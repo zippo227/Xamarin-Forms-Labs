@@ -10,10 +10,7 @@ namespace XForms.Toolkit.Sample
 		public TextToSpeechPage ()
 		{
 			InitializeComponent ();
-			btnSpeak.Clicked += (s,e) =>{
-
-				DependencyService.Get<ITextToSpeechService>().Speak("Hello from XForms Toolkit");
-			};
+			BindingContext = ViewModelLocator.Main;
 		}
 	}
 }

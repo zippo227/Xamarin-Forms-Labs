@@ -6,7 +6,7 @@
     <ContentPage.Content>
     <StackLayout>
 
-        <Button x:Name="btnSpeak" Text="Speak" WidthRequest="200" HeightRequest="100" ></Button>
+        <Button x:Name="btnSpeak" Text="Speak" WidthRequest="200" HeightRequest="100" Command="{Binding SpeakCommand}" ></Button>
     </StackLayout>
     
     </ContentPage.Content>

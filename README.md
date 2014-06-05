@@ -6,10 +6,13 @@ Xamarin Forms Toolkit is a open source project that aims to provide a powerfull 
 Call for action for all Xamarin Developers, embrace this project and share your controls and services with the community, add your own control to the toolkit.
 
 Available controls (Beta)
-Calendar Control ; ExtendedTabbedPage
+Calendar Control ; ExtendedTabbedPage ; ImageButton
 
 Available services (Beta)
 TextToSpeech
+
+Available Mvvm helpers (Beta)
+ViewModelBase ; RelayCommand
 
 To develop on this project, run the build.bat or build.sh file first so the required Xamarin nuget packages can be downloaded.
 
@@ -22,3 +25,7 @@ Rui Marinho @rmarinho
 Filip De Vos @foxtricks
 
 ThomasLebrun
+
+Sami M. Kallio
+
+Kevin E. Ford

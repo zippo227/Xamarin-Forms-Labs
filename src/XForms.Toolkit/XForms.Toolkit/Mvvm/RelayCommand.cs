@@ -53,8 +53,10 @@ namespace XForms.Toolkit
 
 		public bool CanExecute(object parameter)
 		{
-			return _canExecute == null 
-				&& _canExecute.Invoke();
+			if (_canExecute == null)
+				return true;
+
+			return _canExecute.Invoke();
 		}
 
 		public virtual void Execute(object parameter)
