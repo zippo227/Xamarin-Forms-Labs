@@ -176,3 +176,5 @@ FakesAssemblies/
 .DS_Store
 
 samples/.DS_Store
+
+src/XForms.Toolkit/XForms.Toolkit.userprefs
