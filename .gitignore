@@ -180,3 +180,5 @@ samples/XForms.Toolkit.Sample.Droid/Resources/Resource.designer.cs
 src/XForms.Toolkit/XForms.Toolkit.Droid/Resources/Resource.designer.cs
 
 src/XForms.Toolkit/XForms.Toolkit.userprefs
+
+*.userprefs
