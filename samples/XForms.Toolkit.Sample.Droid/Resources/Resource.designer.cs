@@ -197,6 +197,9 @@ namespace XForms.Toolkit.Sample.Droid
 			// aapt resource value: 0x7f020001
 			public const int Icon = 2130837505;
 			
+			// aapt resource value: 0x7f020002
+			public const int monoandroidsplash = 2130837506;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -210,17 +213,14 @@ namespace XForms.Toolkit.Sample.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f080003
-			public const int calendar_grid = 2131230723;
+			// aapt resource value: 0x7f080002
+			public const int calendar_grid = 2131230722;
 			
 			// aapt resource value: 0x7f080000
 			public const int calendar_view = 2131230720;
 			
 			// aapt resource value: 0x7f080001
-			public const int myButton = 2131230721;
-			
-			// aapt resource value: 0x7f080002
-			public const int title = 2131230722;
+			public const int title = 2131230721;
 			
 			static Id()
 			{
@@ -242,13 +242,10 @@ namespace XForms.Toolkit.Sample.Droid
 			public const int dialog = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int Main = 2130903042;
+			public const int month = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int month = 2130903043;
-			
-			// aapt resource value: 0x7f030004
-			public const int week = 2130903044;
+			public const int week = 2130903043;
 			
 			static Layout()
 			{
@@ -263,17 +260,11 @@ namespace XForms.Toolkit.Sample.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f060006
-			public const int app_name = 2131099654;
-			
 			// aapt resource value: 0x7f060001
 			public const int day_name_format = 2131099649;
 			
 			// aapt resource value: 0x7f060004
 			public const int full_date_format = 2131099652;
-			
-			// aapt resource value: 0x7f060005
-			public const int hello = 2131099653;
 			
 			// aapt resource value: 0x7f060002
 			public const int invalid_date = 2131099650;
@@ -308,6 +299,9 @@ namespace XForms.Toolkit.Sample.Droid
 			
 			// aapt resource value: 0x7f070000
 			public const int CalendarTitle = 2131165184;
+			
+			// aapt resource value: 0x7f070004
+			public const int Mono_Android_Theme_Splash = 2131165188;
 			
 			static Style()
 			{
