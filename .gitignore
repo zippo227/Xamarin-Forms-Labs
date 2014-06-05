@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+*.DS_Store
 
 # Build results
 [Dd]ebug/
@@ -173,8 +174,9 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
-.DS_Store
-
 samples/.DS_Store
+
+samples/XForms.Toolkit.Sample.Droid/Resources/Resource.designer.cs
+src/XForms.Toolkit/XForms.Toolkit.Droid/Resources/Resource.designer.cs
 
 src/XForms.Toolkit/XForms.Toolkit.userprefs
