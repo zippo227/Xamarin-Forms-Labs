@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using XForms.Toolkit.Sample.WP.Resources;
 using Xamarin.Forms;
+using XForms.Toolkit.WP.Controls.Calendar;
 
 namespace XForms.Toolkit.Sample.WP
 {
@@ -18,7 +19,7 @@ namespace XForms.Toolkit.Sample.WP
         public MainPage()
         {
             InitializeComponent();
-
+          new CalendarViewRenderer();
             // Sample code to localize the ApplicationBar
             Forms.Init();
 
