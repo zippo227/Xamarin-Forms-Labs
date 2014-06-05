@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 
-namespace XForms.Toolkit
+namespace XForms.Toolkit.Mvvm
 {
     /// <summary>
     /// View model base class.

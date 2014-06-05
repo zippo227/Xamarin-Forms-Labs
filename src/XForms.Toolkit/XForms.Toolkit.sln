@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{68C928
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XForms.Toolkit.WP", "XForms.Toolkit.WP\XForms.Toolkit.WP.csproj", "{E38D2AA4-D265-4FF2-90EC-E02EB59F8A73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XForms.Toolkit.Sample.WP", "XForms.Toolkit.Sample.WP\XForms.Toolkit.Sample.WP.csproj", "{5DE84A66-F761-41D2-9714-AF292CA9DBEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XForms.Toolkit.Sample.WP", "..\..\samples\XForms.Toolkit.Sample.WP\XForms.Toolkit.Sample.WP.csproj", "{5DE84A66-F761-41D2-9714-AF292CA9DBEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
