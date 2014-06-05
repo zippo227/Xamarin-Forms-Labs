@@ -6,7 +6,7 @@ Xamarin Forms Toolkit is a open source project that aims to provide a powerfull 
 Call for action for all Xamarin Developers, embrace this project and share your controls and services with the community, add your own control to the toolkit.
 
 Available controls (Beta)
-Calendar Control
+Calendar Control ; ExtendedTabbedPage
 
 Available services (Beta)
 TextToSpeech
@@ -18,3 +18,7 @@ Contributions:
 Michael Ridland @rid00z
 
 Rui Marinho @rmarinho
+
+Filip De Vos @foxtricks
+
+ThomasLebrun
