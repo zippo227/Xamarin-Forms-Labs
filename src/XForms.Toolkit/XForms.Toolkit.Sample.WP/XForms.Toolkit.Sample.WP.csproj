@@ -179,10 +179,6 @@
       <Project>{e38d2aa4-d265-4ff2-90ec-e02eb59f8a73}</Project>
       <Name>XForms.Toolkit.WP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XForms.Toolkit\XForms.Toolkit.csproj">
-      <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
-      <Name>XForms.Toolkit</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
