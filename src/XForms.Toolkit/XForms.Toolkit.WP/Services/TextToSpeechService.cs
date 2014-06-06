@@ -5,7 +5,7 @@ using XForms.Toolkit.Services;
 using XForms.Toolkit.WP.Services;
 
 
-[assembly: Dependency(typeof(TextToSpeechService))]
+[assembly: Dependency(typeof(XForms.Toolkit.WP.Services.TextToSpeechService))]
 namespace XForms.Toolkit.WP.Services
 {
     public class TextToSpeechService : ITextToSpeechService

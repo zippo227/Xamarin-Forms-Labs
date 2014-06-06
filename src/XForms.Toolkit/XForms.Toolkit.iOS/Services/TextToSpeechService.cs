@@ -3,7 +3,7 @@ using Xamarin.Forms;
 using XForms.Toolkit.Services;
 using XForms.Toolkit.iOS.Services;
 
-[assembly: Dependency(typeof(TextToSpeechService))]
+[assembly: Dependency(typeof(XForms.Toolkit.iOS.Services.TextToSpeechService))]
 namespace XForms.Toolkit.iOS.Services
 {
 
