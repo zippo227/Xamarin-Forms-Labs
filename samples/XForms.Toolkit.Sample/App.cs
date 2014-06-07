@@ -26,9 +26,14 @@ namespace XForms.Toolkit.Sample
 			buttons.Title = "Buttons";
 			buttons.Children.Add (new ButtonPage ());
 
+			var labels = new CarouselPage ();
+			labels.Title = "Labels";
+			labels.Children.Add (new ExtendedLabelPage ());
+
 			mainPage.Children.Add (controls);
 			mainPage.Children.Add (services);
 			mainPage.Children.Add (buttons);
+			mainPage.Children.Add (labels);
 
 			return mainPage;
 		}
