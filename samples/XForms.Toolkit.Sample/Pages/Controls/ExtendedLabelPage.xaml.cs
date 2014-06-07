@@ -15,6 +15,7 @@ namespace XForms.Toolkit.Sample
 			};
 			label.FontName = Device.OnPlatform<String>("Roboto-Light", "fonts/Roboto-Light.ttf", "");
 			stkRoot.Children.Add (label);
+			this.BindingContext =  ViewModelLocator.Main;
 		}
 	
 	}
