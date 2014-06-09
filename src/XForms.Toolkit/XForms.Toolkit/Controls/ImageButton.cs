@@ -28,16 +28,40 @@ namespace XForms.Toolkit.Controls
         /// <summary>
         /// The orientation of the image relative to the text.
         /// </summary>
-        public ImageOrientation Orientation { get; set; }
+        public static readonly BindableProperty OrientationProperty =
+            BindableProperty.Create<ImageButton, ImageOrientation>(
+                p => p.Orientation, ImageOrientation.ImageToLeft);
+
+        public ImageOrientation Orientation
+        {
+            get { return (ImageOrientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
+        }
         /// <summary>
         /// The requested height of the image.  If less than or equal to zero than a 
         /// height of 50 will be used.
         /// </summary>
-        public int ImageHeightRequest { get; set; }
+        public static readonly BindableProperty ImageHeightRequestProperty =
+            BindableProperty.Create<ImageButton, int>(
+                p => p.ImageHeightRequest, default(int));
+
+        public int ImageHeightRequest
+        {
+            get { return (int)GetValue(ImageHeightRequestProperty); }
+            set { SetValue(ImageHeightRequestProperty, value); }
+        }
         /// <summary>
         /// The requested width of the image.  If less than or equal to zero than a 
         /// width of 50 will be used.
         /// </summary>
-        public int ImageWidthRequest { get; set; }
+        public static readonly BindableProperty ImageWidthRequestProperty =
+           BindableProperty.Create<ImageButton, int>(
+               p => p.ImageWidthRequest, default(int));
+
+        public int ImageWidthRequest
+        {
+            get { return (int)GetValue(ImageWidthRequestProperty); }
+            set { SetValue(ImageWidthRequestProperty, value); }
+        }
     }
 }

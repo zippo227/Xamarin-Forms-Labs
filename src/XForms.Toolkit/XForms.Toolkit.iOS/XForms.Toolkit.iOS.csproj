@@ -48,9 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Controls\ExtendedLabel\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TextToSpeechService.cs" />
     <Compile Include="Controls\Calendar\CalendarMonthView.cs" />
