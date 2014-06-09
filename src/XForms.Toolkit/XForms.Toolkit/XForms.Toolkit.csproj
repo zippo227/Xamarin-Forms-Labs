@@ -35,8 +35,12 @@
   <ItemGroup>
     <Compile Include="Controls\ExtendedTabbedPage.cs" />
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Device\DisplayExtensions.cs" />
+    <Compile Include="Device\IDevice.cs" />
+    <Compile Include="Device\IDisplay.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IPhoneService.cs" />
     <Compile Include="Services\ITextToSpeechService.cs" />
     <Compile Include="Controls\CalendarView.cs" />
     <Compile Include="Mvvm\ViewModel.cs" />
@@ -46,6 +50,8 @@
     <Compile Include="Controls\AutoCompleteView.xaml.cs">
       <DependentUpon>AutoCompleteView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\Serialization\IJsonConvert.cs" />
+    <Compile Include="Services\Serialization\JsonDelegate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
