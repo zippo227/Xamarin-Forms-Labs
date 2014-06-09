@@ -15,9 +15,8 @@ namespace XForms.Toolkit.Sample
 			var tabPage = new ExtendedTabbedPage () { Title="XForms Toolkit Samples" };
 			var mainPage = new NavigationPage (tabPage);
 
-			var controls = new ContentPage ();
+			var controls = new ContentPage () { Title="Controls"};
 			controls.Title = "Controls";
-
 			ListView lst = new ListView ();
 			lst.ItemsSource = new List<string>() {"Calendar", "AutoComplete"};
 			lst.ItemSelected += (sender, e) => {
@@ -35,9 +34,22 @@ namespace XForms.Toolkit.Sample
 
 			controls.Content = lst;
 
-			var services = new CarouselPage ();
-			services.Title = "Services";
-			services.Children.Add (new TextToSpeechPage ());
+			var services = new ContentPage () { Title="Services"};
+			ListView lstServices = new ListView ();
+			lstServices.ItemsSource = new List<string>() {"Text To Speech", "Device Info"};
+			lstServices.ItemSelected += (sender, e) => {
+				switch (e.SelectedItem.ToString()) {
+				case "Text To Speech":
+					mainPage.Navigation.PushAsync(new TextToSpeechPage ());
+					break;
+				case "Device Info":
+					mainPage.Navigation.PushAsync(new DeviceInfoPage ());
+					break;
+				default:
+					break;
+				}
+			};
+			services.Content = lstServices;
 
 			var buttons = new CarouselPage ();
 			buttons.Title = "Buttons";
