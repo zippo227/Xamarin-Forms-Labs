@@ -47,6 +47,8 @@
     <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
     <Compile Include="Controls\ExtendedTextCell.cs" />
+    <Compile Include="Services\Serialization\IJsonConvert.cs" />
+    <Compile Include="Services\Serialization\JsonDelegate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

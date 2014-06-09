@@ -1,7 +1,7 @@
 ﻿using System;
 using XForms.Toolkit.Services;
 
-namespace XForms.Toolkit.Device
+namespace XForms.Toolkit
 {
     public interface IDevice
     {

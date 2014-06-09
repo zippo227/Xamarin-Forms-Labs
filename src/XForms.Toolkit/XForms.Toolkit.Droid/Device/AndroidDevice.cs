@@ -3,7 +3,7 @@ using Android.Telephony;
 using Android.OS;
 using XForms.Toolkit.Services;
 
-namespace XForms.Toolkit.Device
+namespace XForms.Toolkit
 {
     public class AndroidDevice: IDevice
     {

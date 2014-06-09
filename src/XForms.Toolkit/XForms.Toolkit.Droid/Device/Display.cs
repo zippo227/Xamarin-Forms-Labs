@@ -1,7 +1,7 @@
 ﻿using System;
 using Android.App;
 
-namespace XForms.Toolkit.Device
+namespace XForms.Toolkit
 {
     public class Display : IDisplay
     {

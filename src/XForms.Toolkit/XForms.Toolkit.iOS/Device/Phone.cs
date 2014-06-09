@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using XForms.Toolkit.Services;
 
 namespace XForms.Toolkit
 {

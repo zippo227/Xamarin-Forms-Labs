@@ -2,6 +2,7 @@
 using MonoTouch.UIKit;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using XForms.Toolkit.Services;
 
 namespace XForms.Toolkit
 {

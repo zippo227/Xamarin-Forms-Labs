@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Phone.Info;
 using XForms.Toolkit.Services;
 
-namespace XForms.Toolkit.Device
+namespace XForms.Toolkit
 {
     public class WindowsPhoneDevice : IDevice
     {

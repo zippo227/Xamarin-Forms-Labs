@@ -2,7 +2,7 @@
 using MonoTouch.CoreTelephony;
 using MonoTouch.UIKit;
 
-namespace XForms.Toolkit
+namespace XForms.Toolkit.Services
 {
     public class PhoneService : IPhoneService
     {

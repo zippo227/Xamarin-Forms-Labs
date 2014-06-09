@@ -1,5 +1,5 @@
 ﻿
-namespace XForms.Toolkit.Device
+namespace XForms.Toolkit
 {
     /// <summary>
     /// Portable interface for device screen information

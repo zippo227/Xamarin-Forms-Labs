@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Phone.Info;
 
-namespace XForms.Toolkit.Device
+namespace XForms.Toolkit
 {
     public class Display : IDisplay
     {

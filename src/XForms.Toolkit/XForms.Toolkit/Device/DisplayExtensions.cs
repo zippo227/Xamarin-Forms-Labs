@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XForms.Toolkit.Device
+namespace XForms.Toolkit
 {
     public static class DisplayExtensions
     {
