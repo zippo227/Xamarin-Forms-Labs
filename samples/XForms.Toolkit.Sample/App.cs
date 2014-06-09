@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using XForms.Toolkit.Controls;
 using XForms.Toolkit.Sample.Pages.Controls;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace XForms.Toolkit.Sample
 {
@@ -10,14 +11,30 @@ namespace XForms.Toolkit.Sample
 	{
 		public static Page GetMainPage ()
 		{	
-			var mainPage = new ExtendedTabbedPage ();
-			mainPage.CurrentPageChanged +=
-				() => Debug.WriteLine(string.Format("ExtendedTabbedPage CurrentPageChanged {0}",mainPage.CurrentPage.Title));
 
-			var controls = new CarouselPage ();
+			var tabPage = new ExtendedTabbedPage () { Title="XForms Toolkit Samples" };
+			var mainPage = new NavigationPage (tabPage);
+
+			var controls = new ContentPage ();
 			controls.Title = "Controls";
-			controls.Children.Add (new CalendarPage ());
-			controls.Children.Add (new AutoCompletePage ());
+
+			ListView lst = new ListView ();
+			lst.ItemsSource = new List<string>() {"Calendar", "AutoComplete"};
+			lst.ItemSelected += (sender, e) => {
+				switch (e.SelectedItem.ToString()) {
+				case "Calendar":
+					mainPage.Navigation.PushAsync(new CalendarPage ());
+					break;
+				case "AutoComplete":
+					mainPage.Navigation.PushAsync(new AutoCompletePage ());
+					break;
+				default:
+					break;
+				}
+			};
+
+			controls.Content = lst;
+
 			var services = new CarouselPage ();
 			services.Title = "Services";
 			services.Children.Add (new TextToSpeechPage ());
@@ -30,10 +47,14 @@ namespace XForms.Toolkit.Sample
 			labels.Title = "Labels";
 			labels.Children.Add (new ExtendedLabelPage ());
 
-			mainPage.Children.Add (controls);
-			mainPage.Children.Add (services);
-			mainPage.Children.Add (buttons);
-			mainPage.Children.Add (labels);
+			tabPage.Children.Add (controls);
+			tabPage.Children.Add (services);
+			tabPage.Children.Add (buttons);
+			tabPage.Children.Add (labels);
+
+			tabPage.CurrentPageChanged +=
+				() => Debug.WriteLine(string.Format("ExtendedTabbedPage CurrentPageChanged {0}",tabPage.CurrentPage.Title));
+
 
 			return mainPage;
 		}

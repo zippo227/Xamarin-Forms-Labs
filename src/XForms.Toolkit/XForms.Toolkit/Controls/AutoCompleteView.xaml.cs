@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace XForms.Toolkit.Controls
 {
-
 	public partial class AutoCompleteView : ContentView
 	{
 		public AutoCompleteView ()
@@ -17,7 +16,7 @@ namespace XForms.Toolkit.Controls
 				Text = e.NewTextValue;
 			};
 			btnSearch.Clicked += (s, e) => {
-				if(SearchCommand.CanExecute(Text))
+				if(SearchCommand !=null && SearchCommand.CanExecute(Text))
 					SearchCommand.Execute(Text);
 			};
 			lstSugestions.ItemSelected += (s, e) => {
@@ -26,6 +25,7 @@ namespace XForms.Toolkit.Controls
 				ShowHideListbox(false);
 			};
 			AvailableSugestions = new ObservableCollection<string> ();
+			this.ShowHideListbox (false);
 			lstSugestions.BindingContext = this.AvailableSugestions;
 		}
 
@@ -76,6 +76,7 @@ namespace XForms.Toolkit.Controls
 
 				var filteredsugestions = control.Sugestions.Where (x => x.ToLowerInvariant ().Contains (newPlaceHolderValue))
 					.OrderByDescending (x => x.ToLowerInvariant ().StartsWith (newPlaceHolderValue)).ToArray ();
+
 				control.AvailableSugestions.Clear ();
 
 				foreach (var item in filteredsugestions) {

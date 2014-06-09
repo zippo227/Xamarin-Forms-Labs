@@ -138,8 +138,8 @@
   <Import Project="..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.0.6197\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.0.6197\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <ItemGroup>
     <Folder Include="Resources\fonts\" />
-  <ItemGroup>
-  </ItemGroup>
+    <ItemGroup Include="">
+    </ItemGroup>
     <BundleResource Include="Resources\icon_facebook.png" />
   </ItemGroup>
   <ItemGroup>
