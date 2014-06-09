@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using XForms.Toolkit.Services;
 
-[assembly: Dependency (typeof (TextToSpeechService))]
+[assembly: Dependency(typeof(XForms.Toolkit.Droid.Services.TextToSpeechService))]
 namespace XForms.Toolkit.Droid.Services
 {
 

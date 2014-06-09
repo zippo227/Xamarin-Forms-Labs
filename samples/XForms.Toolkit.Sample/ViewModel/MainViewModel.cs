@@ -13,8 +13,24 @@ namespace XForms.Toolkit.Sample
 			SpeakCommand = new RelayCommand (() => {
 				DependencyService.Get<ITextToSpeechService>().Speak("Hello from XForms Toolkit");
 			});
+			Items = new ObservableCollection<string> ();
+			for (int i = 0; i < 10; i++) {
+				Items.Add(string.Format("item {0}",i));
+			}
 		}
 
+		private ObservableCollection<string> _items= null;
+		public ObservableCollection<string> Items{
+			get{
+				return _items;
+			}
+			 set{ 
+				_items = value;
+				NotifyPropertyChanged ("Items");
+			}
+		}
+
+	
 		private RelayCommand _speakCommand= null;
 		public RelayCommand SpeakCommand{
 			get{

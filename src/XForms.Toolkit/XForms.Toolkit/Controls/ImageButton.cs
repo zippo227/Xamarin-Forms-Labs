@@ -13,9 +13,18 @@ namespace XForms.Toolkit.Controls
         /// The name of the image without path or file type information.
         /// Android: There should be a drable resource with the same name
         /// iOS: There should be an image in the Resources folder with a build action of BundleResource.
-        /// Windows Phone: There soudl be an image in the Images folder with a type of .png and build action set to resource.
+        /// Windows Phone: There should be an image in the Images folder with a type of .png and build action set to resource.
         /// </summary>
-        public string Image { get; set; }
+        public static readonly BindableProperty ImageProperty =
+            BindableProperty.Create<ImageButton, string>(
+                p => p.Image, default(string));
+
+        public string Image
+        {
+            get { return (string)GetValue(ImageProperty); }
+            set { SetValue(ImageProperty, value); }
+        }
+
         /// <summary>
         /// The orientation of the image relative to the text.
         /// </summary>
