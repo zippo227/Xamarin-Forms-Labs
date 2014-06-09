@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:controls="clr-namespace:XForms.Toolkit.Controls;assembly=XForms.Toolkit"
+    x:Class="XForms.Toolkit.Sample.AutoCompletePage">
+    <ContentPage.Content>
+        	<controls:AutoCompleteControl VerticalOptions="StartAndExpand"
+				Text="{Binding SearchText, Mode=TwoWay}"
+				Placeholder="type 'item'"
+				ShowSearch="True"
+				SearchCommand="{Binding SearchCommand}"
+				Sugestions="{Binding Items, Mode=TwoWay}"
+				/>
+    </ContentPage.Content>
+</ContentPage>
+

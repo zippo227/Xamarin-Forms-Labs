@@ -68,5 +68,64 @@ namespace XForms.Toolkit
 			}
 		}
 	}
+
+	public class RelayCommand<T> : ICommand
+	{
+		private readonly Action<T> _execute;
+
+		private readonly Predicate<T> _canExecute;
+
+		public RelayCommand(Action<T> execute)
+			: this(execute, null)
+		{}
+		public RelayCommand(Action<T> execute, Predicate<T> canExecute)
+		{
+			if (execute == null)
+			{
+				throw new ArgumentNullException("execute");
+			}
+
+			_execute = execute;
+
+			if (canExecute != null)
+			{
+				_canExecute = canExecute;
+			}
+		}
+
+	
+		/// <summary>
+		/// Occurs when changes occur that affect whether the command should execute.
+		/// </summary>
+		public event EventHandler CanExecuteChanged;
+
+
+		public void RaiseCanExecuteChanged()
+		{
+
+			var handler = CanExecuteChanged;
+			if (handler != null)
+			{
+				handler(this, EventArgs.Empty);
+			}
+		}
+
+		public bool CanExecute(object parameter)
+		{
+			if (_canExecute == null)
+				return true;
+
+			return _canExecute.Invoke((T)parameter);
+		}
+
+		public virtual void Execute(object parameter)
+		{
+			if (CanExecute(parameter)
+				&& _execute != null)
+			{
+				_execute.Invoke((T)parameter);
+			}
+		}
+	}
 }
 

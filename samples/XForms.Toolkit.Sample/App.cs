@@ -17,7 +17,7 @@ namespace XForms.Toolkit.Sample
 			var controls = new CarouselPage ();
 			controls.Title = "Controls";
 			controls.Children.Add (new CalendarPage ());
-
+			controls.Children.Add (new AutoCompletePage ());
 			var services = new CarouselPage ();
 			services.Title = "Services";
 			services.Children.Add (new TextToSpeechPage ());

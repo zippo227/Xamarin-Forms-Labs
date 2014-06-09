@@ -41,6 +41,16 @@ namespace XForms.Toolkit.Sample
 			}
 		}
 
+		private RelayCommand<string> _searchCommand;
+		public RelayCommand<string> SearchCommand {
+			get{ return _searchCommand ?? new RelayCommand<string> (
+				obj => {
+
+
+				}, obj => !string.IsNullOrEmpty (obj)); }
+		}
+
+
 	}
 }
 
