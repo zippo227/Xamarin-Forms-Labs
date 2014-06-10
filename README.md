@@ -90,12 +90,11 @@ License MIT more about that in the [LICENSE][1] file.
 __________________
 
 **Contributions:**
-Michael Ridland @rid00z
-Rui Marinho @ruiespinho
-Filip De Vos @foxtricks
-ThomasLebrun
-Sami M. Kallio
-Kevin E. Ford @Bowman74
-
+ - Michael Ridland @rid00z 
+ - Rui Marinho @ruiespinho 
+ - Filip De Vos @foxtricks 
+ - ThomasLebrun 
+ - Sami M. Kallio 
+ - Kevin E. Ford @Bowman74
 
   [1]: https://github.com/XForms/XForms-Toolkit/blob/master/LICENSE
