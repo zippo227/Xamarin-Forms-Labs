@@ -22,6 +22,35 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 
  - ViewModelBase 
  - RelayCommand ; RelayCommand< T >
+_________________
+
+Using the controls
+-----------
+
+Add XForms.Toolkit.Controls reference to your projects , main pcl, ios, android, and wp.
+
+Xaml :
+
+Reference the assembly namespace 
+
+     xmlns:controls="clr-namespace:XForms.Toolkit.Controls;assembly=XForms.Toolkit"
+
+Render your control:
+
+     <controls:ImageButton Text="Twitter" BackgroundColor="#01abdf" TextColor="#ffffff" HeightRequest="75" WidthRequest="175" Image="icon_twitter" Orientation="ImageToLeft"  ImageHeightRequest="50" ImageWidthRequest="50" />
+      
+Or from your codebehind:
+
+
+	var button = new ImageButton() {
+				ImageHeightRequest = 50,
+				ImageWidthRequest = 50,
+				Orientation= Orientation.ImageToLeft",
+				Image = "icon_twitter"
+			};
+	stacker.Children.Add (button);
+	
+_________________
 
 _______________
 
@@ -46,33 +75,6 @@ Screenshots
 Coming soon..
 
 __________________
-
-_________________
-
-Using the controls
------------
-Xaml :
-
-Reference the assembly namespace 
-
-     xmlns:controls="clr-namespace:XForms.Toolkit.Controls;assembly=XForms.Toolkit"
-
-Render your control:
-
-     <controls:ImageButton Text="Twitter" BackgroundColor="#01abdf" TextColor="#ffffff" HeightRequest="75" WidthRequest="175" Image="icon_twitter" Orientation="ImageToLeft"  ImageHeightRequest="50" ImageWidthRequest="50" />
-      
-Or from your codebehind:
-
-
-	var button = new ImageButton() {
-				ImageHeightRequest = 50,
-				ImageWidthRequest = 50,
-				Orientation= Orientation.ImageToLeft",
-				Image = "icon_twitter"
-			};
-	stacker.Children.Add (button);
-	
-_________________
 
 Contribute
 -----------
