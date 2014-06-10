@@ -7,6 +7,11 @@ using System.Linq;
 
 namespace XForms.Toolkit.Controls
 {
+	public class Preserve : Attribute
+	{
+
+	}
+	[Preserve()]
 	public partial class AutoCompleteView : ContentView
 	{
 		public AutoCompleteView ()
@@ -16,17 +21,23 @@ namespace XForms.Toolkit.Controls
 				Text = e.NewTextValue;
 			};
 			btnSearch.Clicked += (s, e) => {
-				if(SearchCommand !=null && SearchCommand.CanExecute(Text))
-					SearchCommand.Execute(Text);
+				if (SearchCommand != null && SearchCommand.CanExecute (Text))
+					SearchCommand.Execute (Text);
 			};
 			lstSugestions.ItemSelected += (s, e) => {
-				entText.Text = (string) e.SelectedItem;
-				AvailableSugestions.Clear();
-				ShowHideListbox(false);
+				entText.Text = (string)e.SelectedItem;
+				AvailableSugestions.Clear ();
+				ShowHideListbox (false);
+				if (ExecuteOnSugestionClick
+				   && SearchCommand != null && SearchCommand.CanExecute (Text)) {
+					SearchCommand.Execute(Text);
+				}
+
 			};
 			AvailableSugestions = new ObservableCollection<string> ();
 			this.ShowHideListbox (false);
-			lstSugestions.BindingContext = this.AvailableSugestions;
+			lstSugestions.ItemsSource = this.AvailableSugestions;
+			//lstSugestions.ItemTemplate = this.SugestionItemDataTemplate;
 		}
 
 		private void ShowHideListbox(bool show){
@@ -36,6 +47,12 @@ namespace XForms.Toolkit.Controls
 		public Entry TextEntry {
 			get{ 
 				return entText;
+			}
+		}
+
+		public ListView ListViewSugestions {
+			get{ 
+				return lstSugestions;
 			}
 		}
 
@@ -93,6 +110,7 @@ namespace XForms.Toolkit.Controls
 			}
 		}
 
+
 		public static readonly BindableProperty PlaceholderProperty =
 			BindableProperty.Create<AutoCompleteView,string> (
 				p => p.Placeholder, "", BindingMode.TwoWay, null,
@@ -109,6 +127,7 @@ namespace XForms.Toolkit.Controls
 
 		}
 
+
 		public static readonly BindableProperty ShowSearchProperty =
 			BindableProperty.Create<AutoCompleteView,bool> (
 				p => p.ShowSearchButton, true, BindingMode.TwoWay, null, new BindableProperty.BindingPropertyChangedDelegate<bool> (ShowSearchChanged));
@@ -124,6 +143,7 @@ namespace XForms.Toolkit.Controls
 
 		}
 
+
 		public static readonly BindableProperty SearchCommandProperty =
 			BindableProperty.Create<AutoCompleteView,ICommand> (
 				p => p.SearchCommand, null);
@@ -132,6 +152,68 @@ namespace XForms.Toolkit.Controls
 			get { return (ICommand)GetValue (SearchCommandProperty); }
 			set { SetValue (SearchCommandProperty, value); }
 		}
+
+
+		public static readonly BindableProperty SugestionItemDataTemplateProperty =
+			BindableProperty.Create<AutoCompleteView, DataTemplate> (p => p.SugestionItemDataTemplate, null,
+				BindingMode.TwoWay, null, 
+				new	BindableProperty.BindingPropertyChangedDelegate<DataTemplate> (SugestionItemDataTemplateChanged), null, null);
+
+		public DataTemplate SugestionItemDataTemplate {
+			get { return (DataTemplate)GetValue (SugestionItemDataTemplateProperty); }
+			set { SetValue (SugestionItemDataTemplateProperty, value); }
+		}
+
+		static void SugestionItemDataTemplateChanged (BindableObject obj, DataTemplate oldShowSearchValue, DataTemplate newShowSearchValue)
+		{
+
+			(obj as AutoCompleteView).lstSugestions.ItemTemplate = newShowSearchValue;
+
+		}
+
+
+		public static readonly BindableProperty SearchBackgroundColorProperty =
+			BindableProperty.Create<AutoCompleteView, Color> (p => p.SearchBackgroundColor, Color.Red,
+				BindingMode.TwoWay, null, 
+				new	BindableProperty.BindingPropertyChangedDelegate<Color> (SearchBackgroundColorChanged), null, null);
+
+		public Color SearchBackgroundColor {
+			get { return (Color)GetValue (SearchBackgroundColorProperty); }
+			set { SetValue (SearchBackgroundColorProperty, value); }
+		}
+
+		static void SearchBackgroundColorChanged (BindableObject obj, Color oldValue, Color newValue)
+		{
+			(obj as AutoCompleteView).stkBase.BackgroundColor = newValue;
+		}
+
+
+		public static readonly BindableProperty SugestionBackgroundColorProperty =
+			BindableProperty.Create<AutoCompleteView, Color> (p => p.SugestionBackgroundColor, Color.Red,
+				BindingMode.TwoWay, null, 
+				new	BindableProperty.BindingPropertyChangedDelegate<Color> (SugestionBackgroundColorChanged), null, null);
+
+		public Color SugestionBackgroundColor {
+			get { return (Color)GetValue (SugestionBackgroundColorProperty); }
+			set { SetValue (SugestionBackgroundColorProperty, value); }
+		}
+
+		static void SugestionBackgroundColorChanged (BindableObject obj, Color oldValue, Color newValue)
+		{
+
+			(obj as AutoCompleteView).lstSugestions.BackgroundColor = newValue;
+		}
+
+
+		public static readonly BindableProperty ExecuteOnSugestionClickProperty =
+			BindableProperty.Create<AutoCompleteView, bool> (p => p.ExecuteOnSugestionClick, false);
+
+		public bool ExecuteOnSugestionClick {
+			get { return (bool)GetValue (ExecuteOnSugestionClickProperty); }
+			set { SetValue (ExecuteOnSugestionClickProperty, value); }
+		}
+
+
 
 		#endregion
 	}
