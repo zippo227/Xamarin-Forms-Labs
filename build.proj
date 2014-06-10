@@ -11,10 +11,7 @@
 
         <RestoreCommand>$(NuGetCommand) restore "$(PackagesConfigPath)" -NonInteractive -PackagesDirectory $(PackagesDirectory)" </RestoreCommand>
         <SolutionFile>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "XForms.Toolkit", "XForms.Toolkit.sln"))</SolutionFile> 
-
-        <XFormsToolkitProject>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "XForms.Toolkit", "XForms.Toolkit", "XForms.Toolkit.csproj"))</XFormsToolkitProject>
-        <XFormsToolkitIOSProject>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "XForms.Toolkit", "XForms.Toolkit.iOS", "XForms.Toolkit.iOS.csproj"))</XFormsToolkitIOSProject>
-        <XFormsToolkitDroidProject>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "XForms.Toolkit", "XForms.Toolkit.Droid", "XForms.Toolkit.Droid.csproj"))</XFormsToolkitDroidProject>
+        <ProjectsMask></ProjectsMask> 
         <Configuration>Release</Configuration>
     </PropertyGroup>
 
@@ -22,26 +19,35 @@
         <SolutionToBuild Include="$(SolutionFile)">
             <Properties>Configuration=$(Configuration)</Properties>
         </SolutionToBuild>
+
+        <ProjectsToPack Include='$(MSBuildProjectDirectory)\src\**\*.csproj' />
     </ItemGroup>
 
-    <Target Name="Build" DependsOnTargets="RestorePackages;BuildSolution;PackNuGetPackages">
+    <Target Name="Build">
+        <CallTarget Targets="RestorePackages" />
+        <CallTarget Targets="BuildSolution" />
+        <CallTarget Targets="PackNuGetPackages" />
     </Target>
 
     <Target Name="BuildSolution">
+      <Message Text="Building Solutions" />
       <MSBuild Projects="@(SolutionToBuild)"/>   
     </Target>
 
     <Target Name="PackNuGetPackages">
-        <Exec Command="$(NuGetCommand) pack $(XFormsToolkitProject) -prop Configuration=$(Configuration)" Condition="'$(OS)' != 'Windows_NT' And Exists('$(PackagesConfigPath)')" />
-        <Exec Command="$(NuGetCommand) pack $(XFormsToolkitProject) -prop Configuration=$(Configuration)" LogStandardErrorAsError="true" Condition="'$(OS)' == 'Windows_NT' And Exists('$(PackagesConfigPath)')" />
+      <Message Text="Packing Nuget Packages" />
+      <Exec Command="$(NuGetCommand) pack @(ProjectsToPack) -prop Configuration=$(Configuration)" 
+              Condition="'$(OS)' != 'Windows_NT' And Exists('$(PackagesConfigPath)') and Exists(@(ProjectsToPack->'%(RootDir)%(Directory)%(FileName).nuspec')) and '%(Identity)' != ''" />
 
-        <Exec Command="$(NuGetCommand) pack $(XFormsToolkitIOSProject) -prop Configuration=$(Configuration)" Condition="'$(OS)' != 'Windows_NT' And Exists('$(PackagesConfigPath)')" />
-        <Exec Command="$(NuGetCommand) pack $(XFormsToolkitIOSProject) -prop Configuration=$(Configuration)" LogStandardErrorAsError="true" Condition="'$(OS)' == 'Windows_NT' And Exists('$(PackagesConfigPath)')" />
-
-        <Exec Command="$(NuGetCommand) pack $(XFormsToolkitDroidProject) -prop Configuration=$(Configuration)" Condition="'$(OS)' != 'Windows_NT' And Exists('$(PackagesConfigPath)')" />
-        <Exec Command="$(NuGetCommand) pack $(XFormsToolkitDroidProject) -prop Configuration=$(Configuration)" LogStandardErrorAsError="true" Condition="'$(OS)' == 'Windows_NT' And Exists('$(PackagesConfigPath)')" />
+      <Exec Command="$(NuGetCommand) pack @(ProjectsToPack) -prop Configuration=$(Configuration)" 
+              LogStandardErrorAsError="true" 
+              Condition="'$(OS)' == 'Windows_NT' And Exists('$(PackagesConfigPath)') and Exists(@(ProjectsToPack->'%(RootDir)%(Directory)%(FileName).nuspec')) and '%(Identity)' != ''" />
     </Target>
 
+    <!-- ********************************************************************************************************** -->
+    <!-- The code below this section is re-used from the nuget.targets file in the nuget.codeplex.org project. -->
+    <!-- This code is released under Apache License 2.0 (http://nuget.codeplex.com/license). -->
+    <!-- ********************************************************************************************************** -->
     <Target Name="RestorePackages" DependsOnTargets="CheckPrerequisites">
         <Exec Command="$(RestoreCommand)" Condition="'$(OS)' != 'Windows_NT' And Exists('$(PackagesConfigPath)')" />
         <Exec Command="$(RestoreCommand)" LogStandardErrorAsError="true" Condition="'$(OS)' == 'Windows_NT' And Exists('$(PackagesConfigPath)')" />
@@ -60,7 +66,7 @@
 
     <Target Name="_DownloadNuGet">
         <DownloadNuGet OutputFilename="$(NuGetExePath)" Condition=" '$(DownloadNuGetExe)' == 'true' AND !Exists('$(NuGetExePath)')" />
-    </Target>
+   </Target>
 
     <UsingTask TaskName="DownloadNuGet" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
         <ParameterGroup>

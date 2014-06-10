@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="XForms.Toolkit.WP.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XForms.Toolkit\XForms.Toolkit.csproj">
