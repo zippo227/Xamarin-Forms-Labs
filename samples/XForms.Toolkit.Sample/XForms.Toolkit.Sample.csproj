@@ -50,6 +50,12 @@
     <Compile Include="Pages\Controls\ExtendedLabelPage.xaml.cs">
       <DependentUpon>ExtendedLabelPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\AutoCompletePage.xaml.cs">
+      <DependentUpon>AutoCompletePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Services\DeviceInfoPage.xaml.cs">
+      <DependentUpon>DeviceInfoPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -63,6 +69,12 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Controls\ExtendedLabelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Controls\AutoCompletePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Services\DeviceInfoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
