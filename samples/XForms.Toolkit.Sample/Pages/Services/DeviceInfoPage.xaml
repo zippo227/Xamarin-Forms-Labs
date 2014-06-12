@@ -11,6 +11,9 @@
         	<Label Text="{Binding DeviceUIThreadInfo}"></Label>
 
         	<Label Text="{Binding DeviceTimerInfo}"></Label>
+
+          <Label Text="{Binding DeviceManufacturer}"></Label>
+          <Label Text="{Binding DeviceName}"></Label>
         	DeviceUIThreadInfo
         </StackLayout>
     </ContentPage.Content>

@@ -67,8 +67,9 @@ namespace XForms.Toolkit.Sample
                     Children = { level, charger }
                 };
 
-                battery.OnLevelChange += (s, e) => levelAction.Invoke();
-                battery.OnChargerStatusChanged += (s, e) => levelAction.Invoke();
+                battery.OnLevelChange += (s, e) => Device.BeginInvokeOnMainThread(levelAction);
+
+                battery.OnChargerStatusChanged += (s, e) => Device.BeginInvokeOnMainThread(chargerAction);
             }
             else
             {
