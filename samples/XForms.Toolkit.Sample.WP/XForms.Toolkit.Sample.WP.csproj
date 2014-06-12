@@ -175,6 +175,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\XForms.Toolkit\XForms.Toolkit\XForms.Toolkit.csproj">
+      <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
+      <Name>XForms.Toolkit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XForms.Toolkit.Sample\XForms.Toolkit.Sample.csproj">
       <Project>{dc133a2f-e49e-49e3-b43d-bfb957cb5482}</Project>
       <Name>XForms.Toolkit.Sample</Name>

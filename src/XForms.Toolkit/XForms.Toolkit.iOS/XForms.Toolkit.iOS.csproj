@@ -50,8 +50,12 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
+      <Link>Device\Battery.designer.cs</Link>
+    </Compile>
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Device\AppleDevice.cs" />
+    <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\Pad.cs" />
     <Compile Include="Device\Phone.cs" />

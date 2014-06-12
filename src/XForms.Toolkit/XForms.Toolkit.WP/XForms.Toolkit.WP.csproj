@@ -84,11 +84,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
+      <Link>Device\Battery.designer.cs</Link>
+    </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\WindowsPhoneDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

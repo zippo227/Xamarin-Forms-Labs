@@ -20,7 +20,7 @@ namespace XForms.Toolkit
         protected AppleDevice()
         {
 //            this.BluetoothHub = new BluetoothHub ();
-//            this.Battery = new BatteryImpl ();
+            this.Battery = new Battery();
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
         }
 
@@ -69,6 +69,12 @@ namespace XForms.Toolkit
         }
 
         public IPhoneService PhoneService
+        {
+            get;
+            protected set;
+        }
+
+        public IBattery Battery
         {
             get;
             protected set;

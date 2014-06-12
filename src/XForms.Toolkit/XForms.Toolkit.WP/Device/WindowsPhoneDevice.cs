@@ -16,6 +16,7 @@ namespace XForms.Toolkit
         {
             this.Display = new Display();
             this.PhoneService = new PhoneService();
+            this.Battery = new Battery();
         }
 
         public static IDevice CurrentDevice { get { return currentDevice ?? (currentDevice = new WindowsPhoneDevice()); } }
@@ -29,6 +30,12 @@ namespace XForms.Toolkit
         }
 
         public IPhoneService PhoneService
+        {
+            get;
+            private set;
+        }
+
+        public IBattery Battery
         {
             get;
             private set;

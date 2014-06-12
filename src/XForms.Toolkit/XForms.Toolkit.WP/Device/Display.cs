@@ -67,5 +67,10 @@ namespace XForms.Toolkit
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return string.Format("[Screen: Height={0}, Width={1}, Xdpi={2:0.0}, Ydpi={3:0.0}]", Height, Width, Xdpi, Ydpi);
+        }
     }
 }

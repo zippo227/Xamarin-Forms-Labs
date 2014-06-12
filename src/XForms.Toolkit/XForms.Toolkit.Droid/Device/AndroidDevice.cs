@@ -30,7 +30,7 @@ namespace XForms.Toolkit
             this.HardwareVersion = Build.Hardware;
             this.FirmwareVersion = Build.VERSION.Release;
 
-//            this.Battery = new BatteryImpl ();
+            this.Battery = new Battery();
         }
 
         public static IDevice CurrentDevice { get { return currentDevice ?? (currentDevice = new AndroidDevice()); } }
@@ -44,6 +44,12 @@ namespace XForms.Toolkit
         }
 
         public IDisplay Display
+        {
+            get;
+            private set;
+        }
+
+        public IBattery Battery
         {
             get;
             private set;

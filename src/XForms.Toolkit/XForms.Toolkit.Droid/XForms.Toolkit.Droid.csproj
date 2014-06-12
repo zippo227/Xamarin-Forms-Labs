@@ -57,6 +57,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
+      <Link>Device\Battery.designer.cs</Link>
+    </Compile>
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarCellView.cs" />
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarGridView.cs" />
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarPickerView.cs" />
@@ -68,7 +71,11 @@
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthView.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Device\AndroidDevice.cs" />
+    <Compile Include="Device\Battery.cs" />
+    <Compile Include="Device\BroadcastMonitor.cs" />
     <Compile Include="Device\Display.cs" />
+    <Compile Include="Extensions\BroadcastReceiverExtensions.cs" />
+    <Compile Include="Extensions\IntentFilterExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\TextToSpeechService.cs" />

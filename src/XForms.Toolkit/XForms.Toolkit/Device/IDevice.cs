@@ -16,6 +16,8 @@ namespace XForms.Toolkit
         /// <value>Phone service instance if available, otherwise null.</value>
         IPhoneService PhoneService { get; }
 
+        IBattery Battery { get; }
+
         /// <summary>
         /// Gets the name of the device.
         /// </summary>

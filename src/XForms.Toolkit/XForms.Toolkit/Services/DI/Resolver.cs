@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Services.DI
+namespace XForms.Toolkit.Services
 {
     /// <summary>
     /// Wrapper for IResolver instance for quick access
