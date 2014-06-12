@@ -85,6 +85,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
+    <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\WindowsPhoneDevice.cs" />

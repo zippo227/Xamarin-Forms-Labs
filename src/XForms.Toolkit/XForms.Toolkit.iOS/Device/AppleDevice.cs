@@ -24,43 +24,40 @@ namespace XForms.Toolkit
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
         }
 
-        public static IDevice CurrentDevice ()
+        /// <summary>
+        /// Gets the runtime device for Apple's devices
+        /// </summary>
+        public static IDevice CurrentDevice
         {
-            if (device != null)
+            get
             {
-                return device;
+                if (device != null)
+                {
+                    return device;
+                }
+
+                var hardwareVersion = GetSystemProperty("hw.machine");
+
+                var regex = new Regex(iPhoneExpression).Match(hardwareVersion);
+                if (regex.Success)
+                {
+                    return device = new Phone(int.Parse(regex.Groups[1].Value), int.Parse(regex.Groups[2].Value));
+                }
+
+                regex = new Regex(iPodExpression).Match(hardwareVersion);
+                if (regex.Success)
+                {
+                    return device = new Pod(int.Parse(regex.Groups[1].Value), int.Parse(regex.Groups[2].Value));
+                }
+
+                regex = new Regex(iPadExpression).Match(hardwareVersion);
+                if (regex.Success)
+                {
+                    return device = new Pad(int.Parse(regex.Groups[1].Value), int.Parse(regex.Groups[2].Value));
+                }
+
+                return device = new Simulator();
             }
-
-            var hardwareVersion = GetSystemProperty ("hw.machine");
-
-
-            var regex = new Regex (iPhoneExpression).Match(hardwareVersion);
-            if (regex.Success)
-            {
-                return device = new Phone (int.Parse (regex.Groups [1].Value), int.Parse (regex.Groups [2].Value));
-            }
-
-            regex = new Regex (iPodExpression).Match (hardwareVersion);
-            if (regex.Success)
-            {
-                return device = new Pod (int.Parse (regex.Groups [1].Value), int.Parse (regex.Groups [2].Value));
-            }
-
-            regex = new Regex (iPadExpression).Match (hardwareVersion);
-            if (regex.Success)
-            {
-                return device = new Pad (int.Parse (regex.Groups [1].Value), int.Parse (regex.Groups [2].Value));
-            }
-
-            return device = new Simulator ();
-
-            //
-
-            //
-
-            //
-            //            if ([platform isEqualToString:@"i386"])         return @"Simulator";
-            //            if ([platform isEqualToString:@"x86_64"])       return @"Simulator";
         }
 
         #region IDevice implementation

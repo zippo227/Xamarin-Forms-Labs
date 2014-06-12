@@ -22,7 +22,7 @@ namespace XForms.Toolkit.WP.Controls
 
             this.webView = new WebBrowser()
                 {
-                    //Source = this.Model.Uri
+                    Source = this.Model.Uri
                 };
 
             this.webView.IsScriptEnabled = true;
@@ -41,7 +41,7 @@ namespace XForms.Toolkit.WP.Controls
         {
             if (e.PropertyName == "Uri")
             {
-                //this.webView.Source = this.Model.Uri;
+                this.webView.Source = this.Model.Uri;
             }
         }
 

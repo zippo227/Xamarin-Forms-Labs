@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using XForms.Toolkit.Controls;
 using XForms.Toolkit.Sample.Pages.Controls;
 using System.Diagnostics;
+using XForms.Toolkit.Services.Serialization;
 
 namespace XForms.Toolkit.Sample
 {
@@ -37,6 +38,17 @@ namespace XForms.Toolkit.Sample
 
 			return mainPage;
 		}
+
+        public static Page GetHybridPage()
+        {
+            return new ContentPage()
+            {
+                Content = new HybridWebView(new JsonDelegate(t => t.ToString()))
+                {
+                    Uri = new Uri("https://github.com/XForms/XForms-Toolkit")
+                }
+            };
+        }
 	}
 }
 

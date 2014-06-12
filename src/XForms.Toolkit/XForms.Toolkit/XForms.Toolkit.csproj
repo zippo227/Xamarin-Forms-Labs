@@ -34,12 +34,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\ExtendedTabbedPage.cs" />
+    <Compile Include="Controls\HybridWebView.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />
     <Compile Include="Device\IDevice.cs" />
     <Compile Include="Device\IDisplay.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DI\IDependencyContainer.cs" />
+    <Compile Include="Services\DI\IResolver.cs" />
+    <Compile Include="Services\DI\Resolver.cs" />
+    <Compile Include="Services\DI\SimpleContainer.cs" />
     <Compile Include="Services\IPhoneService.cs" />
     <Compile Include="Services\ITextToSpeechService.cs" />
     <Compile Include="Controls\CalendarView.cs" />
