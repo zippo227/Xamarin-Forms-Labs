@@ -15,8 +15,9 @@ namespace XForms.Toolkit.Sample
 		{
 			SpeakCommand = new RelayCommand (() => 
             {
-				DependencyService.Get<ITextToSpeechService>().Speak("Hello from XForms Toolkit");
+					DependencyService.Get<ITextToSpeechService>().Speak(TextToSpeak);
 			});
+
 			
             Items = new ObservableCollection<string> ();
 			
@@ -37,29 +38,6 @@ namespace XForms.Toolkit.Sample
 			});
 		}
 
-		public string DeviceOS 
-        {
-			get
-            { 
-				return string.Format("Your device OS: {0}", Device.OS.ToString());
-			}
-		}
-
-		public string DeviceIdiom 
-        {
-			get
-            { 
-				return string.Format("Your device Idiom: {0}", Device.Idiom.ToString ());
-			}
-		}
-
-		public string DeviceClassInfo 
-        {
-			get
-            { 
-				return "The Device class allows you  to access the Main UI thread, so you can marshal your code easily.";
-			}
-		}
 
         public string DeviceManufacturer
         {
@@ -76,6 +54,34 @@ namespace XForms.Toolkit.Sample
                 return string.Format("Device is called {0}", this.device.Name);
             }
         }
+
+		private string _numberToCall ="+1 (855) 926-2746";
+		public string NumberToCall
+		{
+			get
+			{
+				return _numberToCall;
+			}
+			set
+			{
+				this.ChangeAndNotify(ref _numberToCall, value);
+			}
+		}
+
+
+		private string _textToSpeak ="Hello from XForms Toolkit";
+		public string TextToSpeak
+		{
+			get
+			{
+				return _textToSpeak;
+			}
+			set
+			{
+				this.ChangeAndNotify(ref _textToSpeak, value);
+			}
+		}
+
 
         private bool batteryLevel;
         public bool BatteryLevel
@@ -127,11 +133,10 @@ namespace XForms.Toolkit.Sample
             set
             { 
                 _items = value;
-                NotifyPropertyChanged ("Items");
+				this.ChangeAndNotify(ref _items, value);
             }
 		}
 
-	
 		private RelayCommand _speakCommand= null;
 		public RelayCommand SpeakCommand
         {
@@ -155,6 +160,17 @@ namespace XForms.Toolkit.Sample
                     obj => !string.IsNullOrEmpty (obj)); 
             }
         }
+
+		private RelayCommand _callCommand;
+		public RelayCommand CallCommand 
+		{
+			get
+			{ 
+				return _callCommand ?? new RelayCommand (
+					() => {this.device .PhoneService.DialNumber(NumberToCall);}, 
+					() => true); 
+			}
+		}
 	}
 }
 

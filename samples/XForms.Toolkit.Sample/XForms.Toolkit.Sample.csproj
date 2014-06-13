@@ -54,8 +54,8 @@
     <Compile Include="Pages\Controls\AutoCompletePage.xaml.cs">
       <DependentUpon>AutoCompletePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Services\DeviceInfoPage.xaml.cs">
-      <DependentUpon>DeviceInfoPage.xaml</DependentUpon>
+    <Compile Include="Pages\Services\PhoneServicePage.xaml.cs">
+      <DependentUpon>PhoneServicePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
@@ -73,7 +73,7 @@
     <EmbeddedResource Include="Pages\Controls\AutoCompletePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\Services\DeviceInfoPage.xaml">
+    <EmbeddedResource Include="Pages\Services\PhoneServicePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
