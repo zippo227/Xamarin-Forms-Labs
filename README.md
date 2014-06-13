@@ -12,6 +12,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - ImageButton (beta)
  - ExtendedLabel (alpha)
  - AutoComplete (doesn't work on android)
+ - HybridWebView (alpha)
 
 **Available services (Beta)**
 
