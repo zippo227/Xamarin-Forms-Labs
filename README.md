@@ -84,7 +84,12 @@ Using the Services
 **PhoneService** 
 
 	     var device = Resolver.Resolve<IDevice>();
-	     device.PhoneService.DialNumber("+1 (855) 926-2746")
+	     // not all devices have phone service, f.e. iPod and Android tablets
+	     // so we need to check if phone service is available
+	     if (device.PhoneService != null)
+	     {
+	         device.PhoneService.DialNumber("+1 (855) 926-2746");
+	     }
 
 _______________
 
