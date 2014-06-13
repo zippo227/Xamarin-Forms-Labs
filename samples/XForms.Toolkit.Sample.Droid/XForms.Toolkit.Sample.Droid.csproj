@@ -30,10 +30,9 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
-    <AndroidLinkSkip />
+    <AndroidLinkSkip>
+    </AndroidLinkSkip>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-    <BundleAssemblies>False</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -49,17 +48,17 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\..\src\XForms.Toolkit\packages\Xamarin.Android.Support.v4.19.0.2\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
+    <Reference Include="Xamarin.Forms.Platform.Android">
+      <HintPath>..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.1.0.6201\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.0.6197\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Platform.Android">
-      <HintPath>..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.0.6197\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
+      <HintPath>..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.1.0.6201\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.0.6197\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.1.0.6201\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\..\src\XForms.Toolkit\packages\Xamarin.Android.Support.v4.19.1.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -114,14 +113,7 @@
     <AndroidResource Include="Resources\drawable\icon_twitter.png" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.0.6197\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.0.6197\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
-  </Target>
-  <Import Project="..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.0.6197\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\XForms.Toolkit\packages\Xamarin.Forms.1.0.6197\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <Import Project="../../src/XForms.Toolkit/packages/Xamarin.Forms.1.1.0.6201/build/portable-win+net45+wp80+MonoAndroid10+MonoTouch10/Xamarin.Forms.targets" />
   <ItemGroup />
   <ItemGroup>
     <AndroidAsset Include="Assets\fonts\Roboto-Light.ttf" />

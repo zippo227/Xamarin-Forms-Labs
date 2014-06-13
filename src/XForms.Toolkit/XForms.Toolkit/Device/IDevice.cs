@@ -3,6 +3,9 @@ using XForms.Toolkit.Services;
 
 namespace XForms.Toolkit
 {
+    /// <summary>
+    /// Abstracted device interface.
+    /// </summary>
     public interface IDevice
     {
         /// <summary>
@@ -16,6 +19,9 @@ namespace XForms.Toolkit
         /// <value>Phone service instance if available, otherwise null.</value>
         IPhoneService PhoneService { get; }
 
+        /// <summary>
+        /// Gets the battery for the device.
+        /// </summary>
         IBattery Battery { get; }
 
         /// <summary>
@@ -24,10 +30,19 @@ namespace XForms.Toolkit
         /// <value>The name.</value>
         string Name { get; }
 
+        /// <summary>
+        /// Gets the firmware version.
+        /// </summary>
         string FirmwareVersion { get; }
 
+        /// <summary>
+        /// Gets the hardware version.
+        /// </summary>
         string HardwareVersion { get; }
 
+        /// <summary>
+        /// Gets the manufacturer.
+        /// </summary>
         string Manufacturer { get; }
     }
 }

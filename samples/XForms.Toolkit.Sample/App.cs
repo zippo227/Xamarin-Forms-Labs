@@ -2,9 +2,11 @@
 using Xamarin.Forms;
 using XForms.Toolkit.Controls;
 using XForms.Toolkit.Sample.Pages.Controls;
+using XForms.Toolkit.Mvvm;
 using System.Diagnostics;
 using XForms.Toolkit.Services.Serialization;
 using XForms.Toolkit.Services;
+using System.Collections.Generic;
 
 namespace XForms.Toolkit.Sample
 {
@@ -12,51 +14,100 @@ namespace XForms.Toolkit.Sample
 	{
 		public static Page GetMainPage ()
 		{	
-			var mainPage = new ExtendedTabbedPage ();
-			mainPage.CurrentPageChanged +=
-				() => Debug.WriteLine(string.Format("ExtendedTabbedPage CurrentPageChanged {0}",mainPage.CurrentPage.Title));
+			//Register our views with our view models
+			ViewFactory.Register<MvvmSamplePage,MvvmSampleViewModel> ();
+			ViewFactory.Register<NewPageView,NewPageViewModel> ();
 
-			var controls = new CarouselPage ();
-			controls.Title = "Controls";
-			controls.Children.Add (new CalendarPage ());
+			var mainTab = new ExtendedTabbedPage () { Title="XForms Toolkit Samples" };
+			var mainPage = new NavigationPage (mainTab);
+			mainTab.CurrentPageChanged += () => {
+				Debug.WriteLine (string.Format ("ExtendedTabbedPage CurrentPageChanged {0}", mainTab.CurrentPage.Title));
+			};
 
-			var services = new CarouselPage ();
-			services.Title = "Services";
-			services.Children.Add (new TextToSpeechPage ());
-
-			var buttons = new CarouselPage ();
-			buttons.Title = "Buttons";
-			buttons.Children.Add (new ButtonPage ());
-
-			var labels = new CarouselPage ();
-			labels.Title = "Labels";
-			labels.Children.Add (new ExtendedLabelPage ());
-
-            var deviceInfo = new CarouselPage()
-            {
-                Title = "Device",
-                Children = { new DeviceInfoPage(), new ExtendedDeviceInfoPage(Resolver.Resolve<IDevice>()) }
-            };
-
-			mainPage.Children.Add (controls);
-			mainPage.Children.Add (services);
-			mainPage.Children.Add (buttons);
-			mainPage.Children.Add (labels);
-            mainPage.Children.Add(deviceInfo);
+			var controls = GetControlsPage (mainPage);
+			var services = GetServicesPage (mainPage);
+			var mvvm =  ViewFactory.CreatePage(typeof(MvvmSampleViewModel));
+			mainTab.Children.Add (controls);
+			mainTab.Children.Add (services);
+			mainTab.Children.Add (mvvm);
 
 			return mainPage;
 		}
 
-        public static Page GetHybridPage()
-        {
-            return new ContentPage()
-            {
-                Content = new HybridWebView(new JsonDelegate(t => t.ToString()))
-                {
-                    Uri = new Uri("https://github.com/XForms/XForms-Toolkit")
-                }
-            };
-        }
+		static ContentPage GetServicesPage (NavigationPage mainPage)
+		{
+			var services = new ContentPage ();
+			services.Title = "Services";
+			var lstServices = new ListView ();
+			lstServices.ItemsSource = new List<string> () {
+				"TextToSpeech",
+				"DeviceExtended",
+				"PhoneService"
+			};
+			lstServices.ItemSelected += (sender, e) =>  {
+				switch (e.SelectedItem.ToString ().ToLower ()) {
+				case "texttospeech":
+					mainPage.Navigation.PushAsync (new TextToSpeechPage ());
+					break;
+				case "deviceextended":
+					mainPage.Navigation.PushAsync (new ExtendedDeviceInfoPage (Resolver.Resolve<IDevice> ()));
+					break;
+				case "phoneservice":
+					mainPage.Navigation.PushAsync (new PhoneServicePage ());
+					break;
+				default:
+					break;
+				}
+			};
+			services.Content = lstServices;
+			return services;
+		}
+
+		static ContentPage GetControlsPage (NavigationPage mainPage)
+		{
+			var controls = new ContentPage ();
+			controls.Title = "Controls";
+			var lstControls = new ListView ();
+			lstControls.ItemsSource = new List<string> () {
+				"Calendar",
+				"Autocomplete",
+				"Buttons",
+				"Labels",
+				"HybridWebView"
+			};
+			lstControls.ItemSelected += (sender, e) => {
+				switch (e.SelectedItem.ToString ().ToLower ()) {
+				case "calendar":
+					mainPage.Navigation.PushAsync (new CalendarPage ());
+					break;
+				case "autocomplete":
+					Device.OnPlatform (() => mainPage.Navigation.PushAsync (new AutoCompletePage ()),
+                        null, () => mainPage.Navigation.PushAsync(new AutoCompletePage()));
+					break;
+				case "buttons":
+					mainPage.Navigation.PushAsync (new ButtonPage ());
+					break;
+				case "labels":
+					mainPage.Navigation.PushAsync (new ExtendedLabelPage ());
+					break;
+				case "hybridwebview":
+					mainPage.Navigation.PushAsync (new ContentPage () {
+						
+						Content = new HybridWebView (new JsonDelegate (t => t.ToString ())) {
+							Uri = new Uri ("https://github.com/XForms/XForms-Toolkit"), 
+
+							HorizontalOptions = LayoutOptions.FillAndExpand,
+							VerticalOptions = LayoutOptions.FillAndExpand
+						}
+					});
+					break;
+				default:
+					break;
+				}
+			};
+			controls.Content = lstControls;
+			return controls;
+		}
 	}
 }
 

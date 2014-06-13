@@ -12,6 +12,9 @@ using Android.Widget;
 
 namespace XForms.Toolkit
 {
+    /// <summary>
+    /// Broadcast monitor.
+    /// </summary>
     public abstract class BroadcastMonitor : BroadcastReceiver
     {
         /// <summary>
@@ -36,6 +39,9 @@ namespace XForms.Toolkit
             this.UnregisterReceiver();
         }
 
+        /// <summary>
+        /// Gets the intent filter to use for monitoring.
+        /// </summary>
         protected abstract IntentFilter Filter { get; }
     }
 }
