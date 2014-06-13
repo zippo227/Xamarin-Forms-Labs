@@ -57,6 +57,14 @@
     <Compile Include="Pages\Services\PhoneServicePage.xaml.cs">
       <DependentUpon>PhoneServicePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\MvvmSampleViewModel.cs" />
+    <Compile Include="ViewModel\NewPageViewModel.cs" />
+    <Compile Include="Pages\Mvvm\MvvmSamplePage.xaml.cs">
+      <DependentUpon>MvvmSamplePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Mvvm\NewPageView.xaml.cs">
+      <DependentUpon>NewPageView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup />
@@ -74,6 +82,12 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Services\PhoneServicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Mvvm\MvvmSamplePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Mvvm\NewPageView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -101,5 +115,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\Mvvm\" />
   </ItemGroup>
 </Project>

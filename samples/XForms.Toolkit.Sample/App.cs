@@ -13,6 +13,7 @@ namespace XForms.Toolkit.Sample
 	{
 		public static Page GetMainPage ()
 		{	
+		
 			var mainTab = new ExtendedTabbedPage () { Title="XForms Toolkit Samples" };
 			var mainPage = new NavigationPage (mainTab);
 			mainTab.CurrentPageChanged += () => {
@@ -20,29 +21,15 @@ namespace XForms.Toolkit.Sample
 			};
 
 			var controls = GetControlsPage (mainPage);
-
 			var services = GetServicesPage (mainPage);
+			var mvvm =  new MvvmSamplePage ();
 
 			mainTab.Children.Add (controls);
 			mainTab.Children.Add (services);
-		
+			mainTab.Children.Add (mvvm);
 
 			return mainPage;
 		}
-
-        public static Page GetHybridPage()
-        {
-            return new ContentPage()
-            {
-                Content = new HybridWebView(new JsonDelegate(t => t.ToString()))
-                {
-					Uri = new Uri("https://github.com/XForms/XForms-Toolkit"), 
-
-					HorizontalOptions=LayoutOptions.FillAndExpand,
-					VerticalOptions = LayoutOptions.FillAndExpand
-                }
-            };
-        }
 
 		static ContentPage GetServicesPage (NavigationPage mainPage)
 		{
@@ -85,14 +72,14 @@ namespace XForms.Toolkit.Sample
 				"Labels",
 				"HybridWebView"
 			};
-			lstControls.ItemSelected += (sender, e) =>  {
+			lstControls.ItemSelected += (sender, e) => {
 				switch (e.SelectedItem.ToString ().ToLower ()) {
 				case "calendar":
 					mainPage.Navigation.PushAsync (new CalendarPage ());
 					break;
 				case "autocomplete":
-					Device.OnPlatform(()=>mainPage.Navigation.PushAsync (new AutoCompletePage ()),
-										null,null);
+					Device.OnPlatform (() => mainPage.Navigation.PushAsync (new AutoCompletePage ()),
+						null, null);
 					break;
 				case "buttons":
 					mainPage.Navigation.PushAsync (new ButtonPage ());
@@ -101,7 +88,15 @@ namespace XForms.Toolkit.Sample
 					mainPage.Navigation.PushAsync (new ExtendedLabelPage ());
 					break;
 				case "hybridwebview":
-					mainPage.Navigation.PushAsync (App.GetHybridPage ());
+					mainPage.Navigation.PushAsync (new ContentPage () {
+						
+						Content = new HybridWebView (new JsonDelegate (t => t.ToString ())) {
+							Uri = new Uri ("https://github.com/XForms/XForms-Toolkit"), 
+
+							HorizontalOptions = LayoutOptions.FillAndExpand,
+							VerticalOptions = LayoutOptions.FillAndExpand
+						}
+					});
 					break;
 				default:
 					break;
