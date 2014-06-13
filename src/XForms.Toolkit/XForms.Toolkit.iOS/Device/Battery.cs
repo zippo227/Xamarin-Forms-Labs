@@ -8,6 +8,9 @@ using MonoTouch.UIKit;
 
 namespace XForms.Toolkit
 {
+    /// <summary>
+    /// Battery portion for Apple devices.
+    /// </summary>
     public partial class Battery
     {
         /// <summary>
@@ -54,6 +57,9 @@ namespace XForms.Toolkit
             );
         }
 
+        /// <summary>
+        /// Stops the level monitoring.
+        /// </summary>
         partial void StopLevelMonitoring()
         {
             NSNotificationCenter.DefaultCenter.RemoveObserver
@@ -65,6 +71,9 @@ namespace XForms.Toolkit
             UIDevice.CurrentDevice.BatteryMonitoringEnabled = (onChargerStatusChanged != null);
         }
 
+        /// <summary>
+        /// Stops the charger monitoring.
+        /// </summary>
         partial void StopChargerMonitoring()
         {
             NSNotificationCenter.DefaultCenter.RemoveObserver
@@ -76,6 +85,9 @@ namespace XForms.Toolkit
             UIDevice.CurrentDevice.BatteryMonitoringEnabled = (onLevelChange != null);
         }
 
+        /// <summary>
+        /// Starts the charger monitoring.
+        /// </summary>
         partial void StartChargerMonitoring()
         {
             UIDevice.CurrentDevice.BatteryMonitoringEnabled = true;

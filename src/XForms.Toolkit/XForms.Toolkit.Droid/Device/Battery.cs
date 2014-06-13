@@ -103,7 +103,7 @@ namespace XForms.Toolkit
             var intent = new IntentFilter(Intent.ActionBatteryChanged).RegisterReceiver();
             if (intent != null)
             {
-                f = LevelMonitor.GetLevel(intent);
+                f = LevelMonitor.GetMonitorLevel(intent);
             }
 
             return f;
@@ -131,7 +131,7 @@ namespace XForms.Toolkit
             int status = intent.GetIntExtra(Android.OS.BatteryManager.ExtraStatus, -1);
             return (status == (int)Android.OS.BatteryPlugged.Ac || status == (int)Android.OS.BatteryPlugged.Usb);
         }
-
+            
         private class LevelMonitor : BroadcastMonitor
         {
             private Battery battery;
@@ -143,7 +143,7 @@ namespace XForms.Toolkit
 
             public override void OnReceive(Context context, Intent intent)
             {
-                this.battery.Level = GetLevel(intent);
+                this.battery.Level = GetMonitorLevel(intent);
             }
 
             protected override IntentFilter Filter
@@ -151,7 +151,7 @@ namespace XForms.Toolkit
                 get { return new IntentFilter(Intent.ActionBatteryChanged); }
             }
 
-            public static int GetLevel(Intent intent)
+            public static int GetMonitorLevel(Intent intent)
             {
                 var rawlevel = intent.GetIntExtra(BatteryManager.ExtraLevel, -1);
                 var scale = intent.GetIntExtra(BatteryManager.ExtraScale, -1);
