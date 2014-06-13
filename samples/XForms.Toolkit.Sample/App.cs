@@ -79,7 +79,7 @@ namespace XForms.Toolkit.Sample
 					break;
 				case "autocomplete":
 					Device.OnPlatform (() => mainPage.Navigation.PushAsync (new AutoCompletePage ()),
-						null, null);
+                        null, () => mainPage.Navigation.PushAsync(new AutoCompletePage()));
 					break;
 				case "buttons":
 					mainPage.Navigation.PushAsync (new ButtonPage ());

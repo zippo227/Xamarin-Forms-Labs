@@ -16,32 +16,34 @@ namespace XForms.Toolkit.WP.Controls
     {
         protected WebBrowser webView;
 
-        protected override void OnModelSet()
+        protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
         {
-            base.OnModelSet();
+            base.OnElementChanged(e);
 
             this.webView = new WebBrowser()
-                {
-                    Source = this.Model.Uri
-                };
+            {
+                Source = this.Element.Uri
+            };
 
             this.webView.IsScriptEnabled = true;
             this.webView.Navigating += webView_Navigating;
             this.webView.LoadCompleted += webView_LoadCompleted;
             this.webView.ScriptNotify += WebViewOnScriptNotify;
+          
+            this.Element.JavaScriptLoadRequested += Inject;
 
-            this.Model.JavaScriptLoadRequested += Inject;
-
-            this.Model.PropertyChanged += Model_PropertyChanged;
+            this.Element.PropertyChanged += Model_PropertyChanged;
 
             this.SetNativeControl(this.webView);
+         
         }
 
+     
         void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Uri")
             {
-                this.webView.Source = this.Model.Uri;
+                this.webView.Source = this.Element.Uri;
             }
         }
 
@@ -51,7 +53,7 @@ namespace XForms.Toolkit.WP.Controls
             var values = notifyEventArgs.Value.Split('/');
             var name = values.FirstOrDefault();
 
-            if (name != null && this.Model.TryGetAction(name, out action))
+            if (name != null && this.Element.TryGetAction(name, out action))
             {
                 var data = Uri.UnescapeDataString(values.ElementAt(1));
                 action.Invoke(data);
