@@ -70,6 +70,9 @@
     <Compile Include="Services\Serialization\SerializationFormat.cs" />
     <Compile Include="Services\Serialization\StreamSerializerExtensions.cs" />
     <Compile Include="Services\Serialization\StringSerializerExtensions.cs" />
+    <Compile Include="Mvvm\BaseView.cs" />
+    <Compile Include="Mvvm\ViewFactory.cs" />
+    <Compile Include="Mvvm\ViewModelNavigation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
