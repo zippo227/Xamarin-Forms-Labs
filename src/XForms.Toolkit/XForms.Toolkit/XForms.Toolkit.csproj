@@ -66,13 +66,18 @@
     <Compile Include="Services\Serialization\ISerializer.cs" />
     <Compile Include="Services\Serialization\IStreamSerializer.cs" />
     <Compile Include="Services\Serialization\IStringSerializer.cs" />
+    <Compile Include="Services\Serialization\IXmlSerializer.cs" />
     <Compile Include="Services\Serialization\JsonDelegate.cs" />
     <Compile Include="Services\Serialization\SerializationFormat.cs" />
+    <Compile Include="Services\Serialization\StreamSerializer.cs" />
     <Compile Include="Services\Serialization\StreamSerializerExtensions.cs" />
+    <Compile Include="Services\Serialization\StringSerializer.cs" />
     <Compile Include="Services\Serialization\StringSerializerExtensions.cs" />
     <Compile Include="Mvvm\BaseView.cs" />
     <Compile Include="Mvvm\ViewFactory.cs" />
     <Compile Include="Mvvm\ViewModelNavigation.cs" />
+    <Compile Include="Services\Serialization\SystemJsonSerializer.cs" />
+    <Compile Include="Services\Serialization\SystemXmlSerializer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
