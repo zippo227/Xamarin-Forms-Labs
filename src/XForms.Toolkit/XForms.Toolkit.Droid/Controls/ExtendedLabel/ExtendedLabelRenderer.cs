@@ -23,16 +23,19 @@ namespace XForms.Toolkit.Droid
 	{
 		public ExtendedLabelRender (){}
 
-
-		protected override void OnModelChanged (VisualElement oldModel, VisualElement newModel)
+		protected override void OnElementChanged (ElementChangedEventArgs<Label> e)
 		{
-			base.OnModelChanged (oldModel, newModel);
-			var view = (ExtendedLabel)newModel;
-			var control = (global::Android.Widget.TextView)Control;
-			UpdateUi (view, control);
-		
 
 		}
+//		protected override void OnModelChanged (VisualElement oldModel, VisualElement newModel)
+//		{
+//			base.OnModelChanged (oldModel, newModel);
+//			var view = (ExtendedLabel)newModel;
+//			var control = (global::Android.Widget.TextView)Control;
+//			UpdateUi (view, control);
+//		
+//
+//		}
 
 		void UpdateUi (ExtendedLabel view, TextView control)
 		{
