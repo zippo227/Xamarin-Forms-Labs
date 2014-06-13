@@ -19,7 +19,7 @@ namespace XForms.Toolkit.Mvvm
 		}
 	}
 	// Can be replaced by all sorts of complexity and auto loading BS but this keeps it simple and loose
-	static class ViewFactory
+	public static class ViewFactory
 	{
 		static readonly Dictionary<Type, Type> TypeDictionary = new Dictionary<Type, Type> (); 
 		public static void Register<TView, TViewModel> ()

@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using XForms.Toolkit.Controls;
 using XForms.Toolkit.Sample.Pages.Controls;
+using XForms.Toolkit.Mvvm;
 using System.Diagnostics;
 using XForms.Toolkit.Services.Serialization;
 using XForms.Toolkit.Services;
@@ -13,7 +14,10 @@ namespace XForms.Toolkit.Sample
 	{
 		public static Page GetMainPage ()
 		{	
-		
+			//Register our views with our view models
+			ViewFactory.Register<MvvmSamplePage,MvvmSampleViewModel> ();
+			ViewFactory.Register<NewPageView,NewPageViewModel> ();
+
 			var mainTab = new ExtendedTabbedPage () { Title="XForms Toolkit Samples" };
 			var mainPage = new NavigationPage (mainTab);
 			mainTab.CurrentPageChanged += () => {
@@ -22,8 +26,7 @@ namespace XForms.Toolkit.Sample
 
 			var controls = GetControlsPage (mainPage);
 			var services = GetServicesPage (mainPage);
-			var mvvm =  new MvvmSamplePage ();
-
+			var mvvm =  ViewFactory.CreatePage(typeof(MvvmSampleViewModel));
 			mainTab.Children.Add (controls);
 			mainTab.Children.Add (services);
 			mainTab.Children.Add (mvvm);

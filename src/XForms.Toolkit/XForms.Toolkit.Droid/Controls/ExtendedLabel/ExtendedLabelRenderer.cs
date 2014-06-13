@@ -25,17 +25,11 @@ namespace XForms.Toolkit.Droid
 
 		protected override void OnElementChanged (ElementChangedEventArgs<Label> e)
 		{
-
+			base.OnElementChanged (e);
+			var view = (ExtendedLabel)this.Element;
+			var control = (global::Android.Widget.TextView)Control;
+			UpdateUi (view, control);
 		}
-//		protected override void OnModelChanged (VisualElement oldModel, VisualElement newModel)
-//		{
-//			base.OnModelChanged (oldModel, newModel);
-//			var view = (ExtendedLabel)newModel;
-//			var control = (global::Android.Widget.TextView)Control;
-//			UpdateUi (view, control);
-//		
-//
-//		}
 
 		void UpdateUi (ExtendedLabel view, TextView control)
 		{

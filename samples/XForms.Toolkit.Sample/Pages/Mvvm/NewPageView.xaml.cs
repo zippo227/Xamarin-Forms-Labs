@@ -10,7 +10,6 @@ namespace XForms.Toolkit.Sample
 		public NewPageView ()
 		{
 			InitializeComponent ();
-			this.BindingContext = new NewPageViewModel ();
 		}
 	}
 }

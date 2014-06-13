@@ -82,7 +82,7 @@
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
-    <Compile Include="Controls\ExtendedTextCell\ExtendedLabelRenderer.cs" />
+    <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

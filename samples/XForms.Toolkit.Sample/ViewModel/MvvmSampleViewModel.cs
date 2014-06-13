@@ -18,7 +18,7 @@ namespace XForms.Toolkit.Sample
 			get
 			{ 
 				return _navigateToViewModel ?? new RelayCommand (
-					() => {Navigation.PushAsync<NewPageViewModel>(); }, 
+					async () => await Navigation.PushAsync<NewPageViewModel>() , 
 					() => true); 
 			}
 		}
