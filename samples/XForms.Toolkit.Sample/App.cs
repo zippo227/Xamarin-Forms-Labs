@@ -3,6 +3,8 @@ using Xamarin.Forms;
 using XForms.Toolkit.Controls;
 using XForms.Toolkit.Sample.Pages.Controls;
 using System.Diagnostics;
+using XForms.Toolkit.Services.Serialization;
+using XForms.Toolkit.Services;
 
 namespace XForms.Toolkit.Sample
 {
@@ -30,13 +32,31 @@ namespace XForms.Toolkit.Sample
 			labels.Title = "Labels";
 			labels.Children.Add (new ExtendedLabelPage ());
 
+            var deviceInfo = new CarouselPage()
+            {
+                Title = "Device",
+                Children = { new DeviceInfoPage(), new ExtendedDeviceInfoPage(Resolver.Resolve<IDevice>()) }
+            };
+
 			mainPage.Children.Add (controls);
 			mainPage.Children.Add (services);
 			mainPage.Children.Add (buttons);
 			mainPage.Children.Add (labels);
+            mainPage.Children.Add(deviceInfo);
 
 			return mainPage;
 		}
+
+        public static Page GetHybridPage()
+        {
+            return new ContentPage()
+            {
+                Content = new HybridWebView(new JsonDelegate(t => t.ToString()))
+                {
+                    Uri = new Uri("https://github.com/XForms/XForms-Toolkit")
+                }
+            };
+        }
 	}
 }
 

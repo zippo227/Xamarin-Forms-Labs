@@ -10,6 +10,8 @@ using XForms.Toolkit.Sample.WP.Resources;
 
 namespace XForms.Toolkit.Sample.WP
 {
+    using Services;
+
     public partial class App : Application
     {
         /// <summary>
@@ -61,6 +63,11 @@ namespace XForms.Toolkit.Sample.WP
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            var resolverContainer = new SimpleContainer();
+
+            resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice);
+
+            Resolver.SetResolver(resolverContainer.GetResolver());
         }
 
         // Code to execute when the application is activated (brought to foreground)
