@@ -24,6 +24,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - ViewModelBase 
  - RelayCommand ; RelayCommand< T >
  - ViewFactory
+ - IOC
  
 _________________
 
