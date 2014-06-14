@@ -1,6 +1,7 @@
 ﻿using Android.Telephony;
 using Android.OS;
 using XForms.Toolkit.Services;
+using XForms.Toolkit.Services.Camera;
 
 namespace XForms.Toolkit
 {
@@ -72,7 +73,17 @@ namespace XForms.Toolkit
             private set;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Gets the picture chooser.
+		/// </summary>
+		/// <value>The picture chooser.</value>
+	    public IPictureChooser PictureChooser
+	    {
+		    get; 
+			private set;
+	    }
+
+	    /// <summary>
         /// Gets the name of the device.
         /// </summary>
         public string Name
