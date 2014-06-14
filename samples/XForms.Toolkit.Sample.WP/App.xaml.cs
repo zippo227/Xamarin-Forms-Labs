@@ -11,6 +11,7 @@ using XForms.Toolkit.Sample.WP.Resources;
 namespace XForms.Toolkit.Sample.WP
 {
     using Services;
+    using XForms.Toolkit.Services.Serialization;
 
     public partial class App : Application
     {
@@ -65,7 +66,8 @@ namespace XForms.Toolkit.Sample.WP
         {
             var resolverContainer = new SimpleContainer();
 
-            resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice);
+            resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
+                .Register<IJsonSerializer,Services.Serialization.ServiceStackV3.JsonSerializer>();
 
             Resolver.SetResolver(resolverContainer.GetResolver());
         }

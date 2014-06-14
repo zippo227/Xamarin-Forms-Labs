@@ -10,9 +10,9 @@ using Microsoft.Phone.Controls;
 using XForms.Toolkit.WP.Controls;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
-namespace XForms.Toolkit.WP.Controls
+namespace XForms.Toolkit.Controls
 {
-    public class HybridWebViewRenderer : ViewRenderer<HybridWebView, WebBrowser>
+    public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, WebBrowser>
     {
         protected WebBrowser webView;
 
@@ -38,15 +38,6 @@ namespace XForms.Toolkit.WP.Controls
          
         }
 
-     
-        void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Uri")
-            {
-                this.webView.Source = this.Element.Uri;
-            }
-        }
-
         private void WebViewOnScriptNotify(object sender, NotifyEventArgs notifyEventArgs)
         {
             Action<string> action;
@@ -70,28 +61,15 @@ namespace XForms.Toolkit.WP.Controls
 
         }
 
-        private void InjectNativeFunctionScript()
-        {
-            var builder = new StringBuilder();
-            builder.Append("function Native(action, data){ ");
-            builder.Append("window.external.notify(");
-            builder.Append("action + \"/\"");
-            builder.Append(" + ((typeof data == \"object\") ? JSON.stringify(data) : data)");
-            builder.Append(")");
-            builder.Append(" ;}");
-
-            this.Inject(this, builder.ToString());
-        }
-
         private void Inject(object sender, string script)
         {
             //this.webView.InvokeScript(string.Format("javascript: {0}", script));
             this.webView.InvokeScript("eval", script);
         }
 
-        private void Load(object sender, Uri uri)
+        partial void Load(Uri uri)
         {
-            this.webView.Navigate(uri);
+            this.webView.Source = uri;
         }
     }
 }

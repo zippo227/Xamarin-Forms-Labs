@@ -65,6 +65,11 @@
     <Compile Include="Pages\Mvvm\NewPageView.xaml.cs">
       <DependentUpon>NewPageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\WebHybridViewModel.cs" />
+    <Compile Include="Pages\Mvvm\HybridWebViewPage.cs" />
+    <Compile Include="Pages\Mvvm\CanvasWebHybrid.xaml.cs">
+      <DependentUpon>CanvasWebHybrid.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup />
@@ -88,6 +93,9 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Mvvm\NewPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Mvvm\CanvasWebHybrid.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -116,7 +124,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\Mvvm\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

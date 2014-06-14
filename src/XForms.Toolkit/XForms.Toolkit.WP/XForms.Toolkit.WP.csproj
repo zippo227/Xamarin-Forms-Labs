@@ -91,6 +91,9 @@
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
+      <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\Display.cs" />
@@ -131,7 +134,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="README_FIRST.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />

@@ -91,15 +91,16 @@ namespace XForms.Toolkit.Sample
 					mainPage.Navigation.PushAsync (new ExtendedLabelPage ());
 					break;
 				case "hybridwebview":
-					mainPage.Navigation.PushAsync (new ContentPage () {
-						
-						Content = new HybridWebView (new JsonDelegate (t => t.ToString ())) {
-							Uri = new Uri ("https://github.com/XForms/XForms-Toolkit"), 
-
-							HorizontalOptions = LayoutOptions.FillAndExpand,
-							VerticalOptions = LayoutOptions.FillAndExpand
-						}
-					});
+                    mainPage.Navigation.PushAsync(new CanvasWebHybrid());
+//					mainPage.Navigation.PushAsync (new ContentPage () {
+//						
+//						Content = new HybridWebView (Resolver.Resolve<IJsonSerializer>()) {
+//							Uri = new Uri ("https://github.com/XForms/XForms-Toolkit"), 
+//
+//							HorizontalOptions = LayoutOptions.FillAndExpand,
+//							VerticalOptions = LayoutOptions.FillAndExpand
+//						}
+//					});
 					break;
 				default:
 					break;
