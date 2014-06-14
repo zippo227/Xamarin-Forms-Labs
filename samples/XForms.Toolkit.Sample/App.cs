@@ -17,6 +17,7 @@ namespace XForms.Toolkit.Sample
 			//Register our views with our view models
 			ViewFactory.Register<MvvmSamplePage,MvvmSampleViewModel> ();
 			ViewFactory.Register<NewPageView,NewPageViewModel> ();
+			ViewFactory.Register<GeolocatorPage,GeolocatorViewModel> ();
 
 			var mainTab = new ExtendedTabbedPage () { Title="XForms Toolkit Samples" };
 			var mainPage = new NavigationPage (mainTab);
@@ -42,7 +43,8 @@ namespace XForms.Toolkit.Sample
 			lstServices.ItemsSource = new List<string> () {
 				"TextToSpeech",
 				"DeviceExtended",
-				"PhoneService"
+				"PhoneService",
+				"GeoLocator"
 			};
 			lstServices.ItemSelected += (sender, e) =>  {
 				switch (e.SelectedItem.ToString ().ToLower ()) {
@@ -54,6 +56,9 @@ namespace XForms.Toolkit.Sample
 					break;
 				case "phoneservice":
 					mainPage.Navigation.PushAsync (new PhoneServicePage ());
+					break;
+				case "geolocator":
+					mainPage.Navigation.PushAsync (ViewFactory.CreatePage(typeof(GeolocatorViewModel)));
 					break;
 				default:
 					break;

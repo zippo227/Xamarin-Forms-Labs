@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Services\Geolocation\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
@@ -68,6 +69,8 @@
     <Compile Include="Controls\Calendar\CalendarMonthView.cs" />
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
+    <Compile Include="Services\Geolocation\Geolocator.cs" />
+    <Compile Include="Services\Geolocation\GeolocationSingleUpdateDelegate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
