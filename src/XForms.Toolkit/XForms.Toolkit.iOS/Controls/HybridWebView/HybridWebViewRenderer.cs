@@ -25,7 +25,7 @@ namespace XForms.Toolkit.Controls
             this.InjectNativeFunctionScript();
             base.SetNativeControl(this.WebView);
 
-            this.Init ();
+            this.Initialize();
         }
 
         //protected override void Dispose(bool disposing)

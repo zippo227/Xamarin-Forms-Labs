@@ -24,7 +24,7 @@ namespace XForms.Toolkit.Controls
 
             this.SetNativeControl (this.webView);
 
-            Init ();
+            Initialize();
         }
             
         partial void Inject(string script)

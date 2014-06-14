@@ -29,12 +29,10 @@ namespace XForms.Toolkit.Controls
             this.webView.Navigating += webView_Navigating;
             this.webView.LoadCompleted += webView_LoadCompleted;
             this.webView.ScriptNotify += WebViewOnScriptNotify;
-          
-            this.Element.JavaScriptLoadRequested += Inject;
-
-            this.Element.PropertyChanged += Model_PropertyChanged;
 
             this.SetNativeControl(this.webView);
+
+            this.Initialize ();
          
         }
 
@@ -61,15 +59,17 @@ namespace XForms.Toolkit.Controls
 
         }
 
-        private void Inject(object sender, string script)
+        partial void Inject(string script)
         {
-            //this.webView.InvokeScript(string.Format("javascript: {0}", script));
             this.webView.InvokeScript("eval", script);
         }
 
         partial void Load(Uri uri)
         {
-            this.webView.Source = uri;
+            if (uri != null)
+            {
+                this.webView.Source = uri;
+            }
         }
     }
 }

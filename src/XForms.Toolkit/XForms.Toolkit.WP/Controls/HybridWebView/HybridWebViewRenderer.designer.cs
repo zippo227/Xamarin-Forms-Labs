@@ -41,7 +41,7 @@ namespace XForms.Toolkit.Controls
             }
         }
 
-        private void Init()
+        private void Initialize()
         {
             this.Element.PropertyChanged += Model_PropertyChanged;
             if (this.Element.Uri != null)
