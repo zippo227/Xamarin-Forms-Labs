@@ -7,6 +7,9 @@ using Microsoft.Phone.Info;
 
 namespace XForms.Toolkit
 {
+    /// <summary>
+    /// Windows Phone Battery class.
+    /// </summary>
     public partial class Battery
     {
         /// <summary>

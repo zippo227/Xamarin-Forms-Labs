@@ -22,6 +22,7 @@ namespace XForms.Toolkit
                 }
                 onLevelChange += value;
             }
+
             remove
             {
                 onLevelChange -= value;

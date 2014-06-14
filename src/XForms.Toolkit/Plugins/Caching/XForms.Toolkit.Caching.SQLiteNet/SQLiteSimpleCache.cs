@@ -13,12 +13,11 @@ namespace XForms.Toolkit.Caching.SQLiteNet
 {
     public class SQLiteSimpleCache : SQLiteConnectionWithLock, ISimpleCache
     {
-        protected IByteSerializer serializer;
+        private IByteSerializer serializer;
 
         public SQLiteSimpleCache(ISQLitePlatform platform, SQLiteConnectionString connection, IByteSerializer defaultSerializer)
             : base(platform, connection)
         {
-            //DropTable<SQliteCacheTable>();
             this.CreateTable<SQliteCacheTable>();
             this.serializer = defaultSerializer;
         }
@@ -27,7 +26,7 @@ namespace XForms.Toolkit.Caching.SQLiteNet
 
         public bool Remove(string key)
         {
-            return (this.Delete<SQliteCacheTable>(key) == 1);
+            return this.Delete<SQliteCacheTable>(key) == 1;
         }
 
         public void RemoveAll(IEnumerable<string> keys)
@@ -54,7 +53,7 @@ namespace XForms.Toolkit.Caching.SQLiteNet
 
         public bool Replace<T>(string key, T value)
         {
-            return (this.Remove(key)) ?
+            return this.Remove(key) ?
                 this.Add(key, value) :
                 false;
         }
@@ -86,15 +85,6 @@ namespace XForms.Toolkit.Caching.SQLiteNet
 
         #endregion
 
-        #region IDisposable Members
-
-        //public void Dispose()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        #endregion
-
         protected virtual T GetObject<T>(SQliteCacheTable item)
         {
             return (item != null) ? this.serializer.Deserialize<T>(item.Blob) : default(T);
@@ -121,7 +111,5 @@ namespace XForms.Toolkit.Caching.SQLiteNet
             public string Key { get; set; }
             public byte[] Blob { get; set; }
         }
-
-
     }
 }
