@@ -19,6 +19,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - TextToSpeech 
  - Device (battery info, device info)
  - Phone Service (cellular network info, make phonecalls)
+ - Geolocator
 
 **Available Mvvm helpers (Beta)**
 
