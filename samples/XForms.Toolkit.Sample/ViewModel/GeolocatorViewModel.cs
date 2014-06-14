@@ -61,7 +61,7 @@ namespace XForms.Toolkit.Sample
 			get
 			{ 
 				return _getPositionCommand ?? new RelayCommand (
-					() => { GetPosition(); }, 
+					async () => { await GetPosition(); }, 
 					() => true); 
 			}
 		}
@@ -74,7 +74,7 @@ namespace XForms.Toolkit.Sample
 			this.geolocator.PositionError += OnListeningError;
 			this.geolocator.PositionChanged += OnPositionChanged;
 		}
-		void GetPosition ()
+		async Task GetPosition ()
 		{
 			Setup();
 
@@ -84,7 +84,7 @@ namespace XForms.Toolkit.Sample
 			PositionLatitude = String.Empty;
 			PositionLongitude = String.Empty;
 
-			this.geolocator.GetPositionAsync (timeout: 10000, cancelToken: this.cancelSource.Token, includeHeading: true)
+			await this.geolocator.GetPositionAsync (timeout: 10000, cancelToken: this.cancelSource.Token, includeHeading: true)
 				.ContinueWith (t =>
 					{
 						if (t.IsFaulted)

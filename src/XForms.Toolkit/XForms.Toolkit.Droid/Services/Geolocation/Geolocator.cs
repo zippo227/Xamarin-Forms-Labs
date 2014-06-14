@@ -31,14 +31,12 @@ namespace XForms.Toolkit.Droid.Services.Geolocation
 {
 	public class Geolocator : IGeolocator
 	{
-	public Geolocator (Context context)
-	{
-		if (context == null)
-			throw new ArgumentNullException ("context");
 
-		this.manager = (LocationManager)context.GetSystemService (Context.LocationService);
-		this.providers = manager.GetProviders (enabledOnly: false).Where (s => s != LocationManager.PassiveProvider).ToArray();
-	}
+		public Geolocator ()
+		{
+			this.manager = (LocationManager)Application.Context.GetSystemService (Context.LocationService);
+			this.providers = manager.GetProviders (enabledOnly: false).Where (s => s != LocationManager.PassiveProvider).ToArray ();
+		}
 
 	public event EventHandler<PositionErrorEventArgs> PositionError;
 	public event EventHandler<PositionEventArgs> PositionChanged;
@@ -279,6 +277,6 @@ namespace XForms.Toolkit.Droid.Services.Geolocation
 	{
 		return new DateTimeOffset (Epoch.AddMilliseconds (location.Time));
 	}
-}
+	}
 }
 
