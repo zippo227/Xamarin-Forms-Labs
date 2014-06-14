@@ -44,10 +44,24 @@ namespace XForms.Toolkit.Services.Geolocation
 
 		Task<Position> GetPositionAsync (int timeout, CancellationToken cancelToken, bool includeHeading);
 
-		void StartListening (int minTime, double minDistance);
+        /// <summary>
+        /// Start listening to location changes
+        /// </summary>
+        /// <param name="minTime">Minimum interval in milliseconds</param>
+        /// <param name="minDistance">Minimum distance in meters</param>
+		void StartListening (uint minTime, double minDistance);
 
-		void StartListening (int minTime, double minDistance, bool includeHeading);
+        /// <summary>
+        /// Start listening to location changes
+        /// </summary>
+        /// <param name="minTime">Minimum interval in milliseconds</param>
+        /// <param name="minDistance">Minimum distance in meters</param>
+        /// <param name="includeHeading">Include heading information</param>
+		void StartListening (uint minTime, double minDistance, bool includeHeading);
 
+        /// <summary>
+        /// Stop listening to location changes
+        /// </summary>
 		void StopListening ();
 	}
 }

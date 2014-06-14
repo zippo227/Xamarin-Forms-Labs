@@ -99,6 +99,8 @@
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\WindowsPhoneDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Geolocation\CoordinateExtensions.cs" />
+    <Compile Include="Services\Geolocation\Geolocator.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\TextToSpeechService.cs" />
   </ItemGroup>
@@ -140,6 +142,7 @@
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <ProjectExtensions />
