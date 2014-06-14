@@ -66,6 +66,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XForms.Toolkit.Services.Tin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XForms.Toolkit.Services.TinyIOC.WP8", "Plugins\DI\XForms.Toolkit.Services.TinyIOC\XForms.Toolkit.Services.TinyIOC.WP8.csproj", "{F8B8C5D4-88A5-4796-9D9F-F9E43675879E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimpleContainer", "SimpleContainer", "{55E40A70-CEE5-49B9-B9AC-44E0029FCD74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -815,6 +817,7 @@ Global
 		{8EF183C3-A209-454B-B4B5-E27B47BF0A99} = {6FD45BEE-2673-432A-BEFB-E93BC75AEE80}
 		{F323DA24-A61A-459F-B9AC-C74BA55F932D} = {6FD45BEE-2673-432A-BEFB-E93BC75AEE80}
 		{F8B8C5D4-88A5-4796-9D9F-F9E43675879E} = {6FD45BEE-2673-432A-BEFB-E93BC75AEE80}
+		{55E40A70-CEE5-49B9-B9AC-44E0029FCD74} = {3293F8C8-427A-4D6C-BA62-BDFB498B072A}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ..\..\samples\XForms.Toolkit.Sample.iOS\XForms.Toolkit.Sample.iOS.csproj
