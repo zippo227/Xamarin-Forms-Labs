@@ -101,7 +101,7 @@ namespace XForms.Toolkit.WP.Services.Camera
 
 			ResizeBasedOnPixelDimension(maxPixelDimension, writeable.PixelWidth, writeable.PixelHeight, out targetWidth, out targetHeight);
 
-			// Note: We are NOT using a "using" statementhere on purpose. It is the callers responsibility to handle the dispose of the stream correctly
+			// Note: We are NOT using a "using" statement here on purpose. It is the callers responsibility to handle the dispose of the stream correctly
 			var memoryStream = new MemoryStream();
 			writeable.SaveJpeg(memoryStream, targetWidth, targetHeight, 0, percentQuality);
 			memoryStream.Seek(0L, SeekOrigin.Begin);
