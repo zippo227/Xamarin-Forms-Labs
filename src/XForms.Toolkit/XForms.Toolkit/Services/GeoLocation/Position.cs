@@ -50,7 +50,7 @@ namespace XForms.Toolkit.Services.Geolocation
 		/// <summary>
 		/// Gets or sets the altitude in meters relative to sea level.
 		/// </summary>
-		public double Altitude
+		public double? Altitude
 		{
 			get;
 			set;
@@ -59,7 +59,7 @@ namespace XForms.Toolkit.Services.Geolocation
 		/// <summary>
 		/// Gets or sets the potential position error radius in meters.
 		/// </summary>
-		public double Accuracy
+		public double? Accuracy
 		{
 			get;
 			set;
@@ -71,7 +71,7 @@ namespace XForms.Toolkit.Services.Geolocation
 		/// <remarks>
 		/// Not supported on Android, will always read 0.
 		/// </remarks>
-		public double AltitudeAccuracy
+		public double? AltitudeAccuracy
 		{
 			get;
 			set;
@@ -80,7 +80,7 @@ namespace XForms.Toolkit.Services.Geolocation
 		/// <summary>
 		/// Gets or sets the heading in degrees relative to true North.
 		/// </summary>
-		public double Heading
+		public double? Heading
 		{
 			get;
 			set;
@@ -89,7 +89,7 @@ namespace XForms.Toolkit.Services.Geolocation
 		/// <summary>
 		/// Gets or sets the speed in meters per second.
 		/// </summary>
-		public double Speed
+		public double? Speed
 		{
 			get;
 			set;

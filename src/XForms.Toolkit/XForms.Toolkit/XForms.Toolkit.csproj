@@ -48,6 +48,7 @@
     <Compile Include="Services\DI\IResolver.cs" />
     <Compile Include="Services\DI\Resolver.cs" />
     <Compile Include="Services\DI\SimpleContainer.cs" />
+    <Compile Include="Services\GeoLocation\PositionExtensions.cs" />
     <Compile Include="Services\ICacheProvider.cs" />
     <Compile Include="Services\IPhoneService.cs" />
     <Compile Include="Services\ISimpleCache.cs" />
@@ -92,6 +93,7 @@
   <ItemGroup>
     <Folder Include="Services\Contacts\" />
     <Folder Include="Services\Email\" />
+	<Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\AutoCompleteView.xaml">

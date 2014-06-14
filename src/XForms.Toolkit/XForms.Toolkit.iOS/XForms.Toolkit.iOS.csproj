@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Services\Geolocation\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\XForms.Toolkit.WP\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">

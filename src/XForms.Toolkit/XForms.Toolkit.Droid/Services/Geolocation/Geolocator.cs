@@ -202,12 +202,12 @@ namespace XForms.Toolkit.Droid.Services.Geolocation
 		return tcs.Task;
 	}
 
-	public void StartListening (int minTime, double minDistance)
+	public void StartListening (uint minTime, double minDistance)
 	{
 		StartListening (minTime, minDistance, false);
 	}
 
-	public void StartListening (int minTime, double minDistance, bool includeHeading)
+	public void StartListening (uint minTime, double minDistance, bool includeHeading)
 	{
 		if (minTime < 0)
 			throw new ArgumentOutOfRangeException ("minTime");
