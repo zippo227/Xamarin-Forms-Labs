@@ -84,6 +84,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\XForms.Toolkit\Device\Accelerometer.designer.cs">
+      <Link>Device\Accelerometer.designer.cs</Link>
+    </Compile>
     <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
     </Compile>
@@ -95,9 +98,11 @@
       <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\WindowsPhoneDevice.cs" />
+    <Compile Include="Extensions\VectorExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Geolocation\CoordinateExtensions.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />

@@ -26,6 +26,7 @@ namespace XForms.Toolkit
         protected AppleDevice()
         {
             this.Battery = new Battery();
+            this.Accelerometer = new Accelerometer();
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
         }
 
@@ -89,6 +90,16 @@ namespace XForms.Toolkit
         /// Gets the battery for the device.
         /// </summary>
         public IBattery Battery
+        {
+            get;
+            protected set;
+        }
+
+        /// <summary>
+        /// Gets the accelerometer for the device if available
+        /// </summary>
+        /// <value>Instance of IAccelerometer if available, otherwise null.</value>
+        public IAccelerometer Accelerometer
         {
             get;
             protected set;

@@ -23,6 +23,11 @@ namespace XForms.Toolkit
                 this.PhoneService = new PhoneService();
             }
 
+            if (XForms.Toolkit.Accelerometer.IsSupported)
+            {
+                this.Accelerometer = new Accelerometer();
+            }
+
 //            if (BluetoothAdapter.DefaultAdapter != null)
 //            {
 //                this.BluetoothHub = new BluetoothHub(BluetoothAdapter.DefaultAdapter);
@@ -67,6 +72,16 @@ namespace XForms.Toolkit
         /// Gets the battery.
         /// </summary>
         public IBattery Battery
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the accelerometer for the device if available
+        /// </summary>
+        /// <value>Instance of IAccelerometer if available, otherwise null.</value>
+        public IAccelerometer Accelerometer
         {
             get;
             private set;

@@ -23,6 +23,11 @@ namespace XForms.Toolkit
             this.Display = new Display();
             this.PhoneService = new PhoneService();
             this.Battery = new Battery();
+
+            if (Microsoft.Devices.Sensors.Accelerometer.IsSupported)
+            {
+                this.Accelerometer = new Accelerometer();
+            }
         }
 
         /// <summary>
@@ -53,6 +58,16 @@ namespace XForms.Toolkit
         /// Gets the battery.
         /// </summary>
         public IBattery Battery
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the accelerometer for the device if available
+        /// </summary>
+        /// <value>Instance of IAccelerometer if available, otherwise null.</value>
+        public IAccelerometer Accelerometer
         {
             get;
             private set;

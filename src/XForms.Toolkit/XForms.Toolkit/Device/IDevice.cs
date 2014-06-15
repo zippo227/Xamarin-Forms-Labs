@@ -25,6 +25,12 @@ namespace XForms.Toolkit
         IBattery Battery { get; }
 
         /// <summary>
+        /// Gets the accelerometer for the device if available
+        /// </summary>
+        /// <value>Instance of IAccelerometer if available, otherwise null.</value>
+        IAccelerometer Accelerometer { get; }
+
+        /// <summary>
         /// Gets the name of the device.
         /// </summary>
         /// <value>The name.</value>
