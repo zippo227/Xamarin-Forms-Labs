@@ -118,6 +118,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\src\XForms.Toolkit\Plugins\Serialization\ServiceStackV3\XForms.Toolkit.Services.Serialization.ServiceStackV3.iOS.csproj">
+      <Project>{B1AB2869-D5B1-45EE-B882-208A23C8EB29}</Project>
+      <Name>XForms.Toolkit.Services.Serialization.ServiceStackV3.iOS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\XForms.Toolkit\XForms.Toolkit\XForms.Toolkit.csproj">
       <Project>{4D10DF5E-883D-468B-A854-4A53C7FE75AC}</Project>
       <Name>XForms.Toolkit</Name>

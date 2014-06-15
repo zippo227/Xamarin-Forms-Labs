@@ -50,9 +50,14 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\XForms.Toolkit.WP\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
+      <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
+      <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
     </Compile>
+    <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Device\AppleDevice.cs" />
     <Compile Include="Device\Battery.cs" />
@@ -68,6 +73,8 @@
     <Compile Include="Controls\Calendar\CalendarMonthView.cs" />
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
+    <Compile Include="Services\Geolocation\Geolocator.cs" />
+    <Compile Include="Services\Geolocation\GeolocationSingleUpdateDelegate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

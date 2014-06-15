@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Xamarin.Forms.Platform.Android;
 using XForms.Toolkit.Services;
+using XForms.Toolkit.Services.Serialization;
 
 
 namespace XForms.Toolkit.Sample.Droid
@@ -35,7 +36,8 @@ namespace XForms.Toolkit.Sample.Droid
         {
             var resolverContainer = new SimpleContainer();
 
-            resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice);
+            resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
+                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>();
 
             Resolver.SetResolver(resolverContainer.GetResolver());
 

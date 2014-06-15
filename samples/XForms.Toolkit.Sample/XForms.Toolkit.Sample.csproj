@@ -65,6 +65,14 @@
     <Compile Include="Pages\Mvvm\NewPageView.xaml.cs">
       <DependentUpon>NewPageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\WebHybridViewModel.cs" />
+    <Compile Include="Pages\Mvvm\CanvasWebHybrid.xaml.cs">
+      <DependentUpon>CanvasWebHybrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\GeolocatorViewModel.cs" />
+    <Compile Include="Pages\Services\GeolocatorPage.xaml.cs">
+      <DependentUpon>GeolocatorPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup />
@@ -90,6 +98,10 @@
     <EmbeddedResource Include="Pages\Mvvm\NewPageView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Mvvm\CanvasWebHybrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Services\GeolocatorPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\XForms.Toolkit\XForms.Toolkit\XForms.Toolkit.csproj">
@@ -116,7 +128,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\Mvvm\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

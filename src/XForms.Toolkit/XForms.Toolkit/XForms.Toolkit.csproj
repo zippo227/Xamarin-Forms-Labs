@@ -48,6 +48,7 @@
     <Compile Include="Services\DI\IResolver.cs" />
     <Compile Include="Services\DI\Resolver.cs" />
     <Compile Include="Services\DI\SimpleContainer.cs" />
+    <Compile Include="Services\GeoLocation\PositionExtensions.cs" />
     <Compile Include="Services\ICacheProvider.cs" />
     <Compile Include="Services\IPhoneService.cs" />
     <Compile Include="Services\ISimpleCache.cs" />
@@ -78,6 +79,8 @@
     <Compile Include="Mvvm\ViewModelNavigation.cs" />
     <Compile Include="Services\Serialization\SystemJsonSerializer.cs" />
     <Compile Include="Services\Serialization\SystemXmlSerializer.cs" />
+    <Compile Include="Services\GeoLocation\Position.cs" />
+    <Compile Include="Services\GeoLocation\IGeolocator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -86,7 +89,9 @@
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="../packages/Xamarin.Forms.1.1.0.6201/build/portable-win+net45+wp80+MonoAndroid10+MonoTouch10/Xamarin.Forms.targets" />
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\AutoCompleteView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -100,4 +105,5 @@
       <HintPath>..\packages\Xamarin.Forms.1.1.0.6201\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
 </Project>

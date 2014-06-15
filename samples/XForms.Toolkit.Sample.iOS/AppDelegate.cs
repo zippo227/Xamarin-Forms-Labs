@@ -7,6 +7,7 @@ using MonoTouch.UIKit;
 using Xamarin.Forms;
 using XForms.Toolkit.iOS.Controls.Calendar;
 using XForms.Toolkit.Services;
+using XForms.Toolkit.Services.Serialization;
 
 namespace XForms.Toolkit.Sample.iOS
 {
@@ -48,7 +49,8 @@ namespace XForms.Toolkit.Sample.iOS
         {
             var resolverContainer = new SimpleContainer();
 
-            resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice);
+            resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice)
+                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>();
 
             Resolver.SetResolver(resolverContainer.GetResolver());
         }
