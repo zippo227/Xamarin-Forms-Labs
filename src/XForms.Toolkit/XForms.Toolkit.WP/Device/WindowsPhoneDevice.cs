@@ -28,6 +28,15 @@ namespace XForms.Toolkit
             {
                 this.Accelerometer = new Accelerometer();
             }
+
+            if (Microsoft.Devices.Sensors.Gyroscope.IsSupported)
+            {
+                // TODO: add gyroscope
+                var g = new Microsoft.Devices.Sensors.Gyroscope();
+
+                var r = g.CurrentValue;
+                var e = new Microsoft.Devices.Sensors.GyroscopeReading();
+            }
         }
 
         /// <summary>

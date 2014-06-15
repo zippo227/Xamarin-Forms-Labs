@@ -7,13 +7,8 @@ using XForms.Toolkit.Helpers;
 
 namespace XForms.Toolkit
 {
-    public partial class Accelerometer : IAccelerometer
+    public partial class Gyroscope
     {
-        /// <summary>
-        /// Gravitational force is 9.81 m/s^2
-        /// </summary>
-        public const double Gravitation = 9.81;
-
         private event EventHandler<EventArgs<Vector3>> readingAvailable;
 
         public event EventHandler<EventArgs<Vector3>> ReadingAvailable

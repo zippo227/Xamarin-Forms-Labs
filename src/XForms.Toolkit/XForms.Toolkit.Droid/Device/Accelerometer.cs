@@ -106,7 +106,7 @@ namespace XForms.Toolkit
                 return;
             }
 
-            this.LatestReading = new Vector3(e.Values[0], e.Values[1], e.Values[2]);
+            this.LatestReading = new Vector3(e.Values[0] / Gravitation, e.Values[1] / Gravitation, e.Values[2] / Gravitation);
 
             this.readingAvailable.Invoke(this, this.LatestReading);
         }

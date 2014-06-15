@@ -90,6 +90,9 @@
     <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
     </Compile>
+    <Compile Include="..\XForms.Toolkit\Device\Gyroscope.designer.cs">
+      <Link>Device\Gyroscope.designer.cs</Link>
+    </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs">
       <SubType>Code</SubType>
@@ -101,6 +104,7 @@
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\Display.cs" />
+    <Compile Include="Device\Gyroscope.cs" />
     <Compile Include="Device\WindowsPhoneDevice.cs" />
     <Compile Include="Extensions\VectorExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,7 +151,6 @@
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <ProjectExtensions />

@@ -111,10 +111,16 @@
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
+    <InterfaceDefinition Include="SensorStoryboardController_iPhone.storyboard" />
+    <InterfaceDefinition Include="SensorStoryboardController_iPad.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="SensorStoryboardController.cs" />
+    <Compile Include="SensorStoryboardController.designer.cs">
+      <DependentUpon>SensorStoryboardController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

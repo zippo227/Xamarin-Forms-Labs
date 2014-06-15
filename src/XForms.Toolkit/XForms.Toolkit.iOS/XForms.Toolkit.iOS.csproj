@@ -79,6 +79,8 @@
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />
     <Compile Include="Services\Geolocation\GeolocationSingleUpdateDelegate.cs" />
+    <Compile Include="Controls\SensorBar\UISensorBar.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

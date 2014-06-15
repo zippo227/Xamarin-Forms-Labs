@@ -7,14 +7,9 @@ using XForms.Toolkit.Helpers;
 
 namespace XForms.Toolkit
 {
-    public partial class Accelerometer : IAccelerometer
+    public abstract class DeviceSensor : ISensor
     {
-        /// <summary>
-        /// Gravitational force is 9.81 m/s^2
-        /// </summary>
-        public const double Gravitation = 9.81;
-
-        private event EventHandler<EventArgs<Vector3>> readingAvailable;
+        protected event EventHandler<EventArgs<Vector3>> readingAvailable;
 
         public event EventHandler<EventArgs<Vector3>> ReadingAvailable
         {
@@ -39,11 +34,13 @@ namespace XForms.Toolkit
         public Vector3 LatestReading
         {
             get;
-            private set;
+            protected set;
         }
 
-        partial void Start();
+        protected abstract void Start();
 
-        partial void Stop();
+        protected abstract void Stop();
+
+        public abstract AccelerometerInterval Interval { get; set;}
     }
 }
