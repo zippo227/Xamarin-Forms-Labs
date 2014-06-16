@@ -12,9 +12,10 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
 {
     public class ImageButtonRenderer : ButtonRenderer
     {
-        private const int controlPadding = 5;
-		private  XForms.Toolkit.Controls.ImageButton ImageButton { get { return (XForms.Toolkit.Controls.ImageButton) Element; } }
-
+        private const int controlPadding = 2;
+		private  Toolkit.Controls.ImageButton ImageButton { get { return (XForms.Toolkit.Controls.ImageButton) Element; } }
+        private const string iPad = "iPad";
+        private const string iPhone = "iPhone";
 
 		protected override void OnElementChanged (ElementChangedEventArgs<Button> e)
 		{
@@ -28,28 +29,27 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
 				switch (imageButton.Orientation)
 				{
 				case ImageOrientation.ImageToLeft:
-					AlignToLeft(imageButton.ImageWidthRequest, targetButton);
+					AlignToLeft(targetButton);
 					break;
 				case ImageOrientation.ImageToRight:
 					AlignToRight(imageButton.ImageWidthRequest, targetButton);
 					break;
 				case ImageOrientation.ImageOnTop:
-					AlignToTop(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
+                    AlignToTop(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
 					break;
 				case ImageOrientation.ImageOnBottom:
-					AlignToBottom(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
+                    AlignToBottom(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
 					break;
 				}                
 			}
 		}
 
-        private void AlignToLeft(int widthRequest, UIButton targetButton)
+        private void AlignToLeft(UIButton targetButton)
         {
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Left;
 
             var titleInsets = new UIEdgeInsets(0, controlPadding, 0, -1 * (controlPadding));
-
             targetButton.TitleEdgeInsets = titleInsets;
         }
 
@@ -58,10 +58,12 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Right;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Right;
 
-            var titleInsets = new UIEdgeInsets(0, -1 * (2 * widthRequest + controlPadding), 0, (2 * widthRequest + controlPadding));
+            var titleInsets = new UIEdgeInsets(0, -1 * (widthRequest + controlPadding), 0, (widthRequest + controlPadding));
 
             targetButton.TitleEdgeInsets = titleInsets;
-            targetButton.SizeToFit();
+            var imageInsets = new UIEdgeInsets(0, widthRequest, 0, -1 * widthRequest);
+            targetButton.ImageEdgeInsets = imageInsets;
+            //targetButton.SizeToFit();
         }
 
         private void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton)
@@ -69,9 +71,26 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Top;
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Center;
+            targetButton.TitleLabel.Text = "Microsoft";
+            targetButton.SizeToFit();
 
-            var titleInsets = new UIEdgeInsets(heightRequest + controlPadding, -1 * (widthRequest - controlPadding), -1 * (heightRequest + controlPadding), (widthRequest - controlPadding));
+            var titleWidth = targetButton.TitleLabel.IntrinsicContentSize.Width;
+
+            UIEdgeInsets titleInsets;
+            UIEdgeInsets imageInsets;
+
+            if (UIDevice.CurrentDevice.Model.Contains(iPad))
+            {
+                titleInsets = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1 * widthRequest / 2), -1 * heightRequest, Convert.ToInt32(widthRequest / 2));
+                imageInsets = new UIEdgeInsets(0, Convert.ToInt32(titleWidth / 2), 0, -1 * Convert.ToInt32(titleWidth / 2));
+            }
+            else
+            {
+                titleInsets = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1 * widthRequest / 2), -1 * heightRequest, Convert.ToInt32(widthRequest / 2));
+                imageInsets = new UIEdgeInsets(0, titleWidth / 2, 0, -1 * titleWidth / 2);
+            }
             targetButton.TitleEdgeInsets = titleInsets;
+            targetButton.ImageEdgeInsets = imageInsets;
         }
 
         private void AlignToBottom(int heightRequest, int widthRequest, UIButton targetButton)
@@ -79,9 +98,25 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Bottom;
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Center;
+            targetButton.SizeToFit();
+            var titleWidth = targetButton.TitleLabel.IntrinsicContentSize.Width;
 
-            var titleInsets = new UIEdgeInsets(-1 * heightRequest, -1 * (widthRequest - controlPadding), heightRequest, (widthRequest - controlPadding));
+            UIEdgeInsets titleInsets;
+            UIEdgeInsets imageInsets;
+
+            if (UIDevice.CurrentDevice.Model.Contains(iPad))
+            {
+                titleInsets = new UIEdgeInsets(-1 * heightRequest, Convert.ToInt32(-1 * widthRequest / 2), heightRequest,
+                    Convert.ToInt32(widthRequest / 2));
+                imageInsets = new UIEdgeInsets(0, titleWidth / 2, 0, -1 * titleWidth / 2);
+            }
+            else
+            {
+                titleInsets = new UIEdgeInsets(-1 * heightRequest, -1 * widthRequest, heightRequest, widthRequest);
+                imageInsets = new UIEdgeInsets(0, 0, 0, 0);                
+            }
             targetButton.TitleEdgeInsets = titleInsets;
+            targetButton.ImageEdgeInsets = imageInsets;
         }
 
         private void SetImage(string imageName, int widthRequest, int heightRequest, UIButton targetButton)
