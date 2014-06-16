@@ -58,11 +58,15 @@
       <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
       <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\XForms.Toolkit\Device\Accelerometer.designer.cs">
+      <Link>Device\Accelerometer.designer.cs</Link>
+    </Compile>
     <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
     </Compile>
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\AppleDevice.cs" />
     <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\Display.cs" />
@@ -79,6 +83,8 @@
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />
     <Compile Include="Services\Geolocation\GeolocationSingleUpdateDelegate.cs" />
+    <Compile Include="Controls\SensorBar\UISensorBar.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
