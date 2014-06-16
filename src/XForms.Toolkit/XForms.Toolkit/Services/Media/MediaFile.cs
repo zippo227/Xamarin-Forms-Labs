@@ -1,33 +1,58 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : XForms.Toolkit
+// Author           : Shawn Anderson
+// Created          : 06-16-2014
+//
+// Last Modified By : Shawn Anderson
+// Last Modified On : 06-16-2014
+// ***********************************************************************
+// <copyright file="MediaFile.cs" company="">
+//     Copyright (c) 2014 . All rights reserved.
+//
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.IO;
 using ExifLib;
 
 namespace XForms.Toolkit.Services.Media
 {
 	/// <summary>
-	///     Class MediaFile. This class cannot be inherited.
+	/// Class MediaFile. This class cannot be inherited.
 	/// </summary>
 	public sealed class MediaFile : IDisposable
 	{
 		#region Private Member Variables
 
 		/// <summary>
-		///     The _dispose
+		/// The _dispose
 		/// </summary>
 		private readonly Action<bool> _dispose;
 
 		/// <summary>
-		///     The _path
+		/// The _path
 		/// </summary>
 		private readonly string _path;
 
 		/// <summary>
-		///     The _stream getter
+		/// The _stream getter
 		/// </summary>
 		private readonly Func<Stream> _streamGetter;
 
 		/// <summary>
-		///     The _is disposed
+		/// The _is disposed
 		/// </summary>
 		private bool _isDisposed;
 
@@ -36,7 +61,7 @@ namespace XForms.Toolkit.Services.Media
 		#region Constructors
 
 		/// <summary>
-		///     Initializes a new instance of the <see cref="MediaFile" /> class.
+		/// Initializes a new instance of the <see cref="MediaFile" /> class.
 		/// </summary>
 		/// <param name="path">The path.</param>
 		/// <param name="streamGetter">The stream getter.</param>
@@ -49,7 +74,7 @@ namespace XForms.Toolkit.Services.Media
 		}
 
 		/// <summary>
-		///     Finalizes an instance of the <see cref="MediaFile" /> class.
+		/// Finalizes an instance of the <see cref="MediaFile" /> class.
 		/// </summary>
 		~MediaFile()
 		{
@@ -61,7 +86,7 @@ namespace XForms.Toolkit.Services.Media
 		#region Public Properties
 
 		/// <summary>
-		///     Gets the path.
+		/// Gets the path.
 		/// </summary>
 		/// <value>The path.</value>
 		/// <exception cref="System.ObjectDisposedException">null</exception>
@@ -79,9 +104,9 @@ namespace XForms.Toolkit.Services.Media
 		}
 
 		/// <summary>
-		///     Gets the stream.
+		/// Gets the stream.
 		/// </summary>
-		/// <returns>Stream.</returns>
+		/// <value>The source.</value>
 		/// <exception cref="System.ObjectDisposedException">null</exception>
 		public Stream Source
 		{
@@ -96,6 +121,11 @@ namespace XForms.Toolkit.Services.Media
 			}
 		}
 
+		/// <summary>
+		/// Gets the exif.
+		/// </summary>
+		/// <value>The exif.</value>
+		/// <exception cref="System.ObjectDisposedException">null</exception>
 		public JpegInfo Exif
 		{
 			get
@@ -117,7 +147,7 @@ namespace XForms.Toolkit.Services.Media
 		#region Public Methods
 
 		/// <summary>
-		///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
 		public void Dispose()
 		{
@@ -129,12 +159,10 @@ namespace XForms.Toolkit.Services.Media
 		#region Private Methods
 
 		/// <summary>
-		///     Releases unmanaged and - optionally - managed resources.
+		/// Releases unmanaged and - optionally - managed resources.
 		/// </summary>
-		/// <param name="disposing">
-		///     <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only
-		///     unmanaged resources.
-		/// </param>
+		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only
+		/// unmanaged resources.</param>
 		private void Dispose(bool disposing)
 		{
 			if (_isDisposed)

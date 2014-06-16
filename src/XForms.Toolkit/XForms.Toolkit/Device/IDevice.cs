@@ -27,6 +27,12 @@ namespace XForms.Toolkit
 		IBattery Battery { get; }
 
 		/// <summary>
+		/// Gets the accelerometer.
+		/// </summary>
+		/// <value>The accelerometer.</value>
+		IAccelerometer Accelerometer { get; }
+
+		/// <summary>
 		/// Gets the picture chooser.
 		/// </summary>
 		/// <value>The picture chooser.</value>

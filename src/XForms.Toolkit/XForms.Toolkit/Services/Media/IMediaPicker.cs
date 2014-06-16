@@ -1,5 +1,29 @@
-﻿using System;
-using System.IO;
+﻿// ***********************************************************************
+// Assembly         : XForms.Toolkit
+// Author           : Shawn Anderson
+// Created          : 06-16-2014
+//
+// Last Modified By : Shawn Anderson
+// Last Modified On : 06-16-2014
+// ***********************************************************************
+// <copyright file="IMediaPicker.cs" company="">
+//     Copyright (c) 2014 . All rights reserved.
+//
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Threading.Tasks;
 
 namespace XForms.Toolkit.Services.Media
@@ -42,7 +66,7 @@ namespace XForms.Toolkit.Services.Media
 		/// <summary>
 		/// Selects the video asynchronous.
 		/// </summary>
-		/// <param name="options"></param>
+		/// <param name="options">The options.</param>
 		/// <returns>Task&lt;IMediaFile&gt;.</returns>
 		Task<MediaFile> SelectVideoAsync(VideoMediaStorageOptions options);
 
@@ -72,7 +96,7 @@ namespace XForms.Toolkit.Services.Media
 	public class MediaPickerArgs : EventArgs
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MediaPickerArgs"/> class.
+		/// Initializes a new instance of the <see cref="MediaPickerArgs" /> class.
 		/// </summary>
 		/// <param name="mf">The mf.</param>
 		public MediaPickerArgs(MediaFile mf)
@@ -93,7 +117,7 @@ namespace XForms.Toolkit.Services.Media
 	public class MediaPickerErrorArgs : EventArgs
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MediaPickerErrorArgs"/> class.
+		/// Initializes a new instance of the <see cref="MediaPickerErrorArgs" /> class.
 		/// </summary>
 		/// <param name="ex">The ex.</param>
 		public MediaPickerErrorArgs(Exception ex)
