@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\XForms.Toolkit\XForms.Toolkit.csproj">
-      <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
+      <Project>{4D10DF5E-883D-468B-A854-4A53C7FE75AC}</Project>
       <Name>XForms.Toolkit</Name>
     </ProjectReference>
   </ItemGroup>

@@ -57,6 +57,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\XForms.Toolkit\Device\Accelerometer.designer.cs">
+      <Link>Device\Accelerometer.designer.cs</Link>
+      <DependentUpon>Accelerometer.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
     </Compile>
@@ -70,6 +74,7 @@
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthDescriptor.cs" />
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthView.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\AndroidDevice.cs" />
     <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\BroadcastMonitor.cs" />
@@ -90,6 +95,8 @@
       <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
     </Compile>
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarDroidView.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -124,4 +131,7 @@
   <Import Project="../packages/Xamarin.Forms.1.1.0.6201/build/portable-win+net45+wp80+MonoAndroid10+MonoTouch10/Xamarin.Forms.targets" />
   <ItemGroup />
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controls\SensorBar\" />
+  </ItemGroup>
 </Project>

@@ -44,7 +44,8 @@ namespace XForms.Toolkit.Sample
 				"TextToSpeech",
 				"DeviceExtended",
 				"PhoneService",
-				"GeoLocator"
+                "GeoLocator",
+                "Accelerometer"
 			};
 			lstServices.ItemSelected += (sender, e) =>  {
 				switch (e.SelectedItem.ToString ().ToLower ()) {
@@ -60,6 +61,9 @@ namespace XForms.Toolkit.Sample
 				case "geolocator":
 					mainPage.Navigation.PushAsync (ViewFactory.CreatePage(typeof(GeolocatorViewModel)));
 					break;
+                case "accelerometer":
+                    mainPage.Navigation.PushAsync (new AcceleratorSensorPage ());
+                    break;
 				default:
 					break;
 				}
