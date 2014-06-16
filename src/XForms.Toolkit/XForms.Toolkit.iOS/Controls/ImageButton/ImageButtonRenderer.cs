@@ -112,7 +112,7 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
             }
             else
             {
-                titleInsets = new UIEdgeInsets(-1 * heightRequest, -1 * widthRequest, heightRequest, titleWidth);
+                titleInsets = new UIEdgeInsets(-1 * heightRequest, -1 * widthRequest, heightRequest, widthRequest);
                 imageInsets = new UIEdgeInsets(0, 0, 0, 0);                
             }
             targetButton.TitleEdgeInsets = titleInsets;
