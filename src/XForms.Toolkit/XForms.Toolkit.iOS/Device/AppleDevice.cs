@@ -3,7 +3,7 @@ using MonoTouch.UIKit;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Camera;
+using XForms.Toolkit.Services.Media;
 
 namespace XForms.Toolkit
 {
@@ -99,7 +99,7 @@ namespace XForms.Toolkit
 		/// Gets the picture chooser.
 		/// </summary>
 		/// <value>The picture chooser.</value>
-	    public IPictureChooser PictureChooser
+	    public IMediaPicker MediaPicker
 	    {
 		    get; 
 			private set;

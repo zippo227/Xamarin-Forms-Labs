@@ -1,6 +1,6 @@
 ﻿using System;
 using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Camera;
+using XForms.Toolkit.Services.Media;
 using XForms.Toolkit.Services.Geolocation;
 
 namespace XForms.Toolkit
@@ -30,7 +30,7 @@ namespace XForms.Toolkit
 		/// Gets the picture chooser.
 		/// </summary>
 		/// <value>The picture chooser.</value>
-		IPictureChooser PictureChooser { get; }
+		IMediaPicker MediaPicker { get; }
 
 		/// <summary>
 		/// Gets the name of the device.

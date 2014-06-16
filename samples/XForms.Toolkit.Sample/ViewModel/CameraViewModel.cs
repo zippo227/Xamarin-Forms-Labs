@@ -1,5 +1,7 @@
-﻿using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Camera;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using XForms.Toolkit.Services;
+using XForms.Toolkit.Services.Media;
 using XForms.Toolkit.Mvvm;
 using Xamarin.Forms;
 
@@ -14,7 +16,7 @@ namespace XForms.Toolkit.Sample
 		/// <summary>
 		/// The _picture chooser
 		/// </summary>
-		private IPictureChooser _pictureChooser;
+		private IMediaPicker _mediaPicker;
 		/// <summary>
 		/// The _image source
 		/// </summary>
@@ -23,6 +25,9 @@ namespace XForms.Toolkit.Sample
 		/// The _take picture command
 		/// </summary>
 		private RelayCommand _takePictureCommand;
+
+		private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+		//private CancellationTokenSource cancelSource;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CameraViewModel"/> class.
@@ -57,7 +62,8 @@ namespace XForms.Toolkit.Sample
 			get
 			{ 
 				return _takePictureCommand ?? (_takePictureCommand = new RelayCommand (
-					TakePicture, 
+					() => TakePicture(),
+
 					() => true)); 
 			}
 		}
@@ -66,30 +72,44 @@ namespace XForms.Toolkit.Sample
 		/// Setups this instance.
 		/// </summary>
 		void Setup(){
-			if (_pictureChooser != null)
+			if (_mediaPicker != null)
 			{
 				return;
 			}
 
 			var device = Resolver.Resolve<IDevice>();
-			_pictureChooser = device.PictureChooser;
+			_mediaPicker = device.MediaPicker;
 		}
 		/// <summary>
 		/// Takes the picture.
 		/// </summary>
-		private void TakePicture ()
+		private async Task TakePicture ()
 		{
 			Setup();
 
 			ImageSource = null;
 
-			this._pictureChooser.TakePicture(1, 100,
-				(s) => {
-					_imageSource = ImageSource.FromStream(() => s);
-				},
-				() => {
+			await this._mediaPicker.TakePhotoAsync(new CameraMediaStorageOptions { DefaultCamera = CameraDevice.Front, MaxPixelDimension = 400}).ContinueWith(t =>
+			{
+				if (t.IsFaulted)
+				{
+					var s = t.Exception.InnerException.ToString();
+				}
+				else if (t.IsCanceled)
+				{
+					var canceled = true;
+				}
+				else
+				{
+					var mediaFile = t.Result;
 
-				});
+					ImageSource = ImageSource.FromStream(() => mediaFile.Source);
+
+					return mediaFile;
+				}
+
+				return null;
+			}, _scheduler);
 		}
 	}
 }

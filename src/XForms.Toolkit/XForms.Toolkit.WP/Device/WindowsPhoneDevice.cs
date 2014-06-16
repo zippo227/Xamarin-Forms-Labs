@@ -1,8 +1,8 @@
 ﻿using Microsoft.Phone.Info;
 using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Camera;
+using XForms.Toolkit.Services.Media;
 using XForms.Toolkit.Services.Geolocation;
-using XForms.Toolkit.WP.Services.Camera;
+using XForms.Toolkit.WP.Services.Media;
 
 namespace XForms.Toolkit
 {
@@ -21,7 +21,7 @@ namespace XForms.Toolkit
 			Display = new Display();
 			PhoneService = new PhoneService();
 			Battery = new Battery();
-			PictureChooser = new PictureChooser();
+			MediaPicker = new MediaPicker();
 		}
 
 		/// <summary>
@@ -63,7 +63,7 @@ namespace XForms.Toolkit
 		/// Gets the picture chooser.
 		/// </summary>
 		/// <value>The picture chooser.</value>
-		public IPictureChooser PictureChooser
+		public IMediaPicker MediaPicker
 		{
 			get; 
 			private set;

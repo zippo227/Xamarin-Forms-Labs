@@ -1,7 +1,8 @@
 ﻿using Android.Telephony;
 using Android.OS;
+using XForms.Toolkit.Droid.Services.Media;
 using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Camera;
+using XForms.Toolkit.Services.Media;
 
 namespace XForms.Toolkit
 {
@@ -37,6 +38,8 @@ namespace XForms.Toolkit
             this.FirmwareVersion = Build.VERSION.Release;
 
             this.Battery = new Battery();
+
+	        this.MediaPicker = new MediaPicker();
         }
 
         /// <summary>
@@ -77,7 +80,7 @@ namespace XForms.Toolkit
 		/// Gets the picture chooser.
 		/// </summary>
 		/// <value>The picture chooser.</value>
-	    public IPictureChooser PictureChooser
+	    public IMediaPicker MediaPicker
 	    {
 		    get; 
 			private set;
