@@ -1,6 +1,8 @@
 ﻿using Android.Telephony;
 using Android.OS;
+using XForms.Toolkit.Droid.Services.Media;
 using XForms.Toolkit.Services;
+using XForms.Toolkit.Services.Media;
 
 namespace XForms.Toolkit
 {
@@ -41,6 +43,8 @@ namespace XForms.Toolkit
             this.FirmwareVersion = Build.VERSION.Release;
 
             this.Battery = new Battery();
+
+	        this.MediaPicker = new MediaPicker();
         }
 
         /// <summary>
@@ -77,7 +81,17 @@ namespace XForms.Toolkit
             private set;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Gets the picture chooser.
+		/// </summary>
+		/// <value>The picture chooser.</value>
+	    public IMediaPicker MediaPicker
+	    {
+		    get; 
+			private set;
+	    }
+
+	    /// <summary>
         /// Gets the accelerometer for the device if available
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>

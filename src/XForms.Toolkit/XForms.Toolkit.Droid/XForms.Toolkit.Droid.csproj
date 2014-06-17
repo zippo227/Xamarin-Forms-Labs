@@ -39,6 +39,9 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExifLib">
+      <HintPath>..\packages\ExifLib.PCL.1.0.0\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -85,6 +88,8 @@
     <Compile Include="Services\Geolocation\GeolocationContinuousListener.cs" />
     <Compile Include="Services\Geolocation\GeolocationSingleListener.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />
+    <Compile Include="Services\Media\MediaPicker.cs" />
+    <Compile Include="Services\Media\MediaPickerActivity.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\TextToSpeechService.cs" />
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
