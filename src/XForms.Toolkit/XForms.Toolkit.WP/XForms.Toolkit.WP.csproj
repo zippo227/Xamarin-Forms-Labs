@@ -101,6 +101,9 @@
       <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarControl.xaml.cs">
+      <DependentUpon>SensorBarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\Display.cs" />
@@ -111,9 +114,13 @@
     <Compile Include="Services\Geolocation\CoordinateExtensions.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />
     <Compile Include="Services\PhoneService.cs" />
+    <Compile Include="Services\Media\MediaPicker.cs" />
     <Compile Include="Services\TextToSpeechService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="ExifLib">
+      <HintPath>..\packages\ExifLib.PCL.1.0.0\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
@@ -150,6 +157,12 @@
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\SensorBar\SensorBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

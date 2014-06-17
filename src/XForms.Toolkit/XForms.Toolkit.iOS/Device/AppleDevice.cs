@@ -3,6 +3,7 @@ using MonoTouch.UIKit;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using XForms.Toolkit.Services;
+using XForms.Toolkit.Services.Media;
 
 namespace XForms.Toolkit
 {
@@ -28,6 +29,11 @@ namespace XForms.Toolkit
             this.Battery = new Battery();
             this.Accelerometer = new Accelerometer();
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
+
+            if (XForms.Toolkit.Gyroscope.IsSupported)
+            {
+                this.Gyroscope = new Gyroscope();
+            }
         }
 
         /// <summary>
@@ -95,7 +101,17 @@ namespace XForms.Toolkit
             protected set;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Gets the picture chooser.
+		/// </summary>
+		/// <value>The picture chooser.</value>
+	    public IMediaPicker MediaPicker
+	    {
+		    get; 
+			private set;
+	    }
+
+	    /// <summary>
         /// Gets the accelerometer for the device if available
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>
@@ -103,6 +119,16 @@ namespace XForms.Toolkit
         {
             get;
             protected set;
+        }
+
+        /// <summary>
+        /// Gets the gyroscope.
+        /// </summary>
+        /// <value>The gyroscope instance if available, otherwise null.</value>
+        public IGyroscope Gyroscope
+        {
+            get;
+            private set;
         }
 
         /// <summary>

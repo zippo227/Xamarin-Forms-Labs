@@ -45,7 +45,8 @@ namespace XForms.Toolkit.Sample
 				"DeviceExtended",
 				"PhoneService",
                 "GeoLocator",
-                "Accelerometer"
+                "Accelerometer",
+                "Display"
 			};
 			lstServices.ItemSelected += (sender, e) =>  {
 				switch (e.SelectedItem.ToString ().ToLower ()) {
@@ -63,6 +64,9 @@ namespace XForms.Toolkit.Sample
 					break;
                 case "accelerometer":
                     mainPage.Navigation.PushAsync (new AcceleratorSensorPage ());
+                    break;
+                case "display":
+                    mainPage.Navigation.PushAsync(new AbsoluteLayoutWithDisplayInfoPage(Resolver.Resolve<IDisplay>()));
                     break;
 				default:
 					break;

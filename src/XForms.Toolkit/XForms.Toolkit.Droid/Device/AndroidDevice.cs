@@ -1,6 +1,8 @@
 ﻿using Android.Telephony;
 using Android.OS;
+using XForms.Toolkit.Droid.Services.Media;
 using XForms.Toolkit.Services;
+using XForms.Toolkit.Services.Media;
 
 namespace XForms.Toolkit
 {
@@ -28,6 +30,11 @@ namespace XForms.Toolkit
                 this.Accelerometer = new Accelerometer();
             }
 
+            if (XForms.Toolkit.Gyroscope.IsSupported)
+            {
+                this.Gyroscope = new Gyroscope();
+            }
+
 //            if (BluetoothAdapter.DefaultAdapter != null)
 //            {
 //                this.BluetoothHub = new BluetoothHub(BluetoothAdapter.DefaultAdapter);
@@ -41,6 +48,8 @@ namespace XForms.Toolkit
             this.FirmwareVersion = Build.VERSION.Release;
 
             this.Battery = new Battery();
+
+	        this.MediaPicker = new MediaPicker();
         }
 
         /// <summary>
@@ -77,11 +86,31 @@ namespace XForms.Toolkit
             private set;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Gets the picture chooser.
+		/// </summary>
+		/// <value>The picture chooser.</value>
+	    public IMediaPicker MediaPicker
+	    {
+		    get; 
+			private set;
+	    }
+
+	    /// <summary>
         /// Gets the accelerometer for the device if available
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>
         public IAccelerometer Accelerometer
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the gyroscope.
+        /// </summary>
+        /// <value>The gyroscope instance if available, otherwise null.</value>
+        public IGyroscope Gyroscope
         {
             get;
             private set;
