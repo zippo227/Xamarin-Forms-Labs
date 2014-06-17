@@ -37,6 +37,7 @@ namespace XForms.Toolkit.Sample.Droid
             var resolverContainer = new SimpleContainer();
 
             resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
+                .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>();
 
             Resolver.SetResolver(resolverContainer.GetResolver());
