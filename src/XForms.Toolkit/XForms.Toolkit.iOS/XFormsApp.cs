@@ -3,8 +3,8 @@
 // Author           : Shawn Anderson
 // Created          : 06-17-2014
 //
-// Last Modified By : Shawn Anderson
-// Last Modified On : 06-17-2014
+// Last Modified By : Sami Kallio
+// Last Modified On : 06-18-2014
 // ***********************************************************************
 // <copyright file="XFormsAppiOS.cs" company="">
 //     Copyright (c) 2014 . All rights reserved.
@@ -62,19 +62,18 @@ namespace XForms.Toolkit.iOS
 		public EventHandler<EventArgs> WillEnterForegroundEvent { get; set; }
 
 		/// <summary>
-		/// Finisheds the launching.
+		/// Finished the launching.
 		/// </summary>
 		/// <param name="application">The application.</param>
+        /// <remarks>Deprecated function</remarks>
 		public override void FinishedLaunching(UIApplication application)
 		{
 			var handler = FinishedLaunchingEvent;
 			if (handler != null) { handler(this, new EventArgs()); }
-
-			base.FinishedLaunching(application);
 		}
 
 		/// <summary>
-		/// Finisheds the launching.
+		/// Finished the launching.
 		/// </summary>
 		/// <param name="app">The application.</param>
 		/// <param name="options">The options.</param>
@@ -84,7 +83,7 @@ namespace XForms.Toolkit.iOS
 			var handler = FinishedLaunchingEvent;
 			if (handler != null) { handler(this, new EventArgs()); }
 
-			return base.FinishedLaunching(app, options);
+			return true;
 		}	
 
 		/// <summary>
@@ -95,8 +94,6 @@ namespace XForms.Toolkit.iOS
 		{
 			var handler = WillTerminateEvent;
 			if (handler != null) { handler(this, new EventArgs()); }
-
-			base.WillTerminate(application);
 		}
 		/// <summary>
 		/// Called when [activated].
@@ -106,9 +103,8 @@ namespace XForms.Toolkit.iOS
 		{
 			var handler = OnActivatedEvent;
 			if (handler != null) { handler(this, new EventArgs()); }
-
-			base.OnActivated(application);
 		}
+
 		/// <summary>
 		/// Dids the enter background.
 		/// </summary>
@@ -117,8 +113,6 @@ namespace XForms.Toolkit.iOS
 		{
 			var handler = DidEnterBackgroundEvent;
 			if (handler != null) { handler(this, new EventArgs()); }
-
-			base.DidEnterBackground(application);
 		}
 
 		/// <summary>
@@ -129,8 +123,6 @@ namespace XForms.Toolkit.iOS
 		{
 			var handler = WillEnterForegroundEvent;
 			if (handler != null) { handler(this, new EventArgs()); }
-
-			base.WillEnterForeground(application);
 		}
 	}
 
