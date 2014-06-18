@@ -101,6 +101,9 @@
       <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarControl.xaml.cs">
+      <DependentUpon>SensorBarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\Display.cs" />
@@ -155,6 +158,12 @@
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\SensorBar\SensorBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

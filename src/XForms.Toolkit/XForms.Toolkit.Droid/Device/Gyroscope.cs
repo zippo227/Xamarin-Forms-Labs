@@ -13,37 +13,35 @@ using XForms.Toolkit.Helpers;
 
 namespace XForms.Toolkit
 {
-    public partial class Accelerometer : Java.Lang.Object, ISensorEventListener
+    public partial class Gyroscope : Java.Lang.Object, ISensorEventListener
     {
         private SensorDelay delay;
         private SensorManager sensorManager;
-        private Sensor accelerometer;
+        private Sensor gyroscope;
 
         public static bool IsSupported
         {
             get
             {
                 var sensorManager = Application.Context.GetSystemService(Context.SensorService) as SensorManager;
-                return sensorManager != null && sensorManager.GetDefaultSensor(SensorType.Accelerometer) != null;
+                return sensorManager != null && sensorManager.GetDefaultSensor(SensorType.Gyroscope) != null;
             }
         }
-
-        #region IAccelerometer Members
 
         public AccelerometerInterval Interval
         {
             get
             {
-                switch (this.delay) 
+                switch (this.delay)
                 {
-                case SensorDelay.Fastest:
-                    return AccelerometerInterval.Fastest;
-                case SensorDelay.Game:
-                    return AccelerometerInterval.Game;
-                case SensorDelay.Normal:
-                    return AccelerometerInterval.Normal;
-                default:
-                    return AccelerometerInterval.Ui;
+                    case SensorDelay.Fastest:
+                        return AccelerometerInterval.Fastest;
+                    case SensorDelay.Game:
+                        return AccelerometerInterval.Game;
+                    case SensorDelay.Normal:
+                        return AccelerometerInterval.Normal;
+                    default:
+                        return AccelerometerInterval.Ui;
                 }
             }
             set
@@ -66,39 +64,41 @@ namespace XForms.Toolkit
             }
         }
 
-        #endregion
-
         partial void Start()
         {
             this.sensorManager = Application.Context.GetSystemService(Context.SensorService) as SensorManager;
 
-            this.accelerometer = sensorManager.GetDefaultSensor(SensorType.Accelerometer);
+            this.gyroscope = sensorManager.GetDefaultSensor(SensorType.Gyroscope);
 
-            this.sensorManager.RegisterListener(this, accelerometer, this.delay);
+            this.sensorManager.RegisterListener(this, this.gyroscope, this.delay);
         }
 
         partial void Stop()
         {
             this.sensorManager.UnregisterListener(this);
             this.sensorManager = null;
-            this.accelerometer = null;
+            this.gyroscope = null;
         }
 
-        public void OnAccuracyChanged (Sensor sensor, SensorStatus accuracy)
+        #region ISensorEventListener Members
+
+        public void OnAccuracyChanged(Sensor sensor, SensorStatus accuracy)
         {
-        //              throw new NotImplementedException ();
+            throw new NotImplementedException();
         }
 
-        public void OnSensorChanged (SensorEvent e)
+        public void OnSensorChanged(SensorEvent e)
         {
-            if (e.Sensor.Type != SensorType.Accelerometer)
+            if (e.Sensor.Type != SensorType.Gyroscope)
             {
                 return;
             }
 
-            this.LatestReading = new Vector3(e.Values[0] / Gravitation, e.Values[1] / Gravitation, e.Values[2] / Gravitation);
+            this.LatestReading = new Vector3(e.Values[0], e.Values[1], e.Values[2]);
 
             this.readingAvailable.Invoke(this, this.LatestReading);
         }
+
+        #endregion
     }
 }

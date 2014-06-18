@@ -64,12 +64,16 @@
     <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
     </Compile>
+    <Compile Include="..\XForms.Toolkit\Device\Gyroscope.designer.cs">
+      <Link>Device\Gyroscope.designer.cs</Link>
+    </Compile>
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\AppleDevice.cs" />
     <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\Display.cs" />
+    <Compile Include="Device\Gyroscope.cs" />
     <Compile Include="Device\Pad.cs" />
     <Compile Include="Device\Phone.cs" />
     <Compile Include="Device\Pod.cs" />
