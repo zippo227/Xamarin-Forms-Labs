@@ -27,9 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{FE751317-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{68C92848-7B0B-4312-A05A-F71FA1157F46}"
 	ProjectSection(SolutionItems) = preProject
+		.nuget\BuildNewPackage-RanAutomatically.ps1 = .nuget\BuildNewPackage-RanAutomatically.ps1
+		.nuget\New-NuGetPackage.ps1 = .nuget\New-NuGetPackage.ps1
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
+		.nuget\UploadPackage-RunManually.bat = .nuget\UploadPackage-RunManually.bat
+		.nuget\UploadPackage-RunManually.ps1 = .nuget\UploadPackage-RunManually.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XForms.Toolkit.WP", "XForms.Toolkit.WP\XForms.Toolkit.WP.csproj", "{E38D2AA4-D265-4FF2-90EC-E02EB59F8A73}"

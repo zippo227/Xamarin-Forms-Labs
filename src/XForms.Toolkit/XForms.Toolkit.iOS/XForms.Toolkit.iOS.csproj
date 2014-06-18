@@ -89,6 +89,7 @@
     <Compile Include="Services\Geolocation\GeolocationSingleUpdateDelegate.cs" />
     <Compile Include="Controls\SensorBar\UISensorBar.cs" />
     <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
+    <Compile Include="XFormsApp.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
@@ -114,4 +115,10 @@
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="../packages/Xamarin.Forms.1.1.0.6201/build/portable-win+net45+wp80+MonoAndroid10+MonoTouch10/Xamarin.Forms.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>REM Create a NuGet package for this project and place the .nupkg file in the project's output directory.
+REM If you see this in Visual Studio's Error List window, check the Output window's Build tab for the actual error.
+ECHO Building NuGet package in Post-Build event...
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nuget\BuildNewPackage-RanAutomatically.ps1' -ProjectFilePath '$(ProjectPath)' -OutputDirectory '$(TargetDir)' -Configuration '$(ConfigurationName)' -Platform '$(PlatformName)'" -PackageDirectory '$(SolutionDir)..\..\packages'</PostBuildEvent>
+  </PropertyGroup>
 </Project>
