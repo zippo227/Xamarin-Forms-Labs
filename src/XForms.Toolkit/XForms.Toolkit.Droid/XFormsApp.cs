@@ -30,9 +30,9 @@ using XForms.Toolkit.Mvvm;
 namespace XForms.Toolkit.Droid
 {
 	/// <summary>
-	/// Class XFormsApplicationDriod.
+	/// Class XFormsApplicationDroid.
 	/// </summary>
-	public class XFormsApplicationDriod : AndroidActivity
+	public class XFormsApplicationDroid : AndroidActivity
 	{
 		/// <summary>
 		/// Gets or sets the destroy.
@@ -275,13 +275,13 @@ namespace XForms.Toolkit.Droid
 	/// <summary>
 	/// Class XFormsAppDriod.
 	/// </summary>
-	public class XFormsAppDriod : XFormsApp<XFormsApplicationDriod>
+	public class XFormsAppDriod : XFormsApp<XFormsApplicationDroid>
 	{
 		/// <summary>
 		/// Called when [initialize].
 		/// </summary>
 		/// <param name="app">The application.</param>
-		protected override void OnInit(XFormsApplicationDriod app)
+		protected override void OnInit(XFormsApplicationDroid app)
 		{
 			
 			this.AppContext.Start += (o, e) => { this.OnStartup(); };

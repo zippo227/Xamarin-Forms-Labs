@@ -44,10 +44,10 @@ namespace XForms.Toolkit.Sample.Droid
 	/// Class MainActivity.
 	/// </summary>
 	[Activity (Label = "XForms.Toolkit.Sample.Droid", MainLauncher = true)]
-	public class MainActivity : XFormsApplicationDriod
+	public class MainActivity : XFormsApplicationDroid
 	{
 		/// <summary>
-		/// The _initialized
+		/// Indicated if the application has been initialized
 		/// </summary>
         private static bool _initialized;
 
@@ -84,6 +84,7 @@ namespace XForms.Toolkit.Sample.Droid
 
 			resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
 				.Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+				.Register<IDependencyContainer>(resolverContainer)
 				.Register<IXFormsApp>(app);
 
             Resolver.SetResolver(resolverContainer.GetResolver());
