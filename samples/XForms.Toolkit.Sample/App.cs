@@ -39,6 +39,41 @@ namespace XForms.Toolkit.Sample
 	/// </summary>
 	public class App
 	{
+		public static void Init()
+		{
+			var app = Resolver.Resolve<IXFormsApp>();
+			if (app == null) return;
+
+			app.Closing += (o, e) =>
+			{
+				System.Diagnostics.Debug.WriteLine("Application Closing");
+			};
+			app.Error += (o, e) =>
+			{
+				System.Diagnostics.Debug.WriteLine("Application Error");
+			};
+			app.Initialize += (o, e) =>
+			{
+				System.Diagnostics.Debug.WriteLine("Application Initialized");
+			};
+			app.Resumed += (o, e) =>
+			{
+				System.Diagnostics.Debug.WriteLine("Application Resumed");
+			};
+			app.Rotation += (o, e) =>
+			{
+				System.Diagnostics.Debug.WriteLine("Application Rotated");
+			};
+			app.Startup += (o, e) =>
+			{
+				System.Diagnostics.Debug.WriteLine("Application Startup");
+			};
+			app.Suspended += (o, e) =>
+			{
+				System.Diagnostics.Debug.WriteLine("Application Suspended");
+			};
+		}
+
 		/// <summary>
 		/// Gets the main page.
 		/// </summary>
