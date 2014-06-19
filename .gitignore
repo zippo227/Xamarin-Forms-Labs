@@ -182,3 +182,4 @@ src/XForms.Toolkit/XForms.Toolkit.Droid/Resources/Resource.designer.cs
 src/XForms.Toolkit/XForms.Toolkit.userprefs
 
 *.userprefs
+NuGet.exe
