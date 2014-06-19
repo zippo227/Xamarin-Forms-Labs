@@ -1,21 +1,20 @@
 ﻿using Android.Speech.Tts;
 using System.Collections.Generic;
+using System.Linq;
+using Java.Util;
 using Xamarin.Forms;
 using XForms.Toolkit.Services;
 
 [assembly: Dependency(typeof(XForms.Toolkit.Droid.Services.TextToSpeechService))]
+
 namespace XForms.Toolkit.Droid.Services
 {
-
 	public class TextToSpeechService : Java.Lang.Object, ITextToSpeechService, TextToSpeech.IOnInitListener
 	{
-
 		TextToSpeech speaker;
 		string toSpeak;
 
-		public TextToSpeechService() { }
-
-		public void Speak(string text)
+	    public void Speak(string text)
 		{
 			var ctx = Forms.Context; // useful for many Android SDK features
 			toSpeak = text;
@@ -41,5 +40,9 @@ namespace XForms.Toolkit.Droid.Services
 		}
 		#endregion
 
-	}
+        public IEnumerable<string> GetInstalledLanguages()
+        {
+            return Locale.GetAvailableLocales().Select(a => a.Language).Distinct();
+        }
+    }
 }
