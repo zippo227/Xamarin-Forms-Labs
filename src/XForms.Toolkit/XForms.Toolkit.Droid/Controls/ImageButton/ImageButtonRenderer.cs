@@ -1,11 +1,12 @@
-
 using Android.Graphics.Drawables;
+using Android.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using XForms.Toolkit.Controls;
 using XForms.Toolkit.Droid.Controls.ImageButton;
 using XForms.Toolkit.Enums;
 using System.ComponentModel;
+using TextAlignment = Android.Views.TextAlignment;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace XForms.Toolkit.Droid.Controls.ImageButton
@@ -22,7 +23,8 @@ namespace XForms.Toolkit.Droid.Controls.ImageButton
 		{
 			base.OnElementChanged (e);
 
-			if (e.OldElement == null) {
+			if (e.OldElement == null) 
+            {
 				var targetButton = (Android.Widget.Button)Control;
 
 				if (Element != null && !string.IsNullOrEmpty(this.ImageButton.Image))
@@ -32,7 +34,6 @@ namespace XForms.Toolkit.Droid.Controls.ImageButton
 				}
 			}
 		}
-	
 
         /// <summary>
         /// Sets the image source.
@@ -42,8 +43,10 @@ namespace XForms.Toolkit.Droid.Controls.ImageButton
         private void SetImageSource(Android.Widget.Button targetButton, Toolkit.Controls.ImageButton model)
         {
             var packageName = Context.PackageName;
+            const int padding = 10;
+            const string resourceType = "drawable";
 
-            var resId = Resources.GetIdentifier(model.Image, "drawable", packageName);
+            var resId = Resources.GetIdentifier(model.Image, resourceType, packageName);
             if (resId > 0)
             {
                 var scaledDrawable = GetScaleDrawableFromResourceId(resId, GetWidth(model.ImageWidthRequest),
@@ -53,12 +56,15 @@ namespace XForms.Toolkit.Droid.Controls.ImageButton
                 Drawable right = null;
                 Drawable top = null;
                 Drawable bottom = null;
+                targetButton.CompoundDrawablePadding = padding;
                 switch (model.Orientation)
                 {
                     case (ImageOrientation.ImageToLeft):
+                        targetButton.Gravity = GravityFlags.Left | GravityFlags.CenterVertical;
                         left = scaledDrawable;
                         break;
                     case (ImageOrientation.ImageToRight):
+                        targetButton.Gravity = GravityFlags.Right | GravityFlags.CenterVertical;
                         right = scaledDrawable;
                         break;
                     case (ImageOrientation.ImageOnTop):
@@ -88,9 +94,6 @@ namespace XForms.Toolkit.Droid.Controls.ImageButton
 				SetImageSource(targetButton, this.ImageButton);
 			}
 		}
-
- 
-       
 
         /// <summary>
         /// Returns a <see cref="Drawable"/> with the correct dimensions from an 
