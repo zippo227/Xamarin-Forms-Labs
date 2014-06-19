@@ -1,21 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// ***********************************************************************
+// Assembly         : XForms.Toolkit.WP
+// Author           : Sami M. Kallio
+// Created          : 06-16-2014
+//
+// Last Modified By : Sami M. Kallio
+// Last Modified On : 06-16-2014
+// ***********************************************************************
+// <copyright file="Geolocator.cs" company="">
+//     Copyright (c) 2014 . All rights reserved.
+//
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using XForms.Toolkit;
 
 [assembly: Dependency(typeof(XForms.Toolkit.Services.Geolocation.Geolocator))]
+
 namespace XForms.Toolkit.Services.Geolocation
 {
     using Windows.Devices.Geolocation;
     using Locator = Windows.Devices.Geolocation.Geolocator;
 
+    /// <summary>
+    /// The geolocator implements <see cref="IGeolocator"/> interface for Windows Phone 8.
+    /// </summary>
     public class Geolocator : IGeolocator
     {
         private Locator locator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Geolocator"/> class.
+        /// </summary>
         public Geolocator()
         {
             locator = new Locator();
