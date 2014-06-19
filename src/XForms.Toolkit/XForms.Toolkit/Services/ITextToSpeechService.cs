@@ -3,11 +3,25 @@ using System.Collections.Generic;
 
 namespace XForms.Toolkit.Services
 {
-	//http://developer.xamarin.com/guides/cross-platform/xamarin-forms/dependency-service/
-	public interface ITextToSpeechService
+    /// <summary>
+    /// The Text To Speech Service interface.
+    /// </summary>
+    public interface ITextToSpeechService
 	{
-		void Speak(string text);
+	    /// <summary>
+	    /// The speak.
+	    /// </summary>
+	    /// <param name="text">
+	    /// The text.
+	    /// </param>
+	    void Speak(string text);
 
+	    /// <summary>
+	    /// Get installed languages.
+	    /// </summary>
+	    /// <returns>
+	    /// The installed language names.
+	    /// </returns>
 	    IEnumerable<string> GetInstalledLanguages();
 	}
 }
