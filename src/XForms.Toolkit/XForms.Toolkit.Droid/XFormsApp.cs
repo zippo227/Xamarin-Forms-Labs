@@ -39,26 +39,31 @@ namespace XForms.Toolkit.Droid
 		/// </summary>
 		/// <value>The destroy.</value>
 		public EventHandler<EventArgs> Destroy { get; set; }
+
 		/// <summary>
 		/// Gets or sets the pause.
 		/// </summary>
 		/// <value>The pause.</value>
 		public EventHandler<EventArgs> Pause { get; set; }
+
 		/// <summary>
 		/// Gets or sets the restart.
 		/// </summary>
 		/// <value>The restart.</value>
 		public EventHandler<EventArgs> Restart { get; set; }
+
 		/// <summary>
 		/// Gets or sets the resume.
 		/// </summary>
 		/// <value>The resume.</value>
 		public EventHandler<EventArgs> Resume { get; set; }
+
 		/// <summary>
 		/// Gets or sets the start.
 		/// </summary>
 		/// <value>The start.</value>
 		public EventHandler<EventArgs> Start { get; set; }
+
 		/// <summary>
 		/// Gets or sets the stop.
 		/// </summary>
@@ -70,10 +75,13 @@ namespace XForms.Toolkit.Droid
 		/// </summary>
 		protected override void OnDestroy()
 		{
-			var handler = Destroy;
-			if (handler != null) { handler(this, new EventArgs()); }
-		
-			base.OnDestroy();
+		    var handler = this.Destroy;
+		    if (handler != null)
+		    {
+		        handler(this, new EventArgs());
+		    }
+
+		    base.OnDestroy();
 		}
 
 		/// <summary>
@@ -125,10 +133,13 @@ namespace XForms.Toolkit.Droid
 		/// </para></remarks>
 		protected override void OnPause()
 		{
-			var handler = Pause;
-			if (handler != null) { handler(this, new EventArgs()); }
+            var handler = this.Pause;
+		    if (handler != null)
+		    {
+		        handler(this, new EventArgs());
+		    }
 
-			base.OnPause();
+		    base.OnPause();
 		}
 
 		/// <summary>
@@ -162,10 +173,13 @@ namespace XForms.Toolkit.Droid
 		/// </para></remarks>
 		protected override void OnRestart()
 		{
-			var handler = Restart;
-			if (handler != null) { handler(this, new EventArgs()); }
+            var handler = this.Restart;
+		    if (handler != null)
+		    {
+		        handler(this, new EventArgs());
+		    }
 
-			base.OnRestart();
+		    base.OnRestart();
 		}
 
 		/// <summary>
@@ -199,14 +213,17 @@ namespace XForms.Toolkit.Droid
 		/// </para></remarks>
 		protected override void OnResume()
 		{
-			var handler = Resume;
-			if (handler != null) { handler(this, new EventArgs()); }
+            var handler = this.Resume;
+		    if (handler != null)
+		    {
+		        handler(this, new EventArgs());
+		    }
 
-			base.OnResume();
+		    base.OnResume();
 		}
 
 		/// <summary>
-		/// Called after <c><see cref="M:Android.App.Activity.OnCreate(Android.OS.Bundle)" /></c> &amp;mdash; or after <c><see cref="M:Android.App.Activity.OnRestart" /></c> when
+		/// Called after <c><see cref="M:Android.App.Activity.OnCreate(Android.OS.Bundle)" /></c> or after <c><see cref="M:Android.App.Activity.OnRestart" /></c> when
 		/// the activity had been stopped, but is now again being displayed to the
 		/// user.
 		/// </summary>
@@ -214,7 +231,7 @@ namespace XForms.Toolkit.Droid
 		/// <altmember cref="M:Android.App.Activity.OnCreate(Android.OS.Bundle)" />
 		/// <altmember cref="M:Android.App.Activity.OnStop" />
 		/// <altmember cref="M:Android.App.Activity.OnResume" />
-		/// <remarks><para tool="javadoc-to-mdoc">Called after <c><see cref="M:Android.App.Activity.OnCreate(Android.OS.Bundle)" /></c> &amp;mdash; or after <c><see cref="M:Android.App.Activity.OnRestart" /></c> when
+		/// <remarks><para tool="javadoc-to-mdoc">Called after <c><see cref="M:Android.App.Activity.OnCreate(Android.OS.Bundle)" /></c> or after <c><see cref="M:Android.App.Activity.OnRestart" /></c> when
 		/// the activity had been stopped, but is now again being displayed to the
 		/// user.  It will be followed by <c><see cref="M:Android.App.Activity.OnResume" /></c>.
 		/// </para>
@@ -230,10 +247,13 @@ namespace XForms.Toolkit.Droid
 		/// </para></remarks>
 		protected override void OnStart()
 		{
-			var handler = Start;
-			if (handler != null) { handler(this, new EventArgs()); }
+            var handler = this.Start;
+		    if (handler != null)
+		    {
+		        handler(this, new EventArgs());
+		    }
 
-			base.OnStart();
+		    base.OnStart();
 		}
 
 		/// <summary>
@@ -264,18 +284,21 @@ namespace XForms.Toolkit.Droid
 		/// </para></remarks>
 		protected override void OnStop()
 		{
-			var handler = Stop;
-			if (handler != null) { handler(this, new EventArgs()); }
+		    var handler = this.Stop;
+		    if (handler != null)
+		    {
+		        handler(this, new EventArgs());
+		    }
 
-			base.OnStop();
+		    base.OnStop();
 		}
 	}
 
 
 	/// <summary>
-	/// Class XFormsAppDriod.
+	/// Class XFormsAppDroid.
 	/// </summary>
-	public class XFormsAppDriod : XFormsApp<XFormsApplicationDroid>
+	public class XFormsAppDroid : XFormsApp<XFormsApplicationDroid>
 	{
 		/// <summary>
 		/// Called when [initialize].
@@ -284,10 +307,10 @@ namespace XForms.Toolkit.Droid
 		protected override void OnInit(XFormsApplicationDroid app)
 		{
 			
-			this.AppContext.Start += (o, e) => { this.OnStartup(); };
-			this.AppContext.Stop += (o, e) => { this.OnClosing(); };
-			this.AppContext.Pause += (o, e) => { this.OnSuspended(); };
-			this.AppContext.Resume += (o, e) => { this.OnResumed(); };
+			this.AppContext.Start += (o, e) => this.OnStartup();
+			this.AppContext.Stop += (o, e) => this.OnClosing();
+			this.AppContext.Pause += (o, e) => this.OnSuspended();
+			this.AppContext.Resume += (o, e) => this.OnResumed();
 
 			base.OnInit(app);
 		}
