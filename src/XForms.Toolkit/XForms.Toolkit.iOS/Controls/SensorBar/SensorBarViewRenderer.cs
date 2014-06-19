@@ -1,25 +1,35 @@
-﻿using Xamarin.Forms.Platform.iOS;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 using XForms.Toolkit;
 using XForms.Toolkit.Controls;
 
 [assembly: ExportRenderer(typeof(SensorBarView), typeof(SensorBarViewRenderer))]
+
 namespace XForms.Toolkit.Controls
 {
+    /// <summary>
+    /// The sensor bar view renderer.
+    /// </summary>
     public class SensorBarViewRenderer : ViewRenderer<SensorBarView, UISensorBar>
     {
         private UISensorBar sensorBar;
 
+        /// <summary>
+        /// The on element changed callback.
+        /// </summary>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
         protected override void OnElementChanged(ElementChangedEventArgs<SensorBarView> e)
         {
             base.OnElementChanged(e);
 
             this.sensorBar = new UISensorBar(this.Bounds);
             this.SetProperties ();
-            this.Element.PropertyChanged += OnPropertyChanged;
+            this.Element.PropertyChanged += this.OnPropertyChanged;
 
-            base.SetNativeControl(this.sensorBar);
+            this.SetNativeControl(this.sensorBar);
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -31,8 +41,8 @@ namespace XForms.Toolkit.Controls
         {
             this.sensorBar.CurrentValue = this.Element.CurrentValue;
             this.sensorBar.Limit = this.Element.Limit;
-            this.sensorBar.NegativeColor = this.Element.NegativeColor.ToUIColor ();
-            this.sensorBar.PositiveColor = this.Element.PositiveColor.ToUIColor ();
+            this.sensorBar.NegativeColor = this.Element.NegativeColor.ToUIColor();
+            this.sensorBar.PositiveColor = this.Element.PositiveColor.ToUIColor();
         }
     }
 }

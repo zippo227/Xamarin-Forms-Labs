@@ -33,7 +33,7 @@ namespace XForms.Toolkit.Controls
             this.Inject(builder.ToString());
         }
 
-        void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Uri")
             {
@@ -43,13 +43,13 @@ namespace XForms.Toolkit.Controls
 
         private void Initialize()
         {
-            this.Element.PropertyChanged += Model_PropertyChanged;
+            this.Element.PropertyChanged += this.Model_PropertyChanged;
             if (this.Element.Uri != null)
             {
                 this.Load (this.Element.Uri);
             }
 
-            this.Element.JavaScriptLoadRequested += (s, e) => Inject(e);
+            this.Element.JavaScriptLoadRequested += (s, e) => this.Inject(e);
         }
 
         partial void Inject(string script);
@@ -63,7 +63,6 @@ namespace XForms.Toolkit.Controls
 
             if (m.Success)
             {
-                //request = request.Remove(0, 
                 Action<string> action;
                 var name = m.Groups["Action"].Value;
 
@@ -71,8 +70,8 @@ namespace XForms.Toolkit.Controls
                 {
                     var data = Uri.UnescapeDataString (request.Remove (m.Index, m.Length));
                     action.Invoke (data);
-//                    return true;
-                } else
+                } 
+                else
                 {
                     System.Diagnostics.Debug.WriteLine ("Unhandled callback {0} was called from JavaScript", name);
                 }
