@@ -23,15 +23,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 
 using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using Android.Content.PM;
 using Android.OS;
-using Xamarin.Forms.Platform.Android;
 using XForms.Toolkit.Droid;
 using XForms.Toolkit.Mvvm;
 using XForms.Toolkit.Services;
@@ -43,7 +38,7 @@ namespace XForms.Toolkit.Sample.Droid
 	/// <summary>
 	/// Class MainActivity.
 	/// </summary>
-	[Activity (Label = "XForms.Toolkit.Sample.Droid", MainLauncher = true)]
+    [Activity(Label = "XForms.Toolkit.Sample.Droid", MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
 	public class MainActivity : XFormsApplicationDroid
 	{
 		/// <summary>
@@ -55,30 +50,30 @@ namespace XForms.Toolkit.Sample.Droid
 		/// Called when [create].
 		/// </summary>
 		/// <param name="bundle">The bundle.</param>
-		protected override void OnCreate (Bundle bundle)
+		protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
 
             if (!_initialized)
             {
-                SetIoc();
+                this.SetIoc();
             }
 
 			Xamarin.Forms.Forms.Init(this, bundle);
 
 			App.Init();
 
-			SetPage(App.GetMainPage());
+            this.SetPage(App.GetMainPage());
 		}
 
 		/// <summary>
-		/// Sets the ioc.
+		/// Sets the IoC.
 		/// </summary>
         private void SetIoc()
         {
             var resolverContainer = new SimpleContainer();
 
-			var app = new XFormsAppDriod();
+			var app = new XFormsAppDroid();
 
 			app.Init(this);
 
