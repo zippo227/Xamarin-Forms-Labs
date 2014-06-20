@@ -26,6 +26,8 @@ namespace XForms.Toolkit.Mvvm
 		public BaseView ()
 		{
 			SetBinding (NavigationProperty, new Binding ("Navigation", converter: new NavigationConverter ()));
+            SetBinding(IsBusyProperty, new Binding("IsBusy"));
+
 		}
 	}
 }
