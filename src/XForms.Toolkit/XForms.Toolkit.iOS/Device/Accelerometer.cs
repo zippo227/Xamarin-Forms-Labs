@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using XForms.Toolkit.Helpers;
 
 namespace XForms.Toolkit
 {
+    /// <summary>
+    /// The accelerometer.
+    /// </summary>
     public partial class Accelerometer
     {
         private AccelerometerInterval interval = AccelerometerInterval.Ui;
 
+        /// <summary>
+        /// Gets or sets the interval.
+        /// </summary>
         public AccelerometerInterval Interval
         {
             get { return this.interval; }
@@ -28,12 +28,12 @@ namespace XForms.Toolkit
 
         partial void Start()
         {
-            UIAccelerometer.SharedAccelerometer.Acceleration += HandleAcceleration;
+            UIAccelerometer.SharedAccelerometer.Acceleration += this.HandleAcceleration;
         }
 
         partial void Stop()
         {
-            UIAccelerometer.SharedAccelerometer.Acceleration -= HandleAcceleration;
+            UIAccelerometer.SharedAccelerometer.Acceleration -= this.HandleAcceleration;
         }
 
         private void HandleAcceleration(object sender, UIAccelerometerEventArgs e)

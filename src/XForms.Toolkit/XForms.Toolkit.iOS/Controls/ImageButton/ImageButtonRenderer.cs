@@ -1,7 +1,7 @@
-using System.ComponentModel;
-using MonoTouch.UIKit;
 using System;
+using System.ComponentModel;
 using System.Drawing;
+using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XForms.Toolkit.Controls;
@@ -9,6 +9,7 @@ using XForms.Toolkit.Enums;
 using XForms.Toolkit.iOS.Controls.ImageButton;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
+
 namespace XForms.Toolkit.iOS.Controls.ImageButton
 {
     /// <summary>
@@ -17,18 +18,17 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
     /// </summary>
     public class ImageButtonRenderer : ButtonRenderer
     {
-        private const int controlPadding = 2;
+        private const int ControlPadding = 2;
+        private const string iPad = "iPad";
+        private const string iPhone = "iPhone";
 
         /// <summary>
-        /// Returns the underlying element typed as an <see cref="ImageButton"/>.
+        /// Gets the underlying element typed as an <see cref="ImageButton"/>.
         /// </summary>
         private Toolkit.Controls.ImageButton ImageButton
         {
-            get { return (XForms.Toolkit.Controls.ImageButton) Element; }
+            get { return (Toolkit.Controls.ImageButton) Element; }
         }
-
-        private const string iPad = "iPad";
-        private const string iPhone = "iPhone";
 
         /// <summary>
         /// Handles the initial drawing of the button.
@@ -38,8 +38,8 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
         {
             base.OnElementChanged(e);
             var imageButton = this.ImageButton;
-            var targetButton = Control as UIButton;
-            if (imageButton != null && targetButton != null && !String.IsNullOrEmpty(imageButton.Image))
+            var targetButton = Control;
+            if (imageButton != null && targetButton != null && !string.IsNullOrEmpty(imageButton.Image))
             {
                 SetImage(imageButton.Image, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
 
@@ -64,7 +64,7 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
         /// <summary>
         /// Called when the underlying model's properties are changed
         /// </summary>
-        /// <param name="sender">Model</param>
+        /// <param name="sender">Model sending the change event</param>
         /// <param name="e">Event arguments</param>
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -72,14 +72,13 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
             if (e.PropertyName == Toolkit.Controls.ImageButton.ImageProperty.PropertyName)
             {
                 var sourceButton = this.Element as Toolkit.Controls.ImageButton;
-                if (sourceButton != null && !String.IsNullOrEmpty(sourceButton.Image))
+                if (sourceButton != null && !string.IsNullOrEmpty(sourceButton.Image))
                 {
                     var imageButton = this.ImageButton;
-                    var targetButton = Control as UIButton;
-                    if (imageButton != null && targetButton != null && !String.IsNullOrEmpty(imageButton.Image))
+                    var targetButton = Control;
+                    if (imageButton != null && targetButton != null && !string.IsNullOrEmpty(imageButton.Image))
                     {
-                        SetImage(imageButton.Image, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest,
-                            targetButton);
+                        SetImage(imageButton.Image, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
                     }
                 }
             }
@@ -89,12 +88,12 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
         /// Properly aligns the title and image on a button to the left.
         /// </summary>
         /// <param name="targetButton">The button to align.</param>
-        private void AlignToLeft(UIButton targetButton)
+        private static void AlignToLeft(UIButton targetButton)
         {
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Left;
 
-            var titleInsets = new UIEdgeInsets(0, controlPadding, 0, -1*(controlPadding));
+            var titleInsets = new UIEdgeInsets(0, ControlPadding, 0, -1 * ControlPadding);
             targetButton.TitleEdgeInsets = titleInsets;
         }
 
@@ -103,15 +102,15 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
         /// </summary>
         /// <param name="widthRequest">The requested image width.</param>
         /// <param name="targetButton">The button to align.</param>
-        private void AlignToRight(int widthRequest, UIButton targetButton)
+        private static void AlignToRight(int widthRequest, UIButton targetButton)
         {
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Right;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Right;
 
-            var titleInsets = new UIEdgeInsets(0, -1*(widthRequest + controlPadding), 0, (widthRequest + controlPadding));
+            var titleInsets = new UIEdgeInsets(0, -1 * (widthRequest + ControlPadding), 0, widthRequest + ControlPadding);
 
             targetButton.TitleEdgeInsets = titleInsets;
-            var imageInsets = new UIEdgeInsets(0, widthRequest, 0, -1*widthRequest);
+            var imageInsets = new UIEdgeInsets(0, widthRequest, 0, -1 * widthRequest);
             targetButton.ImageEdgeInsets = imageInsets;
         }
 
@@ -121,7 +120,7 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="widthRequest">The requested image width.</param>
         /// <param name="targetButton">The button to align.</param>
-        private void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton)
+        private static void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton)
         {
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Top;
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
@@ -136,16 +135,15 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
 
             if (UIDevice.CurrentDevice.Model.Contains(iPad))
             {
-                titleInsets = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1*widthRequest/2), -1*heightRequest,
-                    Convert.ToInt32(widthRequest/2));
-                imageInsets = new UIEdgeInsets(0, Convert.ToInt32(titleWidth/2), 0, -1*Convert.ToInt32(titleWidth/2));
+                titleInsets = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1 * widthRequest / 2), -1 * heightRequest, Convert.ToInt32(widthRequest / 2));
+                imageInsets = new UIEdgeInsets(0, Convert.ToInt32(titleWidth / 2), 0, -1 * Convert.ToInt32(titleWidth / 2));
             }
             else
             {
-                titleInsets = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1*widthRequest/2), -1*heightRequest,
-                    Convert.ToInt32(widthRequest/2));
-                imageInsets = new UIEdgeInsets(0, titleWidth/2, 0, -1*titleWidth/2);
+                titleInsets = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1 * widthRequest / 2), -1 * heightRequest, Convert.ToInt32(widthRequest / 2));
+                imageInsets = new UIEdgeInsets(0, titleWidth / 2, 0, -1 * titleWidth / 2);
             }
+
             targetButton.TitleEdgeInsets = titleInsets;
             targetButton.ImageEdgeInsets = imageInsets;
         }
@@ -156,7 +154,7 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="widthRequest">The requested image width.</param>
         /// <param name="targetButton">The button to align.</param>
-        private void AlignToBottom(int heightRequest, int widthRequest, UIButton targetButton)
+        private static void AlignToBottom(int heightRequest, int widthRequest, UIButton targetButton)
         {
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Bottom;
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
@@ -169,15 +167,15 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
 
             if (UIDevice.CurrentDevice.Model.Contains(iPad))
             {
-                titleInsets = new UIEdgeInsets(-1*heightRequest, Convert.ToInt32(-1*widthRequest/2), heightRequest,
-                    Convert.ToInt32(widthRequest/2));
-                imageInsets = new UIEdgeInsets(0, titleWidth/2, 0, -1*titleWidth/2);
+                titleInsets = new UIEdgeInsets(-1 * heightRequest, Convert.ToInt32(-1 * widthRequest / 2), heightRequest, Convert.ToInt32(widthRequest / 2));
+                imageInsets = new UIEdgeInsets(0, titleWidth / 2, 0, -1 * titleWidth / 2);
             }
             else
             {
-                titleInsets = new UIEdgeInsets(-1*heightRequest, -1*widthRequest, heightRequest, widthRequest);
+                titleInsets = new UIEdgeInsets(-1 * heightRequest, -1 * widthRequest, heightRequest, widthRequest);
                 imageInsets = new UIEdgeInsets(0, 0, 0, 0);
             }
+
             targetButton.TitleEdgeInsets = titleInsets;
             targetButton.ImageEdgeInsets = imageInsets;
         }
@@ -187,10 +185,10 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
         /// height and width request and sets it into a <see cref="UIButton"/>.
         /// </summary>
         /// <param name="imageName">The name of the image to load from a bundle.</param>
-        /// <param name="heightRequest">The requested image height.</param>
         /// <param name="widthRequest">The requested image width.</param>
+        /// <param name="heightRequest">The requested image height.</param>
         /// <param name="targetButton">A <see cref="UIButton"/> to set the image into.</param>
-        private void SetImage(string imageName, int widthRequest, int heightRequest, UIButton targetButton)
+        private static void SetImage(string imageName, int widthRequest, int heightRequest, UIButton targetButton)
         {
             using (var image = UIImage.FromBundle(imageName))
             {

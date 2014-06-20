@@ -21,12 +21,18 @@ namespace XForms.Toolkit.WP.Services
         /// </summary>
         public TextToSpeechService()
         {
-            synth = new SpeechSynthesizer();
+            this.synth = new SpeechSynthesizer();
         }
 
+        /// <summary>
+        /// The speak.
+        /// </summary>
+        /// <param name="text">
+        /// The text.
+        /// </param>
         public async void Speak(string text)
         {
-            await synth.SpeakTextAsync(text);
+            await this.synth.SpeakTextAsync(text);
         }
 
         /// <summary>
