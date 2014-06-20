@@ -17,7 +17,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 **Available services (Beta)**
 
  - TextToSpeech 
- - Device (battery info, device info)
+ - Device (battery info, device info, sensors)
  - Phone Service (cellular network info, make phonecalls)
  - Geolocator
  - Camera (beta only on Windows)
@@ -28,7 +28,6 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - RelayCommand ; RelayCommand< T >
  - ViewFactory
  - IOC
- 
 _________________
 
 Using the MVVM Helpers
@@ -126,7 +125,7 @@ __________________
 License
 -----------
 
-License MIT more about that in the [LICENSE][1] file. 
+License Apache 2.0 more about that in the [LICENSE][1] file. 
 __________________
 
 **Contributions:**
