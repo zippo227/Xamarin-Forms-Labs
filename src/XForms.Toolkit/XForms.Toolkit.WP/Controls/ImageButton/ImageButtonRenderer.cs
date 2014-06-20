@@ -3,16 +3,17 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Microsoft.Phone.SecureElement;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
 using XForms.Toolkit.Controls;
 using XForms.Toolkit.Enums;
 using XForms.Toolkit.WP.Controls.ImageButton;
+using Button = Xamarin.Forms.Button;
 using Image = System.Windows.Controls.Image;
 using TextAlignment = System.Windows.TextAlignment;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
+
 namespace XForms.Toolkit.WP.Controls.ImageButton
 {
     /// <summary>
@@ -21,32 +22,38 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
     /// </summary>
     public class ImageButtonRenderer : ButtonRenderer
     {
-        private Image CurrentImage;
+        private Image currentImage;
+
         /// <summary>
         /// Handles the initial drawing of the button.
         /// </summary>
         /// <param name="e">Information on the <see cref="ImageButton"/>.</param> 
-        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
 
             var sourceButton = this.Element as Toolkit.Controls.ImageButton;
             var targetButton = this.Control;
-            if (sourceButton != null && targetButton != null && !String.IsNullOrEmpty(sourceButton.Image))
+            if (sourceButton != null && targetButton != null && !string.IsNullOrEmpty(sourceButton.Image))
             {
-                var stackPanel = new StackPanel();
-                stackPanel.Orientation = (sourceButton.Orientation == ImageOrientation.ImageOnTop ||
-                    sourceButton.Orientation == ImageOrientation.ImageOnBottom) ?
-                    Orientation.Vertical : Orientation.Horizontal;
+                var stackPanel = new StackPanel
+                    {
+                        Orientation = (sourceButton.Orientation == ImageOrientation.ImageOnTop ||
+                                       sourceButton.Orientation == ImageOrientation.ImageOnBottom)
+                                          ? Orientation.Vertical
+                                          : Orientation.Horizontal
+                    };
 
-                CurrentImage = GetImage(sourceButton.Image, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
-                SetImageMargin(CurrentImage, sourceButton.Orientation);
+                this.currentImage = GetImage(sourceButton.Image, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
+                SetImageMargin(this.currentImage, sourceButton.Orientation);
 
-                var label = new TextBlock();
-                label.TextAlignment = GetTextAlignment(sourceButton.Orientation);
-                label.FontSize = 16;
-                label.VerticalAlignment = VerticalAlignment.Center;
-                label.Text = sourceButton.Text;
+                var label = new TextBlock
+                    {
+                        TextAlignment = GetTextAlignment(sourceButton.Orientation),
+                        FontSize = 16,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Text = sourceButton.Text
+                    };
 
                 if (sourceButton.Orientation == ImageOrientation.ImageToLeft)
                 {
@@ -60,14 +67,14 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
                 if (sourceButton.Orientation == ImageOrientation.ImageOnTop ||
                     sourceButton.Orientation == ImageOrientation.ImageToLeft)
                 {
-                    CurrentImage.HorizontalAlignment = HorizontalAlignment.Left;
-                    stackPanel.Children.Add(CurrentImage);
+                    this.currentImage.HorizontalAlignment = HorizontalAlignment.Left;
+                    stackPanel.Children.Add(this.currentImage);
                     stackPanel.Children.Add(label);
                 }
                 else
                 {
                     stackPanel.Children.Add(label);
-                    stackPanel.Children.Add(CurrentImage);
+                    stackPanel.Children.Add(this.currentImage);
                 }
 
                 targetButton.Content = stackPanel;
@@ -76,11 +83,31 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
         }
 
         /// <summary>
+        /// Called when the underlying model's properties are changed
+        /// </summary>
+        /// <param name="sender">Model sending the change event</param>
+        /// <param name="e">Event arguments</param>
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (e.PropertyName == Toolkit.Controls.ImageButton.ImageProperty.PropertyName)
+            {
+                var sourceButton = this.Element as Toolkit.Controls.ImageButton;
+                if (sourceButton != null && !string.IsNullOrEmpty(sourceButton.Image))
+                {
+                    this.currentImage = GetImage(sourceButton.Image, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
+                    SetImageMargin(this.currentImage, sourceButton.Orientation);
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns the alignment of the label on the button depending on the orientation.
         /// </summary>
         /// <param name="imageOrientation">The orientation to use.</param>
         /// <returns>The alignment to use for the text.</returns>
-        private TextAlignment GetTextAlignment(ImageOrientation imageOrientation)
+        private static TextAlignment GetTextAlignment(ImageOrientation imageOrientation)
         {
             TextAlignment returnValue;
             switch (imageOrientation)
@@ -95,27 +122,8 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
                     returnValue = TextAlignment.Center;
                     break;
             }
+
             return returnValue;
-        }
-
-        /// <summary>
-        /// Called when the underlying model's properties are changed
-        /// </summary>
-        /// <param name="sender">Model</param>
-        /// <param name="e">Event arguments</param>
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName == Toolkit.Controls.ImageButton.ImageProperty.PropertyName)
-            {
-                var sourceButton = this.Element as Toolkit.Controls.ImageButton;
-                if (sourceButton != null && !String.IsNullOrEmpty(sourceButton.Image))
-                {
-                    CurrentImage = GetImage(sourceButton.Image, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
-                    SetImageMargin(CurrentImage, sourceButton.Orientation);
-                }
-            }
         }
 
         /// <summary>
@@ -125,8 +133,8 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
         /// <param name="imageName">The name of the image to return.  Should be the resource name without the .png extension.</param>
         /// <param name="height">The height for the image (divides by 2 for the Windows Phone platform).</param>
         /// <param name="width">The width for the image (divides by 2 for the Windows Phone platform).</param>
-        /// <returns></returns>
-        private Image GetImage(string imageName, int height, int width)
+        /// <returns>An image </returns>
+        private static Image GetImage(string imageName, int height, int width)
         {
             var image = new Image();
             var uri = new Uri("images/" + imageName + ".png", UriKind.Relative);
@@ -142,7 +150,7 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
         /// </summary>
         /// <param name="image">The image to add a margin to.</param>
         /// <param name="orientation">The orientation of the image on the button.</param>
-        private void SetImageMargin(Image image, ImageOrientation orientation)
+        private static void SetImageMargin(Image image, ImageOrientation orientation)
         {
             const int defaultMargin = 10;
             int left = 0;

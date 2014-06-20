@@ -69,24 +69,24 @@ namespace XForms.Toolkit.Sample
 		void Setup(){
 			if (this.geolocator != null)
 				return;
-
-			this.geolocator = DependencyService.Get<IGeolocator> ();
-			this.geolocator.PositionError += OnListeningError;
+            this.geolocator = DependencyService.Get<IGeolocator> ();
+            this.geolocator.PositionError += OnListeningError;
 			this.geolocator.PositionChanged += OnPositionChanged;
 		}
 		async Task GetPosition ()
 		{
-			Setup();
+            Setup();
 
 			this.cancelSource = new CancellationTokenSource();
 
 			PositionStatus = String.Empty;
 			PositionLatitude = String.Empty;
 			PositionLongitude = String.Empty;
-
+            IsBusy = true;
 			await this.geolocator.GetPositionAsync (timeout: 10000, cancelToken: this.cancelSource.Token, includeHeading: true)
 				.ContinueWith (t =>
 					{
+                        IsBusy = false;
 						if (t.IsFaulted)
 							PositionStatus = ((GeolocationException)t.Exception.InnerException).Error.ToString();
 						else if (t.IsCanceled)

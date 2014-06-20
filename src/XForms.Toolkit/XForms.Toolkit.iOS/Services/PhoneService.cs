@@ -9,7 +9,7 @@ namespace XForms.Toolkit.Services
     /// </summary>
     public class PhoneService : IPhoneService
     {
-        private static Lazy<CTTelephonyNetworkInfo> TelNet = new Lazy<CTTelephonyNetworkInfo> ();
+        private static readonly Lazy<CTTelephonyNetworkInfo> TelNet = new Lazy<CTTelephonyNetworkInfo> ();
 
         #region IPhone implementation
         /// <summary>

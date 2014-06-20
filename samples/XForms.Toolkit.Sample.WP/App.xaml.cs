@@ -13,7 +13,7 @@ using XForms.Toolkit.WP;
 namespace XForms.Toolkit.Sample.WP
 {
 	using Services;
-	using XForms.Toolkit.Services.Serialization;
+	using Services.Serialization;
 
 	public partial class App : Application
 	{
@@ -216,7 +216,6 @@ namespace XForms.Toolkit.Sample.WP
 				// ResourceLangauge not being correctly set to a supported language
 				// code or ResourceFlowDirection is set to a value other than LeftToRight
 				// or RightToLeft.
-
 				if (Debugger.IsAttached)
 				{
 					Debugger.Break();
@@ -226,7 +225,10 @@ namespace XForms.Toolkit.Sample.WP
 			}
 		}
 
-		private void SetIoC()
+	    /// <summary>
+	    /// Sets IOC
+	    /// </summary>
+	    private void SetIoC()
 		{
 			var resolverContainer = new SimpleContainer();
 
@@ -235,6 +237,7 @@ namespace XForms.Toolkit.Sample.WP
 			app.Init(this);
 
 			resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
+                .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
 				.Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
 				.Register<IXFormsApp>(app);
 

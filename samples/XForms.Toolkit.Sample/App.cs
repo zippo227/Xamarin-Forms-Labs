@@ -23,14 +23,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
+using System.Collections.Generic;
+using System.Diagnostics;
 using Xamarin.Forms;
 using XForms.Toolkit.Controls;
-using XForms.Toolkit.Sample.Pages.Controls;
 using XForms.Toolkit.Mvvm;
-using System.Diagnostics;
+using XForms.Toolkit.Sample.Pages.Controls;
 using XForms.Toolkit.Services;
-using System.Collections.Generic;
 
 namespace XForms.Toolkit.Sample
 {
@@ -39,48 +38,33 @@ namespace XForms.Toolkit.Sample
 	/// </summary>
 	public class App
 	{
-		public static void Init()
+	    /// <summary>
+	    /// Initializes the application.
+	    /// </summary>
+	    public static void Init()
 		{
-			var app = Resolver.Resolve<IXFormsApp>();
-			if (app == null) return;
+		    var app = Resolver.Resolve<IXFormsApp>();
+		    if (app == null)
+		    {
+		        return;
+		    }
 
-			app.Closing += (o, e) =>
-			{
-				System.Diagnostics.Debug.WriteLine("Application Closing");
-			};
-			app.Error += (o, e) =>
-			{
-				System.Diagnostics.Debug.WriteLine("Application Error");
-			};
-			app.Initialize += (o, e) =>
-			{
-				System.Diagnostics.Debug.WriteLine("Application Initialized");
-			};
-			app.Resumed += (o, e) =>
-			{
-				System.Diagnostics.Debug.WriteLine("Application Resumed");
-			};
-			app.Rotation += (o, e) =>
-			{
-				System.Diagnostics.Debug.WriteLine("Application Rotated");
-			};
-			app.Startup += (o, e) =>
-			{
-				System.Diagnostics.Debug.WriteLine("Application Startup");
-			};
-			app.Suspended += (o, e) =>
-			{
-				System.Diagnostics.Debug.WriteLine("Application Suspended");
-			};
+		    app.Closing += (o, e) => Debug.WriteLine("Application Closing");
+			app.Error += (o, e) => Debug.WriteLine("Application Error");
+			app.Initialize += (o, e) => Debug.WriteLine("Application Initialized");
+			app.Resumed += (o, e) => Debug.WriteLine("Application Resumed");
+			app.Rotation += (o, e) => Debug.WriteLine("Application Rotated");
+			app.Startup += (o, e) => Debug.WriteLine("Application Startup");
+			app.Suspended += (o, e) => Debug.WriteLine("Application Suspended");
 		}
 
 		/// <summary>
 		/// Gets the main page.
 		/// </summary>
-		/// <returns>Page.</returns>
+		/// <returns>The Main Page.</returns>
 		public static Page GetMainPage()
 		{
-			//Register our views with our view models
+		    // Register our views with our view models
 			ViewFactory.Register<MvvmSamplePage, MvvmSampleViewModel>();
 			ViewFactory.Register<NewPageView, NewPageViewModel>();
 			ViewFactory.Register<GeolocatorPage, GeolocatorViewModel>();
@@ -88,10 +72,7 @@ namespace XForms.Toolkit.Sample
 
 			var mainTab = new ExtendedTabbedPage() { Title = "XForms Toolkit Samples" };
 			var mainPage = new NavigationPage(mainTab);
-			mainTab.CurrentPageChanged += () =>
-			{
-				Debug.WriteLine(string.Format("ExtendedTabbedPage CurrentPageChanged {0}", mainTab.CurrentPage.Title));
-			};
+			mainTab.CurrentPageChanged += () => Debug.WriteLine("ExtendedTabbedPage CurrentPageChanged {0}", mainTab.CurrentPage.Title);
 
 			var controls = GetControlsPage(mainPage);
 			var services = GetServicesPage(mainPage);
@@ -107,8 +88,8 @@ namespace XForms.Toolkit.Sample
 		/// Gets the services page.
 		/// </summary>
 		/// <param name="mainPage">The main page.</param>
-		/// <returns>ContentPage.</returns>
-		static ContentPage GetServicesPage(NavigationPage mainPage)
+		/// <returns>Content Page.</returns>
+		private static ContentPage GetServicesPage(VisualElement mainPage)
 		{
             var services = new ContentPage { Title = "Services" };
 			var lstServices = new ListView
@@ -162,12 +143,11 @@ namespace XForms.Toolkit.Sample
 		/// Gets the controls page.
 		/// </summary>
 		/// <param name="mainPage">The main page.</param>
-		/// <returns>ContentPage.</returns>
-		static ContentPage GetControlsPage(NavigationPage mainPage)
+		/// <returns>Content Page.</returns>
+        private static ContentPage GetControlsPage(VisualElement mainPage)
 		{
-			ContentPage controls = new ContentPage();
-			controls.Title = "Controls";
-			var lstControls = new ListView
+			var controls = new ContentPage { Title = "Controls" };
+		    var lstControls = new ListView
 			{
 				ItemsSource = new List<string>()
 				{
@@ -185,10 +165,12 @@ namespace XForms.Toolkit.Sample
 					case "calendar":
 						mainPage.Navigation.PushAsync(new CalendarPage());
 						break;
-					case "autocomplete":
-						Device.OnPlatform(() => mainPage.Navigation.PushAsync(new AutoCompletePage()),
-							null, () => mainPage.Navigation.PushAsync(new AutoCompletePage()));
-						break;
+				    case "autocomplete":
+				        Device.OnPlatform(
+                            () => mainPage.Navigation.PushAsync(new AutoCompletePage()),
+				            null, 
+                            () => mainPage.Navigation.PushAsync(new AutoCompletePage()));
+				        break;
 					case "buttons":
 						mainPage.Navigation.PushAsync(new ButtonPage());
 						break;

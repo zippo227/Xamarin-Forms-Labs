@@ -1,7 +1,7 @@
 Xamarin-Forms-Toolkit
 =====================
 
-Xamarin Forms Toolkit is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+Xamarin Forms Toolkit is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with Xamarin Forms.
 
 Call for action for all Xamarin Developers, embrace this project and share your controls and services with the community, add your own control to the toolkit.
 
@@ -17,7 +17,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 **Available services (Beta)**
 
  - TextToSpeech 
- - Device (battery info, device info)
+ - Device (battery info, device info, sensors)
  - Phone Service (cellular network info, make phonecalls)
  - Geolocator
  - Camera (beta only on Windows)
@@ -28,7 +28,6 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - RelayCommand ; RelayCommand< T >
  - ViewFactory
  - IOC
- 
 _________________
 
 Using the MVVM Helpers
@@ -63,7 +62,7 @@ Or from your codebehind:
 	var button = new ImageButton() {
 				ImageHeightRequest = 50,
 				ImageWidthRequest = 50,
-				Orientation= Orientation.ImageToLeft",
+				Orientation = Orientation.ImageToLeft,
 				Image = "icon_twitter"
 			};
 	stacker.Children.Add (button);
@@ -78,20 +77,20 @@ Using the Services
 	
 **Device** 
 
-	     var device = Resolver.Resolve<IDevice>();
-	     device.Display; //display information
-	     device.Battery; //battery information
+		var device = Resolver.Resolve<IDevice>();
+		device.Display; //display information
+		device.Battery; //battery information
 
 	
 **PhoneService** 
 
-	     var device = Resolver.Resolve<IDevice>();
-	     // not all devices have phone service, f.e. iPod and Android tablets
-	     // so we need to check if phone service is available
-	     if (device.PhoneService != null)
-	     {
-	         device.PhoneService.DialNumber("+1 (855) 926-2746");
-	     }
+	 	var device = Resolver.Resolve<IDevice>();
+		// not all devices have phone service, f.e. iPod and Android tablets
+		// so we need to check if phone service is available
+		if (device.PhoneService != null)
+		{
+			device.PhoneService.DialNumber("+1 (855) 926-2746");
+		}
 
 _______________
 
@@ -126,7 +125,7 @@ __________________
 License
 -----------
 
-License MIT more about that in the [LICENSE][1] file. 
+License Apache 2.0 more about that in the [LICENSE][1] file. 
 __________________
 
 **Contributions:**

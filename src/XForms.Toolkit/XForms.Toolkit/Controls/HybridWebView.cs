@@ -11,27 +11,51 @@ namespace XForms.Toolkit.Controls
 {
     public class HybridWebView : WebView
     {
-        private IStringSerializer jsonSerializer;
-        private Dictionary<string, Action<string>> registeredActions;
+        private readonly IStringSerializer jsonSerializer;
+        private readonly Dictionary<string, Action<string>> registeredActions;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HybridWebView"/> class.
+        /// </summary>
         public HybridWebView() : this(Resolver.Resolve<IJsonSerializer>())
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HybridWebView"/> class.
+        /// </summary>
+        /// <param name="jsonSerializer">
+        /// The JSON serializer.
+        /// </param>
         public HybridWebView(IJsonSerializer jsonSerializer)
         {
             this.jsonSerializer = jsonSerializer;
             this.registeredActions = new Dictionary<string, Action<string>>();
         }
 
+        /// <summary>
+        /// The uri property.
+        /// </summary>
         public static readonly BindableProperty UriProperty = BindableProperty.Create<HybridWebView, Uri>(p => p.Uri, default(Uri));
 
+        /// <summary>
+        /// Gets or sets the uri.
+        /// </summary>
         public Uri Uri
         {
             get { return (Uri)GetValue(UriProperty); }
             set { SetValue(UriProperty, value); }
         }
 
+        /// <summary>
+        /// Registers a native callback.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="action">
+        /// The action.
+        /// </param>
         public void RegisterCallback(string name, Action<string> action)
         {
             this.registeredActions.Add(name, action);

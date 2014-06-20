@@ -14,33 +14,44 @@ namespace XForms.Toolkit
         /// </summary>
         public const double Gravitation = 9.81;
 
-        private event EventHandler<EventArgs<Vector3>> readingAvailable;
-        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Accelerometer"/> class.
+        /// </summary>
         public Accelerometer()
         {
             this.Interval = AccelerometerInterval.Ui;
         }
 
+        /// <summary>
+        /// The reading available event handler.
+        /// </summary>
         public event EventHandler<EventArgs<Vector3>> ReadingAvailable
         {
             add
             {
-                if (readingAvailable == null)
+                if (this.readingAvailable == null)
                 {
-                    Start();
+                    this.Start();
                 }
-                readingAvailable += value;
+
+                this.readingAvailable += value;
             }
+
             remove
             {
-                readingAvailable -= value;
-                if (readingAvailable == null)
+                this.readingAvailable -= value;
+                if (this.readingAvailable == null)
                 {
-                    Stop();
+                    this.Stop();
                 }
             }
         }
 
+        private event EventHandler<EventArgs<Vector3>> readingAvailable;
+
+        /// <summary>
+        /// Gets the latest reading.
+        /// </summary>
         public Vector3 LatestReading
         {
             get;
