@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XForms.Toolkit.Services.Geolocation;
 
-namespace XForms.Toolkit.Services.GeoLocation
+namespace XForms.Toolkit.Services.Geolocation
 {
     /// <summary>
     /// Position extensions
