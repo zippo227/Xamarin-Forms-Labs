@@ -16,11 +16,16 @@ namespace XForms.Toolkit.Sample
 		private string _demoKey = "test-key";
 		public CacheServiceViewModel ()
 		{
-			_cacheService = Resolver.Resolve<ISimpleCache> ();
+			try {
+				_cacheService = Resolver.Resolve<ISimpleCache> ();
+
+			} catch (Exception ex) {
+				
+			}
 			CheckKeyAndDownloadNewContent ();
 		}
 
-		private async Task CheckKeyAndDownloadNewContent(){
+		private void CheckKeyAndDownloadNewContent(){
 		
 			var url  = "http://blog.xamarin.com/feed/";
 
