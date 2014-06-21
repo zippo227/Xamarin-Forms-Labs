@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -30,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExifLib">
@@ -51,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Services\Media\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\XForms.Toolkit.WP\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
@@ -89,6 +92,11 @@
     <Compile Include="Controls\SensorBar\UISensorBar.cs" />
     <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
     <Compile Include="XFormsApp.cs" />
+    <Compile Include="Services\Media\MediaPicker.cs" />
+    <Compile Include="Services\Media\MediaPickerController.cs" />
+    <Compile Include="Services\Media\MediaPickerDelegate.cs" />
+    <Compile Include="Extensions\NSDataStream.cs" />
+    <Compile Include="Services\Media\MediaPickerPopoverDelegate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

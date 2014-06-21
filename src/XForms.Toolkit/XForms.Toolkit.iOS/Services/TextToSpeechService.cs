@@ -5,7 +5,6 @@ using Xamarin.Forms;
 using XForms.Toolkit.Services;
 
 [assembly: Dependency(typeof(XForms.Toolkit.iOS.Services.TextToSpeechService))]
-
 namespace XForms.Toolkit.iOS.Services
 {
     /// <summary>

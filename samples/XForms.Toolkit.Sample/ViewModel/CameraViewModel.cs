@@ -106,7 +106,8 @@ namespace XForms.Toolkit.Sample
 			}
 
 			var device = Resolver.Resolve<IDevice>();
-			_mediaPicker = device.MediaPicker;
+			//	_mediaPicker = device.MediaPicker;
+			_mediaPicker = DependencyService.Get<IMediaPicker> ();
 		}
 		/// <summary>
 		/// Takes the picture.
