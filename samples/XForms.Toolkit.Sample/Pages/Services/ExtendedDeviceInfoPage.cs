@@ -11,7 +11,6 @@ namespace XForms.Toolkit.Sample
     {
         public ExtendedDeviceInfoPage(IDevice device)
         {
-			//device.PhoneService.DialNumber("
 			this.Title ="Extended Device Info";
             if (device == null)
             {
