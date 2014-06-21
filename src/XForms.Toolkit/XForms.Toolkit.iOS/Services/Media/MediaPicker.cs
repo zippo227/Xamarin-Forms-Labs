@@ -116,7 +116,7 @@ namespace XForms.Toolkit.iOS.Services.Media
 			if (!IsPhotosSupported)
 				throw new NotSupportedException();
 
-			return GetMediaAsync (UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
+			return GetMediaAsync (UIImagePickerControllerSourceType.PhotoLibrary, TypeMovie);
 
 		}
 

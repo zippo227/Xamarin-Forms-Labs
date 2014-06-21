@@ -114,6 +114,7 @@ namespace XForms.Toolkit.Services.Media
 			{
 				if (_isDisposed)
 				{
+				
 					throw new ObjectDisposedException(null);
 				}
 

@@ -47,6 +47,10 @@ namespace XForms.Toolkit.Sample
 		/// </summary>
 		private ImageSource _imageSource;
 		/// <summary>
+		/// The _video info
+		/// </summary>
+		private string _videoInfo;
+		/// <summary>
 		/// The _take picture command
 		/// </summary>
 		private RelayCommand _takePictureCommand;
@@ -54,6 +58,10 @@ namespace XForms.Toolkit.Sample
 		/// The _select picture command
 		/// </summary>
 		private RelayCommand _selectPictureCommand;
+		/// <summary>
+		/// The _select video command
+		/// </summary>
+		private RelayCommand _selectVideoCommand;
 
 		/// <summary>
 		/// The _scheduler
@@ -82,7 +90,22 @@ namespace XForms.Toolkit.Sample
 			set
 			{
 				this.ChangeAndNotify(ref _imageSource, value);
-				base.NotifyPropertyChanged();
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the video info.
+		/// </summary>
+		/// <value>The video info.</value>
+		public string VideoInfo
+		{
+			get
+			{
+				return _videoInfo;
+			}
+			set
+			{
+				this.ChangeAndNotify(ref _videoInfo, value,"VideoInfo");
 			}
 		}
 
@@ -101,6 +124,20 @@ namespace XForms.Toolkit.Sample
 			}
 		}
 
+		/// <summary>
+		/// Gets the select video command.
+		/// </summary>
+		/// <value>The select picture command.</value>
+		public RelayCommand SelectVideoCommand 
+		{
+			get
+			{ 
+				return _selectVideoCommand ?? (_selectVideoCommand = new RelayCommand (
+					() => SelectVideo(),
+
+					() => true)); 
+			}
+		}
 		/// <summary>
 		/// Gets the select picture command.
 		/// </summary>
@@ -177,6 +214,37 @@ namespace XForms.Toolkit.Sample
 				MaxPixelDimension = 400
 			});
 			ImageSource = ImageSource.FromStream(() => mediaFile.Source);
+		}
+
+		/// <summary>
+		/// Selects the video.
+		/// </summary>
+		/// <returns>Task.</returns>
+		private async Task SelectVideo ()
+		{
+			Setup ();
+
+			VideoInfo = "Selecting video";
+
+			try {
+				var mediaFile =	await this._mediaPicker.SelectVideoAsync (new VideoMediaStorageOptions ());
+
+				if (mediaFile != null) {
+					VideoInfo = string.Format ("Your video size {0} MB", ConvertBytesToMegabytes (mediaFile.Source.Length));
+				} else {
+					VideoInfo = "No video was selected";
+				}
+			} catch (System.Exception ex) {
+				if(ex is TaskCanceledException)
+					VideoInfo = "Selecting video canceled";
+			}
+
+
+
+		}
+		static double ConvertBytesToMegabytes(long bytes)
+		{
+			return (bytes / 1024f) / 1024f;
 		}
 	}
 }

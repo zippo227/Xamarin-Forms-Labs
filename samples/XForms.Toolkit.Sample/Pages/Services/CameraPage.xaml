@@ -6,8 +6,10 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<Button Text="Take Picture" Command="{Binding TakePictureCommand}"></Button>
-			<Button Text="Select from PictureLibrary" Command="{Binding SelectPictureCommand}"></Button>
+			<Button Text="Select Image from Picture Library" Command="{Binding SelectPictureCommand}"></Button>
+			<Button Text="Select Video from Picture Library " Command="{Binding SelectVideoCommand}"></Button>
 			<Image Source="{Binding ImageSource}" VerticalOptions="CenterAndExpand" />
+			<Entry Text="{Binding VideoInfo}" VerticalOptions="CenterAndExpand" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

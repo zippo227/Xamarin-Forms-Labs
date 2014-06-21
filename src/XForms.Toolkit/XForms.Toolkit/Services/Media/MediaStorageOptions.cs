@@ -167,6 +167,26 @@ namespace XForms.Toolkit.Services.Media
 		{
 			Quality = VideoQuality.High;
 			DesiredLength = TimeSpan.FromMinutes(10);
+			SaveMediaOnCapture = true;
+		}
+		/// <summary>
+		/// Gets or sets the default camera.
+		/// </summary>
+		/// <value>The default camera.</value>
+		public CameraDevice DefaultCamera
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether [save media on capture].
+		/// </summary>
+		/// <value><c>true</c> if [save media on capture]; otherwise, <c>false</c>.</value>
+		public bool SaveMediaOnCapture
+		{
+			get; 
+			set;
 		}
 
 		/// <summary>
