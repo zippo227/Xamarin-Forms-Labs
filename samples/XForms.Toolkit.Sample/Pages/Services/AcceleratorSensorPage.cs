@@ -13,7 +13,9 @@ namespace XForms.Toolkit.Sample
         {
             var device = Resolver.Resolve<IDevice> ();
 
-            if (device.Accelerometer == null)
+			this.Title ="Accelerator Sensor";
+          
+			if (device.Accelerometer == null)
             {
                 this.Content = new Label () 
                 {

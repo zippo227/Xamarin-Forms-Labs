@@ -11,6 +11,7 @@ namespace XForms.Toolkit.Sample
     {
         public AbsoluteLayoutWithDisplayInfoPage(IDisplay display)
         {
+			this.Title = "Absolute Layout With Display Info";
             var abs = new AbsoluteLayout();
             var inchX = display.WidthRequestInInches(1);
             var inchY = display.HeightRequestInInches(1);

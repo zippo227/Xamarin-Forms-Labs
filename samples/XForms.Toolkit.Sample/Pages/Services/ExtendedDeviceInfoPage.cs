@@ -12,7 +12,7 @@ namespace XForms.Toolkit.Sample
         public ExtendedDeviceInfoPage(IDevice device)
         {
 			//device.PhoneService.DialNumber("
-			this.Title ="Extended Device Info Page";
+			this.Title ="Extended Device Info";
             if (device == null)
             {
                 this.Content = new Label()
