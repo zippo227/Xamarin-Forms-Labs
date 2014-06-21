@@ -19,7 +19,6 @@ namespace XForms.Toolkit.Sample.WP
 		public MainPage()
 		{
 			InitializeComponent();
-		  new CalendarViewRenderer();
 			// Sample code to localize the ApplicationBar
 			Forms.Init();
 

@@ -26,7 +26,9 @@ namespace XForms.Toolkit.Sample
 		}
 
 		private void CheckKeyAndDownloadNewContent(){
-		
+			if (_cacheService == null)
+				throw new ArgumentNullException("_cacheService", new Exception("Native SimpleCache implementation wasn't found."));
+
 			var url  = "http://blog.xamarin.com/feed/";
 
 			var keyValue = _cacheService.Get<List<string>>(_demoKey);

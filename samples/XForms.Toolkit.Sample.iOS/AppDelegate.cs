@@ -97,7 +97,7 @@ namespace XForms.Toolkit.Sample.iOS
 			app.Init(this);
 
 			var documents = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			var pathToDatabase = Path.Combine(documents, "xforms.db");
+			var pathToDatabase = "xforms.db";
 
 			resolverContainer.Register<IDevice> (t => AppleDevice.CurrentDevice)
                 .Register<IDisplay> (t => t.Resolve<IDevice> ().Display)

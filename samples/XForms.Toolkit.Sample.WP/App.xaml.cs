@@ -14,6 +14,10 @@ namespace XForms.Toolkit.Sample.WP
 {
 	using Services;
 	using Services.Serialization;
+    using System.IO;
+    using XForms.Toolkit.Caching.SQLiteNet;
+    using Windows.Storage;
+    using System.Threading.Tasks;
 
 	public partial class App : Application
 	{
@@ -228,20 +232,31 @@ namespace XForms.Toolkit.Sample.WP
 	    /// <summary>
 	    /// Sets IOC
 	    /// </summary>
-	    private void SetIoC()
+	    private async void SetIoC()
 		{
 			var resolverContainer = new SimpleContainer();
 
 			var app = new XFormsAppWP();
 
 			app.Init(this);
+            var pathToDatabase = await GetPathForFileAsync("xforms.db");
 
 			resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
 				.Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
-				.Register<IXFormsApp>(app);
+                .Register<IXFormsApp>(app).
+                Register<ISimpleCache>(t => new SQLiteSimpleCache(new SQLite.Net.Platform.WindowsPhone8.SQLitePlatformWP8(),
+                    new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
+			
 
 			Resolver.SetResolver(resolverContainer.GetResolver());
 		}
+
+        public async Task<string> GetPathForFileAsync(string file)
+        {
+            StorageFile storageFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(file, CreationCollisionOption.OpenIfExists);
+
+            return storageFile.Path;
+        }
 	}
 }
