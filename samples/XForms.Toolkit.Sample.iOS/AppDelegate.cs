@@ -31,6 +31,10 @@ using XForms.Toolkit.iOS.Controls.Calendar;
 using XForms.Toolkit.Mvvm;
 using XForms.Toolkit.Services;
 using XForms.Toolkit.Services.Serialization;
+using XForms.Toolkit.Caching.SQLiteNet;
+using SQLite.Net.Platform.XamarinIOS;
+using System;
+using System.IO;
 
 namespace XForms.Toolkit.Sample.iOS
 {
@@ -92,10 +96,16 @@ namespace XForms.Toolkit.Sample.iOS
 			var app = new XFormsAppiOS();
 			app.Init(this);
 
-			resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice)
-                .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
-				.Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
-				.Register<IXFormsApp>(app);
+			var documents = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+			var pathToDatabase = Path.Combine(documents, "xforms.db");
+
+			resolverContainer.Register<IDevice> (t => AppleDevice.CurrentDevice)
+                .Register<IDisplay> (t => t.Resolve<IDevice> ().Display)
+				.Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer> ()
+				.Register<IXFormsApp> (app)
+				.Register<ISimpleCache> (t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(),
+					new SQLite.Net.SQLiteConnectionString(pathToDatabase,true), t.Resolve<IJsonSerializer> () ));
+				
 
             Resolver.SetResolver(resolverContainer.GetResolver());
         }

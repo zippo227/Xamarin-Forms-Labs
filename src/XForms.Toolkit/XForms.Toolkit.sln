@@ -906,6 +906,7 @@ Global
 		{FC01BDDB-E810-4EC9-94AA-A08A66796FCC}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{FC01BDDB-E810-4EC9-94AA-A08A66796FCC}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{FC01BDDB-E810-4EC9-94AA-A08A66796FCC}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{FC01BDDB-E810-4EC9-94AA-A08A66796FCC}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{FC01BDDB-E810-4EC9-94AA-A08A66796FCC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{FC01BDDB-E810-4EC9-94AA-A08A66796FCC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{FC01BDDB-E810-4EC9-94AA-A08A66796FCC}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -948,7 +949,7 @@ Global
 		{F8C821A9-155E-48BC-8998-1ED9DE5CEF1A} = {6D77A8D9-5AD5-4EBD-9137-2999B35F783F}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\..\samples\XForms.Toolkit.Sample.Droid\XForms.Toolkit.Sample.Droid.csproj
+		StartupItem = ..\..\samples\XForms.Toolkit.Sample.iOS\XForms.Toolkit.Sample.iOS.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

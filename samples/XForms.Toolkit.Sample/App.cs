@@ -3,8 +3,8 @@
 // Author           : 
 // Created          : 
 //
-// Last Modified By : Shawn Anderson
-// Last Modified On : 06-16-2014
+// Last Modified By : Rui Marinho
+// Last Modified On : 06-21-2014
 // ***********************************************************************
 // <copyright file="App.cs" company="">
 //     Copyright (c) 2014 . All rights reserved.
@@ -43,6 +43,7 @@ namespace XForms.Toolkit.Sample
 	    /// </summary>
 	    public static void Init()
 		{
+
 		    var app = Resolver.Resolve<IXFormsApp>();
 		    if (app == null)
 		    {
@@ -69,6 +70,7 @@ namespace XForms.Toolkit.Sample
 			ViewFactory.Register<NewPageView, NewPageViewModel>();
 			ViewFactory.Register<GeolocatorPage, GeolocatorViewModel>();
 			ViewFactory.Register<CameraPage, CameraViewModel>();
+			ViewFactory.Register<CacheServicePage, CacheServiceViewModel>();
 
 			var mainTab = new ExtendedTabbedPage() { Title = "XForms Toolkit Samples" };
 			var mainPage = new NavigationPage(mainTab);
@@ -102,7 +104,8 @@ namespace XForms.Toolkit.Sample
 					"GeoLocator",
 					"Camera",
 					"Accelerometer",
-                    "Display"
+					"Display",
+					"Cache"
 				}
 			};
 
@@ -131,6 +134,9 @@ namespace XForms.Toolkit.Sample
                     case "display":
                         mainPage.Navigation.PushAsync(new AbsoluteLayoutWithDisplayInfoPage(Resolver.Resolve<IDisplay>()));
                         break;
+					case "cache":
+						mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(CacheServiceViewModel)));
+						break;
 					default:
 						break;
 				}
