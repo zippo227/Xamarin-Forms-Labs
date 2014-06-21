@@ -36,6 +36,20 @@ namespace XForms.Toolkit.Extensions
             }
         }
 
+        private static double HeightInInches
+        {
+            get
+            {
+                if (widthInInches.HasValue)
+                {
+                    return heightInInches.Value;
+                }
+
+                heightInInches = Display.WidthRequestInInches(1);
+                return heightInInches.Value;
+            }
+        }
+
         public static double GetWidthRequestInInches(this View view)
         {
             return view.WidthRequest / WidthInInches;
@@ -48,12 +62,12 @@ namespace XForms.Toolkit.Extensions
 
         public static double GetHeightRequestInInches(this View view)
         {
-            return view.HeightRequest / WidthInInches;
+            return view.HeightRequest / HeightInInches;
         }
 
         public static void SetHeightRequestInInches(this View view, double inches)
         {
-            view.HeightRequest = inches * WidthInInches;
+            view.HeightRequest = inches * HeightInInches;
         }
     }
 }
