@@ -37,6 +37,7 @@ ECHO Building NuGet package in Post-Build event...
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nuget\BuildNewPackage-RanAutomatically.ps1' -ProjectFilePath '$(ProjectPath)' -OutputDirectory '$(TargetDir)' -Configuration '$(ConfigurationName)' -Platform '$(PlatformName)'" -PackageDirectory '$(SolutionDir)..\..\packages'</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\ExtendedContentView.cs" />
     <Compile Include="Controls\ExtendedTabbedPage.cs" />
     <Compile Include="Controls\HybridWebView.cs" />
     <Compile Include="Controls\ImageButton.cs" />
@@ -49,6 +50,7 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
     <Compile Include="Device\ISensor.cs" />
     <Compile Include="Device\Sensor.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
+    <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Helpers\EventArgs{T}.cs" />
     <Compile Include="Helpers\EventExtensions.cs" />
     <Compile Include="Helpers\TaskUtils.cs" />
@@ -109,7 +111,6 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="Services\Contacts\" />
     <Folder Include="Services\Email\" />
   </ItemGroup>
