@@ -77,8 +77,8 @@ namespace XForms.Toolkit.Sample.Droid
 
 			var app = new XFormsAppDroid();
 		
-			var documents = Environment.DataDirectory.AbsoluteFile;
-			var pathToDatabase = Path.Combine(documents.AbsolutePath, "xforms.db");
+			var documents = Environment.ExternalStorageDirectory.AbsolutePath;
+			var pathToDatabase = Path.Combine(documents, "xforms.db");
 		
 			app.Init(this);
 
