@@ -3,8 +3,8 @@
 // Author           : Shawn Anderson
 // Created          : 06-16-2014
 //
-// Last Modified By : Shawn Anderson
-// Last Modified On : 06-16-2014
+// Last Modified By : Rui Marinho
+// Last Modified On : 06-21-2014
 // ***********************************************************************
 // <copyright file="CameraViewModel.cs" company="">
 //     Copyright (c) 2014 . All rights reserved.
@@ -118,7 +118,7 @@ namespace XForms.Toolkit.Sample
 			get
 			{ 
 				return _takePictureCommand ?? (_takePictureCommand = new RelayCommand (
-					() => TakePicture(),
+					async () => await TakePicture(),
 
 					() => true)); 
 			}
@@ -133,7 +133,7 @@ namespace XForms.Toolkit.Sample
 			get
 			{ 
 				return _selectVideoCommand ?? (_selectVideoCommand = new RelayCommand (
-					() => SelectVideo(),
+					async () => await SelectVideo(),
 
 					() => true)); 
 			}
@@ -147,7 +147,7 @@ namespace XForms.Toolkit.Sample
 			get
 			{ 
 				return _selectPictureCommand ?? (_selectPictureCommand = new RelayCommand (
-					() => SelectPicture(),
+					async () => await SelectPicture(),
 
 					() => true)); 
 			}
@@ -208,12 +208,16 @@ namespace XForms.Toolkit.Sample
 			Setup ();
 
 			ImageSource = null;
+			try {
+				var mediaFile =	await this._mediaPicker.SelectPhotoAsync (new CameraMediaStorageOptions {
+					DefaultCamera = CameraDevice.Front,
+					MaxPixelDimension = 400
+				});
+				ImageSource = ImageSource.FromStream(() => mediaFile.Source);
+			} catch (System.Exception ex) {
+				
+			}
 
-			var mediaFile =	await this._mediaPicker.SelectPhotoAsync (new CameraMediaStorageOptions {
-				DefaultCamera = CameraDevice.Front,
-				MaxPixelDimension = 400
-			});
-			ImageSource = ImageSource.FromStream(() => mediaFile.Source);
 		}
 
 		/// <summary>

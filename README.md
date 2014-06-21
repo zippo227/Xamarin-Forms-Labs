@@ -20,7 +20,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - Device (battery info, device info, sensors)
  - Phone Service (cellular network info, make phonecalls)
  - Geolocator
- - Camera (beta only on Windows)
+ - Camera (Picture and Video picker, Take Picture, Take Video)
 
 **Available Mvvm helpers (Beta)**
 
@@ -137,5 +137,8 @@ __________________
  - Kevin E. Ford @Bowman74
  - Jason Smith @jassmith87 
  - Shawn Anderson
+
+ **Contributions:**
+ 	Xamarin.Mobile
 
   [1]: https://github.com/XForms/XForms-Toolkit/blob/master/LICENSE

@@ -948,7 +948,7 @@ Global
 		{F8C821A9-155E-48BC-8998-1ED9DE5CEF1A} = {6D77A8D9-5AD5-4EBD-9137-2999B35F783F}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\..\samples\XForms.Toolkit.Sample.iOS\XForms.Toolkit.Sample.iOS.csproj
+		StartupItem = ..\..\samples\XForms.Toolkit.Sample.Droid\XForms.Toolkit.Sample.Droid.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

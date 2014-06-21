@@ -11,7 +11,6 @@ using XForms.Toolkit.Droid.Services.Media;
 using XForms.Toolkit.Services.Media;
 
 [assembly: Dependency(typeof (MediaPicker))]
-
 namespace XForms.Toolkit.Droid.Services.Media
 {
 	/// <summary>
@@ -25,7 +24,7 @@ namespace XForms.Toolkit.Droid.Services.Media
 
 		public MediaPicker()
 		{
-			_context = Application.Context;
+			_context = Forms.Context;
 
 			IsCameraAvailable = _context.PackageManager.HasSystemFeature(PackageManager.FeatureCamera);
 
@@ -36,7 +35,7 @@ namespace XForms.Toolkit.Droid.Services.Media
 			IsVideosSupported = true;
 		}
 
-		/// <summary>
+		/// <summary>	
 		///     Gets a value indicating whether this instance is camera available.
 		/// </summary>
 		/// <value><c>true</c> if this instance is camera available; otherwise, <c>false</c>.</value>

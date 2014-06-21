@@ -526,26 +526,26 @@ namespace XForms.Toolkit.Droid.Services.Media
 							bool copied = false;
 
 							// If they don't follow the "rules", try to copy the file locally
-							if (contentPath == null || !contentPath.StartsWith("file"))
-							{
-								copied = true;
-								Uri outputPath = GetOutputMediaFile(context, "temp", null, isPhoto);
-
-								try
-								{
-									using (Stream input = context.ContentResolver.OpenInputStream(uri))
-									using (Stream output = File.Create(outputPath.Path))
-										input.CopyTo(output);
-
-									contentPath = outputPath.Path;
-								}
-								catch (FileNotFoundException)
-								{
-									// If there's no data associated with the uri, we don't know
-									// how to open this. contentPath will be null which will trigger
-									// MediaFileNotFoundException.
-								}
-							}
+//							if (contentPath == null || !contentPath.StartsWith("file"))
+//							{
+//								copied = true;
+//								Uri outputPath = GetOutputMediaFile(context, "temp", null, isPhoto);
+//
+//								try
+//								{
+//									using (Stream input = context.ContentResolver.OpenInputStream(uri))
+//									using (Stream output = File.Create(outputPath.Path))
+//										input.CopyTo(output);
+//
+//									contentPath = outputPath.Path;
+//								}
+//								catch (FileNotFoundException)
+//								{
+//									// If there's no data associated with the uri, we don't know
+//									// how to open this. contentPath will be null which will trigger
+//									// MediaFileNotFoundException.
+//								}
+//							}
 
 							tcs.SetResult(new Tuple<string, bool>(contentPath, copied));
 						}
