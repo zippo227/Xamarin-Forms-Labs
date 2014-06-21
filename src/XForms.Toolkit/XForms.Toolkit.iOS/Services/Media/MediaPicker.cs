@@ -81,7 +81,11 @@ namespace XForms.Toolkit.iOS.Services.Media
 		/// <returns>Task&lt;IMediaFile&gt;.</returns>
 		public Task<MediaFile> SelectPhotoAsync(CameraMediaStorageOptions options)
 		{
-			return null;
+			if (!IsPhotosSupported)
+				throw new NotSupportedException();
+
+			return GetMediaAsync (UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
+
 
 		}
 
@@ -108,7 +112,12 @@ namespace XForms.Toolkit.iOS.Services.Media
 		/// <param name="options">The options.</param>
 		/// <returns>Task&lt;IMediaFile&gt;.</returns>
 		public Task<MediaFile> SelectVideoAsync(VideoMediaStorageOptions options){
-			return null;
+		
+			if (!IsPhotosSupported)
+				throw new NotSupportedException();
+
+			return GetMediaAsync (UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
+
 		}
 
 		/// <summary>

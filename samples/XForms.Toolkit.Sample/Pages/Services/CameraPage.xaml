@@ -6,6 +6,7 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<Button Text="Take Picture" Command="{Binding TakePictureCommand}"></Button>
+			<Button Text="Select from PictureLibrary" Command="{Binding SelectPictureCommand}"></Button>
 			<Image Source="{Binding ImageSource}" VerticalOptions="CenterAndExpand" />
 		</StackLayout>
 	</ContentPage.Content>

@@ -50,6 +50,10 @@ namespace XForms.Toolkit.Sample
 		/// The _take picture command
 		/// </summary>
 		private RelayCommand _takePictureCommand;
+		/// <summary>
+		/// The _select picture command
+		/// </summary>
+		private RelayCommand _selectPictureCommand;
 
 		/// <summary>
 		/// The _scheduler
@@ -62,6 +66,7 @@ namespace XForms.Toolkit.Sample
 		/// </summary>
 		public CameraViewModel()
 		{
+			Setup ();
 		}
 
 		/// <summary>
@@ -91,6 +96,21 @@ namespace XForms.Toolkit.Sample
 			{ 
 				return _takePictureCommand ?? (_takePictureCommand = new RelayCommand (
 					() => TakePicture(),
+
+					() => true)); 
+			}
+		}
+
+		/// <summary>
+		/// Gets the select picture command.
+		/// </summary>
+		/// <value>The select picture command.</value>
+		public RelayCommand SelectPictureCommand 
+		{
+			get
+			{ 
+				return _selectPictureCommand ?? (_selectPictureCommand = new RelayCommand (
+					() => SelectPicture(),
 
 					() => true)); 
 			}
@@ -140,6 +160,23 @@ namespace XForms.Toolkit.Sample
 
 				return null;
 			}, _scheduler);
+		}
+
+		/// <summary>
+		/// Selects the picture.
+		/// </summary>
+		/// <returns>Task.</returns>
+		private async Task SelectPicture ()
+		{
+			Setup ();
+
+			ImageSource = null;
+
+			var mediaFile =	await this._mediaPicker.SelectPhotoAsync (new CameraMediaStorageOptions {
+				DefaultCamera = CameraDevice.Front,
+				MaxPixelDimension = 400
+			});
+			ImageSource = ImageSource.FromStream(() => mediaFile.Source);
 		}
 	}
 }
