@@ -2,7 +2,7 @@
 <toolkit:BaseView
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:toolkit="clr-namespace:Xamarin.Forms.Labs.Mvvm;assembly=XForms.Toolkit"
+    xmlns:toolkit="clr-namespace:Xamarin.Forms.Labs.Mvvm;assembly=Xamarin.Forms.Labs"
   	x:Class="Xamarin.Forms.Labs.Sample.NewPageView"
   	Title="{Binding PageTitle}"
   	>

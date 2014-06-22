@@ -4,12 +4,12 @@ using Android.Content;
 using Android.Util;
 using Android.Graphics;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
-    public class SensorBarDroidView : View
+    public class SensorBarDroidView :Android.Views.View
     {
-        private Color positiveColor = Color.Green;
-        private Color negativeColor = Color.Red;
+        private Android.Graphics.Color positiveColor = Android.Graphics.Color.Green;
+        private Android.Graphics.Color negativeColor = Android.Graphics.Color.Red;
         private double limit = 1;
         private double currentValue = 0;
 
@@ -48,14 +48,14 @@ namespace XForms.Toolkit
             get { return this.limit; }
             set { this.limit = value; }
         }
-            
-        public Color PositiveColor
+
+        public Android.Graphics.Color PositiveColor
         {
             get { return this.positiveColor; }
             set { this.positiveColor = value; }
         }
 
-        public Color NegativeColor
+        public Android.Graphics.Color NegativeColor
         {
             get { return this.negativeColor; }
             set { this.negativeColor = value; }

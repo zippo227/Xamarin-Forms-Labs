@@ -2,7 +2,7 @@
 using Xamarin.Forms.Platform.Android;
 using System.ComponentModel;
 using Xamarin.Forms;
-using XForms.Toolkit;
+using Xamarin.Forms.Labs;
 using Xamarin.Forms.Labs.Droid;
 using Xamarin.Forms.Labs.Controls;
 

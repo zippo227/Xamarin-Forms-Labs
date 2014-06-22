@@ -22,9 +22,9 @@ namespace Xamarin.Forms.Labs
 
             if (DeviceExtendedProperties.TryGetValue("PhysicalScreenResolution", out physicalScreenResolutionObject))
             {
-             //   var physicalScreenResolution = (Size)physicalScreenResolutionObject;
-                //this.Height = (int)physicalScreenResolution.Height;
-                //this.Width = (int)physicalScreenResolution.Width;
+                var physicalScreenResolution = (System.Windows.Size)physicalScreenResolutionObject;
+                this.Height = (int)physicalScreenResolution.Height;
+                this.Width = (int)physicalScreenResolution.Width;
             }
             else
             {
