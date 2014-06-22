@@ -1,7 +1,7 @@
-Xamarin-Forms-Toolkit
+Xamarin-Forms-Labs
 =====================
 
-Xamarin Forms Toolkit is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+Xamarin Forms Labs is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with Xamarin Forms.
 
 Call for action for all Xamarin Developers, embrace this project and share your controls and services with the community, add your own control to the toolkit.
 
@@ -11,15 +11,16 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - ExtendedTabbedPage  
  - ImageButton (beta)
  - ExtendedLabel (alpha)
- - AutoComplete (doesn't work on android)
+ - AutoComplete (beta, doesn't work on android)
  - HybridWebView (alpha)
 
 **Available services (Beta)**
 
  - TextToSpeech 
- - Device (battery info, device info)
+ - Device (battery info, device info, sensors)
  - Phone Service (cellular network info, make phonecalls)
  - Geolocator
+ - Camera (Picture and Video picker, Take Picture, Take Video)
 
 **Available Mvvm helpers (Beta)**
 
@@ -27,7 +28,10 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - RelayCommand ; RelayCommand< T >
  - ViewFactory
  - IOC
- 
+
+**Available Plugins (Beta)**
+    - Serialization
+    - SQLLiteSimpleCache   
 _________________
 
 Using the MVVM Helpers
@@ -44,13 +48,13 @@ _________________
 Using the controls
 -----------
 
-Add XForms.Toolkit.Controls reference to your projects , main pcl, ios, android, and wp.
+Add Xamarin.Forms.Labs.Controls reference to your projects , main pcl, ios, android, and wp.
 
 Xaml :
 
 Reference the assembly namespace 
 
-     xmlns:controls="clr-namespace:XForms.Toolkit.Controls;assembly=XForms.Toolkit"
+     xmlns:controls="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=Xamarin.Forms.Labs"
 
 Render your control:
 
@@ -62,7 +66,7 @@ Or from your codebehind:
 	var button = new ImageButton() {
 				ImageHeightRequest = 50,
 				ImageWidthRequest = 50,
-				Orientation= Orientation.ImageToLeft",
+				Orientation = Orientation.ImageToLeft,
 				Image = "icon_twitter"
 			};
 	stacker.Children.Add (button);
@@ -77,20 +81,20 @@ Using the Services
 	
 **Device** 
 
-	     var device = Resolver.Resolve<IDevice>();
-	     device.Display; //display information
-	     device.Battery; //battery information
+		var device = Resolver.Resolve<IDevice>();
+		device.Display; //display information
+		device.Battery; //battery information
 
 	
 **PhoneService** 
 
-	     var device = Resolver.Resolve<IDevice>();
-	     // not all devices have phone service, f.e. iPod and Android tablets
-	     // so we need to check if phone service is available
-	     if (device.PhoneService != null)
-	     {
-	         device.PhoneService.DialNumber("+1 (855) 926-2746");
-	     }
+	 	var device = Resolver.Resolve<IDevice>();
+		// not all devices have phone service, f.e. iPod and Android tablets
+		// so we need to check if phone service is available
+		if (device.PhoneService != null)
+		{
+			device.PhoneService.DialNumber("+1 (855) 926-2746");
+		}
 
 _______________
 
@@ -125,7 +129,7 @@ __________________
 License
 -----------
 
-License MIT more about that in the [LICENSE][1] file. 
+License Apache 2.0 more about that in the [LICENSE][1] file. 
 __________________
 
 **Contributions:**
@@ -136,5 +140,9 @@ __________________
  - Sami M. Kallio 
  - Kevin E. Ford @Bowman74
  - Jason Smith @jassmith87 
+ - Shawn Anderson
+
+ **Contributions:**
+ 	Xamarin.Mobile
 
   [1]: https://github.com/XForms/XForms-Toolkit/blob/master/LICENSE
