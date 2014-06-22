@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
 	<metadata>
 		<id>$id$</id>
-		<version>$version$</version>
+		<version>1.0.1.4</version>
 		<authors>$author$</authors>
     <title>Xamarin Forms Labs WP</title>
     <tags>xamarin,xamarin forms,xamarin forms labs, wp, windowsphone, controls, services, di, caching, serialization</tags>
@@ -15,8 +15,5 @@
     </description>
 		<releaseNotes>See latest changeset on github</releaseNotes>
 		<copyright>Copyright 2014</copyright>
-		<dependencies>
-			<dependency id="Xamarin.Forms.Labs" version="1.0.1" />
-		</dependencies>
 	</metadata>
 </package>

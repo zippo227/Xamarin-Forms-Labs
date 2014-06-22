@@ -2,21 +2,18 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
 	<metadata>
 		<id>$id$</id>
-    <version>1.0.1.1</version>
+    <version>1.0.1.4</version>
     <authors>Xamarin Forms Labs Team</authors>
     <title>Xamarin Forms Labs Droid</title>
-    <tags>xamarin,xamarin forms,xamarin forms labs, android, controls, services, di, caching, serialization</tags>
+    <tags>xamarin,xamarin forms,xamarin forms labs, android, droid controls, services, di, caching, serialization</tags>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>
-      Xamarin.Forms.Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+      Xamarin Forms Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
       This package contains the Android specific controls and services.
     </description>
 		<releaseNotes>See latest changeset on github</releaseNotes>
 		<copyright>Copyright 2014</copyright>
-		<dependencies>
-			<dependency id="Xamarin.Forms.Labs" version="1.0.1" />
-		</dependencies>
 	</metadata>
 </package>
