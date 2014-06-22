@@ -1,4 +1,4 @@
-Xamarin-Forms-Labs
+Xamarin Forms Labs
 =====================
 
 Xamarin Forms Labs is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with Xamarin Forms.
@@ -10,29 +10,45 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - Calendar Control (beta)  
  - ExtendedTabbedPage  
  - ImageButton (beta)
- - ExtendedLabel (alpha)
- - AutoComplete (beta, doesn't work on android)
+ - ExtendedLabel (beta)
+ - ExtendedViewCell (beta)
+ - ExtendedTextCell (beta)
+ - AutoComplete (beta)
  - HybridWebView (alpha)
 
 **Available services (Beta)**
 
- - TextToSpeech 
- - Device (battery info, device info, sensors)
+ - Text To Speech 
+ - Device (battery info, device info, sensors, accelerometers)
  - Phone Service (cellular network info, make phonecalls)
  - Geolocator
  - Camera (Picture and Video picker, Take Picture, Take Video)
 
 **Available Mvvm helpers (Beta)**
 
- - ViewModelBase 
+ - ViewModelBase (navigation, isbusy)
  - RelayCommand ; RelayCommand< T >
  - ViewFactory
  - IOC
+ - IXFormsApp (application events)
 
 **Available Plugins (Beta)**
-    - Serialization
-    - SQLLiteSimpleCache   
+    
+
+ - Serialization (ServiceStackV3,ProtoBuf,JSON.Net)
+ - Caching (SQLLiteSimpleCache)
+ - Dependency Injection containers (TinyIOC,Autofac,NInject,SimpleInjector)
+
+   
 _________________
+
+
+
+**HOW-TO**
+======
+
+We are working in a great [wiki][1] on how to use the controls and services. https://github.com/XForms/Xamarin-Forms-Labs/wiki
+------------------------------------------------------------------------
 
 Using the MVVM Helpers
 -----------
@@ -47,6 +63,7 @@ _________________
 
 Using the controls
 -----------
+
 
 Add Xamarin.Forms.Labs.Controls reference to your projects , main pcl, ios, android, and wp.
 
@@ -100,8 +117,38 @@ _______________
 
 Nuget
 --------------
+**Main Packages:**
 
-At the time there's no public nuget packages , the solution includes a build action to create nuget packages.
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.iOS/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Droid/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.WP/
+
+**Plugins:**
+
+Caching 
+
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Caching.SQLiteNet/
+
+DI 
+
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.SimpleContainer/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Ninject/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Autofac/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.iOS/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.WP8/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.Droid/
+
+Serialization
+
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ProtoBuf/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.JsonNET/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8/
+ - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS/
+
 
 
 _________________
@@ -109,7 +156,7 @@ _________________
 Build the project
 --------------
 
-To develop on this project, run the build.bat or build.sh file first so the required Xamarin nuget packages can be downloaded.
+To develop on this project, just clone the project to your computer, package restore is enable so build the solution first, if you get any errors try to build each project independently .
 
 
 _________________
@@ -129,7 +176,7 @@ __________________
 License
 -----------
 
-License Apache 2.0 more about that in the [LICENSE][1] file. 
+License Apache 2.0 more about that in the [LICENSE][2] file. 
 __________________
 
 **Contributions:**
@@ -141,8 +188,11 @@ __________________
  - Kevin E. Ford @Bowman74
  - Jason Smith @jassmith87 
  - Shawn Anderson
+ - Sara Silva @saramgsilva
 
- **Contributions:**
+ **Another Project Contributions:**
  	Xamarin.Mobile
 
-  [1]: https://github.com/XForms/XForms-Toolkit/blob/master/LICENSE
+
+  [1]: https://github.com/XForms/Xamarin-Forms-Labs/wiki
+  [2]: https://github.com/XForms/XForms-Toolkit/blob/master/LICENSE

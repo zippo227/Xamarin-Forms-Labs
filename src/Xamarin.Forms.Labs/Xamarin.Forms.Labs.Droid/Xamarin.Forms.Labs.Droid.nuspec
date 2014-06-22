@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
 	<metadata>
 		<id>$id$</id>
-    <version>1.0.1.4</version>
+    <version>1.0.1.5</version>
     <authors>Xamarin Forms Labs Team</authors>
     <title>Xamarin Forms Labs Droid</title>
     <tags>xamarin,xamarin forms,xamarin forms labs, android, droid controls, services, di, caching, serialization</tags>
@@ -15,5 +15,8 @@
     </description>
 		<releaseNotes>See latest changeset on github</releaseNotes>
 		<copyright>Copyright 2014</copyright>
+    <dependencies>
+      <dependency id="Xamarin.Forms.Labs" version="1.0.1.5" />
+    </dependencies>
 	</metadata>
 </package>
