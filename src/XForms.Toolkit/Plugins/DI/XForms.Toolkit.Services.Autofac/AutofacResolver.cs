@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.Services;
 
-namespace XForms.Toolkit.Services.Autofac
+namespace Xamarin.Forms.Labs.Services.Autofac
 {
     public class AutofacResolver : IResolver
     {

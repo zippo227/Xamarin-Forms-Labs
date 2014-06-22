@@ -6,16 +6,16 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using XForms.Toolkit.Mvvm;
-using XForms.Toolkit.Sample.WP.Resources;
-using XForms.Toolkit.WP;
+using Xamarin.Forms.Labs.Mvvm;
+using Xamarin.Forms.Labs.Sample.WP.Resources;
+using Xamarin.Forms.Labs.WP;
 
-namespace XForms.Toolkit.Sample.WP
+namespace Xamarin.Forms.Labs.Sample.WP
 {
 	using Services;
 	using Services.Serialization;
     using System.IO;
-    using XForms.Toolkit.Caching.SQLiteNet;
+    using Xamarin.Forms.Labs.Caching.SQLiteNet;
     using Windows.Storage;
     using System.Threading.Tasks;
 
@@ -138,7 +138,7 @@ namespace XForms.Toolkit.Sample.WP
 		}
 
 		// Do not add any additional code to this method
-		private void CompleteInitializePhoneApplication(object sender, NavigationEventArgs e)
+		private void CompleteInitializePhoneApplication(object sender, System.Windows.Navigation.NavigationEventArgs e)
 		{
 			// Set the root visual to allow the application to render
 			if (RootVisual != RootFrame)
@@ -148,7 +148,7 @@ namespace XForms.Toolkit.Sample.WP
 			RootFrame.Navigated -= CompleteInitializePhoneApplication;
 		}
 
-		private void CheckForResetNavigation(object sender, NavigationEventArgs e)
+        private void CheckForResetNavigation(object sender, System.Windows.Navigation.NavigationEventArgs e)
 		{
 			// If the app has received a 'reset' navigation, then we need to check
 			// on the next navigation to see if the page stack should be reset
@@ -156,7 +156,7 @@ namespace XForms.Toolkit.Sample.WP
 				RootFrame.Navigated += ClearBackStackAfterReset;
 		}
 
-		private void ClearBackStackAfterReset(object sender, NavigationEventArgs e)
+        private void ClearBackStackAfterReset(object sender, System.Windows.Navigation.NavigationEventArgs e)
 		{
 			// Unregister the event so it doesn't get called again
 			RootFrame.Navigated -= ClearBackStackAfterReset;

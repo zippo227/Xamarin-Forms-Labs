@@ -4,7 +4,7 @@ using Android.Util;
 using Android.Views;
 using System.Diagnostics;
 
-namespace XForms.Toolkit.Droid.Controls.Calendar
+namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
     public class CalendarGridView : ViewGroup
     {

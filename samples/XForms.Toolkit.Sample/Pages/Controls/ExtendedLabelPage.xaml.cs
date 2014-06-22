@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using XForms.Toolkit.Controls;
+using Xamarin.Forms.Labs.Controls;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {	
 	public partial class ExtendedLabelPage : ContentPage
 	{	

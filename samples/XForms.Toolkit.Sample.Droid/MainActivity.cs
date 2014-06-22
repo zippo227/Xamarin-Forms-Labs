@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : XForms.Toolkit.Sample.Droid
+// Assembly         : Xamarin.Forms.Labs.Sample.Droid
 // Author           : Shawn Anderson
 // Created          : 06-16-2014
 //
@@ -27,20 +27,20 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using XForms.Toolkit.Droid;
-using XForms.Toolkit.Mvvm;
-using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Serialization;
-using XForms.Toolkit.Caching.SQLiteNet;
+using Xamarin.Forms.Labs.Droid;
+using Xamarin.Forms.Labs.Mvvm;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Services.Serialization;
+using Xamarin.Forms.Labs.Caching.SQLiteNet;
 using System.IO;
 
 
-namespace XForms.Toolkit.Sample.Droid
+namespace Xamarin.Forms.Labs.Sample.Droid
 {
 	/// <summary>
 	/// Class MainActivity.
 	/// </summary>
-    [Activity(Label = "XForms.Toolkit.Sample.Droid", MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
+    [Activity(Label = "Xamarin.Forms.Labs.Sample.Droid", MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
 	public class MainActivity : XFormsApplicationDroid
 	{
 		/// <summary>

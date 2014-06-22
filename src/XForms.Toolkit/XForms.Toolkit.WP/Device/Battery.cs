@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Phone.Info;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Windows Phone Battery class.

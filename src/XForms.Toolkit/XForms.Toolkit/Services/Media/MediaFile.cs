@@ -27,7 +27,7 @@ using System;
 using System.IO;
 using ExifLib;
 
-namespace XForms.Toolkit.Services.Media
+namespace Xamarin.Forms.Labs.Services.Media
 {
 	/// <summary>
 	/// Class MediaFile. This class cannot be inherited.

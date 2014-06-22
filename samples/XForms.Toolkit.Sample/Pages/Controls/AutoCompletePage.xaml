@@ -2,9 +2,9 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:XForms.Toolkit.Controls;assembly=XForms.Toolkit"
+    xmlns:controls="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=XForms.Toolkit"
     Title="AutoComplete"
-    x:Class="XForms.Toolkit.Sample.AutoCompletePage">
+    x:Class="Xamarin.Forms.Labs.Sample.AutoCompletePage">
     <ContentPage.Resources>
     <ResourceDictionary>
 	<!--    this isn't working yet-->

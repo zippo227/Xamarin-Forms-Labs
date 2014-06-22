@@ -2,7 +2,7 @@ using Android.Content;
 using Android.Views;
 using Android.Widget;
 
-namespace XForms.Toolkit.Droid.Controls.Calendar
+namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
     public class MonthAdapter : BaseAdapter<MonthDescriptor>
     {

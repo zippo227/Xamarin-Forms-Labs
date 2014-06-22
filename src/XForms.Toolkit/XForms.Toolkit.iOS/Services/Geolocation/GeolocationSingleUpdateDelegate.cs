@@ -18,10 +18,10 @@ using System;
 using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
 using System.Threading;
-using XForms.Toolkit.Services.Geolocation;
+using Xamarin.Forms.Labs.Services.Geolocation;
 
 
-namespace XForms.Toolkit.iOS.Services.Geolocation
+namespace Xamarin.Forms.Labs.iOS.Services.Geolocation
 {
 	internal class GeolocationSingleUpdateDelegate
 		: CLLocationManagerDelegate

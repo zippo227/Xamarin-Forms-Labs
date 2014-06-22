@@ -1,8 +1,8 @@
 ﻿using System;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Mvvm;
 
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
 	//[ViewType(typeof(NewPageView))] can specify this
 	public class NewPageViewModel : ViewModel

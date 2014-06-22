@@ -1,6 +1,6 @@
-﻿using XForms.Toolkit.Helpers;
+﻿using Xamarin.Forms.Labs.Helpers;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     public static class VectorExtensions
     {

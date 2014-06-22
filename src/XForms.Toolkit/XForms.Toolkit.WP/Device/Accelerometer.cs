@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     using Microsoft.Devices.Sensors;
-    using XForms.Toolkit.Helpers;
+    using Xamarin.Forms.Labs.Helpers;
     using Meter = Microsoft.Devices.Sensors.Accelerometer;
 
     public partial class Accelerometer

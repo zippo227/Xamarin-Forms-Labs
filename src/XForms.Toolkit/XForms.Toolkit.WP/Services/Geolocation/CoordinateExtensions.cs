@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : XForms.Toolkit.WP
+// Assembly         : Xamarin.Forms.Labs.WP
 // Author           : Sami M. Kallio
 // Created          : 06-16-2014
 //
@@ -25,7 +25,7 @@
 // ***********************************************************************
 using Windows.Devices.Geolocation;
 
-namespace XForms.Toolkit.Services.Geolocation
+namespace Xamarin.Forms.Labs.Services.Geolocation
 {
     /// <summary>
     /// The coordinate extensions for Windows Phone.

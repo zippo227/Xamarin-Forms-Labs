@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using SQLite.Net;
 using SQLite.Net.Attributes;
 using SQLite.Net.Interop;
-using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Serialization;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Services.Serialization;
 
-namespace XForms.Toolkit.Caching.SQLiteNet
+namespace Xamarin.Forms.Labs.Caching.SQLiteNet
 {
     public class SQLiteSimpleCache : SQLiteConnectionWithLock, ISimpleCache
     {

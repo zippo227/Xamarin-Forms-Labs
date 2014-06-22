@@ -5,7 +5,7 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace XForms.Toolkit.Sample.iOS
+namespace Xamarin.Forms.Labs.Sample.iOS
 {
     public partial class SensorStoryboardController : UIViewController
     {

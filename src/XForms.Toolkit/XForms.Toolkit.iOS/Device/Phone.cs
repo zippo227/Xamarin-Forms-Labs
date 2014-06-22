@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.iOS.Services;
+using Xamarin.Forms.Labs.Services;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Apple iPhone.
@@ -40,7 +41,7 @@ namespace XForms.Toolkit
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="XForms.Toolkit.Phone"/> class.
+        /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.Phone"/> class.
         /// </summary>
         /// <param name="majorVersion">Major version.</param>
         /// <param name="minorVersion">Minor version.</param>

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace XForms.Toolkit.Mvvm
+namespace Xamarin.Forms.Labs.Mvvm
 {
 	public class ViewModelNavigation
 	{

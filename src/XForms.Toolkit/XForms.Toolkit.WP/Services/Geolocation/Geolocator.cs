@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : XForms.Toolkit.WP
+// Assembly         : Xamarin.Forms.Labs.WP
 // Author           : Sami M. Kallio
 // Created          : 06-16-2014
 //
@@ -27,9 +27,9 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(XForms.Toolkit.Services.Geolocation.Geolocator))]
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.Services.Geolocation.Geolocator))]
 
-namespace XForms.Toolkit.Services.Geolocation
+namespace Xamarin.Forms.Labs.Services.Geolocation
 {
     using Windows.Devices.Geolocation;
     using Locator = Windows.Devices.Geolocation.Geolocator;

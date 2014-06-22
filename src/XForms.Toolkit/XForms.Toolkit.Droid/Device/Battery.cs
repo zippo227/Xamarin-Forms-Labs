@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Battery information class.

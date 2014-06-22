@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using XForms.Toolkit.Controls;
+using Xamarin.Forms.Labs.Controls;
 
-namespace XForms.Toolkit.Sample.Pages.Controls
+namespace Xamarin.Forms.Labs.Sample.Pages.Controls
 {
     public partial class ButtonPage : ContentPage
     {

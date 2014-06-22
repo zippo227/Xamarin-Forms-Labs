@@ -1,12 +1,12 @@
 ﻿using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using XForms.Toolkit.Controls;
-using XForms.Toolkit.iOS;
+using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms.Labs.iOS;
 
 [assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRenderer))]
 
-namespace XForms.Toolkit.iOS
+namespace Xamarin.Forms.Labs.iOS
 {
     /// <summary>
     /// The extended label renderer.

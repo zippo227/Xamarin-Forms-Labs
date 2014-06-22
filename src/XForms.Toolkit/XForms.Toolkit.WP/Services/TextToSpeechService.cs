@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.Phone.Speech.Synthesis;
 using Xamarin.Forms;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.Services;
 
-[assembly: Dependency(typeof(XForms.Toolkit.WP.Services.TextToSpeechService))]
-
-namespace XForms.Toolkit.WP.Services
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.WP.Services.TextToSpeechService))]
+namespace Xamarin.Forms.Labs.WP.Services
 {
     /// <summary>
     /// The text to speech service implements <see cref="ITextToSpeechService"/> for Windows Phone.

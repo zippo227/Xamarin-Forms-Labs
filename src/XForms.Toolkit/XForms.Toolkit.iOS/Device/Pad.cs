@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Apple iPad.
@@ -48,7 +48,7 @@ namespace XForms.Toolkit
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="XForms.Toolkit.Pad"/> class.
+        /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.Pad"/> class.
         /// </summary>
         /// <param name="majorVersion">Major version.</param>
         /// <param name="minorVersion">Minor version.</param>

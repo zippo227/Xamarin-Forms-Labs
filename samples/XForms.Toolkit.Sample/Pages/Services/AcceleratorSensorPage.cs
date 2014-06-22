@@ -1,8 +1,9 @@
 ﻿using System;
 using Xamarin.Forms;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms.Labs.Services;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
     public class AcceleratorSensorPage : ContentPage
     {

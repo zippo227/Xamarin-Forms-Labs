@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Defines battery interface

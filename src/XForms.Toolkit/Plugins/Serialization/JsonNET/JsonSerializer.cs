@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace XForms.Toolkit.Services.Serialization.JsonNET
+namespace Xamarin.Forms.Labs.Services.Serialization.JsonNET
 {
     /// <summary>
     /// JSON serializer using Newtonsoft.Json library

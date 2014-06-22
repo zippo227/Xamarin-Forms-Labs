@@ -3,18 +3,14 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
-using XForms.Toolkit.Controls;
-using XForms.Toolkit.Enums;
-using XForms.Toolkit.WP.Controls.ImageButton;
+using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms.Labs.Enums;
+using Xamarin.Forms.Labs.WP.Controls.ImageButton;
 using Button = Xamarin.Forms.Button;
-using Image = System.Windows.Controls.Image;
-using TextAlignment = System.Windows.TextAlignment;
 
-[assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
-
-namespace XForms.Toolkit.WP.Controls.ImageButton
+[assembly: Xamarin.Forms.ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
+namespace Xamarin.Forms.Labs.WP.Controls.ImageButton
 {
     /// <summary>
     /// Draws a button on the Windows Phone platform with the image shown in the right 
@@ -22,7 +18,7 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
     /// </summary>
     public class ImageButtonRenderer : ButtonRenderer
     {
-        private Image currentImage;
+        private System.Windows.Controls.Image currentImage;
 
         /// <summary>
         /// Handles the initial drawing of the button.
@@ -32,7 +28,7 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
         {
             base.OnElementChanged(e);
 
-            var sourceButton = this.Element as Toolkit.Controls.ImageButton;
+            var sourceButton = this.Element as Xamarin.Forms.Labs.Controls.ImageButton;
             var targetButton = this.Control;
             if (sourceButton != null && targetButton != null && !string.IsNullOrEmpty(sourceButton.Image))
             {
@@ -91,9 +87,9 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == Toolkit.Controls.ImageButton.ImageProperty.PropertyName)
+            if (e.PropertyName == Xamarin.Forms.Labs.Controls.ImageButton.ImageProperty.PropertyName)
             {
-                var sourceButton = this.Element as Toolkit.Controls.ImageButton;
+                var sourceButton = this.Element as Xamarin.Forms.Labs.Controls.ImageButton;
                 if (sourceButton != null && !string.IsNullOrEmpty(sourceButton.Image))
                 {
                     this.currentImage = GetImage(sourceButton.Image, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
@@ -107,19 +103,19 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
         /// </summary>
         /// <param name="imageOrientation">The orientation to use.</param>
         /// <returns>The alignment to use for the text.</returns>
-        private static TextAlignment GetTextAlignment(ImageOrientation imageOrientation)
+        private static System.Windows.TextAlignment GetTextAlignment(ImageOrientation imageOrientation)
         {
-            TextAlignment returnValue;
+            System.Windows.TextAlignment returnValue;
             switch (imageOrientation)
             {
                 case ImageOrientation.ImageToLeft:
-                    returnValue = TextAlignment.Left;
+                    returnValue = System.Windows.TextAlignment.Left;
                     break;
                 case ImageOrientation.ImageToRight:
-                    returnValue = TextAlignment.Right;
+                    returnValue = System.Windows.TextAlignment.Right;
                     break;
                 default:
-                    returnValue = TextAlignment.Center;
+                    returnValue = System.Windows.TextAlignment.Center;
                     break;
             }
 
@@ -134,9 +130,9 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
         /// <param name="height">The height for the image (divides by 2 for the Windows Phone platform).</param>
         /// <param name="width">The width for the image (divides by 2 for the Windows Phone platform).</param>
         /// <returns>An image </returns>
-        private static Image GetImage(string imageName, int height, int width)
+        private static System.Windows.Controls.Image GetImage(string imageName, int height, int width)
         {
-            var image = new Image();
+            var image = new System.Windows.Controls.Image();
             var uri = new Uri("images/" + imageName + ".png", UriKind.Relative);
             var bmp = new BitmapImage(uri);
             image.Source = bmp;
@@ -150,7 +146,7 @@ namespace XForms.Toolkit.WP.Controls.ImageButton
         /// </summary>
         /// <param name="image">The image to add a margin to.</param>
         /// <param name="orientation">The orientation of the image on the button.</param>
-        private static void SetImageMargin(Image image, ImageOrientation orientation)
+        private static void SetImageMargin(System.Windows.Controls.Image image, ImageOrientation orientation)
         {
             const int defaultMargin = 10;
             int left = 0;

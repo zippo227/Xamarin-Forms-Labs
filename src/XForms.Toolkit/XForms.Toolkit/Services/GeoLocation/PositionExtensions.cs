@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Services.Geolocation
+namespace Xamarin.Forms.Labs.Services.Geolocation
 {
     /// <summary>
     /// Position extensions

@@ -7,7 +7,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MonoTouch.CoreMotion;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     public partial class Gyroscope
     {

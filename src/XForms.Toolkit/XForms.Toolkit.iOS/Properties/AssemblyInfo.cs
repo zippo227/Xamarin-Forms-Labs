@@ -4,10 +4,10 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle ("XForms.Toolkit.iOS")]
+[assembly: AssemblyTitle ("Xamarin.Forms.Labs.iOS")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany("XForms Toolkit Team")]
+[assembly: AssemblyCompany("Xamarin Forms Labs Team")]
 [assembly: AssemblyProduct ("")]
 [assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark ("")]

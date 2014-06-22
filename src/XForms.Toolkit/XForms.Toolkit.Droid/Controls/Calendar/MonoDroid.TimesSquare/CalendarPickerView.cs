@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DroidListView = Android.Widget.ListView;
 
-namespace XForms.Toolkit.Droid.Controls.Calendar
+namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
 	public class CalendarPickerView : DroidListView
     {

@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace XForms.Toolkit.Services
+namespace Xamarin.Forms.Labs.Services
 {
     /// <summary>
     /// The Text To Speech Service interface.

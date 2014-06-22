@@ -5,7 +5,7 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace XForms.Toolkit.Sample.iOS
+namespace Xamarin.Forms.Labs.Sample.iOS
 {
 	public class Application
 	{

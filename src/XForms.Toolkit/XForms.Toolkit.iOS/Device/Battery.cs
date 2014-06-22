@@ -6,7 +6,7 @@ using System.Text;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Battery portion for Apple devices.

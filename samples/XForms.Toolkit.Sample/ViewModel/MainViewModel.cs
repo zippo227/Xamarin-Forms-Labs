@@ -1,11 +1,11 @@
 ﻿using System;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Mvvm;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.Services;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
 	public class MainViewModel : ViewModel
 	{

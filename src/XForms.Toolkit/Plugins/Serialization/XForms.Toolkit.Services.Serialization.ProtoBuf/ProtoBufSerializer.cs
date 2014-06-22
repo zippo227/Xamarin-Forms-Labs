@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProtoBuf;
 
-namespace XForms.Toolkit.Services.Serialization.ProtoBuf
+namespace Xamarin.Forms.Labs.Services.Serialization.ProtoBuf
 {
     public class ProtoBufSerializer : StreamSerializer
     {

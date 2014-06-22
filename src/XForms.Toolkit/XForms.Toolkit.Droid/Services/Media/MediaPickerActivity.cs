@@ -7,13 +7,13 @@ using Android.Content;
 using Android.Database;
 using Android.OS;
 using Android.Provider;
-using XForms.Toolkit.Helpers;
-using XForms.Toolkit.Services.Media;
+using Xamarin.Forms.Labs.Helpers;
+using Xamarin.Forms.Labs.Services.Media;
 using Environment = Android.OS.Environment;
 using FileNotFoundException = Java.IO.FileNotFoundException;
 using Uri = Android.Net.Uri;
 
-namespace XForms.Toolkit.Droid.Services.Media
+namespace Xamarin.Forms.Labs.Droid.Services.Media
 {
 	/// <summary>
 	/// Class MediaPickerActivity.

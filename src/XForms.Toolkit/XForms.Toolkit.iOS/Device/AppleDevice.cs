@@ -2,10 +2,10 @@
 using MonoTouch.UIKit;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Media;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Services.Media;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Apple device base class.
@@ -22,7 +22,7 @@ namespace XForms.Toolkit
         static internal extern int sysctlbyname([MarshalAs(UnmanagedType.LPStr)] string property, IntPtr output, IntPtr oldLen, IntPtr newp, uint newlen);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="XForms.Toolkit.AppleDevice"/> class.
+        /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.AppleDevice"/> class.
         /// </summary>
         protected AppleDevice()
         {
@@ -30,7 +30,7 @@ namespace XForms.Toolkit
             this.Accelerometer = new Accelerometer();
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
 
-            if (XForms.Toolkit.Gyroscope.IsSupported)
+            if (Xamarin.Forms.Labs.Gyroscope.IsSupported)
             {
                 this.Gyroscope = new Gyroscope();
             }

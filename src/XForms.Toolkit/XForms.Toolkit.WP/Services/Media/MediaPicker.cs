@@ -7,9 +7,9 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Microsoft.Devices;
 using Microsoft.Phone.Tasks;
-using XForms.Toolkit.Services.Media;
+using Xamarin.Forms.Labs.Services.Media;
 
-namespace XForms.Toolkit.WP.Services.Media
+namespace Xamarin.Forms.Labs.WP.Services.Media
 {
 	/// <summary>
 	///     Class MediaPicker.

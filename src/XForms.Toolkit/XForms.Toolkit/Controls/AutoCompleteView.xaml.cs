@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
 
-namespace XForms.Toolkit.Controls
+namespace Xamarin.Forms.Labs.Controls
 {
 	public class Preserve : Attribute
 	{

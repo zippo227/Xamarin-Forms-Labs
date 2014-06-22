@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     public static class DisplayExtensions
     {

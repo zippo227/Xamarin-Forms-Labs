@@ -9,9 +9,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using XForms.Toolkit.Helpers;
+using Xamarin.Forms.Labs.Helpers;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     public partial class Gyroscope : Java.Lang.Object, ISensorEventListener
     {

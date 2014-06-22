@@ -2,14 +2,14 @@ using Android.Graphics.Drawables;
 using Android.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using XForms.Toolkit.Controls;
-using XForms.Toolkit.Droid.Controls.ImageButton;
-using XForms.Toolkit.Enums;
+using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms.Labs.Droid.Controls.ImageButton;
+using Xamarin.Forms.Labs.Enums;
 using System.ComponentModel;
 using TextAlignment = Android.Views.TextAlignment;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
-namespace XForms.Toolkit.Droid.Controls.ImageButton
+namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
 {
     /// <summary>
     /// Draws a button on the Android platform with the image shown in the right 
@@ -18,7 +18,7 @@ namespace XForms.Toolkit.Droid.Controls.ImageButton
 	public class ImageButtonRenderer : ButtonRenderer
     {
 
-		private  XForms.Toolkit.Controls.ImageButton ImageButton { get { return (XForms.Toolkit.Controls.ImageButton) Element; } }
+		private  Xamarin.Forms.Labs.Controls.ImageButton ImageButton { get { return (Xamarin.Forms.Labs.Controls.ImageButton) Element; } }
 		protected override void OnElementChanged (ElementChangedEventArgs<Button> e)
 		{
 			base.OnElementChanged (e);
@@ -40,7 +40,7 @@ namespace XForms.Toolkit.Droid.Controls.ImageButton
         /// </summary>
         /// <param name="targetButton">The target button.</param>
         /// <param name="model">The model.</param>
-        private void SetImageSource(Android.Widget.Button targetButton, Toolkit.Controls.ImageButton model)
+        private void SetImageSource(Android.Widget.Button targetButton, Xamarin.Forms.Labs.Controls.ImageButton model)
         {
             var packageName = Context.PackageName;
             const int padding = 10;
@@ -88,7 +88,7 @@ namespace XForms.Toolkit.Droid.Controls.ImageButton
 		{
 			base.OnElementPropertyChanged (sender, e);
 
-			if (e.PropertyName == XForms.Toolkit.Controls.ImageButton.ImageProperty.PropertyName)
+			if (e.PropertyName == Xamarin.Forms.Labs.Controls.ImageButton.ImageProperty.PropertyName)
 			{
 				var targetButton = (Android.Widget.Button)Control;
 				SetImageSource(targetButton, this.ImageButton);

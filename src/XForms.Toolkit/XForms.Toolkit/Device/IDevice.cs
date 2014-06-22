@@ -1,9 +1,9 @@
 ﻿using System;
-using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Media;
-using XForms.Toolkit.Services.Geolocation;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.Services.Geolocation;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
 	/// <summary>
 	/// Abstracted device interface.

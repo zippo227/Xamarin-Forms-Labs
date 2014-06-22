@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Services.Serialization
+namespace Xamarin.Forms.Labs.Services.Serialization
 {
     /// <summary>
     /// Defines a generic interface for stream serializer

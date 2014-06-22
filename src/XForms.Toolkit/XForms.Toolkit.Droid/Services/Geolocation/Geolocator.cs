@@ -24,12 +24,12 @@ using Android.Locations;
 using Android.OS;
 using Java.Lang;
 using Xamarin.Forms;
-using XForms.Toolkit.Droid.Services.Geolocation;
-using XForms.Toolkit.Services.Geolocation;
+using Xamarin.Forms.Labs.Droid.Services.Geolocation;
+using Xamarin.Forms.Labs.Services.Geolocation;
 
 [assembly: Dependency(typeof (Geolocator))]
 
-namespace XForms.Toolkit.Droid.Services.Geolocation
+namespace Xamarin.Forms.Labs.Droid.Services.Geolocation
 {
 	public class Geolocator : IGeolocator
 	{

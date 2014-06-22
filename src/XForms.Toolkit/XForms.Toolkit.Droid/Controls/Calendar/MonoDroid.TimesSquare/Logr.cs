@@ -1,13 +1,13 @@
 using Android.Util;
 
-namespace XForms.Toolkit.Droid.Controls.Calendar
+namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
 	public class Logr
 	{
 		public static void D(string message)
 		{
 #if DEBUG
-			Log.Debug("XForms.Toolkit.Droid.Controls.Calendar", message);
+			Log.Debug("Xamarin.Forms.Labs.Droid.Controls.Calendar", message);
 #endif
 		}
 

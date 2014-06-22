@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace XForms.Toolkit.Droid.Controls.Calendar
+namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
     public class MonthView : LinearLayout
     {

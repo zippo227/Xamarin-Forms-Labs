@@ -17,7 +17,7 @@
 using System.IO;
 using MonoTouch.Foundation;
 
-namespace XForms.Toolkit.iOS
+namespace Xamarin.Forms.Labs.iOS
 {
 	internal unsafe class NSDataStream
 		: UnmanagedMemoryStream

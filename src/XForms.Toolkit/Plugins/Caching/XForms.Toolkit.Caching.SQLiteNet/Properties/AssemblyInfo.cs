@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("XForms.Toolkit.Caching.SQLiteNet")]
+[assembly: AssemblyTitle("Xamarin.Forms.Labs.Caching.SQLiteNet")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("XForms.Toolkit.Caching.SQLiteNet")]
+[assembly: AssemblyCompany("Xamarin Forms Labs Team")]
+[assembly: AssemblyProduct("Xamarin.Forms.Labs.Caching.SQLiteNet")]
 [assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XForms.Toolkit.Services
+namespace Xamarin.Forms.Labs.Services
 {
     /// <summary>
     /// Interface for phone functionality and information

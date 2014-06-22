@@ -10,12 +10,12 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-namespace XForms.Toolkit.WP.Controls.SensorBar
+namespace Xamarin.Forms.Labs.WP.Controls.SensorBar
 {
     public partial class SensorBarControl : UserControl
     {
-        private Color positiveColor = Color.FromArgb(255, 0, 255, 0);
-        private Color negativeColor = Color.FromArgb(255, 255, 0, 0);
+        private System.Windows.Media.Color positiveColor = System.Windows.Media.Color.FromArgb(255, 0, 255, 0);
+        private System.Windows.Media.Color negativeColor = System.Windows.Media.Color.FromArgb(255, 255, 0, 0);
         private double limit = 1;
         private double currentValue = 0;
 
@@ -46,7 +46,7 @@ namespace XForms.Toolkit.WP.Controls.SensorBar
         }
 
         [Browsable(true)]
-        public Color PositiveColor
+        public System.Windows.Media.Color PositiveColor
         {
             get { return this.negativeColor; }
             set 
@@ -57,7 +57,7 @@ namespace XForms.Toolkit.WP.Controls.SensorBar
         }
 
         [ Browsable(true)]
-        public Color NegativeColor
+        public System.Windows.Media.Color NegativeColor
         {
             get { return this.negativeColor; }
             set 

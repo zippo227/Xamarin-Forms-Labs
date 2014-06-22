@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
     public class ExtendedDeviceInfoPage : ContentPage
     {

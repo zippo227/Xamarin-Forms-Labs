@@ -9,7 +9,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System.CodeDom.Compiler;
 
-namespace XForms.Toolkit.Sample.iOS
+namespace Xamarin.Forms.Labs.Sample.iOS
 {
 	[Register ("SensorStoryboardController")]
 	partial class SensorStoryboardController

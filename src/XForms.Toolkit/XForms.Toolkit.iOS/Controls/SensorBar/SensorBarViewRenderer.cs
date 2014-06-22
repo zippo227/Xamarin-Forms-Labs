@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using XForms.Toolkit;
-using XForms.Toolkit.Controls;
+using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms.Labs;
 
 [assembly: ExportRenderer(typeof(SensorBarView), typeof(SensorBarViewRenderer))]
 
-namespace XForms.Toolkit.Controls
+namespace Xamarin.Forms.Labs.Controls
 {
     /// <summary>
     /// The sensor bar view renderer.

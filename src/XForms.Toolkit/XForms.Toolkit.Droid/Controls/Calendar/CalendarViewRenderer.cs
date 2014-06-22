@@ -3,25 +3,25 @@ using Android.Widget;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using XForms.Toolkit.Droid.Controls.Calendar;
+using Xamarin.Forms.Labs.Droid.Controls.Calendar;
 using Android.Renderscripts;
 
-[assembly: ExportRenderer (typeof (XForms.Toolkit.Controls.CalendarView), typeof (CalendarViewRenderer))]
-namespace XForms.Toolkit.Droid.Controls.Calendar
+[assembly: ExportRenderer (typeof (Xamarin.Forms.Labs.Controls.CalendarView), typeof (CalendarViewRenderer))]
+namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
 
-	public class CalendarViewRenderer : ViewRenderer<XForms.Toolkit.Controls.CalendarView,LinearLayout>
+	public class CalendarViewRenderer : ViewRenderer<Xamarin.Forms.Labs.Controls.CalendarView,LinearLayout>
     {
-		private const string TAG = "XForms.Toolkit.Controls.Calendar";
+		private const string TAG = "Xamarin.Forms.Labs.Controls.Calendar";
 
-        XForms.Toolkit.Controls.CalendarView _view;
+        Xamarin.Forms.Labs.Controls.CalendarView _view;
         CalendarPickerView _pickerView;
 
         public CalendarViewRenderer()
         {
         }
 
-		protected override void OnElementChanged (ElementChangedEventArgs<XForms.Toolkit.Controls.CalendarView> e)
+		protected override void OnElementChanged (ElementChangedEventArgs<Xamarin.Forms.Labs.Controls.CalendarView> e)
 		{
 			base.OnElementChanged (e);
 

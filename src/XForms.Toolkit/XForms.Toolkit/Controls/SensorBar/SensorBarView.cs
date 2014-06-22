@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs.Controls
 {
     public class SensorBarView : View
     {

@@ -25,7 +25,7 @@
 // ***********************************************************************
 using System;
 
-namespace XForms.Toolkit.Mvvm
+namespace Xamarin.Forms.Labs.Mvvm
 {
 	/// <summary>
 	/// Interface IXFormsApp

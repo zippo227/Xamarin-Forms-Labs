@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.Services;
 
-namespace XForms.Toolkit.Extensions
+namespace Xamarin.Forms.Labs.Extensions
 {
     public static class ViewExtensions
     {

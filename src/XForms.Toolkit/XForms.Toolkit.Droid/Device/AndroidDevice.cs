@@ -1,10 +1,10 @@
 ﻿using Android.Telephony;
 using Android.OS;
-using XForms.Toolkit.Droid.Services.Media;
-using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Media;
+using Xamarin.Forms.Labs.Droid.Services.Media;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Services.Media;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Android device implements <see cref=""/>.
@@ -14,23 +14,23 @@ namespace XForms.Toolkit
         private static IDevice currentDevice;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="XForms.Toolkit.AndroidDevice"/> class.
+        /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.AndroidDevice"/> class.
         /// </summary>
         private AndroidDevice ()
         {
-            var manager = XForms.Toolkit.Services.PhoneService.Manager;
+            var manager = Xamarin.Forms.Labs.Services.PhoneService.Manager;
 
             if (manager != null && manager.PhoneType != PhoneType.None)
             {
                 this.PhoneService = new PhoneService();
             }
 
-            if (XForms.Toolkit.Accelerometer.IsSupported)
+            if (Xamarin.Forms.Labs.Accelerometer.IsSupported)
             {
                 this.Accelerometer = new Accelerometer();
             }
 
-            if (XForms.Toolkit.Gyroscope.IsSupported)
+            if (Xamarin.Forms.Labs.Gyroscope.IsSupported)
             {
                 this.Gyroscope = new Gyroscope();
             }

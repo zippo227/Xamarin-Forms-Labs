@@ -1,8 +1,12 @@
 ﻿using System;
 using MonoTouch.CoreTelephony;
 using MonoTouch.UIKit;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms;
 
-namespace XForms.Toolkit.Services
+
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.iOS.Services.PhoneService))]
+namespace Xamarin.Forms.Labs.iOS.Services
 {
     /// <summary>
     /// Apple Phone service implements <see cref="IPhoneService"/>.

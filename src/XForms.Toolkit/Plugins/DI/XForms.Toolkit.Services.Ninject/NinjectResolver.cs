@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ninject;
 
-namespace XForms.Toolkit.Services.Ninject
+namespace Xamarin.Forms.Labs.Services.Ninject
 {
     public class NinjectResolver : IResolver
     {

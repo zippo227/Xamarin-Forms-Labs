@@ -1,41 +1,15 @@
-﻿// ***********************************************************************
-// Assembly         : XForms.Toolkit.iOS
-// Author           : Rui Marinho
-// Created          : 06-21-2014
-//
-// Last Modified By : Rui Marinho
-// Last Modified On : 06-21-2014
-// ***********************************************************************
-// <copyright file="MediaPicker.cs" company="">
-//     Copyright (c) 2014 . All rights reserved.
-//
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//
-//        http://www.apache.org/licenses/LICENSE-2.0
-//
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using MonoTouch.UIKit;
 using System.Threading;
 using System.IO;
 using System.Linq;
 using System.Drawing;
-using XForms.Toolkit.Services.Media;
+using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(XForms.Toolkit.iOS.Services.Media.MediaPicker))]
-namespace XForms.Toolkit.iOS.Services.Media
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.iOS.Services.Media.MediaPicker))]
+namespace Xamarin.Forms.Labs.iOS.Services.Media
 {
 	public class MediaPicker : IMediaPicker
 	{

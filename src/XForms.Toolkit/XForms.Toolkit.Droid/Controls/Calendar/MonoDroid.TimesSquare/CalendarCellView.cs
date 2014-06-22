@@ -4,7 +4,7 @@ using Android.Util;
 using Android.Widget;
 using System;
 
-namespace XForms.Toolkit.Droid.Controls.Calendar
+namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
     public class CalendarCellView : TextView
     {

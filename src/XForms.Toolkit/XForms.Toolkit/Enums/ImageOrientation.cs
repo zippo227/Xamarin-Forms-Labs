@@ -1,9 +1,9 @@
 ﻿
-namespace XForms.Toolkit.Enums
+namespace Xamarin.Forms.Labs.Enums
 {
     /// <summary>
     /// Specifies where the image will occur relative to the text on a
-    /// <see cref="XForms.Toolkit.Controls.ImageButton"/>.
+    /// <see cref="Xamarin.Forms.Labs.Controls.ImageButton"/>.
     /// </summary>
     public enum ImageOrientation
     {

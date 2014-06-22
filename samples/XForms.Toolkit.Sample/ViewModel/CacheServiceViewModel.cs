@@ -1,13 +1,13 @@
 ﻿using System;
-using XForms.Toolkit.Mvvm;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.Mvvm;
+using Xamarin.Forms.Labs.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
 	public class CacheServiceViewModel : ViewModel
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using MonoTouch.UIKit;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Apple device Simulator.
@@ -9,7 +9,7 @@ namespace XForms.Toolkit
     public class Simulator : AppleDevice
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="XForms.Toolkit.Simulator"/> class.
+        /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.Simulator"/> class.
         /// </summary>
         internal Simulator ()
         {

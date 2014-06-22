@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XForms.Toolkit.Controls;
+using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
 using Microsoft.Phone.Controls;
-using XForms.Toolkit.WP.Controls;
+using Xamarin.Forms.Labs.WP.Controls;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
-namespace XForms.Toolkit.Controls
+namespace Xamarin.Forms.Labs.Controls
 {
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, WebBrowser>
     {

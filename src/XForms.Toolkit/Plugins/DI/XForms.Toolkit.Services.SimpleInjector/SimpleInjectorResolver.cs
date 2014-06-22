@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleInjector;
 
-namespace XForms.Toolkit.Services.SimpleContainer
+namespace Xamarin.Forms.Labs.Services.SimpleContainer
 {
     public class SimpleInjectorResolver : IResolver
     {

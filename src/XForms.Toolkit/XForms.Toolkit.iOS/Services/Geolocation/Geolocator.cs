@@ -21,10 +21,10 @@ using System.Threading;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
-using XForms.Toolkit.Services.Geolocation;
+using Xamarin.Forms.Labs.Services.Geolocation;
 
-[assembly: Dependency(typeof(XForms.Toolkit.iOS.Services.Geolocation.Geolocator))]
-namespace XForms.Toolkit.iOS.Services.Geolocation
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.iOS.Services.Geolocation.Geolocator))]
+namespace Xamarin.Forms.Labs.iOS.Services.Geolocation
 {
 	public class Geolocator : IGeolocator
 	{

@@ -17,7 +17,7 @@
 using System;
 using MonoTouch.UIKit;
 
-namespace XForms.Toolkit.iOS.Services.Media
+namespace Xamarin.Forms.Labs.iOS.Services.Media
 {
 	internal class MediaPickerPopoverDelegate
 		: UIPopoverControllerDelegate

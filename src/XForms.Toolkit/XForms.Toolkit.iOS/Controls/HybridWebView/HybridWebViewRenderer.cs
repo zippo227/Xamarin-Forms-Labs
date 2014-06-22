@@ -3,11 +3,11 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using XForms.Toolkit.Controls;
+using Xamarin.Forms.Labs.Controls;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 
-namespace XForms.Toolkit.Controls
+namespace Xamarin.Forms.Labs.Controls
 {
     /// <summary>
     /// The hybrid web view renderer.

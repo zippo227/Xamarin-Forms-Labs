@@ -1,7 +1,7 @@
 ﻿using Android.Content;
 using Android.App;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Object extensions.

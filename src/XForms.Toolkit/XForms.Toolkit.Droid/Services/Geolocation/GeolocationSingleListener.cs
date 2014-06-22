@@ -20,9 +20,9 @@ using Android.Locations;
 using Android.OS;
 using System.Threading;
 using System.Collections.Generic;
-using XForms.Toolkit.Services.Geolocation;
+using Xamarin.Forms.Labs.Services.Geolocation;
 
-namespace XForms.Toolkit.Droid.Services.Geolocation
+namespace Xamarin.Forms.Labs.Droid.Services.Geolocation
 {
 	internal class GeolocationSingleListener
 		: Java.Lang.Object, ILocationListener

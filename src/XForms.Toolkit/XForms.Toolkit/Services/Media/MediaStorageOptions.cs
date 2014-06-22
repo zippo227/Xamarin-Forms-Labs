@@ -25,7 +25,7 @@
 // ***********************************************************************
 using System;
 
-namespace XForms.Toolkit.Services.Media
+namespace Xamarin.Forms.Labs.Services.Media
 {
 	#region Base Options
 	/// <summary>

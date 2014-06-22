@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
-namespace XForms.Toolkit.Mvvm
+namespace Xamarin.Forms.Labs.Mvvm
 {
 	/// <summary>
 	/// Class ViewTypeAttribute.

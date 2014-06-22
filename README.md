@@ -44,13 +44,13 @@ _________________
 Using the controls
 -----------
 
-Add XForms.Toolkit.Controls reference to your projects , main pcl, ios, android, and wp.
+Add Xamarin.Forms.Labs.Controls reference to your projects , main pcl, ios, android, and wp.
 
 Xaml :
 
 Reference the assembly namespace 
 
-     xmlns:controls="clr-namespace:XForms.Toolkit.Controls;assembly=XForms.Toolkit"
+     xmlns:controls="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=XForms.Toolkit"
 
 Render your control:
 

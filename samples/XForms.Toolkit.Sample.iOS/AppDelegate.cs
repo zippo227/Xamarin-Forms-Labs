@@ -26,17 +26,17 @@
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
-using XForms.Toolkit.iOS;
-using XForms.Toolkit.iOS.Controls.Calendar;
-using XForms.Toolkit.Mvvm;
-using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Serialization;
-using XForms.Toolkit.Caching.SQLiteNet;
+using Xamarin.Forms.Labs.iOS;
+using Xamarin.Forms.Labs.iOS.Controls.Calendar;
+using Xamarin.Forms.Labs.Mvvm;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Services.Serialization;
+using Xamarin.Forms.Labs.Caching.SQLiteNet;
 using SQLite.Net.Platform.XamarinIOS;
 using System;
 using System.IO;
 
-namespace XForms.Toolkit.Sample.iOS
+namespace Xamarin.Forms.Labs.Sample.iOS
 {
 	/// <summary>
 	/// Class AppDelegate.

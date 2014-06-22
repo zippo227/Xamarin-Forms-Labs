@@ -1,7 +1,7 @@
 ﻿using Xamarin.Forms;
-using XForms.Toolkit.Enums;
+using Xamarin.Forms.Labs.Enums;
 
-namespace XForms.Toolkit.Controls
+namespace Xamarin.Forms.Labs.Controls
 {
     /// <summary>
     /// Creates a button with text and an image.

@@ -13,11 +13,11 @@ using Android.Widget;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms;
 using Android.Graphics;
-using XForms.Toolkit.Controls;
-using XForms.Toolkit.Droid;
+using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms.Labs.Droid;
 
 [assembly: ExportRenderer (typeof (ExtendedTextCell), typeof (ExtendedTextCellRenderer))]
-namespace XForms.Toolkit.Droid
+namespace Xamarin.Forms.Labs.Droid
 {
 	public class ExtendedTextCellRenderer :  Xamarin.Forms.Platform.Android.TextCellRenderer
 	{

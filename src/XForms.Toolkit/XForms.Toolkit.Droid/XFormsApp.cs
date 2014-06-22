@@ -1,5 +1,5 @@
 // ***********************************************************************
-// Assembly         : XForms.Toolkit.Droid
+// Assembly         : Xamarin.Forms.Labs.Droid
 // Author           : Shawn Anderson
 // Created          : 06-17-2014
 //
@@ -25,9 +25,9 @@
 // ***********************************************************************
 using System;
 using Xamarin.Forms.Platform.Android;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Mvvm;
 
-namespace XForms.Toolkit.Droid
+namespace Xamarin.Forms.Labs.Droid
 {
 	/// <summary>
 	/// Class XFormsApplicationDroid.

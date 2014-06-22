@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("XForms.Toolkit.Services.Autofac")]
+[assembly: AssemblyTitle("Xamarin.Forms.Labs.Services.Autofac")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("XForms.Toolkit.Services.Autofac")]
+[assembly: AssemblyCompany("Xamarin.Forms.Labs Team")]
+[assembly: AssemblyProduct("Xamarin.Forms.Labs.Services.Autofac")]
 [assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

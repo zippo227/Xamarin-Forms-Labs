@@ -2,10 +2,10 @@
 using System.Linq;
 using MonoTouch.AVFoundation;
 using Xamarin.Forms;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.Services;
 
-[assembly: Dependency(typeof(XForms.Toolkit.iOS.Services.TextToSpeechService))]
-namespace XForms.Toolkit.iOS.Services
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.iOS.Services.TextToSpeechService))]
+namespace Xamarin.Forms.Labs.iOS.Services
 {
     /// <summary>
     /// The text to speech service for iOS.

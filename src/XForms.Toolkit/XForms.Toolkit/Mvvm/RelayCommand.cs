@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
 	public class RelayCommand : ICommand
 	{

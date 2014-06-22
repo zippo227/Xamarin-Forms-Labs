@@ -3,10 +3,11 @@ using Xamarin.Forms.Platform.Android;
 using System.ComponentModel;
 using Xamarin.Forms;
 using XForms.Toolkit;
-using XForms.Toolkit.Droid;
+using Xamarin.Forms.Labs.Droid;
+using Xamarin.Forms.Labs.Controls;
 
 [assembly: ExportRenderer(typeof(SensorBarView), typeof(SensorBarViewRenderer))]
-namespace XForms.Toolkit.Droid
+namespace Xamarin.Forms.Labs.Droid
 {
     public class SensorBarViewRenderer : ViewRenderer<SensorBarView, SensorBarDroidView>
     {

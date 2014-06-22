@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Controls
+namespace Xamarin.Forms.Labs.Controls
 {
     public partial class HybridWebViewRenderer
     {

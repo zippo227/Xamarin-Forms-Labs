@@ -3,11 +3,11 @@ using System.Linq;
 using Android.Speech.Tts;
 using Java.Util;
 using Xamarin.Forms;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.Services;
 
-[assembly: Dependency(typeof(XForms.Toolkit.Droid.Services.TextToSpeechService))]
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.Droid.Services.TextToSpeechService))]
 
-namespace XForms.Toolkit.Droid.Services
+namespace Xamarin.Forms.Labs.Droid.Services
 {
     /// <summary>
     /// The text to speech service implements <see cref="ITextToSpeechService"/> for Android.

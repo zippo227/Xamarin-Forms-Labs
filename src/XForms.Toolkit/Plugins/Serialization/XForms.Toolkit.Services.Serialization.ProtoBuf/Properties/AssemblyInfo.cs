@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("XForms.Toolkit.Services.Serialization.ProtoBuf")]
+[assembly: AssemblyTitle("Xamarin.Forms.Labs.Services.Serialization.ProtoBuf")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("XForms.Toolkit.Services.Serialization.ProtoBuf")]
+[assembly: AssemblyProduct("Xamarin.Forms.Labs.Services.Serialization.ProtoBuf")]
 [assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

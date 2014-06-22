@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Services
+namespace Xamarin.Forms.Labs.Services
 {
     /// <summary>
     /// Interface for dependency container. Extends on <see cref="IResolver"/> by providing the 

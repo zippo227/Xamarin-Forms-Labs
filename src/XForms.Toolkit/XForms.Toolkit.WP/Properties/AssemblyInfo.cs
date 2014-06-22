@@ -6,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("XForms.Toolkit.WP")]
+[assembly: AssemblyTitle("Xamarin.Forms.Labs.WP")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("XForms Toolkit Team")]
-[assembly: AssemblyProduct("XForms.Toolkit.WP")]
+[assembly: AssemblyCompany("Xamarin Forms Labs Team")]
+[assembly: AssemblyProduct("Xamarin.Forms.Labs.WP")]
 [assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

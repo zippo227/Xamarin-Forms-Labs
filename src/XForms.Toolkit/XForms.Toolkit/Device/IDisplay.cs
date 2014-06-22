@@ -1,5 +1,5 @@
 ﻿
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Portable interface for device screen information

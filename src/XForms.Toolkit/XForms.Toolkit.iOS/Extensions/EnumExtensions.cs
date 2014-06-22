@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     public static class EnumExtensions
     {

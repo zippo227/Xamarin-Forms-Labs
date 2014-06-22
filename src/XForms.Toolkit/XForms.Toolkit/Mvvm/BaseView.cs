@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace XForms.Toolkit.Mvvm
+namespace Xamarin.Forms.Labs.Mvvm
 {
     /// <summary>
     /// Converts the Xamarin Forms page navigation to our ViewModelNavigation instance

@@ -3,7 +3,7 @@ using Android.App;
 using Android.Content;
 
 // Analysis disable CheckNamespace
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Broadcast receiver extensions.

@@ -1,7 +1,7 @@
 ﻿using System;
 using MonoTouch.UIKit;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Apple Display class.
@@ -9,7 +9,7 @@ namespace XForms.Toolkit
     public class Display : IDisplay
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="XForms.Toolkit.Display"/> class.
+        /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.Display"/> class.
         /// </summary>
         /// <param name="height">Height in pixels.</param>
         /// <param name="width">Width in pixels.</param>
@@ -78,9 +78,9 @@ namespace XForms.Toolkit
 
         #endregion
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="XForms.Toolkit.Display"/>.
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="Xamarin.Forms.Labs.Display"/>.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents the current <see cref="XForms.Toolkit.Display"/>.</returns>
+        /// <returns>A <see cref="System.String"/> that represents the current <see cref="Xamarin.Forms.Labs.Display"/>.</returns>
         public override string ToString()
         {
             return string.Format("[Screen: Height={0}, Width={1}, Xdpi={2}, Ydpi={3}]", Height, Width, Xdpi, Ydpi);

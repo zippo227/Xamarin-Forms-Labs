@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Services.Serialization.ServiceStackV3
+namespace Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3
 {
     using JsConfig = ServiceStack.Text.JsConfig;
     using JsonDateHandler = ServiceStack.Text.JsonDateHandler;

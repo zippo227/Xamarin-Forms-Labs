@@ -4,13 +4,13 @@ using System.Drawing;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using XForms.Toolkit.Controls;
-using XForms.Toolkit.Enums;
-using XForms.Toolkit.iOS.Controls.ImageButton;
+using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms.Labs.Enums;
+using Xamarin.Forms.Labs.iOS.Controls.ImageButton;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 
-namespace XForms.Toolkit.iOS.Controls.ImageButton
+namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
 {
     /// <summary>
     /// Draws a button on the iOS platform with the image shown in the right 
@@ -25,9 +25,9 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
         /// <summary>
         /// Gets the underlying element typed as an <see cref="ImageButton"/>.
         /// </summary>
-        private Toolkit.Controls.ImageButton ImageButton
+        private Xamarin.Forms.Labs.Controls.ImageButton ImageButton
         {
-            get { return (Toolkit.Controls.ImageButton) Element; }
+            get { return (Xamarin.Forms.Labs.Controls.ImageButton)Element; }
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace XForms.Toolkit.iOS.Controls.ImageButton
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            if (e.PropertyName == Toolkit.Controls.ImageButton.ImageProperty.PropertyName)
+            if (e.PropertyName == Xamarin.Forms.Labs.Controls.ImageButton.ImageProperty.PropertyName)
             {
-                var sourceButton = this.Element as Toolkit.Controls.ImageButton;
+                var sourceButton = this.Element as Xamarin.Forms.Labs.Controls.ImageButton;
                 if (sourceButton != null && !string.IsNullOrEmpty(sourceButton.Image))
                 {
                     var imageButton = this.ImageButton;

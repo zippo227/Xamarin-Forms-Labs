@@ -2,7 +2,7 @@
 using Android.App;
 using Android.Content;
 
-namespace XForms.Toolkit
+namespace Xamarin.Forms.Labs
 {
     /// <summary>
     /// Intent filter extensions.

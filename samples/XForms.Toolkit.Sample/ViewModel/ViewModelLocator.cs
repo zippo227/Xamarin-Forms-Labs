@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using XForms.Toolkit.Sample;
+using Xamarin.Forms.Labs.Sample;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
 	public class ViewModelLocator
     {

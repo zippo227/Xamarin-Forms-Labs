@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : XForms.Toolkit.Sample
+// Assembly         : Xamarin.Forms.Labs.Sample
 // Author           : 
 // Created          : 
 //
@@ -26,12 +26,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Xamarin.Forms;
-using XForms.Toolkit.Controls;
-using XForms.Toolkit.Mvvm;
-using XForms.Toolkit.Sample.Pages.Controls;
-using XForms.Toolkit.Services;
+using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms.Labs.Mvvm;
+using Xamarin.Forms.Labs.Sample.Pages.Controls;
+using Xamarin.Forms.Labs.Services;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
 	/// <summary>
 	/// Class App.

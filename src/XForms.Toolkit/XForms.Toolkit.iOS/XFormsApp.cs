@@ -1,5 +1,5 @@
 // ***********************************************************************
-// Assembly         : XForms.Toolkit.iOS
+// Assembly         : Xamarin.Forms.Labs.iOS
 // Author           : Shawn Anderson
 // Created          : 06-17-2014
 //
@@ -26,9 +26,9 @@
 using System;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Mvvm;
 
-namespace XForms.Toolkit.iOS
+namespace Xamarin.Forms.Labs.iOS
 {
 	/// <summary>
 	/// Class XFormsApplicationDelegate.

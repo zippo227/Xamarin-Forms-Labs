@@ -1,6 +1,6 @@
 using System;
 
-namespace XForms.Toolkit.Droid.Controls.Calendar
+namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
     public enum RangeState
     {

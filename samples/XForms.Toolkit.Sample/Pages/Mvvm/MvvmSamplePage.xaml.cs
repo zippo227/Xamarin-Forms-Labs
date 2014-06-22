@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Mvvm;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {	
 	public partial class MvvmSamplePage : BaseView
 	{	

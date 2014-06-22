@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XForms.Toolkit.Services.Geolocation
+namespace Xamarin.Forms.Labs.Services.Geolocation
 {
 	public class Position
 	{

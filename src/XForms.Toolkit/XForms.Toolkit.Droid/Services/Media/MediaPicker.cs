@@ -7,11 +7,11 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Provider;
 using Xamarin.Forms;
-using XForms.Toolkit.Droid.Services.Media;
-using XForms.Toolkit.Services.Media;
+using Xamarin.Forms.Labs.Droid.Services.Media;
+using Xamarin.Forms.Labs.Services.Media;
 
 [assembly: Dependency(typeof (MediaPicker))]
-namespace XForms.Toolkit.Droid.Services.Media
+namespace Xamarin.Forms.Labs.Droid.Services.Media
 {
 	/// <summary>
 	///     Class MediaPicker.

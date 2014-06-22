@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : XForms.Toolkit.Sample
+// Assembly         : Xamarin.Forms.Labs.Sample
 // Author           : Shawn Anderson
 // Created          : 06-16-2014
 //
@@ -25,12 +25,12 @@
 // ***********************************************************************
 
 using System.Threading.Tasks;
-using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Media;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
 	/// <summary>
 	/// Class CameraViewModel.

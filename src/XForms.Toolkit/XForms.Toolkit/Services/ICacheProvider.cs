@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Services
+namespace Xamarin.Forms.Labs.Services
 {
     public interface ICacheProvider : ISimpleCache
     {

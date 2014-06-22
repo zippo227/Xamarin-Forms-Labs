@@ -1,7 +1,7 @@
 ﻿using System;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Mvvm;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
 	[ViewType(typeof(MvvmSamplePage))]
 	public class MvvmSampleViewModel : ViewModel

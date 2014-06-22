@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Mvvm;
 using System.Linq;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {	
     public partial class CanvasWebHybrid : BaseView
 	{	

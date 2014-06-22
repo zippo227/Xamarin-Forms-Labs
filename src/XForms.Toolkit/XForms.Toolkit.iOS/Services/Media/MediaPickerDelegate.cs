@@ -22,9 +22,9 @@ using MonoTouch.AssetsLibrary;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System.Drawing;
-using XForms.Toolkit.Services.Media;
+using Xamarin.Forms.Labs.Services.Media;
 
-namespace XForms.Toolkit.iOS.Services.Media
+namespace Xamarin.Forms.Labs.iOS.Services.Media
 {
 	internal class MediaPickerDelegate
 		: UIImagePickerControllerDelegate

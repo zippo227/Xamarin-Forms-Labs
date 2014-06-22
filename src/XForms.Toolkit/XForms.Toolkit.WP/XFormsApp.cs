@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Phone.Shell;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Mvvm;
 
-namespace XForms.Toolkit.WP
+namespace Xamarin.Forms.Labs.WP
 {
 	public class XFormsAppWP : XFormsApp<Application>
 	{	

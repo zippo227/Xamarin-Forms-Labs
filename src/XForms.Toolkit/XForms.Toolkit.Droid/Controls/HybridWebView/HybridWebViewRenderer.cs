@@ -1,20 +1,20 @@
 ﻿using System;
 using Xamarin.Forms.Platform.Android;
 using Android.Webkit;
-using XForms.Toolkit.Controls;
+using Xamarin.Forms.Labs.Controls;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
-namespace XForms.Toolkit.Controls
+namespace Xamarin.Forms.Labs.Controls
 {
-    public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, WebView>
+    public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, Android.Webkit.WebView>
     {
-        private WebView webView;
+        private Android.Webkit.WebView webView;
 
         protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
         {
             base.OnElementChanged (e);
 
-            this.webView = new WebView(this.Context);
+            this.webView = new Android.Webkit.WebView(this.Context);
 
             this.webView.Settings.JavaScriptEnabled = true;
 //            this.InjectNativeFunctionScript ();
@@ -50,7 +50,7 @@ namespace XForms.Toolkit.Controls
                 this.webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
             }
 
-            public override bool ShouldOverrideUrlLoading (WebView view, string url)
+            public override bool ShouldOverrideUrlLoading(Android.Webkit.WebView view, string url)
             {
                 HybridWebViewRenderer hybrid;
                 if (!this.webHybrid.TryGetTarget(out hybrid) || !hybrid.CheckRequest(url))
@@ -65,7 +65,7 @@ namespace XForms.Toolkit.Controls
 
         private class ChromeClient : WebChromeClient 
         {
-            public override bool OnJsAlert(WebView view, string url, string message, JsResult result)
+            public override bool OnJsAlert(Android.Webkit.WebView view, string url, string message, JsResult result)
             {
                 // the built-in alert is pretty ugly, you could do something different here if you wanted to
                 return base.OnJsAlert(view, url, message, result);

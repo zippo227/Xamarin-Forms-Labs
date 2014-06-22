@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace XForms.Toolkit.Services.Geolocation
+namespace Xamarin.Forms.Labs.Services.Geolocation
 {
 	public interface IGeolocator
 	{

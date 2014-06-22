@@ -1,6 +1,6 @@
-﻿using XForms.Toolkit.Sample.WP.Resources;
+﻿using Xamarin.Forms.Labs.Sample.WP.Resources;
 
-namespace XForms.Toolkit.Sample.WP
+namespace Xamarin.Forms.Labs.Sample.WP
 {
     /// <summary>
     /// Provides access to string resources.

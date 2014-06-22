@@ -1,11 +1,11 @@
 ﻿using System;
-using XForms.Toolkit.Services.Geolocation;
-using XForms.Toolkit.Mvvm;
+using Xamarin.Forms.Labs.Services.Geolocation;
+using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Sample
+namespace Xamarin.Forms.Labs.Sample
 {
 	[ViewType(typeof(GeolocatorPage))]
 	public class GeolocatorViewModel : ViewModel

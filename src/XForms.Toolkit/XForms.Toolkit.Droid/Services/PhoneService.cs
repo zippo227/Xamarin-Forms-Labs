@@ -4,8 +4,8 @@ using Android.App;
 using Android.Net;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(XForms.Toolkit.Services.PhoneService))]
-namespace XForms.Toolkit.Services
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.Services.PhoneService))]
+namespace Xamarin.Forms.Labs.Services
 {
     /// <summary>
     /// Android Phone service implements <see cref="IPhoneService"/>.

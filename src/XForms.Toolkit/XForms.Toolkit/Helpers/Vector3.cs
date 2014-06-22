@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XForms.Toolkit.Helpers
+namespace Xamarin.Forms.Labs.Helpers
 {
     public class Vector3
     {

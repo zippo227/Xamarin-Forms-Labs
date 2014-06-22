@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TinyIoC;
 
-namespace XForms.Toolkit.Services.TinyIOC
+namespace Xamarin.Forms.Labs.Services.TinyIOC
 {
     public class TinyResolver : IResolver
     {

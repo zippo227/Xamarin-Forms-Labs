@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MonoTouch.UIKit;
-using XForms.Toolkit.Services.Media;
+using Xamarin.Forms.Labs.Services.Media;
 
-namespace XForms.Toolkit.iOS.Services.Media
+namespace Xamarin.Forms.Labs.iOS.Services.Media
 {
 	public sealed class MediaPickerController
 		: UIImagePickerController

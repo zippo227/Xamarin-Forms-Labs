@@ -1,7 +1,7 @@
 ﻿using Xamarin.Forms;
-using XForms.Toolkit.Extensions;
+using Xamarin.Forms.Labs.Extensions;
 
-namespace XForms.Toolkit.Controls
+namespace Xamarin.Forms.Labs.Controls
 {
     /// <summary>
     /// Extended content view.

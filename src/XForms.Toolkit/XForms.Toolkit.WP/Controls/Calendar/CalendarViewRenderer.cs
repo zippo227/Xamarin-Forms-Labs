@@ -1,11 +1,11 @@
 ﻿using WPControls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
-using XForms.Toolkit.Controls;
-using XForms.Toolkit.WP.Controls.Calendar;
+using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms.Labs.WP.Controls.Calendar;
 
 [assembly: ExportRenderer(typeof(CalendarView), typeof(CalendarViewRenderer))]
-namespace XForms.Toolkit.WP.Controls.Calendar
+namespace Xamarin.Forms.Labs.WP.Controls.Calendar
 {
     public class CalendarViewRenderer : ViewRenderer<CalendarView, WPControls.Calendar>
     {

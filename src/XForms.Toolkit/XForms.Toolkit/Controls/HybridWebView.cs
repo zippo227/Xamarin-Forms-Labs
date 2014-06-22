@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using XForms.Toolkit.Services;
-using XForms.Toolkit.Services.Serialization;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Services.Serialization;
 
-namespace XForms.Toolkit.Controls
+namespace Xamarin.Forms.Labs.Controls
 {
     public class HybridWebView : WebView
     {

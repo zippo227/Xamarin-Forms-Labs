@@ -7,11 +7,11 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using XForms.Toolkit.Sample.WP.Resources;
+using Xamarin.Forms.Labs.Sample.WP.Resources;
 using Xamarin.Forms;
-using XForms.Toolkit.WP.Controls.Calendar;
+using Xamarin.Forms.Labs.WP.Controls.Calendar;
 
-namespace XForms.Toolkit.Sample.WP
+namespace Xamarin.Forms.Labs.Sample.WP
 {
 	public partial class MainPage : PhoneApplicationPage
 	{
@@ -22,9 +22,9 @@ namespace XForms.Toolkit.Sample.WP
 			// Sample code to localize the ApplicationBar
 			Forms.Init();
 
-			XForms.Toolkit.Sample.App.Init();
+			Xamarin.Forms.Labs.Sample.App.Init();
 
-			Content = XForms.Toolkit.Sample.App.GetMainPage().ConvertPageToUIElement(this);
+			Content = Xamarin.Forms.Labs.Sample.App.GetMainPage().ConvertPageToUIElement(this);
 			//BuildLocalizedApplicationBar();
 		}
 

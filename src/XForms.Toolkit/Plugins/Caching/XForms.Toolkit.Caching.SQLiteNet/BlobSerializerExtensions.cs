@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite.Net;
-using XForms.Toolkit.Services.Serialization;
+using Xamarin.Forms.Labs.Services.Serialization;
 
-namespace XForms.Toolkit.Caching.SQLiteNet
+namespace Xamarin.Forms.Labs.Caching.SQLiteNet
 {
     public static class BlobSerializerExtensions
     {
