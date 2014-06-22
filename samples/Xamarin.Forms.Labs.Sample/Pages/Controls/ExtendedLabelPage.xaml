@@ -25,6 +25,7 @@
         						FontNameAndroid="fonts/Roboto-Light.ttf" 
         						FontNameIOS="Roboto-Light" 
         						FontSize="22"
+        						IsUnderline="True"
         						HorizontalOptions="StartAndExpand"
 								 VerticalOptions="Center" >
 							</controls:ExtendedLabel>

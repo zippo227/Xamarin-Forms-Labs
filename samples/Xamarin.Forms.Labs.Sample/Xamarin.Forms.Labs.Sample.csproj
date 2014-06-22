@@ -83,6 +83,9 @@
       <DependentUpon>CacheServicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\CacheServiceViewModel.cs" />
+    <Compile Include="Pages\Controls\ExtendedCellPage.xaml.cs">
+      <DependentUpon>ExtendedCellPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -91,6 +94,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Services\CacheServicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Controls\ExtendedCellPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
