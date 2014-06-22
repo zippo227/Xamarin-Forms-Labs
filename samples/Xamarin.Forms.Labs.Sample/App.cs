@@ -72,7 +72,7 @@ namespace Xamarin.Forms.Labs.Sample
 			ViewFactory.Register<CameraPage, CameraViewModel>();
 			ViewFactory.Register<CacheServicePage, CacheServiceViewModel>();
 
-			var mainTab = new ExtendedTabbedPage() { Title = "XForms Toolkit Samples" };
+			var mainTab = new ExtendedTabbedPage() { Title = "Xamarin Forms Labs" };
 			var mainPage = new NavigationPage(mainTab);
 			mainTab.CurrentPageChanged += () => Debug.WriteLine("ExtendedTabbedPage CurrentPageChanged {0}", mainTab.CurrentPage.Title);
 

@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Xamarin.Forms.Labs.Serialization.ServiceStackV3")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("XForms Toolkit Team")]
+[assembly: AssemblyCompany("XForms Team")]
 [assembly: AssemblyProduct("Xamarin.Forms.Labs.Serialization.ServiceStackV3")]
 [assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]

@@ -69,7 +69,7 @@ namespace Xamarin.Forms.Labs.Sample
 		}
 
 
-		private string _textToSpeak ="Hello from XForms Toolkit";
+		private string _textToSpeak ="Hello from Xamarin Forms Labs";
 		public string TextToSpeak
 		{
 			get
