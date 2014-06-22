@@ -49,6 +49,15 @@ namespace Xamarin.Forms.Labs.Controls
 			get { return (bool)GetValue (ShowDisclousureProperty); }
 			set { SetValue (ShowDisclousureProperty, value); }
 		}
+
+		public static readonly BindableProperty DisclousureImageProperty =
+			BindableProperty.Create<ExtendedViewCell,string> (
+				p => p.DisclousureImage, string.Empty);
+
+		public string DisclousureImage {
+			get { return (string)GetValue (DisclousureImageProperty); }
+			set { SetValue (DisclousureImageProperty, value); }
+		}
 	}
 }
 

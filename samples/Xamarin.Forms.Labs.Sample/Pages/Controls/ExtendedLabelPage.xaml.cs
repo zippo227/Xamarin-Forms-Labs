@@ -10,6 +10,8 @@ namespace Xamarin.Forms.Labs.Sample
 		public ExtendedLabelPage ()
 		{
 			InitializeComponent ();
+			BindingContext = ViewModelLocator.Main;
+
 			var label = new ExtendedLabel () {
 				Text = "and From code",
 			};

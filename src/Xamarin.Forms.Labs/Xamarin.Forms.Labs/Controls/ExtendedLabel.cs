@@ -98,6 +98,15 @@ namespace Xamarin.Forms.Labs.Controls
 			
 			}
 		}
+
+
+		public static readonly BindableProperty IsUnderlineProperty =
+			BindableProperty.Create<ExtendedLabel, bool> (p => p.IsUnderline, false);
+
+		public bool IsUnderline {
+			get { return (bool)GetValue (IsUnderlineProperty); }
+			set { SetValue (IsUnderlineProperty, value); }
+		}
 	}
 }
 

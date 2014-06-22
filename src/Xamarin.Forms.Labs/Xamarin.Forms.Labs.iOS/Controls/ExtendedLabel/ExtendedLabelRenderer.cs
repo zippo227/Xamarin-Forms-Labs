@@ -4,6 +4,7 @@ using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.iOS;
 using Xamarin.Forms.Labs.iOS.Controls;
+using MonoTouch.Foundation;
 
 [assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRenderer))]
 
@@ -39,6 +40,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         /// </param>
         private static void UpdateUi(ExtendedLabel view, UILabel control)
 		{
+
 		    if (!string.IsNullOrEmpty(view.FontName))
 		    {
 		        var font = UIFont.FromName(
@@ -62,6 +64,12 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                     control.Font = font;
                 }
 		    }
+
+			if (view.IsUnderline) {
+				control.AttributedText = new NSAttributedString (
+					control.Text, 
+					underlineStyle: NSUnderlineStyle.Single);
+			}
 		}
 	}
 }

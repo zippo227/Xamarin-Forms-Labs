@@ -23,18 +23,19 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
 				if (extendedCell.ShowDisclousure) {
 					cell.Accessory = MonoTouch.UIKit.UITableViewCellAccessory.DisclosureIndicator;
-					var detailDisclosureButton = UIButton.FromType (UIButtonType.Custom);
-					detailDisclosureButton.SetImage (UIImage.FromBundle ("ic-arrow-big.png"), UIControlState.Normal);
-					detailDisclosureButton.SetImage (UIImage.FromBundle ("ic-arrow-big.png"), UIControlState.Selected);
+					if (!string.IsNullOrEmpty (extendedCell.DisclousureImage)) {
+						var detailDisclosureButton = UIButton.FromType (UIButtonType.Custom);
+						detailDisclosureButton.SetImage (UIImage.FromBundle (extendedCell.DisclousureImage), UIControlState.Normal);
+						detailDisclosureButton.SetImage (UIImage.FromBundle (extendedCell.DisclousureImage), UIControlState.Selected);
 
-					detailDisclosureButton.Frame = new RectangleF(0f, 0f, 23f, 40f);
-					detailDisclosureButton.TouchUpInside += (object sender, EventArgs e) => {
-						var index = tv.IndexPathForCell (cell);
-						tv.SelectRow(index,true,UITableViewScrollPosition.None);
-						tv.Source.AccessoryButtonTapped(tv,index);
-						//Do something
-					};
-					cell.AccessoryView = detailDisclosureButton;
+						detailDisclosureButton.Frame = new RectangleF (0f, 0f, 30f, 30f);
+						detailDisclosureButton.TouchUpInside += (object sender, EventArgs e) => {
+							var index = tv.IndexPathForCell (cell);
+							tv.SelectRow (index, true, UITableViewScrollPosition.None);
+							tv.Source.AccessoryButtonTapped (tv, index);
+						};
+						cell.AccessoryView = detailDisclosureButton;
+					}
 				}
 			}
 

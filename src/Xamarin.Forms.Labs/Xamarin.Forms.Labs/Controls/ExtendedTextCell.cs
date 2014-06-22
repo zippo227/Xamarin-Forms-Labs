@@ -59,7 +59,7 @@ namespace Xamarin.Forms.Labs.Controls
 		}
 
 		public static readonly BindableProperty BackgroundColorProperty =
-			BindableProperty.Create<ExtendedViewCell, Color> (p => p.BackgroundColor, Color.Transparent);
+			BindableProperty.Create<ExtendedTextCell, Color> (p => p.BackgroundColor, Color.Transparent);
 
 		public Color BackgroundColor {
 			get { return (Color)GetValue (BackgroundColorProperty); }
@@ -67,7 +67,7 @@ namespace Xamarin.Forms.Labs.Controls
 		}
 
 		public static readonly BindableProperty SeparatorColorProperty =
-			BindableProperty.Create<ExtendedViewCell, Color> (p => p.SeparatorColor, Color.FromRgba(199,199,204,255));
+			BindableProperty.Create<ExtendedTextCell, Color> (p => p.SeparatorColor, Color.FromRgba(199,199,204,255));
 
 		public Color SeparatorColor {
 			get { return (Color)GetValue (SeparatorColorProperty); }
@@ -75,7 +75,7 @@ namespace Xamarin.Forms.Labs.Controls
 		}
 
 		public static readonly BindableProperty SeparatorPaddingProperty =
-			BindableProperty.Create<ExtendedViewCell, Thickness> (p => p.SeparatorPadding, default(Thickness));
+			BindableProperty.Create<ExtendedTextCell, Thickness> (p => p.SeparatorPadding, default(Thickness));
 
 		public Thickness SeparatorPadding {
 			get { return (Thickness)GetValue (SeparatorPaddingProperty); }
@@ -84,7 +84,7 @@ namespace Xamarin.Forms.Labs.Controls
 
 
 		public static readonly BindableProperty ShowSeparatorProperty =
-			BindableProperty.Create<ExtendedViewCell, bool> (p => p.ShowSeparator, true);
+			BindableProperty.Create<ExtendedTextCell, bool> (p => p.ShowSeparator, true);
 
 		public bool ShowSeparator {
 			get { return (bool)GetValue (ShowSeparatorProperty); }
@@ -93,11 +93,20 @@ namespace Xamarin.Forms.Labs.Controls
 
 
 		public static readonly BindableProperty ShowDisclousureProperty =
-			BindableProperty.Create<ExtendedViewCell, bool> (p => p.ShowDisclousure, true);
+			BindableProperty.Create<ExtendedTextCell, bool> (p => p.ShowDisclousure, true);
 
 		public bool ShowDisclousure {
 			get { return (bool)GetValue (ShowDisclousureProperty); }
 			set { SetValue (ShowDisclousureProperty, value); }
+		}
+
+		public static readonly BindableProperty DisclousureImageProperty =
+			BindableProperty.Create<ExtendedTextCell,string> (
+				p => p.DisclousureImage, string.Empty);
+
+		public string DisclousureImage {
+			get { return (string)GetValue (DisclousureImageProperty); }
+			set { SetValue (DisclousureImageProperty, value); }
 		}
 	}
 }

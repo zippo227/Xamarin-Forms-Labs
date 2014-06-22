@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
@@ -9,6 +9,7 @@ namespace Xamarin.Forms.Labs.Sample
 		public ExtendedCellPage ()
 		{
 			InitializeComponent ();
+			BindingContext = ViewModelLocator.Main;
 		}
 	}
 }
