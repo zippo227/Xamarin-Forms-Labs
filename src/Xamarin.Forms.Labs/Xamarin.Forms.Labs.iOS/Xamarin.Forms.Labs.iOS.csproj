@@ -55,17 +55,17 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\XForms.Toolkit.WP\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
+    <Compile Include="..\Xamarin.Forms.Labs.WP\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
       <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
       <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\XForms.Toolkit\Device\Accelerometer.designer.cs">
+    <Compile Include="..\Xamarin.Forms.Labs\Device\Accelerometer.designer.cs">
       <Link>Device\Accelerometer.designer.cs</Link>
     </Compile>
-    <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
+    <Compile Include="..\Xamarin.Forms.Labs\Device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
     </Compile>
-    <Compile Include="..\XForms.Toolkit\Device\Gyroscope.designer.cs">
+    <Compile Include="..\Xamarin.Forms.Labs\Device\Gyroscope.designer.cs">
       <Link>Device\Gyroscope.designer.cs</Link>
     </Compile>
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />

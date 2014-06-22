@@ -84,13 +84,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\XForms.Toolkit\Device\Accelerometer.designer.cs">
+    <Compile Include="..\Xamarin.Forms.Labs\Device\Accelerometer.designer.cs">
       <Link>Device\Accelerometer.designer.cs</Link>
     </Compile>
-    <Compile Include="..\XForms.Toolkit\Device\Battery.designer.cs">
+    <Compile Include="..\Xamarin.Forms.Labs\Device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
     </Compile>
-    <Compile Include="..\XForms.Toolkit\Device\Gyroscope.designer.cs">
+    <Compile Include="..\Xamarin.Forms.Labs\Device\Gyroscope.designer.cs">
       <Link>Device\Gyroscope.designer.cs</Link>
     </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
