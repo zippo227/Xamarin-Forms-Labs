@@ -3,10 +3,11 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.iOS;
+using Xamarin.Forms.Labs.iOS.Controls;
 
 [assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRenderer))]
 
-namespace Xamarin.Forms.Labs.iOS
+namespace Xamarin.Forms.Labs.iOS.Controls
 {
     /// <summary>
     /// The extended label renderer.
