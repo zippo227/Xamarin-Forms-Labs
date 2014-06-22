@@ -6,11 +6,11 @@
         <NuGetExePath Condition=" '$(NuGetExePath)' == '' ">NuGet.exe</NuGetExePath>
         <NuGetCommand Condition=" '$(OS)' == 'Windows_NT'">"$(NuGetExePath)"</NuGetCommand>
         <NuGetCommand Condition=" '$(OS)' != 'Windows_NT' ">mono --runtime=v4.0.30319 $(NuGetExePath)</NuGetCommand>
-        <PackagesDirectory Condition=" '$(PackagesDirectory)' == '' ">$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "XForms.Toolkit", "packages"))</PackagesDirectory>
-        <PackagesConfigPath Condition=" '$(PackagesConfigPath)' == '' ">$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "XForms.Toolkit", "XForms.Toolkit", "packages.config"))</PackagesConfigPath>
+        <PackagesDirectory Condition=" '$(PackagesDirectory)' == '' ">$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "Xamarin.Forms.Labs", "packages"))</PackagesDirectory>
+        <PackagesConfigPath Condition=" '$(PackagesConfigPath)' == '' ">$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "Xamarin.Forms.Labs", "Xamarin.Forms.Labs", "packages.config"))</PackagesConfigPath>
 
         <RestoreCommand>$(NuGetCommand) restore "$(PackagesConfigPath)" -NonInteractive -PackagesDirectory $(PackagesDirectory)" </RestoreCommand>
-        <SolutionFile>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "XForms.Toolkit", "XForms.Toolkit.sln"))</SolutionFile> 
+        <SolutionFile>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "src", "Xamarin.Forms.Labs", "Xamarin.Forms.Labs.sln"))</SolutionFile> 
         <Configuration>Release</Configuration>
     </PropertyGroup>
 
