@@ -4,10 +4,11 @@
 		<id>$id$</id>
 		<version>$version$</version>
 		<authors>$author$</authors>
-		<owners>xforms team</owners>
-		<licenseUrl>https://github.com/XForms/XForms-Toolkit/blob/master/LICENSE</licenseUrl>
-		<projectUrl>https://github.com/XForms/XForms-Toolkit</projectUrl>
-		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <title>Xamarin Forms Labs WP</title>
+    <tags>xamarin,xamarin forms,xamarin forms labs, wp, windowsphone, controls, services, di, caching, serialization</tags>
+    <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>
       Xamarin.Forms.Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
       This package contains the Windows Phone specific controls and services.
@@ -15,7 +16,7 @@
 		<releaseNotes>See latest changeset on github</releaseNotes>
 		<copyright>Copyright 2014</copyright>
 		<dependencies>
-			<dependency id="Xamarin.Forms.Labs" version="1.0" />
+			<dependency id="Xamarin.Forms.Labs" version="1.0.1" />
 		</dependencies>
 	</metadata>
 </package>
