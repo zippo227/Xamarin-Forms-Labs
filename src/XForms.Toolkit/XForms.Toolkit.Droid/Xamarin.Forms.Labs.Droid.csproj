@@ -118,7 +118,7 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
       <SubType>Designer</SubType>
     </None>
     <None Include="Controls\Calendar\MonoDroid.TimesSquare\License.txt" />
-    <None Include="XForms.Toolkit.Droid.nuspec" />
+    <None Include="Xamarin.Forms.Labs.Droid.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

@@ -1,7 +1,7 @@
-Xamarin-Forms-Toolkit
+Xamarin-Forms-Labs
 =====================
 
-Xamarin Forms Toolkit is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with Xamarin Forms.
+Xamarin Forms Labs is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with Xamarin Forms.
 
 Call for action for all Xamarin Developers, embrace this project and share your controls and services with the community, add your own control to the toolkit.
 
@@ -28,6 +28,10 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - RelayCommand ; RelayCommand< T >
  - ViewFactory
  - IOC
+
+**Available Plugins (Beta)**
+    - Serialization
+    - SQLLiteSimpleCache   
 _________________
 
 Using the MVVM Helpers

@@ -9,13 +9,13 @@
 		<projectUrl>https://github.com/XForms/XForms-Toolkit</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>
-			Xamarin Forms Toolkit is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
-			This package contains the iOS specific controls.
-		</description>
+      Xamarin.Forms.Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+      This package contains the Android specific controls and services.
+    </description>
 		<releaseNotes>See latest changeset on github</releaseNotes>
 		<copyright>Copyright 2014</copyright>
 		<dependencies>
-			<dependency id="XForms.Toolkit" version="1.0" />
+			<dependency id="Xamarin.Forms.Labs" version="1.0" />
 		</dependencies>
 	</metadata>
 </package>

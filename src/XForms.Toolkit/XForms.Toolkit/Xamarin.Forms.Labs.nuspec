@@ -4,14 +4,14 @@
 		<id>$id$</id>
 		<version>$version$</version>
 		<authors>$author$</authors>
-		<owners>ruimarinho.net</owners>
+		<owners>xforms team</owners>
 		<licenseUrl>https://github.com/XForms/XForms-Toolkit/blob/master/LICENSE</licenseUrl>
 		<projectUrl>https://github.com/XForms/XForms-Toolkit</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>
-			Xamarin Forms Toolkit is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
-			This package contains the cross-platform framework.
-		</description>
+      Xamarin.Forms.Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+      This package contains the cross-platform framework for your pcl or shared project.
+    </description>
 		<releaseNotes>See latest changeset on github</releaseNotes>
 		<copyright>Copyright 2014</copyright>
 		<dependencies>

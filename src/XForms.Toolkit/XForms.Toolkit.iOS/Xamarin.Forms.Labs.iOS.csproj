@@ -99,7 +99,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
-    <None Include="XForms.Toolkit.iOS.nuspec" />
+    <None Include="Xamarin.Forms.Labs.iOS.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

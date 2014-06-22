@@ -144,7 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="XForms.Toolkit.WP.nuspec" />
+    <None Include="Xamarin.Forms.Labs.WP.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XForms.Toolkit\Xamarin.Forms.Labs.csproj">

@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <Xamarin.Forms.Labs.droid.controls.calendar.CalendarPickerView
+    <xamarin.forms.labs.droid.controls.calendar.CalendarPickerView
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
