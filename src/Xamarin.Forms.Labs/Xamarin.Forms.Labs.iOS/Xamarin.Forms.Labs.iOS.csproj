@@ -53,6 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Controls\ExtendedViewCell\" />
+    <Folder Include="Controls\ExtendedTextCell\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.WP\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
@@ -96,6 +98,8 @@
     <Compile Include="Services\Media\MediaPickerDelegate.cs" />
     <Compile Include="Extensions\NSDataStream.cs" />
     <Compile Include="Services\Media\MediaPickerPopoverDelegate.cs" />
+    <Compile Include="Controls\ExtendedViewCell\ExtendedViewCellRenderer.cs" />
+    <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
