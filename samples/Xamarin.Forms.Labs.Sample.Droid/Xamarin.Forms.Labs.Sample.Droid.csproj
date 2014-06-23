@@ -25,6 +25,7 @@
     <MandroidI18n />
     <JavaMaximumHeapSize />
     <JavaOptions />
+	 <StyleCopTreatErrorsAsWarnings>true</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -87,6 +88,7 @@
     <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
     <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -137,6 +139,7 @@
     <AndroidResource Include="Resources\drawable\icon_twitter.png" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+   <Import Project="..\..\tools\StyleCop\v4.7\StyleCop.Targets" />
   <ItemGroup />
   <ItemGroup>
     <AndroidAsset Include="Assets\fonts\Roboto-Light.ttf" />
