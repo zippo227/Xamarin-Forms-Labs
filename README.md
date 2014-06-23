@@ -180,15 +180,15 @@ License Apache 2.0 more about that in the [LICENSE][2] file.
 __________________
 
 **Contributions:**
- - Michael Ridland @rid00z 
- - Rui Marinho @ruiespinho 
- - Filip De Vos @foxtricks 
+ - Michael Ridland [@rid00z ](https://twitter.com/rid00z)
+ - [Rui Marinho](http://ruimarinho.net/)  [@ruiespinho](https://twitter.com/ruiespinho)
+ - Filip De Vos  [@foxtricks](https://twitter.com/foxtricks)
  - ThomasLebrun 
  - Sami M. Kallio 
- - Kevin E. Ford @Bowman74
- - Jason Smith @jassmith87 
+ - Kevin E. Ford [@Bowman74](https://twitter.com/Bowman74)
+ - Jason Smith [@jassmith87](https://twitter.com/jassmith87)
  - Shawn Anderson
- - Sara Silva @saramgsilva
+ - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
 
  **Another Project Contributions:**
  	Xamarin.Mobile
