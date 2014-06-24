@@ -17,6 +17,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>5003732c</NuGetPackageImportStamp>
+	<StyleCopTreatErrorsAsWarnings>true</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -118,6 +119,7 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
       <SubType>Designer</SubType>
     </None>
     <None Include="Controls\Calendar\MonoDroid.TimesSquare\License.txt" />
+    <None Include="Settings.StyleCop" />
     <None Include="Xamarin.Forms.Labs.Droid.nuspec" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +147,7 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\..\..\tools\StyleCop\v4.7\StyleCop.Targets" />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />
