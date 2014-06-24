@@ -61,8 +61,7 @@ Using the MVVM Helpers
 **ViewFactory**
 Coming soon
 
-**RelayCommand**
-Coming soon
+[**RelayCommand**](https://github.com/XForms/Xamarin-Forms-Labs/wiki/RelayCommand-and-RelayCommand--T)
 
 _________________
 
