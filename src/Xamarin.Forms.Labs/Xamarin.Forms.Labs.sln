@@ -82,6 +82,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Autofac", "Autofac", "{6D77
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs.Services.Autofac", "Plugins\DI\Xamarin.Forms.Labs.Services.Autofac\Xamarin.Forms.Labs.Services.Autofac.csproj", "{F8C821A9-155E-48BC-8998-1ED9DE5CEF1A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptography", "{39E81B30-1CA9-4385-8BBE-BCF5CB80ED8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs.Cryptography", "Plugins\Cryptography\Xamarin.Forms.Labs.Cryptography\Xamarin.Forms.Labs.Cryptography.csproj", "{E063A4B0-2D2D-4467-8F6C-33B157423634}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -916,6 +920,38 @@ Global
 		{F8C821A9-155E-48BC-8998-1ED9DE5CEF1A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F8C821A9-155E-48BC-8998-1ED9DE5CEF1A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F8C821A9-155E-48BC-8998-1ED9DE5CEF1A}.Release|x86.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Ad-Hoc|ARM.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Ad-Hoc|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Ad-Hoc|Mixed Platforms.Build.0 = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Ad-Hoc|x86.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.AppStore|ARM.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.AppStore|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.AppStore|Mixed Platforms.Build.0 = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.AppStore|x86.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E063A4B0-2D2D-4467-8F6C-33B157423634}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -946,6 +982,8 @@ Global
 		{526F68E5-B35B-45FB-A54F-25793D2A1678} = {EB11721D-DEA7-4BDC-9AF8-E6C6E83E6739}
 		{6D77A8D9-5AD5-4EBD-9137-2999B35F783F} = {3293F8C8-427A-4D6C-BA62-BDFB498B072A}
 		{F8C821A9-155E-48BC-8998-1ED9DE5CEF1A} = {6D77A8D9-5AD5-4EBD-9137-2999B35F783F}
+		{39E81B30-1CA9-4385-8BBE-BCF5CB80ED8B} = {C6C2CC94-1785-4DA7-B72F-EC5A8D7041D6}
+		{E063A4B0-2D2D-4467-8F6C-33B157423634} = {39E81B30-1CA9-4385-8BBE-BCF5CB80ED8B}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ..\..\samples\Xamarin.Forms.Labs.Sample.iOS\Xamarin.Forms.Labs.Sample.iOS.csproj
