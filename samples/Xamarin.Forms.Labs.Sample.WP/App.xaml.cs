@@ -249,7 +249,6 @@ namespace Xamarin.Forms.Labs.Sample.WP
                 .Register<IXFormsApp>(app).
                 Register<ISimpleCache>(t => new SQLiteSimpleCache(new SQLite.Net.Platform.WindowsPhone8.SQLitePlatformWP8(),
                     new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
-			
 
 			Resolver.SetResolver(resolverContainer.GetResolver());
 		}
