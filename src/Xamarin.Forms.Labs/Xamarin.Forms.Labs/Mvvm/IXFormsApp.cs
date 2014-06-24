@@ -3,12 +3,13 @@ using System;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
-	/// <summary>
-	/// Interface IXFormsApp
-	/// </summary>
-	public interface IXFormsApp
-	{
+    /// <summary>
+    /// Interface IXFormsApp
+    /// </summary>
+    public interface IXFormsApp
+    {
         #region Properties
+
         /// <summary>
         /// Gets a value indicating whether this instance is initialized.
         /// </summary>
@@ -20,70 +21,84 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <value>The application data directory</value>
         string AppDataDirectory { get; set; }
+
         #endregion Properties
 
-		#region Event Handlers
-		/// <summary>
-		/// Gets or sets the initialize.
-		/// </summary>
-		/// <value>The initialize.</value>
-		EventHandler<EventArgs> Initialize { get; set; }
-		/// <summary>
-		/// Gets or sets the on startup.
-		/// </summary>
-		/// <value>The on startup.</value>
-		EventHandler<EventArgs> Startup { get; set; }
-		/// <summary>
-		/// Gets or sets the on close.
-		/// </summary>
-		/// <value>The on close.</value>
-		EventHandler<EventArgs> Closing { get; set; }
-		/// <summary>
-		/// Gets or sets the on suspend.
-		/// </summary>
-		/// <value>The on suspend.</value>
-		EventHandler<EventArgs> Suspended { get; set; }
-		/// <summary>
-		/// Gets or sets the on resume.
-		/// </summary>
-		/// <value>The on resume.</value>
-		EventHandler<EventArgs> Resumed { get; set; }
-		/// <summary>
-		/// Gets or sets the on error.
-		/// </summary>
-		/// <value>The on error.</value>
-		EventHandler<EventArgs> Error { get; set; }
-		/// <summary>
-		/// Gets or sets the on rotation.
-		/// </summary>
-		/// <value>The on rotation.</value>
-		EventHandler<EventArgs> Rotation { get; set; }
-		#endregion Event Handlers
+        #region Event Handlers
 
-		#region Methods
-		#endregion Methods
-	}
+        /// <summary>
+        /// Gets or sets the initialize.
+        /// </summary>
+        /// <value>The initialize.</value>
+        EventHandler<EventArgs> Initialize { get; set; }
 
-	/// <summary>
-	/// Interface IXFormsApp
-	/// </summary>
-	/// <typeparam name="TApp">The type of the t application.</typeparam>
-	public interface IXFormsApp<TApp> : IXFormsApp
-	{
-		#region Properties
-		/// <summary>
-		/// Gets or sets the application context.
-		/// </summary>
-		/// <value>The application context.</value>
-		TApp AppContext { get; set; }
-		#endregion Properties
+        /// <summary>
+        /// Gets or sets the on startup.
+        /// </summary>
+        /// <value>The on startup.</value>
+        EventHandler<EventArgs> Startup { get; set; }
 
-		#region Methods
-		/// <summary>
-		/// Initializes the specified context.
-		/// </summary>
-		/// <param name="context">The context.</param>
-		void Init(TApp context);
-		#endregion Methods
-	}
+        /// <summary>
+        /// Gets or sets the on close.
+        /// </summary>
+        /// <value>The on close.</value>
+        EventHandler<EventArgs> Closing { get; set; }
+
+        /// <summary>
+        /// Gets or sets the on suspend.
+        /// </summary>
+        /// <value>The on suspend.</value>
+        EventHandler<EventArgs> Suspended { get; set; }
+
+        /// <summary>
+        /// Gets or sets the on resume.
+        /// </summary>
+        /// <value>The on resume.</value>
+        EventHandler<EventArgs> Resumed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the on error.
+        /// </summary>
+        /// <value>The on error.</value>
+        EventHandler<EventArgs> Error { get; set; }
+
+        /// <summary>
+        /// Gets or sets the on rotation.
+        /// </summary>
+        /// <value>The on rotation.</value>
+        EventHandler<EventArgs> Rotation { get; set; }
+
+        #endregion Event Handlers
+
+        #region Methods
+
+        #endregion Methods
+    }
+
+    /// <summary>
+    /// Interface IXFormsApp
+    /// </summary>
+    /// <typeparam name="TApp">The type of the t application.</typeparam>
+    public interface IXFormsApp<TApp> : IXFormsApp
+    {
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the application context.
+        /// </summary>
+        /// <value>The application context.</value>
+        TApp AppContext { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <summary>
+        /// Initializes the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        void Init(TApp context);
+
+        #endregion Methods
+    }
 }
