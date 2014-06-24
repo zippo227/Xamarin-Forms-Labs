@@ -47,7 +47,12 @@ _________________
 **HOW-TO**
 ======
 
-We are working in a great [wiki][1] on how to use the controls and services. https://github.com/XForms/Xamarin-Forms-Labs/wiki
+We are working in a great [wiki][1] on how to use the controls and services. 
+
+
+https://github.com/XForms/Xamarin-Forms-Labs/wiki
+
+
 ------------------------------------------------------------------------
 
 Using the MVVM Helpers
@@ -118,36 +123,36 @@ _______________
 Nuget
 --------------
 **Main Packages:**
+ - [Xamarin.Forms.Labs](https://www.nuget.org/packages/Xamarin.Forms.Labs/)
+ - [Xamarin.Forms.Labs.IOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.iOS/)
+ - [Xamarin.Forms.Labs.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Droid/)
+ - [Xamarin.Forms.Labs.WP](https://www.nuget.org/packages/Xamarin.Forms.Labs.WP/)
 
- - https://www.nuget.org/packages/Xamarin.Forms.Labs/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.iOS/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Droid/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.WP/
 
 **Plugins:**
 
 Caching 
 
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Caching.SQLiteNet/
+ - [Xamarin.Forms.Labs.Caching.SQLiteNet](https://www.nuget.org/packages/Xamarin.Forms.Labs.Caching.SQLiteNet/)
 
 DI 
 
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.SimpleContainer/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Ninject/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Autofac/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.iOS/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.WP8/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.Droid/
+ - [Xamarin.Forms.Labs.Services.SimpleContainer](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.SimpleContainer/)
+ - [Xamarin.Forms.Labs.Services.Ninject](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Ninject/)
+ - [Xamarin.Forms.Labs.Services.Autofac](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Autofac/)
+ - [Xamarin.Forms.Labs.Services.TinyIOC](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC/)
+ - [Xamarin.Forms.Labs.Services.TinyIOC.iOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.iOS/)
+ - [Xamarin.Forms.Labs.Services.TinyIOC.WP8](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.WP8/)
+ - [Xamarin.Forms.Labs.Services.TinyIOC.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.Droid/)
 
 Serialization
 
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ProtoBuf/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.JsonNET/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8/
- - https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS/
+ - [Xamarin.Forms.Labs.Services.Serialization.ProtoBuf](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ProtoBuf/)
+ - [Xamarin.Forms.Labs.Serialization.JsonNET](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.JsonNET/)
+ - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3/)
+ - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid/)
+ - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8/)
+ - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS/)
 
 
 
