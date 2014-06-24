@@ -283,13 +283,13 @@ namespace Xamarin.Forms.Labs.Droid
 		protected override void OnInit(XFormsApplicationDroid app)
 		{
 			
-			this.AppContext.Start += (o, e) => this.OnStartup();
-			this.AppContext.Stop += (o, e) => this.OnClosing();
-			this.AppContext.Pause += (o, e) => this.OnSuspended();
-			this.AppContext.Resume += (o, e) => this.OnResumed();
-		    this.AppDataDirectory = Environment.ExternalStorageDirectory.AbsolutePath;
+            this.AppContext.Start += (o, e) => this.OnStartup();
+            this.AppContext.Stop += (o, e) => this.OnClosing();
+            this.AppContext.Pause += (o, e) => this.OnSuspended();
+            this.AppContext.Resume += (o, e) => this.OnResumed();
+            this.AppDataDirectory = Environment.ExternalStorageDirectory.AbsolutePath;
 
-			base.OnInit(app);
+            base.OnInit(app);
 		}
 	}
 }

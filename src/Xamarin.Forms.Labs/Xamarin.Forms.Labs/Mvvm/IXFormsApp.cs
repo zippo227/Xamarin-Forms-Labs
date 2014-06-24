@@ -8,19 +8,19 @@ namespace Xamarin.Forms.Labs.Mvvm
 	/// </summary>
 	public interface IXFormsApp
 	{
-		#region Properties
-		/// <summary>
-		/// Gets a value indicating whether this instance is initialized.
-		/// </summary>
-		/// <value><c>true</c> if this instance is initialized; otherwise, <c>false</c>.</value>
-		bool IsInitialized { get; }
+        #region Properties
+        /// <summary>
+        /// Gets a value indicating whether this instance is initialized.
+        /// </summary>
+        /// <value><c>true</c> if this instance is initialized; otherwise, <c>false</c>.</value>
+        bool IsInitialized { get; }
 
         /// <summary>
         /// Gets or sets the application data directory.
         /// </summary>
         /// <value>The application data directory</value>
         string AppDataDirectory { get; set; }
-		#endregion Properties
+        #endregion Properties
 
 		#region Event Handlers
 		/// <summary>

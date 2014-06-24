@@ -112,13 +112,13 @@ namespace Xamarin.Forms.Labs.iOS
 		/// <param name="app">The application.</param>
 		protected override void OnInit(XFormsApplicationDelegate app)
 		{
-			this.AppContext.FinishedLaunchingEvent += (o, e) => { this.OnStartup(); };
-			this.AppContext.WillTerminateEvent += (o, e) => { this.OnClosing(); };
-			this.AppContext.DidEnterBackgroundEvent += (o, e) => { this.OnSuspended(); };
-			this.AppContext.WillEnterForegroundEvent += (o, e) => { this.OnResumed(); };
+            this.AppContext.FinishedLaunchingEvent += (o, e) => { this.OnStartup(); };
+            this.AppContext.WillTerminateEvent += (o, e) => { this.OnClosing(); };
+            this.AppContext.DidEnterBackgroundEvent += (o, e) => { this.OnSuspended(); };
+            this.AppContext.WillEnterForegroundEvent += (o, e) => { this.OnResumed(); };
             this.AppDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 
-			base.OnInit(app);
+            base.OnInit(app);
 		}
 	}
 }

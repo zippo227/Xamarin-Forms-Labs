@@ -21,11 +21,11 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// <value>The application data directory</value>
         public string AppDataDirectory { get; set; }
 
-		/// <summary>
-		/// Gets or sets the application context.
-		/// </summary>
-		/// <value>The application context.</value>
-		public TApp AppContext { get; set; }
+        /// <summary>
+        /// Gets or sets the application context.
+        /// </summary>
+        /// <value>The application context.</value>
+        public TApp AppContext { get; set; }
 		#endregion Properties
 
 		#region Event Handlers

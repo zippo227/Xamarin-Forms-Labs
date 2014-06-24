@@ -234,23 +234,23 @@ namespace Xamarin.Forms.Labs.Sample.WP
 	    /// </summary>
 	    private async void SetIoC()
 		{
-			var resolverContainer = new SimpleContainer();
+            var resolverContainer = new SimpleContainer();
 
-			var app = new XFormsAppWP();
+            var app = new XFormsAppWP();
 
-			app.Init(this);
+            app.Init(this);
             
             var documents = app.AppDataDirectory;
             var pathToDatabase = Path.Combine(documents, "xforms.db");
 
-			resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
+            resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
-				.Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+	            .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
                 .Register<IXFormsApp>(app).
                 Register<ISimpleCache>(t => new SQLiteSimpleCache(new SQLite.Net.Platform.WindowsPhone8.SQLitePlatformWP8(),
                     new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
 
-			Resolver.SetResolver(resolverContainer.GetResolver());
+	        Resolver.SetResolver(resolverContainer.GetResolver());
 		}
 
         public async Task<string> GetPathForFileAsync(string file)

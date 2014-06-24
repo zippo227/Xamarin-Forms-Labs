@@ -68,18 +68,18 @@ namespace Xamarin.Forms.Labs.Sample.iOS
         {
             var resolverContainer = new SimpleContainer();
 
-			var app = new XFormsAppiOS();
-			app.Init(this);
+            var app = new XFormsAppiOS();
+            app.Init(this);
 
             var documents = app.AppDataDirectory;
-		    var pathToDatabase = Path.Combine(documents, "xforms.db");
+            var pathToDatabase = Path.Combine(documents, "xforms.db");
 
-			resolverContainer.Register<IDevice> (t => AppleDevice.CurrentDevice)
+            resolverContainer.Register<IDevice> (t => AppleDevice.CurrentDevice)
                 .Register<IDisplay> (t => t.Resolve<IDevice> ().Display)
-				.Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer> ()
-				.Register<IXFormsApp> (app)
-				.Register<ISimpleCache> (t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(),
-					new SQLite.Net.SQLiteConnectionString(pathToDatabase,true), t.Resolve<IJsonSerializer> () ));
+	            .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer> ()
+	            .Register<IXFormsApp> (app)
+	            .Register<ISimpleCache> (t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(),
+		            new SQLite.Net.SQLiteConnectionString(pathToDatabase,true), t.Resolve<IJsonSerializer> () ));
 				
 
             Resolver.SetResolver(resolverContainer.GetResolver());
