@@ -37,65 +37,67 @@ using System.IO;
 
 namespace Xamarin.Forms.Labs.Sample.Droid
 {
-	/// <summary>
-	/// Class MainActivity.
-	/// </summary>
-    [Activity(Label = "Xamarin.Forms.Labs.Sample.Droid", MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
-	public class MainActivity : XFormsApplicationDroid
-	{
-		/// <summary>
-		/// Indicated if the application has been initialized
-		/// </summary>
+    /// <summary>
+    /// Class MainActivity.
+    /// </summary>
+    [Activity(Label = "Xamarin.Forms.Labs.Sample.Droid", MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
+    public class MainActivity : XFormsApplicationDroid
+    {
+        /// <summary>
+        /// Indicated if the application has been initialized
+        /// </summary>
         private static bool _initialized;
 
-		/// <summary>
-		/// Called when [create].
-		/// </summary>
-		/// <param name="bundle">The bundle.</param>
-		protected override void OnCreate(Bundle bundle)
-		{
-			base.OnCreate(bundle);
+        /// <summary>
+        /// Called when [create].
+        /// </summary>
+        /// <param name="bundle">The bundle.</param>
+        protected override void OnCreate(Bundle bundle)
+        {
+            base.OnCreate(bundle);
 
             if (!_initialized)
             {
                 this.SetIoc();
             }
 
-			Xamarin.Forms.Forms.Init(this, bundle);
+            Xamarin.Forms.Forms.Init(this, bundle);
 
-			App.Init();
+            App.Init();
 
             this.SetPage(App.GetMainPage());
-		}
+        }
 
-		/// <summary>
-		/// Sets the IoC.
-		/// </summary>
+        /// <summary>
+        /// Sets the IoC.
+        /// </summary>
         private void SetIoc()
         {
             var resolverContainer = new SimpleContainer();
 
-			var app = new XFormsAppDroid();
-		
-			var documents = Environment.ExternalStorageDirectory.AbsolutePath;
-			var pathToDatabase = Path.Combine(documents, "xforms.db");
-		
-			app.Init(this);
+            var app = new XFormsAppDroid();
 
-			resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
+            app.Init(this);
+
+            var documents = app.AppDataDirectory;
+            var pathToDatabase = Path.Combine(documents, "xforms.db");
+
+            resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
-				.Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
-				.Register<IDependencyContainer>(resolverContainer)
-				.Register<IXFormsApp>(app)
-				.Register<ISimpleCache> (t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid(),
-					new SQLite.Net.SQLiteConnectionString(pathToDatabase,true), t.Resolve<IJsonSerializer> () ));
+                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                .Register<IDependencyContainer>(resolverContainer)
+                .Register<IXFormsApp>(app)
+                .Register<ISimpleCache>(
+                    t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid(),
+                        new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
 
 
             Resolver.SetResolver(resolverContainer.GetResolver());
 
             _initialized = true;
         }
-	}
+    }
 }
 
 
