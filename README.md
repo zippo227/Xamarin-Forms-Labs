@@ -26,8 +26,8 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 
 **Available Mvvm helpers (Beta)**
 
- - ViewModelBase (navigation, isbusy)
- - RelayCommand ; RelayCommand< T >
+ - ViewModel (navigation, isbusy)
+ - RelayCommand and RelayCommand<T>
  - ViewFactory
  - IOC
  - IXFormsApp (application events)
@@ -35,10 +35,10 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 **Available Plugins (Beta)**
     
 
- - Serialization (ServiceStackV3,ProtoBuf,JSON.Net)
+ - Serialization (ServiceStackV3, ProtoBuf, JSON.Net)
  - Caching (SQLLiteSimpleCache)
- - Dependency Injection containers (TinyIOC,Autofac,NInject,SimpleInjector)
-
+ - Dependency Injection containers (TinyIOC, Autofac, NInject, impleInjector)
+ 
    
 _________________
 
