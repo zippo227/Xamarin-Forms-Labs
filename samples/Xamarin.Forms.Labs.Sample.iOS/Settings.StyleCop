@@ -1,12 +1,13 @@
 <StyleCopSettings Version="105">
-   <GlobalSettings>
+  <GlobalSettings>
     <CollectionProperty Name="RecognizedWords">
       <Value>bindable</Value>
       <Value>databinding</Value>
       <Value>tombstoned</Value>
     </CollectionProperty>
+    <StringProperty Name="MergeSettingsFiles">NoMerge</StringProperty>
   </GlobalSettings>
-    <Parsers>
+  <Parsers>
     <Parser ParserId="StyleCop.CSharp.CsParser">
       <ParserSettings>
         <BooleanProperty Name="AnalyzeDesignerFiles">False</BooleanProperty>
@@ -15,13 +16,7 @@
   </Parsers>
   <Analyzers>
     <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
-      <AnalyzerSettings>
-        <StringProperty Name="CompanyName">Xamarin Forms Labs</StringProperty>
-        <StringProperty Name="Copyright">Copyright (c) 2014 Xamarin Forms Labs. All rights reserved.</StringProperty>
-        <BooleanProperty Name="IgnorePrivates">True</BooleanProperty>
-        <BooleanProperty Name="IgnoreInternals">True</BooleanProperty>
-      </AnalyzerSettings>
-     <Rules>
+      <Rules>
         <Rule Name="DocumentationTextMustEndWithAPeriod">
           <RuleSettings>
             <BooleanProperty Name="Enabled">True</BooleanProperty>
@@ -42,11 +37,37 @@
             <BooleanProperty Name="Enabled">True</BooleanProperty>
           </RuleSettings>
         </Rule>
-      </Rules>
-    </Analyzer>
-     <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
-      <Rules>
-        <Rule Name="StaticReadonlyFieldsMustBeginWithUpperCaseLetter">
+        <Rule Name="FileMustHaveHeader">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FileHeaderMustShowCopyright">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FileHeaderMustHaveCopyrightText">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FileHeaderMustContainFileName">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FileHeaderFileNameDocumentationMustMatchFileName">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FileHeaderMustHaveValidCompanyText">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FileHeaderFileNameDocumentationMustMatchTypeName">
           <RuleSettings>
             <BooleanProperty Name="Enabled">False</BooleanProperty>
           </RuleSettings>
@@ -54,7 +75,27 @@
       </Rules>
       <AnalyzerSettings />
     </Analyzer>
-       <Analyzer AnalyzerId="StyleCop.CSharp.OrderingRules">
+    <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
+      <Rules>
+        <Rule Name="StaticReadonlyFieldsMustBeginWithUpperCaseLetter">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FieldNamesMustNotBeginWithUnderscore">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FieldNamesMustNotUseHungarianNotation">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+      </Rules>
+      <AnalyzerSettings />
+    </Analyzer>
+    <Analyzer AnalyzerId="StyleCop.CSharp.OrderingRules">
       <Rules>
         <Rule Name="UsingDirectivesMustBePlacedWithinNamespace">
           <RuleSettings>
@@ -86,6 +127,26 @@
             <BooleanProperty Name="Enabled">False</BooleanProperty>
           </RuleSettings>
         </Rule>
+        <Rule Name="SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="UsingAliasDirectivesMustBePlacedAfterOtherUsingDirectives">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="UsingDirectivesMustBeOrderedAlphabeticallyByNamespace">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="UsingAliasDirectivesMustBeOrderedAlphabeticallyByAliasName">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
       </Rules>
       <AnalyzerSettings />
     </Analyzer>
@@ -106,7 +167,7 @@
             <BooleanProperty Name="Enabled">False</BooleanProperty>
           </RuleSettings>
         </Rule>
-       <Rule Name="ParameterMustFollowComma">
+        <Rule Name="ParameterMustFollowComma">
           <RuleSettings>
             <BooleanProperty Name="Enabled">False</BooleanProperty>
           </RuleSettings>
@@ -117,21 +178,6 @@
           </RuleSettings>
         </Rule>
         <Rule Name="ParametersMustBeOnSameLineOrSeparateLines">
-          <RuleSettings>
-            <BooleanProperty Name="Enabled">False</BooleanProperty>
-          </RuleSettings>
-        </Rule>
-      </Rules>
-      <AnalyzerSettings />
-    </Analyzer>
-    <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
-      <Rules>
-        <Rule Name="FieldNamesMustNotBeginWithUnderscore">
-          <RuleSettings>
-            <BooleanProperty Name="Enabled">False</BooleanProperty>
-          </RuleSettings>
-        </Rule>
-        <Rule Name="FieldNamesMustNotUseHungarianNotation">
           <RuleSettings>
             <BooleanProperty Name="Enabled">False</BooleanProperty>
           </RuleSettings>
@@ -154,5 +200,15 @@
       </Rules>
       <AnalyzerSettings />
     </Analyzer>
-</Analyzers>
+    <Analyzer AnalyzerId="StyleCop.CSharp.SpacingRules">
+      <Rules>
+        <Rule Name="TabsMustNotBeUsed">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+      </Rules>
+      <AnalyzerSettings />
+    </Analyzer>
+  </Analyzers>
 </StyleCopSettings>

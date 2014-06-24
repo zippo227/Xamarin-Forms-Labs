@@ -12,7 +12,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\Xamarin.Forms.Labs\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>4f7e1b08</NuGetPackageImportStamp>
-	 <StyleCopTreatErrorsAsWarnings>true</StyleCopTreatErrorsAsWarnings>
+    <StyleCopTreatErrorsAsWarnings>true</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -131,7 +131,9 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="SensorStoryboardController.cs" />
     <Compile Include="SensorStoryboardController.designer.cs">
       <DependentUpon>SensorStoryboardController.cs</DependentUpon>
@@ -161,7 +163,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-   <Import Project="..\..\tools\StyleCop\v4.7\StyleCop.Targets" />
+  <Import Project="..\..\tools\StyleCop\v4.7\StyleCop.Targets" />
   <ItemGroup>
     <BundleResource Include="Resources\icon_facebook.png" />
   </ItemGroup>
