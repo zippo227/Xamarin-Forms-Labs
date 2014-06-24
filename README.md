@@ -1,7 +1,7 @@
-Xamarin-Forms-Toolkit
+Xamarin Forms Labs
 =====================
 
-Xamarin Forms Toolkit is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with Xamarin Forms.
+Xamarin Forms Labs is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with Xamarin Forms.
 
 Call for action for all Xamarin Developers, embrace this project and share your controls and services with the community, add your own control to the toolkit.
 
@@ -10,25 +10,50 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - Calendar Control (beta)  
  - ExtendedTabbedPage  
  - ImageButton (beta)
- - ExtendedLabel (alpha)
- - AutoComplete (doesn't work on android)
+ - ExtendedLabel (beta)
+ - ExtendedViewCell (beta)
+ - ExtendedTextCell (beta)
+ - AutoComplete (beta)
  - HybridWebView (alpha)
 
 **Available services (Beta)**
 
- - TextToSpeech 
- - Device (battery info, device info, sensors)
+ - Text To Speech 
+ - Device (battery info, device info, sensors, accelerometers)
  - Phone Service (cellular network info, make phonecalls)
  - Geolocator
- - Camera (beta only on Windows)
+ - Camera (Picture and Video picker, Take Picture, Take Video)
 
 **Available Mvvm helpers (Beta)**
 
- - ViewModelBase 
- - RelayCommand ; RelayCommand< T >
+ - ViewModel (navigation, isbusy)
+ - RelayCommand and RelayCommand<T>
  - ViewFactory
  - IOC
+ - IXFormsApp (application events)
+
+**Available Plugins (Beta)**
+    
+
+ - Serialization (ServiceStackV3, ProtoBuf, JSON.Net)
+ - Caching (SQLLiteSimpleCache)
+ - Dependency Injection containers (TinyIOC, Autofac, NInject, impleInjector)
+ 
+   
 _________________
+
+
+
+**HOW-TO**
+======
+
+We are working in a great [wiki][1] on how to use the controls and services. 
+
+
+https://github.com/XForms/Xamarin-Forms-Labs/wiki
+
+
+------------------------------------------------------------------------
 
 Using the MVVM Helpers
 -----------
@@ -36,21 +61,21 @@ Using the MVVM Helpers
 **ViewFactory**
 Coming soon
 
-**RelayCommand**
-Coming soon
+[**RelayCommand**](https://github.com/XForms/Xamarin-Forms-Labs/wiki/RelayCommand-and-RelayCommand--T)
 
 _________________
 
 Using the controls
 -----------
 
-Add XForms.Toolkit.Controls reference to your projects , main pcl, ios, android, and wp.
+
+Add Xamarin.Forms.Labs.Controls reference to your projects , main pcl, ios, android, and wp.
 
 Xaml :
 
 Reference the assembly namespace 
 
-     xmlns:controls="clr-namespace:XForms.Toolkit.Controls;assembly=XForms.Toolkit"
+     xmlns:controls="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=Xamarin.Forms.Labs"
 
 Render your control:
 
@@ -96,8 +121,38 @@ _______________
 
 Nuget
 --------------
+**Main Packages:**
+ - [Xamarin.Forms.Labs](https://www.nuget.org/packages/Xamarin.Forms.Labs/)
+ - [Xamarin.Forms.Labs.IOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.iOS/)
+ - [Xamarin.Forms.Labs.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Droid/)
+ - [Xamarin.Forms.Labs.WP](https://www.nuget.org/packages/Xamarin.Forms.Labs.WP/)
 
-At the time there's no public nuget packages , the solution includes a build action to create nuget packages.
+
+**Plugins:**
+
+Caching 
+
+ - [Xamarin.Forms.Labs.Caching.SQLiteNet](https://www.nuget.org/packages/Xamarin.Forms.Labs.Caching.SQLiteNet/)
+
+DI 
+
+ - [Xamarin.Forms.Labs.Services.SimpleContainer](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.SimpleContainer/)
+ - [Xamarin.Forms.Labs.Services.Ninject](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Ninject/)
+ - [Xamarin.Forms.Labs.Services.Autofac](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Autofac/)
+ - [Xamarin.Forms.Labs.Services.TinyIOC](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC/)
+ - [Xamarin.Forms.Labs.Services.TinyIOC.iOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.iOS/)
+ - [Xamarin.Forms.Labs.Services.TinyIOC.WP8](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.WP8/)
+ - [Xamarin.Forms.Labs.Services.TinyIOC.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.Droid/)
+
+Serialization
+
+ - [Xamarin.Forms.Labs.Services.Serialization.ProtoBuf](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ProtoBuf/)
+ - [Xamarin.Forms.Labs.Serialization.JsonNET](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.JsonNET/)
+ - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3/)
+ - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid/)
+ - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8/)
+ - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS/)
+
 
 
 _________________
@@ -105,7 +160,7 @@ _________________
 Build the project
 --------------
 
-To develop on this project, run the build.bat or build.sh file first so the required Xamarin nuget packages can be downloaded.
+To develop on this project, just clone the project to your computer, package restore is enable so build the solution first, if you get any errors try to build each project independently .
 
 
 _________________
@@ -125,17 +180,23 @@ __________________
 License
 -----------
 
-License Apache 2.0 more about that in the [LICENSE][1] file. 
+License Apache 2.0 more about that in the [LICENSE][2] file. 
 __________________
 
 **Contributions:**
- - Michael Ridland @rid00z 
- - Rui Marinho @ruiespinho 
- - Filip De Vos @foxtricks 
+ - Michael Ridland [@rid00z ](https://twitter.com/rid00z)
+ - [Rui Marinho](http://ruimarinho.net/)  [@ruiespinho](https://twitter.com/ruiespinho)
+ - Filip De Vos  [@foxtricks](https://twitter.com/foxtricks)
  - ThomasLebrun 
  - Sami M. Kallio 
- - Kevin E. Ford @Bowman74
- - Jason Smith @jassmith87 
+ - Kevin E. Ford [@Bowman74](https://twitter.com/Bowman74)
+ - Jason Smith [@jassmith87](https://twitter.com/jassmith87)
  - Shawn Anderson
+ - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
 
-  [1]: https://github.com/XForms/XForms-Toolkit/blob/master/LICENSE
+ **Another Project Contributions:**
+ 	Xamarin.Mobile
+
+
+  [1]: https://github.com/XForms/Xamarin-Forms-Labs/wiki
+  [2]: https://github.com/XForms/XForms-Toolkit/blob/master/LICENSE

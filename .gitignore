@@ -176,10 +176,9 @@ FakesAssemblies/
 
 samples/.DS_Store
 
-samples/XForms.Toolkit.Sample.Droid/Resources/Resource.designer.cs
-src/XForms.Toolkit/XForms.Toolkit.Droid/Resources/Resource.designer.cs
+samples/Xamarin.Forms.Labs.Sample.Droid/Resources/Resource.designer.cs
+src/Xamarin.Forms.Labs/Xamarin.Forms.Labs.Droid/Resources/Resource.designer.cs
 
-src/XForms.Toolkit/XForms.Toolkit.userprefs
+src/Xamarin.Forms.Labs/Xamarin.Forms.Labs.userprefs
 
 *.userprefs
-NuGet.exe

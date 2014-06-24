@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+	<metadata>
+		<id>$id$</id>
+		<version>1.0.1.5</version>
+		<authors>$author$</authors>
+    <title>Xamarin Forms Labs Cryptography</title>
+    <tags>xamarin,xamarin forms,xamarin forms labs, Cryptography, pcl, md5</tags>
+    <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>
+      Xamarin.Forms.Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+      This package contains helpers to work with cryptography.
+    </description>
+		<releaseNotes>See latest changeset on github</releaseNotes>
+		<copyright>Copyright 2014</copyright>
+   
+	</metadata>
+</package>
