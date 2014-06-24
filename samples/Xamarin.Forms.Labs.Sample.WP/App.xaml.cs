@@ -239,7 +239,9 @@ namespace Xamarin.Forms.Labs.Sample.WP
 			var app = new XFormsAppWP();
 
 			app.Init(this);
-            var pathToDatabase = await GetPathForFileAsync("xforms.db");
+            
+            var documents = app.AppDataDirectory;
+            var pathToDatabase = Path.Combine(documents, "xforms.db");
 
 			resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)

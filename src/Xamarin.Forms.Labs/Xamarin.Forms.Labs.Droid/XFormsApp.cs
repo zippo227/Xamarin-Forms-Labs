@@ -1,6 +1,7 @@
 using System;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Labs.Mvvm;
+using Environment = Android.OS.Environment;
 
 namespace Xamarin.Forms.Labs.Droid
 {
@@ -286,6 +287,7 @@ namespace Xamarin.Forms.Labs.Droid
 			this.AppContext.Stop += (o, e) => this.OnClosing();
 			this.AppContext.Pause += (o, e) => this.OnSuspended();
 			this.AppContext.Resume += (o, e) => this.OnResumed();
+		    this.AppDataDirectory = Environment.ExternalStorageDirectory.AbsolutePath;
 
 			base.OnInit(app);
 		}

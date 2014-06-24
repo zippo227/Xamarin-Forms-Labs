@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Windows.Storage;
 using Microsoft.Phone.Shell;
 using Xamarin.Forms.Labs.Mvvm;
 
@@ -15,7 +16,8 @@ namespace Xamarin.Forms.Labs.WP
 		{
 			this.AppContext.Startup += (o, e) => { this.OnStartup(); };
 			this.AppContext.Exit += (o, e) => { this.OnClosing(); };
-			this.AppContext.UnhandledException += (o, e) => { this.OnError(e.ExceptionObject); };		
+			this.AppContext.UnhandledException += (o, e) => { this.OnError(e.ExceptionObject); };
+		    this.AppDataDirectory = ApplicationData.Current.LocalFolder.Path;
 	
 			foreach (var a in app.ApplicationLifetimeObjects)
 			{

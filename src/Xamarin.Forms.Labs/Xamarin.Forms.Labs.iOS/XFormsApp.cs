@@ -116,6 +116,7 @@ namespace Xamarin.Forms.Labs.iOS
 			this.AppContext.WillTerminateEvent += (o, e) => { this.OnClosing(); };
 			this.AppContext.DidEnterBackgroundEvent += (o, e) => { this.OnSuspended(); };
 			this.AppContext.WillEnterForegroundEvent += (o, e) => { this.OnResumed(); };
+            this.AppDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 
 			base.OnInit(app);
 		}

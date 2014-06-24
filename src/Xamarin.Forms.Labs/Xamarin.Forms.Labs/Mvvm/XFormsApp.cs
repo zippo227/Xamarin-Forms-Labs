@@ -15,6 +15,12 @@ namespace Xamarin.Forms.Labs.Mvvm
 		/// <value><c>true</c> if this instance is initialized; otherwise, <c>false</c>.</value>
 		public bool IsInitialized { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the application data directory.
+        /// </summary>
+        /// <value>The application data directory</value>
+        public string AppDataDirectory { get; set; }
+
 		/// <summary>
 		/// Gets or sets the application context.
 		/// </summary>

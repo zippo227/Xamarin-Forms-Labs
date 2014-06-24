@@ -76,11 +76,12 @@ namespace Xamarin.Forms.Labs.Sample.Droid
             var resolverContainer = new SimpleContainer();
 
 			var app = new XFormsAppDroid();
-		
-			var documents = Environment.ExternalStorageDirectory.AbsolutePath;
+
+            app.Init(this);
+
+		    var documents = app.AppDataDirectory;
 			var pathToDatabase = Path.Combine(documents, "xforms.db");
-		
-			app.Init(this);
+			
 
 			resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)

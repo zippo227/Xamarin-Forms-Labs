@@ -71,8 +71,8 @@ namespace Xamarin.Forms.Labs.Sample.iOS
 			var app = new XFormsAppiOS();
 			app.Init(this);
 
-			var documents = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			var pathToDatabase = "xforms.db";
+            var documents = app.AppDataDirectory;
+		    var pathToDatabase = Path.Combine(documents, "xforms.db");
 
 			resolverContainer.Register<IDevice> (t => AppleDevice.CurrentDevice)
                 .Register<IDisplay> (t => t.Resolve<IDevice> ().Display)
