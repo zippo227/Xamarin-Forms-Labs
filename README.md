@@ -23,6 +23,10 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - Phone Service (cellular network info, make phonecalls)
  - Geolocator
  - Camera (Picture and Video picker, Take Picture, Take Video)
+ - Accelerometer
+ - Display
+ - Cache
+
 
 **Available Mvvm helpers (Beta)**
 
@@ -193,6 +197,7 @@ __________________
  - Jason Smith [@jassmith87](https://twitter.com/jassmith87)
  - Shawn Anderson
  - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
+ - Ben Ishiyama-Levy [@mrbrl](http://www.monovo.io)
 
  **Another Project Contributions:**
  	Xamarin.Mobile
