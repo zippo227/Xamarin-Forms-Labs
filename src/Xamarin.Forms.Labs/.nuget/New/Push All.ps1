@@ -3,7 +3,7 @@
 ##  ====================
 ##  Remeber the initial once off setting of your API Key
 ##  
-##      NuGet SetApiKey Your-API-Key
+##      ..\NuGet SetApiKey Your-API-Key
 ##
 
 function Pause ($Message="Press any key to continue...")
@@ -22,7 +22,7 @@ try
     $originalLocation = Get-Location
     
     $basePath = Get-Location
-    $pathToNuGetPackager = [System.IO.Path]::GetFullPath( "$basePath\Tools\NuGet.exe" )
+    $pathToNuGetPackager = [System.IO.Path]::GetFullPath( "$basePath\..\NuGet.exe" )
     $pathToNuGetPackageOutput = [System.IO.Path]::GetFullPath( "$basePath\Packages" )
     
     $host.UI.RawUI.BackgroundColor = [System.ConsoleColor]::Black
