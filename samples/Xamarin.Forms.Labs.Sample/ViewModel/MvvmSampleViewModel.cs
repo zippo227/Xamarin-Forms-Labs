@@ -12,12 +12,12 @@ namespace Xamarin.Forms.Labs.Sample
 		}
 
 
-		private RelayCommand _navigateToViewModel;
-		public RelayCommand NavigateToViewModel 
+		private Command _navigateToViewModel;
+		public Command NavigateToViewModel 
 		{
 			get
 			{ 
-				return _navigateToViewModel ?? new RelayCommand (
+				return _navigateToViewModel ?? new Command (
 					async () => await Navigation.PushAsync<NewPageViewModel>() , 
 					() => true); 
 			}

@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
+    [Obsolete("RelayCommand is deprecated and will be removed, please use  Xamarin.Forms.Command instead.")]
 	public class RelayCommand : ICommand
 	{
 		private readonly Action _execute;
@@ -69,6 +70,7 @@ namespace Xamarin.Forms.Labs.Mvvm
 		}
 	}
 
+    [Obsolete("RelayCommand<T> is deprecated and will be removed, please use  Xamarin.Forms.Command instead.")]
 	public class RelayCommand<T> : ICommand
 	{
 		private readonly Action<T> _execute;

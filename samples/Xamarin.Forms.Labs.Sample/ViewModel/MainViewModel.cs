@@ -13,7 +13,7 @@ namespace Xamarin.Forms.Labs.Sample
 
 		public MainViewModel ()
 		{
-			SpeakCommand = new RelayCommand (() => 
+			SpeakCommand = new Command (() => 
             {
 					DependencyService.Get<ITextToSpeechService>().Speak(TextToSpeak);
 			});
@@ -137,8 +137,8 @@ namespace Xamarin.Forms.Labs.Sample
             }
 		}
 
-		private RelayCommand _speakCommand= null;
-		public RelayCommand SpeakCommand
+		private Command _speakCommand= null;
+		public Command SpeakCommand
         {
 			get
             {
@@ -150,23 +150,23 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 		}
 
-		private RelayCommand<string> _searchCommand;
-		public RelayCommand<string> SearchCommand 
+		private Command<string> _searchCommand;
+		public Command<string> SearchCommand 
         {
 			get
             { 
-                return _searchCommand ?? new RelayCommand<string> (
+                return _searchCommand ?? new Command<string> (
 				    obj => {}, 
                     obj => !string.IsNullOrEmpty (obj)); 
             }
         }
 
-		private RelayCommand _callCommand;
-		public RelayCommand CallCommand 
+		private Command _callCommand;
+		public Command CallCommand 
 		{
 			get
 			{ 
-				return _callCommand ?? new RelayCommand (
+				return _callCommand ?? new Command (
 					() => {this.device .PhoneService.DialNumber(NumberToCall);}, 
 					() => true); 
 			}
