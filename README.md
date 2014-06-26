@@ -197,6 +197,7 @@ __________________
  - Jason Smith [@jassmith87](https://twitter.com/jassmith87)
  - Shawn Anderson
  - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
+ - Ben Ishiyama-Levy [@mrbrl](http://www.monovo.io)
 
  **Another Project Contributions:**
  	Xamarin.Mobile
