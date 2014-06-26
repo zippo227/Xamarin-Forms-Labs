@@ -84,33 +84,33 @@ namespace Xamarin.Forms.Labs.Sample
 				}
 			};
 
-			lstServices.ItemSelected += (sender, e) =>
+			lstServices.ItemSelected += async (sender, e) =>
 			{
 				switch (e.SelectedItem.ToString().ToLower())
 				{
 					case "texttospeech":
-						mainPage.Navigation.PushAsync(new TextToSpeechPage());
+						await mainPage.Navigation.PushAsync(new TextToSpeechPage());
 						break;
 					case "deviceextended":
-						mainPage.Navigation.PushAsync(new ExtendedDeviceInfoPage(Resolver.Resolve<IDevice>()));
+                        await mainPage.Navigation.PushAsync(new ExtendedDeviceInfoPage(Resolver.Resolve<IDevice>()));
 						break;
 					case "phoneservice":
-						mainPage.Navigation.PushAsync(new PhoneServicePage());
+                        await mainPage.Navigation.PushAsync(new PhoneServicePage());
 						break;
 					case "geolocator":
-						mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(GeolocatorViewModel)));
+                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(GeolocatorViewModel)));
 						break;
 					case "camera":
-						mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(CameraViewModel)));
+                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(CameraViewModel)));
 						break;
 					case "accelerometer":
-						mainPage.Navigation.PushAsync(new AcceleratorSensorPage());
+                        await mainPage.Navigation.PushAsync(new AcceleratorSensorPage());
 						break;
                     case "display":
-                        mainPage.Navigation.PushAsync(new AbsoluteLayoutWithDisplayInfoPage(Resolver.Resolve<IDisplay>()));
+                        await mainPage.Navigation.PushAsync(new AbsoluteLayoutWithDisplayInfoPage(Resolver.Resolve<IDisplay>()));
                         break;
 					case "cache":
-						mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(CacheServiceViewModel)));
+                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(CacheServiceViewModel)));
 						break;
 					default:
 						break;
@@ -140,30 +140,27 @@ namespace Xamarin.Forms.Labs.Sample
 					"HybridWebView"
 				}
 			};
-			lstControls.ItemSelected += (sender, e) =>
+			lstControls.ItemSelected += async (sender, e) =>
 			{
 				switch (e.SelectedItem.ToString().ToLower())
 				{
 					case "calendar":
-						mainPage.Navigation.PushAsync(new CalendarPage());
+                        await mainPage.Navigation.PushAsync(new CalendarPage());
 						break;
 				    case "autocomplete":
-				        Device.OnPlatform(
-                            () => mainPage.Navigation.PushAsync(new AutoCompletePage()),
-				            null, 
-                            () => mainPage.Navigation.PushAsync(new AutoCompletePage()));
+                        await mainPage.Navigation.PushAsync(new AutoCompletePage());
 				        break;
 					case "buttons":
-						mainPage.Navigation.PushAsync(new ButtonPage());
+                        await mainPage.Navigation.PushAsync(new ButtonPage());
 						break;
 					case "labels":
-						mainPage.Navigation.PushAsync(new ExtendedLabelPage());
+                        await mainPage.Navigation.PushAsync(new ExtendedLabelPage());
 						break;
 					case "cells":
-						mainPage.Navigation.PushAsync(new ExtendedCellPage());
+                        await mainPage.Navigation.PushAsync(new ExtendedCellPage());
 						break;
 					case "hybridwebview":
-						mainPage.Navigation.PushAsync(new CanvasWebHybrid());
+                        await mainPage.Navigation.PushAsync(new CanvasWebHybrid());
 						break;
 					default:
 						break;
