@@ -24,7 +24,7 @@ namespace Xamarin.Forms.Labs.Sample
 		    {
 		        return;
 		    }
-
+            
 		    app.Closing += (o, e) => Debug.WriteLine("Application Closing");
 			app.Error += (o, e) => Debug.WriteLine("Application Error");
 			app.Initialize += (o, e) => Debug.WriteLine("Application Initialized");
@@ -46,7 +46,7 @@ namespace Xamarin.Forms.Labs.Sample
 			ViewFactory.Register<GeolocatorPage, GeolocatorViewModel>();
 			ViewFactory.Register<CameraPage, CameraViewModel>();
 			ViewFactory.Register<CacheServicePage, CacheServiceViewModel>();
-
+            
 			var mainTab = new ExtendedTabbedPage() { Title = "Xamarin Forms Labs" };
 			var mainPage = new NavigationPage(mainTab);
 			mainTab.CurrentPageChanged += () => Debug.WriteLine("ExtendedTabbedPage CurrentPageChanged {0}", mainTab.CurrentPage.Title);

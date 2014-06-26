@@ -81,11 +81,11 @@ namespace Xamarin.Forms.Labs.Sample.iOS
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
                 .Register<IXFormsApp>(app)
+                .Register<IDependencyContainer>(t => resolverContainer)
                 .Register<ISimpleCache>(
                     t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(),
                         new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
-
-
+            
             Resolver.SetResolver(resolverContainer.GetResolver());
         }
     }

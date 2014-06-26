@@ -4,7 +4,9 @@ using Xamarin.Forms;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
-	/// <summary>
+    using Xamarin.Forms.Labs.Services;
+
+    /// <summary>
 	/// Class ViewTypeAttribute.
 	/// </summary>
 	[AttributeUsage (AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
@@ -56,6 +58,9 @@ namespace Xamarin.Forms.Labs.Mvvm
 			where TViewModel : ViewModel
 		{
 			TypeDictionary[typeof (TViewModel)] = typeof (TView);
+
+            // register viewmodel with DI to enable non default vm constructors / service locator
+		    Resolver.Resolve<IDependencyContainer>().Register<TViewModel, TViewModel>();
 		}
 
 		/// <summary>
@@ -68,12 +73,14 @@ namespace Xamarin.Forms.Labs.Mvvm
 		public static Page CreatePage(Type viewModelType, Action<ViewModel, Page> createAction = null)
 		{
 			Type viewType = null;
+            ViewModel viewModel;
+		    
 			if (TypeDictionary.ContainsKey (viewModelType)) {
 				viewType = TypeDictionary[viewModelType];
 			} else {
 				throw new InvalidOperationException ("Unknown View for ViewModel");
 			}
-
+            
 			var pageCacheKey = string.Format("{0}:{1}", viewModelType.Name, viewType.Name);
 			if (EnableCache)
 			{
@@ -89,9 +96,18 @@ namespace Xamarin.Forms.Labs.Mvvm
 			}
 
 			var page = (Page)Activator.CreateInstance (viewType);
-			var viewModel = (ViewModel)Activator.CreateInstance(viewModelType);
+            
+		    try
+		    {
+		        viewModel = (ViewModel)Resolver.Resolve(viewModelType);
+		    }
+		    catch
+		    {
+                // fallback
+		        viewModel = (ViewModel)Activator.CreateInstance(viewModelType);
+		    }
 
-			viewModel.Navigation = new ViewModelNavigation(page.Navigation);
+		    viewModel.Navigation = new ViewModelNavigation(page.Navigation);
 
 			page.BindingContext = viewModel;
 
