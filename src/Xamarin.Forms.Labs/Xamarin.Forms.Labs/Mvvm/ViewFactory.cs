@@ -56,12 +56,17 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <typeparam name="TView">The type of the t view.</typeparam>
         /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-        public static void Register<TView, TViewModel>() where TView : Page where TViewModel : ViewModel
+        public static void Register<TView, TViewModel>()
+            where TView : Page
+            where TViewModel : ViewModel
         {
             TypeDictionary[typeof(TViewModel)] = typeof(TView);
 
-            // register viewmodel with DI to enable non default vm constructors / service locator
-            Resolver.Resolve<IDependencyContainer>().Register<TViewModel, TViewModel>();
+            var container = Resolver.Resolve<IDependencyContainer>();
+            // check if we have DI container
+            if (container != null)
+                // register viewmodel with DI to enable non default vm constructors / service locator
+               container.Register<TViewModel, TViewModel>();
         }
 
         /// <summary>
@@ -107,9 +112,14 @@ namespace Xamarin.Forms.Labs.Mvvm
             }
             catch
             {
+               
                 // fallback
                 viewModel = (ViewModel)Activator.CreateInstance(viewModelType);
             }
+
+            //this is the real fallback :)
+            if(viewModel == null)
+                viewModel = (ViewModel)Activator.CreateInstance(viewModelType);
 
             viewModel.Navigation = new ViewModelNavigation(page.Navigation);
 
