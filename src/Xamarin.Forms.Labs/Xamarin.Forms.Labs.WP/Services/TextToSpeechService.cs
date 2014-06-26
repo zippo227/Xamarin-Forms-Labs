@@ -5,8 +5,8 @@ using Windows.Phone.Speech.Synthesis;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services;
 
-[assembly: Dependency(typeof(Xamarin.Forms.Labs.WP.Services.TextToSpeechService))]
-namespace Xamarin.Forms.Labs.WP.Services
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.WP8.Services.TextToSpeechService))]
+namespace Xamarin.Forms.Labs.WP8.Services
 {
     /// <summary>
     /// The text to speech service implements <see cref="ITextToSpeechService"/> for Windows Phone.

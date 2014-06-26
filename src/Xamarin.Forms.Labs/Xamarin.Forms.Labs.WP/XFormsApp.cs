@@ -8,7 +8,7 @@ using Windows.Storage;
 using Microsoft.Phone.Shell;
 using Xamarin.Forms.Labs.Mvvm;
 
-namespace Xamarin.Forms.Labs.WP
+namespace Xamarin.Forms.Labs.WP8
 {
     public class XFormsAppWP : XFormsApp<Application>
     {

@@ -7,7 +7,7 @@ using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
 using Microsoft.Phone.Controls;
-using Xamarin.Forms.Labs.WP.Controls;
+using Xamarin.Forms.Labs.WP8.Controls;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 namespace Xamarin.Forms.Labs.Controls

@@ -2,8 +2,8 @@
 using Microsoft.Phone.Info;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
-using Xamarin.Forms.Labs.WP.Services;
-using Xamarin.Forms.Labs.WP.Services.Media;
+using Xamarin.Forms.Labs.WP8.Services;
+using Xamarin.Forms.Labs.WP8.Services.Media;
 
 namespace Xamarin.Forms.Labs
 {

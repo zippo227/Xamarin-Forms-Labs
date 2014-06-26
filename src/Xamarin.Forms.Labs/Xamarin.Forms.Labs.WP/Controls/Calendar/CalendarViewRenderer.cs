@@ -2,10 +2,10 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
 using Xamarin.Forms.Labs.Controls;
-using Xamarin.Forms.Labs.WP.Controls.Calendar;
+using Xamarin.Forms.Labs.WP8.Controls.Calendar;
 
 [assembly: ExportRenderer(typeof(CalendarView), typeof(CalendarViewRenderer))]
-namespace Xamarin.Forms.Labs.WP.Controls.Calendar
+namespace Xamarin.Forms.Labs.WP8.Controls.Calendar
 {
     public class CalendarViewRenderer : ViewRenderer<CalendarView, WPControls.Calendar>
     {
