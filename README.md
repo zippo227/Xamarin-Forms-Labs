@@ -23,6 +23,10 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - Phone Service (cellular network info, make phonecalls)
  - Geolocator
  - Camera (Picture and Video picker, Take Picture, Take Video)
+ - Accelerometer
+ - Display
+ - Cache
+
 
 **Available Mvvm helpers (Beta)**
 
