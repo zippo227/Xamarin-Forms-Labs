@@ -56,18 +56,15 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <typeparam name="TView">The type of the t view.</typeparam>
         /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-        public static void Register<TView, TViewModel>()
-            where TView : Page
-            where TViewModel : ViewModel
+        public static void Register<TView, TViewModel>() where TView : Page where TViewModel : ViewModel
         {
             TypeDictionary[typeof(TViewModel)] = typeof(TView);
 
             var container = Resolver.Resolve<IDependencyContainer>();
 
             // check if we have DI container
-            if (container != null)
-                // register viewmodel with DI to enable non default vm constructors / service locator
-               container.Register<TViewModel, TViewModel>();
+            if (container != null) // register viewmodel with DI to enable non default vm constructors / service locator
+                container.Register<TViewModel, TViewModel>();
         }
 
         /// <summary>
@@ -82,7 +79,8 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// <exception cref="System.InvalidOperationException">
         /// Unknown View for ViewModel.
         /// </exception>
-        public static Page CreatePage<TViewModel>(Action<TViewModel, Page> initialiser = null) where TViewModel : ViewModel
+        public static Page CreatePage<TViewModel>(Action<TViewModel, Page> initialiser = null)
+            where TViewModel : ViewModel
         {
             Type viewType = null;
             Type viewModelType = typeof(TViewModel);
@@ -123,17 +121,14 @@ namespace Xamarin.Forms.Labs.Mvvm
                 }
 
                 //this is the real fallback :)
-                if (viewModel == null)
-                    viewModel = (TViewModel)Activator.CreateInstance(viewModelType);
+                if (viewModel == null) viewModel = (TViewModel)Activator.CreateInstance(viewModelType);
 
                 viewModel.Navigation = new ViewModelNavigation(page.Navigation);
 
-                if (EnableCache)
-                    PageCache[pageCacheKey] = new Tuple<ViewModel, Page>(viewModel, page);
+                if (EnableCache) PageCache[pageCacheKey] = new Tuple<ViewModel, Page>(viewModel, page);
             }
 
-            if (initialiser != null)
-                initialiser(viewModel, page);
+            if (initialiser != null) initialiser(viewModel, page);
 
             // forcing break reference on viewmodel in order to allow initializer to do its work
             page.BindingContext = null;
