@@ -53,7 +53,7 @@ namespace Xamarin.Forms.Labs.Sample
 
 			var controls = GetControlsPage(mainPage);
 			var services = GetServicesPage(mainPage);
-			var mvvm = ViewFactory.CreatePage(typeof(MvvmSampleViewModel));
+			var mvvm = ViewFactory.CreatePage<MvvmSampleViewModel>();
 			mainTab.Children.Add(controls);
 			mainTab.Children.Add(services);
 			mainTab.Children.Add(mvvm);
@@ -98,10 +98,10 @@ namespace Xamarin.Forms.Labs.Sample
                         await mainPage.Navigation.PushAsync(new PhoneServicePage());
 						break;
 					case "geolocator":
-                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(GeolocatorViewModel)));
+                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<GeolocatorViewModel>());
 						break;
 					case "camera":
-                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(CameraViewModel)));
+                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<CameraViewModel>());
 						break;
 					case "accelerometer":
                         await mainPage.Navigation.PushAsync(new AcceleratorSensorPage());
@@ -110,7 +110,7 @@ namespace Xamarin.Forms.Labs.Sample
                         await mainPage.Navigation.PushAsync(new AbsoluteLayoutWithDisplayInfoPage(Resolver.Resolve<IDisplay>()));
                         break;
 					case "cache":
-                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage(typeof(CacheServiceViewModel)));
+                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<CacheServiceViewModel>());
 						break;
 					default:
 						break;

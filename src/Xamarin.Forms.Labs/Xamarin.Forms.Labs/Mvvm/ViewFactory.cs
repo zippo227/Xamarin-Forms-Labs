@@ -56,30 +56,34 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <typeparam name="TView">The type of the t view.</typeparam>
         /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-        public static void Register<TView, TViewModel>()
-            where TView : Page
-            where TViewModel : ViewModel
+        public static void Register<TView, TViewModel>() where TView : Page where TViewModel : ViewModel
         {
             TypeDictionary[typeof(TViewModel)] = typeof(TView);
 
             var container = Resolver.Resolve<IDependencyContainer>();
+
             // check if we have DI container
-            if (container != null)
-                // register viewmodel with DI to enable non default vm constructors / service locator
-               container.Register<TViewModel, TViewModel>();
+            if (container != null) // register viewmodel with DI to enable non default vm constructors / service locator
+                container.Register<TViewModel, TViewModel>();
         }
 
         /// <summary>
         /// Creates the page.
         /// </summary>
-        /// <param name="viewModelType">Type of the view model.</param>
-        /// <param name="createAction">The create action.</param>
-        /// <returns>Page.</returns>
-        /// <exception cref="System.InvalidOperationException">Unknown View for ViewModel</exception>
-        public static Page CreatePage(Type viewModelType, Action<ViewModel, Page> createAction = null)
+        /// <param name="initialiser">
+        /// The create action.
+        /// </param>
+        /// <returns>
+        /// Page.
+        /// </returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// Unknown View for ViewModel.
+        /// </exception>
+        public static Page CreatePage<TViewModel>(Action<TViewModel, Page> initialiser = null)
+            where TViewModel : ViewModel
         {
             Type viewType = null;
-            ViewModel viewModel;
+            Type viewModelType = typeof(TViewModel);
 
             if (TypeDictionary.ContainsKey(viewModelType))
             {
@@ -90,65 +94,47 @@ namespace Xamarin.Forms.Labs.Mvvm
                 throw new InvalidOperationException("Unknown View for ViewModel");
             }
 
+            Page page = null;
+            TViewModel viewModel;
             var pageCacheKey = string.Format("{0}:{1}", viewModelType.Name, viewType.Name);
-            if (EnableCache)
+
+            if (EnableCache && PageCache.ContainsKey(pageCacheKey))
             {
-                if (PageCache.ContainsKey(pageCacheKey))
+                var cache = PageCache[pageCacheKey];
+                viewModel = cache.Item1 as TViewModel;
+                page = cache.Item2;
+            }
+            else
+            {
+                page = (Page)Activator.CreateInstance(viewType);
+
+                try
                 {
-                    var cache = PageCache[pageCacheKey];
-
-                    if (createAction != null)
-                    {
-                        createAction(cache.Item1, cache.Item2);
-                    }
+                    viewModel = (TViewModel)Resolver.Resolve(viewModelType);
                 }
+                catch
+                {
+                    throw new InvalidOperationException(
+                        String.Format(
+                            "ViewModel {0} cannot be resolved - please make sure you've added it to the ViewFactory by calling Register<TView, TViewModel>().",
+                            viewModelType));
+                }
+
+                //this is the real fallback :)
+                if (viewModel == null) viewModel = (TViewModel)Activator.CreateInstance(viewModelType);
+
+                viewModel.Navigation = new ViewModelNavigation(page.Navigation);
+
+                if (EnableCache) PageCache[pageCacheKey] = new Tuple<ViewModel, Page>(viewModel, page);
             }
 
-            var page = (Page)Activator.CreateInstance(viewType);
+            if (initialiser != null) initialiser(viewModel, page);
 
-            try
-            {
-                viewModel = (ViewModel)Resolver.Resolve(viewModelType);
-            }
-            catch
-            {
-               
-                // fallback
-                viewModel = (ViewModel)Activator.CreateInstance(viewModelType);
-            }
-
-            //this is the real fallback :)
-            if(viewModel == null)
-                viewModel = (ViewModel)Activator.CreateInstance(viewModelType);
-
-            viewModel.Navigation = new ViewModelNavigation(page.Navigation);
-
+            // forcing break reference on viewmodel in order to allow initializer to do its work
+            page.BindingContext = null;
             page.BindingContext = viewModel;
 
-            if (createAction != null)
-            {
-                createAction(viewModel, page);
-            }
-
-            if (EnableCache)
-            {
-                PageCache[pageCacheKey] = new Tuple<ViewModel, Page>(viewModel, page);
-            }
-
             return page;
-        }
-
-        /// <summary>
-        /// Creates the page.
-        /// </summary>
-        /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-        /// <param name="createAction">The create action.</param>
-        /// <returns>Page.</returns>
-        public static Page CreatePage<TViewModel>(Action<ViewModel, Page> createAction = null)
-            where TViewModel : ViewModel
-        {
-            var viewModelType = typeof(TViewModel);
-            return CreatePage(viewModelType, createAction);
         }
     }
 }
