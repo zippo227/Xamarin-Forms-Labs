@@ -43,7 +43,7 @@ namespace Xamarin.Forms.Labs.Droid
         /// <summary>
         /// Gets or sets the stop.
         /// </summary>
-        /// <value>The stop.</value>
+        /// <value>The stop event handler.</value>
         public EventHandler<EventArgs> Stop { get; set; }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Xamarin.Forms.Labs.Droid
         /// creating them through
         /// <c><see cref="M:Android.App.Activity.ManagedQuery(Android.Net.Uri, System.String[], System.String[], System.String[], System.String[])" /></c>,
         /// this is usually the place
-        /// where the cursor should be requeried (because you had deactivated it in
+        /// where the cursor should be required (because you had deactivated it in
         /// <c><see cref="M:Android.App.Activity.OnStop" /></c>.
         /// </para>
         /// <para tool="javadoc-to-mdoc">
@@ -173,7 +173,7 @@ namespace Xamarin.Forms.Labs.Droid
         /// (such as the camera), etc.
         /// </para>
         /// <para tool="javadoc-to-mdoc">Keep in mind that onResume is not the best indicator that your activity
-        /// is visible to the user; a system window such as the keyguard may be in
+        /// is visible to the user; a system window such as the key guard may be in
         /// front.  Use <c><see cref="M:Android.App.Activity.OnWindowFocusChanged(System.Boolean)" /></c> to know for certain that your
         /// activity is visible to the user (for example, to resume a game).
         /// </para>
@@ -270,7 +270,6 @@ namespace Xamarin.Forms.Labs.Droid
         }
     }
 
-
     /// <summary>
     /// Class XFormsAppDroid.
     /// </summary>
@@ -282,7 +281,6 @@ namespace Xamarin.Forms.Labs.Droid
         /// <param name="app">The application.</param>
         protected override void OnInit(XFormsApplicationDroid app)
         {
-
             this.AppContext.Start += (o, e) => this.OnStartup();
             this.AppContext.Stop += (o, e) => this.OnClosing();
             this.AppContext.Pause += (o, e) => this.OnSuspended();

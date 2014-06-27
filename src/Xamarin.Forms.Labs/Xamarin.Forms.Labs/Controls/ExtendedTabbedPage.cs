@@ -4,11 +4,12 @@ using Xamarin.Forms;
 namespace Xamarin.Forms.Labs.Controls
 {
 	/// <summary>
-	/// Delegate CurrentPageChangingEventHandler
+	/// Delegate CurrentPageChangingEventHandler.
 	/// </summary>
 	public delegate void CurrentPageChangingEventHandler();
-	/// <summary>
-	/// Delegate CurrentPageChangedEventHandler
+
+    /// <summary>
+	/// Delegate CurrentPageChangedEventHandler.
 	/// </summary>
 	public delegate void CurrentPageChangedEventHandler();
 
@@ -21,7 +22,8 @@ namespace Xamarin.Forms.Labs.Controls
 		/// Occurs when [current page changing].
 		/// </summary>
 		public event CurrentPageChangingEventHandler CurrentPageChanging;
-		/// <summary>
+
+        /// <summary>
 		/// Occurs when [current page changed].
 		/// </summary>
 		public event CurrentPageChangedEventHandler CurrentPageChanged;
