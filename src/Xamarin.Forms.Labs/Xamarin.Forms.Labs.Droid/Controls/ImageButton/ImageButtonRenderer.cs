@@ -6,7 +6,6 @@ using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Droid.Controls.ImageButton;
 using Xamarin.Forms.Labs.Enums;
 using System.ComponentModel;
-using TextAlignment = Android.Views.TextAlignment;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
@@ -17,22 +16,32 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
     /// </summary>
 	public class ImageButtonRenderer : ButtonRenderer
     {
+        /// <summary>
+        /// Gets the underlying control typed as an <see cref="ImageButton"/>.
+        /// </summary>
+        private Labs.Controls.ImageButton ImageButton
+        {
+            get { return (Labs.Controls.ImageButton)Element; }
+        }
 
-		private  Xamarin.Forms.Labs.Controls.ImageButton ImageButton { get { return (Xamarin.Forms.Labs.Controls.ImageButton) Element; } }
-		protected override void OnElementChanged (ElementChangedEventArgs<Button> e)
+		/// <summary>
+		/// Sets up the button including the image. 
+		/// </summary>
+		/// <param name="e">The event arguments.</param>
+        protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
 		{
-			base.OnElementChanged (e);
+			base.OnElementChanged(e);
 
-			if (e.OldElement == null) 
-            {
-				var targetButton = (Android.Widget.Button)Control;
+		    if (e.OldElement != null)
+		    {
+		        return;
+		    }
+		    var targetButton = this.Control;
 
-				if (Element != null && !string.IsNullOrEmpty(this.ImageButton.Image))
-				{
-
-					SetImageSource(targetButton, this.ImageButton);
-				}
-			}
+		    if (this.Element != null && !string.IsNullOrEmpty(this.ImageButton.Image))
+		    {
+		        this.SetImageSource(targetButton, this.ImageButton);
+		    }
 		}
 
         /// <summary>
@@ -40,13 +49,13 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
         /// </summary>
         /// <param name="targetButton">The target button.</param>
         /// <param name="model">The model.</param>
-        private void SetImageSource(Android.Widget.Button targetButton, Xamarin.Forms.Labs.Controls.ImageButton model)
+        private void SetImageSource(Android.Widget.Button targetButton, Labs.Controls.ImageButton model)
         {
             var packageName = Context.PackageName;
-            const int padding = 10;
-            const string resourceType = "drawable";
+            const int Padding = 10;
+            const string ResourceType = "drawable";
 
-            var resId = Resources.GetIdentifier(model.Image, resourceType, packageName);
+            var resId = Resources.GetIdentifier(model.Image, ResourceType, packageName);
             if (resId > 0)
             {
                 var scaledDrawable = GetScaleDrawableFromResourceId(resId, GetWidth(model.ImageWidthRequest),
@@ -56,21 +65,21 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
                 Drawable right = null;
                 Drawable top = null;
                 Drawable bottom = null;
-                targetButton.CompoundDrawablePadding = padding;
+                targetButton.CompoundDrawablePadding = Padding;
                 switch (model.Orientation)
                 {
-                    case (ImageOrientation.ImageToLeft):
+                    case ImageOrientation.ImageToLeft:
                         targetButton.Gravity = GravityFlags.Left | GravityFlags.CenterVertical;
                         left = scaledDrawable;
                         break;
-                    case (ImageOrientation.ImageToRight):
+                    case ImageOrientation.ImageToRight:
                         targetButton.Gravity = GravityFlags.Right | GravityFlags.CenterVertical;
                         right = scaledDrawable;
                         break;
-                    case (ImageOrientation.ImageOnTop):
+                    case ImageOrientation.ImageOnTop:
                         top = scaledDrawable;
                         break;
-                    case (ImageOrientation.ImageOnBottom):
+                    case ImageOrientation.ImageOnBottom:
                         bottom = scaledDrawable;
                         break;
                 }
@@ -80,17 +89,17 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
         }
 
 		/// <summary>
-		/// Called when the underlying model's properties are changed
+		/// Called when the underlying model's properties are changed.
 		/// </summary>
-		/// <param name="sender">Model</param>
-		/// <param name="e">Event arguments</param>
-		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
+		/// <param name="sender">The Model used.</param>
+		/// <param name="e">The event arguments.</param>
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			base.OnElementPropertyChanged (sender, e);
+			base.OnElementPropertyChanged(sender, e);
 
-			if (e.PropertyName == Xamarin.Forms.Labs.Controls.ImageButton.ImageProperty.PropertyName)
+			if (e.PropertyName == Labs.Controls.ImageButton.ImageProperty.PropertyName)
 			{
-				var targetButton = (Android.Widget.Button)Control;
+				var targetButton = Control;
 				SetImageSource(targetButton, this.ImageButton);
 			}
 		}
@@ -119,8 +128,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
         /// <returns>The width to use.</returns>
         private int GetWidth(int requestedWidth)
         {
-            const int defaultWidth = 50;
-            return requestedWidth <= 0 ? defaultWidth : requestedWidth;
+            const int DefaultWidth = 50;
+            return requestedWidth <= 0 ? DefaultWidth : requestedWidth;
         }
 
         /// <summary>
@@ -130,8 +139,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
         /// <returns>The height to use.</returns>
         private int GetHeight(int requestedHeight)
         {
-            const int defaultHeight = 50;
-            return requestedHeight <= 0 ? defaultHeight : requestedHeight;
+            const int DefaultHeight = 50;
+            return requestedHeight <= 0 ? DefaultHeight : requestedHeight;
         }
     }
 }

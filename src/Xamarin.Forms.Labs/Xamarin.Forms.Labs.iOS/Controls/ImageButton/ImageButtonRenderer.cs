@@ -18,16 +18,22 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
     /// </summary>
     public class ImageButtonRenderer : ButtonRenderer
     {
+        /// <summary>
+        /// The padding to use in the control.
+        /// </summary>
         private const int ControlPadding = 2;
-        private const string iPad = "iPad";
-        private const string iPhone = "iPhone";
+        
+        /// <summary>
+        /// Identifies the iPad.
+        /// </summary>
+        private const string Ipad = "iPad";
 
         /// <summary>
         /// Gets the underlying element typed as an <see cref="ImageButton"/>.
         /// </summary>
-        private Xamarin.Forms.Labs.Controls.ImageButton ImageButton
+        private Labs.Controls.ImageButton ImageButton
         {
-            get { return (Xamarin.Forms.Labs.Controls.ImageButton)Element; }
+            get { return (Labs.Controls.ImageButton)Element; }
         }
 
         /// <summary>
@@ -62,16 +68,16 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
         }
 
         /// <summary>
-        /// Called when the underlying model's properties are changed
+        /// Called when the underlying model's properties are changed.
         /// </summary>
-        /// <param name="sender">Model sending the change event</param>
-        /// <param name="e">Event arguments</param>
+        /// <param name="sender">Model sending the change event.</param>
+        /// <param name="e">Event arguments.</param>
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            if (e.PropertyName == Xamarin.Forms.Labs.Controls.ImageButton.ImageProperty.PropertyName)
+            if (e.PropertyName == Labs.Controls.ImageButton.ImageProperty.PropertyName)
             {
-                var sourceButton = this.Element as Xamarin.Forms.Labs.Controls.ImageButton;
+                var sourceButton = this.Element as Labs.Controls.ImageButton;
                 if (sourceButton != null && !string.IsNullOrEmpty(sourceButton.Image))
                 {
                     var imageButton = this.ImageButton;
@@ -133,7 +139,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             UIEdgeInsets titleInsets;
             UIEdgeInsets imageInsets;
 
-            if (UIDevice.CurrentDevice.Model.Contains(iPad))
+            if (UIDevice.CurrentDevice.Model.Contains(Ipad))
             {
                 titleInsets = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1 * widthRequest / 2), -1 * heightRequest, Convert.ToInt32(widthRequest / 2));
                 imageInsets = new UIEdgeInsets(0, Convert.ToInt32(titleWidth / 2), 0, -1 * Convert.ToInt32(titleWidth / 2));
@@ -165,7 +171,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             UIEdgeInsets titleInsets;
             UIEdgeInsets imageInsets;
 
-            if (UIDevice.CurrentDevice.Model.Contains(iPad))
+            if (UIDevice.CurrentDevice.Model.Contains(Ipad))
             {
                 titleInsets = new UIEdgeInsets(-1 * heightRequest, Convert.ToInt32(-1 * widthRequest / 2), heightRequest, Convert.ToInt32(widthRequest / 2));
                 imageInsets = new UIEdgeInsets(0, titleWidth / 2, 0, -1 * titleWidth / 2);

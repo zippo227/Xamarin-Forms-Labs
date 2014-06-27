@@ -7,7 +7,6 @@ using Xamarin.Forms.Platform.WinPhone;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Enums;
 using Xamarin.Forms.Labs.WP8.Controls.ImageButton;
-using Button = Xamarin.Forms.Button;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
@@ -18,6 +17,9 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
     /// </summary>
     public class ImageButtonRenderer : ButtonRenderer
     {
+        /// <summary>
+        /// The image displayed in the button.
+        /// </summary>
         private System.Windows.Controls.Image currentImage;
 
         /// <summary>
@@ -28,7 +30,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
         {
             base.OnElementChanged(e);
 
-            var sourceButton = this.Element as Xamarin.Forms.Labs.Controls.ImageButton;
+            var sourceButton = this.Element as Labs.Controls.ImageButton;
             var targetButton = this.Control;
             if (sourceButton != null && targetButton != null && !string.IsNullOrEmpty(sourceButton.Image))
             {
@@ -75,21 +77,20 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
 
                 targetButton.Content = stackPanel;
             }
-
         }
 
         /// <summary>
-        /// Called when the underlying model's properties are changed
+        /// Called when the underlying model's properties are changed.
         /// </summary>
-        /// <param name="sender">Model sending the change event</param>
-        /// <param name="e">Event arguments</param>
+        /// <param name="sender">Model sending the change event.</param>
+        /// <param name="e">Event arguments.</param>
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == Xamarin.Forms.Labs.Controls.ImageButton.ImageProperty.PropertyName)
+            if (e.PropertyName == Labs.Controls.ImageButton.ImageProperty.PropertyName)
             {
-                var sourceButton = this.Element as Xamarin.Forms.Labs.Controls.ImageButton;
+                var sourceButton = this.Element as Labs.Controls.ImageButton;
                 if (sourceButton != null && !string.IsNullOrEmpty(sourceButton.Image))
                 {
                     this.currentImage = GetImage(sourceButton.Image, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
@@ -129,15 +130,15 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
         /// <param name="imageName">The name of the image to return.  Should be the resource name without the .png extension.</param>
         /// <param name="height">The height for the image (divides by 2 for the Windows Phone platform).</param>
         /// <param name="width">The width for the image (divides by 2 for the Windows Phone platform).</param>
-        /// <returns>An image </returns>
+        /// <returns>A properly sized image.</returns>
         private static System.Windows.Controls.Image GetImage(string imageName, int height, int width)
         {
             var image = new System.Windows.Controls.Image();
             var uri = new Uri("images/" + imageName + ".png", UriKind.Relative);
             var bmp = new BitmapImage(uri);
             image.Source = bmp;
-            image.Height = height / 2;
-            image.Width = width / 2;
+            image.Height = Convert.ToDouble(height / 2);
+            image.Width = Convert.ToDouble(width / 2);
             return image;
         }
 
@@ -148,7 +149,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
         /// <param name="orientation">The orientation of the image on the button.</param>
         private static void SetImageMargin(System.Windows.Controls.Image image, ImageOrientation orientation)
         {
-            const int defaultMargin = 10;
+            const int DefaultMargin = 10;
             int left = 0;
             int top = 0;
             int right = 0;
@@ -157,16 +158,16 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
             switch (orientation)
             {
                 case ImageOrientation.ImageToLeft:
-                    right = defaultMargin;
+                    right = DefaultMargin;
                     break;
                 case ImageOrientation.ImageOnTop:
-                    bottom = defaultMargin;
+                    bottom = DefaultMargin;
                     break;
                 case ImageOrientation.ImageToRight:
-                    left = defaultMargin;
+                    left = DefaultMargin;
                     break;
                 case ImageOrientation.ImageOnBottom:
-                    top = defaultMargin;
+                    top = DefaultMargin;
                     break;
             }
 
