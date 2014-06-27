@@ -27,15 +27,15 @@ namespace Xamarin.Forms.Labs.Sample
 		/// <summary>
 		/// The _take picture command
 		/// </summary>
-		private RelayCommand _takePictureCommand;
+		private Command _takePictureCommand;
 		/// <summary>
 		/// The _select picture command
 		/// </summary>
-		private RelayCommand _selectPictureCommand;
+		private Command _selectPictureCommand;
 		/// <summary>
 		/// The _select video command
 		/// </summary>
-		private RelayCommand _selectVideoCommand;
+		private Command _selectVideoCommand;
 
 		/// <summary>
 		/// The _scheduler
@@ -87,11 +87,11 @@ namespace Xamarin.Forms.Labs.Sample
 		/// Gets the take picture command.
 		/// </summary>
 		/// <value>The take picture command.</value>
-		public RelayCommand TakePictureCommand 
+		public Command TakePictureCommand 
 		{
 			get
 			{ 
-				return _takePictureCommand ?? (_takePictureCommand = new RelayCommand (
+				return _takePictureCommand ?? (_takePictureCommand = new Command (
 					async () => await TakePicture(),
 
 					() => true)); 
@@ -102,11 +102,11 @@ namespace Xamarin.Forms.Labs.Sample
 		/// Gets the select video command.
 		/// </summary>
 		/// <value>The select picture command.</value>
-		public RelayCommand SelectVideoCommand 
+		public Command SelectVideoCommand 
 		{
 			get
 			{ 
-				return _selectVideoCommand ?? (_selectVideoCommand = new RelayCommand (
+				return _selectVideoCommand ?? (_selectVideoCommand = new Command (
 					async () => await SelectVideo(),
 
 					() => true)); 
@@ -116,11 +116,11 @@ namespace Xamarin.Forms.Labs.Sample
 		/// Gets the select picture command.
 		/// </summary>
 		/// <value>The select picture command.</value>
-		public RelayCommand SelectPictureCommand 
+		public Command SelectPictureCommand 
 		{
 			get
 			{ 
-				return _selectPictureCommand ?? (_selectPictureCommand = new RelayCommand (
+				return _selectPictureCommand ?? (_selectPictureCommand = new Command (
 					async () => await SelectPicture(),
 
 					() => true)); 

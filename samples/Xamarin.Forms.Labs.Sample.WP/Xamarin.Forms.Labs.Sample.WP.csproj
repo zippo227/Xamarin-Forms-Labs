@@ -182,9 +182,9 @@
       <Project>{dc133a2f-e49e-49e3-b43d-bfb957cb5482}</Project>
       <Name>Xamarin.Forms.Labs.Sample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs.WP\Xamarin.Forms.Labs.WP.csproj">
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs.WP\Xamarin.Forms.Labs.WP8.csproj">
       <Project>{e38d2aa4-d265-4ff2-90ec-e02eb59f8a73}</Project>
-      <Name>Xamarin.Forms.Labs.WP</Name>
+      <Name>Xamarin.Forms.Labs.WP8</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : Xamarin.Forms.Labs.WP
+// Assembly         : Xamarin.Forms.Labs.WP8
 // Author           : Sami M. Kallio
 // Created          : 06-16-2014
 //

@@ -6,11 +6,11 @@ using System.Windows.Media.Imaging;
 using Xamarin.Forms.Platform.WinPhone;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Enums;
-using Xamarin.Forms.Labs.WP.Controls.ImageButton;
+using Xamarin.Forms.Labs.WP8.Controls.ImageButton;
 using Button = Xamarin.Forms.Button;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
-namespace Xamarin.Forms.Labs.WP.Controls.ImageButton
+namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
 {
     /// <summary>
     /// Draws a button on the Windows Phone platform with the image shown in the right 

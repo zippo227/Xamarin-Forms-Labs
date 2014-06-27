@@ -3,8 +3,8 @@ using Microsoft.Phone.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services;
 
-[assembly: Dependency(typeof(Xamarin.Forms.Labs.WP.Services.PhoneService))]
-namespace Xamarin.Forms.Labs.WP.Services
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.WP8.Services.PhoneService))]
+namespace Xamarin.Forms.Labs.WP8.Services
 {
     /// <summary>
     /// Phone service for Windows Phone devices.

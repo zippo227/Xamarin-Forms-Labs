@@ -10,7 +10,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-namespace Xamarin.Forms.Labs.WP.Controls.SensorBar
+namespace Xamarin.Forms.Labs.WP8.Controls.SensorBar
 {
     public partial class SensorBarControl : UserControl
     {

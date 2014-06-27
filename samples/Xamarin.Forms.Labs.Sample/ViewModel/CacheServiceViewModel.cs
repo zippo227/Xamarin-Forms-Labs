@@ -67,12 +67,12 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 		}
 
-		private RelayCommand _saveItemsToCacheCommand;
-		public RelayCommand SaveItemsToCacheCacheCommand 
+		private Command _saveItemsToCacheCommand;
+        public Command SaveItemsToCacheCacheCommand 
 		{
 			get
 			{ 
-				return _saveItemsToCacheCommand ?? (_saveItemsToCacheCommand = new RelayCommand (
+				return _saveItemsToCacheCommand ?? (_saveItemsToCacheCommand = new Command (
 					() => {
 						_cacheService.Remove(_demoKey);
 						_cacheService.Add(_demoKey,Items.ToList());
@@ -82,12 +82,12 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 		}
 
-		private RelayCommand _clearCacheCommand;
-		public RelayCommand ClearCacheCommand 
+		private Command _clearCacheCommand;
+		public Command ClearCacheCommand 
 		{
 			get
 			{ 
-				return _clearCacheCommand ?? (_clearCacheCommand = new RelayCommand (
+				return _clearCacheCommand ?? (_clearCacheCommand = new Command (
 					 () => _cacheService.FlushAll(),
 					() => true)); 
 			}

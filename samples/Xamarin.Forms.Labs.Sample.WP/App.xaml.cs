@@ -8,7 +8,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Sample.WP.Resources;
-using Xamarin.Forms.Labs.WP;
+using Xamarin.Forms.Labs.WP8;
 
 namespace Xamarin.Forms.Labs.Sample.WP
 {
@@ -247,15 +247,21 @@ namespace Xamarin.Forms.Labs.Sample.WP
             resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
-                .Register<IXFormsApp>(app).
-                Register<ISimpleCache>(
+                .Register<IDependencyContainer>(t => resolverContainer)
+                .Register<IXFormsApp>(app)
+                .Register<ISimpleCache>(
                     t => new SQLiteSimpleCache(new SQLite.Net.Platform.WindowsPhone8.SQLitePlatformWP8(),
                         new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
 
             Resolver.SetResolver(resolverContainer.GetResolver());
         }
 
-        public async Task<string> GetPathForFileAsync(string file)
+        /// <summary>
+        /// Gets the path for file asynchronous.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        private async Task<string> GetPathForFileAsync(string file)
         {
             StorageFile storageFile =
                 await ApplicationData.Current.LocalFolder.CreateFileAsync(file, CreationCollisionOption.OpenIfExists);

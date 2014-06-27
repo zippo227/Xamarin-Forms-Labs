@@ -51,6 +51,7 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="TinyContainer.cs" />
     <Compile Include="TinyIoC.cs" />
     <Compile Include="TinyResolver.cs" />
   </ItemGroup>

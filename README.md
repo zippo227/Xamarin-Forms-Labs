@@ -31,7 +31,6 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 **Available Mvvm helpers (Beta)**
 
  - ViewModel (navigation, isbusy)
- - RelayCommand and RelayCommand<T>
  - ViewFactory
  - IOC
  - IXFormsApp (application events)
@@ -65,7 +64,6 @@ Using the MVVM Helpers
 **ViewFactory**
 Coming soon
 
-[**RelayCommand**](https://github.com/XForms/Xamarin-Forms-Labs/wiki/RelayCommand-and-RelayCommand--T)
 
 _________________
 
@@ -197,6 +195,7 @@ __________________
  - Jason Smith [@jassmith87](https://twitter.com/jassmith87)
  - Shawn Anderson
  - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
+ - Ben Ishiyama-Levy [@mrbrl](http://www.monovo.io)
 
  **Another Project Contributions:**
  	Xamarin.Mobile

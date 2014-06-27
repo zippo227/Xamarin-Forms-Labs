@@ -9,7 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Xamarin.Forms.Labs.Sample.WP.Resources;
 using Xamarin.Forms;
-using Xamarin.Forms.Labs.WP.Controls.Calendar;
+using Xamarin.Forms.Labs.WP8.Controls.Calendar;
 
 namespace Xamarin.Forms.Labs.Sample.WP
 {

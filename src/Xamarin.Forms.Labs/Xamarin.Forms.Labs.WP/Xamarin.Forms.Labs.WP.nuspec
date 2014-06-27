@@ -4,7 +4,7 @@
 		<id>$id$</id>
 		<version>1.0.1.5</version>
 		<authors>$author$</authors>
-    <title>Xamarin Forms Labs WP</title>
+    <title>Xamarin Forms Labs WP8</title>
     <tags>xamarin,xamarin forms,xamarin forms labs, wp, windowsphone, controls, services, di, caching, serialization</tags>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>

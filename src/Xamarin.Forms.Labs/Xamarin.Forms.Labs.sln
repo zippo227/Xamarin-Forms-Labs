@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{68C928
 		.nuget\UploadPackage-RunManually.ps1 = .nuget\UploadPackage-RunManually.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs.WP", "Xamarin.Forms.Labs.WP\Xamarin.Forms.Labs.WP.csproj", "{E38D2AA4-D265-4FF2-90EC-E02EB59F8A73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs.WP8", "Xamarin.Forms.Labs.WP\Xamarin.Forms.Labs.WP8.csproj", "{E38D2AA4-D265-4FF2-90EC-E02EB59F8A73}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{C6C2CC94-1785-4DA7-B72F-EC5A8D7041D6}"
 EndProject
@@ -141,6 +141,7 @@ Global
 		{4D10DF5E-883D-468B-A854-4A53C7FE75AC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{4D10DF5E-883D-468B-A854-4A53C7FE75AC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{4D10DF5E-883D-468B-A854-4A53C7FE75AC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4D10DF5E-883D-468B-A854-4A53C7FE75AC}.Debug|x86.Build.0 = Debug|Any CPU
 		{4D10DF5E-883D-468B-A854-4A53C7FE75AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D10DF5E-883D-468B-A854-4A53C7FE75AC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D10DF5E-883D-468B-A854-4A53C7FE75AC}.Release|ARM.ActiveCfg = Release|Any CPU
@@ -248,6 +249,7 @@ Global
 		{DC133A2F-E49E-49E3-B43D-BFB957CB5482}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{DC133A2F-E49E-49E3-B43D-BFB957CB5482}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{DC133A2F-E49E-49E3-B43D-BFB957CB5482}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC133A2F-E49E-49E3-B43D-BFB957CB5482}.Debug|x86.Build.0 = Debug|Any CPU
 		{DC133A2F-E49E-49E3-B43D-BFB957CB5482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC133A2F-E49E-49E3-B43D-BFB957CB5482}.Release|ARM.ActiveCfg = Release|Any CPU
 		{DC133A2F-E49E-49E3-B43D-BFB957CB5482}.Release|ARM.Build.0 = Release|Any CPU
@@ -875,6 +877,7 @@ Global
 		{526F68E5-B35B-45FB-A54F-25793D2A1678}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{526F68E5-B35B-45FB-A54F-25793D2A1678}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{526F68E5-B35B-45FB-A54F-25793D2A1678}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{526F68E5-B35B-45FB-A54F-25793D2A1678}.Debug|x86.Build.0 = Debug|Any CPU
 		{526F68E5-B35B-45FB-A54F-25793D2A1678}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{526F68E5-B35B-45FB-A54F-25793D2A1678}.Release|Any CPU.Build.0 = Release|Any CPU
 		{526F68E5-B35B-45FB-A54F-25793D2A1678}.Release|ARM.ActiveCfg = Release|Any CPU

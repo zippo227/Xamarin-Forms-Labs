@@ -34,7 +34,7 @@ namespace Xamarin.Forms.Labs.Services
         /// <returns>An instance of <see cref="IDependencyContainer"/></returns>
         IDependencyContainer Register<T, TImpl>()
             where T : class
-            where TImpl : T;
+            where TImpl : class, T;
 
         /// <summary>
         /// Tries to register a type

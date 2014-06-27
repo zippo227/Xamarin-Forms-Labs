@@ -55,12 +55,12 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 		}
 
-		private RelayCommand _getPositionCommand;
-		public RelayCommand GetPositionCommand 
+		private Command _getPositionCommand;
+		public Command GetPositionCommand 
 		{
 			get
 			{ 
-				return _getPositionCommand ?? new RelayCommand (
+				return _getPositionCommand ?? new Command (
 					async () => { await GetPosition(); }, 
 					() => true); 
 			}
