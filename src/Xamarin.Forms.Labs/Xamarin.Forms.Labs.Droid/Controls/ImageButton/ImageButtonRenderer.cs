@@ -55,7 +55,14 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
             const int Padding = 10;
             const string ResourceType = "drawable";
 
-            var resId = Resources.GetIdentifier(model.Image, ResourceType, packageName);
+            int position = model.Image.LastIndexOf(".");
+            string fileName = model.Image;
+            if (position >= 0)
+            {
+                fileName = model.Image.Substring(0, position);
+            }
+
+            var resId = Resources.GetIdentifier(fileName, ResourceType, packageName);
             if (resId > 0)
             {
                 var scaledDrawable = GetScaleDrawableFromResourceId(resId, GetWidth(model.ImageWidthRequest),

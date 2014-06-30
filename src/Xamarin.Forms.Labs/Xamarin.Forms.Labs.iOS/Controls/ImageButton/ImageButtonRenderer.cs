@@ -196,7 +196,14 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
         /// <param name="targetButton">A <see cref="UIButton"/> to set the image into.</param>
         private static void SetImage(string imageName, int widthRequest, int heightRequest, UIButton targetButton)
         {
-            using (var image = UIImage.FromBundle(imageName))
+            int position = imageName.LastIndexOf(".");
+            string fileName = imageName;
+            if (position >= 0)
+            {
+                fileName = imageName.Substring(0, position);
+            }
+
+            using (var image = UIImage.FromBundle(fileName))
             {
                 UIGraphics.BeginImageContext(new SizeF(widthRequest, heightRequest));
                 image.Draw(new RectangleF(0, 0, widthRequest, heightRequest));
