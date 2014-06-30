@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using Xamarin.Forms.Platform.WinPhone;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Enums;
@@ -11,11 +10,13 @@ using Xamarin.Forms.Labs.WP8.Controls.ImageButton;
 [assembly: Xamarin.Forms.ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Draws a button on the Windows Phone platform with the image shown in the right 
     /// position with the right size.
     /// </summary>
-    public class ImageButtonRenderer : ButtonRenderer
+    public partial class ImageButtonRenderer : ButtonRenderer
     {
         /// <summary>
         /// The image displayed in the button.
@@ -26,13 +27,13 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
         /// Handles the initial drawing of the button.
         /// </summary>
         /// <param name="e">Information on the <see cref="ImageButton"/>.</param> 
-        protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
+        protected async override void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
 
             var sourceButton = this.Element as Labs.Controls.ImageButton;
             var targetButton = this.Control;
-            if (sourceButton != null && targetButton != null && !string.IsNullOrEmpty(sourceButton.Image))
+            if (sourceButton != null && targetButton != null && sourceButton.Source != null)
             {
                 var stackPanel = new StackPanel
                     {
@@ -42,7 +43,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
                                           : Orientation.Horizontal
                     };
 
-                this.currentImage = GetImage(sourceButton.Image, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
+                this.currentImage = await GetImageAsync(sourceButton.Source, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
                 SetImageMargin(this.currentImage, sourceButton.Orientation);
 
                 var label = new TextBlock
@@ -84,16 +85,16 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
         /// </summary>
         /// <param name="sender">Model sending the change event.</param>
         /// <param name="e">Event arguments.</param>
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == Labs.Controls.ImageButton.ImageProperty.PropertyName)
+            if (e.PropertyName == Labs.Controls.ImageButton.SourceProperty.PropertyName)
             {
                 var sourceButton = this.Element as Labs.Controls.ImageButton;
-                if (sourceButton != null && !string.IsNullOrEmpty(sourceButton.Image))
+                if (sourceButton != null && sourceButton.Source != null)
                 {
-                    this.currentImage = GetImage(sourceButton.Image, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
+                    this.currentImage = await GetImageAsync(sourceButton.Source, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
                     SetImageMargin(this.currentImage, sourceButton.Orientation);
                 }
             }
@@ -124,19 +125,19 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
         }
 
         /// <summary>
-        /// Returns a <see cref="Image"/> of type .png that is a resource in the Windows Phone project
-        /// and stored in the images folder.
+        /// Returns a <see cref="Image"/> from the <see cref="ImageSource"/> provided.
         /// </summary>
-        /// <param name="imageName">The name of the image to return.  Should be the resource name without the .png extension.</param>
+        /// <param name="source">The <see cref="ImageSource"/> to load the image from.</param>
         /// <param name="height">The height for the image (divides by 2 for the Windows Phone platform).</param>
         /// <param name="width">The width for the image (divides by 2 for the Windows Phone platform).</param>
         /// <returns>A properly sized image.</returns>
-        private static System.Windows.Controls.Image GetImage(string imageName, int height, int width)
+        private async static Task<System.Windows.Controls.Image> GetImageAsync(ImageSource source, int height, int width)
         {
             var image = new System.Windows.Controls.Image();
-            var uri = new Uri("images/" + imageName, UriKind.Relative);
-            var bmp = new BitmapImage(uri);
-            image.Source = bmp;
+            var handler = GetHandler(source);
+            var imageSource = await handler.LoadImageAsync(source);
+
+            image.Source = imageSource;
             image.Height = Convert.ToDouble(height / 2);
             image.Width = Convert.ToDouble(width / 2);
             return image;
