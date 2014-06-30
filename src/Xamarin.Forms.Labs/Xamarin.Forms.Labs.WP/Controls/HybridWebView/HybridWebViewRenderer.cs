@@ -55,7 +55,10 @@ namespace Xamarin.Forms.Labs.Controls
 
         void webView_Navigating(object sender, NavigatingEventArgs e)
         {
-
+            if (this.CheckRequest(e.Uri.AbsoluteUri))
+            {
+                System.Diagnostics.Debug.WriteLine(e.Uri);
+            }
         }
 
         partial void Inject(string script)

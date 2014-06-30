@@ -9,10 +9,9 @@ namespace Xamarin.Forms.Labs.Controls
 {
     public partial class HybridWebViewRenderer
     {
-#if !WINDOWS_PHONE
-        private const string Format = "(file|http|https)://(local|LOCAL)/Action(=|%3D)(?<Action>[\\w]+)/";
+
+        private const string Format = "^(file|http|https)://(local|LOCAL)/Action(=|%3D)(?<Action>[\\w]+)/";
         private static readonly Regex Expression = new Regex(Format);
-#endif
 
         private void InjectNativeFunctionScript()
         {
@@ -56,7 +55,6 @@ namespace Xamarin.Forms.Labs.Controls
 
         partial void Load(Uri uri);
 
-#if !WINDOWS_PHONE
         private bool CheckRequest(string request)
         {
             var m = Expression.Match(request);
@@ -79,6 +77,5 @@ namespace Xamarin.Forms.Labs.Controls
 
             return m.Success;
         }
-#endif
     }
 }
