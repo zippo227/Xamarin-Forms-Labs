@@ -153,10 +153,10 @@
     <BundleResource Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="HTML\canvasjs.min.js" />
     <Content Include="HTML\home.html" />
-    <Resource Include="Images\icon_facebook.png" />
-    <Resource Include="Images\icon_google.png" />
-    <Resource Include="Images\icon_microsoft.png" />
-    <Resource Include="Images\icon_twitter.png" />
+    <Content Include="Images\icon_facebook.png" />
+    <Content Include="Images\icon_google.png" />
+    <Content Include="Images\icon_microsoft.png" />
+    <Content Include="Images\icon_twitter.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">

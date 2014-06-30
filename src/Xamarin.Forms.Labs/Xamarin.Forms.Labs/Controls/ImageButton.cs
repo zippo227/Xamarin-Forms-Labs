@@ -2,6 +2,9 @@
 
 namespace Xamarin.Forms.Labs.Controls
 {
+    using System;
+    using System.Linq.Expressions;
+
     /// <summary>
     /// Creates a button with text and an image.
     /// The image can be on the left, above, on the right or below the text.
@@ -11,23 +14,19 @@ namespace Xamarin.Forms.Labs.Controls
         /// <summary>
         /// Backing field for the Image property.
         /// </summary>
-        public static readonly BindableProperty ImageProperty =
-            BindableProperty.Create<ImageButton, string>(
-                p => p.Image, default(string));
-
+        public static readonly BindableProperty SourceProperty = BindableProperty.Create<ImageButton, ImageSource>((Expression<Func<ImageButton, ImageSource>>)(w => w.Source), (ImageSource)null, BindingMode.OneWay, (BindableProperty.ValidateValueDelegate<ImageSource>)null, (BindableProperty.BindingPropertyChangedDelegate<ImageSource>)((bindable, oldvalue, newvalue) => ((VisualElement)bindable).ToString()), (BindableProperty.BindingPropertyChangingDelegate<ImageSource>)null, (BindableProperty.CoerceValueDelegate<ImageSource>)null);
+        
         /// <summary>
-        /// Gets or sets the name of the image including extension without path.
-        /// Android: There should be a drawable resource with the same name without the extension
-        /// iOS: There should be an image in the Resources folder with a build action of BundleResource.
-        /// Windows Phone: There should be an image in the Images folder and build action set to resource.
+        /// Gets or sets the ImageSource to use with the control.
         /// </summary>
         /// <value>
-        /// The Orientation property gets/sets the value of the backing field, ImageProperty.
-        /// </value> 
-        public string Image
+        /// The Source property gets/sets the value of the backing field, SourceProperty.
+        /// </value>
+        [TypeConverter(typeof(ImageSourceConverter))] 
+        public ImageSource Source
         {
-            get { return (string)GetValue(ImageProperty); }
-            set { SetValue(ImageProperty, value); }
+            get { return (ImageSource)GetValue(SourceProperty); }
+            set { SetValue(SourceProperty, value); }
         }
 
         /// <summary>

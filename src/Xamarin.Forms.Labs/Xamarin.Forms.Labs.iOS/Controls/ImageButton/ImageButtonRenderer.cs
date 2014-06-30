@@ -9,14 +9,15 @@ using Xamarin.Forms.Labs.Enums;
 using Xamarin.Forms.Labs.iOS.Controls.ImageButton;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
-
 namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Draws a button on the iOS platform with the image shown in the right 
     /// position with the right size.
     /// </summary>
-    public class ImageButtonRenderer : ButtonRenderer
+    public partial class ImageButtonRenderer : ButtonRenderer
     {
         /// <summary>
         /// The padding to use in the control.
@@ -40,14 +41,14 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
         /// Handles the initial drawing of the button.
         /// </summary>
         /// <param name="e">Information on the <see cref="ImageButton"/>.</param> 
-        protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
+        protected async override void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
             var imageButton = this.ImageButton;
             var targetButton = Control;
-            if (imageButton != null && targetButton != null && !string.IsNullOrEmpty(imageButton.Image))
+            if (imageButton != null && targetButton != null && imageButton.Source != null)
             {
-                SetImage(imageButton.Image, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
+                await SetImageAsync(imageButton.Source, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
 
                 switch (imageButton.Orientation)
                 {
@@ -72,19 +73,19 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
         /// </summary>
         /// <param name="sender">Model sending the change event.</param>
         /// <param name="e">Event arguments.</param>
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            if (e.PropertyName == Labs.Controls.ImageButton.ImageProperty.PropertyName)
+            if (e.PropertyName == Labs.Controls.ImageButton.SourceProperty.PropertyName)
             {
                 var sourceButton = this.Element as Labs.Controls.ImageButton;
-                if (sourceButton != null && !string.IsNullOrEmpty(sourceButton.Image))
+                if (sourceButton != null && sourceButton.Source != null)
                 {
                     var imageButton = this.ImageButton;
                     var targetButton = Control;
-                    if (imageButton != null && targetButton != null && !string.IsNullOrEmpty(imageButton.Image))
+                    if (imageButton != null && targetButton != null && imageButton.Source != null)
                     {
-                        SetImage(imageButton.Image, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
+                        await SetImageAsync(imageButton.Source, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
                     }
                 }
             }
@@ -190,20 +191,15 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
         /// Loads an image from a bundle given the supplied image name, resizes it to the
         /// height and width request and sets it into a <see cref="UIButton"/>.
         /// </summary>
-        /// <param name="imageName">The name of the image to load from a bundle.</param>
+        /// <param name="source">The <see cref="ImageSource"/> to load the image from.</param>
         /// <param name="widthRequest">The requested image width.</param>
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="targetButton">A <see cref="UIButton"/> to set the image into.</param>
-        private static void SetImage(string imageName, int widthRequest, int heightRequest, UIButton targetButton)
+        /// <returns>A <see cref="Task"/> for the awaited operation.</returns>
+        private async static Task SetImageAsync(ImageSource source, int widthRequest, int heightRequest, UIButton targetButton)
         {
-            int position = imageName.LastIndexOf(".");
-            string fileName = imageName;
-            if (position >= 0)
-            {
-                fileName = imageName.Substring(0, position);
-            }
-
-            using (var image = UIImage.FromBundle(fileName))
+            var handler = GetHandler(source);
+            using (UIImage image = await handler.LoadImageAsync(source))
             {
                 UIGraphics.BeginImageContext(new SizeF(widthRequest, heightRequest));
                 image.Draw(new RectangleF(0, 0, widthRequest, heightRequest));
