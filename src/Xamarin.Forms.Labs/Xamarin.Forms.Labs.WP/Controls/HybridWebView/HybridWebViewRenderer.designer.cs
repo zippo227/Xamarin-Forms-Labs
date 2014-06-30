@@ -10,7 +10,7 @@ namespace Xamarin.Forms.Labs.Controls
     public partial class HybridWebViewRenderer
     {
 #if !WINDOWS_PHONE
-        private const string Format = "(file|http|https)://(local|LOCAL)/Action=(?<Action>[\\w]+)/";
+        private const string Format = "(file|http|https)://(local|LOCAL)/Action(=|%3D)(?<Action>[\\w]+)/";
         private static readonly Regex Expression = new Regex(Format);
 #endif
 
