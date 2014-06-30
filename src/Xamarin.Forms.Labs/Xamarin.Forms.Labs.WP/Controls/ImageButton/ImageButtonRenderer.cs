@@ -134,7 +134,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
         private static System.Windows.Controls.Image GetImage(string imageName, int height, int width)
         {
             var image = new System.Windows.Controls.Image();
-            var uri = new Uri("images/" + imageName + ".png", UriKind.Relative);
+            var uri = new Uri("images/" + imageName, UriKind.Relative);
             var bmp = new BitmapImage(uri);
             image.Source = bmp;
             image.Height = Convert.ToDouble(height / 2);

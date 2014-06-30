@@ -16,10 +16,10 @@ namespace Xamarin.Forms.Labs.Controls
                 p => p.Image, default(string));
 
         /// <summary>
-        /// Gets or sets the name of the image without path or file type information.
-        /// Android: There should be a drawable resource with the same name
+        /// Gets or sets the name of the image including extension without path.
+        /// Android: There should be a drawable resource with the same name without the extension
         /// iOS: There should be an image in the Resources folder with a build action of BundleResource.
-        /// Windows Phone: There should be an image in the Images folder with a type of '.png' and build action set to resource.
+        /// Windows Phone: There should be an image in the Images folder and build action set to resource.
         /// </summary>
         /// <value>
         /// The Orientation property gets/sets the value of the backing field, ImageProperty.
