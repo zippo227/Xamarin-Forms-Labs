@@ -25,7 +25,6 @@
     <MandroidI18n />
     <JavaMaximumHeapSize />
     <JavaOptions />
-
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -142,8 +141,14 @@
     <AndroidResource Include="Resources\drawable\icon_twitter.png" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
- 
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidAsset Include="..\Xamarin.Forms.Labs.Sample.WP\HTML\canvasjs.min.js">
+      <Link>Assets\HTML\canvasjs.min.js</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Xamarin.Forms.Labs.Sample.WP\HTML\home.html">
+      <Link>Assets\HTML\home.html</Link>
+    </AndroidAsset>
+  </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\fonts\Roboto-Light.ttf" />
   </ItemGroup>

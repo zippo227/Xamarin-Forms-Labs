@@ -26,13 +26,23 @@ namespace Xamarin.Forms.Labs.Controls
         {
             base.OnElementChanged(e);
 
-            this.webView = new UIWebView();
+            if (this.webView == null)
+            {
+                this.webView = new UIWebView();
 
-            this.webView.ShouldStartLoad += this.HandleStartLoad;
-            this.InjectNativeFunctionScript();
-            this.SetNativeControl(this.webView);
+                this.webView.LoadFinished += LoadFinished;
+                this.webView.ShouldStartLoad += this.HandleStartLoad;
+                this.InjectNativeFunctionScript();
+                this.SetNativeControl(this.webView);
+            }
 
-            this.Initialize();
+            this.Unbind(e.OldElement);
+            this.Bind();
+        }
+
+        void LoadFinished(object sender, EventArgs e)
+        {
+            
         }
 
         private bool HandleStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
@@ -51,6 +61,13 @@ namespace Xamarin.Forms.Labs.Controls
             {
                 this.webView.LoadRequest(new NSUrlRequest(new NSUrl(uri.AbsoluteUri)));
             }
+        }
+
+        partial void LoadFromContent(object sender, string contentFullName)
+        {
+            this.Element.Uri = new Uri(NSBundle.MainBundle.BundlePath + "/" + contentFullName);
+            //string homePageUrl = NSBundle.MainBundle.BundlePath + "/" + contentFullName;
+            //this.webView.LoadRequest(new NSUrlRequest(new NSUrl(homePageUrl, false)));
         }
     }
 }

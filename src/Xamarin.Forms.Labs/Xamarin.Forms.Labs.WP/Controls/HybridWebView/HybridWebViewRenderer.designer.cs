@@ -9,10 +9,9 @@ namespace Xamarin.Forms.Labs.Controls
 {
     public partial class HybridWebViewRenderer
     {
-#if !WINDOWS_PHONE
-        private const string Format = "(file|http|https)://(local|LOCAL)/Action=(?<Action>[\\w]+)/";
+
+        private const string Format = "^(file|http|https)://(local|LOCAL)/Action(=|%3D)(?<Action>[\\w]+)/";
         private static readonly Regex Expression = new Regex(Format);
-#endif
 
         private void InjectNativeFunctionScript()
         {
@@ -21,7 +20,7 @@ namespace Xamarin.Forms.Labs.Controls
 #if WINDOWS_PHONE
             builder.Append("window.external.notify(");
 #else
-            builder.Append("window.location = \"f//LOCAL/Action=\" + ");
+            builder.Append("window.location = \"//LOCAL/Action=\" + ");
 #endif
             builder.Append("action + \"/\"");
             builder.Append(" + ((typeof data == \"object\") ? JSON.stringify(data) : data)");
@@ -41,7 +40,7 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
-        private void Initialize()
+        private void Bind()
         {
             this.Element.PropertyChanged += this.Model_PropertyChanged;
             if (this.Element.Uri != null)
@@ -49,14 +48,31 @@ namespace Xamarin.Forms.Labs.Controls
                 this.Load (this.Element.Uri);
             }
 
-            this.Element.JavaScriptLoadRequested += (s, e) => this.Inject(e);
+            this.Element.JavaScriptLoadRequested += OnInjectRequest;
+            this.Element.LoadFromContentRequested += LoadFromContent;
+        }
+
+        private void Unbind(HybridWebView oldElement)
+        {
+            if (oldElement != null)
+            {
+                oldElement.PropertyChanged -= this.Model_PropertyChanged;
+                oldElement.JavaScriptLoadRequested -= OnInjectRequest;
+                oldElement.LoadFromContentRequested -= LoadFromContent;
+            }
+        }
+
+        private void OnInjectRequest(object sender, string script)
+        {
+            this.Inject(script);
         }
 
         partial void Inject(string script);
 
         partial void Load(Uri uri);
 
-#if !WINDOWS_PHONE
+        partial void LoadFromContent(object sender, string contentFullName);
+
         private bool CheckRequest(string request)
         {
             var m = Expression.Match(request);
@@ -79,6 +95,5 @@ namespace Xamarin.Forms.Labs.Controls
 
             return m.Success;
         }
-#endif
     }
 }

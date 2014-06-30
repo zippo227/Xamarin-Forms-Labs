@@ -27,7 +27,6 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>2f3f675f</NuGetPackageImportStamp>
-
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -152,6 +151,8 @@
     <BundleResource Include="Toolkit.Content\ApplicationBar.Check.png" />
     <BundleResource Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <BundleResource Include="Toolkit.Content\ApplicationBar.Add.png" />
+    <Content Include="HTML\canvasjs.min.js" />
+    <Content Include="HTML\home.html" />
     <Resource Include="Images\icon_facebook.png" />
     <Resource Include="Images\icon_google.png" />
     <Resource Include="Images\icon_microsoft.png" />
@@ -221,7 +222,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
- 
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

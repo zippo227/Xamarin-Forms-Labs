@@ -29,8 +29,6 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 datapoint.PropertyChanged += HandlePropertyChanged;
             }
-
-            this.hybridWebView.Uri = new Uri ("https://raw.githubusercontent.com/sami1971/SimplyMobile/master/iOS/Tests/WebClientTests/Content/home.html");
 		}
 
         void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -55,6 +53,13 @@ namespace Xamarin.Forms.Labs.Sample
         void HandlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             this.hybridWebView.CallJsFunction ("onViewModelData", this.BindingContext);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            this.hybridWebView.LoadFromContent("HTML/home.html");
         }
 	}
 }

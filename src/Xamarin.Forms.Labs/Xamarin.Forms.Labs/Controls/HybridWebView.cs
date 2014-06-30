@@ -66,6 +66,15 @@ namespace Xamarin.Forms.Labs.Controls
             return this.registeredActions.Remove(name);
         }
 
+        public void LoadFromContent(string contentFullName)
+        {
+            var handler = this.LoadFromContentRequested;
+            if (handler != null)
+            {
+                handler(this, contentFullName);
+            }
+        }
+
         public void InjectJavaScript(string script)
         {
             var handler = this.JavaScriptLoadRequested;
@@ -102,5 +111,6 @@ namespace Xamarin.Forms.Labs.Controls
         }
 
         public EventHandler<string> JavaScriptLoadRequested;
+        public EventHandler<string> LoadFromContentRequested;
     }
 }
