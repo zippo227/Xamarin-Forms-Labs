@@ -20,19 +20,20 @@ namespace Xamarin.Forms.Labs.Controls
         {
             base.OnElementChanged(e);
 
-            this.webView = new WebBrowser()
+            if (this.webView == null)
             {
-                Source = this.Element.Uri
-            };
+                this.webView = new WebBrowser();
 
-            this.webView.IsScriptEnabled = true;
-            this.webView.Navigating += webView_Navigating;
-            this.webView.LoadCompleted += webView_LoadCompleted;
-            this.webView.ScriptNotify += WebViewOnScriptNotify;
+                this.webView.IsScriptEnabled = true;
+                this.webView.Navigating += webView_Navigating;
+                this.webView.LoadCompleted += webView_LoadCompleted;
+                this.webView.ScriptNotify += WebViewOnScriptNotify;
 
-            this.SetNativeControl(this.webView);
+                this.SetNativeControl(this.webView);
+            }
 
-            this.Initialize ();
+            this.Unbind(e.OldElement);
+            this.Bind();
         }
 
         private void WebViewOnScriptNotify(object sender, NotifyEventArgs notifyEventArgs)
@@ -55,7 +56,7 @@ namespace Xamarin.Forms.Labs.Controls
 
         void webView_Navigating(object sender, NavigatingEventArgs e)
         {
-            if (this.CheckRequest(e.Uri.AbsoluteUri))
+            if (e.Uri.IsAbsoluteUri && this.CheckRequest(e.Uri.AbsoluteUri))
             {
                 System.Diagnostics.Debug.WriteLine(e.Uri);
             }
@@ -79,6 +80,11 @@ namespace Xamarin.Forms.Labs.Controls
             {
                 this.webView.Source = uri;
             }
+        }
+
+        partial void LoadFromContent(object sender, string contentFullName)
+        {
+            this.Element.Uri = new Uri(contentFullName, UriKind.Relative);
         }
     }
 }

@@ -14,17 +14,22 @@ namespace Xamarin.Forms.Labs.Controls
         {
             base.OnElementChanged (e);
 
-            this.webView = new Android.Webkit.WebView(this.Context);
+            if (this.webView == null)
+            {
+                this.webView = new Android.Webkit.WebView(this.Context);
 
-            this.webView.Settings.JavaScriptEnabled = true;
-//            this.InjectNativeFunctionScript ();
+                this.webView.Settings.JavaScriptEnabled = true;
+                //            this.InjectNativeFunctionScript ();
 
-            this.webView.SetWebViewClient (new Client (this));
-            this.webView.SetWebChromeClient(new ChromeClient());
+                this.webView.SetWebViewClient(new Client(this));
+                this.webView.SetWebChromeClient(new ChromeClient());
 
-            this.SetNativeControl (this.webView);
+                this.SetNativeControl(this.webView);
+            }
 
-            Initialize();
+            this.Unbind(e.OldElement);
+
+            this.Bind();
         }
             
         partial void Inject(string script)
@@ -41,6 +46,11 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
+        partial void LoadFromContent(object sender, string contentFullName)
+        {
+            this.Element.Uri = new Uri("file:///android_asset/" + contentFullName);
+        }
+
         private class Client : WebViewClient
         {
             private readonly WeakReference<HybridWebViewRenderer> webHybrid;
@@ -55,8 +65,11 @@ namespace Xamarin.Forms.Labs.Controls
                 HybridWebViewRenderer hybrid;
                 if (!this.webHybrid.TryGetTarget(out hybrid) || !hybrid.CheckRequest(url))
                 {
-                    view.LoadUrl(url);
-                    hybrid.InjectNativeFunctionScript ();
+                    //view.LoadUrl(url);
+                    ////hybrid.InjectNativeFunctionScript ();
+                    //return false;
+
+                    return base.ShouldOverrideUrlLoading(view, url);
                 }
 
                 return true;
