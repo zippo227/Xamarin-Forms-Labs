@@ -1,16 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Xamarin.Forms.Labs.Services.Serialization
 {
+    /// <summary>
+    /// The string serializer base class.
+    /// </summary>
+    [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1124:DoNotUseRegions", Justification = "Reviewed. Suppression is OK here.")]
     public abstract class StringSerializer : ISerializer
     {
         #region ISerializer Members
+        /// <summary>
+        /// Gets the serialization format.
+        /// </summary>
+        /// <value>Serialization format.</value>
         public abstract SerializationFormat Format { get; }
 
+        /// <summary>
+        /// Cleans memory.
+        /// </summary>
         public abstract void Flush();
         #endregion
 

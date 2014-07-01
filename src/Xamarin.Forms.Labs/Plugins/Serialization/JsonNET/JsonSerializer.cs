@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace Xamarin.Forms.Labs.Services.Serialization.JsonNET
 {
     /// <summary>
-    /// JSON serializer using Newtonsoft.Json library
+    /// JSON serializer using Newtonsoft.Json library.
     /// </summary>
     /// <remarks>
     /// 
-    /// Newtonsoft.Json copyright information
+    /// Newtonsoft.Json copyright information.
     /// 
     /// The MIT License (MIT)
     /// Copyright (c) 2007 James Newton-King
@@ -20,35 +17,45 @@ namespace Xamarin.Forms.Labs.Services.Serialization.JsonNET
     /// https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
     /// 
     /// </remarks>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1644:DocumentationHeadersMustNotContainBlankLines", Justification = "Reviewed. Suppression is OK here."), SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1629:DocumentationTextMustEndWithAPeriod", Justification = "Reviewed. Suppression is OK here."), SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
     public class JsonSerializer : StringSerializer, IJsonSerializer
     {
+        /// <summary>
+        /// Gets the serialization format.
+        /// </summary>
+        /// <value>Serialization format.</value>
         public override SerializationFormat Format
         {
             get { return SerializationFormat.Json; }
         }
 
+        /// <summary>
+        /// Cleans memory.
+        /// </summary>
         public override void Flush()
         {
+#if DEBUG
             throw new NotImplementedException();
+#endif
         }
 
         /// <summary>
-        /// Serializes object to a string
+        /// Serializes object to a string.
         /// </summary>
-        /// <param name="obj">Object to serialize</param>
-        /// <returns>Serialized string of the object</returns>
+        /// <typeparam name="T">Type of object to serialize.</typeparam>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns>Serialized string of the object.</returns>
         public override string Serialize<T>(T obj)
         {
-            JsonConvert.DefaultSettings().ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             return JsonConvert.SerializeObject(obj);
         }
 
         /// <summary>
-        /// Deserializes string into an object
+        /// Deserializes string into an object.
         /// </summary>
-        /// <typeparam name="T">Type of object to serialize to</typeparam>
-        /// <param name="data">Serialized object</param>
-        /// <returns>Object of type T</returns>
+        /// <typeparam name="T">Type of object to deserialize to.</typeparam>
+        /// <param name="data">Serialized object.</param>
+        /// <returns>Object of type T.</returns>
         public override T Deserialize<T>(string data)
         {
             return JsonConvert.DeserializeObject<T>(data);
