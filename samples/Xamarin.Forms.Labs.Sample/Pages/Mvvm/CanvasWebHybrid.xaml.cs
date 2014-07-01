@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Mvvm;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Sample
 {	
@@ -29,25 +31,24 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 datapoint.PropertyChanged += HandlePropertyChanged;
             }
+
+            this.hybridWebView.LoadFinished += (s, e) =>
+            {
+                this.hybridWebView.CallJsFunction ("onViewModelData", this.BindingContext);
+            };
 		}
 
         void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-//            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
-//            {
-                foreach (var datapoint in e.NewItems.OfType<DataPoint>())
-                {
-                    datapoint.PropertyChanged += HandlePropertyChanged;
-                }
-//            } 
-//            else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-//            {
-                foreach (var datapoint in e.OldItems.OfType<DataPoint>())
-                {
-                    datapoint.PropertyChanged -= HandlePropertyChanged;
-                }
-//            }
-            
+            foreach (var datapoint in e.NewItems.OfType<DataPoint>())
+            {
+                datapoint.PropertyChanged += HandlePropertyChanged;
+            }
+
+            foreach (var datapoint in e.OldItems.OfType<DataPoint>())
+            {
+                datapoint.PropertyChanged -= HandlePropertyChanged;
+            }
         }
 
         void HandlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

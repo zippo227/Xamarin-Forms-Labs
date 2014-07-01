@@ -10,12 +10,12 @@
     <toolkit:BaseView.Content>
 	     <StackLayout x:Name="container" Padding="0,40,0,0">
 	     <Label Text="{Binding Title}"></Label>
-			<ListView ItemsSource="{Binding DataPoints}" WidthRequest="200" HeightRequest="100">
+			<ListView ItemsSource="{Binding DataPoints}" WidthRequest="200" HeightRequest="200">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 											<ViewCell>
 						<ViewCell.View>
-							<StackLayout>
+							<StackLayout HeightRequest="100">
 							<Label Text="{Binding Label}"></Label>
 							<Slider Value="{Binding Y, Mode=TwoWay}"></Slider>
 <!--							<Slider Maximum="{Binding Max}"></Slider>-->
