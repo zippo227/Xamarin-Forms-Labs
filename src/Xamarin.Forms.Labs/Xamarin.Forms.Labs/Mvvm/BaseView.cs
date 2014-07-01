@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
     /// <summary>
-    /// Converts the Xamarin Forms page navigation to our ViewModelNavigation instance
+    /// Converts the Xamarin Forms page navigation to our <see cref="ViewModelNavigation"/> instance.
     /// </summary>
 	class NavigationConverter : IValueConverter
 	{
@@ -28,9 +23,9 @@ namespace Xamarin.Forms.Labs.Mvvm
 	{
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseView"/> class.
-        /// Binds the Navigation and IsBusy property 
+        /// Binds the Navigation and IsBusy property.
         /// </summary>
-		public BaseView ()
+		public BaseView()
 		{
 			SetBinding (NavigationProperty, new Binding ("Navigation", converter: new NavigationConverter ()));
             SetBinding(IsBusyProperty, new Binding("IsBusy"));
