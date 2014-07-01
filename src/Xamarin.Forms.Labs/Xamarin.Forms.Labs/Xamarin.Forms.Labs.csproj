@@ -84,13 +84,11 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
     </Compile>
     <Compile Include="Services\Media\IMediaPicker.cs" />
     <Compile Include="Services\Serialization\IByteSerializer.cs" />
-    <Compile Include="Services\Serialization\IJsonConvert.cs" />
     <Compile Include="Services\Serialization\IJsonSerializer.cs" />
     <Compile Include="Services\Serialization\ISerializer.cs" />
     <Compile Include="Services\Serialization\IStreamSerializer.cs" />
     <Compile Include="Services\Serialization\IStringSerializer.cs" />
     <Compile Include="Services\Serialization\IXmlSerializer.cs" />
-    <Compile Include="Services\Serialization\JsonDelegate.cs" />
     <Compile Include="Services\Serialization\SerializationFormat.cs" />
     <Compile Include="Services\Serialization\StreamSerializer.cs" />
     <Compile Include="Services\Serialization\StreamSerializerExtensions.cs" />

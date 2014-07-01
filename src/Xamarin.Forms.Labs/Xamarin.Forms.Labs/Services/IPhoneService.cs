@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Xamarin.Forms.Labs.Services
+﻿namespace Xamarin.Forms.Labs.Services
 {
     /// <summary>
-    /// Interface for phone functionality and information
+    /// Interface for phone functionality and information.
     /// </summary>
     public interface IPhoneService
     {
@@ -24,25 +22,26 @@ namespace Xamarin.Forms.Labs.Services
 
         /// <summary>
         /// Gets a value indicating whether this instance has network available.
+        /// </summary>
         bool? IsNetworkAvailable { get; }
 
         /// <summary>
-        /// Gets the ISO Country Code
+        /// Gets the ISO Country Code.
         /// </summary>
         string ICC { get; }
 
         /// <summary>
-        /// Gets the Mobile Country Code
+        /// Gets the Mobile Country Code.
         /// </summary>
         string MCC { get; }
 
         /// <summary>
-        /// Gets the Mobile Network Code
+        /// Gets the Mobile Network Code.
         /// </summary>
         string MNC { get; }
 
         /// <summary>
-        /// Opens native dialog to dial the specified number
+        /// Opens native dialog to dial the specified number.
         /// </summary>
         /// <param name="number">Number to dial.</param>
         void DialNumber(string number);

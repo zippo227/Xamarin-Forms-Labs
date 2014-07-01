@@ -9,10 +9,10 @@ namespace Xamarin.Forms.Labs.Services
     public interface ITextToSpeechService
 	{
 	    /// <summary>
-	    /// The speak.
+	    /// The speak method.
 	    /// </summary>
 	    /// <param name="text">
-	    /// The text.
+	    /// The text to speak.
 	    /// </param>
 	    void Speak(string text);
 

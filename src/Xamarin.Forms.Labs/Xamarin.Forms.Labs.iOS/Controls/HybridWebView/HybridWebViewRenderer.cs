@@ -42,7 +42,7 @@ namespace Xamarin.Forms.Labs.Controls
 
         void LoadFinished(object sender, EventArgs e)
         {
-            
+            this.Element.OnLoadFinished(sender, e);
         }
 
         private bool HandleStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)

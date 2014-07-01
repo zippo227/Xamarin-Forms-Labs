@@ -11,6 +11,7 @@ namespace Xamarin.Forms.Labs.Controls
 {
     public class HybridWebView : WebView
     {
+        private object InjectLock = new object();
         private readonly IStringSerializer jsonSerializer;
         private readonly Dictionary<string, Action<string>> registeredActions;
 
@@ -77,16 +78,28 @@ namespace Xamarin.Forms.Labs.Controls
 
         public void InjectJavaScript(string script)
         {
-            var handler = this.JavaScriptLoadRequested;
-            if (handler != null)
+            lock (this.InjectLock)
             {
-                handler(this, script);
+                var handler = this.JavaScriptLoadRequested;
+                if (handler != null)
+                {
+                    handler(this, script);
+                }
             }
         }
 
         public bool TryGetAction(string name, out Action<string> action)
         {
             return this.registeredActions.TryGetValue(name, out action);
+        }
+
+        public void OnLoadFinished(object sender, EventArgs e)
+        {
+            var handler = this.LoadFinished;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
 
         public void CallJsFunction(string funcName, params object[] parameters)
@@ -112,5 +125,6 @@ namespace Xamarin.Forms.Labs.Controls
 
         public EventHandler<string> JavaScriptLoadRequested;
         public EventHandler<string> LoadFromContentRequested;
+        public EventHandler LoadFinished;
     }
 }

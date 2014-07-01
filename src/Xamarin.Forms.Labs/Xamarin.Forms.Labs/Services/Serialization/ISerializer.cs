@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xamarin.Forms.Labs.Services.Serialization
+﻿namespace Xamarin.Forms.Labs.Services.Serialization
 {
     /// <summary>
-    /// Common serializer interface
+    /// Common serializer interface.
     /// </summary>
     public interface ISerializer : IByteSerializer, IStreamSerializer, IStringSerializer
     {
         /// <summary>
-        /// Gets the serialization format
+        /// Gets the serialization format.
         /// </summary>
+        /// <value>Serialization format.</value>
         SerializationFormat Format { get; }
 
         /// <summary>
-        /// Cleans memory
+        /// Cleans memory.
         /// </summary>
         void Flush();
     }

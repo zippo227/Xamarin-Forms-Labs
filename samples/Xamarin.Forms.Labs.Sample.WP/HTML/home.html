@@ -11,6 +11,9 @@
     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
     <script type="text/javascript" src="canvasjs.min.js"></script>
     <script language="javascript">
+    	var chart;
+    	var points;
+        
         function onViewModelData(model) {
             var v;
             if (model.title === undefined) {
@@ -18,18 +21,33 @@
             } else {
                 v = model;
             }
-            
+
             //Native("dataCallback", model.toString());
             //Native("dataCallback", v.dataPoints);
+            if (!chart)
+            {
+            	points = v.dataPoints;
+				chart = new CanvasJS.Chart("chartContainer", {
+	                theme: "theme2",
+	                title: {
+	                    text: v.title
+	                },
+	                data: [{ type: "column", dataPoints: v.dataPoints }]
+	            });
+           	}
+           	else
+           	{
+           		chart.options.data = null;
+           		chart.options.data  = [{ type: "column", dataPoints: v.dataPoints }];
+           		//chart.options.data[0].dataPoints = null;
+           		//chart.options.data[0].dataPoints = v.dataPoints;
+           		//update(v.dataPoints);
+	            //chart.data.dataPoints = v.dataPoints;
+           	}
             
-            var chart = new CanvasJS.Chart("chartContainer", {
-                theme: "theme2",
-                title: {
-                    text: v.title
-                },
-                data: [{ type: "column", dataPoints: v.dataPoints }]
-            });
+
             chart.render();
+            onUpdateFinished();
         }
         
         function sendData(o) {
@@ -38,6 +56,10 @@
         
         function sendData(o,b) {
             Native("dataCallback", [o, b]);
+        }
+
+        function onUpdateFinished(){
+        	Native("chartUpdated", chart);
         }
     </script>
     

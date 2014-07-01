@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3
 {
@@ -11,11 +7,11 @@ namespace Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3
     using Serializer = ServiceStack.Text.JsonSerializer;
 
     /// <summary>
-    /// JSON serializer using ServiceStack.Text library
+    /// JSON serializer using ServiceStack.Text library.
     /// </summary>
     /// <remarks>
     /// 
-    /// ServiceStack.Text copyright information
+    /// ServiceStack.Text copyright information.
     /// 
     /// Copyright (c) 2007-2011, Demis Bellot, ServiceStack.
     /// http://www.servicestack.net
@@ -24,6 +20,7 @@ namespace Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3
     /// https://github.com/ServiceStack/ServiceStack.Text/blob/master/LICENSE
     /// 
     /// </remarks>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1629:DocumentationTextMustEndWithAPeriod", Justification = "Reviewed. Suppression is OK here."), SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1644:DocumentationHeadersMustNotContainBlankLines", Justification = "Reviewed. Suppression is OK here."), SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
     public class JsonSerializer : IJsonSerializer
     {
         /// <summary>

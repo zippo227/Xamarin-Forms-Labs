@@ -1,38 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Xamarin.Forms.Labs.Services.Serialization
+﻿namespace Xamarin.Forms.Labs.Services.Serialization
 {
     /// <summary>
-    /// Serialization format type
+    /// Serialization format type.
     /// </summary>
     public enum SerializationFormat
     {
         /// <summary>
-        /// Custom undefined format
+        /// Custom undefined format.
         /// </summary>
         Custom,
 
         /// <summary>
-        /// JSON format
+        /// JSON format.
         /// </summary>
         Json,
 
         /// <summary>
-        /// XML format
+        /// XML format.
         /// </summary>
         Xml,
 
         /// <summary>
-        /// ProtoBuffer format
+        /// ProtoBuffer format.
         /// </summary>
         ProtoBuffer,
 
         /// <summary>
-        /// Custom binary
+        /// Custom binary format.
         /// </summary>
         Binary
     }
