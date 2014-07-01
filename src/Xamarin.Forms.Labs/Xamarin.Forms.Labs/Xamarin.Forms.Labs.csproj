@@ -103,6 +103,8 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
     <Compile Include="Services\Geolocation\IGeolocator.cs" />
     <Compile Include="Controls\SensorBar\SensorBarView.cs" />
     <Compile Include="Controls\ExtendedViewCell.cs" />
+    <Compile Include="Services\Web\IRestClient.cs" />
+    <Compile Include="Services\Web\RestResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
