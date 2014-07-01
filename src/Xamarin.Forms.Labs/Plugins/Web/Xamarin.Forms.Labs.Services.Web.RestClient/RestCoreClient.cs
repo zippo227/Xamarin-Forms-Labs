@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Xamarin.Forms.Labs.Services.Web.RestClient
 {
-    public abstract class RestCoreClient
+    public abstract class RestCoreClient : IRestClient
     {
         protected readonly ISerializer Serializer;
         protected readonly HttpClient Client;
