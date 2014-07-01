@@ -90,7 +90,8 @@ Or from your codebehind:
 				ImageHeightRequest = 50,
 				ImageWidthRequest = 50,
 				Orientation = Orientation.ImageToLeft,
-				Image = "icon_twitter"
+				Source = "icon_twitter.png",
+				Text = "Twitter"
 			};
 	stacker.Children.Add (button);
 	
@@ -191,7 +192,7 @@ __________________
  - Filip De Vos  [@foxtricks](https://twitter.com/foxtricks)
  - ThomasLebrun 
  - Sami M. Kallio 
- - Kevin E. Ford [@Bowman74](https://twitter.com/Bowman74)
+ - [Kevin E. Ford](http://windingroadway.blogspot.com/) [@Bowman74](https://twitter.com/Bowman74)
  - Jason Smith [@jassmith87](https://twitter.com/jassmith87)
  - Shawn Anderson
  - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
