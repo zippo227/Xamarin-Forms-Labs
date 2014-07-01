@@ -1,11 +1,26 @@
 ﻿using System;
-using Xamarin.Forms.Labs.Services.Serialization;
 using System.Net.Http;
+using Xamarin.Forms.Labs.Services.Serialization;
 
 namespace Xamarin.Forms.Labs.Services.Web.RestClient
 {
+    /// <summary>
+    /// The JSON rest client.
+    /// </summary>
     public class JsonRestClient : RestCoreClient
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonRestClient"/> class.
+        /// </summary>
+        /// <param name="serializer">
+        /// The serializer.
+        /// </param>
+        /// <param name="httpClient">
+        /// The http client.
+        /// </param>
+        /// <exception cref="Exception">
+        /// Throws an exception if the serializer does not support JSON
+        /// </exception>
         public JsonRestClient(IJsonSerializer serializer, HttpClient httpClient = null)
             : base(serializer, httpClient)
         {
@@ -15,6 +30,9 @@ namespace Xamarin.Forms.Labs.Services.Web.RestClient
             }
         }
 
+        /// <summary>
+        /// Gets the string content type.
+        /// </summary>
         protected override string StringContentType
         {
             get { return "text/json"; }
