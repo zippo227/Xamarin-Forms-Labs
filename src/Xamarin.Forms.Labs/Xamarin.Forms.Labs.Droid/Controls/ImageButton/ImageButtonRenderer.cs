@@ -6,7 +6,6 @@ using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Droid.Controls.ImageButton;
 using Xamarin.Forms.Labs.Enums;
 using System.ComponentModel;
-using System.IO;
 using System.Threading.Tasks;
 using Android.Graphics;
 
