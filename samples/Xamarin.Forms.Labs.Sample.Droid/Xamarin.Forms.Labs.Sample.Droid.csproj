@@ -52,6 +52,7 @@
     <AndroidSupportedAbis>armeabi,armeabi-v7a</AndroidSupportedAbis>
     <MonoDroidExtraArgs>
     </MonoDroidExtraArgs>
+    <DefineConstants>__Android__</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

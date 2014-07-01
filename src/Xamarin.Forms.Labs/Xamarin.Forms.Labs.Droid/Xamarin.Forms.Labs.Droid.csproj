@@ -41,6 +41,7 @@
 REM If you see this in Visual Studio's Error List window, check the Output window's Build tab for the actual error.
 ECHO Building NuGet package in Post-Build event...
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nuget\BuildNewPackage-RanAutomatically.ps1' -ProjectFilePath '$(ProjectPath)' -OutputDirectory '$(TargetDir)' -Configuration '$(ConfigurationName)' -Platform '$(PlatformName)'" -PackageDirectory '$(SolutionDir)..\..\packages'</PostBuildEvent>
+    <DefineConstants>__Android__</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExifLib">
