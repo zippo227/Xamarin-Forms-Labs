@@ -86,6 +86,7 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthView.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.shared.cs" />
+    <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\AndroidDevice.cs" />
     <Compile Include="Device\Battery.cs" />
