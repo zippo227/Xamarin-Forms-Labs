@@ -4,7 +4,7 @@
     <id>Xamarin.Forms.Labs.Cryptography</id>
     <title>Xamarin Forms Labs Cryptography</title>
     <tags>xamarin,xamarin forms,xamarin forms labs, Cryptography, pcl, md5</tags>
-    <version>1.1.0</version>
+    <version>1.1.0-Beta2</version>
     <authors>Xamarin Forms Labs Team</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -23,11 +23,11 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     <dependencies></dependencies>
   </metadata>
   <files>
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Cryptography.dll*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Cryptography.dll.mdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Cryptography.pdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Cryptography.xml*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Cryptography.dll*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Cryptography.dll.mdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Cryptography.pdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Cryptography.xml*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
     <!-- Source Files for Symbol Server -->
-    <file src="..\..\Plugins\Cryptography\Xamarin.Forms.Labs.Cryptography\**\*.cs" target="src\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\Plugins\Cryptography\Xamarin.Forms.Labs.Cryptography\**\*.cs" target="src\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
   </files>
 </package>

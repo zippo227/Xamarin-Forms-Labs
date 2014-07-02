@@ -4,7 +4,7 @@
     <id>Xamarin.Forms.Labs.Caching.SQLiteNet</id>
     <title>Xamarin Forms Labs - Caching</title>
     <tags>Xamarin.Forms Labs Caching</tags>
-    <version>1.1.0</version>
+    <version>1.1.0-Beta2</version>
     <authors>Xamarin Forms Labs Team</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -19,16 +19,16 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     </summary>
     <language>en-US</language>
     <dependencies>
-      <dependency id="Xamarin.Forms.Labs" version="1.1.0.0" />
+      <dependency id="Xamarin.Forms.Labs" version="1.1.0-Beta2" />
       <dependency id="SQLite.Net.Async-PCL" version="2.3.0" />
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Caching.SQLiteNet.dll*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Caching.SQLiteNet.dll.mdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Caching.SQLiteNet.pdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Caching.SQLiteNet.xml*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Caching.SQLiteNet.dll*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Caching.SQLiteNet.dll.mdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Caching.SQLiteNet.pdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Caching.SQLiteNet.xml*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
     <!-- Source Files for Symbol Server -->
-    <file src="..\..\Plugins\Caching\Xamarin.Forms.Labs.Caching.SQLiteNet\**\*.cs" target="src\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\Plugins\Caching\Xamarin.Forms.Labs.Caching.SQLiteNet\**\*.cs" target="src\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
   </files>
 </package>
