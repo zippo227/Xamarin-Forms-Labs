@@ -137,7 +137,8 @@ namespace Xamarin.Forms.Labs.Sample
 					"Buttons",
 					"Labels",
 					"Cells",
-					"HybridWebView"
+					"HybridWebView",
+                    "WebImage"
 				}
 			};
 			lstControls.ItemSelected += async (sender, e) =>
@@ -162,6 +163,9 @@ namespace Xamarin.Forms.Labs.Sample
 					case "hybridwebview":
                         await mainPage.Navigation.PushAsync(new CanvasWebHybrid());
 						break;
+                    case "webimage":
+				        await mainPage.Navigation.PushAsync(new WebImagePage());
+				        break;
 					default:
 						break;
 				}

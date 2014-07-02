@@ -15,6 +15,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - ExtendedTextCell (beta)
  - AutoComplete (beta)
  - HybridWebView (alpha)
+ - Web Image (beta)
 
 **Available services (Beta)**
 
@@ -199,6 +200,7 @@ __________________
  - Shawn Anderson
  - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
  - Ben Ishiyama-Levy [@mrbrl](http://www.monovo.io)
+ - Ryan Wischkaemper
 
  **Another Project Contributions:**
  	Xamarin.Mobile
