@@ -85,6 +85,7 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nu
     <Compile Include="Services\Media\IMediaPicker.cs" />
     <Compile Include="Services\Serialization\IByteSerializer.cs" />
     <Compile Include="Services\Serialization\IJsonSerializer.cs" />
+    <Compile Include="Services\Serialization\IProtoBufSerializer.cs" />
     <Compile Include="Services\Serialization\ISerializer.cs" />
     <Compile Include="Services\Serialization\IStreamSerializer.cs" />
     <Compile Include="Services\Serialization\IStringSerializer.cs" />

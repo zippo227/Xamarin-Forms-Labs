@@ -1,9 +1,9 @@
 ﻿using System;
-using Xamarin.Forms.Labs.Services.Serialization;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Text;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Forms.Labs.Services.Serialization;
 
 namespace Xamarin.Forms.Labs.Services.Web.RestClient
 {
