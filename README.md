@@ -178,6 +178,8 @@ Contribute
 -----------
 
 Everbody is welcome to contribute with any kind of controls or features at this time. Since there's no oficial releases feel free to submit your playground controls even if they aren't perfect. 
+
+Twitter hashtag : [#xflabs](https://twitter.com/search?q=xflabs)
 __________________
 
 License

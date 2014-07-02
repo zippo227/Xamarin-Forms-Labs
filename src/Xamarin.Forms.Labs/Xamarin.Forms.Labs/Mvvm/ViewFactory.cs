@@ -112,12 +112,12 @@ namespace Xamarin.Forms.Labs.Mvvm
                 {
                     viewModel = (TViewModel)Resolver.Resolve(viewModelType);
                 }
-                catch
+                catch (Exception exception)
                 {
                     throw new InvalidOperationException(
                         String.Format(
-                            "ViewModel {0} cannot be resolved - please make sure you've added it to the ViewFactory by calling Register<TView, TViewModel>().",
-                            viewModelType));
+                            "ViewModel {0} cannot be resolved - please make sure you've added it to the ViewFactory by calling Register<TView, TViewModel>() and that you've registered the TViewModel dependencies with the IoC container.",
+                            viewModelType), exception);
                 }
 
                 //this is the real fallback :)
