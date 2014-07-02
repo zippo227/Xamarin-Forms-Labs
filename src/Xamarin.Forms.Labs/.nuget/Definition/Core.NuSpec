@@ -2,20 +2,18 @@
 <package>
   <metadata>
     <id>Xamarin.Forms.Labs</id>
-    <title>Xamarin Forms Labs - Core</title>
-    <tags>Xamarin.Forms Labs Core</tags>
+    <title>Xamarin Forms Labs</title>
+    <tags>Xamarin.Forms Labs ios android wp8 controls services</tags>
     <version>1.1.0-Beta2</version>
     <authors>Xamarin Forms Labs</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-Xamarin Forms Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
-
-This package contains the cross-platform framework with controls and services for your pcl or shared project.
+Xamarin Forms Labs is a open source project that aims to provide a powerfull and cross platform set of controls and services tailored to work with Xamarin Forms.
     </description>
     <summary>
-Xamarin Forms Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+Xamarin Forms Labs is a open source project that aims to provide a powerfull and cross platform set of controls and services tailored to work with Xamarin Forms.
     </summary>
     <language>en-US</language>
     <dependencies>
