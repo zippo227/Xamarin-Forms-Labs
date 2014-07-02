@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Xamarin.Forms.Labs.Services.Serialization.JsonNET</name>
+    </assembly>
+    <members>
+        <member name="T:Xamarin.Forms.Labs.Services.Serialization.JsonNET.JsonSerializer">
+            <summary>
+            JSON serializer using Newtonsoft.Json library.
+            </summary>
+            <remarks>
+            
+            Newtonsoft.Json copyright information.
+            
+            The MIT License (MIT)
+            Copyright (c) 2007 James Newton-King
+            
+            https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
+            
+            </remarks>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Services.Serialization.JsonNET.JsonSerializer.Flush">
+            <summary>
+            Cleans memory.
+            </summary>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Services.Serialization.JsonNET.JsonSerializer.Serialize``1(``0)">
+            <summary>
+            Serializes object to a string.
+            </summary>
+            <typeparam name="T">Type of object to serialize.</typeparam>
+            <param name="obj">Object to serialize.</param>
+            <returns>Serialized string of the object.</returns>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Services.Serialization.JsonNET.JsonSerializer.Deserialize``1(System.String)">
+            <summary>
+            Deserializes string into an object.
+            </summary>
+            <typeparam name="T">Type of object to deserialize to.</typeparam>
+            <param name="data">Serialized object.</param>
+            <returns>Object of type T.</returns>
+        </member>
+        <member name="P:Xamarin.Forms.Labs.Services.Serialization.JsonNET.JsonSerializer.Format">
+            <summary>
+            Gets the serialization format.
+            </summary>
+            <value>Serialization format.</value>
+        </member>
+    </members>
+</doc>

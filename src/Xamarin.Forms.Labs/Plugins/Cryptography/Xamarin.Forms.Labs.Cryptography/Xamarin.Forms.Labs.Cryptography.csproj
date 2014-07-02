@@ -28,15 +28,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\..\..\ReleaseBuild\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\..\..\..\ReleaseBuild\Xamarin.Forms.Labs.Cryptography.XML</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="Xamarin.Forms.Labs.Cryptography.nuspec" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="MD5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

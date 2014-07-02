@@ -22,28 +22,10 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls
 
             PageLayout.Padding = new Thickness(padding, topPadding, padding, padding);
 
-            ((ImageButton)TwitterButton).Source = Device.OnPlatform(
-                "icon_twitter.png",
-                "icon_twitter.png",
-                "Images/icon_twitter.png");
-            ((ImageButton)FacebookButton).Source = Device.OnPlatform(
-                "icon_facebook.png",
-                "icon_facebook.png",
-                "Images/icon_facebook.png");
-            ((ImageButton)GoogleButton).Source = Device.OnPlatform(
-                "icon_google.png",
-                "icon_google.png",
-                "Images/icon_google.png");
-            ((ImageButton)MicrosoftButton).Source = Device.OnPlatform(
-                "icon_microsoft.png",
-                "icon_microsoft.png",
-                "Images/icon_microsoft.png");
-
             TwitterButton.Clicked += Button_Click;
             FacebookButton.Clicked += Button_Click;
             GoogleButton.Clicked += Button_Click;
             MicrosoftButton.Clicked += Button_Click;
-
         }
 
         private void Button_Click(object sender, EventArgs e)

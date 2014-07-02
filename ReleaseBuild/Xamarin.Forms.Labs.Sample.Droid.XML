@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Xamarin.Forms.Labs.Sample.Droid</name>
+    </assembly>
+    <members>
+        <member name="T:Xamarin.Forms.Labs.Sample.Droid.MainActivity">
+            <summary>
+            Class MainActivity.
+            </summary>
+        </member>
+        <member name="F:Xamarin.Forms.Labs.Sample.Droid.MainActivity._initialized">
+            <summary>
+            Indicated if the application has been initialized
+            </summary>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Sample.Droid.MainActivity.OnCreate(Android.OS.Bundle)">
+            <summary>
+            Called when [create].
+            </summary>
+            <param name="bundle">The bundle.</param>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Sample.Droid.MainActivity.SetIoc">
+            <summary>
+            Sets the IoC.
+            </summary>
+        </member>
+    </members>
+</doc>

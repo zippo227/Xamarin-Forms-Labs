@@ -34,12 +34,13 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Bin\Release</OutputPath>
+    <OutputPath>..\..\..\ReleaseBuild\</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\..\ReleaseBuild\Xamarin.Forms.Labs.WP8.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -150,7 +151,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
-    <None Include="Xamarin.Forms.Labs.WP.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
@@ -183,10 +183,6 @@
     <Error Condition="!Exists('..\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>REM Create a NuGet package for this project and place the .nupkg file in the project's output directory.
-REM If you see this in Visual Studio's Error List window, check the Output window's Build tab for the actual error.
-ECHO Building NuGet package in Post-Build event...
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(SolutionDir).nuget\BuildNewPackage-RanAutomatically.ps1' -ProjectFilePath '$(ProjectPath)' -OutputDirectory '$(TargetDir)' -Configuration '$(ConfigurationName)' -Platform '$(PlatformName)'" -PackageDirectory '$(SolutionDir)..\..\packages'</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
