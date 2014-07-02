@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
-    <id>Xamarin.Forms.Labs.Core</id>
+    <id>Xamarin.Forms.Labs</id>
     <title>Xamarin Forms Labs - Core</title>
     <tags>Xamarin.Forms Labs Core</tags>
-    <version>1.1.0</version>
+    <version>1.1.0-Beta2</version>
     <authors>Xamarin Forms Labs</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -24,10 +24,10 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.dll*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.dll.mdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.pdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.xml*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.dll*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.dll.mdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.pdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.xml*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Droid.dll*" target="lib\MonoAndroid" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Droid.dll.mdb*" target="lib\MonoAndroid" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Droid.pdb*" target="lib\MonoAndroid" />
@@ -41,7 +41,7 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.WP8.pdb*" target="lib\wp8" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.WP8.xml*" target="lib\wp8" />
     <!-- Source Files for Symbol Server -->
-    <file src="..\..\Xamarin.Forms.Labs\**\*.cs" target="src\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\Xamarin.Forms.Labs\**\*.cs" target="src\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
     <file src="..\..\Xamarin.Forms.Labs.Droid\**\*.cs" target="src\MonoAndroid" />
     <file src="..\..\Xamarin.Forms.Labs.iOS\**\*.cs" target="src\MonoTouch" />
     <file src="..\..\Xamarin.Forms.Labs.WP\**\*.cs" target="src\wp8" />
