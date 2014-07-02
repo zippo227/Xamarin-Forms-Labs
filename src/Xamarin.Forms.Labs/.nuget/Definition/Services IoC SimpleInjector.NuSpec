@@ -4,7 +4,7 @@
     <id>Xamarin.Forms.Labs.Services.SimpleContainer</id>
     <title>Xamarin Forms Labs IoC SimpleContainer</title>
     <tags>xamarin,xamarin forms,xamarin forms labs, pcl, md5, Ioc, SimpleInjector</tags>
-    <version>1.1.0</version>
+    <version>1.1.0-Beta2</version>
     <authors>Xamarin Forms Labs Team</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -22,15 +22,15 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     <language>en-US</language>
     <dependencies>
       <dependency id="SimpleInjector" version="2.5.0" />
-      <dependency id="Xamarin.Forms.Labs" version="1.1.0.0" />
+      <dependency id="Xamarin.Forms.Labs" version="1.1.0-Beta2" />
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.SimpleContainer.dll*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.SimpleContainer.dll.mdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.SimpleContainer.pdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.SimpleContainer.xml*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.SimpleContainer.dll*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.SimpleContainer.dll.mdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.SimpleContainer.pdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.SimpleContainer.xml*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
     <!-- Source Files for Symbol Server -->
-    <file src="..\..\Plugins\DI\Xamarin.Forms.Labs.Services.SimpleInjector\**\*.cs" target="src\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\Plugins\DI\Xamarin.Forms.Labs.Services.SimpleInjector\**\*.cs" target="src\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
   </files>
 </package>
