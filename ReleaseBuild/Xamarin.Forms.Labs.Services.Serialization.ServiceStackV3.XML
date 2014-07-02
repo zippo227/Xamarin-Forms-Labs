@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3</name>
+    </assembly>
+    <members>
+        <member name="T:Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.JsonSerializer">
+            <summary>
+            JSON serializer using ServiceStack.Text library.
+            </summary>
+            <remarks>
+            
+            ServiceStack.Text copyright information.
+            
+            Copyright (c) 2007-2011, Demis Bellot, ServiceStack.
+            http://www.servicestack.net
+            All rights reserved.
+            
+            https://github.com/ServiceStack/ServiceStack.Text/blob/master/LICENSE
+            
+            </remarks>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.JsonSerializer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.JsonSerializer"/> class.
+            </summary>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.JsonSerializer.#ctor(System.Boolean,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.JsonSerializer"/> class.
+            </summary>
+            <param name="emitCamelCaseNames">Emit camelcase names</param>
+            <param name="accurateDateTime">Set to true if you need DateTime's to not lose accuracy</param>
+        </member>
+    </members>
+</doc>

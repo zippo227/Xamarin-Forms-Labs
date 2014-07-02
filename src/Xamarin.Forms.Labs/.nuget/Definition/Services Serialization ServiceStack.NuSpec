@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3</id>
+    <title>Xamarin Forms Labs Serialization ServiceStackV3</title>
+    <tags>xamarin,xamarin forms,xamarin forms labs, pcl, md5, Ioc, ServiceStackV3, serialization</tags>
+    <version>1.1.0</version>
+    <authors>Xamarin Forms Labs Team</authors>
+    <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+Xamarin Forms Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+
+      This package contains helpers for serialization with ServiceStackV3
+    </description>
+    <summary>
+Xamarin Forms Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+    </summary>
+    <releaseNotes>See latest changeset on github</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <language>en-US</language>
+    <dependencies>
+      <dependency id="Xamarin.Forms.Labs" version="1.1.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.dll*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.dll.mdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.pdb*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.xml*" target="lib\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+    <!-- Source Files for Symbol Server -->
+    <file src="..\..\Plugins\Serialization\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf\**\*.cs" target="src\portable-net45+wp8+MonoAndroid1+MonoTouch1" />
+  </files>
+</package>
