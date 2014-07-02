@@ -25,26 +25,11 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.dll*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.dll.mdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.pdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.xml*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid.dll*" target="lib\MonoAndroid" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid.dll.mdb*" target="lib\MonoAndroid" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid.pdb*" target="lib\MonoAndroid" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid.xml*" target="lib\MonoAndroid" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS.dll*" target="lib\MonoTouch" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS.dll.mdb*" target="lib\MonoTouch" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS.pdb*" target="lib\MonoTouch" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS.xml*" target="lib\MonoTouch" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8.dll*" target="lib\wp8" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8.dll.mdb*" target="lib\wp8" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8.pdb*" target="lib\wp8" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8.xml*" target="lib\wp8" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.dll*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.dll.mdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.pdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.xml*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
     <!-- Source Files for Symbol Server -->
-    <file src="..\..\Plugins\Serialization\ServiceStackV3\**\*.cs" target="src\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\Plugins\Serialization\ServiceStackV3\**\*.cs" target="src\MonoAndroid" />
-    <file src="..\..\Plugins\Serialization\ServiceStackV3\**\*.cs" target="src\MonoTouch" />
-    <file src="..\..\Plugins\\Serialization\ServiceStackV3\**\*.cs" target="src\wp8" />
+    <file src="..\..\Plugins\Serialization\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf\**\*.cs" target="src\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
   </files>
 </package>
