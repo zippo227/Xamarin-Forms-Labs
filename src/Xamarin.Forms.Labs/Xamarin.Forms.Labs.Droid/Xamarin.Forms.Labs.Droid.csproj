@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;__Android__</DefineConstants>
+    <DefineConstants>DEBUG;__ANDROID__;__MOBILE__;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
@@ -37,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <ConsolePause>false</ConsolePause>
-    <DefineConstants>__Android__</DefineConstants>
+    <DefineConstants>__ANDROID__;__MOBILE__;</DefineConstants>
     <DocumentationFile>..\..\..\ReleaseBuild\Xamarin.Forms.Labs.Droid.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
