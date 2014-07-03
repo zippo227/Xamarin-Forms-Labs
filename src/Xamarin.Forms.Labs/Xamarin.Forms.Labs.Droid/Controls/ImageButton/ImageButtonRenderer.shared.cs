@@ -1,4 +1,4 @@
-#if __Android__
+#if __ANDROID__
 using Xamarin.Forms.Platform.Android;
 
 namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton

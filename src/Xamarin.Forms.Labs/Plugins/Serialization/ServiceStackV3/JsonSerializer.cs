@@ -2,8 +2,14 @@
 
 namespace Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3
 {
+    using ServiceStack.Text;
+
+    using IStringSerializer = Xamarin.Forms.Labs.Services.Serialization.IStringSerializer;
     using JsConfig = ServiceStack.Text.JsConfig;
+#if __ANDROID__ || __IOS__ || WINDOWS_PHONE
     using JsonDateHandler = ServiceStack.Text.JsonDateHandler;
+#else
+#endif
     using Serializer = ServiceStack.Text.JsonSerializer;
 
     /// <summary>
@@ -29,7 +35,11 @@ namespace Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3
         public JsonSerializer()
         {
             JsConfig.EmitCamelCaseNames = true;
+            #if __ANDROID__ || __IOS__ || WINDOWS_PHONE
             JsConfig.DateHandler = JsonDateHandler.ISO8601;
+#else
+            JsConfig.DateHandler = DateHandler.ISO8601;
+#endif
         }
 
         /// <summary>
@@ -43,7 +53,11 @@ namespace Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3
 
             if (accurateDateTime)
             {
+            #if __ANDROID__ || __IOS__ || WINDOWS_PHONE
                 JsConfig.DateHandler = JsonDateHandler.ISO8601;
+#else
+                JsConfig.DateHandler = DateHandler.ISO8601;
+#endif
             }
         }
 
