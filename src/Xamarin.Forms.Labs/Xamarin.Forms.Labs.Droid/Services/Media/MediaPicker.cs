@@ -10,7 +10,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Labs.Droid.Services.Media;
 using Xamarin.Forms.Labs.Services.Media;
 
-[assembly: Dependency(typeof (MediaPicker))]
+[assembly: Dependency(typeof(MediaPicker))]
+
 namespace Xamarin.Forms.Labs.Droid.Services.Media
 {
 	/// <summary>
@@ -18,28 +19,41 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 	/// </summary>
 	public class MediaPicker : IMediaPicker
 	{
-		private readonly Context _context;
-		private TaskCompletionSource<MediaFile> _completionSource;
-		private int _requestId;
+		private TaskCompletionSource<MediaFile> completionSource;
+		private int requestId;
 
-		public MediaPicker()
+	    private Context Context
+	    {
+            get { return Forms.Context ?? Application.Context; }
+	    }
+
+	    /// <summary>
+	    /// Initializes a new instance of the <see cref="MediaPicker"/> class.
+	    /// </summary>
+	    public MediaPicker()
 		{
-			_context = Forms.Context;
-
-			IsCameraAvailable = _context.PackageManager.HasSystemFeature(PackageManager.FeatureCamera);
-
-			if (Build.VERSION.SdkInt >= BuildVersionCodes.Gingerbread)
-				IsCameraAvailable |= _context.PackageManager.HasSystemFeature(PackageManager.FeatureCameraFront);
-
 			IsPhotosSupported = true;
 			IsVideosSupported = true;
 		}
 
-		/// <summary>	
-		///     Gets a value indicating whether this instance is camera available.
-		/// </summary>
-		/// <value><c>true</c> if this instance is camera available; otherwise, <c>false</c>.</value>
-		public bool IsCameraAvailable { get; private set; }
+	    /// <summary>	
+	    /// Gets a value indicating whether this instance is camera available.
+	    /// </summary>
+	    /// <value><c>true</c> if this instance is camera available; otherwise, <c>false</c>.</value>
+	    public bool IsCameraAvailable
+	    {
+            get
+            {
+                var isCameraAvailable = Context.PackageManager.HasSystemFeature(PackageManager.FeatureCamera);
+
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.Gingerbread)
+                {
+                    isCameraAvailable |= Context.PackageManager.HasSystemFeature(PackageManager.FeatureCameraFront);
+                }
+
+                return isCameraAvailable;
+            }
+	    }
 
 		/// <summary>
 		///     Gets a value indicating whether this instance is photos supported.
@@ -54,15 +68,17 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 		public bool IsVideosSupported { get; private set; }
 
 		/// <summary>
-		///     Select a picture from library.
+		/// Select a picture from library.
 		/// </summary>
 		/// <param name="options">The storage options.</param>
-		/// <returns>Task&lt;IMediaFile&gt;.</returns>
-		/// <exception cref="System.NotImplementedException"></exception>
+		/// <returns>Task with a return type of MediaFile.</returns>
+        /// <exception cref="System.NotSupportedException">Throws an exception if feature is not supported.</exception>
 		public Task<MediaFile> SelectPhotoAsync(CameraMediaStorageOptions options)
 		{
 			if (!IsCameraAvailable)
-				throw new NotSupportedException();
+			{
+                throw new NotSupportedException();
+			}
 
 			options.VerifyOptions();
 
@@ -70,31 +86,35 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 		}
 
 		/// <summary>
-		///     Takes the picture.
+		/// Takes the picture.
 		/// </summary>
 		/// <param name="options">The storage options.</param>
-		/// <returns>Task&lt;IMediaFile&gt;.</returns>
-		/// <exception cref="System.NotImplementedException"></exception>
+        /// <returns>Task with a return type of MediaFile.</returns>
+        /// <exception cref="System.NotSupportedException">Throws an exception if feature is not supported.</exception>
 		public Task<MediaFile> TakePhotoAsync(CameraMediaStorageOptions options)
 		{
-			if (!IsCameraAvailable)
-				throw new NotSupportedException();
+		    if (!IsCameraAvailable)
+		    {
+		        throw new NotSupportedException();
+		    }   
 
-			options.VerifyOptions();
+		    options.VerifyOptions();
 
 			return TakeMediaAsync("image/*", MediaStore.ActionImageCapture, options);
 		}
 
 		/// <summary>
-		///     Selects the video asynchronous.
+		/// Selects the video asynchronous.
 		/// </summary>
-		/// <param name="options"></param>
-		/// <returns>Task&lt;IMediaFile&gt;.</returns>
-		/// <exception cref="System.NotImplementedException"></exception>
+		/// <param name="options">Video storage options.</param>
+        /// <returns>Task with a return type of MediaFile.</returns>
+        /// <exception cref="System.NotSupportedException">Throws an exception if feature is not supported.</exception>
 		public Task<MediaFile> SelectVideoAsync(VideoMediaStorageOptions options)
 		{
 			if (!IsCameraAvailable)
-				throw new NotSupportedException();
+			{
+			    throw new NotSupportedException();
+			}
 
 			options.VerifyOptions();
 
@@ -102,15 +122,17 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 		}
 
 		/// <summary>
-		///     Takes the video asynchronous.
+		/// Takes the video asynchronous.
 		/// </summary>
 		/// <param name="options">The options.</param>
-		/// <returns>Task&lt;IMediaFile&gt;.</returns>
-		/// <exception cref="System.NotImplementedException"></exception>
+        /// <returns>Task with a return type of MediaFile.</returns>
+        /// <exception cref="System.NotSupportedException">Throws an exception if feature is not supported.</exception>
 		public Task<MediaFile> TakeVideoAsync(VideoMediaStorageOptions options)
 		{
 			if (!IsCameraAvailable)
-				throw new NotSupportedException();
+			{
+			    throw new NotSupportedException();
+			}
 
 			options.VerifyOptions();
 
@@ -118,7 +140,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 		}
 
 		/// <summary>
-		///     Event the fires when media has been selected
+		/// Gets or sets the event that fires when media has been selected.
 		/// </summary>
 		/// <value>The on photo selected.</value>
 		public EventHandler<MediaPickerArgs> OnMediaSelected { get; set; }
@@ -133,14 +155,14 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 		/// Creates the media intent.
 		/// </summary>
 		/// <param name="id">The identifier.</param>
-		/// <param name="type">The type.</param>
+		/// <param name="type">The type of intent.</param>
 		/// <param name="action">The action.</param>
 		/// <param name="options">The options.</param>
 		/// <param name="tasked">if set to <c>true</c> [tasked].</param>
-		/// <returns>Intent.</returns>
+		/// <returns>Intent to create media.</returns>
 		private Intent CreateMediaIntent(int id, string type, string action, MediaStorageOptions options, bool tasked = true)
 		{
-			var pickerIntent = new Intent(_context, typeof (MediaPickerActivity));
+            var pickerIntent = new Intent(Context, typeof(MediaPickerActivity));
 			pickerIntent.PutExtra(MediaPickerActivity.EXTRA_ID, id);
 			pickerIntent.PutExtra(MediaPickerActivity.EXTRA_TYPE, type);
 			pickerIntent.PutExtra(MediaPickerActivity.EXTRA_ACTION, action);
@@ -151,7 +173,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 				pickerIntent.PutExtra(MediaPickerActivity.EXTRA_PATH, options.Directory);
 				pickerIntent.PutExtra(MediaStore.Images.ImageColumns.Title, options.Name);
 
-				var vidOptions = (options as VideoMediaStorageOptions);
+				var vidOptions = options as VideoMediaStorageOptions;
 				if (vidOptions != null)
 				{
 					pickerIntent.PutExtra(MediaStore.ExtraDurationLimit, (int) vidOptions.DesiredLength.TotalSeconds);
@@ -165,14 +187,18 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 		/// <summary>
 		/// Gets the request identifier.
 		/// </summary>
-		/// <returns>System.Int32.</returns>
+		/// <returns>Request id as integer.</returns>
 		private int GetRequestId()
 		{
-			int id = _requestId;
-			if (_requestId == Int32.MaxValue)
-				_requestId = 0;
+			var id = requestId;
+			if (requestId == int.MaxValue)
+			{
+			    requestId = 0;
+			}
 			else
-				_requestId++;
+			{
+			    requestId++;
+			}
 
 			return id;
 		}
@@ -180,37 +206,47 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 		/// <summary>
 		/// Takes the media asynchronous.
 		/// </summary>
-		/// <param name="type">The type.</param>
+        /// <param name="type">The type of intent.</param>
 		/// <param name="action">The action.</param>
 		/// <param name="options">The options.</param>
-		/// <returns>Task&lt;MediaFile&gt;.</returns>
-		/// <exception cref="System.InvalidOperationException">Only one operation can be active at a time</exception>
+        /// <returns>Task with a return type of MediaFile.</returns>
+		/// <exception cref="System.InvalidOperationException">Only one operation can be active at a time.</exception>
 		private Task<MediaFile> TakeMediaAsync(string type, string action, MediaStorageOptions options)
 		{
 			var id = GetRequestId();
 
 			var ntcs = new TaskCompletionSource<MediaFile>(id);
-			if (Interlocked.CompareExchange(ref _completionSource, ntcs, null) != null)
-				throw new InvalidOperationException("Only one operation can be active at a time");
+			if (Interlocked.CompareExchange(ref completionSource, ntcs, null) != null)
+			{
+			    throw new InvalidOperationException("Only one operation can be active at a time");
+			}
 
-			_context.StartActivity(CreateMediaIntent(id, type, action, options));
+            Context.StartActivity(CreateMediaIntent(id, type, action, options));
 
 			EventHandler<MediaPickedEventArgs> handler = null;
 			handler = (s, e) =>
 			{
-				var tcs = Interlocked.Exchange(ref _completionSource, null);
+				var tcs = Interlocked.Exchange(ref completionSource, null);
 
 				MediaPickerActivity.MediaPicked -= handler;
 
 				if (e.RequestId != id)
-					return;
+				{
+				    return;
+				}
 
 				if (e.Error != null)
-					tcs.SetException(e.Error);
+				{
+				    tcs.SetException(e.Error);
+				} 
 				else if (e.IsCanceled)
-					tcs.SetCanceled();
+				{
+				    tcs.SetCanceled();
+				}
 				else
-					tcs.SetResult(e.Media);
+				{
+				    tcs.SetResult(e.Media);
+				}
 			};
 
 			MediaPickerActivity.MediaPicked += handler;
