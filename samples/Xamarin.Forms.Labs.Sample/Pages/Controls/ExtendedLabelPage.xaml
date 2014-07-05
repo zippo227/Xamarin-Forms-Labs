@@ -23,7 +23,8 @@
 						<Grid >
 								<controls:ExtendedLabel Text="{Binding}" 
         						FontNameAndroid="fonts/Roboto-Light.ttf" 
-        						FontNameIOS="Roboto-Light" 
+        						FontNameIOS="Roboto-Light"
+                    FontName="Courier New"
         						FontSize="22"
         						IsUnderline="True"
         						HorizontalOptions="StartAndExpand"

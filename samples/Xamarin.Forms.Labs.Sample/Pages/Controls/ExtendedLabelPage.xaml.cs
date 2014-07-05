@@ -12,15 +12,16 @@ namespace Xamarin.Forms.Labs.Sample
 			InitializeComponent ();
 			BindingContext = ViewModelLocator.Main;
 
-			var label = new ExtendedLabel () {
-				Text = "and From code",
+			var label = new ExtendedLabel
+			{
+			    Text = "and From code",
+			    FontName = Device.OnPlatform<String>("Roboto-Light", "fonts/Roboto-Light.ttf", "Courier New"),
+                IsUnderline = true,
+			    FontSize = 22,
 			};
-			label.FontName = Device.OnPlatform<String>("Roboto-Light", "fonts/Roboto-Light.ttf", "");
-			label.FontSize = 22;
-			stkRoot.Children.Add (label);
-		
+
+		    stkRoot.Children.Add (label);
 		}
-	
 	}
 }
 
