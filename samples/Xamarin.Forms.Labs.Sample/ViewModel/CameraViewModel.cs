@@ -12,46 +12,55 @@ namespace Xamarin.Forms.Labs.Sample
 	[ViewType(typeof(CameraPage))]
 	public class CameraViewModel : ViewModel
 	{
-		/// <summary>
-		/// The _picture chooser
-		/// </summary>
-		private IMediaPicker _mediaPicker;
-		/// <summary>
-		/// The _image source
-		/// </summary>
-		private ImageSource _imageSource;
-		/// <summary>
-		/// The _video info
-		/// </summary>
-		private string _videoInfo;
-		/// <summary>
-		/// The _take picture command
-		/// </summary>
-		private Command _takePictureCommand;
-		/// <summary>
-		/// The _select picture command
-		/// </summary>
-		private Command _selectPictureCommand;
-		/// <summary>
-		/// The _select video command
-		/// </summary>
-		private Command _selectVideoCommand;
+        /// <summary>
+        /// The _scheduler.
+        /// </summary>
+        private readonly TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
 		/// <summary>
-		/// The _scheduler
+		/// The _picture chooser.
 		/// </summary>
-		private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-		//private CancellationTokenSource cancelSource;
+		private IMediaPicker mediaPicker;
+
+		/// <summary>
+		/// The _image source.
+		/// </summary>
+		private ImageSource imageSource;
+
+		/// <summary>
+		/// The _video info.
+		/// </summary>
+		private string videoInfo;
+
+		/// <summary>
+		/// The _take picture command.
+		/// </summary>
+		private Command takePictureCommand;
+
+		/// <summary>
+		/// The _select picture command.
+		/// </summary>
+		private Command selectPictureCommand;
+
+		/// <summary>
+		/// The _select video command.
+		/// </summary>
+		private Command selectVideoCommand;
+
+	    private string status;
+
+
+        ////private CancellationTokenSource cancelSource;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CameraViewModel" /> class.
 		/// </summary>
 		public CameraViewModel()
 		{
-			Setup ();
+		    Setup();
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Gets or sets the image source.
 		/// </summary>
 		/// <value>The image source.</value>
@@ -59,11 +68,11 @@ namespace Xamarin.Forms.Labs.Sample
 		{
 			get
 			{
-				return _imageSource;
+				return imageSource;
 			}
 			set
 			{
-				this.ChangeAndNotify(ref _imageSource, value);
+				this.ChangeAndNotify(ref imageSource, value);
 			}
 		}
 
@@ -75,11 +84,11 @@ namespace Xamarin.Forms.Labs.Sample
 		{
 			get
 			{
-				return _videoInfo;
+				return videoInfo;
 			}
 			set
 			{
-				this.ChangeAndNotify(ref _videoInfo, value,"VideoInfo");
+			    this.ChangeAndNotify(ref videoInfo, value);
 			}
 		}
 
@@ -90,11 +99,10 @@ namespace Xamarin.Forms.Labs.Sample
 		public Command TakePictureCommand 
 		{
 			get
-			{ 
-				return _takePictureCommand ?? (_takePictureCommand = new Command (
-					async () => await TakePicture(),
-
-					() => true)); 
+			{
+			    return takePictureCommand ?? (takePictureCommand = new Command(
+			                                                           async () => await TakePicture(),
+			                                                           () => true)); 
 			}
 		}
 
@@ -105,13 +113,13 @@ namespace Xamarin.Forms.Labs.Sample
 		public Command SelectVideoCommand 
 		{
 			get
-			{ 
-				return _selectVideoCommand ?? (_selectVideoCommand = new Command (
-					async () => await SelectVideo(),
-
-					() => true)); 
+			{
+			    return selectVideoCommand ?? (selectVideoCommand = new Command(
+			                                                           async () => await SelectVideo(),
+			                                                           () => true)); 
 			}
 		}
+
 		/// <summary>
 		/// Gets the select picture command.
 		/// </summary>
@@ -119,49 +127,64 @@ namespace Xamarin.Forms.Labs.Sample
 		public Command SelectPictureCommand 
 		{
 			get
-			{ 
-				return _selectPictureCommand ?? (_selectPictureCommand = new Command (
-					async () => await SelectPicture(),
-
-					() => true)); 
+			{
+			    return selectPictureCommand ?? (selectPictureCommand = new Command(
+			                                                               async () => await SelectPicture(),
+			                                                               () => true)); 
 			}
 		}
 
-		/// <summary>
+	    /// <summary>
+	    /// Gets the status.
+	    /// </summary>
+	    /// <value>
+	    /// The status.
+	    /// </value>
+	    public string Status
+	    {
+	        get { return status; }
+	        private set { this.ChangeAndNotify(ref status, value); }
+	    }
+
+	    /// <summary>
 		/// Setups this instance.
 		/// </summary>
-		void Setup(){
-			if (_mediaPicker != null)
+		private void Setup()
+        {
+			if (mediaPicker != null)
 			{
 				return;
 			}
 
 			var device = Resolver.Resolve<IDevice>();
-		
-			_mediaPicker = DependencyService.Get<IMediaPicker> ();
-			//RM: hack for working on windows phone? 
-			if (_mediaPicker == null)
-				_mediaPicker = device.MediaPicker;
+
+		    mediaPicker = DependencyService.Get<IMediaPicker>();
+		    ////RM: hack for working on windows phone? 
+		    if (mediaPicker == null)
+			{
+			    mediaPicker = device.MediaPicker;
+			}
 		}
+
 		/// <summary>
 		/// Takes the picture.
 		/// </summary>
-		/// <returns>Task.</returns>
-		private async Task TakePicture ()
+		/// <returns>Take Picture Task.</returns>
+		private async Task TakePicture()
 		{
-			Setup();
+		    Setup();
 
 			ImageSource = null;
 
-			await this._mediaPicker.TakePhotoAsync(new CameraMediaStorageOptions { DefaultCamera = CameraDevice.Front, MaxPixelDimension = 400}).ContinueWith(t =>
+			await this.mediaPicker.TakePhotoAsync(new CameraMediaStorageOptions { DefaultCamera = CameraDevice.Front, MaxPixelDimension = 400 }).ContinueWith(t =>
 			{
 				if (t.IsFaulted)
 				{
-					var s = t.Exception.InnerException.ToString();
+                    this.Status = t.Exception.InnerException.ToString();
 				}
 				else if (t.IsCanceled)
 				{
-					var canceled = true;
+				    this.Status = "Canceled";
 				}
 				else
 				{
@@ -173,57 +196,70 @@ namespace Xamarin.Forms.Labs.Sample
 				}
 
 				return null;
-			}, _scheduler);
+			}, scheduler);
 		}
 
 		/// <summary>
 		/// Selects the picture.
 		/// </summary>
-		/// <returns>Task.</returns>
-		private async Task SelectPicture ()
+		/// <returns>Select Picture Task.</returns>
+		private async Task SelectPicture()
 		{
-			Setup ();
+		    Setup();
 
-			ImageSource = null;
-			try {
-				var mediaFile =	await this._mediaPicker.SelectPhotoAsync (new CameraMediaStorageOptions {
-					DefaultCamera = CameraDevice.Front,
-					MaxPixelDimension = 400
-				});
-				ImageSource = ImageSource.FromStream(() => mediaFile.Source);
-			} catch (System.Exception ex) {
-				
+		    ImageSource = null;
+			try
+			{
+			    var mediaFile = await this.mediaPicker.SelectPhotoAsync(new CameraMediaStorageOptions
+			        {
+			            DefaultCamera = CameraDevice.Front,
+			            MaxPixelDimension = 400
+			        });
+			    ImageSource = ImageSource.FromStream(() => mediaFile.Source);
 			}
-
+			catch (System.Exception ex)
+			{
+			    this.Status = ex.Message;
+			}
 		}
 
 		/// <summary>
 		/// Selects the video.
 		/// </summary>
-		/// <returns>Task.</returns>
-		private async Task SelectVideo ()
+		/// <returns>Select Video Task.</returns>
+		private async Task SelectVideo()
 		{
-			Setup ();
+		    Setup();
 
-			VideoInfo = "Selecting video";
+		    VideoInfo = "Selecting video";
 
-			try {
-				var mediaFile =	await this._mediaPicker.SelectVideoAsync (new VideoMediaStorageOptions ());
+			try
+			{
+			    var mediaFile = await this.mediaPicker.SelectVideoAsync(new VideoMediaStorageOptions());
 
-				if (mediaFile != null) {
-					VideoInfo = string.Format ("Your video size {0} MB", ConvertBytesToMegabytes (mediaFile.Source.Length));
-				} else {
+			    if (mediaFile != null)
+				{
+				    VideoInfo = string.Format("Your video size {0} MB", ConvertBytesToMegabytes(mediaFile.Source.Length));
+				}
+				else 
+                {
 					VideoInfo = "No video was selected";
 				}
-			} catch (System.Exception ex) {
-				if(ex is TaskCanceledException)
-					VideoInfo = "Selecting video canceled";
+			} 
+            catch (System.Exception ex) 
+            {
+				if (ex is TaskCanceledException)
+				{
+                    VideoInfo = "Selecting video canceled";
+				}
+				else
+				{
+				    VideoInfo = ex.Message;
+				}
 			}
-
-
-
 		}
-		static double ConvertBytesToMegabytes(long bytes)
+
+		private static double ConvertBytesToMegabytes(long bytes)
 		{
 			return (bytes / 1024f) / 1024f;
 		}

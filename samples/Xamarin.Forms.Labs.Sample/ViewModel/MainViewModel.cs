@@ -1,174 +1,206 @@
 ﻿using System;
 using Xamarin.Forms.Labs.Mvvm;
 using System.Collections.ObjectModel;
-using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Sample
 {
-	public class MainViewModel : ViewModel
+    /// <summary>
+    /// The main view model.
+    /// </summary>
+    public class MainViewModel : ViewModel
 	{
-        private IDevice device;
+        private readonly IDevice device;
+        private string numberToCall = "+1 (855) 926-2746";
+        private string textToSpeak = "Hello from Xamarin Forms Labs";
+        private string deviceTimerInfo = string.Empty;
+        private ObservableCollection<string> items;
+        private Command<string> searchCommand;
+        private Command callCommand;
 
-		public MainViewModel ()
-		{
-			SpeakCommand = new Command (() => 
-            {
-					DependencyService.Get<ITextToSpeechService>().Speak(TextToSpeak);
-			});
+	    /// <summary>
+	    /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+	    /// </summary>
+	    public MainViewModel()
+	    {
+	        SpeakCommand = new Command(() => DependencyService.Get<ITextToSpeechService>().Speak(TextToSpeak));
 
-			
-            Items = new ObservableCollection<string> ();
-			
-            for (int i = 0; i < 10; i++) 
+	        Items = new ObservableCollection<string>();
+		    for (var i = 0; i < 10; i++) 
             {
-				Items.Add(string.Format("item {0}",i));
+                Items.Add(string.Format("item {0}", i));
 			}
-
             this.device = Resolver.Resolve<IDevice>();
 		}
-
-		public void StartTimer()
-        {
-			Device.StartTimer (new TimeSpan(6000), () => 
-            {
-				DeviceTimerInfo ="This text was updated using the Device Timer";
-				return true;
-			});
+	    /// <summary>
+	    /// The start timer.
+	    /// </summary>
+	    public void StartTimer()
+	    {
+	        Device.StartTimer(new TimeSpan(6000), () =>
+	            {
+	                DeviceTimerInfo = "This text was updated using the Device Timer";
+	                return true;
+	            });
 		}
-
-
-        public string DeviceManufacturer
+	    /// <summary>
+	    /// Gets the device manufacturer.
+	    /// </summary>
+	    /// <value>
+	    /// The device manufacturer.
+	    /// </value>
+	    public string DeviceManufacturer
         {
             get
             {
                 return string.Format("Device was manufactured by {0}", this.device.Manufacturer);
             }
         }
-
-        public string DeviceName
+	    
+        /// <summary>
+	    /// Gets the device name.
+	    /// </summary>
+	    /// <value>
+	    /// The device name.
+	    /// </value>
+	    public string DeviceName
         {
             get
             {
                 return string.Format("Device is called {0}", this.device.Name);
             }
         }
-
-		private string _numberToCall ="+1 (855) 926-2746";
-		public string NumberToCall
+	    
+	    /// <summary>
+	    /// Gets or sets the number to call.
+	    /// </summary>
+	    /// <value>
+	    /// The number to call.
+	    /// </value>
+	    public string NumberToCall
 		{
 			get
 			{
-				return _numberToCall;
+				return numberToCall;
 			}
 			set
 			{
-				this.ChangeAndNotify(ref _numberToCall, value);
+				this.ChangeAndNotify(ref numberToCall, value);
 			}
 		}
-
-
-		private string _textToSpeak ="Hello from Xamarin Forms Labs";
-		public string TextToSpeak
+	    
+	    /// <summary>
+	    /// Gets or sets the text to speak.
+	    /// </summary>
+	    /// <value>
+	    /// The text to speak.
+	    /// </value>
+	    public string TextToSpeak
 		{
 			get
 			{
-				return _textToSpeak;
+				return textToSpeak;
 			}
 			set
 			{
-				this.ChangeAndNotify(ref _textToSpeak, value);
+				this.ChangeAndNotify(ref textToSpeak, value);
 			}
 		}
 
+		private string deviceUIThreadInfo = string.Empty;
 
-        private bool batteryLevel;
-        public bool BatteryLevel
-        {
-            get
-            {
-                return batteryLevel;
-            }
-            private set
-            {
-                this.ChangeAndNotify(ref batteryLevel, value);
-            }
-        }
-
-		private string _deviceUIThreadInfo = string.Empty;
-		public string DeviceUIThreadInfo
+	    /// <summary>
+	    /// Gets or sets the device UI thread info.
+	    /// </summary>
+	    /// <value>
+	    /// The device UI thread info.
+	    /// </value>
+	    public string DeviceUIThreadInfo
         {
 			get
             {
-				return _deviceUIThreadInfo;
+				return deviceUIThreadInfo;
 			}
 			set
             { 
-				this.ChangeAndNotify(ref _deviceUIThreadInfo, value);
+				this.ChangeAndNotify(ref deviceUIThreadInfo, value);
 			}
 		}
 
-		private string _deviceTimerInfo = string.Empty;
-		public string DeviceTimerInfo
+	    /// <summary>
+	    /// Gets or sets the device timer info.
+	    /// </summary>
+	    /// <value>
+	    /// The device timer info.
+	    /// </value>
+	    public string DeviceTimerInfo
         {
             get
             {
-				return _deviceTimerInfo;
+				return deviceTimerInfo;
 			}
 			
             set
             { 
-				this.ChangeAndNotify(ref _deviceTimerInfo, value);
+				this.ChangeAndNotify(ref deviceTimerInfo, value);
 			}
 		}
 
-		private ObservableCollection<string> _items= null;
-		public ObservableCollection<string> Items
+	    /// <summary>
+	    /// Gets or sets the items.
+	    /// </summary>
+	    /// <value>
+	    /// The items.
+	    /// </value>
+	    public ObservableCollection<string> Items
         {
             get
             {
-                return _items;
+                return items;
             }
             set
-            { 
-                _items = value;
-				this.ChangeAndNotify(ref _items, value);
-            }
-		}
-
-		private Command _speakCommand= null;
-		public Command SpeakCommand
-        {
-			get
             {
-				return _speakCommand;
-			}
-			private set
-            { 
-				_speakCommand = value;
-			}
+				this.ChangeAndNotify(ref items, value);
+            }
 		}
 
-		private Command<string> _searchCommand;
-		public Command<string> SearchCommand 
+	    /// <summary>
+	    /// Gets the speak command.
+	    /// </summary>
+	    /// <value>
+	    /// The speak command.
+	    /// </value>
+	    public Command SpeakCommand { get; private set; }
+
+	    /// <summary>
+	    /// Gets the search command.
+	    /// </summary>
+	    /// <value>
+	    /// The search command.
+	    /// </value>
+	    public Command<string> SearchCommand 
         {
 			get
-            { 
-                return _searchCommand ?? new Command<string> (
-				    obj => {}, 
-                    obj => !string.IsNullOrEmpty (obj)); 
-            }
+			{
+			    return searchCommand ?? (searchCommand = new Command<string>(
+			                                 obj => { },
+			                                 obj => !string.IsNullOrEmpty(obj)));
+			}
         }
 
-		private Command _callCommand;
-		public Command CallCommand 
+	    /// <summary>
+	    /// Gets the call command.
+	    /// </summary>
+	    /// <value>
+	    /// The call command.
+	    /// </value>
+	    public Command CallCommand 
 		{
 			get
-			{ 
-				return _callCommand ?? new Command (
-					() => {this.device .PhoneService.DialNumber(NumberToCall);}, 
-					() => true); 
+			{
+			    return callCommand ?? (callCommand = new Command(
+			                                               () => this.device.PhoneService.DialNumber(NumberToCall),
+			                                               () => true)); 
 			}
 		}
 	}

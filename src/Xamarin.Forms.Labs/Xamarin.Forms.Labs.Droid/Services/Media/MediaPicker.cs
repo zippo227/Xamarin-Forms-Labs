@@ -22,7 +22,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 		private TaskCompletionSource<MediaFile> completionSource;
 		private int requestId;
 
-	    private Context Context
+	    private static Context Context
 	    {
             get { return Forms.Context ?? Application.Context; }
 	    }
