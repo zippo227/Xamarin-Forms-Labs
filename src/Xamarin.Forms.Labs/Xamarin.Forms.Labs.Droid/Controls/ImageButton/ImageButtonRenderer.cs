@@ -61,8 +61,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
             {
                 if (bitmap != null)
                 {
-                    Drawable drawable = new BitmapDrawable(this.Resources, bitmap);
-                    var scaledDrawable = GetScaleDrawableFromResourceId(drawable, GetWidth(model.ImageWidthRequest),
+                    Drawable drawable = new BitmapDrawable(bitmap);
+                    var scaledDrawable = GetScaleDrawable(drawable, GetWidth(model.ImageWidthRequest),
                         GetHeight(model.ImageHeightRequest));
 
                     Drawable left = null;
@@ -132,33 +132,11 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
         /// <param name="width">The width to scale to.</param>
         /// <param name="height">The height to scale to.</param>
         /// <returns>A scaled <see cref="Drawable"/>.</returns>
-        private Drawable GetScaleDrawableFromResourceId(Drawable drawable, int width, int height)
+        private Drawable GetScaleDrawable(Drawable drawable, int width, int height)
         {
             var returnValue = new ScaleDrawable(drawable, 0, width, height).Drawable;
             returnValue.SetBounds(0, 0, width, height);
             return returnValue;
-        }
-
-        /// <summary>
-        /// Gets the width based on the requested width, if request less than 0, returns 50.
-        /// </summary>
-        /// <param name="requestedWidth">The requested width.</param>
-        /// <returns>The width to use.</returns>
-        private int GetWidth(int requestedWidth)
-        {
-            const int DefaultWidth = 50;
-            return requestedWidth <= 0 ? DefaultWidth : requestedWidth;
-        }
-
-        /// <summary>
-        /// Gets the height based on the requested height, if request less than 0, returns 50.
-        /// </summary>
-        /// <param name="requestedHeight">The requested height.</param>
-        /// <returns>The height to use.</returns>
-        private int GetHeight(int requestedHeight)
-        {
-            const int DefaultHeight = 50;
-            return requestedHeight <= 0 ? DefaultHeight : requestedHeight;
         }
     }
 }
