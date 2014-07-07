@@ -4,7 +4,7 @@
     <id>Xamarin.Forms.Labs.Services.TinyIOC</id>
     <title>Xamarin Forms Labs IoC TinyIoC</title>
     <tags>xamarin,xamarin forms,xamarin forms labs, pcl, md5, Ioc, TinyIoC</tags>
-    <version>1.1.0-Beta3</version>
+    <version>..</version>
     <authors>Xamarin Forms Labs</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>

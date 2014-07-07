@@ -4,7 +4,7 @@
     <id>Xamarin.Forms.Labs.Services.Serialization.JsonNET</id>
     <title>Xamarin Forms Labs Serialization Json.Net</title>
     <tags>xamarin,xamarin forms,xamarin forms labs, pcl, md5, Ioc, Json, serialization</tags>
-    <version>1.1.0-Beta3</version>
+    <version>..</version>
     <authors>Xamarin Forms Labs Team</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
