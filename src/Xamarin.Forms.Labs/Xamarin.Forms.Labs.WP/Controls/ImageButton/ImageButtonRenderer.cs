@@ -62,7 +62,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
                 {
                     targetButton.HorizontalContentAlignment = HorizontalAlignment.Right;
                 }
-                
+
                 if (sourceButton.Orientation == ImageOrientation.ImageOnTop ||
                     sourceButton.Orientation == ImageOrientation.ImageToLeft)
                 {

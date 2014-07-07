@@ -16,7 +16,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
     /// Draws a button on the Android platform with the image shown in the right 
     /// position with the right size.
     /// </summary>
-	public partial class ImageButtonRenderer : ButtonRenderer
+    public partial class ImageButtonRenderer : ButtonRenderer
     {
         /// <summary>
         /// Gets the underlying control typed as an <see cref="ImageButton"/>.
@@ -26,25 +26,25 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
             get { return (Labs.Controls.ImageButton)Element; }
         }
 
-		/// <summary>
-		/// Sets up the button including the image. 
-		/// </summary>
-		/// <param name="e">The event arguments.</param>
+        /// <summary>
+        /// Sets up the button including the image. 
+        /// </summary>
+        /// <param name="e">The event arguments.</param>
         protected async override void OnElementChanged(ElementChangedEventArgs<Button> e)
-		{
-			base.OnElementChanged(e);
+        {
+            base.OnElementChanged(e);
 
-		    if (e.OldElement != null)
-		    {
-		        return;
-		    }
-		    var targetButton = this.Control;
+            if (e.OldElement != null)
+            {
+                return;
+            }
+            var targetButton = this.Control;
 
-		    if (this.Element != null && this.ImageButton.Source != null)
-		    {
-		        await this.SetImageSourceAsync(targetButton, this.ImageButton);
-		    }
-		}
+            if (this.Element != null && this.ImageButton.Source != null)
+            {
+                await this.SetImageSourceAsync(targetButton, this.ImageButton);
+            }
+        }
 
         /// <summary>
         /// Sets the image source.
@@ -108,21 +108,21 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
             return returnValue;
         }
 
-		/// <summary>
-		/// Called when the underlying model's properties are changed.
-		/// </summary>
-		/// <param name="sender">The Model used.</param>
-		/// <param name="e">The event arguments.</param>
-		protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged(sender, e);
+        /// <summary>
+        /// Called when the underlying model's properties are changed.
+        /// </summary>
+        /// <param name="sender">The Model used.</param>
+        /// <param name="e">The event arguments.</param>
+        protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
 
-			if (e.PropertyName == Labs.Controls.ImageButton.SourceProperty.PropertyName)
-			{
-				var targetButton = Control;
+            if (e.PropertyName == Labs.Controls.ImageButton.SourceProperty.PropertyName)
+            {
+                var targetButton = Control;
                 await SetImageSourceAsync(targetButton, this.ImageButton);
-			}
-		}
+            }
+        }
 
         /// <summary>
         /// Returns a <see cref="Drawable"/> with the correct dimensions from an 

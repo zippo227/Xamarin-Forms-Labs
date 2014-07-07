@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
         /// The padding to use in the control.
         /// </summary>
         private const int ControlPadding = 2;
-        
+
         /// <summary>
         /// Identifies the iPad.
         /// </summary>
