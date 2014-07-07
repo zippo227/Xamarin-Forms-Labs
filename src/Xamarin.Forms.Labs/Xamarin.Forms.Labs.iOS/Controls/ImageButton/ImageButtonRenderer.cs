@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
         /// The padding to use in the control.
         /// </summary>
         private const int ControlPadding = 2;
-        
+
         /// <summary>
         /// Identifies the iPad.
         /// </summary>
@@ -48,7 +48,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             var targetButton = Control;
             if (imageButton != null && targetButton != null && imageButton.Source != null)
             {
-                await SetImageAsync(imageButton.Source, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
+                await SetImageAsync(imageButton.Source, this.GetWidth(imageButton.ImageWidthRequest), this.GetHeight(imageButton.ImageHeightRequest), targetButton);
 
                 switch (imageButton.Orientation)
                 {

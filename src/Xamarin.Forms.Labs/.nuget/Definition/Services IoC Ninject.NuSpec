@@ -4,7 +4,7 @@
     <id>Xamarin.Forms.Labs.Services.Ninject</id>
     <title>Xamarin Forms Labs IoC Ninject</title>
     <tags>xamarin,xamarin forms,xamarin forms labs, pcl, md5, Ioc, Ninject</tags>
-    <version>1.1.0-Beta2</version>
+    <version>1.1.0-Beta4</version>
     <authors>Xamarin Forms Labs Team</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -22,15 +22,15 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     <language>en-US</language>
     <dependencies>
       <dependency id="Portable.Ninject" version="3.2.0" />
-      <dependency id="Xamarin.Forms.Labs" version="1.1.0-Beta2" />
+      <dependency id="Xamarin.Forms.Labs" version="[1.1.0-Beta4]" />
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Ninject.dll*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Ninject.dll.mdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Ninject.pdb*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Ninject.xml*" target="lib\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Ninject.dll*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Ninject.dll.mdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Ninject.pdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.Ninject.xml*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
     <!-- Source Files for Symbol Server -->
-    <file src="..\..\Plugins\DI\Xamarin.Forms.Labs.Services.Ninject\**\*.cs" target="src\portable-net45+win+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\Plugins\DI\Xamarin.Forms.Labs.Services.Ninject\**\*.cs" target="src" />
   </files>
 </package>
