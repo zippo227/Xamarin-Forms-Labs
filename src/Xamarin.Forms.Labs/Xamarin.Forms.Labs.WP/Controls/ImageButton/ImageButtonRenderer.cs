@@ -43,7 +43,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
                                           : Orientation.Horizontal
                     };
 
-                this.currentImage = await GetImageAsync(sourceButton.Source, sourceButton.ImageHeightRequest, sourceButton.ImageWidthRequest);
+                this.currentImage = await GetImageAsync(sourceButton.Source, this.GetHeight(sourceButton.ImageHeightRequest), this.GetWidth(sourceButton.ImageWidthRequest));
                 SetImageMargin(this.currentImage, sourceButton.Orientation);
 
                 var label = new TextBlock
