@@ -127,10 +127,6 @@ Nuget
 --------------
 **Main Packages:**
  - [Xamarin.Forms.Labs](https://www.nuget.org/packages/Xamarin.Forms.Labs/)
- - [Xamarin.Forms.Labs.IOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.iOS/)
- - [Xamarin.Forms.Labs.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Droid/)
- - [Xamarin.Forms.Labs.WP](https://www.nuget.org/packages/Xamarin.Forms.Labs.WP/)
-
 
 **Plugins:**
 
@@ -144,21 +140,15 @@ DI
  - [Xamarin.Forms.Labs.Services.Ninject](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Ninject/)
  - [Xamarin.Forms.Labs.Services.Autofac](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Autofac/)
  - [Xamarin.Forms.Labs.Services.TinyIOC](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC/)
- - [Xamarin.Forms.Labs.Services.TinyIOC.iOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.iOS/)
- - [Xamarin.Forms.Labs.Services.TinyIOC.WP8](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.WP8/)
- - [Xamarin.Forms.Labs.Services.TinyIOC.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.Droid/)
 
 Serialization
 
  - [Xamarin.Forms.Labs.Services.Serialization.ProtoBuf](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ProtoBuf/)
  - [Xamarin.Forms.Labs.Serialization.JsonNET](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.JsonNET/)
- - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3/)
- - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid/)
- - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8/)
- - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS/)
 
+Cryptography
 
-
+ - [Xamarin.Forms.Labs.Cryptography](https://www.nuget.org/packages/Xamarin.Forms.Labs.Cryptography/)
 _________________
 
 Build the project
