@@ -44,8 +44,17 @@ namespace Xamarin.Forms.Labs.WP8.Services.Media
 
 			_photoChooser.ShowCamera = false;
 
-			IsCameraAvailable = Microsoft.Devices.Camera.IsCameraTypeSupported(CameraType.Primary) ||
-			                    Microsoft.Devices.Camera.IsCameraTypeSupported(CameraType.FrontFacing);
+            // TODO: fix this properly
+            try
+            {
+                IsCameraAvailable = Microsoft.Devices.Camera.IsCameraTypeSupported(CameraType.Primary) ||
+                    Microsoft.Devices.Camera.IsCameraTypeSupported(CameraType.FrontFacing);
+            }
+            catch
+            {
+                IsCameraAvailable = false;
+            }
+
 
 			IsPhotosSupported = true;
 			IsVideosSupported = IsCameraAvailable;

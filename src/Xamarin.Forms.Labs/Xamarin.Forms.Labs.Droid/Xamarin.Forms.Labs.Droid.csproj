@@ -112,6 +112,7 @@
     <Compile Include="Controls\SensorBar\SensorBarDroidView.cs" />
     <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
     <Compile Include="XFormsApp.cs" />
+    <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -146,7 +147,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controls\DynamicListView\" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

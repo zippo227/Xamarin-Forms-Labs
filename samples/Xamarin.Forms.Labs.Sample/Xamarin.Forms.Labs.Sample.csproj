@@ -39,6 +39,10 @@
     <Compile Include="Pages\Controls\ButtonPage.xaml.cs">
       <DependentUpon>ButtonPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\DynamicList\BasicList.cs" />
+    <Compile Include="Pages\Controls\DynamicList\DynamicListView.xaml.cs">
+      <DependentUpon>DynamicListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Controls\WebImagePage.xaml.cs">
       <DependentUpon>WebImagePage.xaml</DependentUpon>
     </Compile>
@@ -151,11 +155,9 @@
     </Reference>
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Microsoft.Net.Http.2.2.27-beta\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.Primitives">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Microsoft.Net.Http.2.2.27-beta\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.1.1.6206\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
@@ -170,6 +172,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\Controls\WebImagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Controls\DynamicList\DynamicListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

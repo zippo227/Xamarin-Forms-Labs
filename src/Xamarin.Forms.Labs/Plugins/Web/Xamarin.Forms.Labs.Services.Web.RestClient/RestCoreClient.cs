@@ -246,11 +246,11 @@ namespace Xamarin.Forms.Labs.Services.Web.RestClient
                 var stream = await response.Content.ReadAsStreamAsync();
 
                 return new RestResponse<T>(serializer.Deserialize<T>(stream));
-                ////// get response strings
-                //// var content = await response.Content.ReadAsStringAsync();
-                ////// serialize the response to object
-                //// return serializer.Deserialize<ServiceResponse<T>>(content);
-                ////returnResponse.Value = serializer.Deserialize<T>(returnResponse.Content);
+                // get response strings
+                //var content = await response.Content.ReadAsStringAsync();
+                //// serialize the response to object
+                //var resp = serializer.Deserialize<T>(content);
+                //return new RestResponse<T>(resp);
             }
             catch (Exception ex)
             {

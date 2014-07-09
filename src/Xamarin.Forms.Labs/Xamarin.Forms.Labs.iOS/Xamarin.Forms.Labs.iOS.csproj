@@ -72,6 +72,7 @@
     <Compile Include="..\Xamarin.Forms.Labs\Device\Gyroscope.designer.cs">
       <Link>Device\Gyroscope.designer.cs</Link>
     </Compile>
+    <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />

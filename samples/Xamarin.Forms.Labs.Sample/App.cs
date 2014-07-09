@@ -138,7 +138,8 @@ namespace Xamarin.Forms.Labs.Sample
 					"Labels",
 					"Cells",
 					"HybridWebView",
-                    "WebImage"
+                    "WebImage",
+                    "DynamicListView"
 				}
 			};
 			lstControls.ItemSelected += async (sender, e) =>
@@ -166,6 +167,9 @@ namespace Xamarin.Forms.Labs.Sample
                     case "webimage":
 				        await mainPage.Navigation.PushAsync(new WebImagePage());
 				        break;
+                    case "dynamiclistview":
+                        await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.DynamicList.DynamicListView());
+                        break;
 					default:
 						break;
 				}
