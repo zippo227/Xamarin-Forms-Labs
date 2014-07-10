@@ -98,6 +98,7 @@
       <Link>Device\Gyroscope.designer.cs</Link>
     </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
+    <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs">

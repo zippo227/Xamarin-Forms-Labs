@@ -23,6 +23,16 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls.DynamicList
         void dynamicList_OnSelected(object sender, EventArgs<object> e)
         {
             System.Diagnostics.Debug.WriteLine(e.Value);
+            try
+            {
+                this.dynamicList.Remove(e.Value);
+            }
+            catch (Exception ex)
+            {
+
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            
         }
 
         protected override void OnAppearing()

@@ -10,6 +10,7 @@
     <StackLayout x:Name="container" Padding="0,40,0,0">
       <Button Text="Add new string" x:Name="button"></Button>
       <Button Text="Add current time" x:Name="buttonDate"></Button>
+       <Label Text="Click on item to remove it"></Label>
       <controls:BasicList x:Name="dynamicList" WidthRequest="200" HeightRequest="325">
       </controls:BasicList>
     </StackLayout>
