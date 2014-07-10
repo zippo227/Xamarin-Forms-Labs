@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ServiceStack.Text.WP">
-      <HintPath>..\..\..\..\..\..\..\PortableClassLibraries\references\ServiceStack\WP8\ServiceStack.Text.WP.dll</HintPath>
+      <HintPath>libs\WP\ServiceStack.Text.WP.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
