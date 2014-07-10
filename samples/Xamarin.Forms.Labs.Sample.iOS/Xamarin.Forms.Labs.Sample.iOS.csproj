@@ -183,6 +183,14 @@
   <ItemGroup>
     <BundleResource Include="Resources\icon_twitter.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Xamarin.Forms.Labs.Sample.WP\HTML\canvasjs.min.js">
+      <Link>HTML\canvasjs.min.js</Link>
+    </Content>
+    <Content Include="..\Xamarin.Forms.Labs.Sample.WP\HTML\home.html">
+      <Link>HTML\home.html</Link>
+    </Content>
+  </ItemGroup>
   <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

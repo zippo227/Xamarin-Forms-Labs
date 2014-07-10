@@ -96,12 +96,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ServiceStack.Text.WP8">
-      <HintPath>libs\WP\ServiceStack.Text.WP8.dll</HintPath>
-    </Reference>
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Settings.StyleCop" />
+    <Reference Include="ServiceStack.Text.WP">
+      <HintPath>..\..\..\..\..\..\..\PortableClassLibraries\references\ServiceStack\WP8\ServiceStack.Text.WP.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
