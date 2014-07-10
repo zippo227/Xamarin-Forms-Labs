@@ -75,7 +75,7 @@ namespace Xamarin.Forms.Labs.Services.SimpleContainer
         /// <returns>An instance of <see cref="IDependencyContainer"/></returns>
         public IDependencyContainer Register<T>(Type type) where T : class
         {
-            this.container.RegisterSingle(typeof(T), type);
+            this.container.Register(typeof(T), type);
             return this;
         }
 
@@ -87,7 +87,7 @@ namespace Xamarin.Forms.Labs.Services.SimpleContainer
         /// <returns>An instance of <see cref="IDependencyContainer"/></returns>
         public IDependencyContainer Register(Type type, Type impl)
         {
-            this.container.RegisterSingle(type, impl);
+            this.container.Register(type, impl);
             return this;
         }
 
