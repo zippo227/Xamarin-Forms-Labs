@@ -27,7 +27,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls
             if (this.tableView == null)
             {
                 //var source = new DataSource(this);
-                this.tableView.ItemTemplate = new DataSource(this).ContentTemplate;
+                //this.tableView.ItemTemplate = new DataSource(this).ContentTemplate;
                 this.tableView = new LongListSelector();
                 this.tableView.SelectionChanged += (sender, args) =>
                     {
