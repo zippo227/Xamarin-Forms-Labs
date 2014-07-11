@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SimpleInjector;
 
-namespace Xamarin.Forms.Labs.Services.SimpleContainer
+namespace Xamarin.Forms.Labs.Services.SimpleInjectorContainer
 {
     /// <summary>
     /// The simple injector resolver.

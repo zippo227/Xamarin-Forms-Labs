@@ -1,7 +1,7 @@
 ﻿using System;
 using SimpleInjector;
 
-namespace Xamarin.Forms.Labs.Services.SimpleContainer
+namespace Xamarin.Forms.Labs.Services.SimpleInjectorContainer
 {
     /// <summary>
     /// The simple injector container.
@@ -64,6 +64,12 @@ namespace Xamarin.Forms.Labs.Services.SimpleContainer
             where TImpl : class, T
         {
             this.container.Register<T, TImpl>();
+            return this;
+        }
+
+        public IDependencyContainer RegisterSingle<T, TImpl>() where T : class where TImpl : class, T
+        {
+            this.container.RegisterSingle<T, TImpl>();
             return this;
         }
 
