@@ -30,9 +30,14 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
 						detailDisclosureButton.Frame = new RectangleF (0f, 0f, 30f, 30f);
 						detailDisclosureButton.TouchUpInside += (object sender, EventArgs e) => {
-							var index = tv.IndexPathForCell (cell);
-							tv.SelectRow (index, true, UITableViewScrollPosition.None);
-							tv.Source.AccessoryButtonTapped (tv, index);
+								try {
+									var index = tv.IndexPathForCell (cell);
+									tv.SelectRow (index, true, UITableViewScrollPosition.None);
+									tv.Source.RowSelected (tv, index);
+								} catch ( MonoTouch.Foundation.You_Should_Not_Call_base_In_This_Method
+									 ex) {
+									Console.Write("Xamarin Forms Labs Weird stuff : You_Should_Not_Call_base_In_This_Method happend");
+								}
 						};
 						cell.AccessoryView = detailDisclosureButton;
 					}
