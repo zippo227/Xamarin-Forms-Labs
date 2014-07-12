@@ -1,11 +1,12 @@
 ﻿using System;
 using MonoTouch.CoreTelephony;
+using MonoTouch.SystemConfiguration;
 using MonoTouch.UIKit;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms;
 
-
 [assembly: Dependency(typeof(Xamarin.Forms.Labs.iOS.Services.PhoneService))]
+
 namespace Xamarin.Forms.Labs.iOS.Services
 {
     /// <summary>
@@ -13,12 +14,15 @@ namespace Xamarin.Forms.Labs.iOS.Services
     /// </summary>
     public class PhoneService : IPhoneService
     {
-        private static readonly Lazy<CTTelephonyNetworkInfo> TelNet = new Lazy<CTTelephonyNetworkInfo> ();
+        private static readonly Lazy<CTTelephonyNetworkInfo> TelNet = new Lazy<CTTelephonyNetworkInfo>();
 
         #region IPhone implementation
         /// <summary>
         /// Gets the cellular provider.
         /// </summary>
+        /// <value>
+        /// The cellular provider name.
+        /// </value>
         public string CellularProvider
         {
             get
@@ -35,7 +39,9 @@ namespace Xamarin.Forms.Labs.iOS.Services
         {
             get
             {
-                return null;
+                NetworkReachabilityFlags flags;
+                Reachability.IsNetworkAvailable(out flags);
+                return (flags & NetworkReachabilityFlags.IsWWAN) != 0;
             }
         }
 
@@ -59,13 +65,17 @@ namespace Xamarin.Forms.Labs.iOS.Services
         {
             get
             {
-                return null;
+                NetworkReachabilityFlags flags;
+                return Reachability.IsNetworkAvailable(out flags);
             }
         }
 
         /// <summary>
-        /// Gets the ISO Country Code
+        /// Gets the ISO Country Code.
         /// </summary>
+        /// <value>
+        /// The ISO Country Code.
+        /// </value>
         public string ICC
         {
             get
@@ -75,8 +85,11 @@ namespace Xamarin.Forms.Labs.iOS.Services
         }
 
         /// <summary>
-        /// Gets the Mobile Country Code
+        /// Gets the Mobile Country Code.
         /// </summary>
+        /// <value>
+        /// The Mobile Country Code.
+        /// </value>
         public string MCC
         {
             get
@@ -86,8 +99,11 @@ namespace Xamarin.Forms.Labs.iOS.Services
         }
 
         /// <summary>
-        /// Gets the Mobile Network Code
+        /// Gets the Mobile Network Code.
         /// </summary>
+        /// <value>
+        /// The Mobile Network Code.
+        /// </value>
         public string MNC
         {
             get
@@ -97,7 +113,7 @@ namespace Xamarin.Forms.Labs.iOS.Services
         }
 
         /// <summary>
-        /// Opens native dialog to dial the specified number
+        /// Opens native dialog to dial the specified number.
         /// </summary>
         /// <param name="number">Number to dial.</param>
         public void DialNumber(string number)

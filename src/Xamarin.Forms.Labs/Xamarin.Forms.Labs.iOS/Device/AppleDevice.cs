@@ -30,14 +30,14 @@ namespace Xamarin.Forms.Labs
             this.Accelerometer = new Accelerometer();
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
 
-            if (Xamarin.Forms.Labs.Gyroscope.IsSupported)
+            if (Labs.Gyroscope.IsSupported)
             {
                 this.Gyroscope = new Gyroscope();
             }
         }
 
         /// <summary>
-        /// Gets the runtime device for Apple's devices
+        /// Gets the runtime device for Apple's devices.
         /// </summary>
         public static IDevice CurrentDevice
         {

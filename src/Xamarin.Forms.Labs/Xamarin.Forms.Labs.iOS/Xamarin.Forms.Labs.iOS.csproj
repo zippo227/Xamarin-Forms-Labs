@@ -90,6 +90,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Services\PhoneService.cs" />
+    <Compile Include="Services\Reachability.cs" />
     <Compile Include="Services\TextToSpeechService.cs" />
     <Compile Include="Controls\Calendar\CalendarMonthView.cs" />
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />

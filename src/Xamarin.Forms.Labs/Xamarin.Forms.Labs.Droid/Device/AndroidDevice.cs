@@ -7,30 +7,30 @@ using Xamarin.Forms.Labs.Services.Media;
 namespace Xamarin.Forms.Labs
 {
     /// <summary>
-    /// Android device implements <see cref=""/>.
+    /// Android device implements <see cref="IDevice"/>.
     /// </summary>
-    public class AndroidDevice: IDevice
+    public class AndroidDevice : IDevice
     {
         private static IDevice currentDevice;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.AndroidDevice"/> class.
+        /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
         /// </summary>
-        private AndroidDevice ()
+        private AndroidDevice()
         {
-            var manager = Xamarin.Forms.Labs.Services.PhoneService.Manager;
+            var manager = Services.PhoneService.Manager;
 
             if (manager != null && manager.PhoneType != PhoneType.None)
             {
                 this.PhoneService = new PhoneService();
             }
 
-            if (Xamarin.Forms.Labs.Accelerometer.IsSupported)
+            if (Labs.Accelerometer.IsSupported)
             {
                 this.Accelerometer = new Accelerometer();
             }
 
-            if (Xamarin.Forms.Labs.Gyroscope.IsSupported)
+            if (Labs.Gyroscope.IsSupported)
             {
                 this.Gyroscope = new Gyroscope();
             }
@@ -40,7 +40,7 @@ namespace Xamarin.Forms.Labs
 //                this.BluetoothHub = new BluetoothHub(BluetoothAdapter.DefaultAdapter);
 //            }
 
-            this.Display = new Display ();
+            this.Display = new Display();
 
             this.Manufacturer = Build.Manufacturer;
             this.Name = Build.Model;
@@ -55,6 +55,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the current device.
         /// </summary>
+        /// <value>
+        /// The current device.
+        /// </value>
         public static IDevice CurrentDevice { get { return currentDevice ?? (currentDevice = new AndroidDevice()); } }
 
         #region IDevice implementation
@@ -71,6 +74,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the display information for the device.
         /// </summary>
+        /// <value>
+        /// The display.
+        /// </value>
         public IDisplay Display
         {
             get;
@@ -80,6 +86,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the battery.
         /// </summary>
+        /// <value>
+        /// The battery.
+        /// </value>
         public IBattery Battery
         {
             get;
@@ -97,7 +106,7 @@ namespace Xamarin.Forms.Labs
 	    }
 
 	    /// <summary>
-        /// Gets the accelerometer for the device if available
+        /// Gets the accelerometer for the device if available.
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>
         public IAccelerometer Accelerometer
@@ -119,6 +128,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the name of the device.
         /// </summary>
+        /// <value>
+        /// The name of the device.
+        /// </value>
         public string Name
         {
             get;
@@ -128,6 +140,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the firmware version.
         /// </summary>
+        /// <value>
+        /// The firmware version.
+        /// </value>
         public string FirmwareVersion
         {
             get;
@@ -137,6 +152,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the hardware version.
         /// </summary>
+        /// <value>
+        /// The hardware version.
+        /// </value>
         public string HardwareVersion
         {
             get;
@@ -146,6 +164,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the manufacturer.
         /// </summary>
+        /// <value>
+        /// The manufacturer.
+        /// </value>
         public string Manufacturer
         {
             get;

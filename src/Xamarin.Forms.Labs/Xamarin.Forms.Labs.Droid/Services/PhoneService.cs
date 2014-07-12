@@ -15,6 +15,9 @@ namespace Xamarin.Forms.Labs.Services
         /// <summary>
         /// Gets the telephony manager for Android.
         /// </summary>
+        /// <value>
+        /// The manager.
+        /// </value>
         public static TelephonyManager Manager
         {
             get
@@ -23,65 +26,107 @@ namespace Xamarin.Forms.Labs.Services
             }
         }
 
+        /// <summary>
+        /// Gets the connectivity manager.
+        /// </summary>
+        /// <value>
+        /// The connectivity manager.
+        /// </value>
+        public static ConnectivityManager ConnectivityManager
+        {
+            get
+            {
+                return Application.Context.GetSystemService(Context.ConnectivityService) as ConnectivityManager;
+            }
+        }
+
         #region IPhone implementation
         /// <summary>
         /// Gets the cellular provider.
         /// </summary>
+        /// <value>
+        /// The cellular provider.
+        /// </value>
         public string CellularProvider
         {
             get
             {
-                return PhoneService.Manager.NetworkOperatorName;
+                return Manager.NetworkOperatorName;
             }
         }
 
         /// <summary>
-        /// Gets the ISO Country Code
+        /// Gets the ISO Country Code.
         /// </summary>
+        /// <value>
+        /// The ISO Country Code.
+        /// </value>
         public string ICC
         {
             get
             {
-                return PhoneService.Manager.SimCountryIso;
+                return Manager.SimCountryIso;
             }
         }
 
         /// <summary>
-        /// Gets the Mobile Country Code
+        /// Gets the Mobile Country Code.
         /// </summary>
+        /// <value>
+        /// The Mobile Country Code.
+        /// </value>
         public string MCC
         {
             get
             {
-                return PhoneService.Manager.NetworkOperator.Remove(3,3);
+                return Manager.NetworkOperator.Remove(3, 3);
             }
         }
 
         /// <summary>
-        /// Gets the Mobile Network Code
+        /// Gets the Mobile Network Code.
         /// </summary>
+        /// <value>
+        /// The Mobile Network Code.
+        /// </value>
         public string MNC
         {
             get
             {
-                return PhoneService.Manager.NetworkOperator.Remove(0,3);
+                return Manager.NetworkOperator.Remove(0, 3);
             }
         }
 
         /// <summary>
         /// Gets a value indicating whether this instance has cellular data enabled.
         /// </summary>
+        /// <value>
+        /// Null if value cannot be determined, otherwise the status of cellular data.
+        /// </value>
+        /// <remarks>
+        /// This feature will require the following Android permissions:
+        ///     - android.permission.INTERNET
+        ///     - android.permission.ACCESS_NETWORK_STATE 
+        /// Please set them in the AndroidManifest.xml file.
+        /// </remarks>
         public bool? IsCellularDataEnabled
         {
             get
             {
-                return null;
+                // TODO: determine if mobile network actually indicates mobile data capability,
+                // most likely this is not accurate way of getting the information and while this info
+                // is provided by WP8 we might want to mark this as unsupported feature
+                var mobileNetworkInfo = ConnectivityManager.GetNetworkInfo(ConnectivityType.Mobile);
+                return mobileNetworkInfo != null && mobileNetworkInfo.IsConnected;
             }
         }
 
         /// <summary>
         /// Gets a value indicating whether this instance has cellular data roaming enabled.
         /// </summary>
+        /// <value>
+        /// Null if value cannot be determined, otherwise the status of cellular data roaming.
+        /// </value>
         public bool? IsCellularDataRoamingEnabled
         {
             get
@@ -91,18 +136,28 @@ namespace Xamarin.Forms.Labs.Services
         }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is network available.
+        /// Gets a value indicating whether network is available.
         /// </summary>
+        /// <value>
+        /// The network availability.
+        /// </value>
+        /// <remarks>
+        /// This feature will require the following Android permissions:
+        ///     - android.permission.INTERNET
+        ///     - android.permission.ACCESS_NETWORK_STATE 
+        /// Please set them in the AndroidManifest.xml file.
+        /// </remarks>
         public bool? IsNetworkAvailable
         {
             get
             {
-                return null;
+                var activeNetworkInfo = ConnectivityManager.ActiveNetworkInfo;
+                return activeNetworkInfo != null && activeNetworkInfo.IsConnected;
             }
         }
 
         /// <summary>
-        /// Opens native dialog to dial the specified number
+        /// Opens native dialog to dial the specified number.
         /// </summary>
         /// <param name="number">Number to dial.</param>
         public void DialNumber(string number)
