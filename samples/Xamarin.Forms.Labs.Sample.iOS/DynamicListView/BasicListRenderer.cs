@@ -15,14 +15,14 @@ namespace Xamarin.Forms.Labs.Sample.iOS
 {
     public class BasicListRenderer : DynamicUITableViewRenderer<object>
     {
-        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+        protected override UITableViewCell GetCell(UITableView tableView, object item)
         {
-            var item = this.Element.Data[indexPath.Item];
             if (item is string)
             {
-                return base.GetCell(tableView, indexPath);
+                return base.GetCell(tableView, item);
             }
-            else if (item is DateTime)
+            
+            if (item is DateTime)
             {
                 var cell = new UITableViewCell(UITableViewCellStyle.Value1, this.GetType().Name);
 

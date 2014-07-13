@@ -20,7 +20,7 @@ namespace Xamarin.Forms.Labs.Mvvm
 	/// this.ChangeAndNotify(ref this.propertyBackField, value);
 	/// }
 	/// </example>
-	public abstract class ViewModel : NotifyPropertyChangedBase
+	public abstract class ViewModel : ObservableObject
     {
 		/// <summary>
 		/// Gets or sets the navigation.

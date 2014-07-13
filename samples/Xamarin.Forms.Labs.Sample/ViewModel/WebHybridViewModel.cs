@@ -62,7 +62,7 @@ namespace Xamarin.Forms.Labs.Sample
         }
     }
 
-    public class DataPoint : NotifyPropertyChangedBase
+    public class DataPoint : ObservableObject
     {
         private string label;
         private double y;

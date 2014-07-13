@@ -41,7 +41,7 @@
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
     <Compile Include="Controls\WebImage.cs" />
-    <Compile Include="Data\NotifyPropertyChangedBase.cs" />
+    <Compile Include="Data\ObservableObject.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />
     <Compile Include="Device\IAccelerometer.cs" />
     <Compile Include="Device\IBattery.cs" />
