@@ -46,6 +46,7 @@ namespace Xamarin.Forms.Labs.Sample
 			ViewFactory.Register<GeolocatorPage, GeolocatorViewModel>();
 			ViewFactory.Register<CameraPage, CameraViewModel>();
 			ViewFactory.Register<CacheServicePage, CacheServiceViewModel>();
+			ViewFactory.Register<SoundPage, SoundServiceViewModel>();
             
 			var mainTab = new ExtendedTabbedPage() { Title = "Xamarin Forms Labs" };
 			var mainPage = new NavigationPage(mainTab);
@@ -80,7 +81,8 @@ namespace Xamarin.Forms.Labs.Sample
 					"Camera",
 					"Accelerometer",
 					"Display",
-					"Cache"
+					"Cache",
+					"Sound"
 				}
 			};
 
@@ -111,6 +113,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
 					case "cache":
                         await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<CacheServiceViewModel>());
+						break;
+					case "sound":
+						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<SoundServiceViewModel>());
 						break;
 					default:
 						break;

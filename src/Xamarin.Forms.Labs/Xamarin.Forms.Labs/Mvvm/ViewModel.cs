@@ -41,7 +41,7 @@ namespace Xamarin.Forms.Labs.Mvvm
             get { return _isBusy; }
             set
             {
-                ChangeAndNotify<bool>(ref _isBusy, value);
+				SetProperty<bool>(ref _isBusy, value);
             }
         }
 		#region INotifyPropertyChanged implementation

@@ -152,6 +152,7 @@
     <AndroidAsset Include="..\Xamarin.Forms.Labs.Sample.WP\HTML\home.html">
       <Link>Assets\HTML\home.html</Link>
     </AndroidAsset>
+    <AndroidAsset Include="Assets\BusyEarnin.mp3" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\fonts\Roboto-Light.ttf" />
