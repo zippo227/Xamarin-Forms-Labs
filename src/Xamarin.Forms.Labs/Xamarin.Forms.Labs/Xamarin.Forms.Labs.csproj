@@ -41,6 +41,7 @@
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
     <Compile Include="Controls\WebImage.cs" />
+    <Compile Include="Data\NotifyPropertyChangedBase.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />
     <Compile Include="Device\IAccelerometer.cs" />
     <Compile Include="Device\IBattery.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Services\ISimpleCache.cs" />
     <Compile Include="Services\ITextToSpeechService.cs" />
     <Compile Include="Controls\CalendarView.cs" />
-    <Compile Include="Mvvm\ViewModel.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
     <Compile Include="Controls\ExtendedTextCell.cs" />

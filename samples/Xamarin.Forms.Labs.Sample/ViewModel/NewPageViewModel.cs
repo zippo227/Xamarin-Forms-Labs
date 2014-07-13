@@ -5,7 +5,7 @@ using Xamarin.Forms.Labs.Mvvm;
 namespace Xamarin.Forms.Labs.Sample
 {
 	//[ViewType(typeof(NewPageView))] can specify this
-	public class NewPageViewModel : ViewModel
+	public class NewPageViewModel : ViewModelBase
 	{
 		public NewPageViewModel ()
 		{
@@ -26,7 +26,7 @@ namespace Xamarin.Forms.Labs.Sample
 			set
 						
 			{
-				this.ChangeAndNotify(ref _newPage, value);
+				this.SetProperty(ref _newPage, value);
 			}
 		}
 
@@ -39,7 +39,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{
-				this.ChangeAndNotify(ref _pageTitle, value);
+				this.SetProperty(ref _pageTitle, value);
 			}
 		}
 	}

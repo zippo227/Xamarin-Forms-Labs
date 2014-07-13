@@ -9,7 +9,7 @@ namespace Xamarin.Forms.Labs.Sample
     /// The Geo-locator view model.
     /// </summary>
     [ViewType(typeof(GeolocatorPage))]
-	public class GeolocatorViewModel : ViewModel
+	public class GeolocatorViewModel : ViewModelBase
 	{
         private readonly TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
 		private IGeolocator geolocator;
@@ -33,7 +33,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{
-				this.ChangeAndNotify(ref positionStatus, value);
+				this.SetProperty(ref positionStatus, value);
 			}
 		}
 
@@ -51,7 +51,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{
-				this.ChangeAndNotify(ref positionLatitude, value);
+				this.SetProperty(ref positionLatitude, value);
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{
-				this.ChangeAndNotify(ref positionLongitude, value);
+				this.SetProperty(ref positionLongitude, value);
 			}
 		}
 

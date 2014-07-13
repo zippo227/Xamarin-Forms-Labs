@@ -40,8 +40,8 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// <summary>
         /// The page cache.
         /// </summary>
-        private static readonly Dictionary<string, Tuple<ViewModel, Page>> PageCache =
-            new Dictionary<string, Tuple<ViewModel, Page>>();
+        private static readonly Dictionary<string, Tuple<ViewModelBase, Page>> PageCache =
+            new Dictionary<string, Tuple<ViewModelBase, Page>>();
 
         /// <summary>
         /// Gets or sets a value indicating whether [enable cache].
@@ -54,7 +54,7 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <typeparam name="TView">The type of the t view.</typeparam>
         /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-        public static void Register<TView, TViewModel>() where TView : Page where TViewModel : ViewModel
+        public static void Register<TView, TViewModel>() where TView : Page where TViewModel : ViewModelBase
         {
             TypeDictionary[typeof(TViewModel)] = typeof(TView);
 
@@ -82,7 +82,7 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// Unknown View for ViewModel.
         /// </exception>
         public static Page CreatePage<TViewModel>(Action<TViewModel, Page> initialiser = null)
-            where TViewModel : ViewModel
+            where TViewModel : ViewModelBase
         {
             Type viewType;
             var viewModelType = typeof(TViewModel);
@@ -116,7 +116,7 @@ namespace Xamarin.Forms.Labs.Mvvm
 
                 if (EnableCache)
                 {
-                    PageCache[pageCacheKey] = new Tuple<ViewModel, Page>(viewModel, page);
+                    PageCache[pageCacheKey] = new Tuple<ViewModelBase, Page>(viewModel, page);
                 }
             }
 

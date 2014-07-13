@@ -10,7 +10,7 @@ namespace Xamarin.Forms.Labs.Sample
 	/// Class CameraViewModel.
 	/// </summary>
 	[ViewType(typeof(CameraPage))]
-	public class CameraViewModel : ViewModel
+	public class CameraViewModel : ViewModelBase
 	{
         /// <summary>
         /// The _scheduler.
@@ -72,7 +72,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{
-				this.ChangeAndNotify(ref imageSource, value);
+				this.SetProperty(ref imageSource, value);
 			}
 		}
 
@@ -88,7 +88,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{
-			    this.ChangeAndNotify(ref videoInfo, value);
+			    this.SetProperty(ref videoInfo, value);
 			}
 		}
 
@@ -143,7 +143,7 @@ namespace Xamarin.Forms.Labs.Sample
 	    public string Status
 	    {
 	        get { return status; }
-	        private set { this.ChangeAndNotify(ref status, value); }
+	        private set { this.SetProperty(ref status, value); }
 	    }
 
 	    /// <summary>

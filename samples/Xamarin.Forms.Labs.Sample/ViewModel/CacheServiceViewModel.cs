@@ -10,7 +10,7 @@ namespace Xamarin.Forms.Labs.Sample
     /// <summary>
     /// Sample ViewModel for the CacheService.
     /// </summary>
-    public class CacheServiceViewModel : ViewModel
+    public class CacheServiceViewModel : ViewModelBase
     {
         /// <summary>
         /// Key used in the cache.
@@ -73,7 +73,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
             set
             {
-                this.ChangeAndNotify(ref cacheInfo, value);
+                this.SetProperty(ref cacheInfo, value);
             }
         }
 
@@ -94,7 +94,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
             set
             {
-                this.ChangeAndNotify(ref items, value);
+                this.SetProperty(ref items, value);
             }
         }
 
