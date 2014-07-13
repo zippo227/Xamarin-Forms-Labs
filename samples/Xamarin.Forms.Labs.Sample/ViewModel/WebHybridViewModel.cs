@@ -9,7 +9,7 @@ using Xamarin.Forms.Labs.Data;
 
 namespace Xamarin.Forms.Labs.Sample
 {
-    public class ChartViewModel : ViewModelBase
+    public class ChartViewModel : ViewModel
     {
         public ChartViewModel()
         {
@@ -57,7 +57,7 @@ namespace Xamarin.Forms.Labs.Sample
             set
             {
                 dataPoints = value;
-                this.OnPropertyChanged ();
+                this.NotifyPropertyChanged();
             }
         }
     }

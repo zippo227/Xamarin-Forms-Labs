@@ -22,7 +22,7 @@ namespace Xamarin.Forms.Labs.Data
         /// </summary>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         /// <param name="propertyName">The name of the property to raise the PropertyChanged event for.</param>
-        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
+        protected virtual void NotifyPropertyChanged([CallerMemberName]string propertyName = null)
         {
             OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
         }
@@ -32,7 +32,7 @@ namespace Xamarin.Forms.Labs.Data
         /// </summary>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         /// <param name="propertyExpression">The lambda expression of the property to raise the PropertyChanged event for.</param>
-        protected virtual void OnPropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        protected virtual void NotifyPropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
             string propertyName = GetPropertyName(propertyExpression);
             OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
@@ -75,7 +75,7 @@ namespace Xamarin.Forms.Labs.Data
                 return false;
 
             storage = value;
-            this.OnPropertyChanged(propertyName);
+            this.NotifyPropertyChanged(propertyName);
             return true;
         }
 
