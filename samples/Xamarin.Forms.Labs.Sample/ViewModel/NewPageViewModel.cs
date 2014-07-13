@@ -26,7 +26,7 @@ namespace Xamarin.Forms.Labs.Sample
 			set
 						
 			{
-				this.ChangeAndNotify(ref _newPage, value);
+				this.SetProperty(ref _newPage, value);
 			}
 		}
 
@@ -39,7 +39,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{
-				this.ChangeAndNotify(ref _pageTitle, value);
+				this.SetProperty(ref _pageTitle, value);
 			}
 		}
 	}

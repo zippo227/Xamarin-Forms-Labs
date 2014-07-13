@@ -73,7 +73,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
             set
             {
-                this.ChangeAndNotify(ref cacheInfo, value);
+                this.SetProperty(ref cacheInfo, value);
             }
         }
 
@@ -94,7 +94,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
             set
             {
-                this.ChangeAndNotify(ref items, value);
+                this.SetProperty(ref items, value);
             }
         }
 

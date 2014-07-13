@@ -41,7 +41,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{ 
-				this.ChangeAndNotify(ref navigateToViewModelButtonText, value);
+				this.SetProperty(ref navigateToViewModelButtonText, value);
 			}
 		}
 	}
