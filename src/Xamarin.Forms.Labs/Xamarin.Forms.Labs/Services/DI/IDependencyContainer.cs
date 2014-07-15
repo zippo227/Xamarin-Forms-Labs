@@ -37,6 +37,17 @@ namespace Xamarin.Forms.Labs.Services
             where TImpl : class, T;
 
         /// <summary>
+        /// Registers a type to instantiate for type T as singleton.
+        /// </summary>
+        /// <typeparam name="T">Type of instance</typeparam>
+        /// <typeparam name="TImpl">Type to register for instantiation.</typeparam>
+        /// <returns>An instance of <see cref="IDependencyContainer"/></returns>
+        IDependencyContainer RegisterSingle<T, TImpl>()
+            where T : class
+            where TImpl : class, T;
+
+
+        /// <summary>
         /// Tries to register a type
         /// </summary>
         /// <typeparam name="T">Type of instance</typeparam>

@@ -10,12 +10,23 @@ namespace Xamarin.Forms.Labs
     /// </summary>
     public class Phone : AppleDevice
     {
+        /// <summary>
+        /// The phone type.
+        /// </summary>
         public enum PhoneType
         {
+            /// <summary>
+            /// Unknown phone type.
+            /// </summary>
             [Description("Unknown device")]
             Unknown = 0,
+
+            /// <summary>
+            /// The iPhone 1G.
+            /// </summary>
             [Description("iPhone 1G")]
             iPhone1G = 1,
+
             [Description("iPhone 3G")]
             iPhone3G,
             [Description("iPhone 3GS")]
@@ -94,6 +105,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the version of iPhone.
         /// </summary>
+        /// <value>
+        /// The version.
+        /// </value>
         public PhoneType Version
         {
             get;

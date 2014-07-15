@@ -85,7 +85,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{
-				this.ChangeAndNotify(ref numberToCall, value);
+				this.SetProperty(ref numberToCall, value);
 			}
 		}
 	    
@@ -103,7 +103,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
 			{
-				this.ChangeAndNotify(ref textToSpeak, value);
+				this.SetProperty(ref textToSpeak, value);
 			}
 		}
 
@@ -123,7 +123,7 @@ namespace Xamarin.Forms.Labs.Sample
 			}
 			set
             { 
-				this.ChangeAndNotify(ref deviceUIThreadInfo, value);
+				this.SetProperty(ref deviceUIThreadInfo, value);
 			}
 		}
 
@@ -142,7 +142,7 @@ namespace Xamarin.Forms.Labs.Sample
 			
             set
             { 
-				this.ChangeAndNotify(ref deviceTimerInfo, value);
+				this.SetProperty(ref deviceTimerInfo, value);
 			}
 		}
 
@@ -160,7 +160,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
             set
             {
-				this.ChangeAndNotify(ref items, value);
+				this.SetProperty(ref items, value);
             }
 		}
 

@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using Xamarin.Forms.Labs.Data;
+using System;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
@@ -18,7 +20,7 @@ namespace Xamarin.Forms.Labs.Mvvm
 	/// this.ChangeAndNotify(ref this.propertyBackField, value);
 	/// }
 	/// </example>
-	public abstract class ViewModel : INotifyPropertyChanged
+	public abstract class ViewModel : ObservableObject
     {
 		/// <summary>
 		/// Gets or sets the navigation.
@@ -39,7 +41,7 @@ namespace Xamarin.Forms.Labs.Mvvm
             get { return _isBusy; }
             set
             {
-                ChangeAndNotify<bool>(ref _isBusy, value);
+				SetProperty<bool>(ref _isBusy, value);
             }
         }
 		#region INotifyPropertyChanged implementation
@@ -66,29 +68,12 @@ namespace Xamarin.Forms.Labs.Mvvm
 		/// <param name="value">Value.</param>
 		/// <param name="propertyName">Property name.</param>
 		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+        [Obsolete("Use the SetProperty method instead.")]
         protected bool ChangeAndNotify<T>(ref T property, T value, [CallerMemberName] string propertyName = "")
         {
-            if (!EqualityComparer<T>.Default.Equals(property, value))
-            {
-                property = value;
-                NotifyPropertyChanged(propertyName);
-                return true;
-            }
-
-            return false;
+            return SetProperty(ref property, value, propertyName);
         }
 
-		/// <summary>
-		/// Notifies the property changed.
-		/// </summary>
-		/// <param name="propertyName">Property name.</param>
-        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
         #endregion
     }
 }

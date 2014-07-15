@@ -13,8 +13,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls
 
         private const string Xaml = @"<DataTemplate
                     xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
-                    xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml""
-                    xmlns:Controls=""clr-namespace:Xamarin.Forms.Labs.WP8.Controls"">
+                    xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"">
                     <Grid>
                         <TextBlock Text='{Binding}' FontSize='40' />
                     </Grid>        
@@ -27,7 +26,8 @@ namespace Xamarin.Forms.Labs.WP8.Controls
             if (this.tableView == null)
             {
                 //var source = new DataSource(this);
-                this.tableView.ItemTemplate = new DataSource(this).ContentTemplate;
+                //this.tableView.ItemTemplate = new DataSource(this).ContentTemplate;
+                
                 this.tableView = new LongListSelector();
                 this.tableView.SelectionChanged += (sender, args) =>
                     {
@@ -37,6 +37,8 @@ namespace Xamarin.Forms.Labs.WP8.Controls
                         }
                     };
 
+                this.tableView.ItemTemplate = Template;
+
                 this.SetNativeControl(this.tableView);
             }
 
@@ -44,9 +46,17 @@ namespace Xamarin.Forms.Labs.WP8.Controls
             this.Bind(e.NewElement);
         }
 
+        protected virtual System.Windows.DataTemplate Template
+        {
+            get
+            {
+                return (System.Windows.DataTemplate)XamlReader.Load(Xaml);
+            }
+        }
+
         protected virtual System.Windows.DataTemplate TemplateForItem(object item)
         {
-            return (System.Windows.DataTemplate)XamlReader.Load(Xaml);
+            return this.Template;
         }
 
         private void Unbind(DynamicListView<T> oldElement)
