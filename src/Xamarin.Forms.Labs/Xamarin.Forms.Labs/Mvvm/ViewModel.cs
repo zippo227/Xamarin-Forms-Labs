@@ -6,27 +6,27 @@ using System;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
-	/// <summary>
-	/// View model base class.
-	/// </summary>
-	/// <example>
-	/// To implement observable property:
-	/// private object propertyBackField;
-	/// public object Property
-	/// {
-	/// get { return this.propertyBackField; }
-	/// set
-	/// {
-	/// this.ChangeAndNotify(ref this.propertyBackField, value);
-	/// }
-	/// </example>
-	public abstract class ViewModel : ObservableObject
+    /// <summary>
+    /// View model base class.
+    /// </summary>
+    /// <example>
+    /// To implement observable property:
+    /// private object propertyBackField;
+    /// public object Property
+    /// {
+    /// get { return this.propertyBackField; }
+    /// set
+    /// {
+    /// this.ChangeAndNotify(ref this.propertyBackField, value);
+    /// }
+    /// </example>
+    public abstract class ViewModel : ObservableObject
     {
-		/// <summary>
-		/// Gets or sets the navigation.
-		/// </summary>
-		/// <value>The navigation.</value>
-		public ViewModelNavigation Navigation { get; set; }
+        /// <summary>
+        /// Gets or sets the navigation.
+        /// </summary>
+        /// <value>The navigation.</value>
+        public ViewModelNavigation Navigation { get; set; }
 
         private bool _isBusy;
 
@@ -41,33 +41,33 @@ namespace Xamarin.Forms.Labs.Mvvm
             get { return _isBusy; }
             set
             {
-				SetProperty<bool>(ref _isBusy, value);
+                SetProperty<bool>(ref _isBusy, value);
             }
         }
-		#region INotifyPropertyChanged implementation
-		/// <summary>
-		/// Occurs when property is changed.
-		/// </summary>
+        #region INotifyPropertyChanged implementation
+        /// <summary>
+        /// Occurs when property is changed.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
-		/// <summary>
-		/// Unbind all handlers from property changed event.
-		/// </summary>
+        /// <summary>
+        /// Unbind all handlers from property changed event.
+        /// </summary>
         public void Unbind()
         {
             this.PropertyChanged = null;
         }
 
         #region Protected methods
-		/// <summary>
-		/// Changes the property if the value is different and invokes PropertyChangedEventHandler.
-		/// </summary>
-		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		/// <param name="property">Property.</param>
-		/// <param name="value">Value.</param>
-		/// <param name="propertyName">Property name.</param>
-		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+        /// <summary>
+        /// Changes the property if the value is different and invokes PropertyChangedEventHandler.
+        /// </summary>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
+        /// <param name="property">Property.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="propertyName">Property name.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         [Obsolete("Use the SetProperty method instead.")]
         protected bool ChangeAndNotify<T>(ref T property, T value, [CallerMemberName] string propertyName = "")
         {

@@ -19,11 +19,12 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             _dividerPaint.Color = base.Resources.GetColor(Resource.Color.calendar_divider);
         }
 
-		public override void AddView(Android.Views.View child, int index, LayoutParams @params)
+        public override void AddView(Android.Views.View child, int index, LayoutParams @params)
         {
 
-            if (ChildCount == 0) {
-                ((CalendarRowView) child).IsHeaderRow = true;
+            if (ChildCount == 0)
+            {
+                ((CalendarRowView)child).IsHeaderRow = true;
             }
             base.AddView(child, index, @params);
         }
@@ -31,7 +32,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         protected override void DispatchDraw(Canvas canvas)
         {
             base.DispatchDraw(canvas);
-            var row = (ViewGroup) GetChildAt(1);
+            var row = (ViewGroup)GetChildAt(1);
             int top = row.Top;
             int bottom = Bottom;
 
@@ -40,13 +41,14 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             canvas.DrawLine(left + _floatFudge, top, left + _floatFudge, bottom, _dividerPaint);
 
             //Each cell's right-side border.
-            for (int c = 0; c < 7; c++) {
+            for (int c = 0; c < 7; c++)
+            {
                 float x = left + row.GetChildAt(c).Right - _floatFudge;
                 canvas.DrawLine(x, top, x, bottom, _dividerPaint);
             }
         }
 
-		protected override bool DrawChild(Canvas canvas, Android.Views.View child, long drawingTime)
+        protected override bool DrawChild(Canvas canvas, Android.Views.View child, long drawingTime)
         {
             bool isInvalidated = base.DrawChild(canvas, child, drawingTime);
             //Draw a bottom border
@@ -61,7 +63,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                 MeasureSpec.ToString(heightMeasureSpec));
 
             int widthMeasureSize = MeasureSpec.GetSize(widthMeasureSpec);
-            if (_oldWidthMeasureSize == widthMeasureSize) {
+            if (_oldWidthMeasureSize == widthMeasureSize)
+            {
                 Logr.D("SKIP Grid.OnMeasure");
                 SetMeasuredDimension(MeasuredWidth, MeasuredHeight);
                 return;
@@ -70,15 +73,17 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             var stopwatch = Stopwatch.StartNew();
 
             _oldWidthMeasureSize = widthMeasureSize;
-            int cellSize = widthMeasureSize/7;
+            int cellSize = widthMeasureSize / 7;
             //Remove any extra pixels since /7 us unlikey to give whole nums.
-            widthMeasureSize = cellSize*7;
+            widthMeasureSize = cellSize * 7;
             int totalHeight = 0;
             int rowWidthSpec = MeasureSpec.MakeMeasureSpec(widthMeasureSize, MeasureSpecMode.Exactly);
             int rowHeightSpec = MeasureSpec.MakeMeasureSpec(cellSize, MeasureSpecMode.Exactly);
-            for (int c = 0; c < ChildCount; c++) {
+            for (int c = 0; c < ChildCount; c++)
+            {
                 var child = GetChildAt(c);
-                if (child.Visibility == ViewStates.Visible) {
+                if (child.Visibility == ViewStates.Visible)
+                {
                     MeasureChild(child, rowWidthSpec,
                         c == 0 ? MeasureSpec.MakeMeasureSpec(cellSize, MeasureSpecMode.AtMost) : rowHeightSpec);
                     totalHeight += child.MeasuredHeight;
@@ -96,7 +101,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             var stopwatch = Stopwatch.StartNew();
 
             t = 0;
-            for (int c = 0; c < ChildCount; c++) {
+            for (int c = 0; c < ChildCount; c++)
+            {
                 var child = GetChildAt(c);
                 int rowHeight = child.MeasuredHeight;
                 child.Layout(l, t, r, t + rowHeight);
@@ -112,7 +118,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         {
             set
             {
-                if (_oldNumRows != value) {
+                if (_oldNumRows != value)
+                {
                     _oldWidthMeasureSize = 0;
                 }
                 _oldNumRows = value;

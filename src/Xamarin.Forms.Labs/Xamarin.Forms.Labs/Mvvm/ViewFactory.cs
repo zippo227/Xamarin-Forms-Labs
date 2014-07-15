@@ -54,14 +54,16 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <typeparam name="TView">The type of the t view.</typeparam>
         /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-        public static void Register<TView, TViewModel>() where TView : Page where TViewModel : ViewModel
+        public static void Register<TView, TViewModel>()
+            where TView : Page
+            where TViewModel : ViewModel
         {
             TypeDictionary[typeof(TViewModel)] = typeof(TView);
 
             var container = Resolver.Resolve<IDependencyContainer>();
 
             // check if we have DI container
-            if (container != null) 
+            if (container != null)
             {
                 // register viewmodel with DI to enable non default vm constructors / service locator
                 container.Register<TViewModel, TViewModel>();

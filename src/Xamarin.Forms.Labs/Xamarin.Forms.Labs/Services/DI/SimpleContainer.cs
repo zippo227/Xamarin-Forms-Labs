@@ -64,12 +64,14 @@ namespace Xamarin.Forms.Labs.Services
         /// <returns>An instance of <see cref="SimpleContainer"/></returns>
         public IDependencyContainer Register<T, TImpl>()
             where T : class
-            where TImpl :class, T
+            where TImpl : class, T
         {
             return this.Register<T>(t => Activator.CreateInstance<TImpl>() as T);
         }
 
-        public IDependencyContainer RegisterSingle<T, TImpl>() where T : class where TImpl : class, T
+        public IDependencyContainer RegisterSingle<T, TImpl>()
+            where T : class
+            where TImpl : class, T
         {
             var type = typeof(T);
             List<object> list;

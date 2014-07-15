@@ -15,6 +15,5 @@ namespace Xamarin.Forms.Labs.Controls
             get { return (string)GetValue(ImageUrlProperty); }
             set { SetValue(ImageUrlProperty, value); }
         }
-
     }
 }
