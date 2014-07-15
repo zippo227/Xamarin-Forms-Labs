@@ -18,7 +18,8 @@ namespace Xamarin.Forms.Labs.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="HybridWebView"/> class.
         /// </summary>
-        public HybridWebView() : this(Resolver.Resolve<IJsonSerializer>())
+        public HybridWebView()
+            : this(Resolver.Resolve<IJsonSerializer>())
         {
         }
 

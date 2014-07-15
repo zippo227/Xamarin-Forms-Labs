@@ -46,18 +46,18 @@ namespace Xamarin.Forms.Labs.Controls
         /// The control.
         /// </param>
         private static void UpdateUi(ExtendedLabel view, TextBlock control)
-		{
-		    if (!string.IsNullOrEmpty(view.FontName))
-		    {
+        {
+            if (!string.IsNullOrEmpty(view.FontName))
+            {
                 control.FontFamily = new FontFamily(view.FontName);
                 control.FontSize = (view.FontSize > 0) ? (float)view.FontSize : 12.0f;
-		    }
+            }
 
-			if (view.IsUnderline)
-			{
-			    control.TextDecorations = TextDecorations.Underline;
-			}
-		}
+            if (view.IsUnderline)
+            {
+                control.TextDecorations = TextDecorations.Underline;
+            }
+        }
     }
 }
 
