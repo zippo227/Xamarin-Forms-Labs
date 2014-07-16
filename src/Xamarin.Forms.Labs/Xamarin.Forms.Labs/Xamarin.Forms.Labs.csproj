@@ -110,6 +110,7 @@
     <Compile Include="Services\SoundService\ISoundService.cs" />
     <Compile Include="Services\SoundService\SoundFile.cs" />
     <Compile Include="Services\SoundService\SoundFinishedEventArgs.cs" />
+    <Compile Include="Controls\GridView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

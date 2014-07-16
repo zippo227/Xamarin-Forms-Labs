@@ -17,9 +17,9 @@ namespace Xamarin.Forms.Labs.Controls
         /// </summary>
         private ObservableCollection<T> data;
 
-        public DynamicListView()
+        public DynamicListView ()
         {
-            this.Data = new ObservableCollection<T>();
+            this.Data = new ObservableCollection<T> ();
         }
 
         //public Predicate<T> Filter
@@ -50,9 +50,9 @@ namespace Xamarin.Forms.Labs.Controls
         /// <param name="item">
         /// The item.
         /// </param>
-        public void Add(T item)
+        public void Add (T item)
         {
-            this.Data.Add(item);
+            this.Data.Add (item);
         }
 
         /// <summary>
@@ -67,40 +67,36 @@ namespace Xamarin.Forms.Labs.Controls
         /// <returns>
         /// <see cref="bool"/>, true if replacement was successful, false if original object was not found.
         /// </returns>
-        public bool Replace(T original, T replacement)
+        public bool Replace (T original, T replacement)
         {
-            var index = this.Data.IndexOf(original);
+            var index = this.Data.IndexOf (original);
 
-            if (index < 0)
-            {
+            if (index < 0) {
                 return false;
             }
 
-            this.Data[index] = replacement;
+            this.Data [index] = replacement;
 
             return true;
         }
 
-        public void Remove(T item)
+        public void Remove (T item)
         {
-            this.Data.Remove(item);
+            this.Data.Remove (item);
         }
 
         /// <summary>
         /// Gets or sets the data.
         /// </summary>
-        public ObservableCollection<T> Data
-        {
-            get
-            {
+        public ObservableCollection<T> Data {
+            get {
                 return this.data;
             }
 
-            set
-            {
-                this.OnPropertyChanging();
+            set {
+                this.OnPropertyChanging ();
                 this.data = value;
-                this.OnPropertyChanged();
+                this.OnPropertyChanged ();
             }
         }
 
@@ -108,11 +104,10 @@ namespace Xamarin.Forms.Labs.Controls
         /// Invokes the item selected event.
         /// </summary>
         /// <param name="item">Item.</param>
-        public void InvokeItemSelectedEvent(object sender, T item)
+        public void InvokeItemSelectedEvent (object sender, T item)
         {
-            if (this.OnSelected != null)
-            {
-                this.OnSelected.Invoke(sender, new EventArgs<T>(item));
+            if (this.OnSelected != null) {
+                this.OnSelected.Invoke (sender, new EventArgs<T> (item));
             }
         }
 

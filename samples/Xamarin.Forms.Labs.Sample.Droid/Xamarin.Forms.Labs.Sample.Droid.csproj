@@ -67,20 +67,16 @@
     <Reference Include="SQLite.Net.Platform.XamarinAndroid">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\SQLite.Net.Platform.XamarinAndroid.2.3.0\lib\MonoAndroid\SQLite.Net.Platform.XamarinAndroid.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Android.Support.v4.20.0.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Core, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.Android, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Forms.Platform.Android">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Xaml, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>

@@ -42,21 +42,19 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="Xamarin.Forms.Core, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\packages\Xamarin.Forms.1.2.1.6229\lib\MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.iOS, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Forms.Platform.iOS">
       <HintPath>..\packages\Xamarin.Forms.1.2.1.6229\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Xaml, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.1.2.1.6229\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Controls\GridView\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -111,6 +109,8 @@
     <Compile Include="Controls\ExtendedViewCell\ExtendedViewCellRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
     <Compile Include="Services\SoundService.cs" />
+    <Compile Include="Controls\GridView\GridViewRenderer.cs" />
+    <Compile Include="Controls\GridView\GridCollectionView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

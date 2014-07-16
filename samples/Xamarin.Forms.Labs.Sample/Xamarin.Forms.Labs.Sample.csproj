@@ -100,6 +100,9 @@
       <DependentUpon>SoundPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\SoundServiceViewModel.cs" />
+    <Compile Include="Pages\Controls\GridViewPage.xaml.cs">
+      <DependentUpon>GridViewPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -115,6 +118,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Services\SoundPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Controls\GridViewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <LogicalName>GridViewPage.xaml</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

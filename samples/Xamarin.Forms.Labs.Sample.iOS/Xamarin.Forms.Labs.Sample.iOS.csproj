@@ -126,6 +126,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Resources\BusyEarnin.mp3" />
+    <BundleResource Include="Resources\ad16.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
