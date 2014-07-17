@@ -49,6 +49,7 @@
     <Compile Include="Device\IDisplay.cs" />
     <Compile Include="Device\IGyroscope.cs" />
     <Compile Include="Device\ISensor.cs" />
+    <Compile Include="Device\Orientation.cs" />
     <Compile Include="Device\Sensor.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
