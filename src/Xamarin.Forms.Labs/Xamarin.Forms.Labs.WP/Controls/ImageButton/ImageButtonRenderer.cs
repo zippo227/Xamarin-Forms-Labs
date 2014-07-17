@@ -39,8 +39,8 @@ namespace Xamarin.Forms.Labs.WP8.Controls.ImageButton
                     {
                         Orientation = (sourceButton.Orientation == ImageOrientation.ImageOnTop ||
                                        sourceButton.Orientation == ImageOrientation.ImageOnBottom)
-                                          ? Orientation.Vertical
-                                          : Orientation.Horizontal
+                                          ? System.Windows.Controls.Orientation.Vertical
+                                          : System.Windows.Controls.Orientation.Horizontal
                     };
 
                 this.currentImage = await GetImageAsync(sourceButton.Source, this.GetHeight(sourceButton.ImageHeightRequest), this.GetWidth(sourceButton.ImageWidthRequest));
