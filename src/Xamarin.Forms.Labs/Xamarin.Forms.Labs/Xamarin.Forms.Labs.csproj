@@ -84,6 +84,7 @@
       <DependentUpon>AutoCompleteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\Media\IMediaPicker.cs" />
+    <Compile Include="Services\NetworkStatus.cs" />
     <Compile Include="Services\Serialization\IByteSerializer.cs" />
     <Compile Include="Services\Serialization\IJsonSerializer.cs" />
     <Compile Include="Services\Serialization\IProtoBufSerializer.cs" />
