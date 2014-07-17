@@ -32,7 +32,7 @@ namespace Xamarin.Forms.Labs.Sample
 				return _duration;
 			}
 			set {
-				this.ChangeAndNotify (ref _duration, value,"Duration");
+				SetProperty (ref _duration, value);
 				NotifyPropertyChanged ("DurationText");
 			}
 		}

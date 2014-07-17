@@ -153,6 +153,9 @@
     <BundleResource Include="Toolkit.Content\ApplicationBar.Check.png" />
     <BundleResource Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <BundleResource Include="Toolkit.Content\ApplicationBar.Add.png" />
+    <Content Include="BusyEarnin.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="HTML\canvasjs.min.js" />
     <Content Include="HTML\home.html" />
     <Content Include="Images\icon_facebook.png" />

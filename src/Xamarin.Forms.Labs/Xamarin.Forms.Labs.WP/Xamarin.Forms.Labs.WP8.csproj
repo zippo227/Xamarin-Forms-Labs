@@ -126,6 +126,7 @@
     <Compile Include="Services\Geolocation\Geolocator.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\Media\MediaPicker.cs" />
+    <Compile Include="Services\SoundService.cs" />
     <Compile Include="Services\TextToSpeechService.cs" />
     <Compile Include="XFormsApp.cs" />
   </ItemGroup>
