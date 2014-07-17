@@ -193,6 +193,7 @@
     <Content Include="..\Xamarin.Forms.Labs.Sample.WP\HTML\home.html">
       <Link>HTML\home.html</Link>
     </Content>
+    <BundleResource Include="Resources\imgNotAvailable.png" />
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
