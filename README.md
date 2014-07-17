@@ -16,6 +16,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - AutoComplete (beta)
  - HybridWebView (alpha)
  - Web Image (beta)
+ - GridView (IOS beta)
 
 **Available services (Beta)**
 
@@ -27,6 +28,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - Accelerometer
  - Display
  - Cache
+ - SoundService
 
 
 **Available Mvvm helpers (Beta)**
