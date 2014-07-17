@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using MonoTouch.SystemConfiguration;
 using MonoTouch.CoreFoundation;
+using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.iOS.Services
 {
@@ -14,26 +15,6 @@ namespace Xamarin.Forms.Labs.iOS.Services
         private static NetworkReachability defaultRouteReachability;
         private static NetworkReachability remoteHostReachability;
 
-        /// <summary>
-        /// The network status.
-        /// </summary>
-        public enum NetworkStatus
-        {
-            /// <summary>
-            /// Network not reachable.
-            /// </summary>
-            NotReachable,
-
-            /// <summary>
-            /// Network reachable via carrier data network.
-            /// </summary>
-            ReachableViaCarrierDataNetwork,
-
-            /// <summary>
-            /// Network reachable via WiFi network.
-            /// </summary>
-            ReachableViaWiFiNetwork
-        }
 
         /// <summary>
         /// Checks if network is reachable without requiring connection.
