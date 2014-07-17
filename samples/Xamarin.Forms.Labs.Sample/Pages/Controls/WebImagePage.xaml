@@ -5,7 +5,7 @@
 					   x:Class="Xamarin.Forms.Labs.Sample.Pages.Controls.WebImagePage"
              Title="Web Image">
   <StackLayout>
-    <controls:WebImage ImageUrl="http://www.stockvault.net/data/2011/05/31/124348/small.jpg"/>
+    <controls:WebImage ImageUrl="http://www.stockvault.net/data/2011/05/31/124348/small.jpg" DefaultImage="imgNotAvailable.png"/>
   </StackLayout>
 
 </ContentPage>
