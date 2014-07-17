@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xamarin.Forms.Labs.Device
+namespace Xamarin.Forms.Labs
 {
     public enum Orientation
     {
