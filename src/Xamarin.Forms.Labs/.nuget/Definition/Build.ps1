@@ -96,7 +96,7 @@ try
     ## ----------
     $configuration = "Release"
     $basePath = Get-Location
-    $pathToBin = [System.IO.Path]::GetFullPath( "$basePath\..\..\Xamarin.Forms.Labs\Bin\$configuration" )
+    $pathToBin = [System.IO.Path]::GetFullPath( "$basePath\..\..\..\..\ReleaseBuild" )
     $pathToNuGetPackager = [System.IO.Path]::GetFullPath( "$basePath\..\NuGet.exe" )
     $pathToNuGetPackageOutput = [System.IO.Path]::GetFullPath( "$basePath\..\Packages" )
     $originalBackground = $host.UI.RawUI.BackgroundColor
