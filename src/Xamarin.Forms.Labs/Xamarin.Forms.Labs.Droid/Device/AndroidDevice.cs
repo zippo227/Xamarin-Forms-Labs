@@ -62,6 +62,18 @@ namespace Xamarin.Forms.Labs
 
         #region IDevice implementation
         /// <summary>
+        /// Gets Unique Id for the device.
+        /// </summary>
+        /// <value>
+        /// The id for the device.
+        /// </value>
+        public string Id
+        {
+            // TODO: Verify what is the best combination of Unique Id for Android
+            get { return Build.Serial; }
+        }
+
+        /// <summary>
         /// Gets the phone service for this device.
         /// </summary>
         /// <value>Phone service instance if available, otherwise null.</value>

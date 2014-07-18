@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Microsoft.Phone.Info;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
@@ -13,12 +14,17 @@ namespace Xamarin.Forms.Labs
 	public class WindowsPhoneDevice : IDevice
 	{
 		/// <summary>
-		/// The _current device
+		/// The current device.
 		/// </summary>
-		private static WindowsPhoneDevice _currentDevice;
+		private static WindowsPhoneDevice currentDevice;
+
+        /// <summary>
+        /// The Id for the device.
+        /// </summary>
+        private string id;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.WindowsPhoneDevice" /> class.
+		/// Prevents a default instance of the <see cref="WindowsPhoneDevice"/> class from being created.
 		/// </summary>
 		private WindowsPhoneDevice()
 		{
@@ -43,9 +49,33 @@ namespace Xamarin.Forms.Labs
 		/// Gets the current device.
 		/// </summary>
 		/// <value>The current device.</value>
-		public static IDevice CurrentDevice { get { return _currentDevice ?? (_currentDevice = new WindowsPhoneDevice()); } }
+		public static IDevice CurrentDevice { get { return currentDevice ?? (currentDevice = new WindowsPhoneDevice()); } }
 
 		#region IDevice Members
+
+        /// <summary>
+        /// Gets Unique Id for the device.
+        /// </summary>
+        /// <value>
+        /// The id for the device.
+        /// </value>
+	    public string Id
+	    {
+	        get
+	        {
+                if (string.IsNullOrEmpty(this.id))
+                {
+                    object o;
+                    if (DeviceExtendedProperties.TryGetValue("DeviceUniqueId", out o))
+                    {
+                        this.id = Convert.ToBase64String((byte[])o);
+                    }
+                }
+
+	            return this.id;
+	        }
+	    }
+
 		/// <summary>
 		/// Gets the display.
 		/// </summary>
@@ -77,7 +107,7 @@ namespace Xamarin.Forms.Labs
 		}
 
 		/// <summary>
-		/// Gets the accelerometer for the device if available
+		/// Gets the accelerometer for the device if available.
 		/// </summary>
 		/// <value>Instance of IAccelerometer if available, otherwise null.</value>
 		public IAccelerometer Accelerometer
@@ -109,7 +139,7 @@ namespace Xamarin.Forms.Labs
 		/// <summary>
 		/// Gets the name.
 		/// </summary>
-		/// <value>The name.</value>
+		/// <value>The name of the device.</value>
 		public string Name
 		{
 			get { return DeviceStatus.DeviceName; }

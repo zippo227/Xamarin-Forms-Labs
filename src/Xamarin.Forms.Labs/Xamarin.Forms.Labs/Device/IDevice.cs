@@ -10,6 +10,11 @@ namespace Xamarin.Forms.Labs
 	/// </summary>
 	public interface IDevice
 	{
+        /// <summary>
+        /// Gets Unique Id for the device.
+        /// </summary>
+        string Id { get; }
+
 		/// <summary>
 		/// Gets the display information for the device.
 		/// </summary>
@@ -47,7 +52,7 @@ namespace Xamarin.Forms.Labs
 		/// <summary>
 		/// Gets the name of the device.
 		/// </summary>
-		/// <value>The name.</value>
+		/// <value>The name of the device.</value>
 		string Name { get; }
 
 		/// <summary>
