@@ -27,13 +27,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{FE751317-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{68C92848-7B0B-4312-A05A-F71FA1157F46}"
 	ProjectSection(SolutionItems) = preProject
-		.nuget\BuildNewPackage-RanAutomatically.ps1 = .nuget\BuildNewPackage-RanAutomatically.ps1
-		.nuget\New-NuGetPackage.ps1 = .nuget\New-NuGetPackage.ps1
+		.nuget\Build All.ps1 = .nuget\Build All.ps1
+		.nuget\Clean All.ps1 = .nuget\Clean All.ps1
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
-		.nuget\UploadPackage-RunManually.bat = .nuget\UploadPackage-RunManually.bat
-		.nuget\UploadPackage-RunManually.ps1 = .nuget\UploadPackage-RunManually.ps1
+		.nuget\Push All.ps1 = .nuget\Push All.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs.WP8", "Xamarin.Forms.Labs.WP\Xamarin.Forms.Labs.WP8.csproj", "{E38D2AA4-D265-4FF2-90EC-E02EB59F8A73}"
@@ -95,6 +94,22 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs.Services.Web.RestClient.Droid", "Plugins\Web\Xamarin.Forms.Labs.Services.Web.RestClient\Xamarin.Forms.Labs.Services.Web.RestClient.Droid.csproj", "{6F2F5193-BB10-4DA3-92ED-25D5410DC299}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs.Services.Web.RestClient.WP8", "Plugins\Web\Xamarin.Forms.Labs.Services.Web.RestClient\Xamarin.Forms.Labs.Services.Web.RestClient.WP8.csproj", "{619F28A9-0B72-43FA-B37C-13D42DA39CF3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Definition", "Definition", "{00CA1022-3B1F-471C-9269-6611CAD6C9B8}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\Definition\Build.ps1 = .nuget\Definition\Build.ps1
+		.nuget\Definition\Clean.ps1 = .nuget\Definition\Clean.ps1
+		.nuget\Definition\Core.NuSpec = .nuget\Definition\Core.NuSpec
+		.nuget\Definition\Services Caching.NuSpec = .nuget\Definition\Services Caching.NuSpec
+		.nuget\Definition\Services Cryptography.NuSpec = .nuget\Definition\Services Cryptography.NuSpec
+		.nuget\Definition\Services IoC Autofac.NuSpec = .nuget\Definition\Services IoC Autofac.NuSpec
+		.nuget\Definition\Services IoC Ninject.NuSpec = .nuget\Definition\Services IoC Ninject.NuSpec
+		.nuget\Definition\Services IoC SimpleInjector.NuSpec = .nuget\Definition\Services IoC SimpleInjector.NuSpec
+		.nuget\Definition\Services IoC TinyIOC.NuSpec = .nuget\Definition\Services IoC TinyIOC.NuSpec
+		.nuget\Definition\Services Serialization JSON.NuSpec = .nuget\Definition\Services Serialization JSON.NuSpec
+		.nuget\Definition\Services Serialization ProtoBuf.NuSpec = .nuget\Definition\Services Serialization ProtoBuf.NuSpec
+		.nuget\Definition\Services Serialization ServiceStack.NuSpec = .nuget\Definition\Services Serialization ServiceStack.NuSpec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -385,9 +400,9 @@ Global
 		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.AppStore|x86.ActiveCfg = Release|x86
 		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.AppStore|x86.Build.0 = Release|x86
 		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.AppStore|x86.Deploy.0 = Release|x86
-		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.Debug|Any CPU.Build.0 = Debug|x86
-		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.Debug|Any CPU.Deploy.0 = Debug|x86
+		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.Debug|ARM.ActiveCfg = Debug|ARM
 		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.Debug|ARM.Build.0 = Debug|ARM
 		{5DE84A66-F761-41D2-9714-AF292CA9DBEB}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -1205,8 +1220,9 @@ Global
 		{CB46882F-8C00-4938-A336-3C10B39D7500} = {C5E1079F-3449-4306-9E63-ED4D36EEBF75}
 		{6F2F5193-BB10-4DA3-92ED-25D5410DC299} = {C5E1079F-3449-4306-9E63-ED4D36EEBF75}
 		{619F28A9-0B72-43FA-B37C-13D42DA39CF3} = {C5E1079F-3449-4306-9E63-ED4D36EEBF75}
+		{00CA1022-3B1F-471C-9269-6611CAD6C9B8} = {68C92848-7B0B-4312-A05A-F71FA1157F46}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\..\samples\Xamarin.Forms.Labs.Sample.Droid\Xamarin.Forms.Labs.Sample.Droid.csproj
+		StartupItem = ..\..\samples\Xamarin.Forms.Labs.Sample.iOS\Xamarin.Forms.Labs.Sample.iOS.csproj
 	EndGlobalSection
 EndGlobal

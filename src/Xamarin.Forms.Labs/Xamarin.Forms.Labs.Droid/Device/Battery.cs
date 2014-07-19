@@ -23,35 +23,35 @@ namespace Xamarin.Forms.Labs
 
         private static bool? chargerConnected;
 
-        partial void StartLevelMonitoring()
+        partial void StartLevelMonitoring ()
         {
-            if (levelMonitor == null)
-            {
-                levelMonitor = new LevelMonitor(this);
+            if (levelMonitor == null) {
+                levelMonitor = new LevelMonitor (this);
             }
-            levelMonitor.Start();
+            levelMonitor.Start ();
         }
 
-        partial void StopLevelMonitoring()
+        partial void StopLevelMonitoring ()
         {
-            if (levelMonitor == null) return;
-            levelMonitor.Stop();
+            if (levelMonitor == null)
+                return;
+            levelMonitor.Stop ();
             levelMonitor = null;
         }
 
-        partial void StartChargerMonitoring()
+        partial void StartChargerMonitoring ()
         {
-            if (chargerMonitor == null)
-            {
-                chargerMonitor = new ChargerMonitor(this);
+            if (chargerMonitor == null) {
+                chargerMonitor = new ChargerMonitor (this);
             }
-            chargerMonitor.Start();
+            chargerMonitor.Start ();
         }
 
-        partial void StopChargerMonitoring()
+        partial void StopChargerMonitoring ()
         {
-            if (chargerMonitor == null) return;
-            chargerMonitor.Stop();
+            if (chargerMonitor == null)
+                return;
+            chargerMonitor.Stop ();
             chargerMonitor = null;
         }
 
@@ -61,13 +61,11 @@ namespace Xamarin.Forms.Labs
         /// <value>
         /// The level.
         /// </value>
-        public int Level
-        {
-            get { return GetLevel(); }
-            private set
-            {
+        public int Level {
+            get { return GetLevel (); }
+            private set {
                 level = value;
-                onLevelChange.Invoke(this, level.Value);
+                onLevelChange.Invoke (this, level.Value);
             }
         }
 
@@ -75,16 +73,13 @@ namespace Xamarin.Forms.Labs
         /// Gets a value indicating whether this <see cref="SimplyMobile.Device.Battery"/> is charging.
         /// </summary>
         /// <value><c>true</c> if charging; otherwise, <c>false</c>.</value>
-        public bool Charging
-        {
-            get
-            {
-                return GetChargerState();
+        public bool Charging {
+            get {
+                return GetChargerState ();
             }
-            private set
-            {
+            private set {
                 chargerConnected = value;
-                onChargerStatusChanged.Invoke(this, chargerConnected.Value);
+                onChargerStatusChanged.Invoke (this, chargerConnected.Value);
             }
         }
 
@@ -92,18 +87,16 @@ namespace Xamarin.Forms.Labs
         /// Gets the level.
         /// </summary>
         /// <returns>The level.</returns>
-        private static int GetLevel()
+        private static int GetLevel ()
         {
-            if (levelMonitor != null && level.HasValue)
-            {
+            if (levelMonitor != null && level.HasValue) {
                 return level.Value;
             }
 
             var f = -1;
-            var intent = new IntentFilter(Intent.ActionBatteryChanged).RegisterReceiver();
-            if (intent != null)
-            {
-                f = LevelMonitor.GetMonitorLevel(intent);
+            var intent = new IntentFilter (Intent.ActionBatteryChanged).RegisterReceiver ();
+            if (intent != null) {
+                f = LevelMonitor.GetMonitorLevel (intent);
             }
 
             return f;
@@ -113,51 +106,45 @@ namespace Xamarin.Forms.Labs
         /// Gets the state of the charger.
         /// </summary>
         /// <returns><c>true</c>, if charger state was gotten, <c>false</c> otherwise.</returns>
-        private static bool GetChargerState()
+        private static bool GetChargerState ()
         {
-            if (chargerMonitor != null && chargerConnected.HasValue)
-            {
+            if (chargerMonitor != null && chargerConnected.HasValue) {
                 return chargerConnected.Value;
             }
 
-            var o = new object();
-
-            var intent = new IntentFilter(Intent.ActionBatteryChanged).RegisterReceiver();
-            if (intent == null)
-            {
+            var intent = new IntentFilter (Intent.ActionBatteryChanged).RegisterReceiver ();
+            if (intent == null) {
                 return false;
             }
 
-            int status = intent.GetIntExtra(Android.OS.BatteryManager.ExtraStatus, -1);
+            int status = intent.GetIntExtra (Android.OS.BatteryManager.ExtraStatus, -1);
             return (status == (int)Android.OS.BatteryPlugged.Ac || status == (int)Android.OS.BatteryPlugged.Usb);
         }
-            
+
         private class LevelMonitor : BroadcastMonitor
         {
             private Battery battery;
 
-            public LevelMonitor(Battery battery)
+            public LevelMonitor (Battery battery)
             {
                 this.battery = battery;
             }
 
-            public override void OnReceive(Context context, Intent intent)
+            public override void OnReceive (Context context, Intent intent)
             {
-                this.battery.Level = GetMonitorLevel(intent);
+                this.battery.Level = GetMonitorLevel (intent);
             }
 
-            protected override IntentFilter Filter
-            {
-                get { return new IntentFilter(Intent.ActionBatteryChanged); }
+            protected override IntentFilter Filter {
+                get { return new IntentFilter (Intent.ActionBatteryChanged); }
             }
 
-            public static int GetMonitorLevel(Intent intent)
+            public static int GetMonitorLevel (Intent intent)
             {
-                var rawlevel = intent.GetIntExtra(BatteryManager.ExtraLevel, -1);
-                var scale = intent.GetIntExtra(BatteryManager.ExtraScale, -1);
+                var rawlevel = intent.GetIntExtra (BatteryManager.ExtraLevel, -1);
+                var scale = intent.GetIntExtra (BatteryManager.ExtraScale, -1);
 
-                if (rawlevel >= 0 && scale > 0)
-                {
+                if (rawlevel >= 0 && scale > 0) {
                     return rawlevel * 100 / scale;
                 }
 
@@ -169,24 +156,22 @@ namespace Xamarin.Forms.Labs
         {
             private Battery battery;
 
-            public ChargerMonitor(Battery battery)
+            public ChargerMonitor (Battery battery)
             {
                 this.battery = battery;
             }
 
-            protected override IntentFilter Filter
-            {
-                get
-                {
-                    var filter = new IntentFilter(Intent.ActionPowerConnected);
-                    filter.AddAction(Intent.ActionPowerDisconnected);
+            protected override IntentFilter Filter {
+                get {
+                    var filter = new IntentFilter (Intent.ActionPowerConnected);
+                    filter.AddAction (Intent.ActionPowerDisconnected);
                     return filter;
                 }
             }
 
-            public override void OnReceive(Context context, Intent intent)
+            public override void OnReceive (Context context, Intent intent)
             {
-                this.battery.Charging = intent.Action.Equals(Intent.ActionPowerConnected);
+                this.battery.Charging = intent.Action.Equals (Intent.ActionPowerConnected);
             }
         }
     }

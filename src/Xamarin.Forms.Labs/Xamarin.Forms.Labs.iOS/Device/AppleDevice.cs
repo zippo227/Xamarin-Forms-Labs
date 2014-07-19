@@ -39,6 +39,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the runtime device for Apple's devices.
         /// </summary>
+        /// <value>
+        /// The current device.
+        /// </value>
         public static IDevice CurrentDevice
         {
             get
@@ -74,8 +77,26 @@ namespace Xamarin.Forms.Labs
 
         #region IDevice implementation
         /// <summary>
-        /// Gets the display information for the device.
+        /// Gets Unique Id for the device.
         /// </summary>
+        /// <value>
+        /// The id for the device.
+        /// </value>
+        public string Id
+        {
+            get
+            {
+                // TODO: implement Unique Id for iOS
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the display information for the device.
+        /// </summary>
+        /// <value>
+        /// The display.
+        /// </value>
         public IDisplay Display
         {
             get;
@@ -83,7 +104,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the phone service for this device.
+        /// Gets or sets the phone service for this device.
         /// </summary>
         /// <value>Phone service instance if available, otherwise null.</value>
         public IPhoneService PhoneService
@@ -93,8 +114,11 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the battery for the device.
+        /// Gets or sets the battery for the device.
         /// </summary>
+        /// <value>
+        /// The battery.
+        /// </value>
         public IBattery Battery
         {
             get;
@@ -112,7 +136,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the accelerometer for the device if available
+        /// Gets or sets the accelerometer for the device if available
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>
         public IAccelerometer Accelerometer
@@ -132,7 +156,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the name of the device.
+        /// Gets or sets the name of the device.
         /// </summary>
         public string Name
         {
@@ -141,7 +165,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the firmware version.
+        /// Gets or sets the firmware version.
         /// </summary>
         public string FirmwareVersion
         {
@@ -150,7 +174,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the hardware version.
+        /// Gets or sets the hardware version.
         /// </summary>
         public string HardwareVersion
         {
@@ -161,6 +185,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the manufacturer.
         /// </summary>
+        /// <value>
+        /// The manufacturer.
+        /// </value>
         public string Manufacturer
         {
             get

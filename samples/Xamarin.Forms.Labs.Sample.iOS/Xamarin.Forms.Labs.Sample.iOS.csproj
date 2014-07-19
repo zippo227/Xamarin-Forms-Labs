@@ -110,14 +110,14 @@
     <Reference Include="SQLite.Net.Platform.XamarinIOS">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\SQLite.Net.Platform.XamarinIOS.2.3.0\lib\monotouch\SQLite.Net.Platform.XamarinIOS.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\lib\MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Forms.Platform.iOS">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\lib\MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +126,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Resources\BusyEarnin.mp3" />
+    <BundleResource Include="Resources\ad16.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -172,6 +173,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" />
   <ItemGroup>
     <BundleResource Include="Resources\icon_facebook.png" />
   </ItemGroup>
@@ -191,12 +193,12 @@
     <Content Include="..\Xamarin.Forms.Labs.Sample.WP\HTML\home.html">
       <Link>HTML\home.html</Link>
     </Content>
+    <BundleResource Include="Resources\imgNotAvailable.png" />
   </ItemGroup>
-  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
 </Project>
