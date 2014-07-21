@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Services.Serialization
 {
     public static class StreamSerializerExtensions
     {
-        /// <summary>
-        /// Deserializes from stream.
-        /// </summary>
-        /// <returns>The from stream.</returns>
-        /// <param name="stream">Stream.</param>
-        /// <typeparam name="T">The type of object to deserialize.</typeparam>
         public static T DeserializeFromString<T>(this IStreamSerializer serializer, string value, Encoding encoding = null)
         {
             var encoder = encoding ?? Encoding.UTF8;
@@ -42,7 +32,7 @@ namespace Xamarin.Forms.Labs.Services.Serialization
             }
         }
 
-        public static byte[] SerializeToBytes(this IStreamSerializer serializer, object obj, Encoding encoding = null)
+        public static byte[] GetSerializedBytes(this IStreamSerializer serializer, object obj, Encoding encoding = null)
         {
             using (var stream = new MemoryStream())
             {

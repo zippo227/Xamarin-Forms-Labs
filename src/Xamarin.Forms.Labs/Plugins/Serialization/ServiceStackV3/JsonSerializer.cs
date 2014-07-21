@@ -77,9 +77,9 @@ namespace Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3
 
         #region IByteSerializer Members
 
-        public byte[] Serialize<T>(T obj)
+        public byte[] SerializeToBytes<T>(T obj)
         {
-            return (this as IStringSerializer).SerializeToBytes(obj);
+            return (this as IStringSerializer).GetSerializedBytes(obj);
         }
 
         public T Deserialize<T>(byte[] data)

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Services.Serialization
 {
@@ -16,28 +12,24 @@ namespace Xamarin.Forms.Labs.Services.Serialization
         /// Serializes to stream.
         /// </summary>
         /// <param name="obj">Object to serialize.</param>
-        /// <param name="stream">Stream.</param>
+        /// <param name="stream">Stream to serialize to.</param>
         public static void SerializeToStream(this IStringSerializer serializer, object obj, Stream stream)
         {
-            using (var streamWriter = new StreamWriter(stream))
-            {
-                streamWriter.Write(serializer.Serialize(obj));
-            }
+            var streamWriter = new StreamWriter(stream);
+            streamWriter.Write(serializer.Serialize(obj));
         }
 
         /// <summary>
         /// Deserializes from stream.
         /// </summary>
-        /// <returns>The from stream.</returns>
-        /// <param name="stream">Stream.</param>
+        /// <returns>The deserialized object.</returns>
+        /// <param name="serializer">The string serializer.</param>
+        /// <param name="stream">Stream to deserialize from.</param>
         /// <typeparam name="T">The type of object to deserialize.</typeparam>
         public static T DeserializeFromStream<T>(this IStringSerializer serializer, Stream stream)
         {
-            using (var streamReader = new StreamReader(stream))
-            {
-                var text = streamReader.ReadToEnd();
-                return serializer.Deserialize<T>(text);
-            }
+            var text = new StreamReader(stream).ReadToEnd();
+            return serializer.Deserialize<T>(text);
         }
 
         /// <summary>
@@ -67,7 +59,7 @@ namespace Xamarin.Forms.Labs.Services.Serialization
             return serializer.Deserialize<T>(str);
         }
 
-        public static byte[] SerializeToBytes(this IStringSerializer serializer, object obj, Encoding encoding = null)
+        public static byte[] GetSerializedBytes(this IStringSerializer serializer, object obj, Encoding encoding = null)
         {
             var encoder = encoding ?? Encoding.UTF8;
             var str = serializer.Serialize(obj);
