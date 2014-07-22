@@ -21,6 +21,35 @@ namespace Xamarin.Forms.Labs.Services.Serialization.JsonNET
     public class JsonSerializer : StringSerializer, IJsonSerializer
     {
         /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="Xamarin.Forms.Labs.Services.Serialization.JsonNET.JsonSerializer"/> class
+        /// with the most flexible settings.
+        /// </summary>
+        /// <remarks>
+        /// These settings might not be the most efficient so consider using the constructor
+        /// with options.
+        /// </remarks> 
+        public JsonSerializer()
+        {
+            JsonConvert.DefaultSettings = JsonConvert.DefaultSettings ?? new Func<JsonSerializerSettings>(() => 
+                new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.All,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+        }
+
+        public JsonSerializer(TypeNameHandling typeNameHandling, ReferenceLoopHandling referenceLoopHandling)
+        {
+            JsonConvert.DefaultSettings = JsonConvert.DefaultSettings ?? new Func<JsonSerializerSettings>(() => 
+                new JsonSerializerSettings()
+                {
+                    TypeNameHandling = typeNameHandling,
+                    ReferenceLoopHandling = referenceLoopHandling
+                });
+        }
+
+        /// <summary>
         /// Gets the serialization format.
         /// </summary>
         /// <value>Serialization format.</value>

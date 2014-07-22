@@ -15,8 +15,13 @@ namespace Xamarin.Forms.Labs.Services.Serialization
         /// <param name="stream">Stream to serialize to.</param>
         public static void SerializeToStream(this IStringSerializer serializer, object obj, Stream stream)
         {
-            var streamWriter = new StreamWriter(stream);
-            streamWriter.Write(serializer.Serialize(obj));
+            var streamWriter = new StreamWriter(stream)
+            {
+                AutoFlush = true
+            };
+
+            var str = serializer.Serialize(obj);
+            streamWriter.Write(str);
         }
 
         /// <summary>

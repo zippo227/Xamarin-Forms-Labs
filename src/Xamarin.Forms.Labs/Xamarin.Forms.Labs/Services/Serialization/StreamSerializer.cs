@@ -27,7 +27,7 @@
         /// <typeparam name="T">Type of object to serialize to.</typeparam>
         /// <param name="obj">Object to serialize.</param>
         /// <returns>Serialized byte[] of the object.</returns>
-        public byte[] SerializeToBytes<T>(T obj)
+        public virtual byte[] SerializeToBytes<T>(T obj)
         {
             return (this as IStreamSerializer).GetSerializedBytes(obj);
         }
@@ -38,7 +38,7 @@
         /// <typeparam name="T">Type of object to serialize to.</typeparam>
         /// <param name="data">Serialized object as byte buffer.</param>
         /// <returns>Object of type T.</returns>
-        public T Deserialize<T>(byte[] data)
+        public virtual T Deserialize<T>(byte[] data)
         {
             return (this as IStreamSerializer).DeserializeFromBytes<T>(data);
         }
@@ -70,7 +70,7 @@
         /// <typeparam name="T">Type of object to serialize.</typeparam>
         /// <param name="obj">Object to serialize.</param>
         /// <returns>Serialized string of the object.</returns>
-        public string Serialize<T>(T obj)
+        public virtual string Serialize<T>(T obj)
         {
             return (this as IStreamSerializer).SerializeToString(obj);
         }
@@ -81,7 +81,7 @@
         /// <typeparam name="T">Type of object to serialize to.</typeparam>
         /// <param name="data">Serialized object.</param>
         /// <returns>Object of type T.</returns>
-        public T Deserialize<T>(string data)
+        public virtual T Deserialize<T>(string data)
         {
             return (this as IStreamSerializer).DeserializeFromString<T>(data);
         }
