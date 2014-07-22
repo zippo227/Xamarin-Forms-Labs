@@ -17,7 +17,7 @@ namespace Xamarin.Forms.Labs.Sample
         private string numberToCall = "+1 (855) 926-2746";
         private string textToSpeak = "Hello from Xamarin Forms Labs";
         private string deviceTimerInfo = string.Empty;
-		private ObservableCollection<AutoCompleteSearchObject> items;
+		private ObservableCollection<object> items;
         private ObservableCollection<string> images;
         private Command<string> searchCommand;
 		private Command<object> cellSelectedCommand;
@@ -30,7 +30,7 @@ namespace Xamarin.Forms.Labs.Sample
         {
             SpeakCommand = new Command (() => DependencyService.Get<ITextToSpeechService> ().Speak (TextToSpeak));
 
-            Items = new ObservableCollection<AutoCompleteSearchObject> ();
+			Items = new ObservableCollection<object> ();
             Images = new ObservableCollection<string> ();
             for (var i = 0; i < 10; i++) {
                 Images.Add ("ad16.jpg");
@@ -144,7 +144,7 @@ namespace Xamarin.Forms.Labs.Sample
         /// <value>
         /// The items.
         /// </value>
-		public ObservableCollection<AutoCompleteSearchObject> Items {
+		public ObservableCollection<object> Items {
             get {
                 return items;
             }
@@ -221,7 +221,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
         }
     }
-	public class TestPerson : ObservableObject, AutoCompleteSearchObject
+	public class TestPerson : ObservableObject/*, AutoCompleteSearchObject*/
 	{
 		public const string FirstNameProperty = "FirstName";
 		public string firstName;
@@ -241,7 +241,7 @@ namespace Xamarin.Forms.Labs.Sample
 			LastName = lastnameInput;
 			Age = ageInput;
 		}
-		public string SearchString ()
+		public override string ToString()/*string StringToSearchBy ()*/
 		{
 			return FirstName;
 		}
