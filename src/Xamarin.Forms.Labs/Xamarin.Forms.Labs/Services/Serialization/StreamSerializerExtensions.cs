@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Xamarin.Forms.Labs.Services.Serialization
@@ -7,9 +8,10 @@ namespace Xamarin.Forms.Labs.Services.Serialization
     {
         public static T DeserializeFromString<T>(this IStreamSerializer serializer, string value, Encoding encoding = null)
         {
-            var encoder = encoding ?? Encoding.UTF8;
+            //var encoder = encoding ?? Encoding.UTF8;
 
-            var bytes = encoder.GetBytes(value);
+            //var bytes = encoder.GetBytes(value);
+            var bytes = Convert.FromBase64String(value);
             using (var stream = new MemoryStream(bytes))
             {
                 return serializer.Deserialize<T>(stream);
@@ -19,11 +21,14 @@ namespace Xamarin.Forms.Labs.Services.Serialization
         public static string SerializeToString<T>(this IStreamSerializer serializer, T obj, Encoding encoding = null)
         {
             var encoder = encoding ?? Encoding.UTF8;
-            using (var stream = new StreamReader(new MemoryStream(), encoder))
+            using (var stream = new MemoryStream())
             {
-                serializer.Serialize<T>(obj, stream.BaseStream);
-                stream.BaseStream.Position = 0;
-                return stream.ReadToEnd();
+                serializer.Serialize<T>(obj, stream);
+                stream.Position = 0;
+                var bytes = new byte[stream.Length];
+                stream.Read(bytes, 0, (int)stream.Length);
+
+                return Convert.ToBase64String(bytes);
             }
         }
 

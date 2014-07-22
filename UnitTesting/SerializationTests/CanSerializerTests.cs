@@ -18,7 +18,7 @@ using TextSerializationTests;
 
 namespace SerializationTests
 {
-    //[TestFixture()]
+    [TestFixture()]
     public abstract class CanSerializerTests
     {
         protected abstract ISerializer Serializer { get; }
@@ -84,17 +84,45 @@ namespace SerializationTests
         }
 
         [Test()]
-        public void CanSerializeDateTime()
+        public void CanSerializeDateTimeAsString()
         {
             var p = DateTime.Now;
             Assert.IsTrue(this.Serializer.CanSerializeString<DateTime>(p));
         }
 
         [Test()]
-        public void CanSerializeDateTimeOffset()
+        public void CanSerializeDateTimeAsByte()
+        {
+            var p = DateTime.Now;
+            Assert.IsTrue(this.Serializer.CanSerializeBytes<DateTime>(p));
+        }
+
+        [Test()]
+        public void CanSerializeDateTimeAsStream()
+        {
+            var p = DateTime.Now;
+            Assert.IsTrue(this.Serializer.CanSerializeStream<DateTime>(p));
+        }
+
+        [Test()]
+        public void CanSerializeDateTimeOffsetAsString()
         {
             var p = new DateTimeOffset(DateTime.Now);
             Assert.IsTrue(this.Serializer.CanSerializeString<DateTimeOffset>(p));
+        }
+
+        [Test()]
+        public void CanSerializeDateTimeOffsetAsByte()
+        {
+            var p = new DateTimeOffset(DateTime.Now);
+            Assert.IsTrue(this.Serializer.CanSerializeBytes<DateTimeOffset>(p));
+        }
+
+        [Test()]
+        public void CanSerializeDateTimeOffsetAsStream()
+        {
+            var p = new DateTimeOffset(DateTime.Now);
+            Assert.IsTrue(this.Serializer.CanSerializeStream<DateTimeOffset>(p));
         }
 
         [Test()]
