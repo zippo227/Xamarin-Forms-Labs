@@ -221,7 +221,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
         }
     }
-	public class TestPerson : ObservableObject/*, AutoCompleteSearchObject*/
+	public class TestPerson : ObservableObject, AutoCompleteSearchObject
 	{
 		public const string FirstNameProperty = "FirstName";
 		public string firstName;
@@ -241,7 +241,7 @@ namespace Xamarin.Forms.Labs.Sample
 			LastName = lastnameInput;
 			Age = ageInput;
 		}
-		public override string ToString()/*string StringToSearchBy ()*/
+		public string StringToSearchBy ()
 		{
 			return FirstName;
 		}
