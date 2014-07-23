@@ -86,8 +86,7 @@ namespace Xamarin.Forms.Labs
         {
             get
             {
-                // TODO: implement Unique Id for iOS
-                throw new NotImplementedException();
+               return UIDevice.CurrentDevice.IdentifierForVendor.AsString();
             }
         }
 
