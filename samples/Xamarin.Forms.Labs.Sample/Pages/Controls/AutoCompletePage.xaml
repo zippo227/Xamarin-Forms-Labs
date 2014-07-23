@@ -9,12 +9,15 @@
     <ResourceDictionary>
 	<!--    this isn't working yet-->
       <DataTemplate x:Key="SugestionItemTemplate">
-			<ViewCell >
-					<ViewCell.View >
+			<ViewCell Height="60">
+					<ViewCell.View>
 						<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-							<Grid Padding="15,10,10,10" VerticalOptions="FillAndExpand"  >
-								<Label Text="{Binding}" VerticalOptions="Center" HorizontalOptions="Start" />
-							</Grid>
+							
+								<Label Text="{Binding FirstName}" VerticalOptions="Center" HorizontalOptions="Start" />
+						
+							
+								<Label Text="{Binding LastName}" VerticalOptions="Center" HorizontalOptions="Start" />
+							
 						</StackLayout>
 					</ViewCell.View>
 				</ViewCell>
@@ -24,14 +27,14 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         	<controls:AutoCompleteView 
-				Text="{Binding SearchText, Mode=TwoWay}"
 				SugestionItemDataTemplate="{StaticResource SugestionItemTemplate}"
-				Placeholder="type 'item'"
+				Placeholder="type 'firstname'"
 				ShowSearch="True"
 				SearchBackgroundColor="Blue"
 				SugestionBackgroundColor="Yellow"
 				SearchCommand="{Binding SearchCommand}"
 				Sugestions="{Binding Items, Mode=TwoWay}"
+				SelectedCommand = "{Binding CellSelectedCommand}"
 				/>
     </ContentPage.Content>
 </ContentPage>

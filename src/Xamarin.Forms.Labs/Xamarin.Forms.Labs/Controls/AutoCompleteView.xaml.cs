@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Xamarin.Forms.Labs.Controls
 {
@@ -28,17 +29,19 @@ namespace Xamarin.Forms.Labs.Controls
             };
             lstSugestions.ItemSelected += (s, e) =>
             {
-                entText.Text = (string)e.SelectedItem;
+				entText.Text = GetSearchString(e.SelectedItem);
+
                 AvailableSugestions.Clear();
                 ShowHideListbox(false);
+				SelectedCommand.Execute(e);
                 if (ExecuteOnSugestionClick
                    && SearchCommand != null && SearchCommand.CanExecute(Text))
                 {
-                    SearchCommand.Execute(Text);
+                    SearchCommand.Execute(e);
                 }
 
             };
-            AvailableSugestions = new ObservableCollection<string>();
+			AvailableSugestions = new ObservableCollection<object>();
             this.ShowHideListbox(false);
             lstSugestions.ItemsSource = this.AvailableSugestions;
             //lstSugestions.ItemTemplate = this.SugestionItemDataTemplate;
@@ -65,7 +68,7 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
-        public ObservableCollection<string> AvailableSugestions
+		public ObservableCollection<object> AvailableSugestions
         {
             get;
             private set;
@@ -75,12 +78,12 @@ namespace Xamarin.Forms.Labs.Controls
         #region Bindable Properties
 
         public static readonly BindableProperty SugestionsProperty =
-            BindableProperty.Create<AutoCompleteView, ObservableCollection<string>>
+			BindableProperty.Create<AutoCompleteView, ObservableCollection<object>>
         (p => p.Sugestions, null);
 
-        public ObservableCollection<string> Sugestions
+		public ObservableCollection<object> Sugestions
         {
-            get { return (ObservableCollection<string>)GetValue(SugestionsProperty); }
+			get { return (ObservableCollection<object>)GetValue(SugestionsProperty); }
             set { SetValue(SugestionsProperty, value); }
         }
 
@@ -100,12 +103,14 @@ namespace Xamarin.Forms.Labs.Controls
             var control = (obj as AutoCompleteView);
 
             control.btnSearch.IsEnabled = !string.IsNullOrEmpty(newPlaceHolderValue);
-
-            if (!string.IsNullOrEmpty(newPlaceHolderValue) && control.Sugestions != null)
+			string cleanedNewPlaceHolderValue = Regex.Replace(newPlaceHolderValue.ToLowerInvariant(), @"\s+", string.Empty);
+			if (!string.IsNullOrEmpty(cleanedNewPlaceHolderValue) && control.Sugestions != null)
             {
-
-                var filteredsugestions = control.Sugestions.Where(x => x.ToLowerInvariant().Contains(newPlaceHolderValue))
-                    .OrderByDescending(x => x.ToLowerInvariant().StartsWith(newPlaceHolderValue)).ToArray();
+				var filteredsugestions = control.Sugestions.Where(x => {
+					return Regex.Replace(GetSearchString(x).ToLowerInvariant(), @"\s+", string.Empty).Contains(cleanedNewPlaceHolderValue);
+				}).OrderByDescending(x => {
+					return Regex.Replace(GetSearchString(x).ToLowerInvariant(), @"\s+", string.Empty).StartsWith(cleanedNewPlaceHolderValue);
+				}).ToArray();
 
                 control.AvailableSugestions.Clear();
 
@@ -128,7 +133,15 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
-
+		public static string GetSearchString(object x)
+		{
+			AutoCompleteSearchObject itm;
+			if ((itm = x as AutoCompleteSearchObject) != null) {
+				return itm.StringToSearchBy ();
+			} else {
+				return x.ToString ();
+			}
+		}
         public static readonly BindableProperty PlaceholderProperty =
             BindableProperty.Create<AutoCompleteView, string>(
                 p => p.Placeholder, "", BindingMode.TwoWay, null,
@@ -174,6 +187,15 @@ namespace Xamarin.Forms.Labs.Controls
             set { SetValue(SearchCommandProperty, value); }
         }
 
+		public static readonly BindableProperty SelectedCommandProperty =
+			BindableProperty.Create<AutoCompleteView, ICommand>(
+				p => p.SelectedCommand, null);
+
+		public ICommand SelectedCommand
+		{
+			get { return (ICommand)GetValue(SelectedCommandProperty); }
+			set { SetValue(SelectedCommandProperty, value); }
+		}
 
         public static readonly BindableProperty SugestionItemDataTemplateProperty =
             BindableProperty.Create<AutoCompleteView, DataTemplate>(p => p.SugestionItemDataTemplate, null,
@@ -242,5 +264,10 @@ namespace Xamarin.Forms.Labs.Controls
 
         #endregion
     }
+
+	public interface AutoCompleteSearchObject
+	{
+		string StringToSearchBy ();
+	}
 }
 
