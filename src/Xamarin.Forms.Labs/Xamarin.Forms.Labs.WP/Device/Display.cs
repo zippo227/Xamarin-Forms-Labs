@@ -16,6 +16,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.Display"/> class.
         /// </summary>
+        /// <remarks>
+        /// To get accurate display reading application should enable ID_CAP_IDENTITY_DEVICE on app manifest.
+        /// </remarks>
         public Display()
         {
             object physicalScreenResolutionObject;

@@ -275,6 +275,9 @@ namespace Xamarin.Forms.Labs.Droid
     /// </summary>
     public class XFormsAppDroid : XFormsApp<XFormsApplicationDroid>
     {
+        public XFormsAppDroid() { }
+
+        public XFormsAppDroid(XFormsApplicationDroid app) : base(app) { }
         /// <summary>
         /// Called when [initialize].
         /// </summary>

@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
-    <Compile Include="TestsSample.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -101,5 +100,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\SerializationTests\SerializationTests.projitems" Label="Shared" Condition="Exists('..\SerializationTests\SerializationTests.projitems')" />
+  <Import Project="..\DeviceTests\DeviceTests.projitems" Label="Shared" Condition="Exists('..\DeviceTests\DeviceTests.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

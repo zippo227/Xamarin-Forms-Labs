@@ -121,6 +121,7 @@
     <Compile Include="UnitTestAppDelegate.cs" />
   </ItemGroup>
   <Import Project="..\SerializationTests\SerializationTests.projitems" Label="Shared" Condition="Exists('..\SerializationTests\SerializationTests.projitems')" />
+  <Import Project="..\DeviceTests\DeviceTests.projitems" Label="Shared" Condition="Exists('..\DeviceTests\DeviceTests.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\JsonNET\Xamarin.Forms.Labs.Services.Serialization.JsonNET.csproj">

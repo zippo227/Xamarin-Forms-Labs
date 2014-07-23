@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.iOS.Services.Media;
 
 namespace Xamarin.Forms.Labs
 {
@@ -34,6 +35,8 @@ namespace Xamarin.Forms.Labs
             {
                 this.Gyroscope = new Gyroscope();
             }
+
+            this.MediaPicker = new MediaPicker();
         }
 
         /// <summary>

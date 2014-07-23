@@ -35,10 +35,10 @@ namespace Labs.Tests.iOS
             runner.Add(System.Reflection.Assembly.GetExecutingAssembly());
 
             window.RootViewController = new UINavigationController(runner.GetViewController());
-			
+            
             // make the window visible
             window.MakeKeyAndVisible();
-			
+            
             return true;
         }
     }
