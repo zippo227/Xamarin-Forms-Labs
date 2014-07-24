@@ -23,9 +23,9 @@ namespace Xamarin.Forms.Labs.Services.Serialization
 
         #region IByteSerializer Members
 
-        byte[] IByteSerializer.Serialize<T>(T obj)
+        byte[] IByteSerializer.SerializeToBytes<T>(T obj)
         {
-            return (this as IStringSerializer).SerializeToBytes(obj);
+            return (this as IStringSerializer).GetSerializedBytes(obj);
         }
 
         public T Deserialize<T>(byte[] data)
@@ -37,12 +37,12 @@ namespace Xamarin.Forms.Labs.Services.Serialization
         #region IStreamSerializer Members
         public void Serialize<T>(T obj, System.IO.Stream stream)
         {
-            (this as IStringSerializer).SerializeToStream(obj, stream);
+            this.SerializeToStream(obj, stream);
         }
 
         public T Deserialize<T>(System.IO.Stream stream)
         {
-            return (this as IStringSerializer).DeserializeFromStream<T>(stream);
+            return this.DeserializeFromStream<T>(stream);
         }
         #endregion
 

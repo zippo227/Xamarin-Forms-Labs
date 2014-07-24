@@ -5,9 +5,16 @@ namespace Xamarin.Forms.Labs.Mvvm
     /// <summary>
     /// Class XFormsApp.
     /// </summary>
-    /// <typeparam name="TApp">The type of the t application.</typeparam>
+    /// <typeparam name="TApp">The type of the application.</typeparam>
     public class XFormsApp<TApp> : IXFormsApp<TApp>
     {
+        public XFormsApp() { }
+
+        public XFormsApp(TApp context)
+        {
+            this.Init(context);
+        }
+
         #region Properties
 
         /// <summary>

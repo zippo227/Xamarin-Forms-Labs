@@ -92,7 +92,7 @@ namespace Xamarin.Forms.Labs.Caching.SQLiteNet
 
         protected virtual byte[] GetBytes<T>(T obj)
         {
-            return this.serializer.Serialize(obj);
+            return this.serializer.SerializeToBytes(obj);
         }
 
         protected class SQliteCacheTable

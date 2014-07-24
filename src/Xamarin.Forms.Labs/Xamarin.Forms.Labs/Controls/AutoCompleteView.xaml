@@ -9,7 +9,7 @@
 		 		<Entry x:Name="entText" HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
 		 		<Button x:Name="btnSearch" VerticalOptions="Center"  Text="Search"></Button>
 		 	</StackLayout>
-          	<ListView x:Name="lstSugestions" HeightRequest="250"></ListView>
+          	<ListView x:Name="lstSugestions" HeightRequest="250" HasUnevenRows="true"></ListView>
 	   	 </StackLayout>
     </ContentView.Content>
 </ContentView>

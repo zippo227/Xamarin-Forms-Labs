@@ -17,6 +17,10 @@ namespace Xamarin.Forms.Labs.WP8
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
     public class XFormsAppWP : XFormsApp<Application>
     {
+        public XFormsAppWP() { }
+
+        public XFormsAppWP(Application application) : base(application) { }
+
         /// <summary>
         /// Initializes the specified context.
         /// </summary>

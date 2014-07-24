@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Services.Serialization
 {
     public static class StreamSerializerExtensions
     {
-        /// <summary>
-        /// Deserializes from stream.
-        /// </summary>
-        /// <returns>The from stream.</returns>
-        /// <param name="stream">Stream.</param>
-        /// <typeparam name="T">The type of object to deserialize.</typeparam>
         public static T DeserializeFromString<T>(this IStreamSerializer serializer, string value, Encoding encoding = null)
         {
-            var encoder = encoding ?? Encoding.UTF8;
-            using (var stream = new MemoryStream(encoder.GetBytes(value)))
+            //var encoder = encoding ?? Encoding.UTF8;
+
+            //var bytes = encoder.GetBytes(value);
+            var bytes = Convert.FromBase64String(value);
+            using (var stream = new MemoryStream(bytes))
             {
                 return serializer.Deserialize<T>(stream);
             }
@@ -27,14 +21,18 @@ namespace Xamarin.Forms.Labs.Services.Serialization
         public static string SerializeToString<T>(this IStreamSerializer serializer, T obj, Encoding encoding = null)
         {
             var encoder = encoding ?? Encoding.UTF8;
-            using (var stream = new StreamReader(new MemoryStream(), encoder))
+            using (var stream = new MemoryStream())
             {
-                serializer.Serialize<T>(obj, stream.BaseStream);
-                return stream.ReadToEnd();
+                serializer.Serialize<T>(obj, stream);
+                stream.Position = 0;
+                var bytes = new byte[stream.Length];
+                stream.Read(bytes, 0, (int)stream.Length);
+
+                return Convert.ToBase64String(bytes);
             }
         }
 
-        public static T DeserializeFromBytes<T>(this IStreamSerializer serializer, byte[] data, Encoding encoding = null)
+        public static T DeserializeFromBytes<T>(this IStreamSerializer serializer, byte[] data)
         {
             using (var stream = new MemoryStream(data))
             {
@@ -42,7 +40,7 @@ namespace Xamarin.Forms.Labs.Services.Serialization
             }
         }
 
-        public static byte[] SerializeToBytes(this IStreamSerializer serializer, object obj, Encoding encoding = null)
+        public static byte[] GetSerializedBytes(this IStreamSerializer serializer, object obj)
         {
             using (var stream = new MemoryStream())
             {
