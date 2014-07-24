@@ -87,6 +87,12 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\lib\WP80\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector">
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\SimpleInjector.2.5.0\lib\portable-net4+sl4+wp8+win8\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Diagnostics">
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\SimpleInjector.2.5.0\lib\portable-net4+sl4+wp8+win8\SimpleInjector.Diagnostics.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -141,6 +147,22 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.Autofac\Xamarin.Forms.Labs.Services.Autofac.csproj">
+      <Project>{f8c821a9-155e-48bc-8998-1ed9de5cef1a}</Project>
+      <Name>Xamarin.Forms.Labs.Services.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.Ninject\Xamarin.Forms.Labs.Services.Ninject.csproj">
+      <Project>{ec5686a6-9846-4b09-8288-cb7396331b54}</Project>
+      <Name>Xamarin.Forms.Labs.Services.Ninject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.SimpleInjector\Xamarin.Forms.Labs.Services.SimpleInjector.csproj">
+      <Project>{526f68e5-b35b-45fb-a54f-25793d2a1678}</Project>
+      <Name>Xamarin.Forms.Labs.Services.SimpleInjector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.TinyIOC\Xamarin.Forms.Labs.Services.TinyIOC.WP8.csproj">
+      <Project>{f8b8c5d4-88a5-4796-9d9f-f9e43675879e}</Project>
+      <Name>Xamarin.Forms.Labs.Services.TinyIOC.WP8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\JsonNET\Xamarin.Forms.Labs.Services.Serialization.JsonNET.csproj">
       <Project>{a1021de4-5e69-4219-b396-64f6683b3727}</Project>
       <Name>Xamarin.Forms.Labs.Services.Serialization.JsonNET</Name>
@@ -175,6 +197,7 @@
   </ItemGroup>
   <Import Project="..\SerializationTests\SerializationTests.projitems" Label="Shared" Condition="Exists('..\SerializationTests\SerializationTests.projitems')" />
   <Import Project="..\DeviceTests\DeviceTests.projitems" Label="Shared" Condition="Exists('..\DeviceTests\DeviceTests.projitems')" />
+  <Import Project="..\IocTests\IocTests.projitems" Label="Shared" Condition="Exists('..\IocTests\IocTests.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

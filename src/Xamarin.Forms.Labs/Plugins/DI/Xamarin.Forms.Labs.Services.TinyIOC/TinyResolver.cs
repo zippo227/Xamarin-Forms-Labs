@@ -35,8 +35,13 @@ namespace Xamarin.Forms.Labs.Services.TinyIOC
             {
                 return this.container.Resolve<T>();
             }
-            catch
+            catch (TinyIoCResolutionException ex)
             {
+                if (ex.InnerException != null)
+                {
+                    throw ex.InnerException;
+                }
+
                 return null;
             }
         }
@@ -52,8 +57,13 @@ namespace Xamarin.Forms.Labs.Services.TinyIOC
             {
                 return this.container.Resolve(type);
             }
-            catch
+            catch (TinyIoCResolutionException ex)
             {
+                if (ex.InnerException != null)
+                {
+                    throw ex.InnerException;
+                }
+
                 return null;
             }
         }
