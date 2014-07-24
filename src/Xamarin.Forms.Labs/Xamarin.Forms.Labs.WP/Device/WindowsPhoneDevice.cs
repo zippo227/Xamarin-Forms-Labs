@@ -21,7 +21,9 @@ namespace Xamarin.Forms.Labs
         /// </summary>
         private static WindowsPhoneDevice currentDevice;
 
-        private MediaPicker mediaPicker;
+        private IMediaPicker mediaPicker;
+
+        private INetwork network;
 
         /// <summary>
         /// The Id for the device.
@@ -156,6 +158,21 @@ namespace Xamarin.Forms.Labs
             get
             {
                 return this.mediaPicker ?? (this.mediaPicker = new MediaPicker());
+            }
+        }
+
+        /// <summary>
+        /// Gets the network service.
+        /// </summary>
+        /// <value>The network service.</value>
+        /// <exception cref="System.UnauthorizedAccessException">
+        /// Exception is thrown if application manifest does not enable ID_CAP_NETWORKING capability.
+        /// </exception>
+        public INetwork Network
+        {
+            get
+            {
+                return this.network ?? (this.network = new Network());
             }
         }
 

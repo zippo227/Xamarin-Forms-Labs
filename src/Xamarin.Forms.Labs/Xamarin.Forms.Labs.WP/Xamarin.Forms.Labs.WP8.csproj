@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Services\Geolocation\CoordinateExtensions.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />
+    <Compile Include="Services\Network.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\Media\MediaPicker.cs" />
     <Compile Include="Services\SoundService.cs" />

@@ -83,6 +83,23 @@ namespace IocTests
             }
         }
 
+        [Test]
+        public void RegisterGeneric()
+        {
+            var container = this.GetEmptyContainer();
+
+            container.Register(typeof(IFoo<>), typeof(Foo<>));
+
+            var resolver = container.GetResolver();
+
+            var genericInt = resolver.Resolve<IFoo<int>>();
+
+            Assert.IsNotNull(genericInt);
+
+            Assert.IsTrue(genericInt is IFoo<int>);
+
+        }
+
         public class InvalidClass : IDependencyContainer
         {
             public InvalidClass()
@@ -133,5 +150,8 @@ namespace IocTests
 
             #endregion
         }
+
+        public interface IFoo<T> { };
+        public class Foo<T> : IFoo<T> { };
     }
 }
