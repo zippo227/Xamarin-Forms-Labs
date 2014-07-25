@@ -7,7 +7,11 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Microsoft.Devices;
 using Microsoft.Phone.Tasks;
+using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.WP8.Services.Media;
+
+[assembly: Dependency(typeof(MediaPicker))]
 
 namespace Xamarin.Forms.Labs.WP8.Services.Media
 {

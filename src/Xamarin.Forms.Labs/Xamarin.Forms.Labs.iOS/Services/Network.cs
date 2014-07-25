@@ -7,6 +7,8 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms.Labs.Services;
 
+[assembly: Xamarin.Forms.Dependency(typeof(Xamarin.Forms.Labs.iOS.Services.Network))]
+
 namespace Xamarin.Forms.Labs.iOS.Services
 {
     public class Network : INetwork

@@ -12,7 +12,9 @@ using Android.Widget;
 using Java.Net;
 using Xamarin.Forms.Labs.Services;
 
-namespace Xamarin.Forms.Labs.Droid
+[assembly: Xamarin.Forms.Dependency(typeof(Xamarin.Forms.Labs.Droid.Services.Network))]
+
+namespace Xamarin.Forms.Labs.Droid.Services
 {
     public class Network : INetwork
     {
