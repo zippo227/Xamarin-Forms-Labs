@@ -138,7 +138,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "HybridWebView",
                     "WebImage",
                     "DynamicListView",
-                    "GridView"
+                    "GridView",
+                    "ExtendedScrollView"
                 }
             };
             lstControls.ItemSelected += async (sender, e) => {
@@ -169,6 +170,9 @@ namespace Xamarin.Forms.Labs.Sample
                     break;
                 case "gridview":
                     await mainPage.Navigation.PushAsync (new Xamarin.Forms.Labs.Sample.Pages.Controls.GridViewPage ());
+                    break;
+                case "extendedscrollview":
+                    await mainPage.Navigation.PushAsync (new Xamarin.Forms.Labs.Sample.Pages.Controls.ExtendedScrollView ());
                     break;
                 default:
                     break;

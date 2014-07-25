@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Controls\ExtendedScrollView\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -111,6 +112,7 @@
     <Compile Include="Services\SoundService.cs" />
     <Compile Include="Controls\GridView\GridViewRenderer.cs" />
     <Compile Include="Controls\GridView\GridCollectionView.cs" />
+    <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
