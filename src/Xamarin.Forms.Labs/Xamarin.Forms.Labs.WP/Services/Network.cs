@@ -9,6 +9,8 @@ using System.Net.Sockets;
 using System.Net.NetworkInformation;
 using Microsoft.Phone.Net.NetworkInformation;
 
+[assembly: Xamarin.Forms.Dependency(typeof(Xamarin.Forms.Labs.WP8.Services.Network))]
+
 namespace Xamarin.Forms.Labs.WP8.Services
 {
     public class Network : INetwork
