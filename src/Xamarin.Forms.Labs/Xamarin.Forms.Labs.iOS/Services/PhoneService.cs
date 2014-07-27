@@ -120,6 +120,11 @@ namespace Xamarin.Forms.Labs.iOS.Services
         {
             UIApplication.SharedApplication.OpenUrl(new MonoTouch.Foundation.NSUrl("tel:" + number));
         }
+
+        public void SendSMS(string to, string body)
+        {
+            UIApplication.SharedApplication.OpenUrl(new MonoTouch.Foundation.NSUrl("sms:" + to));
+        }
         #endregion
     }
 }

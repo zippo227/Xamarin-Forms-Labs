@@ -40,7 +40,7 @@ namespace Xamarin.Forms.Labs.Services.Web
         /// <param name="address">Address of the service.</param>
         /// <param name="dto">DTO to post.</param>
         /// <typeparam name="T">The type of object to be returned.</typeparam>
-        Task<RestResponse<T>> PostAsync<T>(string address, object dto);
+        Task<T> PostAsync<T>(string address, object dto);
 
         /// <summary>
         /// Async PUT method.
@@ -49,7 +49,7 @@ namespace Xamarin.Forms.Labs.Services.Web
         /// <param name="address">Address of the service.</param>
         /// <param name="dto">DTO to put.</param>
         /// <typeparam name="T">The type of object to be returned.</typeparam>
-        Task<RestResponse<T>> PutAsync<T>(string address, object dto);
+        Task<T> PutAsync<T>(string address, object dto);
 
         /// <summary>
         /// Async GET method.
@@ -57,7 +57,7 @@ namespace Xamarin.Forms.Labs.Services.Web
         /// <returns>The async task.</returns>
         /// <param name="address">Address of the service.</param>
         /// <typeparam name="T">The type of object to be returned.</typeparam>
-        Task<RestResponse<T>> GetAsync<T>(string address);
+        Task<T> GetAsync<T>(string address);
 
         /// <summary>
         /// Async GET method.
@@ -66,7 +66,7 @@ namespace Xamarin.Forms.Labs.Services.Web
         /// <param name="address">Address of the service.</param>
         /// <param name="values">Values for the request.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        Task<RestResponse<T>> GetAsync<T>(string address, Dictionary<string, string> values);
+        Task<T> GetAsync<T>(string address, Dictionary<string, string> values);
 
         /// <summary>
         /// Deletes the async.
@@ -74,7 +74,7 @@ namespace Xamarin.Forms.Labs.Services.Web
         /// <returns>The async task.</returns>
         /// <param name="address">Address.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        Task<RestResponse<T>> DeleteAsync<T>(string address);
+        Task<T> DeleteAsync<T>(string address);
     }
 }
 

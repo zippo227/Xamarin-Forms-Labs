@@ -85,7 +85,12 @@ namespace Xamarin.Forms.Labs.WP8.Services
         /// <param name="number">Number to dial.</param>
         public void DialNumber(string number)
         {
-            new PhoneCallTask() { PhoneNumber = number }.Show();
+            new PhoneCallTask{ PhoneNumber = number }.Show();
+        }
+
+        public void SendSMS(string to, string body)
+        {
+            new SmsComposeTask{ To = to, Body = body }.Show();
         }
     }
 }

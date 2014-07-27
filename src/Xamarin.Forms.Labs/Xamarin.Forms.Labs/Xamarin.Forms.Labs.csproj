@@ -110,11 +110,11 @@
     <Compile Include="Controls\SensorBar\SensorBarView.cs" />
     <Compile Include="Controls\ExtendedViewCell.cs" />
     <Compile Include="Services\Web\IRestClient.cs" />
-    <Compile Include="Services\Web\RestResponse.cs" />
     <Compile Include="Services\SoundService\ISoundService.cs" />
     <Compile Include="Services\SoundService\SoundFile.cs" />
     <Compile Include="Services\SoundService\SoundFinishedEventArgs.cs" />
     <Compile Include="Controls\GridView.cs" />
+    <Compile Include="Services\Web\WebResponseException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
