@@ -21,7 +21,14 @@ namespace Xamarin.Forms.Labs.Services.Unity
         /// <returns>An instance of {T} if successful, otherwise null.</returns>
         public T Resolve<T>() where T : class
         {
-            return _container.Resolve<T>();
+            try
+            {
+                return _container.Resolve<T>();
+            }
+            catch (ResolutionFailedException)
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -31,7 +38,14 @@ namespace Xamarin.Forms.Labs.Services.Unity
         /// <returns>An instance to type if found as <see cref="object"/>, otherwise null.</returns>
         public object Resolve(Type type)
         {
-            return _container.Resolve(type);
+            try
+            {
+                return _container.Resolve(type);
+            }
+            catch (ResolutionFailedException)
+            {
+                return null;
+            }
         }
 
         /// <summary>

@@ -15,5 +15,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)SimpleContainerResolverTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SimpleInjectorResolveTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TinyIocResolveTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnityResolverTests.cs" />
   </ItemGroup>
 </Project>
