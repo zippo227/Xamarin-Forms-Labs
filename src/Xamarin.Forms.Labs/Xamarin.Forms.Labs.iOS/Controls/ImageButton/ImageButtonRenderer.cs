@@ -202,7 +202,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             using (UIImage image = await handler.LoadImageAsync(source))
             {
                 targetButton.SetImage (
-                    image.CreateResizableImage (new UIEdgeInsets (0, 0, widthRequest, heightRequest)).ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                    image.Scale(new SizeF(widthRequest, heightRequest)).ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
                     , UIControlState.Normal);
             }
         }
