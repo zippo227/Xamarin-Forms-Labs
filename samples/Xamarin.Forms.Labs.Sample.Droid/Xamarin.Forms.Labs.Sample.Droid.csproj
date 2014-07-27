@@ -119,10 +119,6 @@
       <Project>{DC133A2F-E49E-49E3-B43D-BFB957CB5482}</Project>
       <Name>Xamarin.Forms.Labs.Sample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs.Droid\Xamarin.Forms.Labs.Droid.csproj">
-      <Project>{67BB1B0A-8F35-4B87-907A-0BCA3103B38B}</Project>
-      <Name>Xamarin.Forms.Labs.Droid</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
       <Project>{4D10DF5E-883D-468B-A854-4A53C7FE75AC}</Project>
       <Name>Xamarin.Forms.Labs</Name>
