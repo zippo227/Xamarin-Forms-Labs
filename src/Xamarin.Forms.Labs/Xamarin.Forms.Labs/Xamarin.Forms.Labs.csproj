@@ -115,6 +115,7 @@
     <Compile Include="Services\SoundService\SoundFinishedEventArgs.cs" />
     <Compile Include="Controls\GridView.cs" />
     <Compile Include="Controls\ExtendedScrollView.cs" />
+    <Compile Include="Services\Web\WebResponseException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
