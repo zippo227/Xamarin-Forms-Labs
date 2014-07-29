@@ -114,7 +114,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Right;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Right;
 
-            var titleInsets = new UIEdgeInsets(0, -1 * (widthRequest + ControlPadding), 0, widthRequest + ControlPadding);
+            var titleInsets = new UIEdgeInsets(0, 0, 0, widthRequest + ControlPadding);
 
             targetButton.TitleEdgeInsets = titleInsets;
             var imageInsets = new UIEdgeInsets(0, widthRequest, 0, -1 * widthRequest);
@@ -204,6 +204,16 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
                 targetButton.SetImage (
                     image.Scale(new SizeF(widthRequest, heightRequest)).ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
                     , UIControlState.Normal);
+            }
+        }
+
+        public override void LayoutSubviews()
+        {
+            base.LayoutSubviews();
+            if (ImageButton.Orientation == ImageOrientation.ImageToRight)
+            {
+                var imageInsets = new UIEdgeInsets(0, Control.Frame.Size.Width - ControlPadding - ImageButton.ImageWidthRequest, 0, 0);
+                Control.ImageEdgeInsets = imageInsets;
             }
         }
     }
