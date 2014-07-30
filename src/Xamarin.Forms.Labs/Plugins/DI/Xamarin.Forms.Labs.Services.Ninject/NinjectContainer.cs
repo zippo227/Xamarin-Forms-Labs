@@ -26,6 +26,13 @@ namespace Xamarin.Forms.Labs.Services.Ninject
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="NinjectContainer"/> class with <see cref="StandardKernel"/>.
+        /// </summary>
+        public NinjectContainer() : this(new StandardKernel())
+        {
+        }
+
+        /// <summary>
         /// Gets the resolver from the container.
         /// </summary>
         /// <returns>An instance of <see cref="IResolver"/></returns>

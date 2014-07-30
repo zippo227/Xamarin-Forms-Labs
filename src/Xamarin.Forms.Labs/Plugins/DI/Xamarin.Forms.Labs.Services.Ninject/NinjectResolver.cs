@@ -33,8 +33,21 @@ namespace Xamarin.Forms.Labs.Services.Ninject
         /// <returns>An instance of {T} if successful, otherwise null.</returns>
         public T Resolve<T>() where T : class
         {
-            return this.kernel.Get<T>();
+            try
+            {
+                return this.kernel.Get<T>();
+            }
+            catch (ActivationException ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    throw ex.InnerException;
+                }
+
+                return null;
+            }
         }
+            
 
         /// <summary>
         /// Resolve a dependency by type.
@@ -43,7 +56,19 @@ namespace Xamarin.Forms.Labs.Services.Ninject
         /// <returns>An instance to type if found as <see cref="object"/>, otherwise null.</returns>
         public object Resolve(Type type)
         {
-            return this.kernel.Get(type);
+            try
+            {
+                return this.kernel.Get(type);
+            }
+            catch (ActivationException ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    throw ex.InnerException;
+                }
+
+                return null;
+            }
         }
 
         /// <summary>

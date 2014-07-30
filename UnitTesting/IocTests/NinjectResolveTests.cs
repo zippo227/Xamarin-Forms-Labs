@@ -20,12 +20,16 @@ namespace IocTests
     {
         protected override IResolver GetEmptyResolver()
         {
-            throw new NotImplementedException();
+            return GetEmptyContainer().GetResolver();
         }
 
         protected override IDependencyContainer GetEmptyContainer()
         {
-            throw new NotImplementedException();
+#if WINDOWS_PHONE
+            return new NinjectContainer(new Ninject.StandardKernel());
+#else
+            return new NinjectContainer();
+#endif
         }
     }
 }
