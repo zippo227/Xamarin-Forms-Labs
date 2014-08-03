@@ -35,9 +35,9 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             get { return _calendar.Months.Count; }
         }
 
-		public override Android.Views.View GetView(int position, Android.Views.View convertView, ViewGroup parent)
+        public override Android.Views.View GetView(int position, Android.Views.View convertView, ViewGroup parent)
         {
-            var monthView = (MonthView) convertView ??
+            var monthView = (MonthView)convertView ??
                             MonthView.Create(parent, _inflater, _calendar.WeekdayNameFormat, _calendar.Today,
                                 _calendar.ClickHandler);
             monthView.Init(_calendar.Months[position], _calendar.Cells[position]);

@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-using Xamarin.Forms.Labs.Extensions;
 
 namespace Xamarin.Forms.Labs.Controls
 {

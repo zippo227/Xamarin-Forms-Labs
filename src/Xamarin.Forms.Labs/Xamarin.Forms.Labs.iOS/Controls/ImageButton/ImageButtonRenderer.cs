@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
         /// The padding to use in the control.
         /// </summary>
         private const int ControlPadding = 2;
-        
+
         /// <summary>
         /// Identifies the iPad.
         /// </summary>
@@ -48,7 +48,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             var targetButton = Control;
             if (imageButton != null && targetButton != null && imageButton.Source != null)
             {
-                await SetImageAsync(imageButton.Source, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
+                await SetImageAsync(imageButton.Source, this.GetWidth(imageButton.ImageWidthRequest), this.GetHeight(imageButton.ImageHeightRequest), targetButton);
 
                 switch (imageButton.Orientation)
                 {
@@ -114,7 +114,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Right;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Right;
 
-            var titleInsets = new UIEdgeInsets(0, -1 * (widthRequest + ControlPadding), 0, widthRequest + ControlPadding);
+            var titleInsets = new UIEdgeInsets(0, 0, 0, widthRequest + ControlPadding);
 
             targetButton.TitleEdgeInsets = titleInsets;
             var imageInsets = new UIEdgeInsets(0, widthRequest, 0, -1 * widthRequest);
@@ -201,19 +201,19 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             var handler = GetHandler(source);
             using (UIImage image = await handler.LoadImageAsync(source))
             {
-                UIGraphics.BeginImageContext(new SizeF(widthRequest, heightRequest));
-                image.Draw(new RectangleF(0, 0, widthRequest, heightRequest));
-                using (var resultImage = UIGraphics.GetImageFromCurrentImageContext())
-                {
-                    UIGraphics.EndImageContext();
-                    using (var resizableImage =
-                        resultImage.CreateResizableImage(new UIEdgeInsets(0, 0, widthRequest, heightRequest)))
-                    {
-                        targetButton.SetImage(
-                            resizableImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal),
-                            UIControlState.Normal);
-                    }
-                }
+                targetButton.SetImage (
+                    image.Scale(new SizeF(widthRequest, heightRequest)).ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                    , UIControlState.Normal);
+            }
+        }
+
+        public override void LayoutSubviews()
+        {
+            base.LayoutSubviews();
+            if (ImageButton.Orientation == ImageOrientation.ImageToRight)
+            {
+                var imageInsets = new UIEdgeInsets(0, Control.Frame.Size.Width - ControlPadding - ImageButton.ImageWidthRequest, 0, 0);
+                Control.ImageEdgeInsets = imageInsets;
             }
         }
     }

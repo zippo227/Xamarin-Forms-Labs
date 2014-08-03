@@ -231,9 +231,9 @@ namespace Xamarin.Forms.Labs.Sample.WP
         }
 
         /// <summary>
-        /// Sets IOC
+        /// Sets Inversion of Control.
         /// </summary>
-        private async void SetIoC()
+        private void SetIoC()
         {
             var resolverContainer = new SimpleContainer();
 

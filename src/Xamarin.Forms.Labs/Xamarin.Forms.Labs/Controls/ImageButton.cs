@@ -15,14 +15,14 @@ namespace Xamarin.Forms.Labs.Controls
         /// Backing field for the Image property.
         /// </summary>
         public static readonly BindableProperty SourceProperty = BindableProperty.Create<ImageButton, ImageSource>((Expression<Func<ImageButton, ImageSource>>)(w => w.Source), (ImageSource)null, BindingMode.OneWay, (BindableProperty.ValidateValueDelegate<ImageSource>)null, (BindableProperty.BindingPropertyChangedDelegate<ImageSource>)((bindable, oldvalue, newvalue) => ((VisualElement)bindable).ToString()), (BindableProperty.BindingPropertyChangingDelegate<ImageSource>)null, (BindableProperty.CoerceValueDelegate<ImageSource>)null);
-        
+
         /// <summary>
         /// Gets or sets the ImageSource to use with the control.
         /// </summary>
         /// <value>
         /// The Source property gets/sets the value of the backing field, SourceProperty.
         /// </value>
-        [TypeConverter(typeof(ImageSourceConverter))] 
+        [TypeConverter(typeof(ImageSourceConverter))]
         public ImageSource Source
         {
             get { return (ImageSource)GetValue(SourceProperty); }

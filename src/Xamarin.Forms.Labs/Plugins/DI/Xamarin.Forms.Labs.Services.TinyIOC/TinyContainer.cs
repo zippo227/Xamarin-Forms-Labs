@@ -74,6 +74,12 @@ namespace Xamarin.Forms.Labs.Services.TinyIOC
             return this;
         }
 
+        public IDependencyContainer RegisterSingle<T, TImpl>() where T : class where TImpl : class, T
+        {
+            this.container.Register<T, TImpl>().AsSingleton();
+            return this;
+        }
+
         /// <summary>
         /// The register.
         /// </summary>

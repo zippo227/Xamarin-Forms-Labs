@@ -41,11 +41,7 @@ function ChangeNuSpecVersion( $nuSpecFilePath, $version="0.0.0.0" )
         $idAttribute = $dependency.Attributes( "id" ) | Select-Object -First 1
         if ( $idAttribute -ne $null )
         {
-            if ( $idAttribute.Value -eq "CSLA-Core" )
-            {
-                $dependency.SetAttributeValue( "version", "[$version]" )
-            }
-            if ( $idAttribute.Value -eq "CSLA-ASP.NET" )
+            if ( $idAttribute.Value -eq "Xamarin.Forms.Labs" )
             {
                 $dependency.SetAttributeValue( "version", "[$version]" )
             }
@@ -100,7 +96,7 @@ try
     ## ----------
     $configuration = "Release"
     $basePath = Get-Location
-    $pathToBin = [System.IO.Path]::GetFullPath( "$basePath\..\..\Xamarin.Forms.Labs\Bin\$configuration" )
+    $pathToBin = [System.IO.Path]::GetFullPath( "$basePath\..\..\..\..\ReleaseBuild" )
     $pathToNuGetPackager = [System.IO.Path]::GetFullPath( "$basePath\..\NuGet.exe" )
     $pathToNuGetPackageOutput = [System.IO.Path]::GetFullPath( "$basePath\..\Packages" )
     $originalBackground = $host.UI.RawUI.BackgroundColor

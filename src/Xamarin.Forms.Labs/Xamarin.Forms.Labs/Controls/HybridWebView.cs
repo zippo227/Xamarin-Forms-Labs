@@ -1,25 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Serialization;
 
 namespace Xamarin.Forms.Labs.Controls
 {
+    /// <summary>
+    /// The hybrid web view.
+    /// </summary>
     public class HybridWebView : WebView
     {
-        private object InjectLock = new object();
+        /// <summary>
+        /// The inject lock.
+        /// </summary>
+        private readonly object injectLock = new object();
+
+        /// <summary>
+        /// The JSON serializer.
+        /// </summary>
         private readonly IStringSerializer jsonSerializer;
+
+        /// <summary>
+        /// The registered actions.
+        /// </summary>
         private readonly Dictionary<string, Action<string>> registeredActions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HybridWebView"/> class.
         /// </summary>
-        public HybridWebView() : this(Resolver.Resolve<IJsonSerializer>())
+        /// <remarks>HybridWebView will use either <see cref="IJsonSerializer"/> configured
+        /// with IoC or if missing it will use <see cref="SystemJsonSerializer"/> by default.</remarks>
+        public HybridWebView()
         {
+            if (!Resolver.IsSet || (this.jsonSerializer = Resolver.Resolve<IJsonSerializer>()) == null)
+            {
+                this.jsonSerializer = new SystemJsonSerializer();
+            }
+
+            this.registeredActions = new Dictionary<string, Action<string>>();
         }
 
         /// <summary>
@@ -78,7 +97,7 @@ namespace Xamarin.Forms.Labs.Controls
 
         public void InjectJavaScript(string script)
         {
-            lock (this.InjectLock)
+            lock (this.injectLock)
             {
                 var handler = this.JavaScriptLoadRequested;
                 if (handler != null)

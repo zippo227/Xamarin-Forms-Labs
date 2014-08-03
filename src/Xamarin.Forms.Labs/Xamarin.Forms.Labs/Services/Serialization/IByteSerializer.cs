@@ -11,7 +11,7 @@
         /// <typeparam name="T">Type of object to serialize to.</typeparam>
         /// <param name="obj">Object to serialize.</param>
         /// <returns>Serialized byte[] of the object.</returns>
-        byte[] Serialize<T>(T obj);
+        byte[] SerializeToBytes<T>(T obj);
 
         /// <summary>
         /// Deserializes string into an object.

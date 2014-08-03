@@ -27,7 +27,7 @@ namespace Xamarin.Forms.Labs.Controls
         /// <returns>Returns a <see cref="ImageSource"/> loaded from the value.</returns>
         public override object ConvertFrom(CultureInfo culture, object value)
         {
-           if (value == null)
+            if (value == null)
             {
                 return null;
             }

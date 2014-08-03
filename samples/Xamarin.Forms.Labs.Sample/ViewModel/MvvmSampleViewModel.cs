@@ -1,41 +1,49 @@
-﻿using System;
-using Xamarin.Forms.Labs.Mvvm;
+﻿using Xamarin.Forms.Labs.Mvvm;
 
 namespace Xamarin.Forms.Labs.Sample
 {
-	[ViewType(typeof(MvvmSamplePage))]
+    /// <summary>
+    /// The MVVM sample view model.
+    /// </summary>
+    [ViewType(typeof(MvvmSamplePage))]
 	public class MvvmSampleViewModel : ViewModel
 	{
-		public MvvmSampleViewModel ()
-		{
-		
-		}
+	    private Command navigateToViewModel;
+        private string navigateToViewModelButtonText = "Navigate to another view model";
 
-
-		private Command _navigateToViewModel;
-		public Command NavigateToViewModel 
-		{
-			get
-			{ 
-				return _navigateToViewModel ?? new Command (
-					async () => await Navigation.PushAsync<NewPageViewModel>() , 
-					() => true); 
-			}
-		}
-
-		private string _navigateToViewModelButtonText = "Navigate to another view model";
-		public string NavigateToViewModelButtonText
+	    /// <summary>
+	    /// Gets the navigate to view model.
+	    /// </summary>
+	    /// <value>
+	    /// The navigate to view model.
+	    /// </value>
+	    public Command NavigateToViewModel 
 		{
 			get
 			{
-				return _navigateToViewModelButtonText;
-			}
-			set
-			{ 
-				this.ChangeAndNotify(ref _navigateToViewModelButtonText, value);
+			    return navigateToViewModel ?? (navigateToViewModel = new Command(
+			                                                               async () => await Navigation.PushAsync<NewPageViewModel>(),
+			                                                               () => true));
 			}
 		}
 
+        /// <summary>
+        /// Gets or sets the navigate to view model button text.
+        /// </summary>
+        /// <value>
+        /// The navigate to view model button text.
+        /// </value>
+        public string NavigateToViewModelButtonText
+		{
+			get
+			{
+				return navigateToViewModelButtonText;
+			}
+			set
+			{ 
+				this.SetProperty(ref navigateToViewModelButtonText, value);
+			}
+		}
 	}
 }
 

@@ -39,7 +39,7 @@
 ##
 ##  “Xamarin Forms Labs - Services IoC SimpleInjector" NuGet
 ##  •	Contents:
-##      o	Xamarin.Forms.Labs.Services.SimpleContainer.dll (PCL - Xamarin Android, Xamarin iOS, Windows Phone 8)
+##      o	Xamarin.Forms.Labs.Services.SimpleInjector.dll (PCL - Xamarin Android, Xamarin iOS, Windows Phone 8)
 ##  •	Dependencies
 ##      o	“Xamarin Forms Labs - Core” NuGet
 ##      o	“SimpleInjector” NuGet

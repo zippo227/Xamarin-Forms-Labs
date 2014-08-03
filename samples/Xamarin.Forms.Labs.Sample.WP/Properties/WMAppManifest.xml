@@ -12,7 +12,6 @@
       <Capability Name="ID_CAP_SPEECH_RECOGNITION" />
       <Capability Name="ID_CAP_PHONEDIALER" />
       <Capability Name="ID_CAP_LOCATION" />
-      <Capability Name="ID_CAP_ISV_CAMERA" />
       <Capability Name="ID_CAP_CONTACTS" />
       <Capability Name="ID_CAP_IDENTITY_DEVICE" />
       <Capability Name="ID_CAP_PROXIMITY" />

@@ -8,6 +8,7 @@
     <!--Application Resources-->
     <Application.Resources>
         <local:LocalizedStrings xmlns:local="clr-namespace:Xamarin.Forms.Labs.Sample.WP" x:Key="LocalizedStrings"/>
+        <MediaElement x:Key="GlobalMedia"></MediaElement>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

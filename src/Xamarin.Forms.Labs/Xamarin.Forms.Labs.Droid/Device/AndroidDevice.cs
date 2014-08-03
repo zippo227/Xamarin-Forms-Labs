@@ -3,34 +3,36 @@ using Android.OS;
 using Xamarin.Forms.Labs.Droid.Services.Media;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.Droid;
+using Xamarin.Forms.Labs.Droid.Services;
 
 namespace Xamarin.Forms.Labs
 {
     /// <summary>
-    /// Android device implements <see cref=""/>.
+    /// Android device implements <see cref="IDevice"/>.
     /// </summary>
-    public class AndroidDevice: IDevice
+    public class AndroidDevice : IDevice
     {
         private static IDevice currentDevice;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.AndroidDevice"/> class.
+        /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
         /// </summary>
-        private AndroidDevice ()
+        private AndroidDevice()
         {
-            var manager = Xamarin.Forms.Labs.Services.PhoneService.Manager;
+            var manager = Services.PhoneService.Manager;
 
             if (manager != null && manager.PhoneType != PhoneType.None)
             {
                 this.PhoneService = new PhoneService();
             }
 
-            if (Xamarin.Forms.Labs.Accelerometer.IsSupported)
+            if (Labs.Accelerometer.IsSupported)
             {
                 this.Accelerometer = new Accelerometer();
             }
 
-            if (Xamarin.Forms.Labs.Gyroscope.IsSupported)
+            if (Labs.Gyroscope.IsSupported)
             {
                 this.Gyroscope = new Gyroscope();
             }
@@ -40,7 +42,7 @@ namespace Xamarin.Forms.Labs
 //                this.BluetoothHub = new BluetoothHub(BluetoothAdapter.DefaultAdapter);
 //            }
 
-            this.Display = new Display ();
+            this.Display = new Display();
 
             this.Manufacturer = Build.Manufacturer;
             this.Name = Build.Model;
@@ -49,15 +51,32 @@ namespace Xamarin.Forms.Labs
 
             this.Battery = new Battery();
 
-	        this.MediaPicker = new MediaPicker();
+            this.MediaPicker = new MediaPicker();
+
+            this.Network = new Network();
         }
 
         /// <summary>
         /// Gets the current device.
         /// </summary>
+        /// <value>
+        /// The current device.
+        /// </value>
         public static IDevice CurrentDevice { get { return currentDevice ?? (currentDevice = new AndroidDevice()); } }
 
         #region IDevice implementation
+        /// <summary>
+        /// Gets Unique Id for the device.
+        /// </summary>
+        /// <value>
+        /// The id for the device.
+        /// </value>
+        public string Id
+        {
+            // TODO: Verify what is the best combination of Unique Id for Android
+            get { return Build.Serial; }
+        }
+
         /// <summary>
         /// Gets the phone service for this device.
         /// </summary>
@@ -71,6 +90,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the display information for the device.
         /// </summary>
+        /// <value>
+        /// The display.
+        /// </value>
         public IDisplay Display
         {
             get;
@@ -80,24 +102,37 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the battery.
         /// </summary>
+        /// <value>
+        /// The battery.
+        /// </value>
         public IBattery Battery
         {
             get;
             private set;
         }
 
-		/// <summary>
-		/// Gets the picture chooser.
-		/// </summary>
-		/// <value>The picture chooser.</value>
-	    public IMediaPicker MediaPicker
-	    {
-		    get; 
-			private set;
-	    }
+        /// <summary>
+        /// Gets the picture chooser.
+        /// </summary>
+        /// <value>The picture chooser.</value>
+        public IMediaPicker MediaPicker
+        {
+            get; 
+            private set;
+        }
 
-	    /// <summary>
-        /// Gets the accelerometer for the device if available
+        /// <summary>
+        /// Gets the network service.
+        /// </summary>
+        /// <value>The network service.</value>
+        public INetwork Network
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the accelerometer for the device if available.
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>
         public IAccelerometer Accelerometer
@@ -119,6 +154,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the name of the device.
         /// </summary>
+        /// <value>
+        /// The name of the device.
+        /// </value>
         public string Name
         {
             get;
@@ -128,6 +166,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the firmware version.
         /// </summary>
+        /// <value>
+        /// The firmware version.
+        /// </value>
         public string FirmwareVersion
         {
             get;
@@ -137,6 +178,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the hardware version.
         /// </summary>
+        /// <value>
+        /// The hardware version.
+        /// </value>
         public string HardwareVersion
         {
             get;
@@ -146,6 +190,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the manufacturer.
         /// </summary>
+        /// <value>
+        /// The manufacturer.
+        /// </value>
         public string Manufacturer
         {
             get;

@@ -101,24 +101,14 @@ namespace Xamarin.Forms.Labs.Services.Web.RestClient
         /// <param name="address">Address of the service.</param>
         /// <param name="dto">DTO to post.</param>
         /// <typeparam name="T">The type of object to be returned.</typeparam>
-        public async Task<RestResponse<T>> PostAsync<T>(string address, object dto)
+        public async Task<T> PostAsync<T>(string address, object dto)
         {
-            try
-            {
-                var content = (this.Serializer as IStringSerializer).Serialize(dto);
+            var content = (this.Serializer as IStringSerializer).Serialize(dto);
 
-                var response = await this.Client.PostAsync(
-                    address,
-                    new StringContent(content, Encoding.UTF8, this.StringContentType));
-                return await GetResponse<T>(response, this.Serializer);
-            }
-            catch (Exception ex)
-            {
-                return new RestResponse<T>(default(T))
-                {
-                    Exception = ex
-                };
-            }
+            var response = await this.Client.PostAsync(
+                address,
+                new StringContent(content, Encoding.UTF8, this.StringContentType));
+            return await GetResponse<T>(response, this.Serializer);
         }
 
         /// <summary>
@@ -128,25 +118,15 @@ namespace Xamarin.Forms.Labs.Services.Web.RestClient
         /// <param name="address">Address of the service.</param>
         /// <param name="dto">DTO to put.</param>
         /// <typeparam name="T">The type of object to be returned.</typeparam>
-        public async Task<RestResponse<T>> PutAsync<T>(string address, object dto)
+        public async Task<T> PutAsync<T>(string address, object dto)
         {
-            try
-            {
-                var content = (this.Serializer as IStringSerializer).Serialize(dto);
+            var content = (this.Serializer as IStringSerializer).Serialize(dto);
 
-                var response = await this.Client.PutAsync(
-                    address,
-                    new StringContent(content, Encoding.UTF8, this.StringContentType));
+            var response = await this.Client.PutAsync(
+                address,
+                new StringContent(content, Encoding.UTF8, this.StringContentType));
 
-                return await GetResponse<T>(response, this.Serializer);
-            }
-            catch (Exception ex)
-            {
-                return new RestResponse<T>(default(T))
-                {
-                    Exception = ex
-                };
-            }
+            return await GetResponse<T>(response, this.Serializer);
         }
 
         /// <summary>
@@ -155,20 +135,10 @@ namespace Xamarin.Forms.Labs.Services.Web.RestClient
         /// <returns>The async task.</returns>
         /// <param name="address">Address of the service.</param>
         /// <typeparam name="T">The type of object to be returned.</typeparam>
-        public async Task<RestResponse<T>> GetAsync<T>(string address)
+        public async Task<T> GetAsync<T>(string address)
         {
-            try
-            {
-                var response = await this.Client.GetAsync(address);
-                return await GetResponse<T>(response, this.Serializer);
-            }
-            catch (Exception ex)
-            {
-                return new RestResponse<T>(default(T))
-                {
-                    Exception = ex
-                };
-            }
+            var response = await this.Client.GetAsync(address);
+            return await GetResponse<T>(response, this.Serializer);
         }
 
         /// <summary>
@@ -178,28 +148,18 @@ namespace Xamarin.Forms.Labs.Services.Web.RestClient
         /// <param name="address">Address of the service.</param>
         /// <param name="values">Values for the request.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public async Task<RestResponse<T>> GetAsync<T>(string address, Dictionary<string, string> values)
+        public async Task<T> GetAsync<T>(string address, Dictionary<string, string> values)
         {
-            try
-            {
-                var builder = new StringBuilder(address);
-                builder.Append("?");
+            var builder = new StringBuilder(address);
+            builder.Append("?");
 
-                foreach (var pair in values)
-                {
-                    builder.Append(string.Format("{0}={1}&amp;", pair.Key, pair.Value));
-                }
-
-                var response = await this.Client.GetAsync(builder.ToString());
-                return await GetResponse<T>(response, this.Serializer);
-            }
-            catch (Exception ex)
+            foreach (var pair in values)
             {
-                return new RestResponse<T>(default(T))
-                {
-                    Exception = ex
-                };
+                builder.Append(string.Format("{0}={1}&amp;", pair.Key, pair.Value));
             }
+
+            var response = await this.Client.GetAsync(builder.ToString());
+            return await GetResponse<T>(response, this.Serializer);
         }
 
         /// <summary>
@@ -208,20 +168,10 @@ namespace Xamarin.Forms.Labs.Services.Web.RestClient
         /// <returns>The async task.</returns>
         /// <param name="address">Address of the service.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public async Task<RestResponse<T>> DeleteAsync<T>(string address)
+        public async Task<T> DeleteAsync<T>(string address)
         {
-            try
-            {
-                var response = await this.Client.DeleteAsync(address);
-                return await GetResponse<T>(response, this.Serializer);
-            }
-            catch (Exception ex)
-            {
-                return new RestResponse<T>(default(T))
-                {
-                    Exception = ex
-                };
-            }
+            var response = await this.Client.DeleteAsync(address);
+            return await GetResponse<T>(response, this.Serializer);
         }
 
         /// <summary>
@@ -231,34 +181,20 @@ namespace Xamarin.Forms.Labs.Services.Web.RestClient
         /// <param name="response">Http response message</param>
         /// <param name="serializer">Serializer to use.</param>
         /// <returns>The async task.</returns>
-        private static async Task<RestResponse<T>> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
+        private static async Task<T> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
         {
             if (!response.IsSuccessStatusCode)
             {
-                return new RestResponse<T>(default(T))
-                {
-                    Exception = new Exception(response.ReasonPhrase)
-                };
+                throw new WebResponseException(response.ReasonPhrase);
             }
+                
+            var stream = await response.Content.ReadAsStreamAsync();
 
-            try
-            {
-                var stream = await response.Content.ReadAsStreamAsync();
-
-                return new RestResponse<T>(serializer.Deserialize<T>(stream));
-                ////// get response strings
-                //// var content = await response.Content.ReadAsStringAsync();
-                ////// serialize the response to object
-                //// return serializer.Deserialize<ServiceResponse<T>>(content);
-                ////returnResponse.Value = serializer.Deserialize<T>(returnResponse.Content);
-            }
-            catch (Exception ex)
-            {
-                return new RestResponse<T>(default(T))
-                {
-                    Exception = ex
-                };
-            }
+            return serializer.Deserialize<T>(stream);
+            // get response strings
+            //var content = await response.Content.ReadAsStringAsync();
+            //// serialize the response to object
+            //return serializer.Deserialize<T>(content);
         }
     }
 }

@@ -17,7 +17,9 @@ namespace Xamarin.Forms.Labs
             var h = b.Height * UIScreen.MainScreen.Scale;
             var w = b.Width * UIScreen.MainScreen.Scale;
             var dpi = UIScreen.MainScreen.Scale * 163;
-            this.Display = new Display ((int)h, (int)w, dpi, dpi); 
+            this.Display = new Display ((int)h, (int)w, dpi, dpi);
+
+            this.Name = this.HardwareVersion = "Simulator";
         }
     }
 }

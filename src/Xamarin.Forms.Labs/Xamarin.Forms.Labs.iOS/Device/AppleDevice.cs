@@ -4,6 +4,8 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.iOS.Services.Media;
+using Xamarin.Forms.Labs.iOS.Services;
 
 namespace Xamarin.Forms.Labs
 {
@@ -30,15 +32,22 @@ namespace Xamarin.Forms.Labs
             this.Accelerometer = new Accelerometer();
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
 
-            if (Xamarin.Forms.Labs.Gyroscope.IsSupported)
+            if (Labs.Gyroscope.IsSupported)
             {
                 this.Gyroscope = new Gyroscope();
             }
+
+            this.MediaPicker = new MediaPicker();
+
+            this.Network = new Network();
         }
 
         /// <summary>
-        /// Gets the runtime device for Apple's devices
+        /// Gets the runtime device for Apple's devices.
         /// </summary>
+        /// <value>
+        /// The current device.
+        /// </value>
         public static IDevice CurrentDevice
         {
             get
@@ -74,8 +83,25 @@ namespace Xamarin.Forms.Labs
 
         #region IDevice implementation
         /// <summary>
-        /// Gets the display information for the device.
+        /// Gets Unique Id for the device.
         /// </summary>
+        /// <value>
+        /// The id for the device.
+        /// </value>
+        public string Id
+        {
+            get
+            {
+               return UIDevice.CurrentDevice.IdentifierForVendor.AsString();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the display information for the device.
+        /// </summary>
+        /// <value>
+        /// The display.
+        /// </value>
         public IDisplay Display
         {
             get;
@@ -83,7 +109,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the phone service for this device.
+        /// Gets or sets the phone service for this device.
         /// </summary>
         /// <value>Phone service instance if available, otherwise null.</value>
         public IPhoneService PhoneService
@@ -93,26 +119,39 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the battery for the device.
+        /// Gets or sets the battery for the device.
         /// </summary>
+        /// <value>
+        /// The battery.
+        /// </value>
         public IBattery Battery
         {
             get;
             protected set;
         }
 
-		/// <summary>
-		/// Gets the picture chooser.
-		/// </summary>
-		/// <value>The picture chooser.</value>
-	    public IMediaPicker MediaPicker
-	    {
-		    get; 
-			private set;
-	    }
+        /// <summary>
+        /// Gets the picture chooser.
+        /// </summary>
+        /// <value>The picture chooser.</value>
+        public IMediaPicker MediaPicker
+        {
+            get; 
+            private set;
+        }
 
-	    /// <summary>
-        /// Gets the accelerometer for the device if available
+        /// <summary>
+        /// Gets the network service.
+        /// </summary>
+        /// <value>The network service.</value>
+        public INetwork Network
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets or sets the accelerometer for the device if available
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>
         public IAccelerometer Accelerometer
@@ -132,7 +171,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the name of the device.
+        /// Gets or sets the name of the device.
         /// </summary>
         public string Name
         {
@@ -141,7 +180,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the firmware version.
+        /// Gets or sets the firmware version.
         /// </summary>
         public string FirmwareVersion
         {
@@ -150,7 +189,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the hardware version.
+        /// Gets or sets the hardware version.
         /// </summary>
         public string HardwareVersion
         {
@@ -161,6 +200,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the manufacturer.
         /// </summary>
+        /// <value>
+        /// The manufacturer.
+        /// </value>
         public string Manufacturer
         {
             get
