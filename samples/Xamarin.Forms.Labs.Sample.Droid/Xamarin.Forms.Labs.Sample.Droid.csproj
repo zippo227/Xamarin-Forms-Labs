@@ -12,19 +12,15 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidApplication>True</AndroidApplication>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>Xamarin.Forms.Labs.Sample.Droid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\Xamarin.Forms.Labs\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>8c945242</NuGetPackageImportStamp>
-    <AndroidLinkSkip />
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
-    <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
-    <JavaMaximumHeapSize />
-    <JavaOptions />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +33,7 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -54,6 +51,14 @@
     </MonoDroidExtraArgs>
     <DefineConstants>__Android__</DefineConstants>
     <DocumentationFile>..\..\ReleaseBuild\Xamarin.Forms.Labs.Sample.Droid.XML</DocumentationFile>
+    <AndroidLinkSkip>
+    </AndroidLinkSkip>
+    <AndroidStoreUncompressedFileExtensions>
+    </AndroidStoreUncompressedFileExtensions>
+    <JavaMaximumHeapSize>
+    </JavaMaximumHeapSize>
+    <JavaOptions>
+    </JavaOptions>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -67,17 +72,17 @@
     <Reference Include="SQLite.Net.Platform.XamarinAndroid">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\SQLite.Net.Platform.XamarinAndroid.2.3.0\lib\MonoAndroid\SQLite.Net.Platform.XamarinAndroid.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Android.Support.v4.20.0.0.2\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
+    <Reference Include="Xamarin.Forms.Platform.Android">
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6243\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6240-pre2\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Platform.Android">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6240-pre2\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6243\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6240-pre2\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6243\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Android.Support.v4.20.0.0.3\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -97,17 +102,7 @@
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\drawable\Icon.png" />
-    <AndroidResource Include="Resources\layout\calendar_picker.xml" />
-    <AndroidResource Include="Resources\layout\dialog.xml" />
-    <AndroidResource Include="Resources\layout\month.xml" />
-    <AndroidResource Include="Resources\layout\week.xml" />
-    <AndroidResource Include="Resources\values\attrs.xml" />
-    <AndroidResource Include="Resources\values\colors.xml" />
-    <AndroidResource Include="Resources\values\dimens.xml" />
-    <AndroidResource Include="Resources\values\styles.xml" />
-    <AndroidResource Include="Resources\color\calendar_text_selector.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
@@ -126,6 +121,10 @@
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Caching\Xamarin.Forms.Labs.Caching.SQLiteNet\Xamarin.Forms.Labs.Caching.SQLiteNet.csproj">
       <Project>{FC01BDDB-E810-4EC9-94AA-A08A66796FCC}</Project>
       <Name>Xamarin.Forms.Labs.Caching.SQLiteNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs.Droid\Xamarin.Forms.Labs.Droid.csproj">
+      <Project>{67BB1B0A-8F35-4B87-907A-0BCA3103B38B}</Project>
+      <Name>Xamarin.Forms.Labs.Droid</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -157,12 +156,16 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\imgNotAvailable.png" />
   </ItemGroup>
-  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.1.6229\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
-  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6240-pre2\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6240-pre2\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6240-pre2\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6240-pre2\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6240-pre2\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
+  <ItemGroup>
+    <Folder Include="Resources\color\" />
+    <Folder Include="Resources\values\" />
+    <Folder Include="Resources\layout\" />
+  </ItemGroup>
 </Project>
