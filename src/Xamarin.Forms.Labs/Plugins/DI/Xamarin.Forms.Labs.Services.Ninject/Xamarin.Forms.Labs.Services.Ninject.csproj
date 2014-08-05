@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ninject">
-      <HintPath>..\..\..\packages\Portable.Ninject.3.3\lib\portable-net4+sl5+wp8+win8+wpa81+monotouch+monoandroid\Ninject.dll</HintPath>
+      <HintPath>..\..\..\packages\Portable.Ninject.3.2.1.1\lib\portable-net4+sl5+wp8+win8+wpa81+monotouch+monoandroid\Ninject.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
