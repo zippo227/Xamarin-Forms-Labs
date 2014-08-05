@@ -32,7 +32,6 @@ namespace Xamarin.Forms.Labs.Controls
             foreach (var item in newValue)
             {
                 var cell = control.ItemTemplate.CreateContent();
-                control.Children.Clear();
                 control.Children.Add(((ViewCell)cell).View);
             }
         }
