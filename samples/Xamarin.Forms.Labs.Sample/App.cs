@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Sample.Pages.Controls;
+using Xamarin.Forms.Labs.Sample.ViewModel;
 using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.Sample
@@ -46,7 +47,8 @@ namespace Xamarin.Forms.Labs.Sample
             ViewFactory.Register<CameraPage, CameraViewModel> ();
             ViewFactory.Register<CacheServicePage, CacheServiceViewModel> ();
             ViewFactory.Register<SoundPage, SoundServiceViewModel> ();
-            
+            ViewFactory.Register<RepeaterViewPage, RepeaterViewViewModel>();
+
             var mainTab = new ExtendedTabbedPage () { Title = "Xamarin Forms Labs" };
             var mainPage = new NavigationPage (mainTab);
             mainTab.CurrentPageChanged += () => Debug.WriteLine ("ExtendedTabbedPage CurrentPageChanged {0}", mainTab.CurrentPage.Title);
@@ -139,7 +141,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "WebImage",
                     "DynamicListView",
                     "GridView",
-                    "ExtendedScrollView"
+                    "ExtendedScrollView",
+                    "RepeaterView"
                 }
             };
             lstControls.ItemSelected += async (sender, e) => {
@@ -173,6 +176,9 @@ namespace Xamarin.Forms.Labs.Sample
                     break;
                 case "extendedscrollview":
                     await mainPage.Navigation.PushAsync (new Xamarin.Forms.Labs.Sample.Pages.Controls.ExtendedScrollView ());
+                    break;
+                case "repeaterview":
+                    await mainPage.Navigation.PushAsync (new Xamarin.Forms.Labs.Sample.Pages.Controls.RepeaterViewPage ());
                     break;
                 default:
                     break;

@@ -43,6 +43,7 @@
     <Compile Include="Pages\Controls\DynamicList\DynamicListView.xaml.cs">
       <DependentUpon>DynamicListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\RepeaterViewPage.cs" />
     <Compile Include="Pages\Controls\WebImagePage.xaml.cs">
       <DependentUpon>WebImagePage.xaml</DependentUpon>
     </Compile>
@@ -62,6 +63,7 @@
     </Compile>
     <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\RepeaterViewViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Pages\Controls\ExtendedLabelPage.xaml.cs">
       <DependentUpon>ExtendedLabelPage.xaml</DependentUpon>
