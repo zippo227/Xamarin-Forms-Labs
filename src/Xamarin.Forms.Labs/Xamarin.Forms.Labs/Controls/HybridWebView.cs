@@ -95,6 +95,15 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
+        public void LoadContent(string content)
+        {
+            var handler = this.LoadContentRequested;
+            if (handler != null)
+            {
+                handler(this, content);
+            }
+        }
+
         public void InjectJavaScript(string script)
         {
             lock (this.injectLock)
@@ -144,6 +153,7 @@ namespace Xamarin.Forms.Labs.Controls
 
         public EventHandler<string> JavaScriptLoadRequested;
         public EventHandler<string> LoadFromContentRequested;
+        public EventHandler<string> LoadContentRequested;
         public EventHandler LoadFinished;
     }
 }
