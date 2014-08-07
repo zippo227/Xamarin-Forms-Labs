@@ -6,11 +6,11 @@ using System.Drawing;
 using Xamarin.Forms.Labs.iOS.Controls;
 using Xamarin.Forms.Labs.Controls;
 
-[assembly: ExportRenderer (typeof (SegmentedControlView), typeof (SegmentedControlRenderer))]
+[assembly: ExportRenderer (typeof (SegmentedControlView), typeof (SegmentedControlRendererView))]
 
 namespace Xamarin.Forms.Labs.iOS.Controls
 {
-	public class SegmentedControlRenderer : ViewRenderer<SegmentedControlView , UISegmentedControl>
+	public class SegmentedControlRendererView : ViewRenderer<SegmentedControlView , UISegmentedControl>
 	{
 		//
 		// Methods
