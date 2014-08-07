@@ -9,128 +9,128 @@ namespace Xamarin.Forms.Labs.Sample
     /// The Geo-locator view model.
     /// </summary>
     [ViewType(typeof(GeolocatorPage))]
-	public class GeolocatorViewModel : ViewModel
-	{
+    public class GeolocatorViewModel : Xamarin.Forms.Labs.Mvvm.ViewModel
+    {
         private readonly TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-		private IGeolocator geolocator;
-		private CancellationTokenSource cancelSource;
+        private IGeolocator geolocator;
+        private CancellationTokenSource cancelSource;
         private string positionStatus = string.Empty;
-		private string positionLatitude = string.Empty;
+        private string positionLatitude = string.Empty;
         private string positionLongitude = string.Empty;
         private Command getPositionCommand;
 
         /// <summary>
-	    /// Gets or sets the position status.
-	    /// </summary>
-	    /// <value>
-	    /// The position status.
-	    /// </value>
-	    public string PositionStatus
-		{
-			get
-			{
-				return positionStatus;
-			}
-			set
-			{
-				this.SetProperty(ref positionStatus, value);
-			}
-		}
+        /// Gets or sets the position status.
+        /// </summary>
+        /// <value>
+        /// The position status.
+        /// </value>
+        public string PositionStatus
+        {
+            get
+            {
+                return positionStatus;
+            }
+            set
+            {
+                this.SetProperty(ref positionStatus, value);
+            }
+        }
 
-	    /// <summary>
-	    /// Gets or sets the position latitude.
-	    /// </summary>
-	    /// <value>
-	    /// The position latitude.
-	    /// </value>
-	    public string PositionLatitude
-		{
-			get
-			{
-				return positionLatitude;
-			}
-			set
-			{
-				this.SetProperty(ref positionLatitude, value);
-			}
-		}
+        /// <summary>
+        /// Gets or sets the position latitude.
+        /// </summary>
+        /// <value>
+        /// The position latitude.
+        /// </value>
+        public string PositionLatitude
+        {
+            get
+            {
+                return positionLatitude;
+            }
+            set
+            {
+                this.SetProperty(ref positionLatitude, value);
+            }
+        }
 
-	    /// <summary>
-	    /// Gets or sets the position longitude.
-	    /// </summary>
-	    /// <value>
-	    /// The position longitude.
-	    /// </value>
-	    public string PositionLongitude
-		{
-			get
-			{
-				return positionLongitude;
-			}
-			set
-			{
-				this.SetProperty(ref positionLongitude, value);
-			}
-		}
+        /// <summary>
+        /// Gets or sets the position longitude.
+        /// </summary>
+        /// <value>
+        /// The position longitude.
+        /// </value>
+        public string PositionLongitude
+        {
+            get
+            {
+                return positionLongitude;
+            }
+            set
+            {
+                this.SetProperty(ref positionLongitude, value);
+            }
+        }
 
-	    /// <summary>
-	    /// Gets the get position command.
-	    /// </summary>
-	    /// <value>
-	    /// The get position command.
-	    /// </value>
-	    public Command GetPositionCommand 
-		{
-			get
-			{ 
-				return getPositionCommand ?? 
+        /// <summary>
+        /// Gets the get position command.
+        /// </summary>
+        /// <value>
+        /// The get position command.
+        /// </value>
+        public Command GetPositionCommand 
+        {
+            get
+            { 
+                return getPositionCommand ?? 
                     (getPositionCommand = new Command(async () => { await GetPosition(); }, () => true)); 
-			}
-		}
+            }
+        }
 
         private void Setup()
         {
-		    if (this.geolocator != null)
-		    {
-		        return;
-		    }
-		        
-		    this.geolocator = DependencyService.Get<IGeolocator>();
-		    this.geolocator.PositionError += OnListeningError;
-		    this.geolocator.PositionChanged += OnPositionChanged;
-		}
+            if (this.geolocator != null)
+            {
+                return;
+            }
+                
+            this.geolocator = DependencyService.Get<IGeolocator>();
+            this.geolocator.PositionError += OnListeningError;
+            this.geolocator.PositionChanged += OnPositionChanged;
+        }
 
         private async Task GetPosition()
         {
             Setup();
 
-			this.cancelSource = new CancellationTokenSource();
+            this.cancelSource = new CancellationTokenSource();
 
-			PositionStatus = string.Empty;
-			PositionLatitude = string.Empty;
-			PositionLongitude = string.Empty;
+            PositionStatus = string.Empty;
+            PositionLatitude = string.Empty;
+            PositionLongitude = string.Empty;
             IsBusy = true;
             await
                 this.geolocator.GetPositionAsync(10000, this.cancelSource.Token, true)
                     .ContinueWith(t =>
                     {
                         IsBusy = false;
-					    if (t.IsFaulted)
-					    {
-					        this.PositionStatus = ((GeolocationException) t.Exception.InnerException).Error.ToString();
-					    }
-					    else if (t.IsCanceled)
-					    {
+                        if (t.IsFaulted)
+                        {
+                            this.PositionStatus = ((GeolocationException) t.Exception.InnerException).Error.ToString();
+                        }
+                        else if (t.IsCanceled)
+                        {
                             this.PositionStatus = "Canceled";
-					    }
-						else
-						{
+                        }
+                        else
+                        {
                             this.PositionStatus = t.Result.Timestamp.ToString("G");
-							PositionLatitude = "La: " + t.Result.Latitude.ToString("N4");
-							PositionLongitude = "Lo: " + t.Result.Longitude.ToString("N4");
-						}
-					}, scheduler);
-		}
+                            PositionLatitude = "La: " + t.Result.Latitude.ToString("N4");
+                            PositionLongitude = "Lo: " + t.Result.Longitude.ToString("N4");
+                        }
+                    }, scheduler);
+        }
 
         ////private void CancelPosition ()
         ////{
@@ -161,7 +161,7 @@ namespace Xamarin.Forms.Labs.Sample
 ////			BeginInvokeOnMainThread (() => {
 ////				ListenStatus.Text = e.Error.ToString();
 ////			});
-		}
+        }
 
         private void OnPositionChanged(object sender, PositionEventArgs e)
         {
@@ -170,7 +170,7 @@ namespace Xamarin.Forms.Labs.Sample
 ////				ListenLatitude.Text = "La: " + e.Position.Latitude.ToString("N4");
 ////				ListenLongitude.Text = "Lo: " + e.Position.Longitude.ToString("N4");
 ////			});
-		}
-	}
+        }
+    }
 }
 

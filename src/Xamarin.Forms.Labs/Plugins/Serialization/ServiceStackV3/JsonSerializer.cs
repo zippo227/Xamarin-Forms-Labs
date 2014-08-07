@@ -61,6 +61,16 @@ namespace Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3
             }
         }
 
+        public static void SetSerializeDelegate<T>(System.Func<T,string> serializerDelegate)
+        {
+            ServiceStack.Text.JsConfig<T>.SerializeFn = serializerDelegate;
+        }
+
+        public static void SetDeserializeDelegate<T>(System.Func<string, T> deserializerDelegate)
+        {
+            ServiceStack.Text.JsConfig<T>.DeSerializeFn = deserializerDelegate;
+        }
+
         #region ISerializer Members
 
         public SerializationFormat Format

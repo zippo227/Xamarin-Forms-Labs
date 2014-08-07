@@ -41,6 +41,7 @@
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
     <Compile Include="Controls\RepeaterView.cs" />
+    <Compile Include="Controls\SegmentedControlView.cs" />
     <Compile Include="Controls\WebImage.cs" />
     <Compile Include="Data\ObservableObject.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />

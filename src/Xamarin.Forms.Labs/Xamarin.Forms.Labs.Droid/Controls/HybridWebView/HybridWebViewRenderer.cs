@@ -51,6 +51,12 @@ namespace Xamarin.Forms.Labs.Controls
             this.Element.Uri = new Uri("file:///android_asset/" + contentFullName);
         }
 
+        partial void LoadContent(object sender, string contentFullName)
+        {
+            //TODO: We need help implementing this feature LoadContent on Android
+            throw new NotImplementedException("We need help implementing this feature");
+        }
+
         private class Client : WebViewClient
         {
             private readonly WeakReference<HybridWebViewRenderer> webHybrid;
