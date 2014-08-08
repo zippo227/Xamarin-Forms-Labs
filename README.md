@@ -17,6 +17,11 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - HybridWebView (alpha)
  - Web Image (beta)
  - GridView (IOS beta)
+ - RepeaterView (beta)
+ - SegmentedControlView (IOS beta)
+ - ExtendedScrollView (IOS beta)
+ - DynamicListView (beta)
+ - ExtendedContentView (beta)
 
 **Available services (Beta)**
 
@@ -43,7 +48,8 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 
  - Serialization (ServiceStackV3, ProtoBuf, JSON.Net)
  - Caching (SQLLiteSimpleCache)
- - Dependency Injection containers (TinyIOC, Autofac, NInject, impleInjector)
+ - Dependency Injection containers (TinyIOC, Autofac, NInject, SimpleInjector, Unity)
+ - Web (RestClient)
  
    
 _________________
@@ -193,8 +199,12 @@ __________________
  - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
  - Ben Ishiyama-Levy [@mrbrl](http://www.monovo.io)
  - Ryan Wischkaemper
+ - [Eric Grover](http://www.ericgrover.com) [@bluechiperic](https://twitter.com/bluechiperic)
+ - [Mitch Milam] [@mitchmilam](https://twitter.com/mitchmilam)
+ - Kazuki Yasufuku
+ - Petr Klíma
 
- **Another Project Contributions:**
+ **Other Project Contributions:**
  	Xamarin.Mobile
 
 

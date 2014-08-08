@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.iOS.Services.Media;
+using Xamarin.Forms.Labs.iOS.Services;
 
 namespace Xamarin.Forms.Labs
 {
@@ -37,6 +38,8 @@ namespace Xamarin.Forms.Labs
             }
 
             this.MediaPicker = new MediaPicker();
+
+            this.Network = new Network();
         }
 
         /// <summary>
@@ -134,6 +137,16 @@ namespace Xamarin.Forms.Labs
         public IMediaPicker MediaPicker
         {
             get; 
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the network service.
+        /// </summary>
+        /// <value>The network service.</value>
+        public INetwork Network
+        {
+            get;
             private set;
         }
 

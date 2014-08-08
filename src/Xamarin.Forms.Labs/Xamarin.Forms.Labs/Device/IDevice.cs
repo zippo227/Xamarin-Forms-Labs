@@ -49,6 +49,12 @@ namespace Xamarin.Forms.Labs
 		/// <value>The picture chooser.</value>
 		IMediaPicker MediaPicker { get; }
 
+        /// <summary>
+        /// Gets the network service.
+        /// </summary>
+        /// <value>The network service.</value>
+        INetwork Network { get; }
+
 		/// <summary>
 		/// Gets the name of the device.
 		/// </summary>

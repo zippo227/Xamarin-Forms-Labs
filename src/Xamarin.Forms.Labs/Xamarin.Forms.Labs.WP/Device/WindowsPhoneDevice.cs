@@ -21,6 +21,10 @@ namespace Xamarin.Forms.Labs
         /// </summary>
         private static WindowsPhoneDevice currentDevice;
 
+        private IMediaPicker mediaPicker;
+
+        private INetwork network;
+
         /// <summary>
         /// The Id for the device.
         /// </summary>
@@ -31,7 +35,6 @@ namespace Xamarin.Forms.Labs
         /// </summary>
         private WindowsPhoneDevice()
         {
-
             Display = new Display();
             PhoneService = new PhoneService();
             Battery = new Battery();
@@ -49,10 +52,10 @@ namespace Xamarin.Forms.Labs
                 }
             }
 
-            if (DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_MEDIALIB_PHOTO))
-            {
-                MediaPicker = new MediaPicker();
-            }
+            //if (DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_MEDIALIB_PHOTO))
+            //{
+            //    MediaPicker = new MediaPicker();
+            //}
         }
 
         /// <summary>
@@ -147,10 +150,30 @@ namespace Xamarin.Forms.Labs
         /// Gets the picture chooser.
         /// </summary>
         /// <value>The picture chooser.</value>
+        /// <exception cref="System.UnauthorizedAccessException">
+        /// Exception is thrown if application manifest does not enable ID_CAP_ISV_CAMERA capability.
+        /// </exception>
         public IMediaPicker MediaPicker
         {
-            get; 
-            private set;
+            get
+            {
+                return this.mediaPicker ?? (this.mediaPicker = new MediaPicker());
+            }
+        }
+
+        /// <summary>
+        /// Gets the network service.
+        /// </summary>
+        /// <value>The network service.</value>
+        /// <exception cref="System.UnauthorizedAccessException">
+        /// Exception is thrown if application manifest does not enable ID_CAP_NETWORKING capability.
+        /// </exception>
+        public INetwork Network
+        {
+            get
+            {
+                return this.network ?? (this.network = new Network());
+            }
         }
 
         /// <summary>

@@ -45,19 +45,19 @@ namespace DeviceTests
         [Test]
         public void HasMediaPicker()
         {
-//#if WINDOWS_PHONE
-//            if (DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_MEDIALIB_PHOTO))
-//            {
-//                Assert.IsNotNull(PlatformDevice.CurrentDevice.MediaPicker);
-//            }
-//            else
-//            {
-//                Assert.ThrowsException<UnauthorizedAccessException>(() => new Xamarin.Forms.Labs.WP8.Services.Media.MediaPicker());
-//                Assert.Inconclusive("Unable to initialize MediaPicker since {0} has not been defined in app manifest.", DeviceCapabilities.Capability.ID_CAP_MEDIALIB_PHOTO);
-//            }
-//#else
+#if WINDOWS_PHONE
+            if (DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_ISV_CAMERA))
+            {
+                Assert.IsNotNull(PlatformDevice.CurrentDevice.MediaPicker);
+            }
+            else
+            {
+                Assert.ThrowsException<UnauthorizedAccessException>(() => PlatformDevice.CurrentDevice.MediaPicker);
+                Assert.Inconclusive("Unable to initialize MediaPicker since {0} has not been defined in app manifest.", DeviceCapabilities.Capability.ID_CAP_ISV_CAMERA);
+            }
+#else
             Assert.IsNotNull(PlatformDevice.CurrentDevice.MediaPicker);
-//#endif
+#endif
         }
 
         [Test]

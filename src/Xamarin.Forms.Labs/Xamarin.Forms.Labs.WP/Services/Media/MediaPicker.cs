@@ -7,7 +7,11 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Microsoft.Devices;
 using Microsoft.Phone.Tasks;
+using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.WP8.Services.Media;
+
+[assembly: Dependency(typeof(MediaPicker))]
 
 namespace Xamarin.Forms.Labs.WP8.Services.Media
 {
@@ -49,7 +53,7 @@ namespace Xamarin.Forms.Labs.WP8.Services.Media
 
             _photoChooser.ShowCamera = false;
 
-            IsCameraAvailable = DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_ISV_CAMERA) && 
+            IsCameraAvailable = //DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_ISV_CAMERA) && 
                 (Microsoft.Devices.Camera.IsCameraTypeSupported(CameraType.Primary) ||
                 Microsoft.Devices.Camera.IsCameraTypeSupported(CameraType.FrontFacing));
 

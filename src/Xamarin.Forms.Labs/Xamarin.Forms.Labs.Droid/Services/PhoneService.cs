@@ -164,6 +164,11 @@ namespace Xamarin.Forms.Labs.Services
         {
             number.StartActivity(new Intent(Intent.ActionDial, Uri.Parse("tel:" + number)));
         }
+
+        public void SendSMS(string to, string body)
+        {
+            SmsManager.Default.SendTextMessage(to, null, body, null, null);
+        }
         #endregion
     }
 }

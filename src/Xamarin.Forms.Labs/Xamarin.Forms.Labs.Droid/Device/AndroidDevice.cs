@@ -3,6 +3,8 @@ using Android.OS;
 using Xamarin.Forms.Labs.Droid.Services.Media;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.Droid;
+using Xamarin.Forms.Labs.Droid.Services;
 
 namespace Xamarin.Forms.Labs
 {
@@ -49,7 +51,9 @@ namespace Xamarin.Forms.Labs
 
             this.Battery = new Battery();
 
-	        this.MediaPicker = new MediaPicker();
+            this.MediaPicker = new MediaPicker();
+
+            this.Network = new Network();
         }
 
         /// <summary>
@@ -107,17 +111,27 @@ namespace Xamarin.Forms.Labs
             private set;
         }
 
-		/// <summary>
-		/// Gets the picture chooser.
-		/// </summary>
-		/// <value>The picture chooser.</value>
-	    public IMediaPicker MediaPicker
-	    {
-		    get; 
-			private set;
-	    }
+        /// <summary>
+        /// Gets the picture chooser.
+        /// </summary>
+        /// <value>The picture chooser.</value>
+        public IMediaPicker MediaPicker
+        {
+            get; 
+            private set;
+        }
 
-	    /// <summary>
+        /// <summary>
+        /// Gets the network service.
+        /// </summary>
+        /// <value>The network service.</value>
+        public INetwork Network
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Gets the accelerometer for the device if available.
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>

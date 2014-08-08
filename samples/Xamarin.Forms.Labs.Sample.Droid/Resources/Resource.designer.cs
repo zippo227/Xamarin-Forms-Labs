@@ -214,9 +214,6 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 			// aapt resource value: 0x7f020006
 			public const int imgNotAvailable = 2130837510;
 			
-			// aapt resource value: 0x7f020007
-			public const int monoandroidsplash = 2130837511;
-			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -322,9 +319,6 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 			
 			// aapt resource value: 0x7f070000
 			public const int CalendarTitle = 2131165184;
-			
-			// aapt resource value: 0x7f070004
-			public const int Mono_Android_Theme_Splash = 2131165188;
 			
 			static Style()
 			{

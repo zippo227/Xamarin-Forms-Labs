@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite.Net;
+using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLite.Net.Interop;
 using Xamarin.Forms.Labs.Services;
@@ -11,15 +12,17 @@ using Xamarin.Forms.Labs.Services.Serialization;
 
 namespace Xamarin.Forms.Labs.Caching.SQLiteNet
 {
-    public class SQLiteSimpleCache : SQLiteConnectionWithLock, ISimpleCache
+    public class SQLiteSimpleCache : SQLiteConnectionWithLock, ISimpleCache, IAsyncSimpleCache
     {
-        private IByteSerializer serializer;
+        private readonly IByteSerializer serializer;
+        private readonly SQLiteAsyncConnection asyncConnection;
 
         public SQLiteSimpleCache(ISQLitePlatform platform, SQLiteConnectionString connection, IByteSerializer defaultSerializer)
             : base(platform, connection)
         {
             this.CreateTable<SQliteCacheTable>();
             this.serializer = defaultSerializer;
+            this.asyncConnection = new SQLiteAsyncConnection(() => this);
         }
 
         #region ICacheProvider Members
@@ -36,7 +39,6 @@ namespace Xamarin.Forms.Labs.Caching.SQLiteNet
 
         public T Get<T>(string key)
         {
-            var items = this.Find<SQliteCacheTable>(key);
             return this.GetObject<T>(this.Find<SQliteCacheTable>(key));
         }
 
@@ -111,5 +113,66 @@ namespace Xamarin.Forms.Labs.Caching.SQLiteNet
             public string Key { get; set; }
             public byte[] Blob { get; set; }
         }
+
+        #region IAsyncSimpleCache Members
+
+        public async Task<bool> RemoveAsync(string key)
+        {
+            var count = await this.asyncConnection.DeleteAsync<SQliteCacheTable>(key);
+            return count == 1;
+        }
+
+        public async Task RemoveAllAsync(IEnumerable<string> keys)
+        {
+            await Task.WhenAll(keys.Select(key => this.RemoveAsync(key)));
+        }
+
+        public async Task<T> GetAsync<T>(string key)
+        {
+            var item = await this.asyncConnection.FindAsync<SQliteCacheTable>(key);
+
+            return this.GetObject<T>(item);
+        }
+
+        public async Task<bool> AddAsync<T>(string key, T value)
+        {
+            var count = await this.asyncConnection.InsertAsync(new SQliteCacheTable(key, this.GetBytes(value)));
+            return count == 1;
+        }
+
+        public async Task<bool> SetAsync<T>(string key, T value)
+        {
+            var n = await this.asyncConnection.InsertOrReplaceAsync(new SQliteCacheTable(key, this.GetBytes(value)));
+            return n == 1;
+        }
+
+        public async Task<bool> ReplaceAsync<T>(string key, T value)
+        {
+            return await this.RemoveAsync(key) ? await this.AddAsync(key, value) : false;
+        }
+
+        public async Task FlushAllAsync()
+        {
+            await this.asyncConnection.DeleteAllAsync<SQliteCacheTable>();
+        }
+
+        public async Task<IDictionary<string, T>> GetAllAsync<T>(IEnumerable<string> keys)
+        {
+            var dict = new Dictionary<string, T>();
+
+            foreach (var item in keys.Select(a => new { Key = a, Item = this.GetAsync<T>(a) }).Where(a => a.Item != null))
+            {
+                dict.Add(item.Key, await item.Item);
+            }
+
+            return dict;
+        }
+
+        public Task SetAllAsync<T>(IDictionary<string, T> values)
+        {
+            return Task.WhenAll(values.Select(value => this.SetAsync<T>(value.Key, value.Value)));
+        }
+
+        #endregion
     }
 }

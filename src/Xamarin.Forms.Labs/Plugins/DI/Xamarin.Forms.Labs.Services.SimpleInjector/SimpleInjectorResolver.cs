@@ -36,8 +36,12 @@ namespace Xamarin.Forms.Labs.Services.SimpleInjectorContainer
             {
                 return this.container.GetInstance<T>();
             }
-            catch
+            catch (SimpleInjector.ActivationException ex)
             {
+                if (ex.InnerException != null)
+                {
+                    throw ex.InnerException;
+                }
 
                 return null;
             }
@@ -54,8 +58,12 @@ namespace Xamarin.Forms.Labs.Services.SimpleInjectorContainer
             {
                 return this.container.GetInstance(type);
             }
-            catch
+            catch (SimpleInjector.ActivationException ex)
             {
+                if (ex.InnerException != null)
+                {
+                    throw ex.InnerException;
+                }
 
                 return null;
             }
@@ -72,8 +80,13 @@ namespace Xamarin.Forms.Labs.Services.SimpleInjectorContainer
             {
                 return this.container.GetAllInstances<T>();
             }
-            catch
+            catch (SimpleInjector.ActivationException ex)
             {
+                if (ex.InnerException != null)
+                {
+                    throw ex.InnerException;
+                }
+
                 return Enumerable.Empty<T>();
             }
         }
@@ -89,8 +102,13 @@ namespace Xamarin.Forms.Labs.Services.SimpleInjectorContainer
             {
                 return this.container.GetAllInstances(type);
             }
-            catch
+            catch (SimpleInjector.ActivationException ex)
             {
+                if (ex.InnerException != null)
+                {
+                    throw ex.InnerException;
+                }
+
                 return Enumerable.Empty<object>();
             }
         }
