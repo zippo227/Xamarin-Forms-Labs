@@ -47,6 +47,8 @@
     <Compile Include="Device\DisplayExtensions.cs" />
     <Compile Include="Device\IAccelerometer.cs" />
     <Compile Include="Device\IBattery.cs" />
+    <Compile Include="Device\IBluetoothDevice.cs" />
+    <Compile Include="Device\IBluetoothHub.cs" />
     <Compile Include="Device\IDevice.cs" />
     <Compile Include="Device\IDisplay.cs" />
     <Compile Include="Device\IGyroscope.cs" />

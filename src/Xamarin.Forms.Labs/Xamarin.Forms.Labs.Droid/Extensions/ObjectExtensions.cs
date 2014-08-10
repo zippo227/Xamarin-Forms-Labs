@@ -27,6 +27,20 @@ namespace Xamarin.Forms.Labs
                 Application.Context.StartActivity (intent);
             }
         }
+
+        public static void StartActivityForResult(this object o, Intent intent)
+        {
+            var context = o as Context;
+            if (context != null)
+            {
+                context.StartActivityForResult(intent);
+            }
+            else
+            {
+                intent.SetFlags(ActivityFlags.NewTask);
+                Application.Context.StartActivityForResult(intent);
+            }
+        }
     }
 }
 

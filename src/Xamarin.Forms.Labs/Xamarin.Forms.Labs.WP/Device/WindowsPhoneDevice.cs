@@ -35,9 +35,10 @@ namespace Xamarin.Forms.Labs
         /// </summary>
         private WindowsPhoneDevice()
         {
-            Display = new Display();
-            PhoneService = new PhoneService();
-            Battery = new Battery();
+            this.Display = new Display();
+            this.PhoneService = new PhoneService();
+            this.Battery = new Battery();
+            this.BluetoothHub = new BluetoothHub();
 
             if (DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_SENSORS))
             {
@@ -174,6 +175,16 @@ namespace Xamarin.Forms.Labs
             {
                 return this.network ?? (this.network = new Network());
             }
+        }
+
+        /// <summary>
+        /// Gets the bluetooth hub service.
+        /// </summary>
+        /// <value>The bluetooth hub service if available, otherwise null.</value>
+        public IBluetoothHub BluetoothHub
+        {
+            get; 
+            private set;
         }
 
         /// <summary>

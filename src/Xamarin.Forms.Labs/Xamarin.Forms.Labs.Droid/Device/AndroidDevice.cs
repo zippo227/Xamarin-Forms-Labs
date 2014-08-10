@@ -37,6 +37,11 @@ namespace Xamarin.Forms.Labs
                 this.Gyroscope = new Gyroscope();
             }
 
+            if (Android.Bluetooth.BluetoothAdapter.DefaultAdapter != null)
+            {
+                this.BluetoothHub = new BluetoothHub(Android.Bluetooth.BluetoothAdapter.DefaultAdapter);
+            }
+
 //            if (BluetoothAdapter.DefaultAdapter != null)
 //            {
 //                this.BluetoothHub = new BluetoothHub(BluetoothAdapter.DefaultAdapter);
@@ -146,6 +151,16 @@ namespace Xamarin.Forms.Labs
         /// </summary>
         /// <value>The gyroscope instance if available, otherwise null.</value>
         public IGyroscope Gyroscope
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the bluetooth hub service.
+        /// </summary>
+        /// <value>The bluetooth hub service if available, otherwise null.</value>
+        public IBluetoothHub BluetoothHub
         {
             get;
             private set;
