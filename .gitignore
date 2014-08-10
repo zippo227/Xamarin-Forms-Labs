@@ -182,3 +182,4 @@ src/Xamarin.Forms.Labs/Xamarin.Forms.Labs.Droid/Resources/Resource.designer.cs
 src/Xamarin.Forms.Labs/Xamarin.Forms.Labs.userprefs
 
 *.userprefs
+*.jf

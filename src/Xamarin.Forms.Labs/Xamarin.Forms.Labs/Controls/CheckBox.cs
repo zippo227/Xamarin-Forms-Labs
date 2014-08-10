@@ -48,12 +48,26 @@ namespace Xamarin.Forms.Labs.Controls
             BindableProperty.Create<CheckBox, Color>(
                 p => p.TextColor, Color.Black);
 
+        /// <summary>
+        /// The font size property
+        /// </summary>
+        public static readonly BindableProperty FontSizeProperty =
+            BindableProperty.Create<CheckBox, double>(
+                p => p.FontSize, -1);
+
+        /// <summary>
+        /// The font name property.
+        /// </summary>
+        public static readonly BindableProperty FontNameProperty =
+            BindableProperty.Create<CheckBox, string>(
+                p => p.FontName, string.Empty);
+
 
         /// <summary>
         /// The checked changed event.
         /// </summary>
         public EventHandler<EventArgs<bool>> CheckedChanged;
- 
+
         /// <summary>
         /// Gets or sets a value indicating whether the control is checked.
         /// </summary>
@@ -144,13 +158,45 @@ namespace Xamarin.Forms.Labs.Controls
                 this.SetValue(TextColorProperty, value);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the size of the font.
+        /// </summary>
+        /// <value>The size of the font.</value>
+        public double FontSize
+        {
+            get
+            {
+                return (double)GetValue(FontSizeProperty);
+            }
+            set
+            {
+                SetValue(FontSizeProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the font.
+        /// </summary>
+        /// <value>The name of the font.</value>
+        public string FontName
+        {
+            get
+            {
+                return (string)GetValue(FontNameProperty);
+            }
+            set
+            {
+                SetValue(FontNameProperty, value);
+            }
+        }
         public string Text
         {
             get
             {
                 return this.Checked
-                           ? (string.IsNullOrEmpty(this.CheckedText) ? this.DefaultText : this.CheckedText)
-                           : (string.IsNullOrEmpty(this.UncheckedText) ? this.DefaultText : this.UncheckedText);
+                    ? (string.IsNullOrEmpty(this.CheckedText) ? this.DefaultText : this.CheckedText)
+                        : (string.IsNullOrEmpty(this.UncheckedText) ? this.DefaultText : this.UncheckedText);
             }
         }
     }

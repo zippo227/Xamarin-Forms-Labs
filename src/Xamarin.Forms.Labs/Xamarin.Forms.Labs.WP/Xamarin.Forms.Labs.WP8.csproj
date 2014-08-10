@@ -98,7 +98,6 @@
       <Link>Device\Gyroscope.designer.cs</Link>
     </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
-    <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
@@ -159,6 +158,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
+    <None Include="Controls\CheckBox\CheckBoxRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
@@ -201,4 +201,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Controls\CheckBox\" />
+  </ItemGroup>
 </Project>

@@ -39,9 +39,6 @@
     <Compile Include="Pages\Controls\ButtonPage.xaml.cs">
       <DependentUpon>ButtonPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Controls\CheckBoxPage.xaml.cs">
-      <DependentUpon>CheckBoxPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\Controls\DynamicList\BasicList.cs" />
     <Compile Include="Pages\Controls\DynamicList\DynamicListView.xaml.cs">
       <DependentUpon>DynamicListView.xaml</DependentUpon>
@@ -112,6 +109,9 @@
     <Compile Include="Pages\Controls\ExtendedScrollView.xaml.cs">
       <DependentUpon>ExtendedScrollView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\CheckBoxPage.xaml.cs">
+      <DependentUpon>CheckBoxPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -135,6 +135,10 @@
     <EmbeddedResource Include="Pages\Controls\ExtendedScrollView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <LogicalName>ExtendedScrollView.xaml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Controls\CheckBoxPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <LogicalName>CheckBoxPage.xaml</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -205,12 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\Controls\DynamicList\DynamicListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\Controls\CheckBoxPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

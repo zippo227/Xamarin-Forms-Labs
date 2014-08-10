@@ -1,18 +1,15 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms.Labs.Controls;
+using Xamarin.Forms;
 
 namespace Xamarin.Forms.Labs.Sample.Pages.Controls
-{
-    public partial class CheckBoxPage
-    {
-        public CheckBoxPage()
+{    
+    public partial class CheckBoxPage : ContentPage
+    {    
+        public CheckBoxPage ()
         {
-            InitializeComponent();
-
+            InitializeComponent ();
         }
     }
 }
+

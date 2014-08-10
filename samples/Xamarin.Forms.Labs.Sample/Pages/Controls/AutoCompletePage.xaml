@@ -12,8 +12,12 @@
 			<ViewCell Height="60">
 					<ViewCell.View>
 						<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+							
 								<Label Text="{Binding FirstName}" VerticalOptions="Center" HorizontalOptions="Start" />
+						
+							
 								<Label Text="{Binding LastName}" VerticalOptions="Center" HorizontalOptions="Start" />
+							
 						</StackLayout>
 					</ViewCell.View>
 				</ViewCell>

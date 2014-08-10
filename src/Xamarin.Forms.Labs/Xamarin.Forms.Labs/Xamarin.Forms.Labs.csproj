@@ -34,7 +34,6 @@
     <DocumentationFile>..\..\..\ReleaseBuild\Xamarin.Forms.Labs.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\DynamicListView.cs" />
     <Compile Include="Controls\ExtendedContentView.cs" />
     <Compile Include="Controls\ExtendedTabbedPage.cs" />
@@ -42,6 +41,7 @@
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
     <Compile Include="Controls\RepeaterView.cs" />
+    <Compile Include="Controls\SegmentedControlView.cs" />
     <Compile Include="Controls\WebImage.cs" />
     <Compile Include="Data\ObservableObject.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />
@@ -62,7 +62,10 @@
     <Compile Include="Helpers\EventExtensions.cs" />
     <Compile Include="Helpers\TaskUtils.cs" />
     <Compile Include="Helpers\Vector3.cs" />
+    <Compile Include="Mvvm\INavigationAware.cs" />
     <Compile Include="Mvvm\IXFormsApp.cs" />
+    <Compile Include="Mvvm\NavigationAwareViewModel.cs" />
+    <Compile Include="Mvvm\NavigationView.cs" />
     <Compile Include="Mvvm\ViewModel.cs" />
     <Compile Include="Mvvm\XFormsApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -121,7 +124,7 @@
     <Compile Include="Controls\ExtendedScrollView.cs" />
     <Compile Include="Services\Web\WebResponseException.cs" />
     <Compile Include="Controls\SegmentControl.cs" />
-    <Compile Include="Controls\SegmentedControlView.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

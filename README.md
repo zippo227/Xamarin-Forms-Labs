@@ -65,6 +65,15 @@ We are working in a great [wiki][1] on how to use the controls and services.
 https://github.com/XForms/Xamarin-Forms-Labs/wiki
 
 
+**Xamarin Forms Labs Framework Helper**
+======
+
+[Xamarin Forms Labs Framework Helper for online use](http://htmlpreview.github.io/?https://github.com/XForms/Xamarin-Forms-Labs/blob/master/Help/Web/Index.html)
+
+[Xamarin.Forms.Labs.chm file for offline use](https://github.com/XForms/Xamarin-Forms-Labs/blob/master/Help/Xamarin.Forms.Labs.chm)
+
+
+
 ------------------------------------------------------------------------
 
 Using the MVVM Helpers
