@@ -53,6 +53,10 @@ namespace Xamarin.Forms.Labs.WP8.Controls
                 case "TextColor":
                     this.Control.Foreground = this.Element.TextColor.ToBrush();
                     break;
+                case "FontName":
+                case "FontSize":
+                    UpdateFont();
+                    break;
                 case "CheckedText":
                 case "UncheckedText":
                     this.Control.Content = Element.Text;
@@ -70,6 +74,15 @@ namespace Xamarin.Forms.Labs.WP8.Controls
                 this.Control.Content = this.Element.Text;
                 this.Control.IsChecked = eventArgs.Value;
             });
+        }
+
+        private void UpdateFont()
+        {
+            if (!string.IsNullOrEmpty(view.FontName))
+            {
+                Control.FontFamily = new FontFamily(Element.FontName);
+                Control.FontSize = (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f;
+            }
         }
     }
 }

@@ -34,6 +34,8 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                 this.SetNativeControl(checkBox);
             }
 
+            UpdateFont();
+
             this.Control.CheckedTitle = string.IsNullOrEmpty(e.NewElement.CheckedText) ? e.NewElement.DefaultText : e.NewElement.CheckedText;
             this.Control.UncheckedTitle = string.IsNullOrEmpty(e.NewElement.UncheckedText) ? e.NewElement.DefaultText : e.NewElement.UncheckedText;
             this.Control.Checked = e.NewElement.Checked;
@@ -60,6 +62,12 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                 case "UncheckedText":
                     this.Control.UncheckedTitle = string.IsNullOrEmpty(this.Element.UncheckedText) ? this.Element.DefaultText : this.Element.UncheckedText;
                     break;
+                case "FontSize":
+                    UpdateFont();
+                    break;
+                case "FontName":
+                    UpdateFont();
+                    break;
                 default:
                     System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName);
                     break;
@@ -72,6 +80,23 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             {
                 this.Control.Checked = eventArgs.Value;
             });
+        }
+
+        private void UpdateFont()
+        {
+            if (string.IsNullOrEmpty(Element.FontName))
+            {
+                return;
+            }
+
+            var font = UIFont.FromName(
+                Element.FontName,
+                (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f);
+
+            if (font != null)
+            {
+                Control.Font = font;
+            }
         }
     }
 }

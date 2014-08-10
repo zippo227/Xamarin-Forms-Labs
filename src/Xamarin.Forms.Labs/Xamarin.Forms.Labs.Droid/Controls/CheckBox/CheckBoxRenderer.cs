@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Android.Graphics;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Droid.Controls;
 using Xamarin.Forms.Platform.Android;
@@ -30,11 +31,21 @@ namespace Xamarin.Forms.Labs.Droid.Controls
                 this.SetNativeControl(checkBox);
             }
 
-            this.Control.Text = e.NewElement.Text;
-            this.Control.Checked = e.NewElement.Checked;
-            this.Control.SetTextColor(e.NewElement.TextColor.ToAndroid());
+            Control.Text = e.NewElement.Text;
+            Control.Checked = e.NewElement.Checked;
+            Control.SetTextColor(e.NewElement.TextColor.ToAndroid());
 
-            this.Element.PropertyChanged += ElementOnPropertyChanged;
+            if (e.NewElement.FontSize > 0)
+            {
+                Control.TextSize = (float)e.NewElement.FontSize;
+            }
+
+            if (!string.IsNullOrEmpty(e.NewElement.FontName))
+            {
+                Control.Typeface = TrySetFont(e.NewElement.FontName);
+            }
+
+            Element.PropertyChanged += ElementOnPropertyChanged;
         }
 
         //private void CheckedChanged(object sender, EventArgs<bool> eventArgs)
@@ -56,19 +67,55 @@ namespace Xamarin.Forms.Labs.Droid.Controls
             switch (propertyChangedEventArgs.PropertyName)
             {
                 case "Checked":
-                    this.Control.Text = this.Element.Text;
-                    this.Control.Checked = this.Element.Checked;
+                    Control.Text = Element.Text;
+                    Control.Checked = Element.Checked;
                     break;
                 case "TextColor":
-                    this.Control.SetTextColor(this.Element.TextColor.ToAndroid());
+                    Control.SetTextColor(Element.TextColor.ToAndroid());
+                    break;
+                case "FontName":
+                    if (!string.IsNullOrEmpty(Element.FontName))
+                    {
+                        Control.Typeface = TrySetFont(Element.FontName);
+                    }
+                    break;
+                case "FontSize":
+                    if (Element.FontSize > 0)
+                    {
+                        Control.TextSize = (float)Element.FontSize;
+                    }
                     break;
                 case "CheckedText":
                 case "UncheckedText":
-                    this.Control.Text = this.Element.Text;
+                    Control.Text = Element.Text;
                     break;
                 default:
                     System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName);
                     break;
+            }
+        }
+
+        private Typeface TrySetFont(string fontName)
+        {
+            Typeface tf = Typeface.Default;
+            try
+            {
+                tf = Typeface.CreateFromAsset(Context.Assets, fontName);
+                return tf;
+            }
+            catch (Exception ex)
+            {
+                Console.Write("not found in assets {0}", ex);
+                try
+                {
+                    tf = Typeface.CreateFromFile(fontName);
+                    return tf;
+                }
+                catch (Exception ex1)
+                {
+                    Console.Write(ex1);
+                    return Typeface.Default;
+                }
             }
         }
     }
