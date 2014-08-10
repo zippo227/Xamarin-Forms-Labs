@@ -108,6 +108,9 @@
     <Compile Include="Pages\Controls\ExtendedScrollView.xaml.cs">
       <DependentUpon>ExtendedScrollView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\CheckBoxPage.xaml.cs">
+      <DependentUpon>CheckBoxPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -131,6 +134,10 @@
     <EmbeddedResource Include="Pages\Controls\ExtendedScrollView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <LogicalName>ExtendedScrollView.xaml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Controls\CheckBoxPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <LogicalName>CheckBoxPage.xaml</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

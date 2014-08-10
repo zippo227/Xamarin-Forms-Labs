@@ -61,7 +61,8 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                     this.Control.UncheckedTitle = string.IsNullOrEmpty(this.Element.UncheckedText) ? this.Element.DefaultText : this.Element.UncheckedText;
                     break;
                 default:
-                    throw new NotImplementedException(string.Format("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName));
+                    System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName);
+                    break;        
             }
         }
 
