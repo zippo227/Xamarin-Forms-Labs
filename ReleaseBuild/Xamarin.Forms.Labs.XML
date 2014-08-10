@@ -4,9 +4,88 @@
         <name>Xamarin.Forms.Labs</name>
     </assembly>
     <members>
+        <member name="T:Xamarin.Forms.Labs.Controls.CheckBox">
+            <summary>
+            The check box.
+            </summary>
+        </member>
+        <member name="F:Xamarin.Forms.Labs.Controls.CheckBox.CheckedProperty">
+            <summary>
+            The width request in inches property.
+            </summary>
+        </member>
+        <member name="F:Xamarin.Forms.Labs.Controls.CheckBox.CheckedTextProperty">
+            <summary>
+            The checked text property.
+            </summary>
+        </member>
+        <member name="F:Xamarin.Forms.Labs.Controls.CheckBox.UncheckedTextProperty">
+            <summary>
+            The unchecked text property.
+            </summary>
+        </member>
+        <member name="F:Xamarin.Forms.Labs.Controls.CheckBox.DefaultTextProperty">
+            <summary>
+            The default text property.
+            </summary>
+        </member>
+        <member name="F:Xamarin.Forms.Labs.Controls.CheckBox.TextColorProperty">
+            <summary>
+            Identifies the TextColor bindable property.
+            </summary>
+            
+            <remarks/>
+        </member>
+        <member name="F:Xamarin.Forms.Labs.Controls.CheckBox.CheckedChanged">
+            <summary>
+            The checked changed event.
+            </summary>
+        </member>
+        <member name="P:Xamarin.Forms.Labs.Controls.CheckBox.Checked">
+            <summary>
+            Gets or sets a value indicating whether the control is checked.
+            </summary>
+            <value>The checked state.</value>
+        </member>
+        <member name="P:Xamarin.Forms.Labs.Controls.CheckBox.CheckedText">
+            <summary>
+            Gets or sets a value indicating the checked text.
+            </summary>
+            <value>The checked state.</value>
+            <remarks>
+            Overwrites the default text property if set when checkbox is checked.
+            </remarks>
+        </member>
+        <member name="P:Xamarin.Forms.Labs.Controls.CheckBox.UncheckedText">
+            <summary>
+            Gets or sets a value indicating whether the control is checked.
+            </summary>
+            <value>The checked state.</value>
+            <remarks>
+            Overwrites the default text property if set when checkbox is checked.
+            </remarks>
+        </member>
+        <member name="P:Xamarin.Forms.Labs.Controls.CheckBox.DefaultText">
+            <summary>
+            Gets or sets the text.
+            </summary>
+        </member>
+        <member name="T:Xamarin.Forms.Labs.Controls.DynamicListView`1">
+            <summary>
+            The dynamic native list view.
+            </summary>
+            <typeparam name="T">
+            Type of items in the list view
+            </typeparam>
+        </member>
         <member name="F:Xamarin.Forms.Labs.Controls.DynamicListView`1.data">
             <summary>
             The data.
+            </summary>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Controls.DynamicListView`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Xamarin.Forms.Labs.Controls.DynamicListView`1"/> class.
             </summary>
         </member>
         <member name="M:Xamarin.Forms.Labs.Controls.DynamicListView`1.Add(`0)">
@@ -31,11 +110,24 @@
             <see cref="T:System.Boolean"/>, true if replacement was successful, false if original object was not found.
             </returns>
         </member>
+        <member name="M:Xamarin.Forms.Labs.Controls.DynamicListView`1.Remove(`0)">
+            <summary>
+            The remove item method.
+            </summary>
+            <param name="item">
+            The item to remove.
+            </param>
+        </member>
         <member name="M:Xamarin.Forms.Labs.Controls.DynamicListView`1.InvokeItemSelectedEvent(System.Object,`0)">
             <summary>
             Invokes the item selected event.
             </summary>
-            <param name="item">Item.</param>
+            <param name="sender">
+            The sender.
+            </param>
+            <param name="item">
+            Item that was selected.
+            </param>
         </member>
         <member name="E:Xamarin.Forms.Labs.Controls.DynamicListView`1.OnSelected">
             <summary>
