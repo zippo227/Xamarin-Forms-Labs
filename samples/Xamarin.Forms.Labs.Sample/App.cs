@@ -142,7 +142,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "DynamicListView",
                     "GridView",
                     "ExtendedScrollView",
-                    "RepeaterView"
+                    "RepeaterView",
+                    "CheckBox"
                 }
             };
             lstControls.ItemSelected += async (sender, e) => {
@@ -179,6 +180,9 @@ namespace Xamarin.Forms.Labs.Sample
                     break;
                 case "repeaterview":
                     await mainPage.Navigation.PushAsync (new Xamarin.Forms.Labs.Sample.Pages.Controls.RepeaterViewPage ());
+                    break;
+                case "checkbox":
+                    await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.CheckBoxPage());
                     break;
                 default:
                     break;
