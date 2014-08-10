@@ -55,6 +55,7 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Controls\SegmentedControlView\" />
+    <Folder Include="Images\CheckBox\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -73,7 +74,6 @@
     <Compile Include="..\Xamarin.Forms.Labs\Device\Gyroscope.designer.cs">
       <Link>Device\Gyroscope.designer.cs</Link>
     </Compile>
-    <Compile Include="Controls\CheckBox\CheckBoxView.cs" />
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
@@ -116,6 +116,7 @@
     <Compile Include="Controls\GridView\GridCollectionView.cs" />
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
     <Compile Include="Controls\SegmentedControlView\SegmentedControlViewRenderer.cs" />
+    <Compile Include="Controls\CheckBox\CheckBoxView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
@@ -138,18 +139,10 @@
     <BundleResource Include="Images\Calendar\today.png" />
     <BundleResource Include="Images\Calendar\todayselected.png" />
     <BundleResource Include="Images\Calendar\topbar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Images\CheckBox\checked_checkbox%402x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Images\CheckBox\unchecked_checkbox%402x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Images\CheckBox\checked_checkbox.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <BundleResource Include="Images\CheckBox\checked_checkbox%402x.png" />
     <BundleResource Include="Images\CheckBox\unchecked_checkbox.png" />
+    <BundleResource Include="Images\CheckBox\unchecked_checkbox%402x.png" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" />

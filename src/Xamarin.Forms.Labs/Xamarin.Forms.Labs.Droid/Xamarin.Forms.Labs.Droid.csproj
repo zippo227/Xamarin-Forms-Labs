@@ -116,6 +116,7 @@
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Services\SoundService.cs" />
     <Compile Include="Controls\GridView\GridViewRenderer.cs" />
+    <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -164,5 +165,6 @@
   </Target>
   <ItemGroup>
     <Folder Include="Controls\GridView\" />
+    <Folder Include="Controls\CheckBox\" />
   </ItemGroup>
 </Project>
