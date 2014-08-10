@@ -158,7 +158,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
-    <None Include="Controls\CheckBox\CheckBoxRenderer.cs" />
+    <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
@@ -201,7 +201,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="Controls\CheckBox\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
