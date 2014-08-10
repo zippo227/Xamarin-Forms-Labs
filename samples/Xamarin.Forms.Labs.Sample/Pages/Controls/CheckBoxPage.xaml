@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:controls="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=Xamarin.Forms.Labs"
-                       x:Class="Xamarin.Forms.Labs.Sample.Pages.Controls.CheckBoxPage">
+					   x:Class="Xamarin.Forms.Labs.Sample.Pages.Controls.CheckBoxPage">
     <StackLayout>
         <StackLayout.BackgroundColor>
             <OnPlatform x:TypeArguments="Color" 
@@ -10,7 +10,7 @@
                         Android="White"
                         WinPhone="Black"/>
         </StackLayout.BackgroundColor>
-        <controls:CheckBox DefaultText="Default text" HorizontalOptions="FillAndExpand" />
+        <controls:CheckBox DefaultText="Default text" HorizontalOptions="FillAndExpand" TextColor="Green" />
         <controls:CheckBox DefaultText="Default text" CheckedText="Checked" UncheckedText="Unchecked" HorizontalOptions="FillAndExpand" />
     </StackLayout>
 </ContentPage>

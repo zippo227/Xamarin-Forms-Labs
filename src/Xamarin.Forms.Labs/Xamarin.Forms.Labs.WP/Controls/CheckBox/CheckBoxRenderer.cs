@@ -38,7 +38,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls
 
             this.Control.Content = e.NewElement.Text;
             this.Control.IsChecked = e.NewElement.Checked;
-
+            this.Control.Foreground = e.NewElement.TextColor.ToBrush();
             this.Element.CheckedChanged += CheckedChanged;
             this.Element.PropertyChanged += ElementOnPropertyChanged;
         }
@@ -51,7 +51,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls
                     this.Control.IsChecked = this.Element.Checked;
                     break;
                 case "TextColor":
-
+                    this.Control.Foreground = this.Element.TextColor.ToBrush();
                     break;
                 case "CheckedText":
                 case "UncheckedText":

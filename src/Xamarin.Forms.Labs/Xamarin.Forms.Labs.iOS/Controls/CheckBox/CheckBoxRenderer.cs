@@ -62,7 +62,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                     break;
                 default:
                     System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName);
-                    break;        
+                    break;
             }
         }
 
