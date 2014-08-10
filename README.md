@@ -64,7 +64,7 @@ https://github.com/XForms/Xamarin-Forms-Labs/wiki
 
 [Website - Xamarin Forms Labs Framework Helper for online use](http://htmlpreview.github.io/?https://github.com/saramgsilva/XForms-Toolkit/blob/master/Help/Web/Index.html)
 
-[Xamarin.Forms.Labs.chm file for offline use](https://github.com/saramgsilva/XForms-Toolkit/edit/master/README.md)
+[Xamarin.Forms.Labs.chm file for offline use](https://github.com/saramgsilva/XForms-Toolkit/blob/master/Help/Xamarin.Forms.Labs.chm)
 
 
 
