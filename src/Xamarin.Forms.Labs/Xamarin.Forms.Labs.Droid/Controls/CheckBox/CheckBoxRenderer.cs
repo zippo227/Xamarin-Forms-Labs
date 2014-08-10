@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Droid.Controls;
 using Xamarin.Forms.Platform.Android;
@@ -18,10 +19,9 @@ namespace Xamarin.Forms.Labs.Droid.Controls
 
             if (e.OldElement != null)
             {
-                e.OldElement.CheckedChanged -= CheckedChanged;
+                e.OldElement.PropertyChanged -= ElementOnPropertyChanged;
             }
 
-            //this.checkBox = this.Control;
             if (this.Control == null)
             {
                 var checkBox = new NativeCheckBox(this.Context);
@@ -34,21 +34,42 @@ namespace Xamarin.Forms.Labs.Droid.Controls
             this.Control.Checked = e.NewElement.Checked;
             this.Control.SetTextColor(e.NewElement.TextColor.ToAndroid());
 
-            this.Element.CheckedChanged += CheckedChanged;
+            this.Element.PropertyChanged += ElementOnPropertyChanged;
         }
 
-        private void CheckedChanged(object sender, EventArgs<bool> eventArgs)
-        {
-            Device.BeginInvokeOnMainThread(() =>
-                {
-                    this.Control.Text = this.Element.Text;
-                    this.Control.Checked = eventArgs.Value;
-                });
-        }
+        //private void CheckedChanged(object sender, EventArgs<bool> eventArgs)
+        //{
+        //    Device.BeginInvokeOnMainThread(() =>
+        //        {
+        //            this.Control.Text = this.Element.Text;
+        //            this.Control.Checked = eventArgs.Value;
+        //        });
+        //}
 
         void checkBox_CheckedChange(object sender, Android.Widget.CompoundButton.CheckedChangeEventArgs e)
         {
             this.Element.Checked = e.IsChecked;
+        }
+
+        private void ElementOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            switch (propertyChangedEventArgs.PropertyName)
+            {
+                case "Checked":
+                    this.Control.Text = this.Element.Text;
+                    this.Control.Checked = this.Element.Checked;
+                    break;
+                case "TextColor":
+                    this.Control.SetTextColor(this.Element.TextColor.ToAndroid());
+                    break;
+                case "CheckedText":
+                case "UncheckedText":
+                    this.Control.Text = this.Element.Text;
+                    break;
+                default:
+                    System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName);
+                    break;
+            }
         }
     }
 }
