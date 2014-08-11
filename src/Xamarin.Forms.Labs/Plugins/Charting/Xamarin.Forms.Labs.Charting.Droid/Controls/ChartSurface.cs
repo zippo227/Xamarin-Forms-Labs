@@ -17,10 +17,10 @@ namespace Xamarin.Forms.Labs.Charting.Droid.Controls
             : base(context)
         {
             SetWillNotDraw(false);
-            _colors = colors;
-            _paint = new Paint() { Color = color, StrokeWidth = 2 };
 
             _chart = chart;
+            _paint = new Paint() { Color = color, StrokeWidth = 2 };
+            _colors = colors;
         }
 
         protected override void OnDraw(Canvas canvas)
