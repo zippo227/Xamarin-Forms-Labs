@@ -36,12 +36,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Events\DoubleDrawingData.cs" />
     <Compile Include="Controls\Chart.cs" />
     <Compile Include="Controls\ChartType.cs" />
     <Compile Include="Controls\DataPoint.cs" />
     <Compile Include="Controls\DataPointCollection.cs" />
+    <Compile Include="Controls\IChartDrawable.cs" />
     <Compile Include="Controls\Series.cs" />
     <Compile Include="Controls\SeriesCollection.cs" />
+    <Compile Include="Events\SingleDrawingData.cs" />
+    <Compile Include="Events\TextDrawingData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
