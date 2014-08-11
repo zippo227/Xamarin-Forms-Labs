@@ -6,9 +6,10 @@ namespace Xamarin.Forms.Labs.Charting.Controls
     {
         public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(Chart), Color.White, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty SeriesProperty = BindableProperty.Create("Series", typeof(SeriesCollection), typeof(Chart), default(SeriesCollection), BindingMode.OneWay, null, null, null, null);
-        public static readonly BindableProperty WidthProperty = BindableProperty.Create("Width", typeof(float), typeof(Chart), default(float), BindingMode.OneWay, null, null, null, null);
-        public static readonly BindableProperty HeightProperty = BindableProperty.Create("Height", typeof(float), typeof(Chart), default(float), BindingMode.OneWay, null, null, null, null);
-        public static readonly BindableProperty SpacingProperty = BindableProperty.Create("Spacing", typeof(float), typeof(Chart), default(float), BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty WidthProperty = BindableProperty.Create("Width", typeof(float), typeof(Chart), 250F, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty HeightProperty = BindableProperty.Create("Height", typeof(float), typeof(Chart), 250F, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty SpacingProperty = BindableProperty.Create("Spacing", typeof(float), typeof(Chart), 5F, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty GridProperty = BindableProperty.Create("Grid", typeof(bool), typeof(Chart), true, BindingMode.OneWay, null, null, null, null);
                 
         public Color Color
         {
@@ -67,6 +68,18 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             set
             {
                 base.SetValue(Chart.SpacingProperty, value);
+            }
+        }
+
+        public bool Grid
+        {
+            get
+            {
+                return (bool)base.GetValue(Chart.GridProperty);
+            }
+            set
+            {
+                base.SetValue(Chart.GridProperty, value);
             }
         }
 
