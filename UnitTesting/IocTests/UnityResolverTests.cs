@@ -26,7 +26,7 @@ namespace IocTests
 
         protected override Xamarin.Forms.Labs.Services.IDependencyContainer GetEmptyContainer()
         {
-            throw new NotImplementedException();
+            return new UnityDependencyContainer();
         }
     }
 }
