@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
 //using System.Windows.Controls;
@@ -39,6 +40,9 @@ namespace Xamarin.Forms.Labs.WP8.Controls
             this.Control.Content = e.NewElement.Text;
             this.Control.IsChecked = e.NewElement.Checked;
             this.Control.Foreground = e.NewElement.TextColor.ToBrush();
+            
+            UpdateFont();
+
             this.Element.CheckedChanged += CheckedChanged;
             this.Element.PropertyChanged += ElementOnPropertyChanged;
         }
@@ -78,11 +82,12 @@ namespace Xamarin.Forms.Labs.WP8.Controls
 
         private void UpdateFont()
         {
-            if (!string.IsNullOrEmpty(view.FontName))
+            if (!string.IsNullOrEmpty(Element.FontName))
             {
                 Control.FontFamily = new FontFamily(Element.FontName);
-                Control.FontSize = (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f;
             }
+
+            Control.FontSize = (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f;
         }
     }
 }
