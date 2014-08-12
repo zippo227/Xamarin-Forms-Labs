@@ -206,6 +206,7 @@ namespace Xamarin.Forms.Labs.Sample
             var lstControls = new ListView
             {
                 ItemsSource = new List<string>() {
+                    "Bar",
                     "Combination"
                 }
             };
@@ -213,6 +214,9 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 switch (e.SelectedItem.ToString().ToLower())
                 {
+                    case "bar":
+                        await mainPage.Navigation.PushAsync(new BarChartPage());
+                        break;
                     case "combination":
                         await mainPage.Navigation.PushAsync(new CombinationPage());
                         break;
