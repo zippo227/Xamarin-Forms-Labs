@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#if !__IOS__
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,7 +22,8 @@ namespace IocTests
 
         protected override Xamarin.Forms.Labs.Services.IResolver GetEmptyResolver()
         {
-            return new UnityResolver(new Microsoft.Practices.Unity.UnityContainer());
+            return GetEmptyContainer().GetResolver();
+            //return new UnityResolver(new Microsoft.Practices.Unity.UnityContainer());
         }
 
         protected override Xamarin.Forms.Labs.Services.IDependencyContainer GetEmptyContainer()
@@ -30,3 +32,4 @@ namespace IocTests
         }
     }
 }
+//#endif
