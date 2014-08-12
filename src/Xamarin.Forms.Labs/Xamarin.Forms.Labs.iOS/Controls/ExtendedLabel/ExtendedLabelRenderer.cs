@@ -14,7 +14,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
     /// The extended label renderer.
     /// </summary>
     public class ExtendedLabelRenderer : LabelRenderer
-	{
+    {
         /// <summary>
         /// The on element changed callback.
         /// </summary>
@@ -22,12 +22,12 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         /// The event arguments.
         /// </param>
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
-		{
-			base.OnElementChanged(e);
-			var view = (ExtendedLabel)Element;
+        {
+            base.OnElementChanged(e);
+            var view = (ExtendedLabel)Element;
 
             UpdateUi(view, this.Control);
-		}
+        }
 
         /// <summary>
         /// Updates the UI.
@@ -39,38 +39,49 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         /// The control.
         /// </param>
         private static void UpdateUi(ExtendedLabel view, UILabel control)
-		{
-
-		    if (!string.IsNullOrEmpty(view.FontName))
-		    {
-		        var font = UIFont.FromName(
+        {
+            if (!string.IsNullOrEmpty(view.FontName))
+            {
+                var font = UIFont.FromName(
                     view.FontName,
-		            (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
-
-		        if (font != null)
-		        {
-		            control.Font = font;
-		        }
-		    }
-
-		    if (!string.IsNullOrEmpty(view.FontNameIOS))
-		    {
-		        var font = UIFont.FromName(
-                    view.FontNameIOS,
-		           (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
+                    (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
 
                 if (font != null)
                 {
                     control.Font = font;
                 }
-		    }
+            }
 
-			if (view.IsUnderline) {
-				control.AttributedText = new NSAttributedString (
-					control.Text, 
-					underlineStyle: NSUnderlineStyle.Single);
-			}
-		}
-	}
+            if (!string.IsNullOrEmpty(view.FontNameIOS))
+            {
+                var font = UIFont.FromName(
+                    view.FontNameIOS,
+                   (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
+
+                if (font != null)
+                {
+                    control.Font = font;
+                }
+            }
+
+            var attrString = new NSMutableAttributedString(control.Text);
+
+            if (view.IsUnderline)
+            {
+                //control.AttributedText = new NSAttributedString(
+                //    control.Text,
+                //    underlineStyle: NSUnderlineStyle.Single);
+
+                attrString.AddAttribute(UIStringAttributeKey.UnderlineStyle, NSNumber.FromInt32((int)NSUnderlineStyle.Single), new NSRange(0, attrString.Length));
+            }
+
+            if (view.IsStrikeThrough)
+            {
+                attrString.AddAttribute(UIStringAttributeKey.StrikethroughStyle, NSNumber.FromInt32((int)NSUnderlineStyle.Single), new NSRange(0, attrString.Length));
+            }
+
+            control.AttributedText = attrString;
+        }
+    }
 }
 

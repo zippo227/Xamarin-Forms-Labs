@@ -57,6 +57,11 @@ namespace Xamarin.Forms.Labs.Controls
             {
                 control.TextDecorations = TextDecorations.Underline;
             }
+
+            if (view.IsStrikeThrough)
+            {
+                // TODO: When StrikeThrough support is added
+            }
         }
     }
 }
