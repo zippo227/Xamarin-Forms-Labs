@@ -14,15 +14,17 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
     public class ChartSurface : Canvas
     {
         private Chart _chart;
-        private SolidColorBrush brush;
+        private SolidColorBrush _brush;
         private WPColor[] _colors;
 
         public ChartSurface(Chart chart, WPColor color, WPColor[] colors) : base()
         {
-            // TODO: Complete member initialization
+            this.Background = new SolidColorBrush(System.Windows.Media.Colors.Blue);
+            this.Width = chart.Width;
+            this.Height = chart.Height;
             _chart = chart;
-            brush = new SolidColorBrush(color);
-            colors = _colors;
+            _brush = new SolidColorBrush(color);
+            _colors = colors;
 
             _chart.OnDrawBar += _chart_OnDrawBar;
             _chart.OnDrawCircle += _chart_OnDrawCircle;
@@ -62,7 +64,7 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         void _chart_OnDrawGridLine(object sender, Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
             WPShapes.Line line = new WPShapes.Line();
-            line.Stroke = brush;
+            line.Stroke = _brush;
             line.StrokeThickness = 2;
 
             line.X1 = e.Data.XFrom;
@@ -90,7 +92,7 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         void _chart_OnDrawText(object sender, Chart.DrawEventArgs<Events.TextDrawingData> e)
         {
             TextBlock textBlock = new TextBlock();
-            textBlock.Foreground = brush;
+            textBlock.Foreground = _brush;
 
             Canvas.SetLeft(textBlock, e.Data.X);
             Canvas.SetTop(textBlock, e.Data.Y);

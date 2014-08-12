@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Labs.Charting.Controls;
 using Xamarin.Forms.Labs.Charting.WP.Controls;
 using Xamarin.Forms.Platform.WinPhone;
@@ -18,7 +13,7 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
             base.OnElementChanged(e);
             if (e.OldElement != null || this.Element == null)
                 return;
-
+            
             System.Windows.Media.Color[] colors = new System.Windows.Media.Color[Element.Series.Count];
 
             for (int i = 0; i < Element.Series.Count; i++)
@@ -35,6 +30,7 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
                     (byte)(Element.Color.R * 255),
                     (byte)(Element.Color.G * 255),
                     (byte)(Element.Color.B * 255));
+
             ChartSurface surfaceView = new ChartSurface(Element, color, colors);
             SetNativeControl(surfaceView);
         }
