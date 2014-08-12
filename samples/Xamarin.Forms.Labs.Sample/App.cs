@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Sample.Pages.Controls;
+using Xamarin.Forms.Labs.Sample.Pages.Controls.Charts;
 using Xamarin.Forms.Labs.Sample.ViewModel;
 using Xamarin.Forms.Labs.Services;
 
@@ -55,9 +56,11 @@ namespace Xamarin.Forms.Labs.Sample
 
             var controls = GetControlsPage (mainPage);
             var services = GetServicesPage (mainPage);
+            var charts = GetChartingPage   (mainPage);
             var mvvm = ViewFactory.CreatePage<MvvmSampleViewModel> ();
             mainTab.Children.Add (controls);
-            mainTab.Children.Add (services);
+            mainTab.Children.Add(services);
+            mainTab.Children.Add(charts);
             mainTab.Children.Add (mvvm);
 
             return mainPage;
@@ -186,6 +189,39 @@ namespace Xamarin.Forms.Labs.Sample
                     break;
                 default:
                     break;
+                }
+            };
+            controls.Content = lstControls;
+            return controls;
+        }
+
+        /// <summary>
+        /// Gets the charting page.
+        /// </summary>
+        /// <param name="mainPage">The main page.</param>
+        /// <returns>Content Page.</returns>
+        private static ContentPage GetChartingPage(VisualElement mainPage)
+        {
+            var controls = new ContentPage { Title = "Charts" };
+            var lstControls = new ListView
+            {
+                ItemsSource = new List<string>() {
+                    "Bar",
+                    "Combination"
+                }
+            };
+            lstControls.ItemSelected += async (sender, e) =>
+            {
+                switch (e.SelectedItem.ToString().ToLower())
+                {
+                    case "bar":
+                        await mainPage.Navigation.PushAsync(new BarChartPage());
+                        break;
+                    case "combination":
+                        await mainPage.Navigation.PushAsync(new CombinationPage());
+                        break;
+                    default:
+                        break;
                 }
             };
             controls.Content = lstControls;
