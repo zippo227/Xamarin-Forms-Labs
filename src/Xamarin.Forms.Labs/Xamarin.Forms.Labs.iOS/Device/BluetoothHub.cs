@@ -44,11 +44,34 @@ namespace Xamarin.Forms.Labs
                     devices.AddRange(e.Peripherals.Select(a => new BluetoothDevice(a))));
 
                 this.manager.RetrievedPeripherals += action;
-                this.manager.RetrieveConnectedPeripherals(new[] { CBUUID.FromString(TransferServiceUuid) });
-                this.manager.RetrievedPeripherals -= action;
 
+                this.manager.RetrievedConnectedPeripherals += ManagerOnRetrievedConnectedPeripherals;
+                this.manager.DiscoveredPeripheral += manager_DiscoveredPeripheral;
+                CBUUID id = null;
+
+                // Bug in Xamarin? https://bugzilla.xamarin.com/show_bug.cgi?id=5808
+                //this.manager.ScanForPeripherals(id, null);
+                this.manager.ScanForPeripherals(CBUUID.FromString(TransferServiceUuid));
+
+                this.manager.RetrievePeripherals(CBUUID.FromString(TransferServiceUuid));
+                //this.manager.RetrieveConnectedPeripherals(new[] { CBUUID.FromString(TransferServiceUuid) });
+                this.manager.RetrievedPeripherals -= action;
+                this.manager.RetrievedConnectedPeripherals -= ManagerOnRetrievedConnectedPeripherals;
+                this.manager.DiscoveredPeripheral -= manager_DiscoveredPeripheral;
+                
                 return devices;
             });
+        }
+
+        void manager_DiscoveredPeripheral(object sender, CBDiscoveredPeripheralEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+        }
+
+        private void ManagerOnRetrievedConnectedPeripherals(object sender, CBPeripheralsEventArgs cbPeripheralsEventArgs)
+        {
+            
+            System.Diagnostics.Debug.WriteLine(cbPeripheralsEventArgs);
         }
 
         public System.Windows.Input.ICommand OpenSettings
