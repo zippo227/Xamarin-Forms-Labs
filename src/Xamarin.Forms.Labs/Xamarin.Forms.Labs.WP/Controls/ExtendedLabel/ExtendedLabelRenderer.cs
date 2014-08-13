@@ -45,7 +45,7 @@ namespace Xamarin.Forms.Labs.Controls
         /// <param name="control">
         /// The control.
         /// </param>
-        private static void UpdateUi(ExtendedLabel view, TextBlock control)
+        private void UpdateUi(ExtendedLabel view, TextBlock control)
         {
             if (!string.IsNullOrEmpty(view.FontName))
             {
@@ -60,7 +60,11 @@ namespace Xamarin.Forms.Labs.Controls
 
             if (view.IsStrikeThrough)
             {
-                // TODO: When StrikeThrough support is added
+                //isn't perfect, but it's a start 
+                var border = new Border() { Height = 1, Width = this.Control.ActualWidth, Background = control.Foreground, HorizontalAlignment = HorizontalAlignment.Center };
+                Canvas.SetTop(border, (this.Control.ActualHeight / 2) - 0.5);
+                ((Xamarin.Forms.Platform.WinPhone.VisualElementRenderer<Xamarin.Forms.Label, System.Windows.Controls.TextBlock>)(this)).Children.Add(border);
+
             }
         }
     }

@@ -56,6 +56,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Controls\SegmentedControlView\" />
     <Folder Include="Images\CheckBox\" />
+    <Folder Include="Controls\ImageGallery\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -119,6 +120,8 @@
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
     <Compile Include="Controls\SegmentedControlView\SegmentedControlViewRenderer.cs" />
     <Compile Include="Controls\CheckBox\CheckBoxView.cs" />
+    <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
+    <Compile Include="Controls\ImageGallery\ImageGalleryView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
