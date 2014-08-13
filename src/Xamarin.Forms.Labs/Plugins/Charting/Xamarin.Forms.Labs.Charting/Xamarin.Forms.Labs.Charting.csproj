@@ -43,6 +43,7 @@
     <Compile Include="Controls\DataPointCollection.cs" />
     <Compile Include="Controls\Series.cs" />
     <Compile Include="Controls\SeriesCollection.cs" />
+    <Compile Include="Events\PieDrawingData.cs" />
     <Compile Include="Events\SingleDrawingData.cs" />
     <Compile Include="Events\TextDrawingData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

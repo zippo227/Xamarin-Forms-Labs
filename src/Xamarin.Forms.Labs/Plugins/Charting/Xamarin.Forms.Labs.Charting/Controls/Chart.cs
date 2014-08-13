@@ -161,6 +161,11 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// Fires when canvas needs to draw a circle
         /// </summary>
         internal event EventHandler<DrawEventArgs<SingleDrawingData>> OnDrawCircle;
+
+        /// <summary>
+        /// Fires when canvas needs to draw a pie
+        /// </summary>
+        internal event EventHandler<DrawEventArgs<PieDrawingData>> OnDrawPie;
         #endregion
 
         /// <summary>
@@ -186,10 +191,8 @@ namespace Xamarin.Forms.Labs.Charting.Controls
                 }
             }
 
-            OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, PADDING_TOP, PADDING_LEFT, Height, 0) });  //Y-axis
-            OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, Height, Width, Height, 0) });              //X-axis
-
-            highestValue = DrawGrid(highestValue);
+            if(Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
+                highestValue = DrawGrid(highestValue);
 
             // If there are no bars, fake them
             if (noOfBars == 0)
@@ -197,23 +200,33 @@ namespace Xamarin.Forms.Labs.Charting.Controls
 
             float widthPerBar = ((Width - PADDING_LEFT) - (Spacing * (noOfBars - 1))) / noOfBars;
 
-            DrawLabels(highestValue, widthPerBar, Series[0].Points);
-
-            Height -= 2; // Y-axis space
-
-            for (int i = 0; i < Series.Count; i++)
+            if (Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
             {
-                Series series = Series[i];
+                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, PADDING_TOP, PADDING_LEFT, Height, 0) });  //Y-axis
+                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, Height, Width, Height, 0) });              //X-axis
+                DrawLabels(highestValue, widthPerBar, Series[0].Points);
 
-                switch (series.Type)
+                Height -= 2; // Y-axis space
+
+                for (int i = 0; i < Series.Count; i++)
                 {
-                    case ChartType.Bar:
-                        DrawBarChart(highestValue, widthPerBar, i, series.Points);
-                        break;
-                    case ChartType.Line:
-                        DrawLineChart(highestValue, widthPerBar, i, series.Points);
-                        break;
+                    Series series = Series[i];
+
+                    switch (series.Type)
+                    {
+                        case ChartType.Bar:
+                            DrawBarChart(highestValue, widthPerBar, i, series.Points);
+                            break;
+                        case ChartType.Line:
+                            DrawLineChart(highestValue, widthPerBar, i, series.Points);
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                Series series = Series.First(s => s.Type == ChartType.Pie);
+                DrawPieChart(series.Points, Series.IndexOf(series));
             }
         }
 
@@ -304,6 +317,24 @@ namespace Xamarin.Forms.Labs.Charting.Controls
 
                 widthIterator += widthPerBar * noOfBarSeries + Spacing;
             }
+        }
+
+        /// <summary>
+        /// Draw a pie chart.
+        /// </summary>
+        /// <param name="points">Specified points in the series.</param>
+        private void DrawPieChart(DataPointCollection points, int pieNo)
+        {
+            float sizeOfCircle = ((Width > Height) ? Height / 2 : Width / 2);
+            float[] values = points.Select(p => p.Value).ToArray();
+            float degreesPerValue = 360 / values.Sum();
+
+            for(int i = 0; i < values.Length; i++)
+            {
+                values[i] = values[i] * degreesPerValue;
+            }
+
+            OnDrawPie(this, new DrawEventArgs<PieDrawingData> { Data = new PieDrawingData(Width / 2, Height / 2, pieNo, sizeOfCircle, values) });
         }
 
         /// <summary>

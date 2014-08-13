@@ -12,6 +12,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
     public enum ChartType
     {
         Bar = 0,
-        Line = 1
+        Line = 1,
+        Pie = 2
     }
 }

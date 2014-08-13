@@ -52,8 +52,8 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         {
             WPShapes.Ellipse ellipse = new WPShapes.Ellipse();
             ellipse.Fill = new SolidColorBrush(_colors[e.Data.SeriesNo]);
-            ellipse.Width = 5;
-            ellipse.Height = 5;
+            ellipse.Width = e.Data.Size;
+            ellipse.Height = e.Data.Size;
 
             Canvas.SetLeft(ellipse, e.Data.X);
             Canvas.SetTop(ellipse, e.Data.Y);
