@@ -41,7 +41,6 @@
     <Compile Include="Controls\ChartType.cs" />
     <Compile Include="Controls\DataPoint.cs" />
     <Compile Include="Controls\DataPointCollection.cs" />
-    <Compile Include="Controls\IChartDrawable.cs" />
     <Compile Include="Controls\Series.cs" />
     <Compile Include="Controls\SeriesCollection.cs" />
     <Compile Include="Events\SingleDrawingData.cs" />

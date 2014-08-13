@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Charting.Controls
 {
+    /// <summary>
+    /// Represents a single series to be drawn in a chart.
+    /// </summary>
     public class Series : Element
     {
         public static readonly BindableProperty PointsProperty = BindableProperty.Create("Points", typeof(DataPointCollection), typeof(Series), default(DataPointCollection), BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(Series), Color.Blue, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty TypeProperty = BindableProperty.Create("Type", typeof(ChartType), typeof(Series), ChartType.Bar, BindingMode.OneWay, null, null, null, null);
 
+        /// <summary>
+        /// Color of the Series.
+        /// </summary>
         public Color Color
         {
             get
@@ -25,6 +31,9 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             }
         }
 
+        /// <summary>
+        /// DataPoints containing Y-axis values and X-axis labels.
+        /// </summary>
         public DataPointCollection Points
         {
             get
@@ -37,6 +46,9 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             }
         }
 
+        /// <summary>
+        /// Type of the series. Possible values: Bar & Line.
+        /// </summary>
         public ChartType Type
         {
             get
@@ -52,12 +64,6 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         public Series()
         {
             Points = new DataPointCollection();
-        }
-
-        public Series(Color color)
-        {
-            Points = new DataPointCollection();
-            this.Color = color;
         }
     }
 }

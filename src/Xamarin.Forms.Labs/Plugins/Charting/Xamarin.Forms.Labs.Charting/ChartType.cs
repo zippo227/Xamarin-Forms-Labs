@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xamarin.Forms.Labs.Charting.Controls
+namespace Xamarin.Forms.Labs.Controls.Charting
 {
-    /// <summary>
-    /// Possible charting types
-    /// </summary>
     public enum ChartType
     {
         Bar = 0,

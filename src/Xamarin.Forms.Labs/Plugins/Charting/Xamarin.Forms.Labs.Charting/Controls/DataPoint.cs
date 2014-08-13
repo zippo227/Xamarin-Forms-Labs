@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Charting.Controls
 {
+    /// <summary>
+    /// Contains the logic for drawing a point.
+    /// </summary>
     public class DataPoint : Element
     {
         public static readonly BindableProperty LabelProperty = BindableProperty.Create("Label", typeof(string), typeof(DataPoint), String.Empty, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(float), typeof(DataPoint), 0.0F, BindingMode.OneWay, null, null, null, null);
 
+        /// <summary>
+        /// X-axis label. Only the labels of the first series will be rendered.
+        /// </summary>
         public string Label
         {
             get
@@ -23,6 +29,9 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             }
         }
 
+        /// <summary>
+        /// Value of the point, used to be drawn.
+        /// </summary>
         public float Value
         {
             get
@@ -33,6 +42,16 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             {
                 base.SetValue(DataPoint.ValueProperty, value);
             }
+        }
+
+        public DataPoint()
+        {
+        }
+
+        public DataPoint(string label, float value)
+        {
+            Label = label;
+            Value = value;
         }
     }
 }
