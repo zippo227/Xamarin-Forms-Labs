@@ -121,6 +121,9 @@
     <Compile Include="Pages\Controls\CheckBoxPage.xaml.cs">
       <DependentUpon>CheckBoxPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\ImageGallery.xaml.cs">
+      <DependentUpon>ImageGallery.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -148,6 +151,10 @@
     <EmbeddedResource Include="Pages\Controls\CheckBoxPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <LogicalName>CheckBoxPage.xaml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Controls\ImageGallery.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <LogicalName>ImageGallery.xaml</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Charting\Xamarin.Forms.Labs.Charting\Xamarin.Forms.Labs.Charting.csproj">
-      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
+      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>Xamarin.Forms.Labs.Charting</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">

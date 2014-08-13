@@ -146,7 +146,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "GridView",
                     "ExtendedScrollView",
                     "RepeaterView",
-                    "CheckBox"
+                    "CheckBox",
+                    "ImageGallery"
                 }
             };
             lstControls.ItemSelected += async (sender, e) => {
@@ -187,9 +188,12 @@ namespace Xamarin.Forms.Labs.Sample
                 case "checkbox":
                     await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.CheckBoxPage());
                     break;
+                case "imagegallery":
+                    await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.ImageGallery());
+                    break;
                 default:
                     break;
-                }
+                             }
             };
             controls.Content = lstControls;
             return controls;
