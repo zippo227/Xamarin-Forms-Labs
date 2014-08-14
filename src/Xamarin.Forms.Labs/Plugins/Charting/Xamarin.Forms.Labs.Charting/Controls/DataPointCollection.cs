@@ -7,18 +7,33 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Charting.Controls
 {
+    /// <summary>
+    /// Collection of DataPoints. The collection represents all data necessary to draw a single series.
+    /// </summary>
     public class DataPointCollection : Collection<DataPoint>
     {
-        public void Add(DataPoint dataPoint)
+        /// <summary>
+        /// Add a DataPoint to the collection.
+        /// </summary>
+        /// <param name="dataPoint">DataPoint to add.</param>
+        public new void Add(DataPoint dataPoint)
         {
             base.Add(dataPoint);
         }
 
-        public void Remove(DataPoint dataPoint)
+        /// <summary>
+        /// Remove a DataPoint from the collection.
+        /// </summary>
+        /// <param name="dataPoint">DataPoint to be removed.</param>
+        public new void Remove(DataPoint dataPoint)
         {
             base.Remove(dataPoint);
         }
 
+        /// <summary>
+        /// Remove a DataPoint from the collection.
+        /// </summary>
+        /// <param name="index">Index of collection to remove DataPoint at.</param>
         public void Remove(int index)
         {
             if (index > Count - 1 || index < 0)
@@ -31,7 +46,12 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             }
         }
 
-        public DataPoint this[int index]
+        /// <summary>
+        /// Retrieve or put a DataPoint at the index in the collection.
+        /// </summary>
+        /// <param name="index">Index to look for in the collection.</param>
+        /// <returns>DataPoint found at the specified index.</returns>
+        public new DataPoint this[int index]
         {
             get
             {

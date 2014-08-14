@@ -48,6 +48,9 @@
     <Compile Include="Pages\Controls\Charts\LineChartPage.xaml.cs">
       <DependentUpon>LineChartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\Charts\PieChartPage.xaml.cs">
+      <DependentUpon>PieChartPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Controls\DynamicList\BasicList.cs" />
     <Compile Include="Pages\Controls\DynamicList\DynamicListView.xaml.cs">
       <DependentUpon>DynamicListView.xaml</DependentUpon>
@@ -247,6 +250,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\Controls\Charts\BarChartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Controls\Charts\PieChartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

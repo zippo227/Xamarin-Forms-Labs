@@ -8,6 +8,9 @@ using Xamarin.Forms.Labs.Charting.Events;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Labs.Charting.Droid"), InternalsVisibleTo("Xamarin.Forms.Labs.Charting.WP")]
 namespace Xamarin.Forms.Labs.Charting.Controls
 {
+    /// <summary>
+    /// Contains charting algorithms and is able to draw and render a chart.
+    /// </summary>
     public class Chart : View
     {
         #region Constants
@@ -158,6 +161,11 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// Fires when canvas needs to draw a circle
         /// </summary>
         internal event EventHandler<DrawEventArgs<SingleDrawingData>> OnDrawCircle;
+
+        /// <summary>
+        /// Fires when canvas needs to draw a pie
+        /// </summary>
+        internal event EventHandler<DrawEventArgs<PieDrawingData>> OnDrawPie;
         #endregion
 
         /// <summary>
@@ -170,6 +178,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         {
             int noOfBars = 0;
             float highestValue = 0;
+
             foreach (Series series in Series)
             {
                 if (series.Type == ChartType.Bar)
@@ -182,29 +191,42 @@ namespace Xamarin.Forms.Labs.Charting.Controls
                 }
             }
 
-            OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, PADDING_TOP, PADDING_LEFT, Height, 0) });  //Y-axis
-            OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, Height, Width, Height, 0) });              //X-axis
+            if(Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
+                highestValue = DrawGrid(highestValue);
 
-            highestValue = DrawGrid(highestValue);
+            // If there are no bars, fake them
+            if (noOfBars == 0)
+                noOfBars = Series[0].Points.Count;
+
             float widthPerBar = ((Width - PADDING_LEFT) - (Spacing * (noOfBars - 1))) / noOfBars;
 
-            DrawLabels(highestValue, widthPerBar, Series[0].Points);
-
-            Height -= 2; // Y-axis space
-
-            for (int i = 0; i < Series.Count; i++)
+            if (Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
             {
-                Series series = Series[i];
+                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, PADDING_TOP, PADDING_LEFT, Height, 0) });  //Y-axis
+                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, Height, Width, Height, 0) });              //X-axis
+                DrawLabels(highestValue, widthPerBar, Series[0].Points);
 
-                switch (series.Type)
+                Height -= 2; // Y-axis space
+
+                for (int i = 0; i < Series.Count; i++)
                 {
-                    case ChartType.Bar:
-                        DrawBarChart(highestValue, widthPerBar, i, series.Points);
-                        break;
-                    case ChartType.Line:
-                        DrawLineChart(highestValue, widthPerBar, i, series.Points);
-                        break;
+                    Series series = Series[i];
+
+                    switch (series.Type)
+                    {
+                        case ChartType.Bar:
+                            DrawBarChart(highestValue, widthPerBar, i, series.Points);
+                            break;
+                        case ChartType.Line:
+                            DrawLineChart(highestValue, widthPerBar, i, series.Points);
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                Series series = Series.First(s => s.Type == ChartType.Pie);
+                DrawPieChart(series.Points, Series.IndexOf(series));
             }
         }
 
@@ -268,7 +290,10 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <param name="points">Specified points in the series.</param>
         private void DrawLineChart(float highestValue, float widthPerBar, int lineNo, DataPointCollection points)
         {
-            float widthOfAllBars = Series.Count(s => s.Type == ChartType.Bar) * widthPerBar;
+            int noOfBarSeries = Series.Count(s => s.Type == ChartType.Bar);
+            if (noOfBarSeries == 0)
+                noOfBarSeries = 1;
+            float widthOfAllBars = noOfBarSeries * widthPerBar;
             float widthIterator = 2 + PADDING_LEFT;
 
             List<float> pointsList = new List<float>();
@@ -290,8 +315,26 @@ namespace Xamarin.Forms.Labs.Charting.Controls
 
                 OnDrawCircle(this, new DrawEventArgs<SingleDrawingData>() { Data = new SingleDrawingData(widthIterator + (widthOfAllBars / 2), ((Height - PADDING_TOP) - heightOfLine) + PADDING_TOP, lineNo) });
 
-                widthIterator += widthPerBar * Series.Count(s => s.Type == ChartType.Bar) + Spacing;
+                widthIterator += widthPerBar * noOfBarSeries + Spacing;
             }
+        }
+
+        /// <summary>
+        /// Draw a pie chart.
+        /// </summary>
+        /// <param name="points">Specified points in the series.</param>
+        private void DrawPieChart(DataPointCollection points, int pieNo)
+        {
+            float sizeOfCircle = ((Width > Height) ? Height / 2 : Width / 2);
+            float[] values = points.Select(p => p.Value).ToArray();
+            float degreesPerValue = 360 / values.Sum();
+
+            for(int i = 0; i < values.Length; i++)
+            {
+                values[i] = values[i] * degreesPerValue;
+            }
+
+            OnDrawPie(this, new DrawEventArgs<PieDrawingData> { Data = new PieDrawingData(Width / 2, Height / 2, pieNo, sizeOfCircle, values) });
         }
 
         /// <summary>
@@ -302,13 +345,16 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <param name="points">Specified points in the series.</param>
         private void DrawLabels(float highestValue, float widthPerBar, DataPointCollection points)
         {
-            float widthOfAllBars = Series.Count(s => s.Type == ChartType.Bar) * widthPerBar;
+            int noOfBarSeries = Series.Count(s => s.Type == ChartType.Bar);
+            if (noOfBarSeries == 0)
+                noOfBarSeries = 1;
+            float widthOfAllBars = noOfBarSeries * widthPerBar;
             float widthIterator = 2 + PADDING_LEFT;
 
             for (int i = 0; i < points.Count; i++)
             {
                 OnDrawText(this, new DrawEventArgs<TextDrawingData>() { Data = new TextDrawingData(points[i].Label, (widthIterator + widthOfAllBars / 2) - (points[i].Label.Length * 4), Height + 25) });
-                widthIterator += widthPerBar * Series.Count(s => s.Type == ChartType.Bar) + Spacing;
+                widthIterator += widthPerBar * noOfBarSeries + Spacing;
             }
         }
         #endregion

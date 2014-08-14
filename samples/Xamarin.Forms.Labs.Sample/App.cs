@@ -225,7 +225,9 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 ItemsSource = new List<string>() {
                     "Bar",
-                    "Combination"
+                    "Line",
+                    "Combination",
+                    "Pie"
                 }
             };
             lstControls.ItemSelected += async (sender, e) =>
@@ -235,8 +237,14 @@ namespace Xamarin.Forms.Labs.Sample
                     case "bar":
                         await mainPage.Navigation.PushAsync(new BarChartPage());
                         break;
+                    case "line":
+                        await mainPage.Navigation.PushAsync(new LineChartPage());
+                        break;
                     case "combination":
                         await mainPage.Navigation.PushAsync(new CombinationPage());
+                        break;
+                    case "pie":
+                        await mainPage.Navigation.PushAsync(new PieChartPage());
                         break;
                     default:
                         break;

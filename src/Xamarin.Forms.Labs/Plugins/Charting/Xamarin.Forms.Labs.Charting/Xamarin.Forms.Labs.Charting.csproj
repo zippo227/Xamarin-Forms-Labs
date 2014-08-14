@@ -41,18 +41,12 @@
     <Compile Include="Controls\ChartType.cs" />
     <Compile Include="Controls\DataPoint.cs" />
     <Compile Include="Controls\DataPointCollection.cs" />
-    <Compile Include="Controls\IChartDrawable.cs" />
     <Compile Include="Controls\Series.cs" />
     <Compile Include="Controls\SeriesCollection.cs" />
+    <Compile Include="Events\PieDrawingData.cs" />
     <Compile Include="Events\SingleDrawingData.cs" />
     <Compile Include="Events\TextDrawingData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
-      <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
-      <Name>Xamarin.Forms.Labs</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
