@@ -51,7 +51,12 @@ namespace Xamarin.Forms.Labs.Sample
             ViewFactory.Register<SoundPage, SoundServiceViewModel> ();
             ViewFactory.Register<RepeaterViewPage, RepeaterViewViewModel>();
 
-            var mainTab = new ExtendedTabbedPage () { Title = "Xamarin Forms Labs" };
+            var mainTab = new ExtendedTabbedPage ()
+            {
+                Title = "Xamarin Forms Labs",
+                SwipeEnabled = true,
+            };
+
             var mainPage = new NavigationPage (mainTab);
             mainTab.CurrentPageChanged += () => Debug.WriteLine ("ExtendedTabbedPage CurrentPageChanged {0}", mainTab.CurrentPage.Title);
 
