@@ -24,25 +24,36 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                 e.OldElement.PropertyChanged -= ElementOnPropertyChanged;
             }
 
-            this.BackgroundColor = this.Element.BackgroundColor.ToUIColor();
+            BackgroundColor = Element.BackgroundColor.ToUIColor();
 
-            if (this.Control == null)
+            if (Control == null)
             {
-                var checkBox = new CheckBoxView(this.Bounds);
-                checkBox.TouchUpInside += (s, args) => this.Element.Checked = this.Control.Checked;
+                var checkBox = new CheckBoxView(Bounds);
+                checkBox.TouchUpInside += (s, args) => Element.Checked = Control.Checked;
 
-                this.SetNativeControl(checkBox);
+                SetNativeControl(checkBox);
             }
 
             UpdateFont();
 
-            this.Control.CheckedTitle = string.IsNullOrEmpty(e.NewElement.CheckedText) ? e.NewElement.DefaultText : e.NewElement.CheckedText;
-            this.Control.UncheckedTitle = string.IsNullOrEmpty(e.NewElement.UncheckedText) ? e.NewElement.DefaultText : e.NewElement.UncheckedText;
-            this.Control.Checked = e.NewElement.Checked;
-            this.Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Normal);
-            this.Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Selected);
+            Control.LineBreakMode = UILineBreakMode.CharacterWrap;
+            Control.VerticalAlignment = UIControlContentVerticalAlignment.Top;
+            Control.CheckedTitle = string.IsNullOrEmpty(e.NewElement.CheckedText) ? e.NewElement.DefaultText : e.NewElement.CheckedText;
+            Control.UncheckedTitle = string.IsNullOrEmpty(e.NewElement.UncheckedText) ? e.NewElement.DefaultText : e.NewElement.UncheckedText;
+            Control.Checked = e.NewElement.Checked;
+            Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Normal);
+            Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Selected);
 
-            this.Element.PropertyChanged += ElementOnPropertyChanged;
+            // All of the things that I have tried to do to set the height.
+            //Control.TitleLabel.Lines = 0;
+            //Control.TitleLabel.AdjustsFontSizeToFitWidth = true;
+            //Control.SizeThatFits(Control.TitleLabel.Bounds);
+            //Control.SizeToFit();
+            //Control.AutosizesSubviews = true;
+            //Control.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
+            //Control.Bounds = Control.TitleLabel.Bounds;
+
+            Element.PropertyChanged += ElementOnPropertyChanged;
         }
 
         private void ElementOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -50,18 +61,21 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             switch (propertyChangedEventArgs.PropertyName)
             {
                 case "Checked":
-                    this.Control.Checked = this.Element.Checked;
+                    Control.Checked = Element.Checked;
                     break;
                 case "TextColor":
-                    this.Control.SetTitleColor(this.Element.TextColor.ToUIColor(), UIControlState.Normal);
-                    this.Control.SetTitleColor(this.Element.TextColor.ToUIColor(), UIControlState.Selected);
+                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Normal);
+                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Selected);
                     break;
                 case "CheckedText":
-                    this.Control.CheckedTitle = string.IsNullOrEmpty(this.Element.CheckedText) ? this.Element.DefaultText : this.Element.CheckedText;
+                    Control.CheckedTitle = string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText;
                     break;
                 case "UncheckedText":
-                    this.Control.UncheckedTitle = string.IsNullOrEmpty(this.Element.UncheckedText) ? this.Element.DefaultText : this.Element.UncheckedText;
+                    Control.UncheckedTitle = string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
                     break;
+                //case "Height":
+                //    Control.Bounds = Control.TitleLabel.Bounds;
+                //    break;
                 case "FontSize":
                     UpdateFont();
                     break;
@@ -89,9 +103,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                 return;
             }
 
-            var font = UIFont.FromName(
-                Element.FontName,
-                (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f);
+            var font = UIFont.FromName(Element.FontName, (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f);
 
             if (font != null)
             {

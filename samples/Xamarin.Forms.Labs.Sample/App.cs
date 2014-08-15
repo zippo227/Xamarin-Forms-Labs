@@ -4,6 +4,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Sample.Pages.Controls;
+using Xamarin.Forms.Labs.Sample.Pages.Controls.Charts;
+using Xamarin.Forms.Labs.Sample.Pages.Services;
 using Xamarin.Forms.Labs.Sample.ViewModel;
 using Xamarin.Forms.Labs.Services;
 
@@ -49,15 +51,22 @@ namespace Xamarin.Forms.Labs.Sample
             ViewFactory.Register<SoundPage, SoundServiceViewModel> ();
             ViewFactory.Register<RepeaterViewPage, RepeaterViewViewModel>();
 
-            var mainTab = new ExtendedTabbedPage () { Title = "Xamarin Forms Labs" };
+            var mainTab = new ExtendedTabbedPage ()
+            {
+                Title = "Xamarin Forms Labs",
+                SwipeEnabled = true,
+            };
+
             var mainPage = new NavigationPage (mainTab);
             mainTab.CurrentPageChanged += () => Debug.WriteLine ("ExtendedTabbedPage CurrentPageChanged {0}", mainTab.CurrentPage.Title);
 
             var controls = GetControlsPage (mainPage);
             var services = GetServicesPage (mainPage);
+            var charts = GetChartingPage   (mainPage);
             var mvvm = ViewFactory.CreatePage<MvvmSampleViewModel> ();
             mainTab.Children.Add (controls);
-            mainTab.Children.Add (services);
+            mainTab.Children.Add(services);
+            mainTab.Children.Add(charts);
             mainTab.Children.Add (mvvm);
 
             return mainPage;
@@ -81,38 +90,44 @@ namespace Xamarin.Forms.Labs.Sample
                     "Accelerometer",
                     "Display",
                     "Cache",
-                    "Sound"
+                    "Sound",
+                    "Bluetooth"
                 }
             };
 
-            lstServices.ItemSelected += async (sender, e) => {
-                switch (e.SelectedItem.ToString ().ToLower ()) {
+            lstServices.ItemSelected += async (sender, e) => 
+            {
+                switch (e.SelectedItem.ToString().ToLower()) 
+                {
                 case "texttospeech":
-                    await mainPage.Navigation.PushAsync (new TextToSpeechPage ());
+                    await mainPage.Navigation.PushAsync(new TextToSpeechPage());
                     break;
                 case "deviceextended":
-                    await mainPage.Navigation.PushAsync (new ExtendedDeviceInfoPage (Resolver.Resolve<IDevice> ()));
+                    await mainPage.Navigation.PushAsync(new ExtendedDeviceInfoPage(Resolver.Resolve<IDevice>()));
                     break;
                 case "phoneservice":
-                    await mainPage.Navigation.PushAsync (new PhoneServicePage ());
+                    await mainPage.Navigation.PushAsync(new PhoneServicePage());
                     break;
                 case "geolocator":
-                    await mainPage.Navigation.PushAsync (ViewFactory.CreatePage<GeolocatorViewModel> ());
+                    await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<GeolocatorViewModel>());
                     break;
                 case "camera":
-                    await mainPage.Navigation.PushAsync (ViewFactory.CreatePage<CameraViewModel> ());
+                    await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<CameraViewModel>());
                     break;
                 case "accelerometer":
-                    await mainPage.Navigation.PushAsync (new AcceleratorSensorPage ());
+                    await mainPage.Navigation.PushAsync(new AcceleratorSensorPage());
                     break;
                 case "display":
-                    await mainPage.Navigation.PushAsync (new AbsoluteLayoutWithDisplayInfoPage (Resolver.Resolve<IDisplay> ()));
+                    await mainPage.Navigation.PushAsync(new AbsoluteLayoutWithDisplayInfoPage (Resolver.Resolve<IDisplay>()));
                     break;
                 case "cache":
-                    await mainPage.Navigation.PushAsync (ViewFactory.CreatePage<CacheServiceViewModel> ());
+                    await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<CacheServiceViewModel>());
                     break;
                 case "sound":
-                    await mainPage.Navigation.PushAsync (ViewFactory.CreatePage<SoundServiceViewModel> ());
+                    await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<SoundServiceViewModel>());
+                    break;
+                case "bluetooth":
+                    await mainPage.Navigation.PushAsync(new BluetoothPage());
                     break;
                 default:
                     break;
@@ -130,8 +145,10 @@ namespace Xamarin.Forms.Labs.Sample
         private static ContentPage GetControlsPage (VisualElement mainPage)
         {
             var controls = new ContentPage { Title = "Controls" };
-            var lstControls = new ListView {
-                ItemsSource = new List<string> () {
+            var lstControls = new ListView 
+            {
+                ItemsSource = new List<string> () 
+                {
                     "Calendar",
                     "Autocomplete",
                     "Buttons",
@@ -143,7 +160,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "GridView",
                     "ExtendedScrollView",
                     "RepeaterView",
-                    "CheckBox"
+                    "CheckBox",
+                    "ImageGallery"
                 }
             };
             lstControls.ItemSelected += async (sender, e) => {
@@ -184,8 +202,52 @@ namespace Xamarin.Forms.Labs.Sample
                 case "checkbox":
                     await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.CheckBoxPage());
                     break;
+                case "imagegallery":
+                    await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.ImageGallery());
+                    break;
                 default:
                     break;
+                             }
+            };
+            controls.Content = lstControls;
+            return controls;
+        }
+
+        /// <summary>
+        /// Gets the charting page.
+        /// </summary>
+        /// <param name="mainPage">The main page.</param>
+        /// <returns>Content Page.</returns>
+        private static ContentPage GetChartingPage(VisualElement mainPage)
+        {
+            var controls = new ContentPage { Title = "Charts" };
+            var lstControls = new ListView
+            {
+                ItemsSource = new List<string>() {
+                    "Bar",
+                    "Line",
+                    "Combination",
+                    "Pie"
+                }
+            };
+            lstControls.ItemSelected += async (sender, e) =>
+            {
+                switch (e.SelectedItem.ToString().ToLower())
+                {
+                    case "bar":
+                        await mainPage.Navigation.PushAsync(new BarChartPage());
+                        break;
+                    case "line":
+                        await mainPage.Navigation.PushAsync(new LineChartPage());
+                        break;
+                    case "combination":
+                        await mainPage.Navigation.PushAsync(new CombinationPage());
+                        break;
+                    case "pie":
+                        await mainPage.Navigation.PushAsync(new PieChartPage());
+                        break;
+                    default:
+                        break;
                 }
             };
             controls.Content = lstControls;

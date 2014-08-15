@@ -5,6 +5,7 @@ using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Data;
 using System.Diagnostics;
 using Xamarin.Forms.Labs.Controls;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Sample
 {
@@ -34,12 +35,21 @@ namespace Xamarin.Forms.Labs.Sample
             Images = new ObservableCollection<string> ();
             for (var i = 0; i < 10; i++) {
                 Images.Add ("ad16.jpg");
-				Items.Add (new TestPerson(string.Format ("FirstName {0}", i), string.Format ("LastName {0}", i),i));
+            	Items.Add (new TestPerson(string.Format ("FirstName {0}", i), string.Format ("LastName {0}", i),i));
             }
 
             this.device = Resolver.Resolve<IDevice> ();
         }
 
+        public Task AddImages()
+        {
+            return Task.Run (async () => {
+                await Task.Delay(1000);
+                for (var i = 0; i < 5; i++) {
+                    Images.Add ("http://www.stockvault.net/data/2011/05/31/124348/small.jpg");
+                }
+            });
+        }
         /// <summary>
         /// The start timer.
         /// </summary>

@@ -12,5 +12,7 @@
         </StackLayout.BackgroundColor>
         <controls:CheckBox DefaultText="Default text" HorizontalOptions="FillAndExpand" TextColor="Green" FontSize="25" FontName="AmericanTypewriter"/>
         <controls:CheckBox DefaultText="Default text" CheckedText="Checked" UncheckedText="Unchecked" TextColor="Blue" HorizontalOptions="FillAndExpand" />
+        <controls:CheckBox DefaultText="This is a very long string. A very long string. A really very long string." TextColor="Blue" HorizontalOptions="FillAndExpand" />
+        <controls:CheckBox DefaultText="Normal length text again." HorizontalOptions="FillAndExpand" TextColor="Black" FontSize="25"/>
     </StackLayout>
 </ContentPage>

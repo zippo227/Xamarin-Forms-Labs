@@ -26,6 +26,64 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Services
                 };
 
             button.SetBinding(Button.CommandProperty, "OpenSettings");
+
+            stack.Children.Add(button);
+
+            var scanButton = new Button()
+                {
+                    Text = "Get paired devices"
+                };
+
+            stack.Children.Add(scanButton);
+
+            var deviceList = new ListView()
+                {
+                    ItemTemplate = new DataTemplate(() =>
+                        {
+                            var nameLabel = new Label();
+                            nameLabel.SetBinding(Label.TextProperty, "Name");
+
+                            var addressLabel = new Label();
+                            addressLabel.SetBinding(Label.TextProperty, "Address");
+
+                            var s = new StackLayout()
+                                {
+                                    Children = {nameLabel, addressLabel}
+                                };
+
+                            return new ViewCell()
+                                {
+                                    View = s
+                                };
+                        })
+                };
+
+            //deviceList.ItemSelected += async (s, e) =>
+            //    {
+            //        var btDevice = e.SelectedItem as IBluetoothDevice;
+
+            //        try
+            //        {
+            //            await btDevice.Connect();
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            System.Diagnostics.Debug.WriteLine(ex.Message);
+            //        }
+                    
+            //    };
+
+            stack.Children.Add(deviceList);
+
+            scanButton.Clicked += async (s, e) =>
+                {
+                    var devices = await bt.GetPairedDevices();
+                    deviceList.ItemsSource = devices;
+                };
+
+            this.BindingContext = bt;
+
+            this.Content = stack;
         }
     }
 }

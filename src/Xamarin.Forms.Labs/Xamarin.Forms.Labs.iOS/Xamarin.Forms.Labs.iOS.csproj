@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -54,8 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Controls\SegmentedControlView\" />
-    <Folder Include="Images\CheckBox\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -76,6 +74,7 @@
     </Compile>
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedTabbedPage\ExtendedTabbedPageRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
@@ -121,6 +120,8 @@
     <Compile Include="Controls\CheckBox\CheckBoxView.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\LabelExtensions.cs" />
+    <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
+    <Compile Include="Controls\ImageGallery\ImageGalleryView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
