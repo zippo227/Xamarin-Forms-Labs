@@ -35,6 +35,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             }
 
             UpdateFont();
+            
 
             Control.LineBreakMode = UILineBreakMode.CharacterWrap;
             Control.VerticalAlignment = UIControlContentVerticalAlignment.Top;
@@ -54,6 +55,8 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             //Control.Bounds = Control.TitleLabel.Bounds;
 
             Element.PropertyChanged += ElementOnPropertyChanged;
+
+            //ResizeText();
         }
 
         private void ElementOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -62,6 +65,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             {
                 case "Checked":
                     Control.Checked = Element.Checked;
+                    ResizeText();
                     break;
                 case "TextColor":
                     Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Normal);
@@ -69,23 +73,60 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                     break;
                 case "CheckedText":
                     Control.CheckedTitle = string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText;
+                    ResizeText();
                     break;
                 case "UncheckedText":
                     Control.UncheckedTitle = string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
+                    ResizeText();
                     break;
                 //case "Height":
                 //    Control.Bounds = Control.TitleLabel.Bounds;
                 //    break;
                 case "FontSize":
                     UpdateFont();
+                    ResizeText();
                     break;
                 case "FontName":
                     UpdateFont();
+                    ResizeText();
                     break;
                 default:
                     System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName);
                     break;
             }
+        }
+
+        private void ResizeText()
+        {
+            var text = this.Element.Checked ? string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText :
+                string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
+
+            var bounds = this.Control.Bounds;
+
+            var width = this.Control.TitleLabel.Bounds.Width;
+
+            var height = text.StringHeight(this.Control.Font, width);
+
+            var minHeight = string.Empty.StringHeight(this.Control.Font, width);
+
+            if (bounds.Height < height)
+            {
+                bounds.Height = height + bounds.Height - minHeight;
+                this.Control.Bounds = bounds;
+                this.Element.HeightRequest = bounds.Height;
+            }
+            //var extra = bounds.Height - minHeight;
+            
+
+            //if (Math.Abs(bounds.Height - height + extra) > .1)
+            //{
+            //    bounds.Height = height + extra;
+            //}
+            
+
+            
+
+            
         }
 
         private void CheckedChanged(object sender, EventArgs<bool> eventArgs)
