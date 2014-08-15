@@ -227,7 +227,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "Bar",
                     "Line",
                     "Combination",
-                    "Pie"
+                    "Pie",
+                    "Databound combination"
                 }
             };
             lstControls.ItemSelected += async (sender, e) =>
@@ -245,6 +246,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "pie":
                         await mainPage.Navigation.PushAsync(new PieChartPage());
+                        break;
+                    case "databound combination":
+                        await mainPage.Navigation.PushAsync(new BoundChartPage());
                         break;
                     default:
                         break;

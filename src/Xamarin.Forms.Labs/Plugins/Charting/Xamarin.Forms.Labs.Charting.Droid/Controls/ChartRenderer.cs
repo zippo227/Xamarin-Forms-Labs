@@ -42,5 +42,43 @@ namespace Xamarin.Forms.Labs.Charting.Droid.Controls
             ChartSurface surfaceView = new ChartSurface(Forms.Context, Element, Element.Color.ToAndroid(), colors);
             SetNativeControl(surfaceView);
         }
+
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+            if (this.Element == null || this.Control == null)
+                return;
+
+            if(e.PropertyName == Chart.ColorProperty.PropertyName)
+            {
+                Control.Paint = new Paint() { Color = Element.Color.ToAndroid(), StrokeWidth = 2 };
+                Control.Invalidate();
+            }
+            else if(e.PropertyName == Chart.GridProperty.PropertyName)
+            {
+                Control.Chart.Grid = Element.Grid;
+                Control.Invalidate();
+            }
+            else if(e.PropertyName == Chart.HeightProperty.PropertyName)
+            {
+                Control.Chart.Height = Element.Height;
+                Control.Invalidate();
+            }
+            else if(e.PropertyName == Chart.SeriesProperty.PropertyName)
+            {
+                Control.Chart.Series = Element.Series;
+                Control.Invalidate();
+            }
+            else if(e.PropertyName == Chart.SpacingProperty.PropertyName)
+            {
+                Control.Chart.Spacing = Element.Spacing;
+                Control.Invalidate();
+            }
+            else if(e.PropertyName == Chart.WidthProperty.PropertyName)
+            {
+                Control.Chart.Width = Element.Width;
+                Control.Invalidate();
+            }
+        }
     }
 }

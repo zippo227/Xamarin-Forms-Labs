@@ -174,7 +174,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <remarks>
         /// Set the events before calling DrawChart.
         /// </remarks>
-        internal void DrawChart()
+        public void DrawChart()
         {
             int noOfBars = 0;
             float highestValue = 0;
@@ -191,7 +191,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
                 }
             }
 
-            if(Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
+            if (Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
                 highestValue = DrawGrid(highestValue);
 
             // If there are no bars, fake them
@@ -203,11 +203,8 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             if (Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
             {
                 OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, PADDING_TOP, PADDING_LEFT, Height, 0) });  //Y-axis
-                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, Height, Width, Height, 0) });              //X-axis
+                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, Height + 1, Width, Height + 1, 0) });      //X-axis
                 DrawLabels(highestValue, widthPerBar, Series[0].Points);
-
-                Height -= 2; // Y-axis space
-
                 for (int i = 0; i < Series.Count; i++)
                 {
                     Series series = Series[i];
@@ -329,7 +326,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             float[] values = points.Select(p => p.Value).ToArray();
             float degreesPerValue = 360 / values.Sum();
 
-            for(int i = 0; i < values.Length; i++)
+            for (int i = 0; i < values.Length; i++)
             {
                 values[i] = values[i] * degreesPerValue;
             }

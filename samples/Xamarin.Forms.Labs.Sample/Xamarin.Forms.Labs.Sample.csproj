@@ -42,6 +42,10 @@
     <Compile Include="Pages\Controls\Charts\BarChartPage.xaml.cs">
       <DependentUpon>BarChartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\Charts\BoundChartPage.xaml.cs">
+      <DependentUpon>BoundChartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Controls\Charts\BoundChartViewModel.cs" />
     <Compile Include="Pages\Controls\Charts\CombinationPage.xaml.cs">
       <DependentUpon>CombinationPage.xaml</DependentUpon>
     </Compile>
@@ -256,6 +260,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\Controls\Charts\PieChartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Controls\Charts\BoundChartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
