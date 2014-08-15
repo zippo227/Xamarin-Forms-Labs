@@ -119,6 +119,8 @@
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
     <Compile Include="Controls\SegmentedControlView\SegmentedControlViewRenderer.cs" />
     <Compile Include="Controls\CheckBox\CheckBoxView.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\LabelExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

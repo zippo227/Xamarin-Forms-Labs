@@ -21,6 +21,11 @@ namespace Xamarin.Forms.Labs.WP8
 
         public XFormsAppWP(Application application) : base(application) { }
 
+        public void RaiseBackPress()
+        {
+            this.OnBackPress();
+        }
+
         /// <summary>
         /// Initializes the specified context.
         /// </summary>
