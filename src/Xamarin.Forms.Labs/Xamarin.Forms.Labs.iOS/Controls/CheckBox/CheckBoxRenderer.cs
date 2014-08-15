@@ -19,11 +19,6 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         {
             base.OnElementChanged(e);
 
-            if (e.OldElement != null)
-            {
-                e.OldElement.PropertyChanged -= ElementOnPropertyChanged;
-            }
-
             BackgroundColor = Element.BackgroundColor.ToUIColor();
 
             if (Control == null)
@@ -44,56 +39,6 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             Control.Checked = e.NewElement.Checked;
             Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Normal);
             Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Selected);
-
-            // All of the things that I have tried to do to set the height.
-            //Control.TitleLabel.Lines = 0;
-            //Control.TitleLabel.AdjustsFontSizeToFitWidth = true;
-            //Control.SizeThatFits(Control.TitleLabel.Bounds);
-            //Control.SizeToFit();
-            //Control.AutosizesSubviews = true;
-            //Control.AutoresizingMask = UIViewAutoresizing.FlexibleHeight;
-            //Control.Bounds = Control.TitleLabel.Bounds;
-
-            Element.PropertyChanged += ElementOnPropertyChanged;
-
-            //ResizeText();
-        }
-
-        private void ElementOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-        {
-            switch (propertyChangedEventArgs.PropertyName)
-            {
-                case "Checked":
-                    Control.Checked = Element.Checked;
-                    ResizeText();
-                    break;
-                case "TextColor":
-                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Normal);
-                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Selected);
-                    break;
-                case "CheckedText":
-                    Control.CheckedTitle = string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText;
-                    ResizeText();
-                    break;
-                case "UncheckedText":
-                    Control.UncheckedTitle = string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
-                    ResizeText();
-                    break;
-                //case "Height":
-                //    Control.Bounds = Control.TitleLabel.Bounds;
-                //    break;
-                case "FontSize":
-                    UpdateFont();
-                    ResizeText();
-                    break;
-                case "FontName":
-                    UpdateFont();
-                    ResizeText();
-                    break;
-                default:
-                    System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName);
-                    break;
-            }
         }
 
         private void ResizeText()
@@ -109,32 +54,22 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
             var minHeight = string.Empty.StringHeight(this.Control.Font, width);
 
-            if (bounds.Height < height)
+            var requiredLines = Math.Round(height / minHeight, MidpointRounding.AwayFromZero);
+
+            var supportedLines = Math.Round(bounds.Height / minHeight, MidpointRounding.ToEven);
+
+            if (supportedLines != requiredLines)
             {
-                bounds.Height = height + bounds.Height - minHeight;
+                bounds.Height += (float)(minHeight * (requiredLines - supportedLines));
                 this.Control.Bounds = bounds;
                 this.Element.HeightRequest = bounds.Height;
             }
-            //var extra = bounds.Height - minHeight;
-            
-
-            //if (Math.Abs(bounds.Height - height + extra) > .1)
-            //{
-            //    bounds.Height = height + extra;
-            //}
-            
-
-            
-
-            
         }
 
-        private void CheckedChanged(object sender, EventArgs<bool> eventArgs)
+        public override void Draw(System.Drawing.RectangleF rect)
         {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                this.Control.Checked = eventArgs.Value;
-            });
+            base.Draw(rect);
+            this.ResizeText();
         }
 
         private void UpdateFont()
@@ -149,6 +84,39 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             if (font != null)
             {
                 Control.Font = font;
+            }
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            switch (e.PropertyName)
+            {
+                case "Checked":
+                    Control.Checked = Element.Checked;
+                    break;
+                case "TextColor":
+                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Normal);
+                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Selected);
+                    break;
+                case "CheckedText":
+                    Control.CheckedTitle = string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText;
+                    break;
+                case "UncheckedText":
+                    Control.UncheckedTitle = string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
+                    break;
+                case "FontSize":
+                    UpdateFont();
+                    break;
+                case "FontName":
+                    UpdateFont();
+                    break;
+                case "Element":
+                    break;
+                default:
+                    System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", e.PropertyName);
+                    return;
             }
         }
     }
