@@ -26,7 +26,7 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
         /// <param name="activateAction">The activate action.</param>
         /// <returns>Task.</returns>
-        public Task PushAsync<TViewModel>(Action<ViewModel, Page> activateAction = null)
+        public Task PushAsync<TViewModel>(Action<TViewModel, Page> activateAction = null)
             where TViewModel : ViewModel
         {
             return PushAsync(ViewFactory.CreatePage<TViewModel>(activateAction));
@@ -56,7 +56,7 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
         /// <param name="activateAction">The create action.</param>
         /// <returns>Task.</returns>
-        public Task PushModalAsync<TViewModel>(Action<ViewModel, Page> activateAction = null)
+        public Task PushModalAsync<TViewModel>(Action<TViewModel, Page> activateAction = null)
             where TViewModel : ViewModel
         {
             return PushModalAsync(ViewFactory.CreatePage<TViewModel>(activateAction));

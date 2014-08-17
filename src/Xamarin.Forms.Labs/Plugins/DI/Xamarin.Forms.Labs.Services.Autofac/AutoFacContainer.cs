@@ -4,27 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms.Labs.Services.Autofac;
 
-namespace Xamarin.Forms.Labs.Services.AutoFac
+namespace Xamarin.Forms.Labs.Services.Autofac
 {
     /// <summary>
     /// The AutoFac container wrapper
     /// Allows registering a AutoFac container with the IDependencyContainer interface
     /// </summary>
-    public class AutoFacContainer : IDependencyContainer
+    public class AutofacContainer : IDependencyContainer
     {
         /// <summary>
         /// The container.
         /// </summary>
         private readonly IContainer container;
         /// <summary>
-        /// Initializes a new instance of the <see cref="AutoFacContainer"/> class.
+        /// Initializes a new instance of the <see cref="AutofacContainer"/> class.
         /// </summary>
         /// <param name="container">
         /// The container.
         /// </param>
-        public AutoFacContainer(IContainer container)
+        public AutofacContainer(IContainer container)
         {
             this.container = container;
         }
