@@ -37,6 +37,7 @@
     <DocumentationFile>..\..\..\..\..\ReleaseBuild\Xamarin.Forms.Labs.Services.Autofac.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AutoFacContainer.cs" />
     <Compile Include="AutofacResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
