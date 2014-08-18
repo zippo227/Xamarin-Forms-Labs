@@ -90,9 +90,6 @@
     <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
     <Compile Include="Controls\ExtendedTextCell.cs" />
-    <Compile Include="Controls\AutoCompleteView.xaml.cs">
-      <DependentUpon>AutoCompleteView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Services\Media\IMediaPicker.cs" />
     <Compile Include="Services\NetworkStatus.cs" />
     <Compile Include="Services\Serialization\IByteSerializer.cs" />
@@ -139,11 +136,6 @@
   <ItemGroup>
     <Folder Include="Services\Contacts\" />
     <Folder Include="Services\Email\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Controls\AutoCompleteView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ExifLib">
