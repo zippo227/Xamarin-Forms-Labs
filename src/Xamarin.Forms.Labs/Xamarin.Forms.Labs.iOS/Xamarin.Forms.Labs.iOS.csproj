@@ -122,6 +122,7 @@
     <Compile Include="Extensions\LabelExtensions.cs" />
     <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
     <Compile Include="Controls\ImageGallery\ImageGalleryView.cs" />
+    <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
