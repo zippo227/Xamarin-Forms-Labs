@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="Controls\DynamicListView.cs" />
     <Compile Include="Controls\ExtendedContentView.cs" />
+    <Compile Include="Controls\ExtendedSlider.cs" />
     <Compile Include="Controls\ExtendedTabbedPage.cs" />
     <Compile Include="Controls\HybridWebView.cs" />
     <Compile Include="Controls\ImageButton.cs" />

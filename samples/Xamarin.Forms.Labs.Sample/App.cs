@@ -162,7 +162,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "RepeaterView",
                     "CheckBox",
                     "ImageGallery",
-                    "CameraView"
+                    "CameraView",
+                    "Slider"
                 }
             };
             lstControls.ItemSelected += async (sender, e) => {
@@ -208,6 +209,9 @@ namespace Xamarin.Forms.Labs.Sample
                     break;
                 case "cameraview":
                     await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.CameraViewPage());
+                    break;
+                case "slider":
+                    await mainPage.Navigation.PushAsync(new ExtendedSliderPage());
                     break;
                 default:
                     break;

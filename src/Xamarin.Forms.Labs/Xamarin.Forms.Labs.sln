@@ -360,9 +360,9 @@ Global
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|iPhoneSimulator.Deploy.0 = Debug|iPhoneSimulator
-		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.ActiveCfg = Debug|iPhone
-		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.Build.0 = Debug|iPhone
-		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.Deploy.0 = Debug|iPhone
+		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.ActiveCfg = Debug|iPhoneSimulator
+		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.Build.0 = Debug|iPhoneSimulator
+		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.Deploy.0 = Debug|iPhoneSimulator
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|x86.ActiveCfg = Debug|iPhone
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Release|Any CPU.ActiveCfg = Release|iPhone
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Release|ARM.ActiveCfg = Release|iPhone
