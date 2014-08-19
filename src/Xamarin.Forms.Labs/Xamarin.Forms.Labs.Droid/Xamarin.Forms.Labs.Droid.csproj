@@ -119,6 +119,7 @@
     <Compile Include="Services\SoundService.cs" />
     <Compile Include="Controls\GridView\GridViewRenderer.cs" />
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
+    <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -168,5 +169,6 @@
   <ItemGroup>
     <Folder Include="Controls\GridView\" />
     <Folder Include="Controls\CheckBox\" />
+    <Folder Include="Controls\CameraView\" />
   </ItemGroup>
 </Project>
