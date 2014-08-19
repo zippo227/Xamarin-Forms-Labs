@@ -42,7 +42,7 @@
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
     <Compile Include="Controls\RepeaterView.cs" />
-    <Compile Include="Controls\SegmentedControlView.cs" />
+    <Compile Include="Controls\SegmentControl\SegmentedControlView.cs" />
     <Compile Include="Controls\WebImage.cs" />
     <Compile Include="Data\ObservableObject.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />
@@ -121,7 +121,7 @@
     <Compile Include="Controls\GridView.cs" />
     <Compile Include="Controls\ExtendedScrollView.cs" />
     <Compile Include="Services\Web\WebResponseException.cs" />
-    <Compile Include="Controls\SegmentControl.cs" />
+    <Compile Include="Controls\SegmentControl\SegmentControl.cs" />
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\ImageGallery.cs" />
     <Compile Include="Controls\CameraView.cs" />

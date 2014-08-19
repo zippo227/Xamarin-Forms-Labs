@@ -163,7 +163,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "CheckBox",
                     "ImageGallery",
                     "CameraView",
-                    "Slider"
+                    "Slider",
+                    "Segment"
                 }
             };
             lstControls.ItemSelected += async (sender, e) => {
@@ -193,25 +194,28 @@ namespace Xamarin.Forms.Labs.Sample
                     await mainPage.Navigation.PushAsync (new Xamarin.Forms.Labs.Sample.Pages.Controls.DynamicList.DynamicListView ());
                     break;
                 case "gridview":
-                    await mainPage.Navigation.PushAsync (new Xamarin.Forms.Labs.Sample.Pages.Controls.GridViewPage ());
+                    await mainPage.Navigation.PushAsync (new GridViewPage ());
                     break;
                 case "extendedscrollview":
-                    await mainPage.Navigation.PushAsync (new Xamarin.Forms.Labs.Sample.Pages.Controls.ExtendedScrollView ());
+                    await mainPage.Navigation.PushAsync (new Pages.Controls.ExtendedScrollView ());
                     break;
                 case "repeaterview":
-                    await mainPage.Navigation.PushAsync (new Xamarin.Forms.Labs.Sample.Pages.Controls.RepeaterViewPage ());
+                    await mainPage.Navigation.PushAsync (new RepeaterViewPage ());
                     break;
                 case "checkbox":
-                    await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.CheckBoxPage());
+                    await mainPage.Navigation.PushAsync(new CheckBoxPage());
                     break;
                 case "imagegallery":
-                    await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.ImageGallery());
+                    await mainPage.Navigation.PushAsync(new Pages.Controls.ImageGallery());
                     break;
                 case "cameraview":
-                    await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.CameraViewPage());
+                    await mainPage.Navigation.PushAsync(new CameraViewPage());
                     break;
                 case "slider":
                     await mainPage.Navigation.PushAsync(new ExtendedSliderPage());
+                    break;
+                case "segment":
+                    await mainPage.Navigation.PushAsync(new SegmentPage());
                     break;
                 default:
                     break;

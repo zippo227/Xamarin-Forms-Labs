@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Pages\Controls\RepeaterViewPage.cs" />
     <Compile Include="Pages\Controls\ExtendedSliderPage.cs" />
+    <Compile Include="Pages\Controls\SegmentPage.cs" />
     <Compile Include="Pages\Controls\WebImagePage.xaml.cs">
       <DependentUpon>WebImagePage.xaml</DependentUpon>
     </Compile>
