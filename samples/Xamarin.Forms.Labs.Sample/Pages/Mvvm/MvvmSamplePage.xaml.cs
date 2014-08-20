@@ -12,7 +12,7 @@ namespace Xamarin.Forms.Labs.Sample
 			InitializeComponent ();
 			BindingContext = new MvvmSampleViewModel ();
 
-            Icon = Device.OnPlatform("services1_32.png", "services1_32.png", "Images/services1_32.png");
+            Icon = Device.OnPlatform("pie27_32.png", "pie27_32.png", "Images/pie27_32.png");
 		}
     }
 }
