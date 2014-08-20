@@ -17,35 +17,46 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             // TabBar.BackgroundColor = MonoTouch.UIKit.UIColor.Green;
         }
 
-        public override void ViewDidLoad()
+        protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
-            base.ViewDidLoad();
+            base.OnElementChanged(e);
 
             var page = (ExtendedTabbedPage)Element;
 
-            // TODO: Need to figure out why this variable is null.
-            //if (!page.SwipeEnabled)
-            //{
-            //    return;
-            //}
-
-            View.AddGestureRecognizer(new UISwipeGestureRecognizer(sw =>
+            if (!page.SwipeEnabled)
             {
-                // TODO: For demo only
-                sw.ShouldReceiveTouch += (recognizer, touch) => (true);     //!(touch.View is UITableView) && !(touch.View is UITableViewCell));
+                return;
+            }
 
-                if (sw.Direction == UISwipeGestureRecognizerDirection.Left)
+            var gesture1 = new UISwipeGestureRecognizer(sw =>
+            {
+                sw.ShouldReceiveTouch += (recognizer, touch) => !(touch.View is UITableView) && !(touch.View is UITableViewCell);
+
+                if (sw.Direction == UISwipeGestureRecognizerDirection.Right)
                 {
                     page.InvokeSwipeLeftEvent(null, null);
                 }
 
-                if (sw.Direction == UISwipeGestureRecognizerDirection.Right)
+            }) { Direction = UISwipeGestureRecognizerDirection.Right };
+
+            var gesture2 = new UISwipeGestureRecognizer(sw =>
+            {
+                sw.ShouldReceiveTouch += (recognizer, touch) => !(touch.View is UITableView) && !(touch.View is UITableViewCell);
+
+                if (sw.Direction == UISwipeGestureRecognizerDirection.Left)
                 {
-                    ((ExtendedTabbedPage)Element).InvokeSwipeRightEvent(null, null);
+                    page.InvokeSwipeRightEvent(null, null);
                 }
 
-                Debug.WriteLine("Swipe Tab.");
-            }));
+            }) { Direction = UISwipeGestureRecognizerDirection.Left };
+
+            View.AddGestureRecognizer(gesture1);
+            View.AddGestureRecognizer(gesture2);
+        }
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
         }
     }
 }

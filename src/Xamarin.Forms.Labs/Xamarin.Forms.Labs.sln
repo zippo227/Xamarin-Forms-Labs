@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs", "Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj", "{4D10DF5E-883D-468B-A854-4A53C7FE75AC}"
 EndProject
@@ -569,7 +569,6 @@ Global
 		{F07360BD-C6CC-4DAE-8CD0-C2383E593897}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{F07360BD-C6CC-4DAE-8CD0-C2383E593897}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{F07360BD-C6CC-4DAE-8CD0-C2383E593897}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F07360BD-C6CC-4DAE-8CD0-C2383E593897}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{F07360BD-C6CC-4DAE-8CD0-C2383E593897}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{F07360BD-C6CC-4DAE-8CD0-C2383E593897}.Debug|x86.Build.0 = Debug|Any CPU
 		{F07360BD-C6CC-4DAE-8CD0-C2383E593897}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -636,7 +635,6 @@ Global
 		{F0F4B2F6-1979-4F36-A81B-5A7A44418831}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{F0F4B2F6-1979-4F36-A81B-5A7A44418831}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{F0F4B2F6-1979-4F36-A81B-5A7A44418831}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F0F4B2F6-1979-4F36-A81B-5A7A44418831}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{F0F4B2F6-1979-4F36-A81B-5A7A44418831}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{F0F4B2F6-1979-4F36-A81B-5A7A44418831}.Debug|x86.Build.0 = Debug|Any CPU
 		{F0F4B2F6-1979-4F36-A81B-5A7A44418831}.Release|Any CPU.ActiveCfg = Release|Any CPU
