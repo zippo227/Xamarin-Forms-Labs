@@ -52,7 +52,9 @@ namespace Xamarin.Forms.Labs.Controls
 
         partial void Inject(string script)
         {
-            this.webView.EvaluateJavascript(script);
+			InvokeOnMainThread(() => {
+            	this.webView.EvaluateJavascript(script);
+			});
         }
 
         partial void Load(Uri uri)

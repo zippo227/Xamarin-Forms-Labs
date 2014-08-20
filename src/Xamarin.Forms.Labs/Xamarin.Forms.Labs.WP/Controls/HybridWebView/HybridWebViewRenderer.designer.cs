@@ -4,32 +4,53 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Xamarin.Forms.Labs.Controls
 {
     public partial class HybridWebViewRenderer
     {
 
-        private const string Format = "^(file|http|https)://(local|LOCAL)/Action(=|%3D)(?<Action>[\\w]+)/";
-        private static readonly Regex Expression = new Regex(Format);
+		private const string Format = "^(file|http|https)://(local|LOCAL)/Action(=|%3D)(?<Action>[\\w]+)/";
+		private const string FuncFormat = "^(file|http|https)://(local|LOCAL)/Func(=|%3D)(?<CallbackIdx>[\\d]+)(&|%26)(?<FuncName>[\\w]+)/";
+		private static readonly Regex Expression = new Regex(Format);
+		private static readonly Regex FuncExpression = new Regex(FuncFormat);
 
         private void InjectNativeFunctionScript()
         {
-            var builder = new StringBuilder();
-            builder.Append("function Native(action, data){ ");
+			var builder = new StringBuilder();
+			builder.Append("function Native(action, data){ ");
 #if WINDOWS_PHONE
-            builder.Append("window.external.notify(");
+			builder.Append("window.external.notify(");
 #else
-            builder.Append("window.location = \"//LOCAL/Action=\" + ");
+			builder.Append("window.location = \"//LOCAL/Action=\" + ");
 #endif
-            builder.Append("action + \"/\"");
-            builder.Append(" + ((typeof data == \"object\") ? JSON.stringify(data) : data)");
+			builder.Append("action + \"/\"");
+			builder.Append(" + ((typeof data == \"object\") ? JSON.stringify(data) : data)");
 #if WINDOWS_PHONE
-            builder.Append(")");
+			builder.Append(")");
 #endif
-            builder.Append(" ;}");
+			builder.Append(" ;}");
 
-            this.Inject(builder.ToString());
+			builder.Append("NativeFuncs = [];");
+			builder.Append("function NativeFunc(action, data, callback){ ");
+
+			builder.Append("  var callbackIdx = NativeFuncs.push(callback) - 1;");
+
+#if WINDOWS_PHONE
+			builder.Append("window.external.notify(");
+#else
+			builder.Append("window.location = '//LOCAL/Func=' + ");
+#endif
+			builder.Append("callbackIdx + '&' + ");
+			builder.Append("action + '/'");
+			builder.Append(" + ((typeof data == 'object') ? JSON.stringify(data) : data)");
+#if WINDOWS_PHONE
+			builder.Append(")");
+#endif
+			builder.Append(" ;}");
+
+			this.Inject(builder.ToString());
         }
 
         private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -48,6 +69,7 @@ namespace Xamarin.Forms.Labs.Controls
                 this.Load (this.Element.Uri);
             }
 
+			this.Element.PropertyChanged += this.Model_PropertyChanged;
             this.Element.JavaScriptLoadRequested += OnInjectRequest;
             this.Element.LoadFromContentRequested += LoadFromContent;
             this.Element.LoadContentRequested += LoadContent;
@@ -79,25 +101,48 @@ namespace Xamarin.Forms.Labs.Controls
 
         private bool CheckRequest(string request)
         {
-            var m = Expression.Match(request);
+			var m = Expression.Match(request);
 
-            if (m.Success)
-            {
-                Action<string> action;
-                var name = m.Groups["Action"].Value;
+			if (m.Success)
+			{
+				Action<string> action;
+				var name = m.Groups["Action"].Value;
 
-                if (this.Element.TryGetAction (name, out action))
-                {
-                    var data = Uri.UnescapeDataString (request.Remove (m.Index, m.Length));
-                    action.Invoke (data);
-                } 
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine ("Unhandled callback {0} was called from JavaScript", name);
-                }
-            }
+				if (this.Element.TryGetAction (name, out action))
+				{
+					var data = Uri.UnescapeDataString (request.Remove (m.Index, m.Length));
+					action.Invoke (data);
+				} 
+				else
+				{
+					System.Diagnostics.Debug.WriteLine ("Unhandled callback {0} was called from JavaScript", name);
+				}
+			}
 
-            return m.Success;
+			var mFunc = FuncExpression.Match(request);
+
+			if (mFunc.Success)
+			{
+				Func<string, object[]> func;
+				var name = mFunc.Groups["FuncName"].Value;
+				var callBackIdx = mFunc.Groups["CallbackIdx"].Value;
+
+				if (this.Element.TryGetFunc (name, out func))
+				{
+					var data = Uri.UnescapeDataString (request.Remove (mFunc.Index, mFunc.Length));
+					ThreadPool.QueueUserWorkItem(o =>
+						{
+							var result = func.Invoke (data);
+							Element.CallJsFunction("NativeFuncs[" + callBackIdx + "]", result);                            
+						});
+				} 
+				else
+				{
+					System.Diagnostics.Debug.WriteLine ("Unhandled callback {0} was called from JavaScript", name);
+				}
+			}
+
+			return m.Success;
         }
     }
 }

@@ -26,6 +26,11 @@ namespace Xamarin.Forms.Labs.Controls
         /// </summary>
         private readonly Dictionary<string, Action<string>> registeredActions;
 
+		/// <summary>
+		/// The registered actions.
+		/// </summary>
+		private readonly Dictionary<string, Func<string, object[]>> registeredFunctions;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HybridWebView"/> class.
         /// </summary>
@@ -39,6 +44,7 @@ namespace Xamarin.Forms.Labs.Controls
             }
 
             this.registeredActions = new Dictionary<string, Action<string>>();
+			registeredFunctions = new Dictionary<string, Func<string, object[]>>();
         }
 
         /// <summary>
@@ -51,6 +57,7 @@ namespace Xamarin.Forms.Labs.Controls
         {
             this.jsonSerializer = jsonSerializer;
             this.registeredActions = new Dictionary<string, Action<string>>();
+			registeredFunctions = new Dictionary<string, Func<string, object[]>>();
         }
 
         /// <summary>
@@ -80,6 +87,20 @@ namespace Xamarin.Forms.Labs.Controls
         {
             this.registeredActions.Add(name, action);
         }
+
+		/// <summary>
+		/// Registers a native callback and returns data to closure
+		/// </summary>
+		/// <param name="name">
+		/// The name.
+		/// </param>
+		/// <param name="action">
+		/// The action.
+		/// </param>
+		public void RegisterNativeFunction(string name, Func<string, object[]> func)
+		{
+			this.registeredFunctions.Add(name, func);
+		}
 
         public bool RemoveCallback(string name)
         {
@@ -120,6 +141,11 @@ namespace Xamarin.Forms.Labs.Controls
         {
             return this.registeredActions.TryGetValue(name, out action);
         }
+
+		public bool TryGetFunc(string name, out Func<string, object[]> func)
+		{
+			return this.registeredFunctions.TryGetValue(name, out func);
+		}
 
         public void OnLoadFinished(object sender, EventArgs e)
         {
