@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
 //using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
@@ -15,7 +16,14 @@ namespace Xamarin.Forms.Labs.Controls
     /// </summary>
     public delegate void CurrentPageChangedEventHandler();
 
+    /// <summary>
+    /// Delegate SwipeLeftEventHandler
+    /// </summary>
     public delegate void SwipeLeftEventHandler();
+
+    /// <summary>
+    /// Delegate SwipeRightEventHandler
+    /// </summary>
     public delegate void SwipeRightEventHandler();
 
     /// <summary>
@@ -23,6 +31,70 @@ namespace Xamarin.Forms.Labs.Controls
     /// </summary>
     public class ExtendedTabbedPage : TabbedPage
     {
+        public static readonly BindableProperty TintColorProperty =
+            BindableProperty.Create<ExtendedTabbedPage, Color>(
+                p => p.TintColor, Color.White);
+
+        public static readonly BindableProperty BarTintColorProperty =
+            BindableProperty.Create<ExtendedTabbedPage, Color>(
+                p => p.BarTintColor, Color.White);
+
+        public static readonly BindableProperty BackgroundColorProperty =
+            BindableProperty.Create<ExtendedTabbedPage, Color>(
+                p => p.BackgroundColor, Color.White);
+
+        public static readonly BindableProperty BadgesProperty =
+           BindableProperty.Create<ExtendedTabbedPage, List<string>>(
+               p => p.Badges, null);
+
+        public Color TintColor
+        {
+            get
+            {
+                return (Color)GetValue(TintColorProperty);
+            }
+            set
+            {
+                SetValue(TintColorProperty, value);
+            }
+        }
+
+        public Color BarTintColor
+        {
+            get
+            {
+                return (Color)GetValue(BarTintColorProperty);
+            }
+            set
+            {
+                SetValue(BarTintColorProperty, value);
+            }
+        }
+
+        public Color BackgroundColor
+        {
+            get
+            {
+                return (Color)GetValue(BackgroundColorProperty);
+            }
+            set
+            {
+                SetValue(BackgroundColorProperty, value);
+            }
+        }
+
+        public List<string> Badges
+        {
+            get
+            {
+                return (List<string>)GetValue(BadgesProperty);
+            }
+            set
+            {
+                SetValue(BadgesProperty, value);
+            }
+        }
+
         public bool SwipeEnabled;
 
         /// <summary>
@@ -36,6 +108,8 @@ namespace Xamarin.Forms.Labs.Controls
             OnSwipeRight += SwipeRight;
 
             SwipeEnabled = false;
+
+            Badges = new List<string>();
         }
 
         /// <summary>
@@ -162,7 +236,9 @@ namespace Xamarin.Forms.Labs.Controls
         }
 
         /// <summary>
-        /// Calculate the 
+        /// Move to the next page.
+        /// Restart at the first page should you try 
+        /// to move past the last page.
         /// </summary>
         private void NextPage()
         {
@@ -178,6 +254,11 @@ namespace Xamarin.Forms.Labs.Controls
             CurrentPage = Children[currentPage];
         }
 
+        /// <summary>
+        /// Move to the previous page.
+        /// If you are on the first page then return 
+        /// the last page in the list
+        /// </summary>
         private void PreviousPage()
         {
             var currentPage = Children.IndexOf(CurrentPage);

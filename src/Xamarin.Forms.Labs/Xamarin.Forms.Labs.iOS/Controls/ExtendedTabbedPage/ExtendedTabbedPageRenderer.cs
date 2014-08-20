@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
@@ -12,9 +13,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
     {
         public ExtendedTabbedPageRenderer()
         {
-            //TabBar.TintColor = MonoTouch.UIKit.UIColor.Black;
-            // TabBar.BarTintColor = MonoTouch.UIKit.UIColor.Blue;
-            // TabBar.BackgroundColor = MonoTouch.UIKit.UIColor.Green;
+            
         }
 
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
@@ -22,6 +21,11 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             base.OnElementChanged(e);
 
             var page = (ExtendedTabbedPage)Element;
+
+            TabBar.TintColor = page.TintColor.ToUIColor();
+            TabBar.BarTintColor = page.BarTintColor.ToUIColor();
+            TabBar.BackgroundColor = page.BackgroundColor.ToUIColor();
+            
 
             if (!page.SwipeEnabled)
             {
@@ -57,6 +61,31 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+            var page = (ExtendedTabbedPage)Element;
+
+            if (page.Badges == null || page.Badges.Count == 0 )
+            {
+                return;
+            }
+
+            var items = TabBar.Items;
+
+            for (var i = 0; i < page.Badges.Count; i++)
+            {
+                if (i >= items.Count())
+                {
+                    continue;
+                }
+
+                items[i].BadgeValue = page.Badges[i];
+            }
         }
     }
 }
