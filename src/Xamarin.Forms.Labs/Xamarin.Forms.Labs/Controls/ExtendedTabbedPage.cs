@@ -47,6 +47,14 @@ namespace Xamarin.Forms.Labs.Controls
            BindableProperty.Create<ExtendedTabbedPage, List<string>>(
                p => p.Badges, null);
 
+        public static readonly BindableProperty TabBarSelectedImageProperty =
+            BindableProperty.Create<ExtendedTabbedPage, string>(
+                p => p.TabBarSelectedImage, null);
+
+        public static readonly BindableProperty TabBarBackgroundImageProperty =
+            BindableProperty.Create<ExtendedTabbedPage, string>(
+                p => p.TabBarBackgroundImage, null);
+
         public Color TintColor
         {
             get
@@ -92,6 +100,30 @@ namespace Xamarin.Forms.Labs.Controls
             set
             {
                 SetValue(BadgesProperty, value);
+            }
+        }
+
+        public string TabBarSelectedImage
+        {
+            get
+            {
+                return (string)GetValue(TabBarSelectedImageProperty);
+            }
+            set
+            {
+                SetValue(TabBarSelectedImageProperty, value);
+            }
+        }
+
+        public string TabBarBackgroundImage
+        {
+            get
+            {
+                return (string)GetValue(TabBarBackgroundImageProperty);
+            }
+            set
+            {
+                SetValue(TabBarBackgroundImageProperty, value);
             }
         }
 

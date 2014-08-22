@@ -58,7 +58,9 @@ namespace Xamarin.Forms.Labs.Sample
                 SwipeEnabled = true,
                 TintColor = Color.White,
                 BarTintColor = Color.Blue,
-                Badges = { "1", "2", "3"}
+                Badges = { "1", "2", "3"},
+                TabBarBackgroundImage = "ToolbarGradient2.png",
+                TabBarSelectedImage = "blackbackground.png",
             };
 
             var mainPage = new NavigationPage(mainTab);

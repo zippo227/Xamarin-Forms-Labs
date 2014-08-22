@@ -70,21 +70,29 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
             var page = (ExtendedTabbedPage)Element;
 
-            if (page.Badges == null || page.Badges.Count == 0 )
+            if (!string.IsNullOrEmpty(page.TabBarSelectedImage))
             {
-                return;
+                TabBar.SelectionIndicatorImage = UIImage.FromFile(page.TabBarSelectedImage).CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0), UIImageResizingMode.Stretch);
             }
 
-            var items = TabBar.Items;
-
-            for (var i = 0; i < page.Badges.Count; i++)
+            if (!string.IsNullOrEmpty(page.TabBarBackgroundImage))
             {
-                if (i >= items.Count())
-                {
-                    continue;
-                }
+                TabBar.BackgroundImage = UIImage.FromFile(page.TabBarBackgroundImage).CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0), UIImageResizingMode.Stretch);
+            }
 
-                items[i].BadgeValue = page.Badges[i];
+            if (page.Badges == null || page.Badges.Count == 0 )
+            {
+                var items = TabBar.Items;
+
+                for (var i = 0; i < page.Badges.Count; i++)
+                {
+                    if (i >= items.Count())
+                    {
+                        continue;
+                    }
+
+                    items[i].BadgeValue = page.Badges[i];
+                }
             }
         }
     }

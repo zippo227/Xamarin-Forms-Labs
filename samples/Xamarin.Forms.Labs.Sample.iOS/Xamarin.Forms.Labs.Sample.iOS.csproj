@@ -202,6 +202,9 @@
     <BundleResource Include="Resources\pie27_32.png" />
     <BundleResource Include="Resources\pie30_32.png" />
     <BundleResource Include="Resources\services1_32.png" />
+    <BundleResource Include="Resources\ToolbarGradient1.png" />
+    <BundleResource Include="Resources\ToolbarGradient2.png" />
+    <BundleResource Include="Resources\blackbackground.png" />
   </ItemGroup>
   <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
