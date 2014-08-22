@@ -15,6 +15,8 @@ namespace Xamarin.Forms.Labs
     {
         private static IDevice currentDevice;
 
+        private IBluetoothHub btHub;
+
         /// <summary>
         /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
         /// </summary>
@@ -35,11 +37,6 @@ namespace Xamarin.Forms.Labs
             if (Labs.Gyroscope.IsSupported)
             {
                 this.Gyroscope = new Gyroscope();
-            }
-
-            if (Android.Bluetooth.BluetoothAdapter.DefaultAdapter != null)
-            {
-                this.BluetoothHub = new BluetoothHub(Android.Bluetooth.BluetoothAdapter.DefaultAdapter);
             }
 
 //            if (BluetoothAdapter.DefaultAdapter != null)
@@ -162,8 +159,15 @@ namespace Xamarin.Forms.Labs
         /// <value>The bluetooth hub service if available, otherwise null.</value>
         public IBluetoothHub BluetoothHub
         {
-            get;
-            private set;
+            get
+            {
+                if (this.btHub == null && Android.Bluetooth.BluetoothAdapter.DefaultAdapter != null)
+                {
+                    this.btHub = new BluetoothHub(Android.Bluetooth.BluetoothAdapter.DefaultAdapter);
+                }
+
+                return this.btHub;
+            }
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -72,6 +72,10 @@
     <Compile Include="..\Xamarin.Forms.Labs\Device\Gyroscope.designer.cs">
       <Link>Device\Gyroscope.designer.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Forms.Labs\Services\FontManager.designer.cs">
+      <Link>Services\FontManager.designer.cs</Link>
+      <DependentUpon>FontManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\ExtendedTabbedPage\ExtendedTabbedPageRenderer.cs" />
@@ -93,6 +97,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Services\FontManager.cs" />
     <Compile Include="Services\Network.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\Reachability.cs" />

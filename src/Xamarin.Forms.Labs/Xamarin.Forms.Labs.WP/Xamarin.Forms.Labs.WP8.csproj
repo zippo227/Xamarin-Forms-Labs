@@ -97,6 +97,10 @@
     <Compile Include="..\Xamarin.Forms.Labs\Device\Gyroscope.designer.cs">
       <Link>Device\Gyroscope.designer.cs</Link>
     </Compile>
+    <Compile Include="..\Xamarin.Forms.Labs\Services\FontManager.designer.cs">
+      <Link>Services\FontManager.designer.cs</Link>
+      <DependentUpon>FontManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
@@ -122,10 +126,12 @@
     <Compile Include="Device\Gyroscope.cs" />
     <Compile Include="Device\WindowsPhoneDevice.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\FontExtensions.cs" />
     <Compile Include="Extensions\VectorExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Services\FontManager.cs" />
     <Compile Include="Services\Geolocation\CoordinateExtensions.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />
     <Compile Include="Services\Network.cs" />

@@ -91,7 +91,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "Display",
                     "Cache",
                     "Sound",
-                    "Bluetooth"
+                    "Bluetooth",
+                    "FontManager"
                 }
             };
 
@@ -128,6 +129,9 @@ namespace Xamarin.Forms.Labs.Sample
                     break;
                 case "bluetooth":
                     await mainPage.Navigation.PushAsync(new BluetoothPage());
+                    break;
+                case "fontmanager":
+                    await mainPage.Navigation.PushAsync(new FontManagerPage(Resolver.Resolve<IDisplay>()));
                     break;
                 default:
                     break;
