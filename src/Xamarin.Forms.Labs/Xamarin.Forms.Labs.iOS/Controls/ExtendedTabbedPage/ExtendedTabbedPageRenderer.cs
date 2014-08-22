@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
@@ -12,40 +13,87 @@ namespace Xamarin.Forms.Labs.iOS.Controls
     {
         public ExtendedTabbedPageRenderer()
         {
-            //TabBar.TintColor = MonoTouch.UIKit.UIColor.Black;
-            // TabBar.BarTintColor = MonoTouch.UIKit.UIColor.Blue;
-            // TabBar.BackgroundColor = MonoTouch.UIKit.UIColor.Green;
+            
+        }
+
+        protected override void OnElementChanged(VisualElementChangedEventArgs e)
+        {
+            base.OnElementChanged(e);
+
+            var page = (ExtendedTabbedPage)Element;
+
+            TabBar.TintColor = page.TintColor.ToUIColor();
+            TabBar.BarTintColor = page.BarTintColor.ToUIColor();
+            TabBar.BackgroundColor = page.BackgroundColor.ToUIColor();
+            
+
+            if (!page.SwipeEnabled)
+            {
+                return;
+            }
+
+            var gesture1 = new UISwipeGestureRecognizer(sw =>
+            {
+                sw.ShouldReceiveTouch += (recognizer, touch) => !(touch.View is UITableView) && !(touch.View is UITableViewCell);
+
+                if (sw.Direction == UISwipeGestureRecognizerDirection.Right)
+                {
+                    page.InvokeSwipeLeftEvent(null, null);
+                }
+
+            }) { Direction = UISwipeGestureRecognizerDirection.Right };
+
+            var gesture2 = new UISwipeGestureRecognizer(sw =>
+            {
+                sw.ShouldReceiveTouch += (recognizer, touch) => !(touch.View is UITableView) && !(touch.View is UITableViewCell);
+
+                if (sw.Direction == UISwipeGestureRecognizerDirection.Left)
+                {
+                    page.InvokeSwipeRightEvent(null, null);
+                }
+
+            }) { Direction = UISwipeGestureRecognizerDirection.Left };
+
+            View.AddGestureRecognizer(gesture1);
+            View.AddGestureRecognizer(gesture2);
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
 
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
             var page = (ExtendedTabbedPage)Element;
 
-            // TODO: Need to figure out why this variable is null.
-            //if (!page.SwipeEnabled)
-            //{
-            //    return;
-            //}
-
-            View.AddGestureRecognizer(new UISwipeGestureRecognizer(sw =>
+            if (!string.IsNullOrEmpty(page.TabBarSelectedImage))
             {
-                // TODO: For demo only
-                sw.ShouldReceiveTouch += (recognizer, touch) => (true);     //!(touch.View is UITableView) && !(touch.View is UITableViewCell));
+                TabBar.SelectionIndicatorImage = UIImage.FromFile(page.TabBarSelectedImage).CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0), UIImageResizingMode.Stretch);
+            }
 
-                if (sw.Direction == UISwipeGestureRecognizerDirection.Left)
+            if (!string.IsNullOrEmpty(page.TabBarBackgroundImage))
+            {
+                TabBar.BackgroundImage = UIImage.FromFile(page.TabBarBackgroundImage).CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0), UIImageResizingMode.Stretch);
+            }
+
+            if (page.Badges != null && page.Badges.Count != 0)
+            {
+                var items = TabBar.Items;
+
+                for (var i = 0; i < page.Badges.Count; i++)
                 {
-                    page.InvokeSwipeLeftEvent(null, null);
-                }
+                    if (i >= items.Count())
+                    {
+                        continue;
+                    }
 
-                if (sw.Direction == UISwipeGestureRecognizerDirection.Right)
-                {
-                    ((ExtendedTabbedPage)Element).InvokeSwipeRightEvent(null, null);
+                    items[i].BadgeValue = page.Badges[i];
                 }
-
-                Debug.WriteLine("Swipe Tab.");
-            }));
+            }
         }
     }
 }

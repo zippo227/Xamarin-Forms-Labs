@@ -26,7 +26,8 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Services
                 {
                     Font = font,
                     HeightRequest = heightRequest + 10,
-                    Text = string.Format("System font {0} is {1:0.000}in tall.", namedSize, height)
+                    Text = string.Format("System font {0} is {1:0.000}in tall.", namedSize, height),
+                    XAlign = TextAlignment.Center
                 };
 
                 stack.Children.Add(label);
@@ -36,10 +37,17 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Services
 
             var inchFont = display.FontManager.FindClosest(f.FontFamily, 0.25);
 
+            stack.Children.Add(new Label() 
+                {
+                    Text = "The below text should be 1/4 inch height from its highest point to lowest.",
+                    XAlign = TextAlignment.Center
+                });
+
             stack.Children.Add(new Label()
                 {
                     Text = "ftlgjp",
-                    Font = inchFont
+                    Font = inchFont,
+                    XAlign = TextAlignment.Center
                 });
 
             this.Content = stack;
