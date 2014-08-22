@@ -25,7 +25,8 @@ namespace Xamarin.Forms.Labs.Services
 
         public double GetHeight(Font font)
         {
-            return font.ToScaledPixel() / display.Ydpi;
+            var scaled = font.ToScaledPixel();
+            return scaled *  Display.Metrics.Density / display.Ydpi;
         }
 
         #endregion

@@ -24,7 +24,13 @@ namespace Xamarin.Forms.Labs.Services
         {
             get 
             {
-                throw new NotImplementedException(); 
+                return Fonts.SystemTypefaces.Select(a =>
+                    {
+                        GlyphTypeface typeFace = null;
+                        a.TryGetGlyphTypeface(out typeFace);
+                        return typeFace;
+                    }).Where(a => a != null).Select(a => a.FontFileName);
+                //throw new NotImplementedException(); 
             }
         }
 
