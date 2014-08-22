@@ -80,7 +80,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                 TabBar.BackgroundImage = UIImage.FromFile(page.TabBarBackgroundImage).CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0), UIImageResizingMode.Stretch);
             }
 
-            if (page.Badges == null || page.Badges.Count == 0 )
+            if (page.Badges != null && page.Badges.Count != 0)
             {
                 var items = TabBar.Items;
 
