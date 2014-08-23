@@ -5,7 +5,7 @@
 					   x:Class="Xamarin.Forms.Labs.Sample.Pages.Controls.Charts.PieChartPage">
   <StackLayout x:Name="PageLayout">
 
-    <charting:Chart x:Name="PieChart" Width="600" Height="900">
+    <charting:Chart x:Name="PieChart" Width="450" Height="750" WidthRequest="450" HeightRequest="750">
 
       <charting:Chart.Series>
         <charting:Series Type="Pie">

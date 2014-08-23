@@ -5,40 +5,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using Xamarin.Forms.Labs.Charting.Controls;
 using WPColor = System.Windows.Media.Color;
+using WPPoint = System.Windows.Point;
+using WPSize = System.Windows.Size;
 using WPShapes = System.Windows.Shapes;
 
 namespace Xamarin.Forms.Labs.Charting.WP.Controls
 {
     public class ChartSurface : Canvas
     {
-        private Chart _chart;
-        private SolidColorBrush _brush;
-        private WPColor[] _colors;
+        public Chart Chart;
+        public SolidColorBrush Brush;
+        public WPColor[] Colors;
 
-        public ChartSurface(Chart chart, WPColor color, WPColor[] colors) : base()
+        public ChartSurface(Chart chart, WPColor color, WPColor[] colors)
+            : base()
         {
-            this.Background = new SolidColorBrush(System.Windows.Media.Colors.Blue);
             this.Width = chart.Width;
             this.Height = chart.Height;
-            _chart = chart;
-            _brush = new SolidColorBrush(color);
-            _colors = colors;
+            Chart = chart;
+            Brush = new SolidColorBrush(color);
+            Colors = colors;
 
-            _chart.OnDrawBar += _chart_OnDrawBar;
-            _chart.OnDrawCircle += _chart_OnDrawCircle;
-            _chart.OnDrawGridLine += _chart_OnDrawGridLine;
-            _chart.OnDrawLine += _chart_OnDrawLine;
-            _chart.OnDrawText += _chart_OnDrawText;
+            Chart.OnDrawBar += _chart_OnDrawBar;
+            Chart.OnDrawCircle += _chart_OnDrawCircle;
+            Chart.OnDrawGridLine += _chart_OnDrawGridLine;
+            Chart.OnDrawLine += _chart_OnDrawLine;
+            Chart.OnDrawText += _chart_OnDrawText;
+            Chart.OnDrawPie += _chart_OnDrawPie;
 
-            _chart.DrawChart();
+            Chart.DrawChart();
         }
 
         void _chart_OnDrawBar(object sender, Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
             WPShapes.Rectangle rectangle = new WPShapes.Rectangle();
-            rectangle.Fill = new SolidColorBrush(_colors[e.Data.SeriesNo]);
+            rectangle.Fill = new SolidColorBrush(Colors[e.Data.SeriesNo]);
             rectangle.Width = e.Data.XTo - e.Data.XFrom;
             rectangle.Height = e.Data.YTo - e.Data.YFrom;
 
@@ -51,7 +55,7 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         void _chart_OnDrawCircle(object sender, Chart.DrawEventArgs<Events.SingleDrawingData> e)
         {
             WPShapes.Ellipse ellipse = new WPShapes.Ellipse();
-            ellipse.Fill = new SolidColorBrush(_colors[e.Data.SeriesNo]);
+            ellipse.Fill = new SolidColorBrush(Colors[e.Data.SeriesNo]);
             ellipse.Width = e.Data.Size;
             ellipse.Height = e.Data.Size;
 
@@ -64,7 +68,7 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         void _chart_OnDrawGridLine(object sender, Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
             WPShapes.Line line = new WPShapes.Line();
-            line.Stroke = _brush;
+            line.Stroke = Brush;
             line.StrokeThickness = 2;
 
             line.X1 = e.Data.XFrom;
@@ -78,7 +82,7 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         void _chart_OnDrawLine(object sender, Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
             WPShapes.Line line = new WPShapes.Line();
-            line.Stroke = new SolidColorBrush(_colors[e.Data.SeriesNo]);
+            line.Stroke = new SolidColorBrush(Colors[e.Data.SeriesNo]);
             line.StrokeThickness = 2;
 
             line.X1 = e.Data.XFrom;
@@ -92,12 +96,54 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         void _chart_OnDrawText(object sender, Chart.DrawEventArgs<Events.TextDrawingData> e)
         {
             TextBlock textBlock = new TextBlock();
-            textBlock.Foreground = _brush;
+            textBlock.Foreground = Brush;
 
             Canvas.SetLeft(textBlock, e.Data.X);
             Canvas.SetTop(textBlock, e.Data.Y);
 
             this.Children.Add(textBlock);
+        }
+        void _chart_OnDrawPie(object sender, Chart.DrawEventArgs<Events.PieDrawingData> e)
+        {
+            float size = ((e.Data.X > e.Data.Y) ? e.Data.Y * 2 : e.Data.X * 2);
+            float halfSize = size / 2;
+            WPPoint previousPoint = new WPPoint(halfSize, 0);
+
+            for (int i = 0; i < e.Data.Percentages.Length; i++)
+            {
+                float value = e.Data.Percentages[i];
+                double coordinateX = halfSize * Math.Sin(value);
+                double coordinateY = halfSize * Math.Cos(value);
+                Path path = new Path();
+
+                PathFigure pathFigure = new PathFigure();
+                pathFigure.IsClosed = true;
+
+                pathFigure.StartPoint = new WPPoint(halfSize, halfSize);
+
+                LineSegment lineSegment = new LineSegment();
+                lineSegment.Point = previousPoint;
+                pathFigure.Segments.Add(lineSegment);
+
+                previousPoint = new WPPoint(coordinateX + halfSize, coordinateY + halfSize);
+
+                ArcSegment arcSegment = new ArcSegment();
+                arcSegment.Size = new WPSize(halfSize, halfSize);
+                arcSegment.Point = previousPoint;
+                arcSegment.RotationAngle = 0;
+                arcSegment.IsLargeArc = value > 180 ? true : false;
+                arcSegment.SweepDirection = SweepDirection.Clockwise;
+                pathFigure.Segments.Add(arcSegment);
+
+                PathGeometry pathGeometry = new PathGeometry();
+                pathGeometry.Figures = new PathFigureCollection();
+
+                pathGeometry.Figures.Add(pathFigure);
+
+                path.Data = pathGeometry;
+                path.Fill = new SolidColorBrush(Colors[i]);
+                this.Children.Add(path);
+            }
         }
     }
 }
