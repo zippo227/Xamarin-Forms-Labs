@@ -76,7 +76,7 @@ namespace Xamarin.Forms.Labs.Charting.Droid.Controls
             }
             else if(e.PropertyName == Chart.WidthProperty.PropertyName)
             {
-                Control.Chart.Width = Element.Width;
+                Control.Chart.WidthRequest = Element.Width;
                 Control.Invalidate();
             }
         }

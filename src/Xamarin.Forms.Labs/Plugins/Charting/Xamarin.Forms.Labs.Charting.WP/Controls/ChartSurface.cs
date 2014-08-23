@@ -23,8 +23,8 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         public ChartSurface(Chart chart, WPColor color, WPColor[] colors)
             : base()
         {
-            this.Width = chart.Width;
-            this.Height = chart.Height;
+            this.Width = chart.WidthRequest;
+            this.Height = chart.HeightRequest;
             Chart = chart;
             Brush = new SolidColorBrush(color);
             Colors = colors;
@@ -59,8 +59,8 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
             ellipse.Width = e.Data.Size;
             ellipse.Height = e.Data.Size;
 
-            Canvas.SetLeft(ellipse, e.Data.X);
-            Canvas.SetTop(ellipse, e.Data.Y);
+            Canvas.SetLeft(ellipse, e.Data.X - (e.Data.Size / 2));
+            Canvas.SetTop(ellipse, e.Data.Y - (e.Data.Size / 2));
 
             this.Children.Add(ellipse);
         }
@@ -105,13 +105,13 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         }
         void _chart_OnDrawPie(object sender, Chart.DrawEventArgs<Events.PieDrawingData> e)
         {
-            float size = ((e.Data.X > e.Data.Y) ? e.Data.Y * 2 : e.Data.X * 2);
-            float halfSize = size / 2;
+            double size = ((e.Data.X > e.Data.Y) ? e.Data.Y * 2 : e.Data.X * 2);
+            double halfSize = size / 2;
             WPPoint previousPoint = new WPPoint(halfSize, 0);
 
             for (int i = 0; i < e.Data.Percentages.Length; i++)
             {
-                float value = e.Data.Percentages[i];
+                double value = e.Data.Percentages[i];
                 double coordinateX = halfSize * Math.Sin(value);
                 double coordinateY = halfSize * Math.Cos(value);
                 Path path = new Path();
