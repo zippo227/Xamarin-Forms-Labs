@@ -9,12 +9,12 @@ namespace Xamarin.Forms.Labs.Charting.Events
     public sealed class PieDrawingData
     {
         public int SeriesNo { get; set; }
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Size { get; set; }
-        public float[] Percentages { get; set; }
-        
-        public PieDrawingData(float x, float y, int seriesNo, float size, float[] percentages)
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Size { get; set; }
+        public double[] Percentages { get; set; }
+
+        public PieDrawingData(double x, double y, int seriesNo, double size, double[] percentages)
         {
             X = x;
             Y = y;

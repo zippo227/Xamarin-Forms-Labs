@@ -21,9 +21,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         #region BindableProperties
         public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(Chart), Color.White, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty SeriesProperty = BindableProperty.Create("Series", typeof(SeriesCollection), typeof(Chart), default(SeriesCollection), BindingMode.OneWay, null, null, null, null);
-        public static readonly BindableProperty WidthProperty = BindableProperty.Create("Width", typeof(float), typeof(Chart), 250F, BindingMode.OneWay, null, null, null, null);
-        public static readonly BindableProperty HeightProperty = BindableProperty.Create("Height", typeof(float), typeof(Chart), 250F, BindingMode.OneWay, null, null, null, null);
-        public static readonly BindableProperty SpacingProperty = BindableProperty.Create("Spacing", typeof(float), typeof(Chart), 5F, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty SpacingProperty = BindableProperty.Create("Spacing", typeof(double), typeof(Chart), 5.0, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty GridProperty = BindableProperty.Create("Grid", typeof(bool), typeof(Chart), true, BindingMode.OneWay, null, null, null, null);
         #endregion
 
@@ -59,43 +57,13 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         }
 
         /// <summary>
-        /// Gets or sets the desired width of the chart element.
-        /// </summary>
-        public float Width
-        {
-            get
-            {
-                return (float)base.GetValue(Chart.WidthProperty);
-            }
-            set
-            {
-                base.SetValue(Chart.WidthProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the desired height of the chart element.
-        /// </summary>
-        public float Height
-        {
-            get
-            {
-                return (float)base.GetValue(Chart.HeightProperty);
-            }
-            set
-            {
-                base.SetValue(Chart.HeightProperty, value);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the desired spacing between series inside chart element.
         /// </summary>
-        public float Spacing
+        public double Spacing
         {
             get
             {
-                return (float)base.GetValue(Chart.SpacingProperty);
+                return (double)base.GetValue(Chart.SpacingProperty);
             }
             set
             {
@@ -174,40 +142,37 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <remarks>
         /// Set the events before calling DrawChart.
         /// </remarks>
-        internal void DrawChart()
+        public void DrawChart()
         {
             int noOfBars = 0;
-            float highestValue = 0;
+            double highestValue = 0;
 
             foreach (Series series in Series)
             {
                 if (series.Type == ChartType.Bar)
                     noOfBars += series.Points.Count();
 
-                float tempHighestValue = series.Points.Max(p => p.Value);
+                double tempHighestValue = series.Points.Max(p => p.Value);
                 if (highestValue < tempHighestValue)
                 {
                     highestValue = tempHighestValue;
                 }
             }
 
-            if(Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
+            if (Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
                 highestValue = DrawGrid(highestValue);
 
             // If there are no bars, fake them
             if (noOfBars == 0)
                 noOfBars = Series[0].Points.Count;
 
-            float widthPerBar = ((Width - PADDING_LEFT) - (Spacing * (noOfBars - 1))) / noOfBars;
+            double widthPerBar = ((WidthRequest - PADDING_LEFT) - (Spacing * (noOfBars - 1))) / noOfBars;
 
             if (Series.FirstOrDefault(s => s.Type == ChartType.Pie) == null)
             {
-                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, PADDING_TOP, PADDING_LEFT, Height, 0) });  //Y-axis
-                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, Height, Width, Height, 0) });              //X-axis
+                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, PADDING_TOP, PADDING_LEFT, HeightRequest, 0) });  //Y-axis
+                OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, HeightRequest + 1, WidthRequest, HeightRequest + 1, 0) });      //X-axis
                 DrawLabels(highestValue, widthPerBar, Series[0].Points);
-
-                Height -= 2; // Y-axis space
-
                 for (int i = 0; i < Series.Count; i++)
                 {
                     Series series = Series[i];
@@ -236,14 +201,14 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// </summary>
         /// <param name="highestValue">Highest Y-value within the series.</param>
         /// <returns>New highest value.</returns>
-        private float DrawGrid(float highestValue)
+        private float DrawGrid(double highestValue)
         {
             int noOfHorizontalLines = 4;
-            float quarterValue = highestValue / 4;
+            double quarterValue = highestValue / 4;
             double valueOfPart = ((int)Math.Round(quarterValue / 10.0)) * 10;
             if (valueOfPart < quarterValue)
                 noOfHorizontalLines = 5;
-            float quarterHeight = (Height - PADDING_TOP) / noOfHorizontalLines;
+            double quarterHeight = (HeightRequest - PADDING_TOP) / noOfHorizontalLines;
 
             // Horizontal lines and Y-value labels
             OnDrawText(this, new DrawEventArgs<TextDrawingData>() { Data = new TextDrawingData((valueOfPart * noOfHorizontalLines).ToString(), 10, PADDING_TOP + 5) });
@@ -251,7 +216,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             {
                 if (Grid)
                 {
-                    OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, PADDING_TOP + (quarterHeight * i), Width, PADDING_TOP + (quarterHeight * i), 0) });
+                    OnDrawGridLine(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(PADDING_LEFT, PADDING_TOP + (quarterHeight * i), WidthRequest, PADDING_TOP + (quarterHeight * i), 0) });
                 }
                 double currentValue = (valueOfPart * noOfHorizontalLines) - (valueOfPart * i);
                 OnDrawText(this, new DrawEventArgs<TextDrawingData>() { Data = new TextDrawingData(currentValue.ToString(), 10, PADDING_TOP + (quarterHeight * i) + 5) });
@@ -267,15 +232,15 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <param name="widthPerBar">Width of a single bar.</param>
         /// <param name="barNo">The number of the series</param>
         /// <param name="points">Specified points in the series.</param>
-        private void DrawBarChart(float highestValue, float widthPerBar, int barNo, DataPointCollection points)
+        private void DrawBarChart(double highestValue, double widthPerBar, int barNo, DataPointCollection points)
         {
-            float widthIterator = 2 + (barNo * widthPerBar) + PADDING_LEFT;
+            double widthIterator = 2 + (barNo * widthPerBar) + PADDING_LEFT;
 
             foreach (DataPoint point in points)
             {
-                float heightOfBar = ((Height - PADDING_TOP) / highestValue) * point.Value;
+                double heightOfBar = ((HeightRequest - PADDING_TOP) / highestValue) * point.Value;
 
-                OnDrawBar(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(widthIterator + 1, ((Height - PADDING_TOP) - heightOfBar) + PADDING_TOP, (widthIterator + widthPerBar) - 1, Height, barNo) });
+                OnDrawBar(this, new DrawEventArgs<DoubleDrawingData>() { Data = new DoubleDrawingData(widthIterator + 1, ((HeightRequest - PADDING_TOP) - heightOfBar) + PADDING_TOP, (widthIterator + widthPerBar) - 1, HeightRequest, barNo) });
 
                 widthIterator += widthPerBar * Series.Count(s => s.Type == ChartType.Bar) + Spacing;
             }
@@ -288,22 +253,22 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <param name="widthPerBar">Width of a single bar.</param>
         /// <param name="lineNo">The number of the series</param>
         /// <param name="points">Specified points in the series.</param>
-        private void DrawLineChart(float highestValue, float widthPerBar, int lineNo, DataPointCollection points)
+        private void DrawLineChart(double highestValue, double widthPerBar, int lineNo, DataPointCollection points)
         {
             int noOfBarSeries = Series.Count(s => s.Type == ChartType.Bar);
             if (noOfBarSeries == 0)
                 noOfBarSeries = 1;
-            float widthOfAllBars = noOfBarSeries * widthPerBar;
-            float widthIterator = 2 + PADDING_LEFT;
+            double widthOfAllBars = noOfBarSeries * widthPerBar;
+            double widthIterator = 2 + PADDING_LEFT;
 
-            List<float> pointsList = new List<float>();
-            float[] previousPoints = new float[2];
+            List<double> pointsList = new List<double>();
+            double[] previousPoints = new double[2];
             for (int i = 0; i < points.Count; i++)
             {
-                float heightOfLine = ((Height - PADDING_TOP) / highestValue) * points[i].Value;
+                double heightOfLine = ((HeightRequest - PADDING_TOP) / highestValue) * points[i].Value;
 
-                float x = widthIterator + (widthOfAllBars / 2);
-                float y = ((Height - PADDING_TOP) - heightOfLine) + PADDING_TOP;
+                double x = widthIterator + (widthOfAllBars / 2);
+                double y = ((HeightRequest - PADDING_TOP) - heightOfLine) + PADDING_TOP;
 
                 if (i != 0)
                 {
@@ -313,7 +278,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
                 previousPoints[0] = x;
                 previousPoints[1] = y;
 
-                OnDrawCircle(this, new DrawEventArgs<SingleDrawingData>() { Data = new SingleDrawingData(widthIterator + (widthOfAllBars / 2), ((Height - PADDING_TOP) - heightOfLine) + PADDING_TOP, lineNo) });
+                OnDrawCircle(this, new DrawEventArgs<SingleDrawingData>() { Data = new SingleDrawingData(widthIterator + (widthOfAllBars / 2), ((HeightRequest - PADDING_TOP) - heightOfLine) + PADDING_TOP, lineNo) });
 
                 widthIterator += widthPerBar * noOfBarSeries + Spacing;
             }
@@ -325,16 +290,16 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <param name="points">Specified points in the series.</param>
         private void DrawPieChart(DataPointCollection points, int pieNo)
         {
-            float sizeOfCircle = ((Width > Height) ? Height / 2 : Width / 2);
-            float[] values = points.Select(p => p.Value).ToArray();
-            float degreesPerValue = 360 / values.Sum();
+            double sizeOfCircle = ((WidthRequest > HeightRequest) ? HeightRequest / 2 : WidthRequest / 2);
+            double[] values = points.Select(p => p.Value).ToArray();
+            double degreesPerValue = 360 / values.Sum();
 
-            for(int i = 0; i < values.Length; i++)
+            for (int i = 0; i < values.Length; i++)
             {
                 values[i] = values[i] * degreesPerValue;
             }
 
-            OnDrawPie(this, new DrawEventArgs<PieDrawingData> { Data = new PieDrawingData(Width / 2, Height / 2, pieNo, sizeOfCircle, values) });
+            OnDrawPie(this, new DrawEventArgs<PieDrawingData> { Data = new PieDrawingData(WidthRequest / 2, HeightRequest / 2, pieNo, sizeOfCircle, values) });
         }
 
         /// <summary>
@@ -343,17 +308,17 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <param name="highestValue">Highest Y-value possible after drawing the grid.</param>
         /// <param name="widthPerBar">Width of a single bar.</param>
         /// <param name="points">Specified points in the series.</param>
-        private void DrawLabels(float highestValue, float widthPerBar, DataPointCollection points)
+        private void DrawLabels(double highestValue, double widthPerBar, DataPointCollection points)
         {
             int noOfBarSeries = Series.Count(s => s.Type == ChartType.Bar);
             if (noOfBarSeries == 0)
                 noOfBarSeries = 1;
-            float widthOfAllBars = noOfBarSeries * widthPerBar;
-            float widthIterator = 2 + PADDING_LEFT;
+            double widthOfAllBars = noOfBarSeries * widthPerBar;
+            double widthIterator = 2 + PADDING_LEFT;
 
             for (int i = 0; i < points.Count; i++)
             {
-                OnDrawText(this, new DrawEventArgs<TextDrawingData>() { Data = new TextDrawingData(points[i].Label, (widthIterator + widthOfAllBars / 2) - (points[i].Label.Length * 4), Height + 25) });
+                OnDrawText(this, new DrawEventArgs<TextDrawingData>() { Data = new TextDrawingData(points[i].Label, (widthIterator + widthOfAllBars / 2) - (points[i].Label.Length * 4), HeightRequest + 25) });
                 widthIterator += widthPerBar * noOfBarSeries + Spacing;
             }
         }

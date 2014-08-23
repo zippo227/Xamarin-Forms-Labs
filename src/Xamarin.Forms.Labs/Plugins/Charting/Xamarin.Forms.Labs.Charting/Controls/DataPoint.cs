@@ -12,7 +12,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
     public class DataPoint : Element
     {
         public static readonly BindableProperty LabelProperty = BindableProperty.Create("Label", typeof(string), typeof(DataPoint), String.Empty, BindingMode.OneWay, null, null, null, null);
-        public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(float), typeof(DataPoint), 0.0F, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(double), typeof(DataPoint), 0.0, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(DataPoint), Color.Blue, BindingMode.OneWay, null, null, null, null);
 
         /// <summary>
@@ -33,11 +33,11 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <summary>
         /// Value of the point, used to be drawn.
         /// </summary>
-        public float Value
+        public double Value
         {
             get
             {
-                return (float)base.GetValue(DataPoint.ValueProperty);
+                return (double)base.GetValue(DataPoint.ValueProperty);
             }
             set
             {
@@ -64,7 +64,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         {
         }
 
-        public DataPoint(string label, float value)
+        public DataPoint(string label, double value)
         {
             Label = label;
             Value = value;
