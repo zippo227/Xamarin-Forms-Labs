@@ -47,6 +47,16 @@ namespace Xamarin.Forms.Labs.Controls
             {
                 this.Load (this.Element.Uri);
             }
+            else if (this.Element.Source is HtmlWebViewSource)
+            {
+                var htmlSource = this.Element.Source as HtmlWebViewSource;
+                this.LoadContent(null, htmlSource.Html);
+            }
+            else if (this.Element.Source is UrlWebViewSource)
+            {
+                var webViewSource = this.Element.Source as UrlWebViewSource;
+                this.Load(new Uri(webViewSource.Url));
+            }
 
             this.Element.JavaScriptLoadRequested += OnInjectRequest;
             this.Element.LoadFromContentRequested += LoadFromContent;

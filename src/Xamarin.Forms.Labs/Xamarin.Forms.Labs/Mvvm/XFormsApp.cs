@@ -81,6 +81,8 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// <value>The on rotation.</value>
         public EventHandler<EventArgs> Rotation { get; set; }
 
+        public EventHandler<EventArgs> BackPress { get; set; } 
+
         #endregion Event Handlers
 
         #region Methods
@@ -150,6 +152,15 @@ namespace Xamarin.Forms.Labs.Mvvm
         protected virtual void OnError(Exception ex)
         {
             RaiseOnError(ex);
+        }
+
+        /// <summary>
+        /// Called when [error].
+        /// </summary>
+        /// <param name="ex">The exception.</param>
+        protected virtual void OnBackPress()
+        {
+            RaiseOnBackPress();
         }
 
         #endregion Virtual Mehods
@@ -228,6 +239,16 @@ namespace Xamarin.Forms.Labs.Mvvm
         protected virtual void RaiseOnError(Exception e)
         {
             var handler = Error;
+
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
+        }
+
+        protected virtual void RaiseOnBackPress()
+        {
+            var handler = BackPress;
 
             if (handler != null)
             {

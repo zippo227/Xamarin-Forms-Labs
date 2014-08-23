@@ -14,18 +14,19 @@ namespace IocTests
 {
     using Xamarin.Forms.Labs.Services;
     using Xamarin.Forms.Labs.Services.Autofac;
+    using Autofac;
 
     [TestFixture()]
     public class AutofacResolveTests : ResolveTests
     {
         protected override IResolver GetEmptyResolver()
         {
-            throw new NotImplementedException();
+            return new AutofacResolver(new ContainerBuilder().Build());
         }
 
         protected override IDependencyContainer GetEmptyContainer()
         {
-            throw new NotImplementedException();
+            return new AutofacContainer(new ContainerBuilder().Build());
         }
     }
 }

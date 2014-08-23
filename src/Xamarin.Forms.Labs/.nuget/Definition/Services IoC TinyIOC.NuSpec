@@ -23,10 +23,6 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.dll*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.dll.mdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.pdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.xml*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.Droid.dll*" target="lib\MonoAndroid" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.Droid.dll.mdb*" target="lib\MonoAndroid" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.Droid.pdb*" target="lib\MonoAndroid" />

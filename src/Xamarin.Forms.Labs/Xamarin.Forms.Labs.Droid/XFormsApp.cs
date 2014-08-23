@@ -278,6 +278,12 @@ namespace Xamarin.Forms.Labs.Droid
         public XFormsAppDroid() { }
 
         public XFormsAppDroid(XFormsApplicationDroid app) : base(app) { }
+
+        public void RaiseBackPress()
+        {
+            this.OnBackPress();
+        }
+
         /// <summary>
         /// Called when [initialize].
         /// </summary>

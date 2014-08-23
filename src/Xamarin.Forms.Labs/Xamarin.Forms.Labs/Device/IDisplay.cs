@@ -1,4 +1,5 @@
 ﻿
+using Xamarin.Forms.Labs.Services;
 namespace Xamarin.Forms.Labs
 {
     /// <summary>
@@ -25,6 +26,11 @@ namespace Xamarin.Forms.Labs
         /// Gets the screens Y pixel density per inch
         /// </summary>
         double Ydpi { get; }
+
+        /// <summary>
+        /// Gets the font manager
+        /// </summary>
+        IFontManager FontManager { get; }
 
         /// <summary>
         /// Convert width in inches to runtime pixels
