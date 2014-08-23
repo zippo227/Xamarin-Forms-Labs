@@ -53,5 +53,41 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
             ChartSurface surfaceView = new ChartSurface(Element, color, colors);
             SetNativeControl(surfaceView);
         }
+
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+            if (this.Element == null || this.Control == null)
+                return;
+
+            if (e.PropertyName == Chart.ColorProperty.PropertyName)
+            {
+                Control.Brush = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(
+                    (byte)(Element.Color.A * 255),
+                    (byte)(Element.Color.R * 255),
+                    (byte)(Element.Color.G * 255),
+                    (byte)(Element.Color.B * 255)));
+            }
+            else if (e.PropertyName == Chart.GridProperty.PropertyName)
+            {
+                Control.Chart.Grid = Element.Grid;
+            }
+            else if (e.PropertyName == Chart.HeightProperty.PropertyName)
+            {
+                Control.Chart.HeightRequest = Element.HeightRequest;
+            }
+            else if (e.PropertyName == Chart.SeriesProperty.PropertyName)
+            {
+                Control.Chart.Series = Element.Series;
+            }
+            else if (e.PropertyName == Chart.SpacingProperty.PropertyName)
+            {
+                Control.Chart.Spacing = Element.Spacing;
+            }
+            else if (e.PropertyName == Chart.WidthProperty.PropertyName)
+            {
+                Control.Chart.WidthRequest = Element.WidthRequest;
+            }
+        }
     }
 }
