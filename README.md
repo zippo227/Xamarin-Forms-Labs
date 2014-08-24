@@ -212,6 +212,7 @@ __________________
  - [Mitch Milam](http://blogs.infinite-x.net) [@mitchmilam](https://twitter.com/mitchmilam)
  - Kazuki Yasufuku
  - Petr Klíma
+ - [Bart Kardol](nl.linkedin.com/pub/bart-kardol/31/968/426/)
 
  **Other Project Contributions:**
  	Xamarin.Mobile
