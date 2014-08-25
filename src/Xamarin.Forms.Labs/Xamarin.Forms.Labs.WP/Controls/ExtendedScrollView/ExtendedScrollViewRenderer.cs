@@ -14,36 +14,23 @@ using Microsoft.Phone.Controls;
 using Xamarin.Forms.Labs.WP8.Controls;
 
 [assembly: ExportRenderer(typeof(ExtendedScrollView), typeof(ExtendedScrollViewRenderer))]
-
 namespace Xamarin.Forms.Labs.Controls
 {
-    /// <summary>
-    /// The extended label renderer.
-    /// </summary>
     public class ExtendedScrollViewRenderer : ScrollViewRenderer
     {
-        /// <summary>
-        /// The on element changed callback.
-        /// </summary>
-        /// <param name="e">
-        /// The event arguments.
-        /// </param>
         protected override void OnElementChanged(ElementChangedEventArgs<ScrollView> e)
         {
             base.OnElementChanged(e);
 
-            var scrollView = (ExtendedScrollView)Element;
-
-            scrollView.Scrolled += (sender, ev) =>
-            {
-                scrollView.UpdateBounds(scrollView.Bounds);
-                scrollView.Position = scrollView.Bounds.Location;
-            };
+			LayoutUpdated += (sender, ev) =>
+			{
+				var scrollView = (ExtendedScrollView)Element;
+				var bounds = new Rectangle(Control.HorizontalOffset, Control.VerticalOffset, Control.ScrollableWidth, Control.ScrollableHeight);
+				scrollView.UpdateBounds(bounds);
+			};
 
             if (e.OldElement != null)
-            {
                 e.OldElement.PropertyChanged -= OnElementPropertyChanged;
-            }
 
             e.NewElement.PropertyChanged += OnElementPropertyChanged;
         }
@@ -57,17 +44,12 @@ namespace Xamarin.Forms.Labs.Controls
                 var scrollView = (ExtendedScrollView)Element;
                 var position = scrollView.Position;
 
-                if (Math.Abs(scrollView.Bounds.Location.Y - position.Y) < EPSILON
-                    && Math.Abs(scrollView.Bounds.Location.X - position.X) < EPSILON)
-                {
+				if (Math.Abs(Control.VerticalOffset - position.Y) < EPSILON
+					&& Math.Abs(Control.HorizontalOffset - position.X) < EPSILON)
                     return;
-                }
 
                 Control.ScrollToVerticalOffset(position.Y);
                 Control.UpdateLayout();
-
-                //this.ScrollRectToVisible(
-                //    new RectangleF((float)position.X, (float)position.Y, Bounds.Width, Bounds.Height), scrollView.AnimateScroll);
             }
         }
 
