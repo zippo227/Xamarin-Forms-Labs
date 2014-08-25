@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Graphics;
 using Android.Views;
+using System;
 using Xamarin.Forms.Labs.Charting.Controls;
 using AndroidColor = Android.Graphics.Color;
 
@@ -48,37 +49,38 @@ namespace Xamarin.Forms.Labs.Charting.Droid.Controls
         
         void _chart_OnDrawBar(object sender, Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
-            Canvas.DrawRect(e.Data.XFrom, e.Data.YFrom, e.Data.XTo, e.Data.YTo, new Paint() { Color = Colors[e.Data.SeriesNo] });
+            Canvas.DrawRect((float)e.Data.XFrom, (float)e.Data.YFrom, (float)e.Data.XTo, (float)e.Data.YTo, new Paint() { Color = Colors[e.Data.SeriesNo] });
         }
 
         void _chart_OnDrawCircle(object sender, Chart.DrawEventArgs<Events.SingleDrawingData> e)
         {
-            Canvas.DrawCircle(e.Data.X, e.Data.Y, e.Data.Size, new Paint() { Color = Colors[e.Data.SeriesNo] });
+            Canvas.DrawCircle((float)e.Data.X, (float)e.Data.Y, (float)e.Data.Size, new Paint() { Color = Colors[e.Data.SeriesNo] });
         }
 
         void _chart_OnDrawGridLine(object sender, Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
-            Canvas.DrawLine(e.Data.XFrom, e.Data.YFrom, e.Data.XTo, e.Data.YTo, Paint);
+            Canvas.DrawLine((float)e.Data.XFrom, (float)e.Data.YFrom, (float)e.Data.XTo, (float)e.Data.YTo, Paint);
         }
 
         void _chart_OnDrawLine(object sender, Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
-            Canvas.DrawLine(e.Data.XFrom, e.Data.YFrom, e.Data.XTo, e.Data.YTo, new Paint() { Color = Colors[e.Data.SeriesNo], StrokeWidth = 2.5F });
+            Canvas.DrawLine((float)e.Data.XFrom, (float)e.Data.YFrom, (float)e.Data.XTo, (float)e.Data.YTo, new Paint() { Color = Colors[e.Data.SeriesNo], StrokeWidth = 2.5F });
         }
 
         void _chart_OnDrawText(object sender, Chart.DrawEventArgs<Events.TextDrawingData> e)
         {
-            Canvas.DrawText(e.Data.Text, e.Data.X, e.Data.Y, Paint);
+            Canvas.DrawText(e.Data.Text, (float)e.Data.X, (float)e.Data.Y, Paint);
         }
 
         void _chart_OnDrawPie(object sender, Chart.DrawEventArgs<Events.PieDrawingData> e)
         {
-            float pieDegrees = 360;
-            float size = ((e.Data.X > e.Data.Y) ? e.Data.Y * 2 : e.Data.X * 2);
+            double pieDegrees = 360;
+            double size = ((e.Data.X > e.Data.Y) ? e.Data.Y * 2 : e.Data.X * 2);
             for(int i = 0; i < e.Data.Percentages.Length; i++)
             {
-                float value = e.Data.Percentages[i];
-                Canvas.DrawArc(new RectF(0, 0, size, size), 0, pieDegrees, true, new Paint() { Color = Colors[i] });
+                double value = e.Data.Percentages[i];
+
+                Canvas.DrawArc(new RectF(0, 0, (float)size, (float)size), 0, (float)pieDegrees, true, new Paint() { Color = Colors[i] });
                 pieDegrees -= value;
             }
         }
