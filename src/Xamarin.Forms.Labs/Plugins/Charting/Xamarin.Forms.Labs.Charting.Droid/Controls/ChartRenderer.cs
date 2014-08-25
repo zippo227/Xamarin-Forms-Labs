@@ -61,7 +61,7 @@ namespace Xamarin.Forms.Labs.Charting.Droid.Controls
             }
             else if(e.PropertyName == Chart.HeightProperty.PropertyName)
             {
-                Control.Chart.Height = Element.HeightRequest;
+                Control.Chart.HeightRequest = Element.HeightRequest;
                 Control.Invalidate();
             }
             else if(e.PropertyName == Chart.SeriesProperty.PropertyName)
