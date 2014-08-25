@@ -29,6 +29,7 @@
       <MSHelp:Attr Name="Locale" Value="en-us" />
       <MSHelp:Attr Name="TopicType" Value="kbSyntax" />
       <MSHelp:Attr Name="TopicType" Value="apiref" />
+      <MSHelp:Attr Name="Abstract" Value="Retrieves the specified item from the cache." />
       <MSHelp:Attr Name="AssemblyVersion" Value="" />
     </xml>
   </head>
@@ -53,6 +54,9 @@
             <h1 class="title">SQLiteSimpleCache<span class="languageSpecificText"><span class="cs">.</span><span class="vb">.</span><span class="cpp">::</span><span class="nu">.</span><span class="fs">.</span></span>GetAsync<span class="languageSpecificText"><span class="cs">&lt;</span><span class="vb">(Of </span><span class="cpp">&lt;</span><span class="nu">(</span><span class="fs">&lt;'</span></span><span class="typeparameter">T</span><span class="languageSpecificText"><span class="cs">&gt;</span><span class="vb">)</span><span class="cpp">&gt;</span><span class="nu">)</span><span class="fs">&gt;</span></span> Method </h1>
             <div id="mainSection">
               <div id="mainBody">
+                <div class="summary">
+   Retrieves the specified item from the cache.
+   </div>
                 <p />
     <b>Namespace:</b> 
    <a href="1155110239.htm">Xamarin.Forms.Labs.Caching.SQLiteNet</a><br />
@@ -66,7 +70,9 @@
 <span class="keyword">generic</span>&lt;<span class="keyword">typename</span> T&gt;
 <a href="http://msdn.microsoft.com/en-us/library/dd321424.aspx" target="_blank">Task</a>&lt;T&gt;^ <span class="identifier">GetAsync</span>(
 	<a href="http://msdn.microsoft.com/en-us/library/system.string.aspx" target="_blank">String</a>^ <span class="parameter">key</span>
-)</pre></div></div></div><h4 class="subHeading">Type Parameters</h4><dl><dt><span class="parameterItalic">T</span></dt><dd /></dl><div id="parameters"><h4 class="subHeading">Parameters</h4><dl paramName="key"><dt><span class="parameterItalic">key</span></dt><dd>Type: <a href="http://msdn.microsoft.com/en-us/library/system.string.aspx" target="_blank">String</a><br /></dd></dl></div></div><div class="LW_CollapsibleArea_Container"><div class="LW_CollapsibleArea_TitleDiv"><h2 class="LW_CollapsibleArea_Title">See Also</h2><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div><a id="seeAlsoSection"><!----></a><div class="seeAlsoStyle"><a href="480239801.htm">SQLiteSimpleCache Class</a></div><div class="seeAlsoStyle"><a href="1155110239.htm">Xamarin.Forms.Labs.Caching.SQLiteNet Namespace</a></div></div></div>
+)</pre></div></div></div><h4 class="subHeading">Type Parameters</h4><dl><dt><span class="parameterItalic">T</span></dt><dd>Type of item.</dd></dl><div id="parameters"><h4 class="subHeading">Parameters</h4><dl paramName="key"><dt><span class="parameterItalic">key</span></dt><dd>Type: <a href="http://msdn.microsoft.com/en-us/library/system.string.aspx" target="_blank">String</a><br />The identifier for the item to retrieve.</dd></dl></div><h4 class="subHeading">Return Value</h4>
+   The retrieved item, or <h4 class="subHeading">Field Value</h4>null if the key was not found.
+   </div><div class="LW_CollapsibleArea_Container"><div class="LW_CollapsibleArea_TitleDiv"><h2 class="LW_CollapsibleArea_Title">See Also</h2><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div><a id="seeAlsoSection"><!----></a><div class="seeAlsoStyle"><a href="480239801.htm">SQLiteSimpleCache Class</a></div><div class="seeAlsoStyle"><a href="1155110239.htm">Xamarin.Forms.Labs.Caching.SQLiteNet Namespace</a></div></div></div>
             </div>
           </div>
         </div>
