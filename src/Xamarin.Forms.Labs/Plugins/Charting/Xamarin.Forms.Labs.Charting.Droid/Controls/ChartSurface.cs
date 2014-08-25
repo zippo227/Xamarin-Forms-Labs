@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Graphics;
 using Android.Views;
+using System;
 using Xamarin.Forms.Labs.Charting.Controls;
 using AndroidColor = Android.Graphics.Color;
 
@@ -73,12 +74,13 @@ namespace Xamarin.Forms.Labs.Charting.Droid.Controls
 
         void _chart_OnDrawPie(object sender, Chart.DrawEventArgs<Events.PieDrawingData> e)
         {
-            float pieDegrees = 360;
-            float size = ((e.Data.X > e.Data.Y) ? (float)e.Data.Y * 2 : (float)e.Data.X * 2);
+            double pieDegrees = 360;
+            double size = ((e.Data.X > e.Data.Y) ? e.Data.Y * 2 : e.Data.X * 2);
             for(int i = 0; i < e.Data.Percentages.Length; i++)
             {
-                float value = (float)e.Data.Percentages[i];
-                Canvas.DrawArc(new RectF(0, 0, size, size), 0, pieDegrees, true, new Paint() { Color = Colors[i] });
+                double value = e.Data.Percentages[i];
+
+                Canvas.DrawArc(new RectF(0, 0, (float)size, (float)size), 0, (float)pieDegrees, true, new Paint() { Color = Colors[i] });
                 pieDegrees -= value;
             }
         }
