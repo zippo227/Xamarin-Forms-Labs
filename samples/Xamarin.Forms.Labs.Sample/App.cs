@@ -187,7 +187,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "ImageGallery",
                     "CameraView",
                     "Slider",
-                    "Segment"
+                    "Segment",
+                    "Popup"
                 }
             };
 
@@ -242,6 +243,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "segment":
                         await mainPage.Navigation.PushAsync(new SegmentPage());
+                        break;
+                    case "popup":
+                        await mainPage.Navigation.PushAsync(new PopupPage());
                         break;
                     default:
                         break;
