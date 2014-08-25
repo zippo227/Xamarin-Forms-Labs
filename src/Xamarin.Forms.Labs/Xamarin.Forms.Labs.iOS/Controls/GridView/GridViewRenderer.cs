@@ -187,5 +187,10 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             onItemSelected (collectionView, indexPath);
         }
 
+        public override void ItemHighlighted(UICollectionView collectionView, NSIndexPath indexPath)
+        {
+            this.onItemSelected.Invoke(collectionView, indexPath);
+        }
+
     }
 }
