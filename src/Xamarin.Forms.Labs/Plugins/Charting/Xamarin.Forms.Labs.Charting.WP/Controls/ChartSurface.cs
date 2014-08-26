@@ -23,19 +23,28 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         public ChartSurface(Chart chart, WPColor color, WPColor[] colors)
             : base()
         {
-            this.Width = chart.WidthRequest;
-            this.Height = chart.HeightRequest;
             Chart = chart;
             Brush = new SolidColorBrush(color);
             Colors = colors;
 
+            Chart.OnDrawBar -= _chart_OnDrawBar;
             Chart.OnDrawBar += _chart_OnDrawBar;
+            Chart.OnDrawCircle -= _chart_OnDrawCircle;
             Chart.OnDrawCircle += _chart_OnDrawCircle;
+            Chart.OnDrawGridLine -= _chart_OnDrawGridLine;
             Chart.OnDrawGridLine += _chart_OnDrawGridLine;
+            Chart.OnDrawLine -= _chart_OnDrawLine;
             Chart.OnDrawLine += _chart_OnDrawLine;
+            Chart.OnDrawText -= _chart_OnDrawText;
             Chart.OnDrawText += _chart_OnDrawText;
+            Chart.OnDrawPie -= _chart_OnDrawPie;
             Chart.OnDrawPie += _chart_OnDrawPie;
 
+            Redraw();
+        }
+
+        public void Redraw()
+        {
             Chart.DrawChart();
         }
 
@@ -97,6 +106,7 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
         {
             TextBlock textBlock = new TextBlock();
             textBlock.Foreground = Brush;
+            textBlock.Text = e.Data.Text;
 
             Canvas.SetLeft(textBlock, e.Data.X);
             Canvas.SetTop(textBlock, e.Data.Y);

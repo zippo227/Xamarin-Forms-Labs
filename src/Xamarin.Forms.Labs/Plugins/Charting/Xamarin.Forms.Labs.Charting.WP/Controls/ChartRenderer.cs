@@ -67,26 +67,32 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
                     (byte)(Element.Color.R * 255),
                     (byte)(Element.Color.G * 255),
                     (byte)(Element.Color.B * 255)));
+                Control.Redraw();
             }
             else if (e.PropertyName == Chart.GridProperty.PropertyName)
             {
                 Control.Chart.Grid = Element.Grid;
+                Control.Redraw();
             }
             else if (e.PropertyName == Chart.HeightProperty.PropertyName)
             {
                 Control.Chart.HeightRequest = Element.HeightRequest;
+                Control.Redraw();
             }
             else if (e.PropertyName == Chart.SeriesProperty.PropertyName)
             {
                 Control.Chart.Series = Element.Series;
+                Control.Redraw();
             }
             else if (e.PropertyName == Chart.SpacingProperty.PropertyName)
             {
                 Control.Chart.Spacing = Element.Spacing;
+                Control.Redraw();
             }
             else if (e.PropertyName == Chart.WidthProperty.PropertyName)
             {
                 Control.Chart.WidthRequest = Element.WidthRequest;
+                Control.Redraw();
             }
         }
     }
