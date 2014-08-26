@@ -128,6 +128,7 @@
     <Compile Include="Controls\GridView\GridViewRenderer.cs" />
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -175,4 +176,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
+  <ItemGroup>
+    <Folder Include="Controls\ExtendedScrollView\" />
+  </ItemGroup>
 </Project>
