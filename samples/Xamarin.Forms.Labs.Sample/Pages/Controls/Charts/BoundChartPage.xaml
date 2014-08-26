@@ -10,7 +10,7 @@
       <Button Text="White"  Command="{Binding ChangeColorWhiteCommand}" />
     </StackLayout>
     
-    <charting:Chart x:Name="CombinationChart" Color="{Binding Color}" WidthRequest="450" HeightRequest="750" Spacing="10">
+    <charting:Chart x:Name="CombinationChart" Color="{Binding Color}" WidthRequest="450" HeightRequest="600" Spacing="10">
 
       <charting:Chart.Series>
         <charting:Series Type="Bar" Color="Red">
