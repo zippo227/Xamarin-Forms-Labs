@@ -8,11 +8,11 @@ namespace Xamarin.Forms.Labs.Charting.Events
 {
     public class TextDrawingData
     {
-        public float X { get; set; }
-        public float Y { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
         public string Text { get; set; }
 
-        public TextDrawingData(string text, float x, float y)
+        public TextDrawingData(string text, double x, double y)
         {
             Text = text;
             X = x;

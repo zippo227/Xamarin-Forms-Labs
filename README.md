@@ -205,13 +205,14 @@ __________________
  - [Kevin E. Ford](http://windingroadway.blogspot.com/) [@Bowman74](https://twitter.com/Bowman74)
  - Jason Smith [@jassmith87](https://twitter.com/jassmith87)
  - Shawn Anderson
- - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
+ - [Sara Silva](http://saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
  - Ben Ishiyama-Levy [@mrbrl](http://www.monovo.io)
  - Ryan Wischkaemper
  - [Eric Grover](http://www.ericgrover.com) [@bluechiperic](https://twitter.com/bluechiperic)
- - [Mitch Milam] [@mitchmilam](https://twitter.com/mitchmilam)
+ - [Mitch Milam](http://blogs.infinite-x.net) [@mitchmilam](https://twitter.com/mitchmilam)
  - Kazuki Yasufuku
  - Petr Klíma
+ - Bart Kardol
 
  **Other Project Contributions:**
  	Xamarin.Mobile

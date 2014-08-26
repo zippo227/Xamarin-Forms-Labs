@@ -4,27 +4,26 @@ using Android.Webkit;
 using Xamarin.Forms.Labs.Controls;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
+
 namespace Xamarin.Forms.Labs.Controls
 {
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, Android.Webkit.WebView>
     {
-        private Android.Webkit.WebView webView;
-
         protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
         {
             base.OnElementChanged (e);
 
-            if (this.webView == null)
+            if (this.Control == null)
             {
-                this.webView = new Android.Webkit.WebView(this.Context);
+                var webView = new Android.Webkit.WebView(this.Context);
 
-                this.webView.Settings.JavaScriptEnabled = true;
+                webView.Settings.JavaScriptEnabled = true;
                 //            this.InjectNativeFunctionScript ();
 
-                this.webView.SetWebViewClient(new Client(this));
-                this.webView.SetWebChromeClient(new ChromeClient());
+                webView.SetWebViewClient(new Client(this));
+                webView.SetWebChromeClient(new ChromeClient());
 
-                this.SetNativeControl(this.webView);
+                this.SetNativeControl(webView);
             }
 
             this.Unbind(e.OldElement);
@@ -34,14 +33,14 @@ namespace Xamarin.Forms.Labs.Controls
             
         partial void Inject(string script)
         {
-            this.webView.LoadUrl(string.Format("javascript: {0}", script));
+            this.Control.LoadUrl(string.Format("javascript: {0}", script));
         }
 
         partial void Load(Uri uri)
         {
             if (uri != null)
             {
-                this.webView.LoadUrl(uri.AbsoluteUri);
+                this.Control.LoadUrl(uri.AbsoluteUri);
                 this.InjectNativeFunctionScript ();
             }
         }
@@ -53,8 +52,7 @@ namespace Xamarin.Forms.Labs.Controls
 
         partial void LoadContent(object sender, string contentFullName)
         {
-            //TODO: We need help implementing this feature LoadContent on Android
-            throw new NotImplementedException("We need help implementing this feature");
+            this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
         }
 
         private class Client : WebViewClient
@@ -69,12 +67,9 @@ namespace Xamarin.Forms.Labs.Controls
             public override bool ShouldOverrideUrlLoading(Android.Webkit.WebView view, string url)
             {
                 HybridWebViewRenderer hybrid;
+
                 if (!this.webHybrid.TryGetTarget(out hybrid) || !hybrid.CheckRequest(url))
                 {
-                    //view.LoadUrl(url);
-                    ////hybrid.InjectNativeFunctionScript ();
-                    //return false;
-
                     return base.ShouldOverrideUrlLoading(view, url);
                 }
 

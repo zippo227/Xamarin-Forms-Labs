@@ -214,6 +214,18 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 			// aapt resource value: 0x7f020006
 			public const int imgNotAvailable = 2130837510;
 			
+			// aapt resource value: 0x7f020007
+			public const int pie27_32 = 2130837511;
+			
+			// aapt resource value: 0x7f020008
+			public const int pie30_32 = 2130837512;
+			
+			// aapt resource value: 0x7f020009
+			public const int services1_32 = 2130837513;
+			
+			// aapt resource value: 0x7f02000a
+			public const int settings20_32 = 2130837514;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
