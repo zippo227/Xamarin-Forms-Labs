@@ -11,16 +11,24 @@ using Android.Graphics;
 using System.Net;
 using Xamarin.Forms.Labs.Droid.Controls.GridView;
 using GridView = Android.Widget.GridView;
+using Android.Content.Res;
 
 [assembly: ExportRenderer (typeof(Xamarin.Forms.Labs.Controls.GridView), typeof(GridViewRenderer))]
 namespace Xamarin.Forms.Labs.Droid.Controls.GridView
 {
     public class GridViewRenderer : ViewRenderer<Xamarin.Forms.Labs.Controls.GridView, Android.Widget.GridView>
     {
+        private Android.Content.Res.Orientation orientation = Android.Content.Res.Orientation.Undefined;
         public GridViewRenderer ()
         {
         }
 
+        protected override void OnConfigurationChanged(Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+            if (newConfig.Orientation != orientation)
+                OnElementChanged(new ElementChangedEventArgs<Labs.Controls.GridView>(this.Element, this.Element));
+        }
 
         protected override void OnElementChanged (ElementChangedEventArgs<Xamarin.Forms.Labs.Controls.GridView> e)
         {
@@ -30,9 +38,18 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GridView
             collectionView.SetGravity(GravityFlags.Center);
             collectionView.SetColumnWidth (Convert.ToInt32(Element.ItemWidth));
             collectionView.StretchMode = StretchMode.StretchColumnWidth;
-            //TODO: calculate numcolumn by size ,     
-            collectionView.SetNumColumns (2);
-            //set padding
+    
+            var metrics = Resources.DisplayMetrics;
+            var spacing = (int)e.NewElement.ColumnSpacing;
+            var width = metrics.WidthPixels;
+            var itemWidth = (int)e.NewElement.ItemWidth;
+
+            int noOfColumns = width / (itemWidth + spacing);
+            // If possible add another row without spacing (because the number of columns will be one less than the number of spacings)
+            if (width - (noOfColumns * (itemWidth + spacing)) >= itemWidth)
+                noOfColumns++;
+
+            collectionView.SetNumColumns (noOfColumns);
             collectionView.SetPadding(Convert.ToInt32(Element.Padding.Left),Convert.ToInt32(Element.Padding.Top), Convert.ToInt32(Element.Padding.Right),Convert.ToInt32(Element.Padding.Bottom));
 
             collectionView.SetBackgroundColor (Element.BackgroundColor.ToAndroid ());
