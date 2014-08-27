@@ -59,6 +59,9 @@
     <Compile Include="Pages\Controls\DynamicList\DynamicListView.xaml.cs">
       <DependentUpon>DynamicListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\ExtendedEntryPage.xaml.cs">
+      <DependentUpon>ExtendedEntryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Controls\PopupPage.xaml.cs">
       <DependentUpon>PopupPage.xaml</DependentUpon>
     </Compile>
@@ -286,6 +289,12 @@
     <EmbeddedResource Include="Pages\Controls\PopupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Controls\ExtendedEntryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
