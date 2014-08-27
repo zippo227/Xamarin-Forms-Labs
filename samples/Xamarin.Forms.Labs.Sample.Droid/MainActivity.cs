@@ -85,7 +85,7 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 
             resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
-                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                .Register<IJsonSerializer, Services.Serialization.SystemJsonSerializer>()
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISimpleCache>(
