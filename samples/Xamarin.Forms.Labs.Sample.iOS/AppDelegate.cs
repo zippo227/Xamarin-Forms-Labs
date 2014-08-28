@@ -80,6 +80,7 @@ namespace Xamarin.Forms.Labs.Sample.iOS
             resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                //.Register<IJsonSerializer, Services.Serialization.SystemJsonSerializer>()
                 .Register<IXFormsApp>(app)
                 .Register<IDependencyContainer>(t => resolverContainer)
                 .Register<ISimpleCache>(
