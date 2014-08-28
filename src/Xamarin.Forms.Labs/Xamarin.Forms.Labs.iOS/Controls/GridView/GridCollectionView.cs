@@ -24,6 +24,10 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
         }
 
+        public override UICollectionViewCell CellForItem(NSIndexPath indexPath)
+        {
+            return base.CellForItem(indexPath);
+        }
 
         public override void Draw (RectangleF rect)
         {

@@ -2,9 +2,9 @@
 <package>
   <metadata>
     <id>Xamarin.Forms.Labs.Services.Ninject</id>
-    <title>Xamarin.Forms.Labs IoC Ninject</title>
-    <tags>labs, Ioc, Ninject</tags>
-    <version>1.1.1-beta3</version>
+    <title>Xamarin Forms Labs IoC Ninject</title>
+    <tags>xamarin,xamarin forms,xamarin forms labs, pcl, md5, Ioc, Ninject</tags>
+    <version>1.1.1-beta4</version>
     <authors>Xamarin Forms Labs Team</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -21,8 +21,8 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     <copyright>Copyright 2014</copyright>
     <language>en-US</language>
     <dependencies>
-      <dependency id="Portable.Ninject" version="3.2.1.1" />
-      <dependency id="Xamarin.Forms.Labs" version="[1.1.1-beta3]" />
+      <dependency id="Portable.Ninject" version="3.2.0" />
+      <dependency id="Xamarin.Forms.Labs" version="[1.1.1-beta4]" />
     </dependencies>
   </metadata>
   <files>

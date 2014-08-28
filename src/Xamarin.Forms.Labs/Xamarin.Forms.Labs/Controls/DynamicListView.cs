@@ -1,25 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Controls
 {
+    /// <summary>
+    /// The dynamic native list view.
+    /// </summary>
+    /// <typeparam name="T">
+    /// Type of items in the list view
+    /// </typeparam>
     public class DynamicListView<T> : View
     {
-        //private Predicate<T> filter;
+        ////private Predicate<T> filter;
 
         /// <summary>
         /// The data.
         /// </summary>
         private ObservableCollection<T> data;
 
-        public DynamicListView ()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DynamicListView{T}"/> class.
+        /// </summary>
+        public DynamicListView()
         {
-            this.Data = new ObservableCollection<T> ();
+            this.Data = new ObservableCollection<T>();
         }
 
         //public Predicate<T> Filter
@@ -50,9 +54,9 @@ namespace Xamarin.Forms.Labs.Controls
         /// <param name="item">
         /// The item.
         /// </param>
-        public void Add (T item)
+        public void Add(T item)
         {
-            this.Data.Add (item);
+            this.Data.Add(item);
         }
 
         /// <summary>
@@ -67,47 +71,63 @@ namespace Xamarin.Forms.Labs.Controls
         /// <returns>
         /// <see cref="bool"/>, true if replacement was successful, false if original object was not found.
         /// </returns>
-        public bool Replace (T original, T replacement)
+        public bool Replace(T original, T replacement)
         {
             var index = this.Data.IndexOf (original);
 
-            if (index < 0) {
+            if (index < 0) 
+            {
                 return false;
             }
 
-            this.Data [index] = replacement;
+            this.Data[index] = replacement;
 
             return true;
         }
 
-        public void Remove (T item)
+        /// <summary>
+        /// The remove item method.
+        /// </summary>
+        /// <param name="item">
+        /// The item to remove.
+        /// </param>
+        public void Remove(T item)
         {
-            this.Data.Remove (item);
+            this.Data.Remove(item);
         }
 
         /// <summary>
         /// Gets or sets the data.
         /// </summary>
-        public ObservableCollection<T> Data {
-            get {
+        public ObservableCollection<T> Data 
+        {
+            get 
+            {
                 return this.data;
             }
 
-            set {
-                this.OnPropertyChanging ();
+            set 
+            {
+                this.OnPropertyChanging();
                 this.data = value;
-                this.OnPropertyChanged ();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// Invokes the item selected event.
         /// </summary>
-        /// <param name="item">Item.</param>
-        public void InvokeItemSelectedEvent (object sender, T item)
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="item">
+        /// Item that was selected.
+        /// </param>
+        public void InvokeItemSelectedEvent(object sender, T item)
         {
-            if (this.OnSelected != null) {
-                this.OnSelected.Invoke (sender, new EventArgs<T> (item));
+            if (this.OnSelected != null)
+            {
+                this.OnSelected.Invoke (sender, new EventArgs<T>(item));
             }
         }
 

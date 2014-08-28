@@ -1,5 +1,7 @@
 ﻿using System;
 using Android.App;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Droid.Services;
 
 namespace Xamarin.Forms.Labs
 {
@@ -18,6 +20,8 @@ namespace Xamarin.Forms.Labs
             this.Width = dm.WidthPixels;
             this.Xdpi = dm.Xdpi;
             this.Ydpi = dm.Ydpi;
+
+            this.FontManager = new FontManager(this);
         }
 
         public static Android.Util.DisplayMetrics Metrics
@@ -60,6 +64,12 @@ namespace Xamarin.Forms.Labs
         /// Gets the screens Y pixel density per inch
         /// </summary>
         public double Ydpi
+        {
+            get;
+            private set;
+        }
+
+        public IFontManager FontManager
         {
             get;
             private set;

@@ -55,6 +55,12 @@ namespace Xamarin.Forms.Labs
         /// <value>The network service.</value>
         INetwork Network { get; }
 
+        /// <summary>
+        /// Gets the bluetooth hub service.
+        /// </summary>
+        /// <value>The bluetooth hub service if available, otherwise null..</value>
+        IBluetoothHub BluetoothHub { get; }
+
 		/// <summary>
 		/// Gets the name of the device.
 		/// </summary>

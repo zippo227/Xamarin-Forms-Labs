@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
@@ -67,6 +68,8 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <value>The on rotation.</value>
         EventHandler<EventArgs> Rotation { get; set; }
+
+        EventHandler<EventArgs> BackPress { get; set; } 
 
         #endregion Event Handlers
 

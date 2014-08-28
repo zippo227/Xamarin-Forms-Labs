@@ -5,6 +5,7 @@ using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Data;
 using System.Diagnostics;
 using Xamarin.Forms.Labs.Controls;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Sample
 {
@@ -17,10 +18,10 @@ namespace Xamarin.Forms.Labs.Sample
         private string numberToCall = "+1 (855) 926-2746";
         private string textToSpeak = "Hello from Xamarin Forms Labs";
         private string deviceTimerInfo = string.Empty;
-		private ObservableCollection<object> items;
+        private ObservableCollection<object> items;
         private ObservableCollection<string> images;
         private Command<string> searchCommand;
-		private Command<object> cellSelectedCommand;
+        private Command<object> cellSelectedCommand;
         private Command callCommand;
 
         /// <summary>
@@ -30,16 +31,25 @@ namespace Xamarin.Forms.Labs.Sample
         {
             SpeakCommand = new Command (() => DependencyService.Get<ITextToSpeechService> ().Speak (TextToSpeak));
 
-			Items = new ObservableCollection<object> ();
+            Items = new ObservableCollection<object> ();
             Images = new ObservableCollection<string> ();
             for (var i = 0; i < 10; i++) {
                 Images.Add ("ad16.jpg");
-				Items.Add (new TestPerson(string.Format ("FirstName {0}", i), string.Format ("LastName {0}", i),i));
+                Items.Add (new TestPerson(string.Format ("FirstName {0}", i), string.Format ("LastName {0}", i),i));
             }
 
             this.device = Resolver.Resolve<IDevice> ();
         }
 
+        public Task AddImages()
+        {
+            return Task.Run (async () => {
+                await Task.Delay(1000);
+                for (var i = 0; i < 5; i++) {
+                    Images.Add ("http://www.stockvault.net/data/2011/05/31/124348/small.jpg");
+                }
+            });
+        }
         /// <summary>
         /// The start timer.
         /// </summary>
@@ -132,7 +142,7 @@ namespace Xamarin.Forms.Labs.Sample
             get {
                 return deviceTimerInfo;
             }
-			
+            
             set { 
                 this.SetProperty (ref deviceTimerInfo, value);
             }
@@ -144,7 +154,7 @@ namespace Xamarin.Forms.Labs.Sample
         /// <value>
         /// The items.
         /// </value>
-		public ObservableCollection<object> Items {
+        public ObservableCollection<object> Items {
             get {
                 return items;
             }
@@ -177,36 +187,36 @@ namespace Xamarin.Forms.Labs.Sample
         public Command SpeakCommand { get; private set; }
 
         
-		/// <summary>
-		/// Gets the selected cell command.
-		/// </summary>
-		/// <value>
-		/// The selected cell command.
-		/// </value>
-		public Command<object> CellSelectedCommand {
+        /// <summary>
+        /// Gets the selected cell command.
+        /// </summary>
+        /// <value>
+        /// The selected cell command.
+        /// </value>
+        public Command<object> CellSelectedCommand {
             get {
-				return cellSelectedCommand ?? (cellSelectedCommand = new Command<object> ((object o) => {
-					TestPerson person = ((TestPerson)((SelectedItemChangedEventArgs)o).SelectedItem);
-					Debug.WriteLine(person.FirstName + person.LastName + person.Age);
-				}));
+                return cellSelectedCommand ?? (cellSelectedCommand = new Command<object> ((object o) => {
+                    TestPerson person = ((TestPerson)((SelectedItemChangedEventArgs)o).SelectedItem);
+                    Debug.WriteLine(person.FirstName + person.LastName + person.Age);
+                }));
             }
         }
 
 
-		/// <summary>
-		/// Gets the search command.
-		/// </summary>
-		/// <value>
-		/// The search command.
-		/// </value>
-		public Command<string> SearchCommand {
-			get {
-				return searchCommand ?? (searchCommand = new Command<string> (
-					obj => {
-					},
-					obj => !string.IsNullOrEmpty (obj.ToString())));
-			}
-		}
+        /// <summary>
+        /// Gets the search command.
+        /// </summary>
+        /// <value>
+        /// The search command.
+        /// </value>
+        public Command<string> SearchCommand {
+            get {
+                return searchCommand ?? (searchCommand = new Command<string> (
+                    obj => {
+                    },
+                    obj => !string.IsNullOrEmpty (obj.ToString())));
+            }
+        }
         /// <summary>
         /// Gets the call command.
         /// </summary>
@@ -221,30 +231,30 @@ namespace Xamarin.Forms.Labs.Sample
             }
         }
     }
-	public class TestPerson : ObservableObject, AutoCompleteSearchObject
-	{
-		public const string FirstNameProperty = "FirstName";
-		public string firstName;
-		public string FirstName{ get{ return firstName; } set {SetProperty (ref firstName, value, FirstNameProperty);}}
+    public class TestPerson : ObservableObject
+    {
+        public const string FirstNameProperty = "FirstName";
+        public string firstName;
+        public string FirstName{ get{ return firstName; } set {SetProperty (ref firstName, value, FirstNameProperty);}}
 
-		public const string LastNameProperty = "LastName";
-		private string lastName;
-		public string LastName { get { return lastName; } set { SetProperty (ref lastName, value, LastNameProperty); } }
+        public const string LastNameProperty = "LastName";
+        private string lastName;
+        public string LastName { get { return lastName; } set { SetProperty (ref lastName, value, LastNameProperty); } }
 
-		public const string AgeProperty = "Age";
-		private int age;
-		public int Age{ get { return age; } set { SetProperty (ref age, value, AgeProperty); } }
+        public const string AgeProperty = "Age";
+        private int age;
+        public int Age{ get { return age; } set { SetProperty (ref age, value, AgeProperty); } }
 
-		public TestPerson(string firstnameInput, string lastnameInput, int ageInput)
-		{
-			FirstName = firstnameInput;
-			LastName = lastnameInput;
-			Age = ageInput;
-		}
-		public string StringToSearchBy ()
-		{
-			return FirstName;
-		}
-	}
+        public TestPerson(string firstnameInput, string lastnameInput, int ageInput)
+        {
+            FirstName = firstnameInput;
+            LastName = lastnameInput;
+            Age = ageInput;
+        }
+        public string StringToSearchBy ()
+        {
+            return FirstName;
+        }
+    }
 }
 

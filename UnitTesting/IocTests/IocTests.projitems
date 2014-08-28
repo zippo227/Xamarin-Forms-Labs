@@ -12,6 +12,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)AutofacResolveTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NinjectResolveTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResolveTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IMyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\MyServiceNoDefaultCtor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Service.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SimpleContainerResolverTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SimpleInjectorResolveTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TinyIocResolveTests.cs" />

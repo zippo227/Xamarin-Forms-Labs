@@ -21,7 +21,7 @@
         </member>
         <member name="M:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient.#ctor(Xamarin.Forms.Labs.Services.Serialization.ISerializer)">
             <summary>
-            Initializes a new instance of the <see cref="T:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient" /> class.
+            Initializes a new instance of the <see cref="T:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient"/> class.
             </summary>
             <param name="serializer">
             The serializer to use.
@@ -29,7 +29,7 @@
         </member>
         <member name="M:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient.#ctor(Xamarin.Forms.Labs.Services.Serialization.ISerializer,System.Net.Http.HttpClient)">
             <summary>
-            Initializes a new instance of the <see cref="T:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient" /> class.
+            Initializes a new instance of the <see cref="T:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient"/> class.
             </summary>
             <param name="serializer">
             The serializer to use.
@@ -37,16 +37,6 @@
             <param name="client">
             The Http client.
             </param>
-        </member>
-        <member name="P:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient.Timeout">
-            <summary>
-            Gets or sets timeout in milliseconds
-            </summary>
-        </member>
-        <member name="P:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient.StringContentType">
-            <summary>
-            Gets the string content type.
-            </summary>
         </member>
         <member name="M:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient.AddHeader(System.String,System.String)">
             <summary>
@@ -119,6 +109,16 @@
             <param name="serializer">Serializer to use.</param>
             <returns>The async task.</returns>
         </member>
+        <member name="P:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient.Timeout">
+            <summary>
+            Gets or sets timeout in milliseconds
+            </summary>
+        </member>
+        <member name="P:Xamarin.Forms.Labs.Services.Web.RestClient.RestCoreClient.StringContentType">
+            <summary>
+            Gets the string content type.
+            </summary>
+        </member>
         <member name="T:Xamarin.Forms.Labs.Services.Web.RestClient.JsonRestClient">
             <summary>
             The JSON rest client.
@@ -126,7 +126,7 @@
         </member>
         <member name="M:Xamarin.Forms.Labs.Services.Web.RestClient.JsonRestClient.#ctor(Xamarin.Forms.Labs.Services.Serialization.IJsonSerializer,System.Net.Http.HttpClient)">
             <summary>
-            Initializes a new instance of the <see cref="T:Xamarin.Forms.Labs.Services.Web.RestClient.JsonRestClient" /> class.
+            Initializes a new instance of the <see cref="T:Xamarin.Forms.Labs.Services.Web.RestClient.JsonRestClient"/> class.
             </summary>
             <param name="serializer">
             The serializer.

@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
     using Xamarin.Forms.Labs.Caching.SQLiteNet;
     using Windows.Storage;
     using System.Threading.Tasks;
+    using Xamarin.Forms.Labs.Charting.WP;
 
     public partial class App : Application
     {
@@ -32,6 +33,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
         /// </summary>
         public App()
         {
+            Charting.WP.Controls.ChartRenderer renderer = new Charting.WP.Controls.ChartRenderer();
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 

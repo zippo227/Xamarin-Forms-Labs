@@ -2,9 +2,9 @@
 <package>
   <metadata>
     <id>Xamarin.Forms.Labs.Services.TinyIOC</id>
-    <title>Xamarin.Forms.Labs.IoC TinyIoC</title>
-    <tags>labs, pcl, md5, Ioc, TinyIoC</tags>
-    <version>1.1.1-beta3</version>
+    <title>Xamarin Forms Labs IoC TinyIoC</title>
+    <tags>xamarin,xamarin forms,xamarin forms labs, pcl, md5, Ioc, TinyIoC</tags>
+    <version>1.1.1-beta4</version>
     <authors>Xamarin Forms Labs</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -19,15 +19,10 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     </summary>
     <language>en-US</language>
     <dependencies>
-      <dependency id="Xamarin.Forms.Labs" version="[1.1.1-beta3]" />
-      <dependency id="TinyIoC" version="1.2" />
+      <dependency id="Xamarin.Forms.Labs" version="[1.1.1-beta4]" />
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.dll*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.dll.mdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.pdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-    <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.xml*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.Droid.dll*" target="lib\MonoAndroid" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.Droid.dll.mdb*" target="lib\MonoAndroid" />
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.Services.TinyIOC.Droid.pdb*" target="lib\MonoAndroid" />

@@ -57,8 +57,7 @@ namespace Xamarin.Forms.Labs.Controls
 
        partial void LoadContent(object sender, string contentFullName)
        {
-           //TODO: We need help implementing this feature LoadContent on Android
-           throw new NotImplementedException("We need help implementing this feature");
+           LoadFromContent(sender, contentFullName);
        }
 
         private void webView_Navigating(object sender, NavigatingEventArgs e)
