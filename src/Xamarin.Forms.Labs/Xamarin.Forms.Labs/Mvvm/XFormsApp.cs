@@ -8,6 +8,8 @@ namespace Xamarin.Forms.Labs.Mvvm
     /// <typeparam name="TApp">The type of the application.</typeparam>
     public class XFormsApp<TApp> : IXFormsApp<TApp>
     {
+        private Orientation orientation;
+
         public XFormsApp() { }
 
         public XFormsApp(TApp context)
@@ -34,6 +36,20 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <value>The application context.</value>
         public TApp AppContext { get; set; }
+
+        public Orientation Orientation 
+        { 
+            get
+            {
+                return this.orientation;
+            }
+
+            protected set
+            {
+                this.orientation = value;
+                this.Rotation.Invoke<Orientation>(this, this.orientation);
+            }
+        }
 
         #endregion Properties
 
@@ -79,7 +95,7 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// Gets or sets the on rotation.
         /// </summary>
         /// <value>The on rotation.</value>
-        public EventHandler<EventArgs> Rotation { get; set; }
+        public EventHandler<EventArgs<Orientation>> Rotation { get; set; }
 
         public EventHandler<EventArgs> BackPress { get; set; } 
 
