@@ -129,6 +129,7 @@
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
+    <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -154,6 +155,7 @@
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\calendar_bg_selector.xml" />
     <AndroidResource Include="Resources\layout\calendar_picker.xml" />
+    <AndroidResource Include="Resources\drawable\ad16.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
@@ -178,5 +180,6 @@
   </Target>
   <ItemGroup>
     <Folder Include="Controls\ExtendedScrollView\" />
+    <Folder Include="Controls\ImageGallery\" />
   </ItemGroup>
 </Project>
