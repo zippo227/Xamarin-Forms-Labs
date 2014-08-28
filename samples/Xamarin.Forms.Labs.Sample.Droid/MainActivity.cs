@@ -3,8 +3,8 @@
 // Author           : Shawn Anderson
 // Created          : 06-16-2014
 //
-// Last Modified By : Shawn Anderson
-// Last Modified On : 06-16-2014
+// Last Modified By : Sami Kallio
+// Last Modified On : 08-28-2014
 // ***********************************************************************
 // <copyright file="MainActivity.cs" company="">
 //     Copyright (c) 2014 . All rights reserved.
@@ -45,11 +45,6 @@ namespace Xamarin.Forms.Labs.Sample.Droid
     public class MainActivity : XFormsApplicationDroid
     {
         /// <summary>
-        /// Indicated if the application has been initialized
-        /// </summary>
-        private static bool _initialized;
-
-        /// <summary>
         /// Called when [create].
         /// </summary>
         /// <param name="bundle">The bundle.</param>
@@ -57,7 +52,7 @@ namespace Xamarin.Forms.Labs.Sample.Droid
         {
             base.OnCreate(bundle);
 
-            if (!_initialized)
+            if (!Resolver.IsSet)
             {
                 this.SetIoc();
             }
@@ -95,8 +90,6 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 
 
             Resolver.SetResolver(resolverContainer.GetResolver());
-
-            _initialized = true;
         }
     }
 }

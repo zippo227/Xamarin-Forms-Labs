@@ -102,6 +102,7 @@
       <DependentUpon>FontManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
+    <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
