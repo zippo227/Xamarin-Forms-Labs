@@ -22,6 +22,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - ExtendedScrollView (IOS beta)
  - DynamicListView (beta)
  - ExtendedContentView (beta)
+ - IconButton (IOS beta)
 
 **Available services (Beta)**
 
