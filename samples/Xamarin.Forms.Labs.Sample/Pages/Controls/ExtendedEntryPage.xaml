@@ -11,6 +11,7 @@
       <controls:ExtendedEntry Placeholder="Italic" Font="Italic" />
       <controls:ExtendedEntry Placeholder="Center Align" XAlign="Center" />
       <controls:ExtendedEntry Placeholder="Right Align" XAlign="End" />
+      <controls:ExtendedEntry Placeholder="No border" HasBorder="false" />
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

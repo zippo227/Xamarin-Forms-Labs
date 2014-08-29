@@ -26,27 +26,25 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         {
             base.OnElementChanged(e);
 
-            var view = (Labs.Controls.ExtendedEntry)Element;
+            var view = (ExtendedEntry)Element;
 
             SetFont(view);
             SetTextAlignment(view);
+            SetBorder(view);
+
             ResizeHeight();
         }
 
         /// <summary>
-        /// Updates the UI.
+        /// The on element property changed callback
         /// </summary>
-        /// <param name="view">
-        /// The view.
-        /// </param>
-        /// <param name="control">
-        /// The control.
-        /// </param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
-            var view = (Labs.Controls.ExtendedEntry)Element;
+            var view = (ExtendedEntry)Element;
 
             if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Font")
                 SetFont(view);
@@ -54,10 +52,13 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "XAlign")
                 SetTextAlignment(view);
 
+            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "HasBorder")
+                SetBorder(view);
+
             ResizeHeight();
         }
 
-        private void SetTextAlignment(Labs.Controls.ExtendedEntry view)
+        private void SetTextAlignment(ExtendedEntry view)
         {
             switch (view.XAlign)
             {
@@ -73,13 +74,18 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             }
         }
 
-        private void SetFont(Labs.Controls.ExtendedEntry view)
+        private void SetFont(ExtendedEntry view)
         {
             UIFont uiFont;
             if (view.Font != Font.Default && (uiFont = view.Font.ToUIFont()) != null)
                 Control.Font = uiFont;
             else if (view.Font == Font.Default)
                 Control.Font = UIFont.SystemFontOfSize(17f);
+        }
+
+        private void SetBorder(ExtendedEntry view)
+        {
+            Control.BorderStyle = view.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
         }
 
         private void ResizeHeight()

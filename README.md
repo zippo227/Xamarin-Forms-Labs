@@ -11,6 +11,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - ExtendedTabbedPage  
  - ImageButton (beta)
  - ExtendedLabel (beta)
+ - ExtendedEntry (IOS)
  - ExtendedViewCell (beta)
  - ExtendedTextCell (beta)
  - AutoComplete (beta)
@@ -210,6 +211,7 @@ __________________
  - Ryan Wischkaemper
  - [Eric Grover](http://www.ericgrover.com) [@bluechiperic](https://twitter.com/bluechiperic)
  - [Mitch Milam](http://blogs.infinite-x.net) [@mitchmilam](https://twitter.com/mitchmilam)
+ - [Jim Bennett](http://www.jimbobbennett.io) [@jimbobbennett](https://twitter.com/jimbobbennett)
  - Kazuki Yasufuku
  - Petr Klíma
  - Bart Kardol
