@@ -78,10 +78,6 @@ namespace Xamarin.Forms.Labs.iOS.Controls.IconButton
             // center the button's contents
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Center;
-
-            // add button text edge insets
-            //var titleInsets = new UIEdgeInsets(ControlPadding, ControlPadding, ControlPadding, ControlPadding);
-            //targetButton.TitleEdgeInsets = titleInsets;
         }
 
         /// <summary>
