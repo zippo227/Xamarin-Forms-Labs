@@ -22,7 +22,6 @@
                 v = model;
             }
 
-            //Native("dataCallback", model.toString());
             //Native("dataCallback", v.dataPoints);
             if (!chart)
             {
@@ -48,6 +47,8 @@
 
             chart.render();
             onUpdateFinished();
+
+            Native("dataCallback", "test");
         }
         
         function sendData(o) {

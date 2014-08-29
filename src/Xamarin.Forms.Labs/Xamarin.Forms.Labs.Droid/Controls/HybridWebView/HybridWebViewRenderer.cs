@@ -23,6 +23,8 @@ namespace Xamarin.Forms.Labs.Controls
                 webView.SetWebViewClient(new Client(this));
                 webView.SetWebChromeClient(new ChromeClient());
 
+                webView.AddJavascriptInterface(new Xamarin(this), "Xamarin");
+
                 this.SetNativeControl(webView);
             }
 
@@ -74,6 +76,28 @@ namespace Xamarin.Forms.Labs.Controls
                 }
 
                 return true;
+            }
+        }
+
+        public class Xamarin : Java.Lang.Object
+        {
+            private readonly WeakReference<HybridWebViewRenderer> webHybrid;
+
+            public Xamarin(HybridWebViewRenderer webHybrid)
+            {
+                this.webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
+            }
+
+            [JavascriptInterface]
+            [Java.Interop.Export("call")]
+            public void Call(string function, string data)
+            {
+                HybridWebViewRenderer hybrid;
+
+                if (this.webHybrid.TryGetTarget(out hybrid))
+                {
+                    hybrid.TryInvoke(function, data);
+                }
             }
         }
 

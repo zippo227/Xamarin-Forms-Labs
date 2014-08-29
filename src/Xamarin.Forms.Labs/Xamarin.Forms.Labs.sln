@@ -1394,6 +1394,6 @@ Global
 		{E739978E-C55B-42B6-9F64-7FAB75295B54} = {0CBE7630-42C2-4407-BD05-A24C9C084063}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\..\samples\Xamarin.Forms.Labs.Sample.iOS\Xamarin.Forms.Labs.Sample.iOS.csproj
+		StartupItem = ..\..\samples\Xamarin.Forms.Labs.Sample.Droid\Xamarin.Forms.Labs.Sample.Droid.csproj
 	EndGlobalSection
 EndGlobal
