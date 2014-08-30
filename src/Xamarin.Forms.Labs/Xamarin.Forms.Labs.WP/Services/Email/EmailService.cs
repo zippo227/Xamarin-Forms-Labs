@@ -16,7 +16,7 @@ namespace Xamarin.Forms.Labs.WP.Services.Email
             get { return true; }
         }
 
-        public void ShowDraft(string subject, string body, bool html, string to)
+        public void ShowDraft(string subject, string body, bool html, string to, IEnumerable<string> attachments)
         {
             var task = new EmailComposeTask()
             {
@@ -28,7 +28,7 @@ namespace Xamarin.Forms.Labs.WP.Services.Email
             task.Show();
         }
 
-        public void ShowDraft(string subject, string body, bool html, string[] to, string[] cc, string[] bcc)
+        public void ShowDraft(string subject, string body, bool html, string[] to, string[] cc, string[] bcc, IEnumerable<string> attachments)
         {
             var task = new EmailComposeTask()
             {
