@@ -36,7 +36,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Email
             intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
             intent.PutExtra(Intent.ExtraText, body ?? string.Empty);
 
-            this.AddAttachments(intent, attachments);
+            intent.AddAttachments(attachments);
 
             this.StartActivity(intent);
         }
@@ -49,17 +49,11 @@ namespace Xamarin.Forms.Labs.Droid.Services.Email
             intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
             intent.PutExtra(Intent.ExtraText, body ?? string.Empty);
 
-            this.AddAttachments(intent, attachments);
+            intent.AddAttachments(attachments);
+
             this.StartActivity(intent);
         }
 
         #endregion
-
-        private void AddAttachments(Intent intent, IEnumerable<string> attachments)
-        {
-            intent.PutParcelableArrayListExtra(
-                Intent.ExtraStream, 
-                attachments.Select(a => Uri.FromFile(new Java.IO.File(a)) as IParcelable).ToList());
-        }
     }
 }
