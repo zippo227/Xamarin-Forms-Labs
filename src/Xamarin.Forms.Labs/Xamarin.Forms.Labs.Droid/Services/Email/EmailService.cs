@@ -9,6 +9,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Xamarin.Forms;
+
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.Droid.Services.Email.EmailService))]
 
 namespace Xamarin.Forms.Labs.Droid.Services.Email
 {
