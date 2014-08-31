@@ -43,6 +43,11 @@
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>
+    <Extensions>
+      <Protocol Name="xamarin.forms.labs"
+                NavUriFragment="encodedLaunchURI=%s"
+                TaskID="_default" />
+    </Extensions>
     <ScreenResolutions>
       <ScreenResolution Name="ID_RESOLUTION_WVGA" />
       <ScreenResolution Name="ID_RESOLUTION_WXGA" />

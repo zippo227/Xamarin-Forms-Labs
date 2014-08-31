@@ -56,6 +56,11 @@ namespace Xamarin.Forms.Labs.Sample.Droid
             {
                 this.SetIoc();
             }
+            else
+            {
+                var app = Resolver.Resolve<IXFormsApp>() as IXFormsApp<XFormsApplicationDroid>;
+                app.AppContext = this;
+            }
 
             Xamarin.Forms.Forms.Init(this, bundle);
 

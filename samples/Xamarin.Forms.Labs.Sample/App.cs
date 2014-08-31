@@ -106,7 +106,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "Cache",
                     "Sound",
                     "Bluetooth",
-                    "FontManager"
+                    "FontManager",
+                    "NFC"
                 }
             };
 
@@ -146,6 +147,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "fontmanager":
                         await mainPage.Navigation.PushAsync(new FontManagerPage(Resolver.Resolve<IDisplay>()));
+                        break;
+                    case "nfc":
+                        await mainPage.Navigation.PushAsync(new NfcDevicePage());
                         break;
                     default:
                         break;
