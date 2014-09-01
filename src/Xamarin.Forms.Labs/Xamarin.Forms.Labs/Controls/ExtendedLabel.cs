@@ -88,31 +88,6 @@ namespace Xamarin.Forms.Labs.Controls
         }
 
         /// <summary>
-        /// The font name wp property.
-        /// </summary>
-        [Obsolete("This is now obsolete. Please rather use FontName and FriendlyFontName to cover all platforms.")]
-        public static readonly BindableProperty FontNameWPProperty =
-            BindableProperty.Create<ExtendedLabel, string>(
-                p => p.FontNameWP, string.Empty);
-
-        /// <summary>
-        /// Gets or sets the font name wp.
-        /// </summary>
-        /// <value>The font name wp.</value>
-        [Obsolete("This is now obsolete. Please rather use FontName and FriendlyFontName to cover all platforms.")]
-        public string FontNameWP
-        {
-            get
-            {
-                return (string)GetValue(FontNameWPProperty);
-            }
-            set
-            {
-                SetValue(FontNameWPProperty, value);
-            }
-        }
-
-        /// <summary>
         /// The font name property.
         /// </summary>
         public static readonly BindableProperty FontNameProperty =
