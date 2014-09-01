@@ -8,6 +8,7 @@ using MonoTouch.UIKit;
 using Xamarin.Forms.Labs.Charting.Controls;
 using System.Drawing;
 using MonoTouch.CoreGraphics;
+using MonoTouch.CoreText;
 
 namespace Xamarin.Forms.Labs.Charting.iOS.Controls
 {
@@ -48,37 +49,40 @@ namespace Xamarin.Forms.Labs.Charting.iOS.Controls
         {
             using (CGContext g = UIGraphics.GetCurrentContext())
             {
-
-                //set up drawing attributes
                 g.SetLineWidth(1);
                 Colors[e.Data.SeriesNo].SetFill();
                 Colors[e.Data.SeriesNo].SetStroke();
 
-                var path = new CGPath();
                 RectangleF rect = new RectangleF((float)e.Data.XFrom, (float)e.Data.YFrom, (float)(e.Data.XTo - e.Data.XFrom), (float)(e.Data.YTo - e.Data.YFrom));
-                //DrawRect(rect, new UIViewPrintFormatter());
-                
-                //add geometry to graphics context and draw it
                 g.AddRect(rect);
+
                 g.DrawPath(CGPathDrawingMode.FillStroke);
             }
         }
 
         private void _chart_OnDrawCircle(object sender, Charting.Controls.Chart.DrawEventArgs<Events.SingleDrawingData> e)
         {
-            //throw new NotImplementedException();
+            using (CGContext g = UIGraphics.GetCurrentContext())
+            {
+                g.SetLineWidth(2);
+                Colors[e.Data.SeriesNo].SetFill();
+                Colors[e.Data.SeriesNo].SetStroke();
+
+                float startAngle = -((float)Math.PI / 2);
+                float endAngle = ((2 * (float)Math.PI) + startAngle);
+                g.AddArc((float)e.Data.X, (float)e.Data.Y, (float)e.Data.Size, startAngle, endAngle, true);
+
+                g.DrawPath(CGPathDrawingMode.FillStroke);
+            }
         }
 
         private void _chart_OnDrawGridLine(object sender, Charting.Controls.Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
             using (CGContext g = UIGraphics.GetCurrentContext())
             {
-                //set up drawing attributes
-                g.SetLineWidth(1);
+                g.SetLineWidth(2);
                 color.SetFill();
                 color.SetStroke();
-
-                var path = new CGPath();
 
                 g.MoveTo((float)e.Data.XFrom, (float)e.Data.YFrom);
                 g.AddLineToPoint((float)e.Data.XTo, (float)e.Data.YTo);
@@ -91,12 +95,9 @@ namespace Xamarin.Forms.Labs.Charting.iOS.Controls
         {
             using (CGContext g = UIGraphics.GetCurrentContext())
             {
-                //set up drawing attributes
-                g.SetLineWidth(1);
+                g.SetLineWidth(2.5F);
                 Colors[e.Data.SeriesNo].SetFill();
                 Colors[e.Data.SeriesNo].SetStroke();
-
-                var path = new CGPath();
 
                 g.MoveTo((float)e.Data.XFrom, (float)e.Data.YFrom);
                 g.AddLineToPoint((float)e.Data.XTo, (float)e.Data.YTo);
@@ -107,12 +108,28 @@ namespace Xamarin.Forms.Labs.Charting.iOS.Controls
 
         private void _chart_OnDrawText(object sender, Charting.Controls.Chart.DrawEventArgs<Events.TextDrawingData> e)
         {
-            //throw new NotImplementedException();
+            NSString str = new NSString(e.Data.Text);
+            str.DrawString(new PointF((float)e.Data.X, (float)e.Data.Y), UIFont.SystemFontOfSize(12));
         }
 
         private void _chart_OnDrawPie(object sender, Charting.Controls.Chart.DrawEventArgs<Events.PieDrawingData> e)
         {
-            //throw new NotImplementedException();
+            double totalDegrees = 0;
+            for (int i = 0; i < e.Data.Percentages.Length; i++)
+            {
+                double degrees = e.Data.Percentages[i];
+                using (CGContext g = UIGraphics.GetCurrentContext())
+                {
+                    g.SetLineWidth(2);
+                    Colors[i].SetFill();
+                    Colors[i].SetStroke();
+
+                    g.AddArc((float)e.Data.X, (float)e.Data.Y, (float)e.Data.Size, (float)(Math.PI / 180 * totalDegrees), (float)(Math.PI / 180 * degrees), true);
+
+                    g.DrawPath(CGPathDrawingMode.FillStroke);
+                }
+                totalDegrees += degrees;
+            }
         }
     }
 }
