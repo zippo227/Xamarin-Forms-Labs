@@ -9,5 +9,7 @@ namespace Xamarin.Forms.Labs.Services
     public interface INetwork
     {
         Task<bool> IsReachable(string host, TimeSpan timeout);
+		NetworkStatus InternetConnectionStatus ();
+		event Action<NetworkStatus> ReachabilityChanged;
     }
 }
