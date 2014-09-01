@@ -13,6 +13,7 @@
     <Button Text="Send Position Email" Command="{Binding SendPositionEmail}"></Button>
     <Button Text="Send Position SMS" Command="{Binding SendPositionSms}"></Button>
     <Button Text="Open Position URI" Command="{Binding OpenPositionUri}"></Button>
+    <Button Text="Driving Directions" Command="{Binding GetDrivingDirections}"></Button>
   </StackLayout>
 </toolkit:BaseView>
 

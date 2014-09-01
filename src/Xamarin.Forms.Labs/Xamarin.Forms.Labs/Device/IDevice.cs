@@ -2,6 +2,7 @@
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.Services.Geolocation;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs
 {
@@ -81,6 +82,13 @@ namespace Xamarin.Forms.Labs
         /// Gets the manufacturer.
         /// </summary>
         string Manufacturer { get; }
+
+        /// <summary>
+        /// Starts the default app associated with the URI for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>The launch operation.</returns>
+        Task<bool> LaunchUriAsync(Uri uri);
     }
 }
 

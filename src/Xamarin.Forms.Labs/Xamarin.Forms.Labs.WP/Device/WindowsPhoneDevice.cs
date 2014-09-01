@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Phone.Info;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
@@ -221,6 +222,16 @@ namespace Xamarin.Forms.Labs
         public string Manufacturer
         {
             get { return DeviceStatus.DeviceManufacturer; }
+        }
+
+        /// <summary>
+        /// Starts the default app associated with the URI for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>The launch operation.</returns>
+        public async Task<bool> LaunchUriAsync(Uri uri)
+        {
+            return await Windows.System.Launcher.LaunchUriAsync(uri);
         }
 
         #endregion

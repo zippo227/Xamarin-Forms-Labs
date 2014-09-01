@@ -19,6 +19,7 @@ namespace Xamarin.Forms.Labs.Sample
         private IGeolocator geolocator;
         private IEmailService emailService;
         private IPhoneService phoneService;
+        private IDevice device;
         private CancellationTokenSource cancelSource;
         private string positionStatus = string.Empty;
         private string positionLatitude = string.Empty;
@@ -27,6 +28,7 @@ namespace Xamarin.Forms.Labs.Sample
         private ICommand sendPositionEmail;
         private ICommand sendPositionSms;
         private ICommand openPositionUri;
+        private ICommand getDrivingDirections;
 
         /// <summary>
         /// Gets or sets the position status.
@@ -92,8 +94,8 @@ namespace Xamarin.Forms.Labs.Sample
         {
             get
             { 
-                return getPositionCommand ?? 
-                    (getPositionCommand = new Command(async () => await GetPosition(), () => true)); 
+                return getPositionCommand ??
+                    (getPositionCommand = new Command(async () => await GetPosition(), () => this.Geolocator != null)); 
             }
         }
 
@@ -135,6 +137,33 @@ namespace Xamarin.Forms.Labs.Sample
                                 Device.OpenUri(uri);
                             },
                         () => this.Geolocator != null));
+            }
+        }
+
+        public ICommand GetDrivingDirections
+        {
+            get
+            {
+                return this.getDrivingDirections ??
+                    (this.getDrivingDirections = new Command(
+                        async () =>
+                        {
+                            var pos = await this.Geolocator.GetPositionAsync(5000);
+                            var uri = Device.OnPlatform(
+                                pos.ToAppleMaps(),
+                                pos.ToUri(),
+                                pos.DriveToLink());
+                            await LabsDevice.LaunchUriAsync(uri);
+                        },
+                        () => this.Geolocator != null && this.LabsDevice != null));
+            }
+        }
+
+        private IDevice LabsDevice
+        {
+            get
+            {
+                return this.device ?? (this.device = Resolver.Resolve<IDevice>());
             }
         }
 
