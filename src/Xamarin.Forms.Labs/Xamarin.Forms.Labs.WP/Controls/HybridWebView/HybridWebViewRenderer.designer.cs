@@ -13,6 +13,16 @@ namespace Xamarin.Forms.Labs.Controls
         private const string Format = "^(file|http|https)://(local|LOCAL)/Action(=|%3D)(?<Action>[\\w]+)/";
         private static readonly Regex Expression = new Regex(Format);
 
+#if __ANDROID__
+        private void InjectNativeFunctionScript()
+        {
+            var builder = new StringBuilder();
+            builder.Append("function Native(action, data){ ");
+            builder.Append("Xamarin.call(action,  (typeof data == \"object\") ? JSON.stringify(data) : data);");
+            builder.Append("}");
+            this.Inject(builder.ToString());
+        }
+#else
         private void InjectNativeFunctionScript()
         {
             var builder = new StringBuilder();
@@ -31,6 +41,7 @@ namespace Xamarin.Forms.Labs.Controls
 
             this.Inject(builder.ToString());
         }
+#endif
 
         private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -93,21 +104,27 @@ namespace Xamarin.Forms.Labs.Controls
 
             if (m.Success)
             {
-                Action<string> action;
-                var name = m.Groups["Action"].Value;
+                var function = m.Groups["Action"].Value;
+                var data = Uri.UnescapeDataString(request.Remove(m.Index, m.Length));
 
-                if (this.Element.TryGetAction (name, out action))
-                {
-                    var data = Uri.UnescapeDataString (request.Remove (m.Index, m.Length));
-                    action.Invoke (data);
-                } 
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine ("Unhandled callback {0} was called from JavaScript", name);
-                }
+                this.TryInvoke(function, data);
             }
 
             return m.Success;
+        }
+
+        private void TryInvoke(string function, string data)
+        {
+            Action<string> action;
+
+            if (this.Element.TryGetAction(function, out action))
+            {
+                action.Invoke(data);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Unhandled callback {0} was called from JavaScript", function);
+            }
         }
     }
 }

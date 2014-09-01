@@ -5,6 +5,7 @@ using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.Droid;
 using Xamarin.Forms.Labs.Droid.Services;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs
 {
@@ -216,6 +217,28 @@ namespace Xamarin.Forms.Labs
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Starts the default app associated with the URI for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>The launch operation.</returns>
+        public Task<bool> LaunchUriAsync(System.Uri uri)
+        {
+            return Task.Run(() =>
+                {
+                    try
+                    {
+                        Forms.Context.StartActivity(new Android.Content.Intent("android.intent.action.VIEW", Android.Net.Uri.Parse(uri.ToString())));
+                        return true;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Android.Util.Log.Error("Device.LaunchUriAsync", ex.Message);
+                        return false;
+                    }
+                });
         }
         #endregion
     }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.Labs.Mvvm;
 
-namespace Xamarin.Forms.Labs.Sample.ViewModel
+namespace Xamarin.Forms.Labs.Sample
 {
     [ViewType(typeof(MvvmSamplePage))]
     public class RepeaterViewViewModel : Xamarin.Forms.Labs.Mvvm.ViewModel

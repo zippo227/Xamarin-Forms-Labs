@@ -10,7 +10,6 @@
 <HelpConfigurations selected="Xamarin-Forms-Labs">
   <HelpConfiguration name="HelpFile">
     <OutputPath>.\Help</OutputPath>
-    <HelpFileName>Xamarin.Forms.Labs</HelpFileName>
     <ImageFolderPath />
     <HtmlFormats>
       <HtmlHelp>true</HtmlHelp>
@@ -34,7 +33,6 @@
   </HelpConfiguration>
   <HelpConfiguration name="Xamarin-Forms-Labs">
     <OutputPath>..\..\Help</OutputPath>
-    <HelpFileName />
     <ImageFolderPath />
     <HtmlFormats>
       <HtmlHelp>true</HtmlHelp>

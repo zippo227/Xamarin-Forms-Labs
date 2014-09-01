@@ -4,6 +4,8 @@
                         xmlns:controls="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=Xamarin.Forms.Labs"
              x:Class="Xamarin.Forms.Labs.Sample.CameraViewPage">
     <StackLayout>
+      <Label Text="This is an embedded camera view."></Label>
       <controls:CameraView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+      <Button Text="Taking a picture is not yet supported..."></Button>
     </StackLayout>
 </ContentPage>

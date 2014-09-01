@@ -23,6 +23,8 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// <value>The application data directory</value>
         string AppDataDirectory { get; set; }
 
+        Orientation Orientation { get; }
+
         #endregion Properties
 
         #region Event Handlers
@@ -67,7 +69,7 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// Gets or sets the on rotation.
         /// </summary>
         /// <value>The on rotation.</value>
-        EventHandler<EventArgs> Rotation { get; set; }
+        EventHandler<EventArgs<Orientation>> Rotation { get; set; }
 
         EventHandler<EventArgs> BackPress { get; set; } 
 

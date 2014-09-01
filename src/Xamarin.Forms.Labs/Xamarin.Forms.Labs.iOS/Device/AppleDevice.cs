@@ -6,6 +6,8 @@ using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.iOS.Services.Media;
 using Xamarin.Forms.Labs.iOS.Services;
+using System.Threading.Tasks;
+using MonoTouch.Foundation;
 
 namespace Xamarin.Forms.Labs
 {
@@ -220,6 +222,16 @@ namespace Xamarin.Forms.Labs
             {
                 return "Apple";
             }
+        }
+
+        /// <summary>
+        /// Starts the default app associated with the URI for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>The launch operation.</returns>
+        public Task<bool> LaunchUriAsync(Uri uri)
+        {
+            return Task.Run(() => UIApplication.SharedApplication.OpenUrl(new NSUrl(uri.ToString())));
         }
         #endregion
 

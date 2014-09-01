@@ -41,6 +41,7 @@
     <Compile Include="Controls\ExtendedSlider.cs" />
     <Compile Include="Controls\ExtendedTabbedPage.cs" />
     <Compile Include="Controls\HybridWebView.cs" />
+    <Compile Include="Controls\IconButton.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
     <Compile Include="Controls\PopupLayout.cs" />
@@ -61,9 +62,11 @@
     <Compile Include="Device\Sensor.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
+    <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Helpers\EventArgs{T}.cs" />
     <Compile Include="Helpers\EventExtensions.cs" />
+    <Compile Include="Helpers\Icons.cs" />
     <Compile Include="Helpers\TaskUtils.cs" />
     <Compile Include="Helpers\Vector3.cs" />
     <Compile Include="Mvvm\INavigationAware.cs" />
@@ -75,9 +78,12 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Services\Email\IEmailService.cs" />
     <Compile Include="Services\IAsyncSimpleCache.cs" />
     <Compile Include="Services\IFontManager.cs" />
     <Compile Include="Services\INetwork.cs" />
+    <Compile Include="Services\INfcDevice.cs" />
+    <Compile Include="Services\Media\IAudioStream.cs" />
     <Compile Include="Services\Media\MediaExtensions.cs" />
     <Compile Include="Services\Media\MediaFile.cs" />
     <Compile Include="Services\Media\MediaFileNoteFoundException.cs" />
@@ -96,6 +102,7 @@
     <Compile Include="Controls\ExtendedLabel.cs" />
     <Compile Include="Controls\ExtendedTextCell.cs" />
     <Compile Include="Services\Media\IMediaPicker.cs" />
+    <Compile Include="Services\Media\WaveRecorder.cs" />
     <Compile Include="Services\NetworkStatus.cs" />
     <Compile Include="Services\Serialization\IByteSerializer.cs" />
     <Compile Include="Services\Serialization\IJsonSerializer.cs" />
@@ -140,7 +147,6 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <Folder Include="Services\Contacts\" />
-    <Folder Include="Services\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ExifLib">

@@ -6,7 +6,6 @@ using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Sample.Pages.Controls;
 using Xamarin.Forms.Labs.Sample.Pages.Controls.Charts;
 using Xamarin.Forms.Labs.Sample.Pages.Services;
-using Xamarin.Forms.Labs.Sample.ViewModel;
 using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.Sample
@@ -106,7 +105,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "Cache",
                     "Sound",
                     "Bluetooth",
-                    "FontManager"
+                    "FontManager",
+                    "NFC"
                 }
             };
 
@@ -146,6 +146,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "fontmanager":
                         await mainPage.Navigation.PushAsync(new FontManagerPage(Resolver.Resolve<IDisplay>()));
+                        break;
+                    case "nfc":
+                        await mainPage.Navigation.PushAsync(new NfcDevicePage());
                         break;
                     default:
                         break;

@@ -33,6 +33,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
         /// </summary>
         public App()
         {
+
             Charting.WP.Controls.ChartRenderer renderer = new Charting.WP.Controls.ChartRenderer();
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
@@ -42,6 +43,8 @@ namespace Xamarin.Forms.Labs.Sample.WP
 
             // Phone-specific initialization
             InitializePhoneApplication();
+
+            RootFrame.UriMapper = new LabsUrlMapper();
 
             // Language display initialization
             InitializeLanguage();
