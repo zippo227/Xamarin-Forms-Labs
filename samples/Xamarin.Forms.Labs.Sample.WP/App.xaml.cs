@@ -33,6 +33,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
         /// </summary>
         public App()
         {
+
             Charting.WP.Controls.ChartRenderer renderer = new Charting.WP.Controls.ChartRenderer();
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
@@ -42,6 +43,8 @@ namespace Xamarin.Forms.Labs.Sample.WP
 
             // Phone-specific initialization
             InitializePhoneApplication();
+
+            RootFrame.UriMapper = new LabsUrlMapper();
 
             // Language display initialization
             InitializeLanguage();
@@ -248,7 +251,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
 
             resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
-                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                .Register<IJsonSerializer, Xamarin.Forms.Labs.ServiceStackSerializer.JsonSerializer>()
                 .Register<IDependencyContainer>(t => resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISimpleCache>(

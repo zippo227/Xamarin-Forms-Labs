@@ -40,13 +40,13 @@
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="ServiceStack.Text.Droid">
+      <HintPath>libs\Droid\ServiceStack.Text.Droid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="ServiceStack.Text">
-      <HintPath>libs\Droid\ServiceStack.Text.MonoDroid.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonSerializer.cs" />

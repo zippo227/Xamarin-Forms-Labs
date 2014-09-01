@@ -4,6 +4,7 @@ using MonoTouch.SystemConfiguration;
 using MonoTouch.UIKit;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms;
+using MonoTouch.MessageUI;
 
 [assembly: Dependency(typeof(Xamarin.Forms.Labs.iOS.Services.PhoneService))]
 
@@ -112,6 +113,13 @@ namespace Xamarin.Forms.Labs.iOS.Services
             }
         }
 
+        public bool CanSendSMS
+        {
+            get
+            {
+                return MFMessageComposeViewController.CanSendText;
+            }
+        }
         /// <summary>
         /// Opens native dialog to dial the specified number.
         /// </summary>
@@ -123,7 +131,16 @@ namespace Xamarin.Forms.Labs.iOS.Services
 
         public void SendSMS(string to, string body)
         {
-            UIApplication.SharedApplication.OpenUrl(new MonoTouch.Foundation.NSUrl("sms:" + to));
+            if (this.CanSendSMS)
+            {
+                var smsController = new MFMessageComposeViewController()
+                {
+                    Body = body,
+                    Recipients = new[] { to }
+                };
+
+                UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(smsController, true, null);
+            }
         }
         #endregion
     }

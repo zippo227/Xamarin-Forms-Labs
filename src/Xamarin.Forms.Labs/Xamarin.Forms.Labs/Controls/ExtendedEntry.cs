@@ -17,6 +17,12 @@
         public static readonly BindableProperty XAlignProperty =
             BindableProperty.Create("XAlign", typeof(TextAlignment), typeof(ExtendedEntry), 
             TextAlignment.Start);
+
+        /// <summary>
+        /// The HasBorder property
+        /// </summary>
+        public static readonly BindableProperty HasBorderProperty =
+            BindableProperty.Create("HasBorder", typeof(bool), typeof(ExtendedEntry), true);
     
         /// <summary>
         /// Gets or sets the Font
@@ -34,6 +40,15 @@
         {
             get { return (TextAlignment)GetValue(XAlignProperty); }
             set { SetValue(XAlignProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets if the border should be shown or not
+        /// </summary>
+        public bool HasBorder
+        {
+            get { return (bool)GetValue(HasBorderProperty); }
+            set { SetValue(HasBorderProperty, value); }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -24,7 +24,19 @@
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchDebug>true</MtouchDebug>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchSdkVersion>7.1</MtouchSdkVersion>
+    <MtouchProfiling>False</MtouchProfiling>
+    <MtouchExtraArgs />
+    <MtouchFastDev>False</MtouchFastDev>
+    <MtouchEnableGenericValueTypeSharing>True</MtouchEnableGenericValueTypeSharing>
+    <MtouchArch>Default, ARMv7</MtouchArch>
+    <MtouchUseLlvm>False</MtouchUseLlvm>
+    <MtouchUseThumb>False</MtouchUseThumb>
+    <MtouchUseSGen>False</MtouchUseSGen>
+    <MtouchUseRefCounting>False</MtouchUseRefCounting>
+    <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
+    <MtouchI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -119,9 +131,6 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -133,11 +142,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Info.plist" />
+    <None Include="Info.plist">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Entitlements.plist" />
     <InterfaceDefinition Include="SensorStoryboardController_iPhone.storyboard" />
     <InterfaceDefinition Include="SensorStoryboardController_iPad.storyboard" />
     <None Include="packages.config" />
+    <BundleResource Include="Resources\fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
@@ -154,9 +168,17 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\ServiceStackV3\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS.csproj">
-      <Project>{B1AB2869-D5B1-45EE-B882-208A23C8EB29}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS</Name>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\Xamarin.Forms.Labs.ServiceStackSerializer\Xamarin.Forms.Labs.ServiceStackSerializer.iOS.csproj">
+      <Project>{1137b5ac-2259-413c-a473-93721d2a7551}</Project>
+      <Name>Xamarin.Forms.Labs.ServiceStackSerializer.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Charting\Xamarin.Forms.Labs.Charting.iOS\Xamarin.Forms.Labs.Charting.iOS.csproj">
+      <Project>{0e3be08b-ee95-4385-b09a-9958b0719a5c}</Project>
+      <Name>Xamarin.Forms.Labs.Charting.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Charting\Xamarin.Forms.Labs.Charting\Xamarin.Forms.Labs.Charting.csproj">
+      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
+      <Name>Xamarin.Forms.Labs.Charting</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
       <Project>{4D10DF5E-883D-468B-A854-4A53C7FE75AC}</Project>

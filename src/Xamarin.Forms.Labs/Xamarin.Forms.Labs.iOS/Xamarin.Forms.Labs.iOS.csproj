@@ -81,6 +81,7 @@
     <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
     <Compile Include="Controls\ExtendedTabbedPage\ExtendedTabbedPageRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
+    <Compile Include="Controls\IconButton\IconButtonRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
     <Compile Include="Device\Accelerometer.cs" />
@@ -98,7 +99,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Services\Email\EmailService.cs" />
     <Compile Include="Services\FontManager.cs" />
+    <Compile Include="Services\Media\Microphone.cs" />
     <Compile Include="Services\Network.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\Reachability.cs" />
