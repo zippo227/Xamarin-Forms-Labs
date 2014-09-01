@@ -125,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
-    <BundleResource Include="Resources\fonts\Roboto-Light.ttf">
+    <BundleResource Include="Resources\Fonts\Roboto-Light.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Resources\BusyEarnin.mp3" />
@@ -140,9 +140,10 @@
     <InterfaceDefinition Include="SensorStoryboardController_iPhone.storyboard" />
     <InterfaceDefinition Include="SensorStoryboardController_iPad.storyboard" />
     <None Include="packages.config" />
-    <BundleResource Include="Resources\fonts\fontawesome-webfont.ttf">
+    <BundleResource Include="Resources\Fonts\fontawesome-webfont.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
+    <Content Include="Resources\Fonts\Open 24 Display St.ttf" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>

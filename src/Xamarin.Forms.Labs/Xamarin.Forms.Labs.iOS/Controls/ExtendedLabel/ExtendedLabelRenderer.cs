@@ -52,6 +52,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                 }
             }
 
+            //======= This is for backward compatability with obsolete attrbute 'FontNameIOS' ========
             if (!string.IsNullOrEmpty(view.FontNameIOS))
             {
                 var font = UIFont.FromName(
@@ -63,6 +64,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                     control.Font = font;
                 }
             }
+            //====== End of obsolete section ==========================================================
 
             var attrString = new NSMutableAttributedString(control.Text);
 

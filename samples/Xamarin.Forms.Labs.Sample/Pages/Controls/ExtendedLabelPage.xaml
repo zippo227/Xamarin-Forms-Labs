@@ -8,15 +8,24 @@
 	>
   <ContentPage.Content>
     <StackLayout x:Name="stkRoot" Padding="0,40,0,0">
-      <controls:ExtendedLabel Text="with strikethrough" IsStrikeThrough="True"></controls:ExtendedLabel>
-      <controls:ExtendedLabel Text="This uses a custom font set xaml"
-              FontNameAndroid="fonts/Roboto-Light.ttf"
-              FontNameIOS="Roboto-Light"
-              FontSize="22"
-              HorizontalOptions="StartAndExpand"
-           VerticalOptions="Center" ></controls:ExtendedLabel>
-
-     
+      <controls:ExtendedLabel Text="Text with strikethrough" 
+                              IsStrikeThrough="True"
+                              HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
+      <controls:ExtendedLabel Text="This uses a custom font 'Open 24 Display St' set xaml using 'FontName' and 'FriendlyFontName' properties"
+                              FontName="Open 24 Display St"
+                              FriendlyFontName="Open 24 Display St"
+                              FontSize="32"
+                              HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
+      <controls:ExtendedLabel Text="This uses a custom font set xaml using 'FontName' properties, but font does NOT exist on this platform, so should default to the system font."
+                              FontName="CODE2000"
+                              FriendlyFontName="Code2000"
+                              FontSize="32"
+                              HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
+      <controls:ExtendedLabel Text="This uses a custom font set xaml using obsolete properties 'FontNameAndroid' and 'FontNameIOS'"
+                              FontNameAndroid="fonts/Roboto-Light.ttf"
+                              FontNameIOS="Roboto-Light"
+                              FontSize="32"
+                              HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
 
     </StackLayout>
   </ContentPage.Content>

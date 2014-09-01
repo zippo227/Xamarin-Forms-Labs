@@ -30,10 +30,12 @@ namespace Xamarin.Forms.Labs.Droid
                 control.Typeface = TrySetFont(view.FontName);
             }
 
+            //======= This is for backward compatability with obsolete attrbute 'FontNameAndroid' ========
             if (!string.IsNullOrEmpty(view.FontNameAndroid))
             {
                 control.Typeface = TrySetFont(view.FontNameAndroid); ;
             }
+            //====== End of obsolete section ==========================================================
 
             if (view.FontSize > 0)
             {
