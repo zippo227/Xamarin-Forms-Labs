@@ -52,20 +52,16 @@ namespace Xamarin.Forms.Labs.Charting.iOS.Controls
                 //set up drawing attributes
                 g.SetLineWidth(1);
                 Colors[e.Data.SeriesNo].SetFill();
+                Colors[e.Data.SeriesNo].SetStroke();
 
                 var path = new CGPath();
                 RectangleF rect = new RectangleF((float)e.Data.XFrom, (float)e.Data.YFrom, (float)(e.Data.XTo - e.Data.XFrom), (float)(e.Data.YTo - e.Data.YFrom));
-                DrawRect(rect, new UIViewPrintFormatter());
+                //DrawRect(rect, new UIViewPrintFormatter());
                 
                 //add geometry to graphics context and draw it
                 g.AddRect(rect);
                 g.DrawPath(CGPathDrawingMode.FillStroke);
             }
-        }
-
-        public override void DrawRect(RectangleF area, UIViewPrintFormatter formatter)
-        {
-            base.DrawRect(area, formatter);
         }
 
         private void _chart_OnDrawCircle(object sender, Charting.Controls.Chart.DrawEventArgs<Events.SingleDrawingData> e)
@@ -75,12 +71,38 @@ namespace Xamarin.Forms.Labs.Charting.iOS.Controls
 
         private void _chart_OnDrawGridLine(object sender, Charting.Controls.Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
-            //throw new NotImplementedException();
+            using (CGContext g = UIGraphics.GetCurrentContext())
+            {
+                //set up drawing attributes
+                g.SetLineWidth(1);
+                color.SetFill();
+                color.SetStroke();
+
+                var path = new CGPath();
+
+                g.MoveTo((float)e.Data.XFrom, (float)e.Data.YFrom);
+                g.AddLineToPoint((float)e.Data.XTo, (float)e.Data.YTo);
+
+                g.DrawPath(CGPathDrawingMode.FillStroke);
+            }
         }
 
         private void _chart_OnDrawLine(object sender, Charting.Controls.Chart.DrawEventArgs<Events.DoubleDrawingData> e)
         {
-            //throw new NotImplementedException();
+            using (CGContext g = UIGraphics.GetCurrentContext())
+            {
+                //set up drawing attributes
+                g.SetLineWidth(1);
+                Colors[e.Data.SeriesNo].SetFill();
+                Colors[e.Data.SeriesNo].SetStroke();
+
+                var path = new CGPath();
+
+                g.MoveTo((float)e.Data.XFrom, (float)e.Data.YFrom);
+                g.AddLineToPoint((float)e.Data.XTo, (float)e.Data.YTo);
+
+                g.DrawPath(CGPathDrawingMode.FillStroke);
+            }
         }
 
         private void _chart_OnDrawText(object sender, Charting.Controls.Chart.DrawEventArgs<Events.TextDrawingData> e)
