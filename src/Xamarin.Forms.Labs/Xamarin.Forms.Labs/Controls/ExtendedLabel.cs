@@ -96,6 +96,7 @@ namespace Xamarin.Forms.Labs.Controls
 
         /// <summary>
         /// Gets or sets the name of the font file including extension. If no extension given then ttf is assumed.
+        /// Fonts need to be included in projects accoring to the documentation.
         /// </summary>
         /// <value>The full name of the font file including extension.</value>
         public string FontName

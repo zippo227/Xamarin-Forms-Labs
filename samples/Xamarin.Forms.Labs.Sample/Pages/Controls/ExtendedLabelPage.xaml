@@ -8,24 +8,38 @@
 	>
   <ContentPage.Content>
     <StackLayout x:Name="stkRoot" Padding="0,40,0,0">
-      <controls:ExtendedLabel Text="Text with strikethrough" 
-                              IsStrikeThrough="True"
+      <controls:ExtendedLabel Text="Plain unspecified Extended Label" HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
+      <controls:ExtendedLabel Text="Text with strikethrough - no font size specified"
+                        IsStrikeThrough="True"
+                        HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
+      <controls:ExtendedLabel Text="Text with strikethrough 20" 
+                              IsStrikeThrough="True" FontSize="20"
                               HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
-      <controls:ExtendedLabel Text="This uses a custom font 'Open 24 Display St' set xaml using 'FontName' and 'FriendlyFontName' properties"
+      <controls:ExtendedLabel Text="Text with strikethrough 32"
+                              IsStrikeThrough="True" FontSize="32"
+                              HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>      
+      <controls:ExtendedLabel Text="This uses a custom font 'Open 24 Display St' set in XAML using 'FontName' and 'FriendlyFontName' properties"
                               FontName="Open 24 Display St"
                               FriendlyFontName="Open 24 Display St"
-                              FontSize="32"
+                              FontSize="20"
                               HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
-      <controls:ExtendedLabel Text="This uses a custom font set xaml using 'FontName' properties, but font does NOT exist on this platform, so should default to the system font."
+      <controls:ExtendedLabel Text="As above, but now with Strikethrough"
+                        FontName="Open 24 Display St"
+                        FriendlyFontName="Open 24 Display St"
+                        FontSize="20"
+                        IsStrikeThrough="True"
+                        HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
+      <!--<controls:ExtendedLabel Text="This uses a custom font set xaml using 'FontName' properties, but font does NOT exist, so should default to the system font."
                               FontName="CODE2000"
                               FriendlyFontName="Code2000"
-                              FontSize="32"
-                              HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
-      <controls:ExtendedLabel Text="This uses a custom font set xaml using obsolete properties 'FontNameAndroid' and 'FontNameIOS'"
-                              FontNameAndroid="fonts/Roboto-Light.ttf"
-                              FontNameIOS="Roboto-Light"
-                              FontSize="32"
-                              HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>
+                              FontSize="20"
+                              HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>-->
+      <!--<controls:ExtendedLabel Text="This uses a custom font set xaml using obsolete properties 'FontNameAndroid', 'FontNameIOS'"
+                              FontNameAndroid="Open 24 Display St.ttf"
+                              FontNameIOS="Open 24 Display St"
+                              FontSize="20"
+                              HorizontalOptions="StartAndExpand"></controls:ExtendedLabel>-->
+
 
     </StackLayout>
   </ContentPage.Content>

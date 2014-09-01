@@ -39,35 +39,27 @@ namespace Xamarin.Forms.Labs.Controls
         /// </param>
         private void UpdateUi(ExtendedLabel view, TextBlock control)
         {
-            if (!string.IsNullOrEmpty(view.FontName))
-            {
-                string filename = view.FontName;
-                //if no extension given then assume and add .ttf
-                if (filename.LastIndexOf(".", System.StringComparison.Ordinal) != filename.Length - 4)
-                {
-                    filename = string.Format("{0}.ttf", filename);
-                }
+            if (view.FontSize > 0)
+                control.FontSize = (float)view.FontSize;
+                //control.FontSize = (view.FontSize > 0) ? (float)view.FontSize : 12.0f;
 
-                control.FontFamily = new FontFamily(string.Format(@"\Assets\Fonts\{0}#{1}",filename, string.IsNullOrEmpty(view.FriendlyFontName) ? filename.Substring(0,filename.Length-4) : view.FriendlyFontName ));
-                control.FontSize = (view.FontSize > 0) ? (float)view.FontSize : 12.0f;
-            }
-
-            if (view.IsUnderline)
-            {
-                control.TextDecorations = TextDecorations.Underline;
-            }
-
+            //need to do this ahead of font change due to unexpected behaviour if done later.
             if (view.IsStrikeThrough)
-            {
-                
-                //isn't perfect, but it's a start 
-                var border = new Border { Height = 1, Width = this.Control.ActualWidth, Background = control.Foreground, HorizontalAlignment = HorizontalAlignment.Center };
-                Canvas.SetTop(border, (this.Control.ActualHeight / 2) - 0.5);
-                ((Xamarin.Forms.Platform.WinPhone.VisualElementRenderer<Xamarin.Forms.Label, System.Windows.Controls.TextBlock>)(this)).Children.Add(border);
+            {             
+                //isn't perfect, but it's a start
+                var border = new Border
+                {
+                    Height = 2, 
+                    Width = this.Control.ActualWidth, 
+                    Background = control.Foreground, 
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+                Canvas.SetTop(border, control.FontSize*.72);
+                //Canvas.SetTop(border, (this.Control.ActualHeight / 2) - 0.5);
+                this.Children.Add(border);
 
 
-
-                ////alternative single line method - STILL IN DEVELOPMENT
+                ////alternative and more flexible grid method - STILL IN DEVELOPMENT - Got stuck putting this control into a new grid!
                 
                 //var strikeThroughGrid = new System.Windows.Controls.Grid();
                 //strikeThroughGrid.VerticalAlignment = VerticalAlignment.Top;
@@ -87,6 +79,21 @@ namespace Xamarin.Forms.Labs.Controls
                 //strikeThroughGrid.Children.Add(strikethroughBorder);
 
             }
+
+            if (!string.IsNullOrEmpty(view.FontName))
+            {
+                string filename = view.FontName;
+                //if no extension given then assume and add .ttf
+                if (filename.LastIndexOf(".", System.StringComparison.Ordinal) != filename.Length - 4)
+                {
+                    filename = string.Format("{0}.ttf", filename);
+                }
+                control.FontFamily = new FontFamily(string.Format(@"\Assets\Fonts\{0}#{1}", filename, string.IsNullOrEmpty(view.FriendlyFontName) ? filename.Substring(0, filename.Length - 4) : view.FriendlyFontName));
+            }
+
+            if (view.IsUnderline)
+                control.TextDecorations = TextDecorations.Underline;
+
         }
     }
 }

@@ -14,16 +14,18 @@ namespace Xamarin.Forms.Labs.Sample
 
             var label = new ExtendedLabel
             {
-                Text = "and From code",
-                FontName = Device.OnPlatform<String>("Roboto-Light", "fonts/Roboto-Light.ttf", "Courier New"),
+                Text = "From code, using Device.OnPlatform, Underlined",
+                FontName = "Open 24 Display St.ttf",
+                FriendlyFontName = Device.OnPlatform<String>("", "", "Open 24 Display St"),
                 IsUnderline = true,
                 FontSize = 22,
             };
 
             var label2 = new ExtendedLabel
             {
-                Text = "and From code",
-                FontName = Device.OnPlatform<String>("Roboto-Light", "fonts/Roboto-Light.ttf", "Courier New"),
+                Text = "From code, Strikethrough",
+                FontName = "Open 24 Display St.ttf",
+                FriendlyFontName = Device.OnPlatform<String>("", "", "Open 24 Display St"),
                 IsUnderline = false,
                 IsStrikeThrough = true,
                 FontSize = 22,

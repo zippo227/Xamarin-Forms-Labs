@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="Assets\fonts\Open 24 Display St.ttf" />
+    <AndroidAsset Include="Assets\Fonts\Open 24 Display St.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
@@ -168,7 +168,7 @@
     <AndroidAsset Include="Assets\BusyEarnin.mp3" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\fonts\Roboto-Light.ttf" />
+    <AndroidAsset Include="Assets\Fonts\Roboto-Light.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\color\" />
