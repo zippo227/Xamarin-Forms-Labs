@@ -4,7 +4,7 @@
 // Created          : 06-16-2014
 //
 // Last Modified By : Sami Kallio
-// Last Modified On : 08-28-2014
+// Last Modified On : 09-01-2014
 // ***********************************************************************
 // <copyright file="MainActivity.cs" company="">
 //     Copyright (c) 2014 . All rights reserved.
@@ -86,7 +86,7 @@ namespace Xamarin.Forms.Labs.Sample.Droid
             resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 //.Register<IJsonSerializer, Services.Serialization.JsonNET.JsonSerializer>()
-                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                .Register<IJsonSerializer, Xamarin.Forms.Labs.ServiceStackSerializer.JsonSerializer>()
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISimpleCache>(

@@ -251,7 +251,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
 
             resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
-                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                .Register<IJsonSerializer, Xamarin.Forms.Labs.ServiceStackSerializer.JsonSerializer>()
                 .Register<IDependencyContainer>(t => resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISimpleCache>(
