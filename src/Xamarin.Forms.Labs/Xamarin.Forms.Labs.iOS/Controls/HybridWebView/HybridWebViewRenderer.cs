@@ -4,6 +4,7 @@ using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms.Labs.Controls;
+using System.Drawing;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 
@@ -56,6 +57,21 @@ namespace Xamarin.Forms.Labs.Controls
             	this.webView.EvaluateJavascript(script);
 			});
         }
+
+		/* 
+         * This is a hack to because the base wasn't working 
+         * when within a stacklayout
+         */
+		public override void LayoutSubviews()
+		{
+			if (this.Control != null) {
+				var control = this.Control;
+				var element = base.Element;
+				control.Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
+				Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
+				Bounds = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
+			}
+		}
 
         partial void Load(Uri uri)
         {
