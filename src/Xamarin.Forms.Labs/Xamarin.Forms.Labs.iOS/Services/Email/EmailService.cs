@@ -6,6 +6,8 @@ using MonoTouch.Foundation;
 using MonoTouch.MessageUI;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
+using Xamarin.Forms.Labs.Mvvm;
+using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Email;
 
 [assembly: Dependency(typeof(Xamarin.Forms.Labs.iOS.Services.Email.EmailService))]
@@ -31,6 +33,8 @@ namespace Xamarin.Forms.Labs.iOS.Services.Email
             {
                 ((MFMailComposeViewController)s).DismissViewController(true, () => { });
             };
+
+            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(mailer, true, null);
         }
 
         public void ShowDraft(string subject, string body, bool html, string to, IEnumerable<string> attachments)

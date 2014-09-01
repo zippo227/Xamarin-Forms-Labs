@@ -156,6 +156,14 @@ namespace Xamarin.Forms.Labs.Services
             }
         }
 
+        public bool CanSendSMS
+        {
+            get
+            {
+                return SmsManager.Default != null;
+            }
+        }
+
         /// <summary>
         /// Opens native dialog to dial the specified number.
         /// </summary>

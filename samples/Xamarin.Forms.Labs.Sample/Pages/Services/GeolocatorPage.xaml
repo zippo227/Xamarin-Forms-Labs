@@ -10,6 +10,9 @@
   	<Entry Text="{Binding PositionStatus}"></Entry>
     <Entry Text="{Binding PositionLatitude}"></Entry>
     <Entry Text="{Binding PositionLongitude}"></Entry>
+    <Button Text="Send Position Email" Command="{Binding SendPositionEmail}"></Button>
+    <Button Text="Send Position SMS" Command="{Binding SendPositionSms}"></Button>
+    <Button Text="Open Position URI" Command="{Binding OpenPositionUri}"></Button>
   </StackLayout>
 </toolkit:BaseView>
 

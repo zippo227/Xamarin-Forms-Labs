@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
                 //string URI = string.Format("/MainPage.xaml");
                 return new Uri("/MainPage.xaml", UriKind.Relative);
             }
+
             return uri;
         }
     }

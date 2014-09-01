@@ -2,6 +2,10 @@
 using Xamarin.Forms.Labs.Mvvm;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms.Labs.Services.Email;
+using System.Windows.Input;
+using System.Linq;
+using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.Sample
 {
@@ -13,11 +17,16 @@ namespace Xamarin.Forms.Labs.Sample
     {
         private readonly TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private IGeolocator geolocator;
+        private IEmailService emailService;
+        private IPhoneService phoneService;
         private CancellationTokenSource cancelSource;
         private string positionStatus = string.Empty;
         private string positionLatitude = string.Empty;
         private string positionLongitude = string.Empty;
         private Command getPositionCommand;
+        private ICommand sendPositionEmail;
+        private ICommand sendPositionSms;
+        private ICommand openPositionUri;
 
         /// <summary>
         /// Gets or sets the position status.
@@ -84,26 +93,95 @@ namespace Xamarin.Forms.Labs.Sample
             get
             { 
                 return getPositionCommand ?? 
-                    (getPositionCommand = new Command(async () => { await GetPosition(); }, () => true)); 
+                    (getPositionCommand = new Command(async () => await GetPosition(), () => true)); 
             }
         }
 
-        private void Setup()
+        public ICommand SendPositionSms
         {
-            if (this.geolocator != null)
+            get
             {
-                return;
+                return sendPositionSms ??
+                    (sendPositionSms = new Command(
+                        async () => await this.SmsPosition(),
+                        () => this.PhoneService != null && this.PhoneService.CanSendSMS));
             }
-                
-            this.geolocator = DependencyService.Get<IGeolocator>();
-            this.geolocator.PositionError += OnListeningError;
-            this.geolocator.PositionChanged += OnPositionChanged;
         }
+
+        public ICommand SendPositionEmail
+        {
+            get
+            {
+                return sendPositionEmail ??
+                    (sendPositionEmail = new Command(
+                        async () => await this.EmailPosition(),
+                        () => this.EmailService != null && this.EmailService.CanSend));
+            }
+        }
+
+        public ICommand OpenPositionUri
+        {
+            get
+            {
+                return openPositionUri ??
+                    (openPositionUri = new Command(
+                        async () => 
+                            {
+                                var pos = await this.Geolocator.GetPositionAsync(5000);
+                                var uri = Device.OnPlatform(
+                                    pos.ToAppleMaps(),
+                                    pos.ToUri(),
+                                    pos.ToBingMaps());
+                                Device.OpenUri(uri);
+                            },
+                        () => this.Geolocator != null));
+            }
+        }
+
+        private IEmailService EmailService
+        {
+            get
+            {
+                return this.emailService ?? (this.emailService = DependencyService.Get<IEmailService>());
+            }
+        }
+
+        private IPhoneService PhoneService
+        {
+            get
+            {
+                return this.phoneService ?? (this.phoneService = DependencyService.Get<IPhoneService>());
+            }
+        }
+
+        private IGeolocator Geolocator
+        {
+            get
+            {
+                if (this.geolocator == null)
+                {
+                    this.geolocator = DependencyService.Get<IGeolocator>();
+                    this.geolocator.PositionError += OnListeningError;
+                    this.geolocator.PositionChanged += OnPositionChanged;
+                }
+                return this.geolocator;
+            }
+        }
+
+        //private void Setup()
+        //{
+        //    if (this.geolocator != null)
+        //    {
+        //        return;
+        //    }
+                
+        //    this.geolocator = DependencyService.Get<IGeolocator>();
+        //    this.geolocator.PositionError += OnListeningError;
+        //    this.geolocator.PositionChanged += OnPositionChanged;
+        //}
 
         private async Task GetPosition()
         {
-            Setup();
-
             this.cancelSource = new CancellationTokenSource();
 
             PositionStatus = string.Empty;
@@ -111,7 +189,7 @@ namespace Xamarin.Forms.Labs.Sample
             PositionLongitude = string.Empty;
             IsBusy = true;
             await
-                this.geolocator.GetPositionAsync(10000, this.cancelSource.Token, true)
+                this.Geolocator.GetPositionAsync(10000, this.cancelSource.Token, true)
                     .ContinueWith(t =>
                     {
                         IsBusy = false;
@@ -130,6 +208,36 @@ namespace Xamarin.Forms.Labs.Sample
                             PositionLongitude = "Lo: " + t.Result.Longitude.ToString("N4");
                         }
                     }, scheduler);
+        }
+
+        private async Task EmailPosition(int timeout = 5000)
+        {
+            var position = await this.Geolocator.GetPositionAsync(timeout);
+
+            var builder = new System.Text.StringBuilder();
+            builder.Append("WP8 link: ");
+            builder.AppendLine(position.ToBingMaps().ToString());
+            builder.Append("Android link: ");
+            builder.AppendLine(position.ToGoogleMaps().ToString());
+            builder.Append("iOS link: ");
+            builder.AppendLine(position.ToAppleMaps().ToString());
+            this.EmailService.ShowDraft(
+                "My position",
+                //string.Format("<html><head><title>My location during {1}.</title></head><body><a href=\"{0}\"> Timezone: {2}.</a></body></html>", position.ToUri().ToString(), position.Timestamp, System.TimeZoneInfo.Local.DisplayName), 
+                builder.ToString(),
+                true, 
+                string.Empty, 
+                Enumerable.Empty<string>());
+        }
+
+        private async Task SmsPosition(int timeout = 5000)
+        {
+            var position = await this.Geolocator.GetPositionAsync(timeout);
+
+            this.PhoneService.SendSMS(string.Empty, position.ToUri().ToString());
+
+            Device.OpenUri(position.ToUri());
+
         }
 
         ////private void CancelPosition ()

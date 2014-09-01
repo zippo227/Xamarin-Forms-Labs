@@ -37,7 +37,15 @@ namespace Xamarin.Forms.Labs.Droid.Services.Email
             intent.PutExtra(Intent.ExtraCc, cc);
             intent.PutExtra(Intent.ExtraBcc, bcc);
             intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
-            intent.PutExtra(Intent.ExtraText, body ?? string.Empty);
+
+            if (html)
+            {
+                intent.PutExtra(Intent.ExtraText, Android.Text.Html.FromHtml(body));
+            }
+            else
+            {
+                intent.PutExtra(Intent.ExtraText, body ?? string.Empty);
+            }
 
             intent.AddAttachments(attachments);
 
@@ -50,7 +58,15 @@ namespace Xamarin.Forms.Labs.Droid.Services.Email
             intent.SetType(html ? "text/html" : "text/plain");
             intent.PutExtra(Intent.ExtraEmail, to);
             intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
-            intent.PutExtra(Intent.ExtraText, body ?? string.Empty);
+
+            if (html)
+            {
+                intent.PutExtra(Intent.ExtraText, body);
+            }
+            else
+            {
+                intent.PutExtra(Intent.ExtraText, body ?? string.Empty);
+            }
 
             intent.AddAttachments(attachments);
 
