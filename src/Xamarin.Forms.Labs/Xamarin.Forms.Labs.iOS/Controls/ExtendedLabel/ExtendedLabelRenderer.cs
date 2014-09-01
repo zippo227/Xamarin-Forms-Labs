@@ -2,7 +2,6 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms.Labs.Controls;
-using Xamarin.Forms.Labs.iOS;
 using Xamarin.Forms.Labs.iOS.Controls;
 using MonoTouch.Foundation;
 
@@ -40,11 +39,15 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         /// </param>
         private static void UpdateUi(ExtendedLabel view, UILabel control)
         {
+            if (view.FontSize > 0)
+            {
+                control.Font = UIFont.FromName(control.Font.Name,(float)view.FontSize);
+            }
+
             if (!string.IsNullOrEmpty(view.FontName))
             {
                 var font = UIFont.FromName(
-                    view.FontName,
-                    (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
+                    view.FontName, control.Font.PointSize);
 
                 if (font != null)
                 {
