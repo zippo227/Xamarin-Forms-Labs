@@ -24,7 +24,19 @@
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchDebug>true</MtouchDebug>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchSdkVersion>7.1</MtouchSdkVersion>
+    <MtouchProfiling>False</MtouchProfiling>
+    <MtouchExtraArgs />
+    <MtouchFastDev>False</MtouchFastDev>
+    <MtouchEnableGenericValueTypeSharing>True</MtouchEnableGenericValueTypeSharing>
+    <MtouchArch>Default, ARMv7</MtouchArch>
+    <MtouchUseLlvm>False</MtouchUseLlvm>
+    <MtouchUseThumb>False</MtouchUseThumb>
+    <MtouchUseSGen>False</MtouchUseSGen>
+    <MtouchUseRefCounting>False</MtouchUseRefCounting>
+    <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
+    <MtouchI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -159,6 +171,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Charting\Xamarin.Forms.Labs.Charting.iOS\Xamarin.Forms.Labs.Charting.iOS.csproj">
+      <Project>{0e3be08b-ee95-4385-b09a-9958b0719a5c}</Project>
+      <Name>Xamarin.Forms.Labs.Charting.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Charting\Xamarin.Forms.Labs.Charting\Xamarin.Forms.Labs.Charting.csproj">
+      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
+      <Name>Xamarin.Forms.Labs.Charting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\ServiceStackV3\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS.csproj">
       <Project>{B1AB2869-D5B1-45EE-B882-208A23C8EB29}</Project>
       <Name>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS</Name>
