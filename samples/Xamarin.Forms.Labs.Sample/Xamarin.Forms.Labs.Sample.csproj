@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Pages\Services\ExtendedDeviceInfoPage.cs" />
     <Compile Include="Pages\Services\FontManagerPage.cs" />
+    <Compile Include="Pages\Services\NfcDevicePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>

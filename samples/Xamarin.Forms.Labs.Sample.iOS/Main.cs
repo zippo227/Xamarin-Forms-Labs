@@ -4,6 +4,7 @@ using System.Linq;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using Xamarin.Forms.Labs.Charting.iOS.Controls;
 
 namespace Xamarin.Forms.Labs.Sample.iOS
 {
@@ -15,6 +16,7 @@ namespace Xamarin.Forms.Labs.Sample.iOS
 			// if you want to use a different Application Delegate class from "AppDelegate"
 			// you can specify it here.
 			UIApplication.Main (args, null, "AppDelegate");
+            ChartRenderer chart = new ChartRenderer();
 		}
 	}
 }

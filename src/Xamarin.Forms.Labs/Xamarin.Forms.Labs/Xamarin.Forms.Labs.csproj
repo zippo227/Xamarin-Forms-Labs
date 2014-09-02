@@ -62,6 +62,7 @@
     <Compile Include="Device\Sensor.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
+    <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Helpers\EventArgs{T}.cs" />
     <Compile Include="Helpers\EventExtensions.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Services\IAsyncSimpleCache.cs" />
     <Compile Include="Services\IFontManager.cs" />
     <Compile Include="Services\INetwork.cs" />
+    <Compile Include="Services\INfcDevice.cs" />
     <Compile Include="Services\Media\IAudioStream.cs" />
     <Compile Include="Services\Media\MediaExtensions.cs" />
     <Compile Include="Services\Media\MediaFile.cs" />
