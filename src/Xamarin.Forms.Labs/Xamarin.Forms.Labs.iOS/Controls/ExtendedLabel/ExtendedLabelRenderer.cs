@@ -46,8 +46,15 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
             if (!string.IsNullOrEmpty(view.FontName))
             {
+                string fontName = view.FontName;
+                //if extension given then remove it for iOS
+                if (fontName.LastIndexOf(".", System.StringComparison.Ordinal) == fontName.Length - 4)
+                {
+                    fontName = fontName.Substring(0, fontName.Length - 4);
+                }
+
                 var font = UIFont.FromName(
-                    view.FontName, control.Font.PointSize);
+                    fontName, control.Font.PointSize);
 
                 if (font != null)
                 {
