@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Xamarin.Forms.Labs.Controls;
@@ -24,9 +25,9 @@ namespace Xamarin.Forms.Labs.Controls
             base.OnElementChanged(e);
 
             var view = (ExtendedLabel)Element;
-
             UpdateUi(view, Control);
         }
+
 
         /// <summary>
         /// Updates the UI.
@@ -95,6 +96,7 @@ namespace Xamarin.Forms.Labs.Controls
                 control.TextDecorations = TextDecorations.Underline;
 
         }
+
     }
 }
 
