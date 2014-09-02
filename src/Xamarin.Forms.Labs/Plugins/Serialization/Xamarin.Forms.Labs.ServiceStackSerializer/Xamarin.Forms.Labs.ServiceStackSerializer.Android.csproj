@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xamarin.Forms.Labs.ServiceStackSerializer</RootNamespace>
-    <AssemblyName>Xamarin.Forms.Labs.ServiceStackSerializer.Droid</AssemblyName>
+    <AssemblyName>Xamarin.Forms.Labs.Services.Serialization.ServiceStack.Droid</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <NuGetPackageImportStamp>9381b04a</NuGetPackageImportStamp>
@@ -32,11 +32,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>True</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\..\..\ReleaseBuild\</OutputPath>
     <DefineConstants>TRACE;ANDROID</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+    <DocumentationFile>..\..\..\..\..\ReleaseBuild\Xamarin.Forms.Labs.Services.Serialization.ServiceStack.Droid.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
