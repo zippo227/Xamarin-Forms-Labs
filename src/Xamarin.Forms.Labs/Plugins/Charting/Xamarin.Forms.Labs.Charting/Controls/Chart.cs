@@ -19,6 +19,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         #endregion
 
         #region BindableProperties
+        public static readonly BindableProperty DataSourceProperty = BindableProperty.Create("DataSource", typeof(ChartDataSet), typeof(Chart), default(ChartDataSet), BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(Chart), Color.White, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty SeriesProperty = BindableProperty.Create("Series", typeof(SeriesCollection), typeof(Chart), default(SeriesCollection), BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty SpacingProperty = BindableProperty.Create("Spacing", typeof(double), typeof(Chart), 5.0, BindingMode.OneWay, null, null, null, null);
@@ -26,6 +27,20 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets or sets the datasource of the chart's data to display.
+        /// </summary>
+        public ChartDataSet DataSource
+        {
+            get
+            {
+                return (ChartDataSet)base.GetValue(Chart.DataSourceProperty);
+            }
+            set
+            {
+                base.SetValue(Chart.DataSourceProperty, value);
+            }
+        }
         /// <summary>
         /// Gets or sets the color of the grid and border of the chart element.
         /// </summary>
@@ -146,6 +161,26 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         {
             int noOfBars = 0;
             double highestValue = 0;
+
+            if(DataSource != default(ChartDataSet))
+            {
+                while (Series.Count != DataSource.Tables.Count)
+                    Series.Add(new Series());
+
+                for(int i = 0; i < DataSource.Tables.Count; i++)
+                {
+                    ChartDataTable table = DataSource.Tables[i];
+                    Series series = Series[i];
+                    series.Points = new DataPointCollection();
+
+                    foreach(object[] val in table.Rows)
+                    {
+                        // Currently only supporting two array values (Y-axis, X-axis)
+                        series.Points.Add(new DataPoint(val[0].ToString(), Convert.ToInt32(val[1])));
+                    }
+                }
+            }
+
 
             foreach (Series series in Series)
             {
