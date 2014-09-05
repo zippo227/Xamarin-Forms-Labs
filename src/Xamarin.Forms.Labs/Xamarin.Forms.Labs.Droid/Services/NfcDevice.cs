@@ -62,15 +62,17 @@ namespace Xamarin.Forms.Labs.Droid.Services
         {
             this.device = adapter;
 
-            //if (this.device == null)
-            //{
-            //    throw new NullReferenceException("NFC adapter is null. Either device does not support NFC or the application does not have NFC priviledges.");
-            //}
+            if (this.device != null)
+            {
+                var app = Resolver.Resolve<IXFormsApp>();
+                var tapp = app as IXFormsApp<XFormsApplicationDroid>;
 
-            var app = Resolver.Resolve<IXFormsApp>();
-            var tapp = app as IXFormsApp<XFormsApplicationDroid>;
-
-            this.device.SetNdefPushMessageCallback(this, tapp.AppContext);
+                this.device.SetNdefPushMessageCallback(this, tapp.AppContext);
+            }
+            else
+            {
+                Android.Util.Log.Info("INfcDevice", "NFC adapter is null. Either device does not support NFC or the application does not have NFC priviledges.");
+            }
         }
 
         public static NfcManager Manager

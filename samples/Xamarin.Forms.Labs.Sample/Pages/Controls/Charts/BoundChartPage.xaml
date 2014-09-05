@@ -9,37 +9,16 @@
       <Button Text="Green"  Command="{Binding ChangeColorGreenCommand}" />
       <Button Text="White"  Command="{Binding ChangeColorWhiteCommand}" />
     </StackLayout>
+    <StackLayout Orientation="Horizontal">
+      <Button Text="Change source chart" Command="{Binding ChangeSourceCommand}" />
+    </StackLayout>
     
-    <charting:Chart x:Name="CombinationChart" Color="{Binding Color}" WidthRequest="450" HeightRequest="600" Spacing="10">
+    <charting:Chart x:Name="CombinationChart" Color="{Binding Color}" WidthRequest="450" HeightRequest="600" Spacing="10" DataSource="{Binding ChartData}">
 
       <charting:Chart.Series>
-        <charting:Series Type="Bar" Color="Red">
-
-          <charting:Series.Points>
-            <charting:DataPoint Label="Jan" Value="25"/>
-            <charting:DataPoint Label="Feb" Value="40"/>
-            <charting:DataPoint Label="March" Value="45"/>
-          </charting:Series.Points>
-
-        </charting:Series>
-        <charting:Series Type="Bar" Color="Blue">
-
-          <charting:Series.Points>
-            <charting:DataPoint Label="Jan" Value="30"/>
-            <charting:DataPoint Label="Feb" Value="35"/>
-            <charting:DataPoint Label="March" Value="40"/>
-          </charting:Series.Points>
-
-        </charting:Series>
-        <charting:Series Type="Line" Color="Green">
-
-          <charting:Series.Points>
-            <charting:DataPoint Label="Jan" Value="27.5"/>
-            <charting:DataPoint Label="Feb" Value="37.5"/>
-            <charting:DataPoint Label="March" Value="42.5"/>
-          </charting:Series.Points>
-
-        </charting:Series>
+        <charting:Series Type="Bar" Color="Red" />
+        <charting:Series Type="Bar" Color="Blue" />
+        <charting:Series Type="Line" Color="Green" />
       </charting:Chart.Series>
 
     </charting:Chart>

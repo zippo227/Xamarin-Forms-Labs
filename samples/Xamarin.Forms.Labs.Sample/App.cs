@@ -50,6 +50,7 @@ namespace Xamarin.Forms.Labs.Sample
             ViewFactory.Register<CacheServicePage, CacheServiceViewModel>();
             ViewFactory.Register<SoundPage, SoundServiceViewModel>();
             ViewFactory.Register<RepeaterViewPage, RepeaterViewViewModel>();
+            ViewFactory.Register<WaveRecorderPage, WaveRecorderViewModel>();
 
             var mainTab = new ExtendedTabbedPage()
             {
@@ -106,7 +107,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "Sound",
                     "Bluetooth",
                     "FontManager",
-                    "NFC"
+                    "NFC",
+                    //"WaveRecorder"
                 }
             };
 
@@ -149,6 +151,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "nfc":
                         await mainPage.Navigation.PushAsync(new NfcDevicePage());
+                        break;
+                    case "waverecorder":
+                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<WaveRecorderViewModel>());
                         break;
                     default:
                         break;

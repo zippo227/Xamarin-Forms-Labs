@@ -83,6 +83,7 @@
     <Compile Include="Services\IFontManager.cs" />
     <Compile Include="Services\INetwork.cs" />
     <Compile Include="Services\INfcDevice.cs" />
+    <Compile Include="Services\IO\IFileManager.cs" />
     <Compile Include="Services\Media\IAudioStream.cs" />
     <Compile Include="Services\Media\MediaExtensions.cs" />
     <Compile Include="Services\Media\MediaFile.cs" />

@@ -28,13 +28,6 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 		{
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::Xamarin.Forms.Labs.Sample.Droid.Resource.String.ApplicationName;
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::Xamarin.Forms.Labs.Sample.Droid.Resource.String.Hello;
-			global::Xamarin.Forms.Labs.Droid.Resource.Attribute.state_current_month = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Attribute.state_current_month;
-			global::Xamarin.Forms.Labs.Droid.Resource.Attribute.state_highlighted = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Attribute.state_highlighted;
-			global::Xamarin.Forms.Labs.Droid.Resource.Attribute.state_range_first = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Attribute.state_range_first;
-			global::Xamarin.Forms.Labs.Droid.Resource.Attribute.state_range_last = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Attribute.state_range_last;
-			global::Xamarin.Forms.Labs.Droid.Resource.Attribute.state_range_middle = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Attribute.state_range_middle;
-			global::Xamarin.Forms.Labs.Droid.Resource.Attribute.state_selectable = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Attribute.state_selectable;
-			global::Xamarin.Forms.Labs.Droid.Resource.Attribute.state_today = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Attribute.state_today;
 			global::Xamarin.Forms.Labs.Droid.Resource.Color.calendar_active_month_bg = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Color.calendar_active_month_bg;
 			global::Xamarin.Forms.Labs.Droid.Resource.Color.calendar_bg = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Color.calendar_bg;
 			global::Xamarin.Forms.Labs.Droid.Resource.Color.calendar_divider = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Color.calendar_divider;
@@ -70,39 +63,10 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 			global::Xamarin.Forms.Labs.Droid.Resource.Style.CalendarCell_CalendarDate = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Style.CalendarCell_CalendarDate;
 			global::Xamarin.Forms.Labs.Droid.Resource.Style.CalendarCell_DayHeader = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Style.CalendarCell_DayHeader;
 			global::Xamarin.Forms.Labs.Droid.Resource.Style.CalendarTitle = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Style.CalendarTitle;
-			global::Xamarin.Forms.Labs.Droid.Resource.Styleable.calendar_cell = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Styleable.calendar_cell;
-			global::Xamarin.Forms.Labs.Droid.Resource.Styleable.calendar_cell_state_current_month = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Styleable.calendar_cell_state_current_month;
-			global::Xamarin.Forms.Labs.Droid.Resource.Styleable.calendar_cell_state_highlighted = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Styleable.calendar_cell_state_highlighted;
-			global::Xamarin.Forms.Labs.Droid.Resource.Styleable.calendar_cell_state_range_first = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Styleable.calendar_cell_state_range_first;
-			global::Xamarin.Forms.Labs.Droid.Resource.Styleable.calendar_cell_state_range_last = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Styleable.calendar_cell_state_range_last;
-			global::Xamarin.Forms.Labs.Droid.Resource.Styleable.calendar_cell_state_range_middle = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Styleable.calendar_cell_state_range_middle;
-			global::Xamarin.Forms.Labs.Droid.Resource.Styleable.calendar_cell_state_selectable = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Styleable.calendar_cell_state_selectable;
-			global::Xamarin.Forms.Labs.Droid.Resource.Styleable.calendar_cell_state_today = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Styleable.calendar_cell_state_today;
 		}
 		
 		public partial class Attribute
 		{
-			
-			// aapt resource value: 0x7f010001
-			public const int state_current_month = 2130771969;
-			
-			// aapt resource value: 0x7f010006
-			public const int state_highlighted = 2130771974;
-			
-			// aapt resource value: 0x7f010003
-			public const int state_range_first = 2130771971;
-			
-			// aapt resource value: 0x7f010005
-			public const int state_range_last = 2130771973;
-			
-			// aapt resource value: 0x7f010004
-			public const int state_range_middle = 2130771972;
-			
-			// aapt resource value: 0x7f010000
-			public const int state_selectable = 2130771968;
-			
-			// aapt resource value: 0x7f010002
-			public const int state_today = 2130771970;
 			
 			static Attribute()
 			{
@@ -358,49 +322,6 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 			}
 			
 			private Xml()
-			{
-			}
-		}
-		
-		public partial class Styleable
-		{
-			
-			public static int[] calendar_cell = new int[] {
-					2130771968,
-					2130771969,
-					2130771970,
-					2130771971,
-					2130771972,
-					2130771973,
-					2130771974};
-			
-			// aapt resource value: 1
-			public const int calendar_cell_state_current_month = 1;
-			
-			// aapt resource value: 6
-			public const int calendar_cell_state_highlighted = 6;
-			
-			// aapt resource value: 3
-			public const int calendar_cell_state_range_first = 3;
-			
-			// aapt resource value: 5
-			public const int calendar_cell_state_range_last = 5;
-			
-			// aapt resource value: 4
-			public const int calendar_cell_state_range_middle = 4;
-			
-			// aapt resource value: 0
-			public const int calendar_cell_state_selectable = 0;
-			
-			// aapt resource value: 2
-			public const int calendar_cell_state_today = 2;
-			
-			static Styleable()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Styleable()
 			{
 			}
 		}

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XamarinFormsLabsSampleiOS</name>
+    </assembly>
+    <members>
+        <member name="T:Xamarin.Forms.Labs.Sample.iOS.AppDelegate">
+            <summary>
+            Class AppDelegate.
+            </summary>
+            <remarks>
+            The UIApplicationDelegate for the application. This class is responsible for launching the
+            User Interface of the application, as well as listening (and optionally responding) to
+            application events from iOS.
+            </remarks>
+        </member>
+        <member name="F:Xamarin.Forms.Labs.Sample.iOS.AppDelegate._window">
+            <summary>
+            The window
+            </summary>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Sample.iOS.AppDelegate.FinishedLaunching(MonoTouch.UIKit.UIApplication,MonoTouch.Foundation.NSDictionary)">
+            <summary>
+            Finished the launching.
+            </summary>
+            <param name="app">The application.</param>
+            <param name="options">The options.</param>
+            <returns>
+                <c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+            <remarks>
+            This method is invoked when the application has loaded and is ready to run. In this
+            method you should instantiate the window, load the UI into it and then make the window
+            visible.
+            You have 17 seconds to return from this method, or iOS will terminate your application.
+            </remarks>
+        </member>
+        <member name="M:Xamarin.Forms.Labs.Sample.iOS.AppDelegate.SetIoc">
+            <summary>
+            Sets the IoC.
+            </summary>
+        </member>
+    </members>
+</doc>

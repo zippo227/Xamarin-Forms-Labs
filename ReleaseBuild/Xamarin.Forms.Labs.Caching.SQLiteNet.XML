@@ -64,7 +64,7 @@
         </member>
         <member name="M:Xamarin.Forms.Labs.Caching.SQLiteNet.SQLiteSimpleCache.GetAll``1(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
-            Retrieves multiple items from the cache. 
+            Retrieves multiple items from the cache.
             The default value of T is set for all keys that do not exist.
             </summary>
             <typeparam name="T">Type of values to get.</typeparam>
@@ -75,7 +75,7 @@
         </member>
         <member name="M:Xamarin.Forms.Labs.Caching.SQLiteNet.SQLiteSimpleCache.SetAll``1(System.Collections.Generic.IDictionary{System.String,``0})">
             <summary>
-            Sets multiple items to the cache. 
+            Sets multiple items to the cache.
             </summary>
             <typeparam name="T">Type of values to set.</typeparam>
             <param name="values">The values.</param>
@@ -140,7 +140,7 @@
         </member>
         <member name="M:Xamarin.Forms.Labs.Caching.SQLiteNet.SQLiteSimpleCache.GetAllAsync``1(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
-            Retrieves multiple items from the cache. 
+            Retrieves multiple items from the cache.
             The default value of T is set for all keys that do not exist.
             </summary>
             <typeparam name="T">Type of values to get.</typeparam>
@@ -151,7 +151,7 @@
         </member>
         <member name="M:Xamarin.Forms.Labs.Caching.SQLiteNet.SQLiteSimpleCache.SetAllAsync``1(System.Collections.Generic.IDictionary{System.String,``0})">
             <summary>
-            Sets multiple items to the cache. 
+            Sets multiple items to the cache.
             </summary>
             <typeparam name="T">Type of values to set.</typeparam>
             <param name="values">The values.</param>

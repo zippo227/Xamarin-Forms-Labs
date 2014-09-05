@@ -101,6 +101,9 @@
       <Link>Services\FontManager.designer.cs</Link>
       <DependentUpon>FontManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Xamarin.Forms.Labs\Services\IO\FileManager.cs">
+      <Link>Services\IO\FileManager.cs</Link>
+    </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />

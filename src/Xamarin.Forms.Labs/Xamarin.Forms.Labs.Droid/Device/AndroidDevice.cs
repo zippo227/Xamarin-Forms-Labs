@@ -6,6 +6,7 @@ using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.Droid;
 using Xamarin.Forms.Labs.Droid.Services;
 using System.Threading.Tasks;
+using Xamarin.Forms.Labs.Services.IO;
 
 namespace Xamarin.Forms.Labs
 {
@@ -17,6 +18,8 @@ namespace Xamarin.Forms.Labs
         private static IDevice currentDevice;
 
         private IBluetoothHub btHub;
+
+        private IFileManager fileManager;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
@@ -44,6 +47,12 @@ namespace Xamarin.Forms.Labs
 //            {
 //                this.BluetoothHub = new BluetoothHub(BluetoothAdapter.DefaultAdapter);
 //            }
+
+            if (Xamarin.Forms.Labs.Droid.Services.Media.Microphone.IsEnabled)
+            {
+                this.Microphone = new Microphone();
+            }
+
 
             this.Display = new Display();
 
@@ -168,6 +177,27 @@ namespace Xamarin.Forms.Labs
                 }
 
                 return this.btHub;
+            }
+        }
+
+        /// <summary>
+        /// Gets the default microphone for the device
+        /// </summary>
+        public IAudioStream Microphone
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the file manager for the device.
+        /// </summary>
+        /// <value>Device file manager.</value>
+        public IFileManager FileManager
+        {
+            get
+            {
+                return this.fileManager ?? (this.fileManager = new FileManager(System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication()));
             }
         }
 
