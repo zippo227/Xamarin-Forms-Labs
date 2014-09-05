@@ -1,10 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Xml;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
