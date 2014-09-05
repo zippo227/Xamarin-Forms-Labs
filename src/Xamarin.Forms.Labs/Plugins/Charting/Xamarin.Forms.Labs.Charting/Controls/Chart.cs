@@ -176,7 +176,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
                     foreach(object[] val in table.Rows)
                     {
                         // Currently only supporting two array values (Y-axis, X-axis)
-                        series.Points.Add(new DataPoint(val[0].ToString(), Convert.ToInt32(val[1])));
+                        series.Points.Add(new DataPoint(val[0].ToString(), Convert.ToDouble(val[1])));
                     }
                 }
             }
