@@ -56,6 +56,7 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
 
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            // TODO: To be improved
             base.OnElementPropertyChanged(sender, e);
             if (this.Element == null || this.Control == null)
                 return;
@@ -92,6 +93,11 @@ namespace Xamarin.Forms.Labs.Charting.WP.Controls
             else if (e.PropertyName == Chart.WidthProperty.PropertyName)
             {
                 Control.Chart.WidthRequest = Element.WidthRequest;
+                Control.Redraw();
+            }
+            else if (e.PropertyName == Chart.DataSourceProperty.PropertyName)
+            {
+                Control.Chart.DataSource = Element.DataSource;
                 Control.Redraw();
             }
         }

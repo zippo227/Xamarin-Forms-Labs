@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs", "Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj", "{4D10DF5E-883D-468B-A854-4A53C7FE75AC}"
 EndProject
@@ -1661,8 +1661,7 @@ Global
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+        {0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.MonoTouch|Any CPU.ActiveCfg = Debug|Any CPU
@@ -1677,8 +1676,7 @@ Global
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|iPhone.Build.0 = Release|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+        {0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
@@ -1729,6 +1727,6 @@ Global
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C} = {0CBE7630-42C2-4407-BD05-A24C9C084063}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\..\samples\Xamarin.Forms.Labs.Sample.Droid\Xamarin.Forms.Labs.Sample.Droid.csproj
-	EndGlobalSection
+        StartupItem = ..\..\samples\Xamarin.Forms.Labs.Sample.Droid\Xamarin.Forms.Labs.Sample.Droid.csproj
+    EndGlobalSection
 EndGlobal
