@@ -7,7 +7,8 @@
     x:Class="Xamarin.Forms.Labs.Sample.ExtendedLabelPage"
     Title="Labels">
     <ContentPage.Content>
-        <!-- removed scrollview as this makes the Windows Phone render not work for some unknown reason!-->
+        <!-- Removed scrollview as this makes the Windows Phone not render the font substitutions. This is bug reported to the Xamarin team. 
+        Works on other platforms. !-->
         <!--<ScrollView>-->
         <StackLayout x:Name="stkRoot" Padding="0,40,0,0">
             <controls:ExtendedLabel

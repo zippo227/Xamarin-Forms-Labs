@@ -1,13 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Xml;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
 
-[assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRenderer))]
+[assembly: ExportRenderer(typeof (ExtendedLabel), typeof (ExtendedLabelRenderer))]
+
 namespace Xamarin.Forms.Labs.Controls
 {
     /// <summary>
@@ -25,7 +28,7 @@ namespace Xamarin.Forms.Labs.Controls
         {
             base.OnElementChanged(e);
 
-            var view = (ExtendedLabel)Element;
+            var view = (ExtendedLabel) Element;
             UpdateUi(view, Control);
         }
 
@@ -42,10 +45,10 @@ namespace Xamarin.Forms.Labs.Controls
         private void UpdateUi(ExtendedLabel view, TextBlock control)
         {
             if (view.FontSize > 0)
-                control.FontSize = (float)view.FontSize;
-                //control.FontSize = (view.FontSize > 0) ? (float)view.FontSize : 12.0f;
+                control.FontSize = (float) view.FontSize;
+            //control.FontSize = (view.FontSize > 0) ? (float)view.FontSize : 12.0f;
 
-            //need to do this ahead of font change due to unexpected behaviour if done later.
+            ////need to do this ahead of font change due to unexpected behaviour if done later.
             if (view.IsStrikeThrough)
             {             
                 //isn't perfect, but it's a start
@@ -60,9 +63,8 @@ namespace Xamarin.Forms.Labs.Controls
                 //Canvas.SetTop(border, (this.Control.ActualHeight / 2) - 0.5);
                 this.Children.Add(border);
 
+                //// STILL IN DEVELOPMENT === alternative and possibly more flexible grid method - Got stuck making this controls parent the grid below
 
-                //// STILL IN DEVELOPMENT - alternative and more flexible grid method - Got stuck making this controls parent the grid below
-                
                 //var strikeThroughGrid = new System.Windows.Controls.Grid();
                 //strikeThroughGrid.VerticalAlignment = VerticalAlignment.Top;
                 //strikeThroughGrid.HorizontalAlignment = HorizontalAlignment.Left;
@@ -86,29 +88,32 @@ namespace Xamarin.Forms.Labs.Controls
             {
                 string filename = view.FontName;
                 //if no extension given then assume and add .ttf
-                if (filename.LastIndexOf(".", System.StringComparison.Ordinal) != filename.Length - 4)
+                if (filename.LastIndexOf(".", StringComparison.Ordinal) != filename.Length - 4)
                 {
                     filename = string.Format("{0}.ttf", filename);
                 }
 
-                //if(IsLocalResourceFileExists(filename))
-                    control.FontFamily = new FontFamily(string.Format(@"\Assets\Fonts\{0}#{1}", filename, string.IsNullOrEmpty(view.FriendlyFontName) ? filename.Substring(0, filename.Length - 4) : view.FriendlyFontName));
+                if (IsLocalFontFileExists(filename)) //only substitute custom font if exists
+                    control.FontFamily =
+                        new FontFamily(string.Format(@"\Assets\Fonts\{0}#{1}", filename,
+                            string.IsNullOrEmpty(view.FriendlyFontName)
+                                ? filename.Substring(0, filename.Length - 4)
+                                : view.FriendlyFontName));
             }
 
             if (view.IsUnderline)
                 control.TextDecorations = TextDecorations.Underline;
-
         }
 
         /// <summary>
-        /// Checks if a local resource exists
+        /// Checks if a local resource font file exists
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filename">the filename including extension, but not path</param>
         /// <returns></returns>
-        private bool IsLocalResourceFileExists(string filename)
+        private bool IsLocalFontFileExists(string filename)
         {
-            return Application.GetResourceStream(new Uri(@"/Xamarin.Forms.Labs.Sample.WP;component/" + filename, UriKind.Relative)) != null;
+            return
+                Application.GetResourceStream(new Uri(string.Format(@"Assets/Fonts/{0}", filename), UriKind.Relative)) !=null;            
         }
     }
 }
-
