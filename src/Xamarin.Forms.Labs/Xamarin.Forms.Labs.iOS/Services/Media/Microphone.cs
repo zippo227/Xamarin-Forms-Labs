@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using MonoTouch.AudioToolbox;
 using MonoTouch.Foundation;
@@ -20,16 +21,6 @@ namespace Xamarin.Forms.Labs.iOS.Services.Media
         public Microphone(int bufferSize = 4098)
         {
             this.bufferSize = bufferSize;
-
-            this.Start = new RelayCommand<int>(
-                rate => this.StartRecording(rate),
-                rate => this.audioQueue == null && this.SupportedSampleRates.Contains(rate)
-            );
-
-            this.Stop = new Command(
-                () => this.Clear(),
-                () => this.Active
-                );
         }
 
         #region IAudioStream implementation
@@ -58,18 +49,6 @@ namespace Xamarin.Forms.Labs.iOS.Services.Media
             }
         }
 
-        public ICommand Start
-        {
-            get;
-            private set;
-        }
-
-        public ICommand Stop
-        {
-            get;
-            private set;
-        }
-
         public bool Active
         {
             get
@@ -91,6 +70,26 @@ namespace Xamarin.Forms.Labs.iOS.Services.Media
                     44100
                 };
             }
+        }
+
+        public Task<bool> Start(int sampleRate)
+        {
+            return Task.Run<bool>(() =>
+                {
+                    if (!this.SupportedSampleRates.Contains(sampleRate))
+                    {
+                        return false;
+                    }
+
+                    this.StartRecording(sampleRate);
+
+                    return this.Active;
+                });
+        }
+
+        public Task Stop()
+        {
+            return Task.Run(() => this.Clear());
         }
 
         #endregion
@@ -172,12 +171,5 @@ namespace Xamarin.Forms.Labs.iOS.Services.Media
                 // todo: 
             }
         }
-
-        #region IAudioStream Members
-
-
-
-
-        #endregion
     }
 }

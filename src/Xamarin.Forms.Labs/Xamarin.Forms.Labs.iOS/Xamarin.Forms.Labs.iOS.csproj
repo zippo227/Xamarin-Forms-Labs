@@ -77,6 +77,9 @@
       <Link>Services\FontManager.designer.cs</Link>
       <DependentUpon>FontManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Xamarin.Forms.Labs\Services\IO\FileManager.cs">
+      <Link>Services\IO\FileManager.cs</Link>
+    </Compile>
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />

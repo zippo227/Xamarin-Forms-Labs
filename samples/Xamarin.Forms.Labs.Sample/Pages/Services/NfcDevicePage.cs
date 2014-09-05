@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Services
 
             var stack = new StackLayout();
 
-            if (this.device == null)
+            if (this.device == null || !this.device.IsEnabled)
             {
                 stack.Children.Add(new Label()
                 {
@@ -58,7 +58,7 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Services
         {
             base.OnAppearing();
 
-            if (this.device != null)
+            if (this.device != null && this.device.IsEnabled)
             {
                 device.DeviceInRange += device_DeviceInRange;
                 device.DeviceOutOfRange += device_DeviceOutOfRange;
@@ -70,7 +70,7 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Services
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            if (this.device != null)
+            if (this.device != null && this.device.IsEnabled)
             {
                 device.DeviceInRange -= device_DeviceInRange;
                 device.DeviceOutOfRange -= device_DeviceOutOfRange;
