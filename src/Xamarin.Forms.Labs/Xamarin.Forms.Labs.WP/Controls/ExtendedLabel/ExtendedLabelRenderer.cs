@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -90,10 +91,8 @@ namespace Xamarin.Forms.Labs.Controls
                     filename = string.Format("{0}.ttf", filename);
                 }
 
-                var fontfileexists = System.IO.File.Exists(filename);
-                var fontfileexists2 = System.IO.File.Exists(@"Fonts\" + filename);
-
-                control.FontFamily = new FontFamily(string.Format(@"\Assets\Fonts\{0}#{1}", filename, string.IsNullOrEmpty(view.FriendlyFontName) ? filename.Substring(0, filename.Length - 4) : view.FriendlyFontName));
+                //if(IsLocalResourceFileExists(filename))
+                    control.FontFamily = new FontFamily(string.Format(@"\Assets\Fonts\{0}#{1}", filename, string.IsNullOrEmpty(view.FriendlyFontName) ? filename.Substring(0, filename.Length - 4) : view.FriendlyFontName));
             }
 
             if (view.IsUnderline)
@@ -101,6 +100,15 @@ namespace Xamarin.Forms.Labs.Controls
 
         }
 
+        /// <summary>
+        /// Checks if a local resource exists
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        private bool IsLocalResourceFileExists(string filename)
+        {
+            return Application.GetResourceStream(new Uri(@"/Xamarin.Forms.Labs.Sample.WP;component/" + filename, UriKind.Relative)) != null;
+        }
     }
 }
 
