@@ -60,7 +60,7 @@ namespace Xamarin.Forms.Labs.Controls
                 this.Children.Add(border);
 
 
-                ////alternative and more flexible grid method - STILL IN DEVELOPMENT - Got stuck putting this control into a new grid!
+                //// STILL IN DEVELOPMENT - alternative and more flexible grid method - Got stuck making this controls parent the grid below
                 
                 //var strikeThroughGrid = new System.Windows.Controls.Grid();
                 //strikeThroughGrid.VerticalAlignment = VerticalAlignment.Top;
@@ -89,6 +89,10 @@ namespace Xamarin.Forms.Labs.Controls
                 {
                     filename = string.Format("{0}.ttf", filename);
                 }
+
+                var fontfileexists = System.IO.File.Exists(filename);
+                var fontfileexists2 = System.IO.File.Exists(@"Fonts\" + filename);
+
                 control.FontFamily = new FontFamily(string.Format(@"\Assets\Fonts\{0}#{1}", filename, string.IsNullOrEmpty(view.FriendlyFontName) ? filename.Substring(0, filename.Length - 4) : view.FriendlyFontName));
             }
 
