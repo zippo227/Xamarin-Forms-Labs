@@ -68,6 +68,9 @@
     <Compile Include="Pages\Controls\RepeaterViewPage.cs" />
     <Compile Include="Pages\Controls\ExtendedSliderPage.cs" />
     <Compile Include="Pages\Controls\SegmentPage.cs" />
+    <Compile Include="Pages\Services\WaveRecorderPage.xaml.cs">
+      <DependentUpon>WaveRecorderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Controls\WebImagePage.xaml.cs">
       <DependentUpon>WebImagePage.xaml</DependentUpon>
     </Compile>
@@ -78,6 +81,7 @@
     </Compile>
     <Compile Include="Pages\Services\ExtendedDeviceInfoPage.cs" />
     <Compile Include="Pages\Services\FontManagerPage.cs" />
+    <Compile Include="Pages\Services\NfcDevicePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -108,6 +112,7 @@
     <Compile Include="Pages\Mvvm\NewPageView.xaml.cs">
       <DependentUpon>NewPageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\WaveRecorderViewModel.cs" />
     <Compile Include="ViewModel\WebHybridViewModel.cs" />
     <Compile Include="Pages\Mvvm\CanvasWebHybrid.xaml.cs">
       <DependentUpon>CanvasWebHybrid.xaml</DependentUpon>
@@ -286,6 +291,12 @@
     <EmbeddedResource Include="Pages\Controls\ExtendedEntryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Services\WaveRecorderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

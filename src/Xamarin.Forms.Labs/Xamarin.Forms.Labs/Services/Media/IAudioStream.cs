@@ -43,8 +43,8 @@ namespace Xamarin.Forms.Labs.Services.Media
 
         IEnumerable<int> SupportedSampleRates { get; }
 
-        ICommand Start { get; }
+        Task<bool> Start(int sampleRate);
 
-        ICommand Stop { get; }
+        Task Stop();
     }
 }

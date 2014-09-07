@@ -101,6 +101,9 @@
       <Link>Services\FontManager.designer.cs</Link>
       <DependentUpon>FontManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Xamarin.Forms.Labs\Services\IO\FileManager.cs">
+      <Link>Services\IO\FileManager.cs</Link>
+    </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
@@ -127,6 +130,7 @@
     <Compile Include="Device\Gyroscope.cs" />
     <Compile Include="Device\WindowsPhoneDevice.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\DeviceExtensions.cs" />
     <Compile Include="Extensions\FontExtensions.cs" />
     <Compile Include="Extensions\OrientationExtensions.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />
@@ -140,6 +144,7 @@
     <Compile Include="Services\Geolocation\Geolocator.cs" />
     <Compile Include="Services\Media\XnaMicrophone.cs" />
     <Compile Include="Services\Network.cs" />
+    <Compile Include="Services\NfcDevice.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\Media\MediaPicker.cs" />
     <Compile Include="Services\SoundService.cs" />

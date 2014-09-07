@@ -9,17 +9,17 @@ namespace Xamarin.Forms.Labs.Services.Media
 {
     public class WaveRecorder
     {
-        private StreamWriter streamWriter;
+        //private StreamWriter streamWriter;
         private BinaryWriter writer;
         private int byteCount;
         private IAudioStream stream;
 
         ~WaveRecorder()
         {
-            StopRecorder();
+            StopRecorder().Wait();
         }
 
-        public bool StartRecorder(IAudioStream stream, string fileName)
+        public async Task<bool> StartRecorder(IAudioStream stream, Stream fileStream, int sampleRate)
         {
             if (this.stream != null || stream == null)
             {
@@ -30,41 +30,31 @@ namespace Xamarin.Forms.Labs.Services.Media
 
             try
             {
-                //this.streamWriter = new StreamWriter(fileName, false);
-                this.writer = new BinaryWriter(this.streamWriter.BaseStream, Encoding.UTF8);
+                this.writer = new BinaryWriter(fileStream, Encoding.UTF8);
             }
             catch (Exception)
             {
                 return false;
             }
+
             this.byteCount = 0;
             this.stream.OnBroadcast += OnStreamBroadcast;
 
-            if (this.stream.Start.CanExecute(this))
-            {
-                this.stream.Start.Execute(this);
-                return true;
-            }
-
-            return false;
+            return await this.stream.Start(sampleRate);
         }
 
-        public void StopRecorder()
+        public async Task StopRecorder()
         {
             if (this.stream != null)
             {
                 this.stream.OnBroadcast -= OnStreamBroadcast;
-                if (this.stream.Stop.CanExecute(this))
-                {
-                    this.stream.Stop.Execute(this);
-                }
+                await this.stream.Stop();
             }
-
-            if (this.streamWriter != null && this.streamWriter.BaseStream.CanWrite)
+            if (this.writer != null && this.writer.BaseStream.CanWrite)
             {
                 this.WriteHeader();
-                this.streamWriter.Dispose();
-                this.streamWriter = null;
+                this.writer.Dispose();
+                this.writer = null;
             }
 
             this.stream = null;

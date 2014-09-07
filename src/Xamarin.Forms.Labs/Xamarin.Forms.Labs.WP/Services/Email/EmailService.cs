@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Phone.Tasks;
+using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services.Email;
+
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.WP.Services.Email.EmailService))]
 
 namespace Xamarin.Forms.Labs.WP.Services.Email
 {

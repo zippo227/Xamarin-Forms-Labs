@@ -6,6 +6,10 @@ using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.iOS.Services.Media;
 using Xamarin.Forms.Labs.iOS.Services;
+using System.Threading.Tasks;
+using MonoTouch.Foundation;
+using Xamarin.Forms.Labs.Services.IO;
+using System.IO.IsolatedStorage;
 
 namespace Xamarin.Forms.Labs
 {
@@ -19,6 +23,8 @@ namespace Xamarin.Forms.Labs
         private const string iPadExpression = "iPad([1-4]),([1-6])";
 
         private static IDevice device;
+
+        private IFileManager fileManager;
 
         [DllImport(MonoTouch.Constants.SystemLibrary)]
         static internal extern int sysctlbyname([MarshalAs(UnmanagedType.LPStr)] string property, IntPtr output, IntPtr oldLen, IntPtr newp, uint newlen);
@@ -182,6 +188,27 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
+        /// Gets the default microphone for the device
+        /// </summary>
+        public IAudioStream Microphone
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the file manager for the device.
+        /// </summary>
+        /// <value>Device file manager.</value>
+        public IFileManager FileManager
+        {
+            get
+            {
+                return this.fileManager ?? (this.fileManager = new FileManager(IsolatedStorageFile.GetUserStoreForApplication()));
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the name of the device.
         /// </summary>
         public string Name
@@ -220,6 +247,16 @@ namespace Xamarin.Forms.Labs
             {
                 return "Apple";
             }
+        }
+
+        /// <summary>
+        /// Starts the default app associated with the URI for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>The launch operation.</returns>
+        public Task<bool> LaunchUriAsync(Uri uri)
+        {
+            return Task.Run(() => UIApplication.SharedApplication.OpenUrl(new NSUrl(uri.ToString())));
         }
         #endregion
 

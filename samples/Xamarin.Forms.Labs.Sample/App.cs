@@ -6,7 +6,6 @@ using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Sample.Pages.Controls;
 using Xamarin.Forms.Labs.Sample.Pages.Controls.Charts;
 using Xamarin.Forms.Labs.Sample.Pages.Services;
-using Xamarin.Forms.Labs.Sample.ViewModel;
 using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.Sample
@@ -51,6 +50,7 @@ namespace Xamarin.Forms.Labs.Sample
             ViewFactory.Register<CacheServicePage, CacheServiceViewModel>();
             ViewFactory.Register<SoundPage, SoundServiceViewModel>();
             ViewFactory.Register<RepeaterViewPage, RepeaterViewViewModel>();
+            ViewFactory.Register<WaveRecorderPage, WaveRecorderViewModel>();
 
             var mainTab = new ExtendedTabbedPage()
             {
@@ -106,7 +106,9 @@ namespace Xamarin.Forms.Labs.Sample
                     "Cache",
                     "Sound",
                     "Bluetooth",
-                    "FontManager"
+                    "FontManager",
+                    "NFC",
+                    //"WaveRecorder"
                 }
             };
 
@@ -146,6 +148,12 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "fontmanager":
                         await mainPage.Navigation.PushAsync(new FontManagerPage(Resolver.Resolve<IDisplay>()));
+                        break;
+                    case "nfc":
+                        await mainPage.Navigation.PushAsync(new NfcDevicePage());
+                        break;
+                    case "waverecorder":
+                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<WaveRecorderViewModel>());
                         break;
                     default:
                         break;
