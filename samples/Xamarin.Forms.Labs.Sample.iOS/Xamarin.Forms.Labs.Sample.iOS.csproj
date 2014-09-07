@@ -32,13 +32,6 @@
     <MtouchI18n>
     </MtouchI18n>
     <MtouchSdkVersion>7.1</MtouchSdkVersion>
-    <MtouchLink>SdkOnly</MtouchLink>
-    <MtouchProfiling>False</MtouchProfiling>
-    <MtouchFastDev>False</MtouchFastDev>
-    <MtouchEnableGenericValueTypeSharing>True</MtouchEnableGenericValueTypeSharing>
-    <MtouchUseLlvm>False</MtouchUseLlvm>
-    <MtouchUseThumb>False</MtouchUseThumb>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -142,11 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
-    <BundleResource Include="Resources\Fonts\Roboto-Light.ttf">
+    <BundleResource Include="Resources\fonts\Roboto-Light.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Resources\BusyEarnin.mp3" />
     <BundleResource Include="Resources\ad16.jpg" />
+    <BundleResource Include="Resources\fonts\Open 24 Display St.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -157,10 +151,9 @@
     <InterfaceDefinition Include="SensorStoryboardController_iPhone.storyboard" />
     <InterfaceDefinition Include="SensorStoryboardController_iPad.storyboard" />
     <None Include="packages.config" />
-    <BundleResource Include="Resources\Fonts\fontawesome-webfont.ttf">
+    <BundleResource Include="Resources\fonts\fontawesome-webfont.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
-    <Content Include="Resources\Fonts\Open 24 Display St.ttf" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
