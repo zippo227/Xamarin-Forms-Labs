@@ -21,6 +21,7 @@ namespace Xamarin.Forms.Labs.Droid
             var control = Control;
 
             UpdateUi(view, control);
+
         }
 
         void UpdateUi(ExtendedLabel view, TextView control)
@@ -57,6 +58,7 @@ namespace Xamarin.Forms.Labs.Droid
             {
                 control.PaintFlags = control.PaintFlags | PaintFlags.StrikeThruText;
             }
+
         }
 
         private Typeface TrySetFont(string fontName)

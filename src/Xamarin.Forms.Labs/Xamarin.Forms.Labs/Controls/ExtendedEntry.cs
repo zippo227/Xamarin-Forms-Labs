@@ -23,6 +23,12 @@
         /// </summary>
         public static readonly BindableProperty HasBorderProperty =
             BindableProperty.Create("HasBorder", typeof(bool), typeof(ExtendedEntry), true);
+
+		/// <summary>
+		/// The PlaceholderTextColor property
+		/// </summary>
+		public static readonly BindableProperty PlaceholderTextColorProperty =
+			BindableProperty.Create("PlaceholderTextColor", typeof(Color), typeof(ExtendedEntry), Color.Default);
     
         /// <summary>
         /// Gets or sets the Font
@@ -50,5 +56,14 @@
             get { return (bool)GetValue(HasBorderProperty); }
             set { SetValue(HasBorderProperty, value); }
         }
+
+		/// <summary>
+		/// Sets color for placeholder text
+		/// </summary>
+		public Color PlaceholderTextColor
+		{
+			get { return (Color)GetValue(PlaceholderTextColorProperty); }
+			set { SetValue(PlaceholderTextColorProperty, value); }
+		}
     }
 }

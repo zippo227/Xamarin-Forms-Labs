@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.iOS.Controls;
 using Xamarin.Forms.Platform.iOS;
+using MonoTouch.Foundation;
 
 [assembly: ExportRenderer(typeof(ExtendedEntry), typeof(ExtendedEntryRenderer))]
 
@@ -31,6 +32,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             SetFont(view);
             SetTextAlignment(view);
             SetBorder(view);
+			SetPlaceholderTextColor(view);
 
             ResizeHeight();
         }
@@ -54,6 +56,8 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
             if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "HasBorder")
                 SetBorder(view);
+			if(string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "PlaceholderTextColor" || e.PropertyName == "Placeholder")
+				SetPlaceholderTextColor(view);
 
             ResizeHeight();
         }
@@ -99,5 +103,17 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
             Element.HeightRequest = height;
         }
+
+		void SetPlaceholderTextColor(ExtendedEntry view)
+		{
+			/*
+UIColor *color = [UIColor lightTextColor];
+YOURTEXTFIELD.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"PlaceHolder Text" attributes:@{NSForegroundColorAttributeName: color}];
+			*/
+			if(string.IsNullOrEmpty(view.Placeholder) == false && view.PlaceholderTextColor != Color.Default) {
+				NSAttributedString placeholderString = new NSAttributedString(view.Placeholder, new UIStringAttributes(){ ForegroundColor = view.PlaceholderTextColor.ToUIColor() });
+				Control.AttributedPlaceholder = placeholderString;
+			}
+		}
     }
 }
