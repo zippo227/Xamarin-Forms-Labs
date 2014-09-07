@@ -122,6 +122,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-Light.ttf" />
+    <Content Include="Assets\Fonts\Open 24 Display St.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">

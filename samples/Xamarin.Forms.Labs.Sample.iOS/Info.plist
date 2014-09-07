@@ -39,7 +39,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/Roboto-Light.ttf</string>
-    <string>Fonts/fontawesome-webfont.ttf</string>
+		<string>Fonts/Open 24 Display St.ttf</string>
+		<string>Fonts/fontawesome-webfont.ttf</string>
 	</array>
 </dict>
 </plist>
