@@ -139,6 +139,7 @@
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
     <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
+    <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -193,4 +194,7 @@
       <UserProperties DocumentXCommentEditorState="&lt;HtmlEditState&gt;&#xA;  &lt;Attributes /&gt;&#xA;&lt;/HtmlEditState&gt;" />
     </VisualStudio>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Controls\ExtendedEntry\" />
+  </ItemGroup>
 </Project>
