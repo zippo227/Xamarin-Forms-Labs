@@ -68,6 +68,7 @@
     <Compile Include="Pages\Controls\RepeaterViewPage.cs" />
     <Compile Include="Pages\Controls\ExtendedSliderPage.cs" />
     <Compile Include="Pages\Controls\SegmentPage.cs" />
+    <Compile Include="Pages\Services\EmailPage.cs" />
     <Compile Include="Pages\Services\WaveRecorderPage.xaml.cs">
       <DependentUpon>WaveRecorderPage.xaml</DependentUpon>
     </Compile>

@@ -108,7 +108,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "Bluetooth",
                     "FontManager",
                     "NFC",
-                    //"WaveRecorder"
+                    //"WaveRecorder",
+                    "Email"
                 }
             };
 
@@ -154,6 +155,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "waverecorder":
                         await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<WaveRecorderViewModel>());
+                        break;
+                    case "email":
+                        await mainPage.Navigation.PushAsync(new EmailPage());
                         break;
                     default:
                         break;
