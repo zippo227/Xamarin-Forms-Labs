@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms.Labs.Charting.Events;
+using System.Reflection;
 
 [assembly: InternalsVisibleTo("Xamarin.Forms.Labs.Charting.Droid"), InternalsVisibleTo("Xamarin.Forms.Labs.Charting.WP"), InternalsVisibleTo("Xamarin.Forms.Labs.Charting.iOS")]
 namespace Xamarin.Forms.Labs.Charting.Controls
@@ -19,7 +20,7 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         #endregion
 
         #region BindableProperties
-        public static readonly BindableProperty DataSourceProperty = BindableProperty.Create("DataSource", typeof(ChartDataSet), typeof(Chart), default(ChartDataSet), BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty DataSourceProperty = BindableProperty.Create("DataSource", typeof(IEnumerable<IEnumerable<object>>), typeof(Chart), default(IEnumerable<IEnumerable<object>>), BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(Chart), Color.White, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty SeriesProperty = BindableProperty.Create("Series", typeof(SeriesCollection), typeof(Chart), default(SeriesCollection), BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty SpacingProperty = BindableProperty.Create("Spacing", typeof(double), typeof(Chart), 5.0, BindingMode.OneWay, null, null, null, null);
@@ -30,11 +31,11 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         /// <summary>
         /// Gets or sets the datasource of the chart's data to display.
         /// </summary>
-        public ChartDataSet DataSource
+        public IEnumerable<IEnumerable<object>> DataSource
         {
             get
             {
-                return (ChartDataSet)base.GetValue(Chart.DataSourceProperty);
+                return (IEnumerable<IEnumerable<object>>)base.GetValue(Chart.DataSourceProperty);
             }
             set
             {
@@ -162,21 +163,32 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             int noOfBars = 0;
             double highestValue = 0;
 
-            if(DataSource != default(ChartDataSet))
+            if (DataSource != default(IEnumerable<IEnumerable>))
             {
-                while (Series.Count != DataSource.Tables.Count)
+                while (Series.Count < DataSource.Count())
                     Series.Add(new Series());
 
-                for(int i = 0; i < DataSource.Tables.Count; i++)
+                for (int i = 0; i < DataSource.Count(); i++)
                 {
-                    ChartDataTable table = DataSource.Tables[i];
-                    Series series = Series[i];
-                    series.Points = new DataPointCollection();
-
-                    foreach(object[] val in table.Rows)
+                    IEnumerable<object> seriesValues = DataSource.ElementAt(i);
+                    // There should be at least one value to access its type and properties.
+                    if (seriesValues.Count() > 1)
                     {
-                        // Currently only supporting two array values (Y-axis, X-axis)
-                        series.Points.Add(new DataPoint(val[0].ToString(), Convert.ToDouble(val[1])));
+                        IEnumerable<PropertyInfo> properties = seriesValues.ElementAt(1).GetType().GetTypeInfo().DeclaredProperties;
+                        // There should be at least two accessible properties on the type.
+                        if (properties.Count() >= 2)
+                        {
+                            Series series = Series[i];
+                            series.Points = new DataPointCollection();
+
+                            foreach (var val in seriesValues)
+                            {
+                                // Currently DataPoint expects a string (X) and a double (Y).
+                                string xValue = properties.ElementAt(0).GetValue(val, null).ToString();
+                                double yValue = Convert.ToDouble(properties.ElementAt(1).GetValue(val, null));
+                                series.Points.Add(new DataPoint(xValue, yValue));
+                            }
+                        }
                     }
                 }
             }

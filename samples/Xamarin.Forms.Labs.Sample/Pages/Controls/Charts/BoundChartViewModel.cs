@@ -11,13 +11,16 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls.Charts
 {
     public class BoundChartViewModel : INotifyPropertyChanged
     {
+        #region commands
         public ICommand ChangeColorYellowCommand { get; set; }
         public ICommand ChangeColorGreenCommand { get; set; }
         public ICommand ChangeColorWhiteCommand { get; set; }
         public ICommand ChangeSourceCommand { get; set; }
+        #endregion
 
         public BoundChartViewModel()
         {
+            #region commands
             ChangeColorYellowCommand = new Command<string>((color) =>
             {
                 this.Color = Xamarin.Forms.Color.Yellow;
@@ -42,7 +45,6 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls.Charts
             {
                 return Color != Color.White;
             });
-            Color = Color.Yellow;
 
             ChangeSourceCommand = new Command(() =>
             {
@@ -52,36 +54,40 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls.Charts
             {
                 return true;
             });
+            #endregion
+
+            Color = Color.Yellow;
 
             this.ChartData = getChartData();
-            
+
         }
 
-        private ChartDataSet getChartData()
+        private List<List<Tuple<string, double>>> getChartData()
         {
             Random rnd = new Random();
 
-            ChartDataTable table1 = new ChartDataTable();
-            table1.Columns.Add(new ChartColumn("Month"));
-            table1.Rows.Add(new object[] { "Jan", rnd.Next(0,100) });
-            table1.Rows.Add(new object[] { "Feb", rnd.Next(0, 100) });
-            table1.Rows.Add(new object[] { "March", rnd.Next(0, 100) });
-
-            ChartDataTable table2 = new ChartDataTable();
-            table2.Columns.Add(new ChartColumn("Month"));
-            table2.Rows.Add(new object[] { "Jan", rnd.Next(0, 100) });
-            table2.Rows.Add(new object[] { "Feb", rnd.Next(0, 100) });
-            table2.Rows.Add(new object[] { "March", rnd.Next(0, 100) });
-
-            ChartDataTable table3 = new ChartDataTable();
-            table3.Columns.Add(new ChartColumn("Month"));
-            table3.Rows.Add(new object[] { "Jan", rnd.Next(0, 100) });
-            table3.Rows.Add(new object[] { "Feb", rnd.Next(0, 100) });
-            table3.Rows.Add(new object[] { "March", rnd.Next(0, 100) });
-
-            return new ChartDataSet()
+            var seriesValues1 = new List<Tuple<string, double>>()
             {
-                Tables = new List<ChartDataTable>() { table1, table2, table3 }
+                new Tuple<string, double>("Jan",   rnd.Next(0,100)),
+                new Tuple<string, double>("Feb",   rnd.Next(0,100)),
+                new Tuple<string, double>("March", rnd.Next(0,100))
+            };
+            var seriesValues2 = new List<Tuple<string, double>>()
+            {
+                new Tuple<string, double>("Jan",   rnd.Next(0,100)),
+                new Tuple<string, double>("Feb",   rnd.Next(0,100)),
+                new Tuple<string, double>("March", rnd.Next(0,100))
+            };
+            var seriesValues3 = new List<Tuple<string, double>>()
+            {
+                new Tuple<string, double>("Jan",   rnd.Next(0,100)),
+                new Tuple<string, double>("Feb",   rnd.Next(0,100)),
+                new Tuple<string, double>("March", rnd.Next(0,100))
+            };
+
+            return new List<List<Tuple<string, double>>>()
+            {
+                seriesValues1, seriesValues2, seriesValues3
             };
         }
 
@@ -94,7 +100,7 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls.Charts
             }
             set
             {
-                if(_color != value)
+                if (_color != value)
                 {
                     _color = value;
                     ((Command)this.ChangeColorYellowCommand).ChangeCanExecute();
@@ -104,9 +110,9 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls.Charts
                 }
             }
         }
-        
-        private ChartDataSet _chartData;
-        public ChartDataSet ChartData
+
+        private List<List<Tuple<string, double>>> _chartData;
+        public List<List<Tuple<string, double>>> ChartData
         {
             get
             {
