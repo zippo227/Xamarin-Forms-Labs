@@ -127,7 +127,7 @@ namespace Xamarin.Forms.Labs.Controls
             var control = (obj as AutoCompleteView);
 
             control.btnSearch.IsEnabled = !string.IsNullOrEmpty(newPlaceHolderValue);
-            string cleanedNewPlaceHolderValue = Regex.Replace(newPlaceHolderValue.ToLowerInvariant(), @"\s+", string.Empty);
+            string cleanedNewPlaceHolderValue = Regex.Replace((newPlaceHolderValue ?? "").ToLowerInvariant(), @"\s+", string.Empty);
             if (!string.IsNullOrEmpty(cleanedNewPlaceHolderValue) && control.Sugestions != null)
             {
                 var filteredsugestions = control.Sugestions.Where(x =>

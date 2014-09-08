@@ -19,61 +19,13 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         {
         }
 
-        private GridDataSource dataSource;
-
-        private GridDataSource DataSource {
-            get {
-                return dataSource ??
-                (dataSource =
-                        new GridDataSource (this.GetCell, this.RowsInSection));
-            }
-        }
-
-        private CollectionViewDelegate gridViewDelegate;
-
-        private CollectionViewDelegate GridViewDelegate {
-            get {
-                return gridViewDelegate ??
-                (gridViewDelegate =
-                        new CollectionViewDelegate (this.RowSelected));
-            }
-        }
-
-        public int RowsInSection (UICollectionView collectionView, int section)
-        {
-            return (this.Element.ItemsSource as ICollection).Count;
-        }
-
-        public void RowSelected (UICollectionView tableView, NSIndexPath indexPath)
-        {
-            this.Element.InvokeItemSelectedEvent (tableView, this.Element.ItemsSource.Cast<object> ().ElementAt (indexPath.Item));
-        }
-
-        public UICollectionViewCell GetCell (UICollectionView collectionView, NSIndexPath indexPath)
-        {
-            var item = this.Element.ItemsSource.Cast<object> ().ElementAt (indexPath.Row);
-            var viewCellBinded = (Element.ItemTemplate.CreateContent () as ViewCell);
-            viewCellBinded.BindingContext = item;
-
-            return GetCell (collectionView, viewCellBinded, indexPath);
-        }
-
-        protected virtual UICollectionViewCell GetCell (UICollectionView collectionView, ViewCell item, NSIndexPath indexPath)
-        {
-            var collectionCell = collectionView.DequeueReusableCell (new NSString (GridViewCell.Key), indexPath) as GridViewCell;
-
-            collectionCell.ViewCell = item;
-
-            return collectionCell as UICollectionViewCell;
-        }
-
-
         protected override void OnElementChanged (ElementChangedEventArgs<GridView> e)
         {
             base.OnElementChanged (e);
 
             var collectionView = new GridCollectionView ();
-
+            collectionView.AllowsMultipleSelection = false;
+            collectionView.SelectionEnable = e.NewElement.SelectionEnabled;
             //set padding
             collectionView.ContentInset = new UIEdgeInsets ((float)Element.Padding.Top, (float)Element.Padding.Left, (float)Element.Padding.Bottom, (float)Element.Padding.Right);
 
@@ -85,8 +37,8 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             this.Unbind (e.OldElement);
             this.Bind (e.NewElement);
 
-            collectionView.DataSource = this.DataSource;
-            collectionView.Delegate = this.GridViewDelegate;
+            collectionView.Source = this.DataSource;
+            //collectionView.Delegate = this.GridViewDelegate;
 
             base.SetNativeControl (collectionView);
 
@@ -134,63 +86,62 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
         private void DataCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            Control.ReloadData ();
+            try {
+                if(Control != null)
+                    Control.ReloadData();
+            } catch (Exception ex) {
+
+            }
         }
 
-    }
+        private GridDataSource dataSource;
 
-    public class GridDataSource : UICollectionViewDataSource
-    {
-        public delegate UICollectionViewCell OnGetCell (UICollectionView tableView, NSIndexPath indexPath);
+        private GridDataSource DataSource {
+            get {
+                return dataSource ??
+                (dataSource =
+                        new GridDataSource (this.GetCell, this.RowsInSection,this.ItemSelected));
+            }
+        }
 
-        public delegate int OnRowsInSection (UICollectionView tableView, int section);
+        private GridViewDelegate gridViewDelegate;
 
-        private readonly OnGetCell onGetCell;
-        private readonly OnRowsInSection onRowsInSection;
+        private GridViewDelegate GridViewDelegate {
+            get {
+                return gridViewDelegate ??
+                (gridViewDelegate =
+                        new GridViewDelegate (this.ItemSelected));
+            }
+        }
 
-        public GridDataSource (OnGetCell onGetCell, OnRowsInSection onRowsInSection)
+        public int RowsInSection (UICollectionView collectionView, int section)
         {
-            this.onGetCell = onGetCell;
-            this.onRowsInSection = onRowsInSection;
+            return (this.Element.ItemsSource as ICollection).Count;
         }
 
-        #region implemented abstract members of UICollectionViewDataSource
-
-        public override int GetItemsCount (UICollectionView collectionView, int section)
+        public void ItemSelected (UICollectionView tableView, NSIndexPath indexPath)
         {
-            return onRowsInSection (collectionView, section);
+            var item = this.Element.ItemsSource.Cast<object>().ElementAt(indexPath.Row);
+            this.Element.InvokeItemSelectedEvent(this, item);
+
         }
 
-        public override UICollectionViewCell GetCell (UICollectionView collectionView, NSIndexPath indexPath)
+        public UICollectionViewCell GetCell (UICollectionView collectionView, NSIndexPath indexPath)
         {
-            return onGetCell (collectionView, indexPath);
+            var item = this.Element.ItemsSource.Cast<object> ().ElementAt (indexPath.Row);
+            var viewCellBinded = (Element.ItemTemplate.CreateContent () as ViewCell);
+            viewCellBinded.BindingContext = item;
+
+            return GetCell (collectionView, viewCellBinded, indexPath);
         }
 
-        #endregion
-
-
-    }
-
-    public class CollectionViewDelegate : UICollectionViewDelegate
-    {
-        public delegate void OnItemSelected (UICollectionView tableView, NSIndexPath indexPath);
-
-        private readonly OnItemSelected onItemSelected;
-
-        public CollectionViewDelegate (OnItemSelected onItemSelected)
+        protected virtual UICollectionViewCell GetCell (UICollectionView collectionView, ViewCell item, NSIndexPath indexPath)
         {
-            this.onItemSelected = onItemSelected;
-        }
+            var collectionCell = collectionView.DequeueReusableCell (new NSString (GridViewCell.Key), indexPath) as GridViewCell;
 
-        public override void ItemSelected (UICollectionView collectionView, NSIndexPath indexPath)
-        {
-            onItemSelected (collectionView, indexPath);
-        }
+            collectionCell.ViewCell = item;
 
-        public override void ItemHighlighted(UICollectionView collectionView, NSIndexPath indexPath)
-        {
-            this.onItemSelected.Invoke(collectionView, indexPath);
+            return collectionCell as UICollectionViewCell;
         }
-
-    }
+           }
 }

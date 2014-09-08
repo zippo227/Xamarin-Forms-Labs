@@ -136,6 +136,9 @@
     <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
     <Compile Include="Controls\ImageGallery\ImageGalleryView.cs" />
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
+    <Compile Include="Controls\GridView\GridDataSource.cs" />
+    <Compile Include="Controls\GridView\GridViewDelegate.cs" />
+    <Compile Include="Controls\GridView\GridViewCell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
