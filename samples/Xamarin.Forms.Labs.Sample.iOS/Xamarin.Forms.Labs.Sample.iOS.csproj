@@ -140,7 +140,6 @@
     </BundleResource>
     <BundleResource Include="Resources\BusyEarnin.mp3" />
     <BundleResource Include="Resources\ad16.jpg" />
-    <BundleResource Include="Resources\fonts\Open 24 Display St.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -154,6 +153,7 @@
     <BundleResource Include="Resources\fonts\fontawesome-webfont.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
+    <BundleResource Include="Resources\fonts\Open 24 Display St.ttf" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>

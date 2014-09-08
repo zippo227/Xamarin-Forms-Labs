@@ -36,9 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\ChartColumn.cs" />
-    <Compile Include="Controls\ChartDataSet.cs" />
-    <Compile Include="Controls\ChartDataTable.cs" />
     <Compile Include="Events\DoubleDrawingData.cs" />
     <Compile Include="Controls\Chart.cs" />
     <Compile Include="Controls\ChartType.cs" />
