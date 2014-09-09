@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Serialization;
+
+[assembly: 
+    InternalsVisibleTo("Xamarin.Forms.Labs.Droid"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.iOS"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.WP8")]
 
 namespace Xamarin.Forms.Labs.Controls
 {
@@ -116,20 +122,6 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
-        public bool TryGetAction(string name, out Action<string> action)
-        {
-            return this.registeredActions.TryGetValue(name, out action);
-        }
-
-        public void OnLoadFinished(object sender, EventArgs e)
-        {
-            var handler = this.LoadFinished;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
         public void CallJsFunction(string funcName, params object[] parameters)
         {
             var builder = new StringBuilder();
@@ -151,9 +143,24 @@ namespace Xamarin.Forms.Labs.Controls
             this.InjectJavaScript(builder.ToString());
         }
 
-        public EventHandler<string> JavaScriptLoadRequested;
-        public EventHandler<string> LoadFromContentRequested;
-        public EventHandler<string> LoadContentRequested;
         public EventHandler LoadFinished;
+
+        internal EventHandler<string> JavaScriptLoadRequested;
+        internal EventHandler<string> LoadFromContentRequested;
+        internal EventHandler<string> LoadContentRequested;
+
+        internal bool TryGetAction(string name, out Action<string> action)
+        {
+            return this.registeredActions.TryGetValue(name, out action);
+        }
+
+        internal void OnLoadFinished(object sender, EventArgs e)
+        {
+            var handler = this.LoadFinished;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
     }
 }

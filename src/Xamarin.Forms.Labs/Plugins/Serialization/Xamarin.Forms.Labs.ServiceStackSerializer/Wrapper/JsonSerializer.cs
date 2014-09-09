@@ -47,7 +47,6 @@ namespace Xamarin.Forms.Labs.ServiceStackSerializer
             if (accurateDateTime)
             {
                 JsConfig.DateHandler = JsonDateHandler.ISO8601;
-
             }
         }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Xamarin.Forms.Labs.ServiceStackSerializer.Common;
 
 namespace ServiceStack.Text.Common
 {
@@ -75,6 +76,12 @@ namespace ServiceStack.Text.Common
 
                 if (type.IsOrHasGenericInterfaceTypeOf(typeof(IEnumerable<>)))
                     return DeserializeEnumerable<T, TSerializer>.Parse;
+
+                if (type.Name.Contains("Tuple`"))
+                {
+                    return new ParseStringDelegate(x => DeserializeTuple<TSerializer>.Parse(type, x));
+                }
+
             }
 
 #if NET40
