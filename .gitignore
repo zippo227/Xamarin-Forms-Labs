@@ -184,7 +184,4 @@ src/Xamarin.Forms.Labs/Xamarin.Forms.Labs.userprefs
 *.userprefs
 *.jf
 
-ReleaseBuild/.monotouch_uploaded
-ReleaseBuild/XamarinFormsLabsSampleiOS*
-
-ReleaseBuild/XamarinFormsLabsSampleiOS.exe
+ReleaseBuild/*
