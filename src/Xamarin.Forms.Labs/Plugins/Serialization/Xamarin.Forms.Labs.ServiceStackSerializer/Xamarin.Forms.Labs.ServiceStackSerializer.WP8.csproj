@@ -106,6 +106,7 @@
     <Compile Include="Common\DeserializeKeyValuePair.cs" />
     <Compile Include="Common\DeserializeListWithElements.cs" />
     <Compile Include="Common\DeserializeSpecializedCollections.cs" />
+    <Compile Include="Common\DeserializeTuple.cs" />
     <Compile Include="Common\DeserializeType.cs" />
     <Compile Include="Common\DeserializeTypeRef.cs" />
     <Compile Include="Common\DeserializeTypeRefJson.cs" />
