@@ -3,7 +3,7 @@
   <metadata>
     <id>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3</id>
     <title>Xamarin Forms Labs Serialization ServiceStackV3</title>
-    <tags>xamarin,xamarin forms,xamarin forms labs, pcl, md5, Ioc, ServiceStackV3, serialization</tags>
+    <tags>xamarin,xamarin forms labs, pcl, md5, Ioc, ServiceStackV3, serialization</tags>
     <version>1.1.1-beta7</version>
     <authors>Xamarin Forms Labs Team</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
