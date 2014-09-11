@@ -197,7 +197,8 @@ namespace Xamarin.Forms.Labs.Sample
                     "Slider",
                     "Segment",
                     "Popup",
-                    "Entries"
+                    "Entries",
+					"Separators"
                 }
             };
 
@@ -259,6 +260,9 @@ namespace Xamarin.Forms.Labs.Sample
                     case "entries":
                         await mainPage.Navigation.PushAsync(new ExtendedEntryPage());
                         break;
+					case "separators":
+						await mainPage.Navigation.PushAsync(new SeparatorPage());
+						break;
                     default:
                         break;
                 }
