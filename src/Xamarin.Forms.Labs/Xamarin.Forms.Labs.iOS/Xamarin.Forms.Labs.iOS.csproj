@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Controls\ExtendedEntryCell\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -141,6 +142,7 @@
     <Compile Include="Controls\GridView\GridDataSource.cs" />
     <Compile Include="Controls\GridView\GridViewDelegate.cs" />
     <Compile Include="Controls\GridView\GridViewCell.cs" />
+    <Compile Include="Controls\ExtendedEntryCell\ExtendedEntryCellRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
