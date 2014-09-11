@@ -37,7 +37,7 @@ namespace Xamarin.Forms.Labs
             this.Battery = new Battery();
             this.Accelerometer = new Accelerometer();
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
-            this.BluetoothHub = new BluetoothHub();
+            //this.BluetoothHub = new BluetoothHub();
 
             if (Labs.Gyroscope.IsSupported)
             {
@@ -181,11 +181,11 @@ namespace Xamarin.Forms.Labs
         /// Gets the bluetooth hub service.
         /// </summary>
         /// <value>The bluetooth hub service if available, otherwise null.</value>
-        public IBluetoothHub BluetoothHub
-        {
-            get;
-            private set;
-        }
+        //public IBluetoothHub BluetoothHub
+        //{
+        //    get;
+        //    private set;
+        //}
 
         /// <summary>
         /// Gets the default microphone for the device

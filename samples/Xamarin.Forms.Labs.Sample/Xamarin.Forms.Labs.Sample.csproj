@@ -76,7 +76,7 @@
       <DependentUpon>WebImagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Services\AbsoluteLayoutWithDisplayInfoPage.cs" />
-    <Compile Include="Pages\Services\BluetoothPage.cs" />
+    <None Include="Pages\Services\BluetoothPage.cs" />
     <Compile Include="Pages\Services\CameraPage.xaml.cs">
       <DependentUpon>CameraPage.xaml</DependentUpon>
     </Compile>
