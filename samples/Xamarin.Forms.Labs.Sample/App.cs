@@ -105,7 +105,7 @@ namespace Xamarin.Forms.Labs.Sample
                     "Display",
                     "Cache",
                     "Sound",
-                    "Bluetooth",
+                    //"Bluetooth",
                     "FontManager",
                     "NFC",
                     //"WaveRecorder",
@@ -144,9 +144,9 @@ namespace Xamarin.Forms.Labs.Sample
                     case "sound":
                         await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<SoundServiceViewModel>());
                         break;
-                    case "bluetooth":
-                        await mainPage.Navigation.PushAsync(new BluetoothPage());
-                        break;
+                    //case "bluetooth":
+                    //    await mainPage.Navigation.PushAsync(new BluetoothPage());
+                    //    break;
                     case "fontmanager":
                         await mainPage.Navigation.PushAsync(new FontManagerPage(Resolver.Resolve<IDisplay>()));
                         break;

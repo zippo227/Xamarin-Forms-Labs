@@ -27,13 +27,15 @@ namespace Xamarin.Forms.Labs.iOS
             return ImageSource.FromStream(new Func<Stream>(() => new MemoryStream(bytes)));
         }
 
-        public static UIImage AddText(this UIImage image, string text, PointF point, UIFont font, UIColor color)
+        public static UIImage AddText(this UIImage image, string text, PointF point, UIFont font, UIColor color, UITextAlignment alignment = UITextAlignment.Left)
         {
-            var label = new UILabel(new RectangleF(point, new SizeF(image.Size.Width - point.X, image.Size.Height - point.Y)))
+            var labelRect = new RectangleF(point, new SizeF(image.Size.Width - point.X, image.Size.Height - point.Y));
+            var label = new UILabel()
             { 
                 Font = font, 
                 Text = text,
-                TextColor = color
+                TextColor = color,
+                TextAlignment = alignment
             };
 
             var labelImage = label.ToNativeImage();
@@ -43,7 +45,7 @@ namespace Xamarin.Forms.Labs.iOS
             {
                 var rect = new RectangleF(new PointF(0, 0), image.Size);
                 context.DrawImage(rect, image.CGImage);
-                context.DrawImage(label.Bounds, labelImage.CGImage);
+                context.DrawImage(labelRect, labelImage.CGImage);
                 context.StrokePath();
                 return UIImage.FromImage(context.ToImage());
             }

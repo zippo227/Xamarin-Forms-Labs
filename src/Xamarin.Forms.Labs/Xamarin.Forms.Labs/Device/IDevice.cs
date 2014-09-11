@@ -61,7 +61,7 @@ namespace Xamarin.Forms.Labs
         /// Gets the bluetooth hub service.
         /// </summary>
         /// <value>The bluetooth hub service if available, otherwise null.</value>
-        IBluetoothHub BluetoothHub { get; }
+        // IBluetoothHub BluetoothHub { get; }
 
         /// <summary>
         /// Gets the default microphone for the device

@@ -267,6 +267,7 @@
     <Compile Include="TextExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\DeserializeTuple.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
