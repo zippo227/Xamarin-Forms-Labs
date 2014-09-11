@@ -62,7 +62,7 @@ namespace Xamarin.Forms.Labs.Sample
 			};
 			stackLayout.Children.Add(stackLabel2);
 			separator = new Separator() {
-				Color = Color.Navy,
+				Color = Color.Red,
 				StrokeType = StrokeType.Dashed
 
 			};
@@ -72,7 +72,7 @@ namespace Xamarin.Forms.Labs.Sample
 			};
 			stackLayout.Children.Add(stackLabel2);
 			separator = new Separator() {
-				Color = Color.Navy,
+				Color = Color.Red,
 				StrokeType = StrokeType.Dotted
 
 			};

@@ -140,6 +140,8 @@
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
     <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
     <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
+    <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
+    <Compile Include="Controls\Separator\SeparatorDroidView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -196,5 +198,6 @@
   </ProjectExtensions>
   <ItemGroup>
     <Folder Include="Controls\ExtendedEntry\" />
+    <Folder Include="Controls\Separator\" />
   </ItemGroup>
 </Project>
