@@ -162,7 +162,7 @@
       <Name>Xamarin.Forms.Labs.Services.TinyIOC.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.Unity\Xamarin.Forms.Labs.Services.Unity.csproj">
-      <Project>{a224c192-e8a2-436e-9d4c-130004ba411a}</Project>
+      <Project>{A224C192-E8A2-436E-9D4C-130004BA411A}</Project>
       <Name>Xamarin.Forms.Labs.Services.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\JsonNET\Xamarin.Forms.Labs.Services.Serialization.JsonNET.csproj">
@@ -174,7 +174,7 @@
       <Name>Xamarin.Forms.Labs.Services.Serialization.ProtoBuf</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\Xamarin.Forms.Labs.ServiceStackSerializer\Xamarin.Forms.Labs.ServiceStackSerializer.iOS.csproj">
-      <Project>{1137b5ac-2259-413c-a473-93721d2a7551}</Project>
+      <Project>{1137B5AC-2259-413C-A473-93721D2A7551}</Project>
       <Name>Xamarin.Forms.Labs.ServiceStackSerializer.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
