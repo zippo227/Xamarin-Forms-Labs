@@ -130,7 +130,14 @@ namespace Xamarin.Forms.Labs.Controls
 		protected override void OnPropertyChanged(string propertyName)
 		{
 			base.OnPropertyChanged(propertyName);
-			UpdateRequestedSize();
+			if(propertyName == ThicknessProperty.PropertyName ||
+			   propertyName == ColorProperty.PropertyName ||
+			   propertyName == SpacingBeforeProperty.PropertyName ||
+			   propertyName == SpacingAfterProperty.PropertyName ||
+			   propertyName == StrokeTypeProperty.PropertyName ||
+			   propertyName == OrientationProperty.PropertyName) {
+				UpdateRequestedSize();
+			}
 		}
 
 
