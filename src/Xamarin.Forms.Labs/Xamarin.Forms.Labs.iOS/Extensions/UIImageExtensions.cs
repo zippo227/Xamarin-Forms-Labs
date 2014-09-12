@@ -29,13 +29,17 @@ namespace Xamarin.Forms.Labs.iOS
 
         public static UIImage AddText(this UIImage image, string text, PointF point, UIFont font, UIColor color, UITextAlignment alignment = UITextAlignment.Left)
         {
-            var labelRect = new RectangleF(point, new SizeF(image.Size.Width - point.X, image.Size.Height - point.Y));
-            var label = new UILabel()
+            //var labelRect = new RectangleF(point, new SizeF(image.Size.Width - point.X, image.Size.Height - point.Y));
+            var h = text.StringHeight(font, image.Size.Width);
+            var labelRect = new RectangleF(point, new SizeF(image.Size.Width - point.X, h));
+
+            var label = new UILabel(labelRect)
             { 
                 Font = font, 
                 Text = text,
                 TextColor = color,
-                TextAlignment = alignment
+                TextAlignment = alignment,
+                BackgroundColor = UIColor.Clear
             };
 
             var labelImage = label.ToNativeImage();

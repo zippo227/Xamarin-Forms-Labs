@@ -109,6 +109,7 @@
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs">
       <SubType>Code</SubType>
