@@ -11,7 +11,7 @@
     <AssemblyName>XamarinFormsLabsSampleiOS</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\Xamarin.Forms.Labs\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>135622a7</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>3d38b1c2</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -114,6 +114,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Microsoft.Net.Http.2.2.28\lib\monotouch\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Microsoft.Net.Http.2.2.28\lib\monotouch\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
@@ -123,14 +132,17 @@
     <Reference Include="SQLite.Net.Platform.XamarinIOS">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\SQLite.Net.Platform.XamarinIOS.2.3.0\lib\monotouch\SQLite.Net.Platform.XamarinIOS.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.iOS">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform.iOS">
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +212,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <ItemGroup>
     <BundleResource Include="Resources\icon_facebook.png" />
   </ItemGroup>
@@ -235,6 +246,13 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6249-pre2\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6249-pre2\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+  </Target>
+  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
 </Project>
