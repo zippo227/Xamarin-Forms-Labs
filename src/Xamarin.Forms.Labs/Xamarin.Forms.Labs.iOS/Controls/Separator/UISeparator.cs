@@ -125,7 +125,7 @@ namespace Xamarin.Forms.Labs.iOS
 				context.SetLineDash(0, new float[]{ 6, 2 });
 				break;
 			case StrokeType.Dotted:
-				context.SetLineDash(0, new float[]{ 1, 1 });
+				context.SetLineDash(0, new float[]{ (float)this.Thickness, (float)this.Thickness});
 				break;
 			default:
 
