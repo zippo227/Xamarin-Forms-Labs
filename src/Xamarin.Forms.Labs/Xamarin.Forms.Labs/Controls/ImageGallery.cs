@@ -13,6 +13,8 @@ namespace Xamarin.Forms.Labs.Controls
 
         public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create ("ItemTemplate", typeof(DataTemplate), typeof(ImageGallery), null, BindingMode.OneWay, null, null, null, null);
 
+		public static readonly BindableProperty AspectProperty = BindableProperty.Create ("AspectProperty", typeof(Aspect), typeof(ImageGallery), Aspect.AspectFill, BindingMode.OneWay, null, null, null, null);
+
 
         // Properties
         //
@@ -33,6 +35,16 @@ namespace Xamarin.Forms.Labs.Controls
                 base.SetValue (ImageGallery.ItemTemplateProperty, value);
             }
         }
+
+
+		public Aspect Aspect {
+			get {
+				return (Aspect)base.GetValue(Image.AspectProperty);
+			}
+			set {
+				base.SetValue(Image.AspectProperty, value);
+			}
+		}
 
     }
 }

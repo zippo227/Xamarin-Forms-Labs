@@ -21,7 +21,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         {
             base.OnElementChanged (e);
 
-            var imageGalleryView = new ImageGalleryView (e.NewElement.ItemsSource as ObservableCollection<string>);
+			var imageGalleryView = new ImageGalleryView (e.NewElement.ItemsSource as ObservableCollection<string>,e.NewElement.Aspect);
             this.Bind (e.NewElement);
             base.SetNativeControl(imageGalleryView);
 
