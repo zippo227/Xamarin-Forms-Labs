@@ -51,6 +51,12 @@ namespace Xamarin.Forms.Labs.Mvvm
             }
         }
 
+        public Func<bool> BackPressDelegate
+        {
+            get;
+            set;
+        }
+
         #endregion Properties
 
         #region Event Handlers
