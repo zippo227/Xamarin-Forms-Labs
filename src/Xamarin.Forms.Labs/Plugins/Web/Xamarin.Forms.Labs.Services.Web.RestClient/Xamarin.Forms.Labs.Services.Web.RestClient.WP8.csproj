@@ -103,7 +103,7 @@
       <HintPath>..\..\..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
-      <HintPath>..\..\..\packages\Microsoft.Net.Http.2.2.27-beta\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
+      <HintPath>..\..\..\packages\Microsoft.Net.Http.2.2.28\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.WP8">
       <HintPath>..\..\..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Platform.WP8.dll</HintPath>
