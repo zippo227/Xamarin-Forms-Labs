@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.Views;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Labs.Controls;
 using Android.Widget;
@@ -19,10 +20,12 @@ namespace Xamarin.Forms.Labs.Droid
 			var control = Control;
 
             SetFont(view);
-			SetPlaceholderTextColor(view, control);
+            SetTextAlignment(view, Control);
+            SetBorder(view);
+            SetPlaceholderTextColor(view, control);
 		}
 
-		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+	    protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
 
@@ -34,6 +37,27 @@ namespace Xamarin.Forms.Labs.Droid
             if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
 				SetPlaceholderTextColor((ExtendedEntry)Element, Control);
 		}
+
+	    private void SetBorder(ExtendedEntry view)
+	    {
+	        
+	    }
+
+	    private void SetTextAlignment(ExtendedEntry view, EditText control)
+	    {
+            switch (view.XAlign)
+            {
+                case TextAlignment.Center:
+                    control.Gravity = GravityFlags.CenterHorizontal;
+                    break;
+                case TextAlignment.End:
+                    control.Gravity = GravityFlags.End;
+                    break;
+                case TextAlignment.Start:
+                    control.Gravity = GravityFlags.Start;
+                    break;
+            }
+        }
 
 	    private void SetFont(ExtendedEntry view)
 	    {
