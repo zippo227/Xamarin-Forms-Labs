@@ -21,7 +21,7 @@ namespace Xamarin.Forms.Labs.Droid
 
             SetFont(view);
             SetTextAlignment(view, Control);
-            SetBorder(view);
+            //SetBorder(view);
             SetPlaceholderTextColor(view, control);
 		}
 
@@ -40,7 +40,7 @@ namespace Xamarin.Forms.Labs.Droid
 
 	    private void SetBorder(ExtendedEntry view)
 	    {
-	        
+	        //HasBorder peroperty not suported on Android
 	    }
 
 	    private void SetTextAlignment(ExtendedEntry view, EditText control)
