@@ -9,7 +9,6 @@ using Xamarin.Forms.Platform.iOS;
 using MonoTouch.Foundation;
 
 [assembly: ExportRenderer(typeof(ExtendedEntry), typeof(ExtendedEntryRenderer))]
-
 namespace Xamarin.Forms.Labs.iOS.Controls
 {
     /// <summary>
@@ -48,16 +47,14 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
             var view = (ExtendedEntry)Element;
 
-            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Font")
+            if (e.PropertyName == ExtendedEntry.FontProperty.PropertyName)
                 SetFont(view);
-
-            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "XAlign")
+            if (e.PropertyName == ExtendedEntry.XAlignProperty.PropertyName)
                 SetTextAlignment(view);
-
-            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "HasBorder")
+            if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
                 SetBorder(view);
-			if(string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "PlaceholderTextColor" || e.PropertyName == "Placeholder")
-				SetPlaceholderTextColor(view);
+            if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
+                SetPlaceholderTextColor(view);
 
             ResizeHeight();
         }
