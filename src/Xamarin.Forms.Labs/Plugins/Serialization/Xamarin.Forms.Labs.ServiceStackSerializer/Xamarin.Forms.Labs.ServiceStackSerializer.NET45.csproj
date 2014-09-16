@@ -102,6 +102,7 @@
     <Compile Include="Common\DeserializeSpecializedCollections.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\DeserializeTuple.cs" />
     <Compile Include="Common\DeserializeType.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -25,6 +25,12 @@ namespace Xamarin.Forms.Labs.Mvvm
 
         Orientation Orientation { get; }
 
+        Func<bool> BackPressDelegate
+        {
+            get;
+            set;
+        }
+
         #endregion Properties
 
         #region Event Handlers

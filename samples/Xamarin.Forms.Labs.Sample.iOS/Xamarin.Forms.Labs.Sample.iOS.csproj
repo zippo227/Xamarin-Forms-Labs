@@ -11,7 +11,7 @@
     <AssemblyName>XamarinFormsLabsSampleiOS</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\Xamarin.Forms.Labs\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>33fca54e</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>3d38b1c2</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,19 +26,12 @@
     <MtouchDebug>True</MtouchDebug>
     <MtouchExtraArgs>
     </MtouchExtraArgs>
-    <MtouchArch>Default, ARMv7</MtouchArch>
+    <MtouchArch>ARMv7</MtouchArch>
     <MtouchUseSGen>True</MtouchUseSGen>
     <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
     <MtouchI18n>
     </MtouchI18n>
     <MtouchSdkVersion>7.1</MtouchSdkVersion>
-    <MtouchLink>SdkOnly</MtouchLink>
-    <MtouchProfiling>False</MtouchProfiling>
-    <MtouchFastDev>False</MtouchFastDev>
-    <MtouchEnableGenericValueTypeSharing>True</MtouchEnableGenericValueTypeSharing>
-    <MtouchUseLlvm>False</MtouchUseLlvm>
-    <MtouchUseThumb>False</MtouchUseThumb>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -142,7 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
-    <BundleResource Include="Resources\Fonts\Roboto-Light.ttf">
+    <BundleResource Include="Resources\fonts\Roboto-Light.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Resources\BusyEarnin.mp3" />
@@ -157,10 +150,10 @@
     <InterfaceDefinition Include="SensorStoryboardController_iPhone.storyboard" />
     <InterfaceDefinition Include="SensorStoryboardController_iPad.storyboard" />
     <None Include="packages.config" />
-    <BundleResource Include="Resources\Fonts\fontawesome-webfont.ttf">
+    <BundleResource Include="Resources\fonts\fontawesome-webfont.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
-    <Content Include="Resources\Fonts\Open 24 Display St.ttf" />
+    <BundleResource Include="Resources\fonts\Open 24 Display St.ttf" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
@@ -235,12 +228,13 @@
     <BundleResource Include="Resources\ToolbarGradient1.png" />
     <BundleResource Include="Resources\ToolbarGradient2.png" />
     <BundleResource Include="Resources\blackbackground.png" />
+    <BundleResource Include="Resources\bubbles.jpg" />
   </ItemGroup>
-  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
+  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
 </Project>

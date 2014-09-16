@@ -11,8 +11,8 @@
     <AssemblyName>Xamarin.Forms.Labs.Services.Serialization.ServiceStack.Droid</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <NuGetPackageImportStamp>9381b04a</NuGetPackageImportStamp>
-    <TargetFrameworkVersion>v4.1</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>4f9fd35a</NuGetPackageImportStamp>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -57,6 +57,7 @@
     <Compile Include="Common\DeserializeKeyValuePair.cs" />
     <Compile Include="Common\DeserializeListWithElements.cs" />
     <Compile Include="Common\DeserializeSpecializedCollections.cs" />
+    <Compile Include="Common\DeserializeTuple.cs" />
     <Compile Include="Common\DeserializeType.cs" />
     <Compile Include="Common\DeserializeTypeRef.cs" />
     <Compile Include="Common\DeserializeTypeRefJson.cs" />
@@ -131,14 +132,17 @@
       <Name>Xamarin.Forms.Labs</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
-  <Import Project="..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -4,7 +4,7 @@
     <id>Xamarin.Forms.Labs</id>
     <title>Xamarin Forms Labs - Core</title>
     <tags>Xamarin.Forms Labs Core</tags>
-    <version>1.1.1-beta7</version>
+    <version>1.1.1-beta10</version>
     <authors>Xamarin Forms Labs</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -20,13 +20,16 @@ Xamarin Forms Labs is a open source project that aims to provide a powerfull and
     <language>en-US</language>
     <dependencies>
       <group>
-        <dependency id="Xamarin.Forms" version="1.2.2.6238-pre1" />
+        <dependency id="Xamarin.Forms" version="1.2.3.6246-pre1" />
         <dependency id="ExifLib.PCL" version="1.0.0" />
       </group>
       <group targetFramework="wp80">
         <dependency id="WPControls" version="1.5.2" />
       </group>
     </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Mono.Android.Export" targetFramework="MonoAndroid" />
+    </frameworkAssemblies>
   </metadata>
   <files>
     <file src="..\..\..\..\ReleaseBuild\**\Xamarin.Forms.Labs.dll*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />

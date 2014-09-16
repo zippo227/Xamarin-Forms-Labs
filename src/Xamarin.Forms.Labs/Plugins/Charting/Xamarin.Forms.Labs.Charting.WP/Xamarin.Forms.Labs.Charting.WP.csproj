@@ -18,7 +18,7 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>18d3c0c6</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>c3cbadf2</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

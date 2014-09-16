@@ -105,10 +105,11 @@ namespace Xamarin.Forms.Labs.Sample
                     "Display",
                     "Cache",
                     "Sound",
-                    "Bluetooth",
+                    //"Bluetooth",
                     "FontManager",
                     "NFC",
-                    //"WaveRecorder"
+                    //"WaveRecorder",
+                    "Email"
                 }
             };
 
@@ -143,9 +144,9 @@ namespace Xamarin.Forms.Labs.Sample
                     case "sound":
                         await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<SoundServiceViewModel>());
                         break;
-                    case "bluetooth":
-                        await mainPage.Navigation.PushAsync(new BluetoothPage());
-                        break;
+                    //case "bluetooth":
+                    //    await mainPage.Navigation.PushAsync(new BluetoothPage());
+                    //    break;
                     case "fontmanager":
                         await mainPage.Navigation.PushAsync(new FontManagerPage(Resolver.Resolve<IDisplay>()));
                         break;
@@ -154,6 +155,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "waverecorder":
                         await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<WaveRecorderViewModel>());
+                        break;
+                    case "email":
+                        await mainPage.Navigation.PushAsync(new EmailPage());
                         break;
                     default:
                         break;
@@ -180,25 +184,25 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 ItemsSource = new List<string>
                 {
-                    "Calendar",
                     "Autocomplete",
                     "Buttons",
-                    "Labels",
-                    "Cells",
-                    "HybridWebView",
-                    "WebImage",
-                    "DynamicListView",
-                    "GridView",
-                    "ExtendedScrollView",
-                    "RepeaterView",
-                    "CheckBox",
-                    "ImageGallery",
+                    "Calendar",
                     "CameraView",
-                    "Slider",
-                    "Segment",
+                    "CheckBox",
+                    "DynamicListView",
+                    "ExtendedCells",
+                    "ExtendedEntries",
+                    "ExtendedLabels",
+                    "ExtendedScrollView",
+                    "ExtendedSlider",
+                    "GridView",
+                    "HybridWebView",
+                    "ImageGallery",
                     "Popup",
-                    "Entries",
-					"Separators"
+                    "RepeaterView",
+                    "Segment",
+					"Separator",
+                    "WebImage"
                 }
             };
 
@@ -206,63 +210,63 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 switch (e.SelectedItem.ToString().ToLower())
                 {
-                    case "calendar":
-                        await mainPage.Navigation.PushAsync(new CalendarPage());
-                        break;
                     case "autocomplete":
                         await mainPage.Navigation.PushAsync(new AutoCompletePage());
                         break;
                     case "buttons":
                         await mainPage.Navigation.PushAsync(new ButtonPage());
                         break;
-                    case "labels":
-                        await mainPage.Navigation.PushAsync(new ExtendedLabelPage());
-                        break;
-                    case "cells":
-                        await mainPage.Navigation.PushAsync(new ExtendedCellPage());
-                        break;
-                    case "hybridwebview":
-                        await mainPage.Navigation.PushAsync(new CanvasWebHybrid());
-                        break;
-                    case "webimage":
-                        await mainPage.Navigation.PushAsync(new WebImagePage());
-                        break;
-                    case "dynamiclistview":
-                        await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.DynamicList.DynamicListView());
-                        break;
-                    case "gridview":
-                        await mainPage.Navigation.PushAsync(new GridViewPage());
-                        break;
-                    case "extendedscrollview":
-                        await mainPage.Navigation.PushAsync(new Pages.Controls.ExtendedScrollView());
-                        break;
-                    case "repeaterview":
-                        await mainPage.Navigation.PushAsync(new RepeaterViewPage());
-                        break;
-                    case "checkbox":
-                        await mainPage.Navigation.PushAsync(new CheckBoxPage());
-                        break;
-                    case "imagegallery":
-                        await mainPage.Navigation.PushAsync(new Pages.Controls.ImageGallery());
+                    case "calendar":
+                        await mainPage.Navigation.PushAsync(new CalendarPage());
                         break;
                     case "cameraview":
                         await mainPage.Navigation.PushAsync(new CameraViewPage());
                         break;
-                    case "slider":
+                    case "checkbox":
+                        await mainPage.Navigation.PushAsync(new CheckBoxPage());
+                        break;
+                    case "dynamiclistview":
+                        await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.DynamicList.DynamicListView());
+                        break;
+                    case "extendedcells":
+                        await mainPage.Navigation.PushAsync(new ExtendedCellPage());
+                        break;
+                    case "extendedentries":
+                        await mainPage.Navigation.PushAsync(new ExtendedEntryPage());
+                        break;
+                    case "extendedlabels":
+                        await mainPage.Navigation.PushAsync(new ExtendedLabelPage());
+                        break;
+                    case "extendedscrollview":
+                        await mainPage.Navigation.PushAsync(new Pages.Controls.ExtendedScrollView());
+                        break;
+                    case "extendedslider":
                         await mainPage.Navigation.PushAsync(new ExtendedSliderPage());
                         break;
-                    case "segment":
-                        await mainPage.Navigation.PushAsync(new SegmentPage());
+                    case "gridview":
+                        await mainPage.Navigation.PushAsync(new GridViewPage());
+                        break;
+                    case "hybridwebview":
+                        await mainPage.Navigation.PushAsync(new CanvasWebHybrid());
+                        break;
+                    case "imagegallery":
+                        await mainPage.Navigation.PushAsync(new Pages.Controls.ImageGallery());
                         break;
                     case "popup":
                         await mainPage.Navigation.PushAsync(new PopupPage());
                         break;
-                    case "entries":
-                        await mainPage.Navigation.PushAsync(new ExtendedEntryPage());
+                    case "repeaterview":
+                        await mainPage.Navigation.PushAsync(new RepeaterViewPage());
                         break;
-					case "separators":
+                    case "segment":
+                        await mainPage.Navigation.PushAsync(new SegmentPage());
+                        break;
+					case "separator":
 						await mainPage.Navigation.PushAsync(new SeparatorPage());
 						break;
+                    case "webimage":
+                        await mainPage.Navigation.PushAsync(new WebImagePage());
+                        break;
                     default:
                         break;
                 }

@@ -52,6 +52,7 @@
     <Compile Include="Common\DeserializeKeyValuePair.cs" />
     <Compile Include="Common\DeserializeListWithElements.cs" />
     <Compile Include="Common\DeserializeSpecializedCollections.cs" />
+    <Compile Include="Common\DeserializeTuple.cs" />
     <Compile Include="Common\DeserializeType.cs" />
     <Compile Include="Common\DeserializeTypeRef.cs" />
     <Compile Include="Common\DeserializeTypeRefJson.cs">
@@ -120,9 +121,6 @@
     <Compile Include="TypeSerializer.Generic.cs" />
     <Compile Include="Wrapper\JsonSerializer.cs" />
     <Compile Include="XmlSerializer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">

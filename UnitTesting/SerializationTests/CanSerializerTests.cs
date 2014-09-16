@@ -31,6 +31,23 @@ namespace SerializationTests
         }
 
         [Test()]
+        public void CanSerializeTuple()
+        {
+            Tuple<int, string> tuple;
+
+            for (var n = 0; n < 10; n++)
+            {
+                tuple = new Tuple<int, string>(n, n.ToString());
+
+                
+                var str = tuple.ToString();
+                System.Diagnostics.Debug.WriteLine(str);
+
+                Assert.IsTrue(this.Serializer.CanSerializeString<Tuple<int, string>>(tuple));
+            }
+        }
+
+        [Test()]
         public void CanSerializePrimitiveAsBytes()
         {
             var p = Primitives.Create(10);

@@ -7,35 +7,36 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 
 **Available controls**
 
- - Calendar Control (beta)  
- - ExtendedTabbedPage  
- - ImageButton (beta)
- - ExtendedLabel (beta)
- - ExtendedEntry (IOS)
- - ExtendedViewCell (beta)
- - ExtendedTextCell (beta)
- - AutoComplete (beta)
- - HybridWebView (alpha)
- - Web Image (beta)
- - GridView (IOS beta)
- - RepeaterView (beta)
- - SegmentedControlView (IOS beta)
- - ExtendedScrollView (IOS beta)
+ - [AutoComplete (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/AutoComplete)
+ - [Calendar Control (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/Calendar-Control)
  - DynamicListView (beta)
- - ExtendedContentView (beta)
+ - ExtendedContentView (beta) 
+ - [ExtendedEntry (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedEntry)
+ - [ExtendedLabel (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedLabel)
+ - ExtendedScrollView (IOS beta)
+ - ExtendedTabbedPage  
+ - [ExtendedTextCell (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedTextCell)
+ - [ExtendedViewCell (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedViewCell)
+ - [HybridWebView (alpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/HybridWebView)
+ - GridView (IOS beta)
+ - ImageButton (beta)
+ - RepeaterView (beta)
+ - [SegmentedControlView (IOS beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/SegmentedControl)
+ - Web Image (beta)
+ 
  - IconButton (IOS beta)
 
 **Available services (Beta)**
 
- - Text To Speech 
- - Device (battery info, device info, sensors, accelerometers)
- - Phone Service (cellular network info, make phonecalls)
- - Geolocator
- - Camera (Picture and Video picker, Take Picture, Take Video)
  - Accelerometer
- - Display
  - Cache
+ - Camera (Picture and Video picker, Take Picture, Take Video)
+ - Device (battery info, device info, sensors, accelerometers)
+ - Display
+ - Geolocator
+ - Phone Service (cellular network info, make phonecalls)
  - SoundService
+ - Text To Speech 
 
 
 **Available Mvvm helpers (Beta)**
@@ -47,7 +48,6 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 
 **Available Plugins (Beta)**
     
-
  - Serialization (ServiceStackV3, ProtoBuf, JSON.Net)
  - Caching (SQLLiteSimpleCache)
  - Dependency Injection containers (TinyIOC, Autofac, NInject, SimpleInjector, Unity)
@@ -217,6 +217,7 @@ __________________
  - Kazuki Yasufuku
  - Petr Klíma
  - Bart Kardol
+ - [Nicholas Rogoff](http://blog.nicholasrogoff.com/) [@nrogoff](https://twitter.com/nrogoff)
 
  **Other Project Contributions:**
  	Xamarin.Mobile

@@ -11,7 +11,7 @@
     <AssemblyName>Xamarin.Forms.Labs.Charting.iOS</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>45b0d285</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>fad01cef</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,14 +44,14 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\..\..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\..\..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.iOS">
       <HintPath>..\..\..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\..\..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +61,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />

@@ -18,7 +18,7 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>b741d1ee</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>bbca931e</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -107,8 +107,10 @@
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs">
       <SubType>Code</SubType>
@@ -134,6 +136,7 @@
     <Compile Include="Extensions\FontExtensions.cs" />
     <Compile Include="Extensions\OrientationExtensions.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />
+    <Compile Include="Extensions\UIElementExtensions.cs" />
     <Compile Include="Extensions\VectorExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
@@ -162,21 +165,20 @@
     <Reference Include="WPControls">
       <HintPath>..\packages\WPControls.1.5.2\lib\wp8\WPControls.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Core, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.WP8, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Forms.Platform.WP8">
       <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Platform.WP8.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Xaml, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Settings.StyleCop" />
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
   </ItemGroup>
