@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
@@ -25,7 +26,7 @@ namespace Xamarin.Forms.Labs.Mvvm
 
         Orientation Orientation { get; }
 
-        Func<bool> BackPressDelegate
+        Func<Task<bool>> BackPressDelegate
         {
             get;
             set;
