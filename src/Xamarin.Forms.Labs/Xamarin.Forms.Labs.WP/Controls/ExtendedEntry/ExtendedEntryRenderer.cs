@@ -36,7 +36,7 @@ namespace Xamarin.Forms.Labs.WP8
             SetFont(view);
             SetTextAlignment(view);
             SetBorder(view);
-            //SetPlaceholderTextColor(view);
+            SetPlaceholderTextColor(view);
 
         }
 
@@ -52,8 +52,8 @@ namespace Xamarin.Forms.Labs.WP8
                 SetTextAlignment(view);
             if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
                 SetBorder(view);
-            //if(e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
-            //    SetPlaceholderTextColor(view);
+            if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
+                SetPlaceholderTextColor(view);
 
         }
 
@@ -125,18 +125,16 @@ namespace Xamarin.Forms.Labs.WP8
             }
             else
             {
-                //Not sure why this method eblow causes an error. Wating for help on this
-
-                //if (view.PlaceholderTextColor != Color.Default && _thisPhoneTextBox != null)
-                //{
-                //    var hintStyle = new Style(typeof(PhoneTextBox));
-                //    hintStyle.Setters.Add(
-                //        new Setter(
-                //            System.Windows.Controls.Control.ForegroundProperty,
-                //            view.PlaceholderTextColor.ToBrush())
-                //        );
-                //    _thisPhoneTextBox.HintStyle = hintStyle;
-                //}
+                if (view.PlaceholderTextColor != Color.Default && _thisPhoneTextBox != null)
+                {
+                    var hintStyle = new Style(typeof(ContentControl));
+                    hintStyle.Setters.Add(
+                        new Setter(
+                            System.Windows.Controls.Control.ForegroundProperty,
+                            view.PlaceholderTextColor.ToBrush())
+                        );
+                    _thisPhoneTextBox.HintStyle = hintStyle;
+                }
             }        
         }
     }
