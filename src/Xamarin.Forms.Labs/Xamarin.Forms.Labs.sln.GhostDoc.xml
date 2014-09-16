@@ -32,7 +32,7 @@
     <SelectedProjects />
   </HelpConfiguration>
   <HelpConfiguration name="Xamarin-Forms-Labs">
-    <OutputPath>..\..\Help</OutputPath>
+    <OutputPath>..\..\Help1</OutputPath>
     <ImageFolderPath />
     <HtmlFormats>
       <HtmlHelp>true</HtmlHelp>
@@ -56,14 +56,18 @@
       <SelectedProject>Xamarin.Forms.Labs</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Droid</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.iOS</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Charting</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Charting.Droid</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.Android</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Caching.SQLiteNet</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.iOS</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Charting.iOS</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Charting.WP</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.WP8</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.WP8</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.JsonNET</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.ServiceStack</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.ProtoBuf</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.NET45</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC.Droid</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC.iOS</SelectedProject>
