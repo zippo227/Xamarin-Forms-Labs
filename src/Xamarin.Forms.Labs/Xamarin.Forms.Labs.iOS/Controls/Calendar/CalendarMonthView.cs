@@ -4,7 +4,7 @@
 //
 //  Converted to MonoTouch on 1/22/09 - Eduardo Scoz || http://escoz.com
 //  Originally reated by Devin Ross on 7/28/09  - tapku.com || http://github.com/devinross/tapkulibrary
-//
+//  Adapted for Xamarin.Forms.Labs project by Vratislav Kalenda on 22/09/14 http://www.applifting.cz
 /*
  
  Permission is hereby granted, free of charge, to any person
@@ -34,6 +34,10 @@ using MonoTouch.UIKit;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Xamarin.Forms.Labs.iOS.Controls.Calendar;
+using System.Globalization;
+using MonoTouch.Foundation;
+using Xamarin.Forms.Labs.Controls;
 
 namespace escoz
 {
@@ -52,27 +56,62 @@ namespace escoz
 		public Func<DateTime, bool> IsDayMarkedDelegate;
 		public Func<DateTime, bool> IsDateAvailable;
 		public Action<DateTime> MonthChanged;
+		Dictionary<int, bool> _hlighlightedDaysOfWeek;
+		public Dictionary<int, bool> HighlightedDaysOfWeek{
+			get{
+				return _hlighlightedDaysOfWeek;
+			}
+		}
 		public Action SwipedUp;
 
 		public DateTime CurrentSelectedDate;
 		public DateTime CurrentMonthYear;
 		protected DateTime CurrentDate { get; set; }
 
+
+
 		private UIScrollView _scrollView;
 		private bool calendarIsLoaded;
-
+		private DateTime? _minDateTime;
+		private DateTime? _maxDateTime;
 		private MonthGridView _monthGridView;
 		bool _showHeader;
+		private bool _showNavArrows;
 
-		public CalendarMonthView(DateTime selectedDate, bool showHeader, float width = 320) 
+		CalendarArrowView _leftArrow;
+
+		CalendarArrowView _rightArrow;
+
+		private StyleDescriptor _styleDescriptor;
+		public StyleDescriptor StyleDescriptor{
+			get{
+				return _styleDescriptor;
+			}
+		}
+
+
+
+		public CalendarMonthView(DateTime selectedDate, bool showHeader,bool showNavArrows, float width = 320) 
 		{
+
 			_showHeader = showHeader;
+			_showNavArrows = showNavArrows;
+			if(_showNavArrows){
+				_showHeader = true;
+			}
+			_styleDescriptor = new StyleDescriptor();
+			HighlightDaysOfWeeks(new DayOfWeek[]{});
+			if (_showHeader && headerHeight == 0){
+				if(showNavArrows){
+					headerHeight = 40;
+				}else{
+					headerHeight = 20;
+				}
+			}
+				
 
 			if (_showHeader)
-				headerHeight = 20;
-
-			if (_showHeader)
-				this.Frame = new RectangleF(0, 0, width, 218);
+				this.Frame = new RectangleF(0, 0, width, 198+headerHeight);
 			else 
 				this.Frame = new RectangleF(0, 0, width, 198);
 
@@ -81,10 +120,12 @@ namespace escoz
 			BackgroundColor = UIColor.White;
 
 			ClipsToBounds = true;
+			CurrentDate = DateTime.Now.Date;
+			CurrentMonthYear = new DateTime(CurrentDate.Year, CurrentDate.Month, 1);
 
 			CurrentSelectedDate = selectedDate;
-			CurrentDate = DateTime.Now.Date;
-			CurrentMonthYear = new DateTime(CurrentSelectedDate.Year, CurrentSelectedDate.Month, 1);
+
+
 
 			var swipeLeft = new UISwipeGestureRecognizer(p_monthViewSwipedLeft);
 			swipeLeft.Direction = UISwipeGestureRecognizerDirection.Left;
@@ -99,7 +140,7 @@ namespace escoz
 			this.AddGestureRecognizer(swipeUp);
 		}
 
-		public void SetDate (DateTime newDate)
+		public void SetDate (DateTime newDate,bool animated)
 		{
 			bool right = true;
 
@@ -116,14 +157,61 @@ namespace escoz
 
 				for (int i=0; i<monthsDiff; i++)
 				{
-					MoveCalendarMonths (right, true);
+					MoveCalendarMonths (right, animated);
 				}
 			} 
 			else
 			{
-				RebuildGrid(right, false);
+				//If we have created the layout already
+				if(_scrollView != null) {
+					RebuildGrid(right, animated);
+				}
 			}
 
+		}
+
+		public void SetMaxAllowedDate(DateTime? maxDate){
+			_maxDateTime = maxDate;
+		}
+		public void SetMinAllowedDate(DateTime? minDate){
+			_minDateTime = minDate;
+		}
+
+
+		public void HighlightDaysOfWeeks(DayOfWeek[] daysOfWeeks)
+		{
+			_hlighlightedDaysOfWeek = new Dictionary<int,bool>();
+			for(int i = 0; i <= 6; i++){
+				_hlighlightedDaysOfWeek[i] = false;
+			}
+			foreach(var dOW in daysOfWeeks){
+				_hlighlightedDaysOfWeek[(int)dOW] = true;
+			}
+		}
+
+		public void SetDisplayedMonthYear(DateTime newDate, bool animated){
+			bool right = true;
+			var monthsDiff = (newDate.Month - CurrentMonthYear.Month) + 12 * (newDate.Year - CurrentMonthYear.Year);
+			if (monthsDiff != 0)
+			{
+				if (monthsDiff < 0)
+				{
+					right = false;
+					monthsDiff = -monthsDiff;
+				}
+
+				for (int i=0; i<monthsDiff; i++)
+				{
+					MoveCalendarMonths (right, animated);
+				}
+			} 
+			else
+			{
+				//If we have created the layout already
+				if(_scrollView != null) {
+					RebuildGrid(right, animated);
+				}
+			}
 		}
 
 		void p_monthViewSwipedUp (UISwipeGestureRecognizer ges)
@@ -158,13 +246,15 @@ namespace escoz
 				ContentSize = new SizeF(320, 260),
 				ScrollEnabled = false,
 				Frame = new RectangleF(0, 16 + headerHeight, 320, this.Frame.Height - 16),
-				BackgroundColor = UIColor.White
+				BackgroundColor = _styleDescriptor.BackgroundColor
 			};
 
 			//_shadow = new UIImageView(UIImage.FromBundle("Images/Calendar/shadow.png"));
 
 			//LoadButtons();
 
+			LoadNavArrows();
+			SetNavigationArrows(false);
 			LoadInitialGrids();
 
 			BackgroundColor = UIColor.Clear;
@@ -181,6 +271,20 @@ namespace escoz
 		public void DeselectDate(){
 			if (_monthGridView!=null)
 				_monthGridView.DeselectDayView();
+		}
+
+		void LoadNavArrows()
+		{
+			_leftArrow = new CalendarArrowView(new RectangleF(10, 9, 18, 22));
+			_leftArrow.Color = StyleDescriptor.TitleForegroundColor;
+			_leftArrow.TouchUpInside += HandlePreviousMonthTouch;
+			_leftArrow.Direction = CalendarArrowView.ArrowDirection.LEFT;
+			this.AddSubview(_leftArrow);
+			_rightArrow = new CalendarArrowView(new RectangleF(320-22-10, 9, 18, 22));
+			_rightArrow.Color = StyleDescriptor.TitleForegroundColor;
+			_rightArrow.TouchUpInside += HandleNextMonthTouch;
+			_rightArrow.Direction = CalendarArrowView.ArrowDirection.RIGHT;
+			this.AddSubview(_rightArrow);
 		}
 
 		/*private void LoadButtons()
@@ -209,8 +313,86 @@ namespace escoz
 
 		public void MoveCalendarMonths (bool right, bool animated)
 		{
-			CurrentMonthYear = CurrentMonthYear.AddMonths(right? 1 : -1);
-			RebuildGrid(right, animated);
+			var newDate = CurrentMonthYear.AddMonths(right? 1 : -1);
+			if((_minDateTime != null && newDate < _minDateTime.Value.Date) || (_maxDateTime != null && newDate > _maxDateTime.Value.Date)){
+				if (animated){
+					var oldX = _monthGridView.Center.X;
+
+					_monthGridView.Center = new PointF(oldX, _monthGridView.Center.Y);
+					UIView.Animate(0.25, () => {
+						if(right) {
+							_monthGridView.Center = new PointF(_monthGridView.Center.X - 40, _monthGridView.Center.Y);
+						} else {
+							_monthGridView.Center = new PointF(_monthGridView.Center.X + 40, _monthGridView.Center.Y);
+						}
+					}, () => {
+						UIView.Animate(0.25, () => {
+							_monthGridView.Center = new PointF(oldX, _monthGridView.Center.Y);
+						});
+					});
+
+				}
+				return;
+			}
+
+			CurrentMonthYear = newDate;
+			SetNavigationArrows(animated);
+			//If we have created the layout already
+			if(_scrollView != null) {
+				RebuildGrid(right, animated);
+			}
+		}
+
+		private void SetNavigationArrows(bool animated){
+
+			bool isMin = false;
+			bool isMax = false;
+			if(_minDateTime != null){
+				isMin = CurrentMonthYear.Month == _minDateTime.Value.Month && CurrentMonthYear.Year == _minDateTime.Value.Year;
+			}
+			if(_maxDateTime != null){
+				isMax = CurrentMonthYear.Month == _maxDateTime.Value.Month && CurrentMonthYear.Year == _maxDateTime.Value.Year;
+			}
+
+			if(_showNavArrows){
+				if(animated){
+					UIView.Animate(0.250, () => {
+						if(isMin && _leftArrow.Enabled){
+							_leftArrow.Enabled = false;
+							_leftArrow.Alpha = 0;
+						}else{
+							_leftArrow.Enabled = true;
+							_leftArrow.Alpha = 1;
+						}
+						if(isMax && _rightArrow.Enabled){
+							_rightArrow.Enabled = false;
+							_rightArrow.Alpha = 0;
+						}else{
+							_rightArrow.Enabled = true;
+							_rightArrow.Alpha = 1;
+						}
+					});
+
+				}else{
+					if(isMin && _leftArrow.Enabled){
+						_leftArrow.Enabled = false;
+						_leftArrow.Alpha = 0;
+					}else{
+						_leftArrow.Enabled = true;
+						_leftArrow.Alpha = 1;
+					}
+
+					if(isMax && _rightArrow.Enabled){
+						_rightArrow.Enabled = false;
+						_rightArrow.Alpha = 0;
+					}else{
+						_rightArrow.Enabled = true;
+						_rightArrow.Alpha = 1;
+					}
+
+
+				}
+			}
 		}
 
 		public void RebuildGrid(bool right, bool animated)
@@ -228,6 +410,7 @@ namespace escoz
 			gridToMove.Frame = new RectangleF(new PointF(pointsToMove, 0), gridToMove.Frame.Size);
 
 			_scrollView.AddSubview(gridToMove);
+
 
 			if (animated){
 				UIView.BeginAnimations("changeMonth");
@@ -287,7 +470,8 @@ namespace escoz
 		{
 			using(var context = UIGraphics.GetCurrentContext())
 			{
-				context.SetFillColor (UIColor.LightGray.CGColor);
+				context.SetFillColor (_styleDescriptor.TitleBackgroundColor.CGColor);
+				//Console.WriteLine("Title background color is {0}",_styleDescriptor.TitleBackgroundColor.ToString());
 				context.FillRect (new RectangleF (0, 0, 320, 18 + headerHeight));
 			}
 
@@ -299,321 +483,81 @@ namespace escoz
 
 		private void DrawMonthLabel(RectangleF rect)
 		{
-			var r = new RectangleF(new PointF(0, 2), new SizeF {Width = 320, Height = 42});
-			UIColor.DarkGray.SetColor();
-			DrawString(CurrentMonthYear.ToString("MMMM yyyy"), 
-				r, UIFont.BoldSystemFontOfSize(16),
-				UILineBreakMode.WordWrap, UITextAlignment.Center);
+			var r = new RectangleF(new PointF(0, 2), new SizeF {Width = 320, Height = headerHeight});
+//			_styleDescriptor.TitleForegroundColor.SetColor();
+//			DrawString(CurrentMonthYear.ToString("MMMM yyyy"), 
+//				r, _styleDescriptor.MonthTitleFont,
+//				UILineBreakMode.WordWrap, UITextAlignment.Center);
+			DrawCenteredString((NSString)CurrentMonthYear.ToString("MMMM yyyy"), _styleDescriptor.TitleForegroundColor, r,StyleDescriptor.MonthTitleFont);
 		}
+
+		private void DrawCenteredString(NSString text,UIColor color, RectangleF rect,UIFont font){
+
+			var paragraphStyle = (NSMutableParagraphStyle)NSParagraphStyle.Default.MutableCopy();
+			paragraphStyle.LineBreakMode = UILineBreakMode.TailTruncation;
+			paragraphStyle.Alignment = UITextAlignment.Center;
+			var attrs = new UIStringAttributes() {
+				Font = font,
+				ForegroundColor = color,
+				ParagraphStyle = paragraphStyle
+			};
+			var size = text.GetSizeUsingAttributes(attrs);
+			RectangleF targetRect = new RectangleF(
+				rect.X + (float)Math.Floor((rect.Width - size.Width) / 2f),
+				rect.Y +(float) Math.Floor((rect.Height - size.Height) / 2f),
+				size.Width,
+				size.Height
+			);
+			text.DrawString(targetRect, attrs);
+
+		}
+
 
 		private void DrawDayLabels(RectangleF rect)
 		{
-			var font = UIFont.BoldSystemFontOfSize(10);
-			UIColor.DarkGray.SetColor();
+			var font = _styleDescriptor.DateLabelFont;
+
 			var context = UIGraphics.GetCurrentContext();
 			context.SaveState();
+			var firstDayOfWeek = (int) CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+			var today = CurrentDate;
+			var originalDay = today;
+			for (int i = 0; i < 7; i++) {
+				var offset = firstDayOfWeek - (int) today.DayOfWeek + i;
+				today = today.AddDays(offset);
+				var dateRectangle = new RectangleF(i*BoxWidth, 2 + headerHeight, BoxWidth, 15);
+				if(StyleDescriptor.ShouldHighlightDaysOfWeekLabel && _hlighlightedDaysOfWeek[(int)today.DayOfWeek] == true) {
+					context.SetFillColorWithColor(_styleDescriptor.HighlightedDateBackgroundColor.CGColor);
+				} else {
+					context.SetFillColorWithColor(_styleDescriptor.DayOfWeekLabelBackgroundColor.CGColor);
 
-			var i = 0;
-			foreach (var d in Enum.GetNames(typeof(DayOfWeek)))
-			{
-				DrawString(d.Substring(0, 3), new RectangleF(i*BoxWidth, 2 + headerHeight, BoxWidth, 10), font,
+				}
+				context.FillRect(dateRectangle);
+				if(StyleDescriptor.ShouldHighlightDaysOfWeekLabel && _hlighlightedDaysOfWeek[(int)today.DayOfWeek] == true) {
+					_styleDescriptor.HighlightedDateForegroundColor.SetColor();
+				} else {
+					_styleDescriptor.DayOfWeekLabelForegroundColor.SetColor();
+				}
+				DrawString(today.ToString("ddd"),dateRectangle, font,
 					UILineBreakMode.WordWrap, UITextAlignment.Center);
-				i++;
+				today = originalDay;
 			}
+
+//			var i = 0;
+//			foreach (var d in Enum.GetNames(typeof(DayOfWeek)))
+//			{
+//				var dateRectangle = new RectangleF(i*BoxWidth, 2 + headerHeight, BoxWidth, 10);
+//				context.SetFillColorWithColor(_styleDescriptor.DayOfWeekLabelBackgroundColor.CGColor);
+//				context.FillRect(dateRectangle);
+//				_styleDescriptor.DayOfWeekLabelForegroundColor.SetColor();
+//				DrawString(d.Substring(0, 3),dateRectangle, font,
+//					UILineBreakMode.WordWrap, UITextAlignment.Center);
+//				i++;
+//			}
 			context.RestoreState();
 		}
 	}
 
-	public class MonthGridView : UIView
-	{
-		private CalendarMonthView _calendarMonthView;
 
-		public DateTime CurrentDate {get;set;}
-		private DateTime _currentMonth;
-
-		protected readonly IList<CalendarDayView> _dayTiles = new List<CalendarDayView>();
-		public int Lines { get; set; }
-		protected CalendarDayView SelectedDayView {get;set;}
-		public int weekdayOfFirst;
-		public IList<DateTime> Marks { get; set; }
-
-		public MonthGridView(CalendarMonthView calendarMonthView, DateTime month)
-		{
-			_calendarMonthView = calendarMonthView;
-			_currentMonth = month.Date;
-
-			var tapped = new UITapGestureRecognizer(p_Tapped);
-			this.AddGestureRecognizer(tapped);
-		}
-
-		void p_Tapped(UITapGestureRecognizer tapRecg)
-		{
-			var loc = tapRecg.LocationInView(this);
-			if (SelectDayView(loc)&& _calendarMonthView.OnDateSelected!=null)
-				_calendarMonthView.OnDateSelected(new DateTime(_currentMonth.Year, _currentMonth.Month, SelectedDayView.Tag));
-		}
-
-		public void Update(){
-			foreach (var v in _dayTiles)
-				updateDayView(v);
-
-			this.SetNeedsDisplay();
-		}
-
-		public void updateDayView(CalendarDayView dayView){
-			dayView.Marked = _calendarMonthView.IsDayMarkedDelegate == null ? 
-				false : _calendarMonthView.IsDayMarkedDelegate(dayView.Date);
-			dayView.Available = _calendarMonthView.IsDateAvailable == null ? 
-				true : _calendarMonthView.IsDateAvailable(dayView.Date);
-		}
-
-		public void BuildGrid ()
-		{
-			DateTime previousMonth = _currentMonth.AddMonths (-1);
-			var daysInPreviousMonth = DateTime.DaysInMonth (previousMonth.Year, previousMonth.Month);
-			var daysInMonth = DateTime.DaysInMonth (_currentMonth.Year, _currentMonth.Month);
-			weekdayOfFirst = (int)_currentMonth.DayOfWeek;
-			var lead = daysInPreviousMonth - (weekdayOfFirst - 1);
-
-			int boxWidth = _calendarMonthView.BoxWidth;
-			int boxHeight = _calendarMonthView.BoxHeight;
-
-			// build last month's days
-			for (int i = 1; i <= weekdayOfFirst; i++)
-			{
-				var viewDay = new DateTime (_currentMonth.Year, _currentMonth.Month, i);
-				var dayView = new CalendarDayView (_calendarMonthView);
-				dayView.Frame = new RectangleF ((i - 1) * boxWidth - 1, 0, boxWidth, boxHeight);
-				dayView.Date = viewDay;
-				dayView.Text = lead.ToString ();
-
-				AddSubview (dayView);
-				_dayTiles.Add (dayView);
-				lead++;
-			}
-
-			var position = weekdayOfFirst + 1;
-			var line = 0;
-
-			// current month
-			for (int i = 1; i <= daysInMonth; i++)
-			{
-				var viewDay = new DateTime (_currentMonth.Year, _currentMonth.Month, i);
-				var dayView = new CalendarDayView(_calendarMonthView)
-				{
-					Frame = new RectangleF((position - 1) * boxWidth - 1, line * boxHeight, boxWidth, boxHeight),
-					Today = (CurrentDate.Date==viewDay.Date),
-					Text = i.ToString(),
-
-					Active = true,
-					Tag = i,
-					Selected = (viewDay.Date == _calendarMonthView.CurrentSelectedDate.Date)
-				};
-
-				dayView.Date = viewDay;
-				updateDayView (dayView);
-
-				if (dayView.Selected)
-					SelectedDayView = dayView;
-
-				AddSubview (dayView);
-				_dayTiles.Add (dayView);
-
-				position++;
-				if (position > 7)
-				{
-					position = 1;
-					line++;
-				}
-			}
-
-			//next month
-			int dayCounter = 1;
-			if (position != 1)
-			{
-				for (int i = position; i < 8; i++)
-				{
-					var viewDay = new DateTime (_currentMonth.Year, _currentMonth.Month, i);
-					var dayView = new CalendarDayView (_calendarMonthView)
-					{
-						Frame = new RectangleF((i - 1) * boxWidth -1, line * boxHeight, boxWidth, boxHeight),
-						Text = dayCounter.ToString(),
-					};
-					dayView.Date = viewDay;
-					updateDayView (dayView);
-
-					AddSubview (dayView);
-					_dayTiles.Add (dayView);
-					dayCounter++;
-				}
-			}
-
-			while (line < 6)
-			{
-				line++;
-				for (int i = 1; i < 8; i++)
-				{
-					var viewDay = new DateTime (_currentMonth.Year, _currentMonth.Month, i);
-					var dayView = new CalendarDayView (_calendarMonthView)
-					{
-						Frame = new RectangleF((i - 1) * boxWidth -1, line * boxHeight, boxWidth, boxHeight),
-						Text = dayCounter.ToString(),
-					};
-					dayView.Date = viewDay;
-					updateDayView (dayView);
-
-					AddSubview (dayView);
-					_dayTiles.Add (dayView);
-					dayCounter++;
-				}
-			}
-
-			Frame = new RectangleF(Frame.Location, new SizeF(Frame.Width, (line + 1) * boxHeight));
-
-			Lines = (position == 1 ? line - 1 : line);
-
-			if (SelectedDayView!=null)
-				this.BringSubviewToFront(SelectedDayView);
-		}
-
-		/*public override void TouchesBegan (NSSet touches, UIEvent evt)
-		{
-			base.TouchesBegan (touches, evt);
-			if (SelectDayView((UITouch)touches.AnyObject)&& _calendarMonthView.OnDateSelected!=null)
-				_calendarMonthView.OnDateSelected(new DateTime(_currentMonth.Year, _currentMonth.Month, SelectedDayView.Tag));
-		}
-		
-		public override void TouchesMoved (NSSet touches, UIEvent evt)
-		{
-			base.TouchesMoved (touches, evt);
-			if (SelectDayView((UITouch)touches.AnyObject)&& _calendarMonthView.OnDateSelected!=null)
-				_calendarMonthView.OnDateSelected(new DateTime(_currentMonth.Year, _currentMonth.Month, SelectedDayView.Tag));
-		}
-		
-		public override void TouchesEnded (NSSet touches, UIEvent evt)
-		{
-			base.TouchesEnded (touches, evt);
-			if (_calendarMonthView.OnFinishedDateSelection==null) return;
-			var date = new DateTime(_currentMonth.Year, _currentMonth.Month, SelectedDayView.Tag);
-			if (_calendarMonthView.IsDateAvailable == null || _calendarMonthView.IsDateAvailable(date))
-				_calendarMonthView.OnFinishedDateSelection(date);
-		}*/
-
-		private bool SelectDayView(PointF p){
-
-			int index = ((int)p.Y / _calendarMonthView.BoxHeight) * 7 + ((int)p.X / _calendarMonthView.BoxWidth);
-			if(index<0 || index >= _dayTiles.Count) return false;
-
-			var newSelectedDayView = _dayTiles[index];
-			if (newSelectedDayView == SelectedDayView) 
-				return false;
-
-			if (!newSelectedDayView.Active){
-				var day = int.Parse(newSelectedDayView.Text);
-				if (day > 15)
-					_calendarMonthView.MoveCalendarMonths(false, true);
-				else
-					_calendarMonthView.MoveCalendarMonths(true, true);
-				return false;
-			} else if (!newSelectedDayView.Active && !newSelectedDayView.Available){
-				return false;
-			}
-
-			if (SelectedDayView!=null)
-				SelectedDayView.Selected = false;
-
-			this.BringSubviewToFront(newSelectedDayView);
-			newSelectedDayView.Selected = true;
-
-			SelectedDayView = newSelectedDayView;
-			_calendarMonthView.CurrentSelectedDate =  SelectedDayView.Date;
-			SetNeedsDisplay();
-			return true;
-		}
-
-		public void DeselectDayView(){
-			if (SelectedDayView==null) return;
-			SelectedDayView.Selected= false;
-			SelectedDayView = null;
-			SetNeedsDisplay();
-		}
-	}
-
-	public class CalendarDayView : UIView
-	{
-		string _text;
-		public DateTime Date {get;set;}
-		bool _active, _today, _selected, _marked, _available;
-		public bool Available {get {return _available; } set {_available = value; SetNeedsDisplay(); }}
-		public string Text {get { return _text; } set { _text = value; SetNeedsDisplay(); } }
-		public bool Active {get { return _active; } set { _active = value; SetNeedsDisplay();  } }
-		public bool Today {get { return _today; } set { _today = value; SetNeedsDisplay(); } }
-		public bool Selected {get { return _selected; } set { _selected = value; SetNeedsDisplay(); } }
-		public bool Marked {get { return _marked; } set { _marked = value; SetNeedsDisplay(); }  }
-
-		CalendarMonthView _mv;
-
-		public CalendarDayView (CalendarMonthView mv)
-		{
-			_mv = mv;
-			BackgroundColor = UIColor.White;
-		}
-
-		public override void Draw(RectangleF rect)
-		{
-			UIImage img = null;
-			UIColor color = UIColor.Gray;
-
-			if (!Active || !Available)
-			{
-				//color = UIColor.FromRGBA(0.576f, 0.608f, 0.647f, 1f);
-				//img = UIImage.FromBundle("Images/Calendar/datecell.png");
-			} 
-			else if (Today && Selected)
-			{
-				//color = UIColor.White;
-				img = UIImage.FromBundle("Images/Calendar/todayselected.png").CreateResizableImage(new UIEdgeInsets(4,4,4,4));
-			} 
-			else if (Today)
-			{
-				//color = UIColor.White;
-				img = UIImage.FromBundle("Images/Calendar/today.png").CreateResizableImage(new UIEdgeInsets(4,4,4,4));
-			} 
-			else if (Selected || Marked)
-			{
-				//color = UIColor.White;
-				img = UIImage.FromBundle("Images/Calendar/datecellselected.png").CreateResizableImage(new UIEdgeInsets(4,4,4,4));
-			}
-			else
-			{
-				color = UIColor.FromRGBA(0.275f, 0.341f, 0.412f, 1f);
-				//img = UIImage.FromBundle("Images/Calendar/datecell.png");
-			}
-
-			if (img != null)
-				img.Draw(new RectangleF(0, 0, _mv.BoxWidth, _mv.BoxHeight));
-
-			color.SetColor();
-			var inflated = new RectangleF(0, 5, Bounds.Width, Bounds.Height);
-			DrawString(Text, inflated,
-				UIFont.BoldSystemFontOfSize(16), 
-				UILineBreakMode.WordWrap, UITextAlignment.Center);
-
-			//            if (Marked)
-			//            {
-			//                var context = UIGraphics.GetCurrentContext();
-			//                if (Selected || Today)
-			//                    context.SetRGBFillColor(1, 1, 1, 1);
-			//                else if (!Active || !Available)
-			//					UIColor.LightGray.SetColor();
-			//				else
-			//                    context.SetRGBFillColor(75/255f, 92/255f, 111/255f, 1);
-			//                context.SetLineWidth(0);
-			//                context.AddEllipseInRect(new RectangleF(Frame.Size.Width/2 - 2, 45-10, 4, 4));
-			//                context.FillPath();
-			//
-			//            }
-		}
-	}
 }
 

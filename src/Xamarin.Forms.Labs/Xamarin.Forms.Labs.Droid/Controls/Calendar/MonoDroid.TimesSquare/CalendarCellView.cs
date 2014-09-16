@@ -8,22 +8,6 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
     public class CalendarCellView : TextView
     {
-        // Comment out code temporarily due to issue with attributes in the current version of Xamarin Android
-        //private static readonly int[] StateSelectable = { Resource.Attribute.state_selectable };
-        //private static readonly int[] StateCurrentMonth = { Resource.Attribute.state_current_month };
-        //private static readonly int[] StateToday = { Resource.Attribute.state_today };
-        //private static readonly int[] StateHighlighted = { Resource.Attribute.state_highlighted };
-        //private static readonly int[] StateRangeFirst = { Resource.Attribute.state_range_first };
-        //private static readonly int[] StateRangeMiddle = { Resource.Attribute.state_range_middle };
-        //private static readonly int[] StateRangeLast = { Resource.Attribute.state_range_last };
-
-        private static readonly int[] StateSelectable = { 0 };
-        private static readonly int[] StateCurrentMonth = { 0 };
-        private static readonly int[] StateToday = { 0 };
-        private static readonly int[] StateHighlighted = { 0 };
-        private static readonly int[] StateRangeFirst = { 0 };
-        private static readonly int[] StateRangeMiddle = { 0 };
-        private static readonly int[] StateRangeLast = { 0 };
 
         private bool _isSelectable;
         private bool _isCurrentMonth;
@@ -56,7 +40,6 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             set
             {
                 _isSelectable = value;
-                RefreshDrawableState();
             }
         }
 
@@ -65,7 +48,6 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             set
             {
                 _isCurrentMonth = value;
-                RefreshDrawableState();
             }
         }
 
@@ -74,7 +56,6 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             set
             {
                 _isToday = value;
-                RefreshDrawableState();
             }
         }
 
@@ -83,7 +64,6 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             set
             {
                 _isHighlighted = value;
-                RefreshDrawableState();
             }
         }
 
@@ -92,47 +72,36 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             set
             {
                 _rangeState = value;
-                RefreshDrawableState();
             }
         }
 
-        protected override int[] OnCreateDrawableState(int extraSpace)
-        {
-            int[] drawableState = base.OnCreateDrawableState(extraSpace + 5);
+		public void SetStyle(StyleDescriptor style){
+			if(style.DateLabelFont != null) {
+				this.Typeface = (style.DateLabelFont);
+			}
+			if(this.Selected){
+				SetBackgroundColor(style.SelectedDateBackgroundColor);
+				SetTextColor(style.SelectedDateForegroundColor);
+			}else if(_isToday){
+				SetBackgroundColor(style.TodayBackgroundColor);
+				SetTextColor(style.TodayForegroundColor);
+			}else if(_isHighlighted){
+				SetBackgroundColor(style.HighlightedDateBackgroundColor);
+				if(_isCurrentMonth) {
+					SetTextColor(style.HighlightedDateForegroundColor);
+				}else{
+					SetTextColor(style.InactiveDateForegroundColor);
+				}
+			}
+			else if(!_isCurrentMonth){
+				SetBackgroundColor(style.InactiveDateBackgroundColor);
+				SetTextColor(style.InactiveDateForegroundColor);
+			}else{
+				SetBackgroundColor(style.DateBackgroundColor);
+				SetTextColor(style.DateForegroundColor);
+			}
+		}
 
-            if (_isSelectable)
-            {
-                MergeDrawableStates(drawableState, StateSelectable);
-            }
 
-            if (_isCurrentMonth)
-            {
-                MergeDrawableStates(drawableState, StateCurrentMonth);
-            }
-
-            if (_isToday)
-            {
-                MergeDrawableStates(drawableState, StateToday);
-            }
-
-            if (_isHighlighted)
-            {
-                MergeDrawableStates(drawableState, StateHighlighted);
-            }
-
-            switch (_rangeState)
-            {
-                case RangeState.First:
-                    MergeDrawableStates(drawableState, StateRangeFirst);
-                    break;
-                case RangeState.Middle:
-                    MergeDrawableStates(drawableState, StateRangeMiddle);
-                    break;
-                case RangeState.Last:
-                    MergeDrawableStates(drawableState, StateRangeLast);
-                    break;
-            }
-            return drawableState;
-        }
     }
 }

@@ -147,6 +147,10 @@
     <Compile Include="Controls\ExtendedEntryCell\ExtendedEntryCellRenderer.cs" />
     <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
     <Compile Include="Controls\Separator\UISeparator.cs" />
+    <Compile Include="Controls\Calendar\StyleDescriptor.cs" />
+    <Compile Include="Controls\Calendar\CalendarDayView.cs" />
+    <Compile Include="Controls\Calendar\MonthGridView.cs" />
+    <Compile Include="Controls\Calendar\CalendarArrowView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
