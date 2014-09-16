@@ -46,13 +46,13 @@ namespace Xamarin.Forms.Labs.Droid
 	    {
             switch (view.XAlign)
             {
-                case TextAlignment.Center:
+                case Xamarin.Forms.TextAlignment.Center:
                     Control.Gravity = GravityFlags.CenterHorizontal;
                     break;
-                case TextAlignment.End:
+                case Xamarin.Forms.TextAlignment.End:
                     Control.Gravity = GravityFlags.End;
                     break;
-                case TextAlignment.Start:
+                case Xamarin.Forms.TextAlignment.Start:
                     Control.Gravity = GravityFlags.Start;
                     break;
             }
