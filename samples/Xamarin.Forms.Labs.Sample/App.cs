@@ -201,6 +201,7 @@ namespace Xamarin.Forms.Labs.Sample
                     "Popup",
                     "RepeaterView",
                     "Segment",
+					"Separator",
                     "WebImage"
                 }
             };
@@ -260,6 +261,9 @@ namespace Xamarin.Forms.Labs.Sample
                     case "segment":
                         await mainPage.Navigation.PushAsync(new SegmentPage());
                         break;
+					case "separator":
+						await mainPage.Navigation.PushAsync(new SeparatorPage());
+						break;
                     case "webimage":
                         await mainPage.Navigation.PushAsync(new WebImagePage());
                         break;
