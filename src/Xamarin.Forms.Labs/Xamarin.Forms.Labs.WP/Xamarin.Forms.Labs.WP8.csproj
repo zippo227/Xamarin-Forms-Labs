@@ -122,6 +122,7 @@
     <Compile Include="Controls\SensorBar\SensorBarControl.xaml.cs">
       <DependentUpon>SensorBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\Battery.cs" />

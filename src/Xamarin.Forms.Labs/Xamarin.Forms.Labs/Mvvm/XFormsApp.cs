@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
@@ -51,7 +52,7 @@ namespace Xamarin.Forms.Labs.Mvvm
             }
         }
 
-        public Func<bool> BackPressDelegate
+        public Func<Task<bool>> BackPressDelegate
         {
             get;
             set;

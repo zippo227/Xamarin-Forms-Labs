@@ -7,6 +7,7 @@ using Xamarin.Forms.Labs.Droid;
 using Xamarin.Forms.Labs.Controls;
 
 [assembly: ExportRenderer(typeof(Separator), typeof(SeparatorRenderer))]
+
 namespace Xamarin.Forms.Labs.Droid
 {
 	public class SeparatorRenderer : ViewRenderer<Separator, SeparatorDroidView>
