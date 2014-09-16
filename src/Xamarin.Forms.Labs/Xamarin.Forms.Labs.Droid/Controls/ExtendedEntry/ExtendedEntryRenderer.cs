@@ -1,11 +1,8 @@
-﻿using System;
-using Android.Views;
+﻿using Android.Views;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Labs.Controls;
-using Android.Widget;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Droid;
-using Android.Content.Res;
 
 [assembly: ExportRenderer(typeof(ExtendedEntry), typeof(ExtendedEntryRenderer))]
 namespace Xamarin.Forms.Labs.Droid
@@ -17,12 +14,11 @@ namespace Xamarin.Forms.Labs.Droid
 			base.OnElementChanged(e);
 
 			var view = (ExtendedEntry)Element;
-			var control = Control;
 
             SetFont(view);
-            SetTextAlignment(view, Control);
+            SetTextAlignment(view);
             //SetBorder(view);
-            SetPlaceholderTextColor(view, control);
+            SetPlaceholderTextColor(view);
 		}
 
 	    protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -31,30 +27,33 @@ namespace Xamarin.Forms.Labs.Droid
 
             var view = (ExtendedEntry)Element;
 
-            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Font")
+            if (e.PropertyName == ExtendedEntry.FontProperty.PropertyName)
                 SetFont(view);
-
+            if (e.PropertyName == ExtendedEntry.XAlignProperty.PropertyName)
+                SetTextAlignment(view);
+            //if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
+            //    SetBorder(view);
             if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
-				SetPlaceholderTextColor((ExtendedEntry)Element, Control);
+                SetPlaceholderTextColor(view);
 		}
 
 	    private void SetBorder(ExtendedEntry view)
 	    {
-	        //HasBorder peroperty not suported on Android
+            //NotCurrentlySupported: HasBorder peroperty not suported on Android
 	    }
 
-	    private void SetTextAlignment(ExtendedEntry view, EditText control)
+	    private void SetTextAlignment(ExtendedEntry view)
 	    {
             switch (view.XAlign)
             {
                 case TextAlignment.Center:
-                    control.Gravity = GravityFlags.CenterHorizontal;
+                    Control.Gravity = GravityFlags.CenterHorizontal;
                     break;
                 case TextAlignment.End:
-                    control.Gravity = GravityFlags.End;
+                    Control.Gravity = GravityFlags.End;
                     break;
                 case TextAlignment.Start:
-                    control.Gravity = GravityFlags.Start;
+                    Control.Gravity = GravityFlags.Start;
                     break;
             }
         }
@@ -65,9 +64,9 @@ namespace Xamarin.Forms.Labs.Droid
 	            Control.TextSize = view.Font.ToScaledPixel();
 	    }
 
-	    private void SetPlaceholderTextColor(ExtendedEntry view, EditText control){
+	    private void SetPlaceholderTextColor(ExtendedEntry view){
 			if(view.PlaceholderTextColor != Color.Default) 
-				control.SetHintTextColor(view.PlaceholderTextColor.ToAndroid());			
+				Control.SetHintTextColor(view.PlaceholderTextColor.ToAndroid());			
 		}
 
 	}

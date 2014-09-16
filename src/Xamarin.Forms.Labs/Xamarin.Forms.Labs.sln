@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Labs", "Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj", "{4D10DF5E-883D-468B-A854-4A53C7FE75AC}"
 EndProject
@@ -416,9 +416,9 @@ Global
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|iPhoneSimulator.Deploy.0 = Debug|iPhoneSimulator
-		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.ActiveCfg = Debug|iPhone
-		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.Build.0 = Debug|iPhone
-		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.Deploy.0 = Debug|iPhone
+		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.ActiveCfg = Debug|iPhoneSimulator
+		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.Build.0 = Debug|iPhoneSimulator
+		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|Mixed Platforms.Deploy.0 = Debug|iPhoneSimulator
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.Debug|x86.ActiveCfg = Debug|iPhone
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.MonoTouch|Any CPU.ActiveCfg = Release|iPhoneSimulator
 		{F68358E7-ADF7-4A0D-8DBF-C81C9B73009C}.MonoTouch|ARM.ActiveCfg = Release|iPhoneSimulator

@@ -14,26 +14,85 @@ namespace Xamarin.Forms.Labs.WP8
 {
     public class ExtendedEntryRenderer :  EntryRenderer
     {
+        private PasswordBox _thisPasswordBox;
+        private PhoneTextBox _thisPhoneTextBox;
+
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
 
             var view = (ExtendedEntry)Element;
 
+            //Because Xamarin EntryRenderer switches the type of control we need to find the right one
+            if (view.IsPassword)
+            {
+                _thisPasswordBox = (PasswordBox) Control.Children.FirstOrDefault(c => c is PasswordBox);
+            }
+            else
+            {
+                _thisPhoneTextBox = (PhoneTextBox) Control.Children.FirstOrDefault(c => c is PhoneTextBox);
+            }
+
             SetFont(view);
-            SetPlaceholderTextColor(view);
+            SetTextAlignment(view);
+            SetBorder(view);
+            //SetPlaceholderTextColor(view);
+
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
+            var view = (ExtendedEntry)Element;
+
             if(e.PropertyName == ExtendedEntry.FontProperty.PropertyName)
-                SetFont((ExtendedEntry)Element);
+                SetFont(view);
+            if (e.PropertyName == ExtendedEntry.XAlignProperty.PropertyName)
+                SetTextAlignment(view);
+            if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
+                SetBorder(view);
+            //if(e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
+            //    SetPlaceholderTextColor(view);
 
-			if(e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
-				SetPlaceholderTextColor((ExtendedEntry)Element);
+        }
 
+        private void SetBorder(ExtendedEntry view)
+        {
+            if (view.IsPassword && _thisPasswordBox != null)
+            {
+                _thisPasswordBox.BorderThickness = view.HasBorder ? new System.Windows.Thickness(2) :  new System.Windows.Thickness(0);
+            }
+            else if (!view.IsPassword && _thisPhoneTextBox != null)
+            {
+                _thisPhoneTextBox.BorderThickness = view.HasBorder ? new System.Windows.Thickness(2) : new System.Windows.Thickness(0);
+            }
+        }
+
+        private void SetTextAlignment(ExtendedEntry view)
+        {
+            if (view.IsPassword && _thisPasswordBox != null)
+            {
+                switch (view.XAlign)
+                {
+                    //NotCurrentlySupported: Text alaignement not available on Windows Phone for Password Entry
+                }                
+            }
+            else if (!view.IsPassword && _thisPhoneTextBox != null)
+            {
+                switch (view.XAlign)
+                {
+                    case TextAlignment.Center:
+                        _thisPhoneTextBox.TextAlignment = System.Windows.TextAlignment.Center;
+                        break;
+                    case TextAlignment.End:
+                        _thisPhoneTextBox.TextAlignment = System.Windows.TextAlignment.Right;
+                        break;
+                    case TextAlignment.Start:
+                        _thisPhoneTextBox.TextAlignment = System.Windows.TextAlignment.Left;
+                        break;
+                }              
+            }
         }
 
         private void SetFont(ExtendedEntry view)
@@ -41,18 +100,16 @@ namespace Xamarin.Forms.Labs.WP8
             if (view.Font != Font.Default)
                 if (view.IsPassword)
                 {
-                    var passwordBox = (PasswordBox)Control.Children.FirstOrDefault(c => c is PasswordBox);
-                    if (passwordBox != null)
+                    if (_thisPasswordBox != null)
                     {
-                        passwordBox.FontSize = view.Font.GetHeight();
+                        _thisPasswordBox.FontSize = view.Font.GetHeight();
                     }
                 }
                 else
                 {
-                    var phoneTextBox = (PhoneTextBox)Control.Children.FirstOrDefault(c => c is PhoneTextBox);
-                    if (phoneTextBox != null)
+                    if (_thisPhoneTextBox != null)
                     {
-                        phoneTextBox.FontSize = view.Font.GetHeight();
+                        _thisPhoneTextBox.FontSize = view.Font.GetHeight();
                     }
                 }
         }
@@ -64,25 +121,22 @@ namespace Xamarin.Forms.Labs.WP8
 
             if (view.IsPassword)
             {
-                //PasswordBox passwordBox = (PasswordBox)control.Children.FirstOrDefault(c => c is PasswordBox);
-                //if (view.PlaceholderTextColor != Color.Default)
-                //    passwordBox.
-                //    editText.SetHintTextColor(e.PlaceholderTextColor.ToAndroid());
-
+                //NotCurrentlySupported: Placeholder text color is not supported on Windows Phone Password control
             }
             else
             {
-                var phoneTextBox = (PhoneTextBox)Control.Children.FirstOrDefault(c => c is PhoneTextBox);
-                if (view.PlaceholderTextColor != Color.Default && phoneTextBox != null)
-                {
-                    var hintStyle = new Style(typeof(PhoneTextBox));
-                    hintStyle.Setters.Add(
-                        new Setter(
-                            System.Windows.Controls.Control.ForegroundProperty,
-                            view.PlaceholderTextColor.ToBrush())
-                        );
-                    phoneTextBox.HintStyle = hintStyle;
-                }
+                //Not sure why this method eblow causes an error. Wating for help on this
+
+                //if (view.PlaceholderTextColor != Color.Default && _thisPhoneTextBox != null)
+                //{
+                //    var hintStyle = new Style(typeof(PhoneTextBox));
+                //    hintStyle.Setters.Add(
+                //        new Setter(
+                //            System.Windows.Controls.Control.ForegroundProperty,
+                //            view.PlaceholderTextColor.ToBrush())
+                //        );
+                //    _thisPhoneTextBox.HintStyle = hintStyle;
+                //}
             }        
         }
     }
