@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>24bc45de</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>4984e599</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,6 +39,7 @@
     <Compile Include="Controls\ExtendedContentView.cs" />
     <Compile Include="Controls\ExtendedEntry.cs" />
     <Compile Include="Controls\ExtendedSlider.cs" />
+    <Compile Include="Controls\ExtendedSwitch.cs" />
     <Compile Include="Controls\ExtendedTabbedPage.cs" />
     <Compile Include="Controls\HybridWebView.cs" />
     <Compile Include="Controls\IconButton.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\ImageGallery.cs" />
     <Compile Include="Controls\CameraView.cs" />
+    <Compile Include="Controls\ExtendedEntryCell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

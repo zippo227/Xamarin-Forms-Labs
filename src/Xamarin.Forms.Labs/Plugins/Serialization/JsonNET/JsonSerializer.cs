@@ -31,12 +31,12 @@ namespace Xamarin.Forms.Labs.Services.Serialization.JsonNET
         /// </remarks> 
         public JsonSerializer()
         {
-            JsonConvert.DefaultSettings = JsonConvert.DefaultSettings ?? new Func<JsonSerializerSettings>(() => 
-                new JsonSerializerSettings()
-                {
-                    TypeNameHandling = TypeNameHandling.All,
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                });
+            //JsonConvert.DefaultSettings = JsonConvert.DefaultSettings ?? new Func<JsonSerializerSettings>(() => 
+            //    new JsonSerializerSettings()
+            //    {
+            //        TypeNameHandling = TypeNameHandling.All,
+            //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            //    });
         }
 
         public JsonSerializer(TypeNameHandling typeNameHandling, ReferenceLoopHandling referenceLoopHandling)

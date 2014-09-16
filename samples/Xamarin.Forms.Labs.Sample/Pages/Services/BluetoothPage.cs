@@ -13,7 +13,7 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Services
         public BluetoothPage()
         {
             var device = Resolver.Resolve<IDevice>();
-            var bt = device.BluetoothHub;
+           // var bt = device.BluetoothHub;
 
             var stack = new StackLayout()
                 {
@@ -77,11 +77,11 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Services
 
             scanButton.Clicked += async (s, e) =>
                 {
-                    var devices = await bt.GetPairedDevices();
-                    deviceList.ItemsSource = devices;
+//                    var devices = await bt.GetPairedDevices();
+//                    deviceList.ItemsSource = devices;
                 };
 
-            this.BindingContext = bt;
+           // this.BindingContext = bt;
 
             this.Content = stack;
         }

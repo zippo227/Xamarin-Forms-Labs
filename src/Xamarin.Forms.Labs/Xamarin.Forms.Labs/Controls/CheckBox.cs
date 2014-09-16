@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Labs.Controls
         /// </summary>
         public static readonly BindableProperty CheckedTextProperty =
             BindableProperty.Create<CheckBox, string>(
-                p => p.CheckedText, string.Empty);
+                p => p.CheckedText, string.Empty, BindingMode.TwoWay);
 
         /// <summary>
         /// The unchecked text property.
