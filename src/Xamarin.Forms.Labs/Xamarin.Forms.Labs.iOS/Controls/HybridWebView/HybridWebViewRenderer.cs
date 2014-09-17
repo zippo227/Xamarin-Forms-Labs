@@ -30,20 +30,27 @@ namespace Xamarin.Forms.Labs.Controls
             if (this.webView == null)
             {
                 this.webView = new UIWebView();
-
                 this.webView.LoadFinished += LoadFinished;
                 this.webView.ShouldStartLoad += this.HandleStartLoad;
                 this.InjectNativeFunctionScript();
                 this.SetNativeControl(this.webView);
             }
 
+			Element.SizeChanged += HandleSizeChanged;
+
             this.Unbind(e.OldElement);
             this.Bind();
+        }
+
+        void HandleSizeChanged (object sender, EventArgs e)
+        {
+			LayoutViews ();
         }
 
         void LoadFinished(object sender, EventArgs e)
         {
             this.Element.OnLoadFinished(sender, e);
+			InjectNativeFunctionScript();
         }
 
         private bool HandleStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
@@ -63,6 +70,11 @@ namespace Xamarin.Forms.Labs.Controls
          * when within a stacklayout
          */
 		public override void LayoutSubviews()
+		{
+			LayoutViews ();
+		}
+
+		void LayoutViews()
 		{
 			if (this.Control != null) {
 				var control = this.Control;

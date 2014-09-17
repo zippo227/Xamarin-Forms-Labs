@@ -49,6 +49,9 @@ namespace Xamarin.Forms.Labs.Controls
 			builder.Append(")");
 #endif
 			builder.Append(" ;}");
+			builder.Append(" if (typeof(window.NativeFuncsReady) !== 'undefined') { ");
+			builder.Append("   window.NativeFuncsReady(); ");
+			builder.Append(" } ");
 
 			this.Inject(builder.ToString());
         }
