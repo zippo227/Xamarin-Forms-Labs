@@ -234,7 +234,7 @@ namespace Xamarin.Forms.Labs.Sample
         }
     }
 
-    public class TestPerson : ObservableObject
+    public class TestPerson : ObservableObject, AutoCompleteSearchObject
     {
         private string firstName;
         private string lastName;
