@@ -13,7 +13,7 @@
       <Button Text="Change source chart" Command="{Binding ChangeSourceCommand}" />
     </StackLayout>
     
-    <charting:Chart x:Name="CombinationChart" Color="{Binding Color}" WidthRequest="450" HeightRequest="600" Spacing="10" DataSource="{Binding ChartData}">
+    <charting:Chart x:Name="CombinationChart" Color="{Binding Color}" WidthRequest="450" HeightRequest="600" Spacing="10" DataSource="{Binding ChartData}" XPath="Item1" YPath="Item2">
 
       <charting:Chart.Series>
         <charting:Series Type="Bar" Color="Red" />
