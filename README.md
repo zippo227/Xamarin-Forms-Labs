@@ -52,7 +52,7 @@ Call for action for all Xamarin Developers, embrace this project and share your 
  - Caching (SQLLiteSimpleCache)
  - Dependency Injection containers (TinyIOC, Autofac, NInject, SimpleInjector, Unity)
  - Web (RestClient)
- - Charting (Line, Bar & Pie) (Alpha)
+ - [Charting (Line, Bar & Pie) (Alpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/Charting)
  
    
 _________________
