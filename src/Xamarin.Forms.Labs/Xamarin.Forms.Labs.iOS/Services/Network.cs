@@ -11,8 +11,28 @@ using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.iOS.Services
 {
-    public class Network : INetwork
+	public class Network : INetwork
     {
+		public Network()
+		{
+			Reachability.ReachabilityChanged += HandleReachabilityChanged;
+		}
+
+		void HandleReachabilityChanged (object sender, EventArgs e)
+		{
+			var reachabilityChanged = ReachabilityChanged;
+			if (reachabilityChanged != null)
+				ReachabilityChanged(this.InternetConnectionStatus());
+		}
+
+		public event Action<NetworkStatus> ReachabilityChanged;
+
+		public Xamarin.Forms.Labs.Services.NetworkStatus InternetConnectionStatus ()
+		{
+			var status = Reachability.InternetConnectionStatus ();
+			return (NetworkStatus)Enum.Parse (typeof(NetworkStatus), status.ToString ());
+		}
+
         public Task<bool> IsReachable(string host, TimeSpan timeout)
         {
             return Task<bool>.Run(() => Reachability.IsHostReachable(host));

@@ -17,10 +17,15 @@ namespace Xamarin.Forms.Labs.WP8.Services
     {
         public Network()
         {
-            //DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+            /* TODO: reachability changed */
         }
 
-        #region INetwork Members
+        public event Action<NetworkStatus> ReachabilityChanged;
+
+        public NetworkStatus InternetConnectionStatus ()
+        {
+            throw new NotImplementedException ();
+        }
 
         public Task<bool> IsReachable(string host, TimeSpan timeout)
         {
@@ -70,6 +75,5 @@ namespace Xamarin.Forms.Labs.WP8.Services
         //    }
         //}
 
-        #endregion
     }
 }
