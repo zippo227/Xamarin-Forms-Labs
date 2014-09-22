@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>24bc45de</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>4984e599</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,9 +37,12 @@
     <Compile Include="Controls\AutoComplete.cs" />
     <Compile Include="Controls\DynamicListView.cs" />
     <Compile Include="Controls\ExtendedContentView.cs" />
+    <Compile Include="Controls\ExtendedEntry.cs" />
     <Compile Include="Controls\ExtendedSlider.cs" />
+    <Compile Include="Controls\ExtendedSwitch.cs" />
     <Compile Include="Controls\ExtendedTabbedPage.cs" />
     <Compile Include="Controls\HybridWebView.cs" />
+    <Compile Include="Controls\IconButton.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
     <Compile Include="Controls\PopupLayout.cs" />
@@ -60,9 +63,11 @@
     <Compile Include="Device\Sensor.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
+    <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Helpers\EventArgs{T}.cs" />
     <Compile Include="Helpers\EventExtensions.cs" />
+    <Compile Include="Helpers\Icons.cs" />
     <Compile Include="Helpers\TaskUtils.cs" />
     <Compile Include="Helpers\Vector3.cs" />
     <Compile Include="Mvvm\INavigationAware.cs" />
@@ -74,9 +79,13 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Services\Email\IEmailService.cs" />
     <Compile Include="Services\IAsyncSimpleCache.cs" />
     <Compile Include="Services\IFontManager.cs" />
     <Compile Include="Services\INetwork.cs" />
+    <Compile Include="Services\INfcDevice.cs" />
+    <Compile Include="Services\IO\IFileManager.cs" />
+    <Compile Include="Services\Media\IAudioStream.cs" />
     <Compile Include="Services\Media\MediaExtensions.cs" />
     <Compile Include="Services\Media\MediaFile.cs" />
     <Compile Include="Services\Media\MediaFileNoteFoundException.cs" />
@@ -95,6 +104,7 @@
     <Compile Include="Controls\ExtendedLabel.cs" />
     <Compile Include="Controls\ExtendedTextCell.cs" />
     <Compile Include="Services\Media\IMediaPicker.cs" />
+    <Compile Include="Services\Media\WaveRecorder.cs" />
     <Compile Include="Services\NetworkStatus.cs" />
     <Compile Include="Services\Serialization\IByteSerializer.cs" />
     <Compile Include="Services\Serialization\IJsonSerializer.cs" />
@@ -129,6 +139,8 @@
     <Compile Include="Controls\ImageGallery.cs" />
     <Compile Include="Controls\CameraView.cs" />
     <Compile Include="Controls\EditableListView.cs" />
+    <Compile Include="Controls\ExtendedEntryCell.cs" />
+    <Compile Include="Controls\Separator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -140,7 +152,6 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <Folder Include="Services\Contacts\" />
-    <Folder Include="Services\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ExifLib">

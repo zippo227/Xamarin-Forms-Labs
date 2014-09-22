@@ -15,6 +15,10 @@
       <Capability Name="ID_CAP_CONTACTS" />
       <Capability Name="ID_CAP_IDENTITY_DEVICE" />
       <Capability Name="ID_CAP_PROXIMITY" />
+      <Capability Name="ID_CAP_ISV_CAMERA" />
+      <Capability Name="ID_CAP_MAP" />
+      <Capability Name="ID_CAP_MEDIALIB_PHOTO" />
+      <Capability Name="ID_CAP_MICROPHONE" />
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
@@ -39,10 +43,19 @@
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>
+    <Extensions>
+      <Protocol Name="xamarin.forms.labs" NavUriFragment="encodedLaunchURI=%s" TaskID="_default" />
+    </Extensions>
     <ScreenResolutions>
       <ScreenResolution Name="ID_RESOLUTION_WVGA" />
       <ScreenResolution Name="ID_RESOLUTION_WXGA" />
       <ScreenResolution Name="ID_RESOLUTION_HD720P" />
     </ScreenResolutions>
+    <Requirements>
+      <Requirement Name="ID_REQ_REARCAMERA" />
+      <Requirement Name="ID_REQ_GYROSCOPE" />
+      <Requirement Name="ID_REQ_MAGNETOMETER" />
+      <Requirement Name="ID_REQ_NFC" />
+    </Requirements>
   </App>
 </Deployment>

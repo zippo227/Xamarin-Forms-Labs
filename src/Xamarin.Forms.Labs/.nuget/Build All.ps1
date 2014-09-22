@@ -46,7 +46,7 @@
 ##  
 ##  “Xamarin Forms Labs - Services IoC TinyIOC" NuGet
 ##  •	Contents:
-##      o	Xamarin.Forms.Labs.Services.TinyIOC.dll (PCL - Xamarin Android, Xamarin iOS, Windows Phone 8)
+##      o	Xamarin.Forms.Labs.Services.TinyIOC.dll (.NET 4.5)
 ##      o	Xamarin.Forms.Labs.Services.TinyIOC.Droid.dll (MonoAndroid - Xamarin Android)
 ##      o	Xamarin.Forms.Labs.Services.TinyIOC.iOS.dll (MonoIos - Xamarin iOS)
 ##      o	Xamarin.Forms.Labs.Services.TinyIOC.WP8.dll (WinPRT - Windows Phone 8)
@@ -69,7 +69,7 @@
 ##  
 ##  “Xamarin Forms Labs - Services Serialization ServiceStack" NuGet
 ##  •	Contents:
-##      o	Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.dll (PCL - Xamarin Android, Xamarin iOS, Windows Phone 8)
+##      o	Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.dll (.NET 4.5)
 ##      o	Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid.dll (MonoAndroid - Xamarin Android)
 ##      o	Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS.dll (MonoIos - Xamarin iOS)
 ##      o	Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8.dll (WinPRT - Windows Phone 8)
@@ -84,11 +84,11 @@ param( [System.String] $commandLineOptions )
 
 function OutputCommandLineUsageHelp()
 {
-	Write-Host "Build all NuGet packages."
+    Write-Host "Build all NuGet packages."
     Write-Host "============================"
     Write-Host "Usage: Build All.ps1 [/PreRelease:<PreReleaseVersion>]"
     Write-Host ">E.g.: Build All.ps1"
-	Write-Host ">E.g.: Build All.ps1 /PreRelease:RC1"
+    Write-Host ">E.g.: Build All.ps1 /PreRelease:RC1"
 }
 
 function Pause ($Message="Press any key to continue...")
@@ -101,15 +101,15 @@ function Pause ($Message="Press any key to continue...")
 ## Process CommandLine options
 if ( [System.String]::IsNullOrEmpty($commandLineOptions) -ne $true )
 {
-	if ( $commandLineOptions.StartsWith("/PreRelease:", [System.StringComparison]::OrdinalIgnoreCase) )
-	{
-		$preRelease = $commandLineOptions.Substring( "/PreRelease:".Length )
-	}
-	else
-	{
-		OutputCommandLineUsageHelp
-		return
-	}
+    if ( $commandLineOptions.StartsWith("/PreRelease:", [System.StringComparison]::OrdinalIgnoreCase) )
+    {
+        $preRelease = $commandLineOptions.Substring( "/PreRelease:".Length )
+    }
+    else
+    {
+        OutputCommandLineUsageHelp
+        return
+    }
 }
 
 try 

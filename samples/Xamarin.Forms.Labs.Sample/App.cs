@@ -6,7 +6,6 @@ using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Sample.Pages.Controls;
 using Xamarin.Forms.Labs.Sample.Pages.Controls.Charts;
 using Xamarin.Forms.Labs.Sample.Pages.Services;
-using Xamarin.Forms.Labs.Sample.ViewModel;
 using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.Sample
@@ -51,6 +50,7 @@ namespace Xamarin.Forms.Labs.Sample
             ViewFactory.Register<CacheServicePage, CacheServiceViewModel>();
             ViewFactory.Register<SoundPage, SoundServiceViewModel>();
             ViewFactory.Register<RepeaterViewPage, RepeaterViewViewModel>();
+            ViewFactory.Register<WaveRecorderPage, WaveRecorderViewModel>();
 
             var mainTab = new ExtendedTabbedPage()
             {
@@ -105,8 +105,11 @@ namespace Xamarin.Forms.Labs.Sample
                     "Display",
                     "Cache",
                     "Sound",
-                    "Bluetooth",
-                    "FontManager"
+                    //"Bluetooth",
+                    "FontManager",
+                    "NFC",
+                    //"WaveRecorder",
+                    "Email"
                 }
             };
 
@@ -141,11 +144,20 @@ namespace Xamarin.Forms.Labs.Sample
                     case "sound":
                         await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<SoundServiceViewModel>());
                         break;
-                    case "bluetooth":
-                        await mainPage.Navigation.PushAsync(new BluetoothPage());
-                        break;
+                    //case "bluetooth":
+                    //    await mainPage.Navigation.PushAsync(new BluetoothPage());
+                    //    break;
                     case "fontmanager":
                         await mainPage.Navigation.PushAsync(new FontManagerPage(Resolver.Resolve<IDisplay>()));
+                        break;
+                    case "nfc":
+                        await mainPage.Navigation.PushAsync(new NfcDevicePage());
+                        break;
+                    case "waverecorder":
+                        await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<WaveRecorderViewModel>());
+                        break;
+                    case "email":
+                        await mainPage.Navigation.PushAsync(new EmailPage());
                         break;
                     default:
                         break;
@@ -172,23 +184,25 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 ItemsSource = new List<string>
                 {
-                    "Calendar",
                     "Autocomplete",
                     "Buttons",
-                    "Labels",
-                    "Cells",
-                    "HybridWebView",
-                    "WebImage",
-                    "DynamicListView",
-                    "GridView",
-                    "ExtendedScrollView",
-                    "RepeaterView",
-                    "CheckBox",
-                    "ImageGallery",
+                    "Calendar",
                     "CameraView",
-                    "Slider",
+                    "CheckBox",
+                    "DynamicListView",
+                    "ExtendedCells",
+                    "ExtendedEntries",
+                    "ExtendedLabels",
+                    "ExtendedScrollView",
+                    "ExtendedSlider",
+                    "GridView",
+                    "HybridWebView",
+                    "ImageGallery",
+                    "Popup",
+                    "RepeaterView",
                     "Segment",
-                    "Popup"
+					"Separator",
+                    "WebImage"
                 }
             };
 
@@ -196,56 +210,62 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 switch (e.SelectedItem.ToString().ToLower())
                 {
-                    case "calendar":
-                        await mainPage.Navigation.PushAsync(new CalendarPage());
-                        break;
                     case "autocomplete":
                         await mainPage.Navigation.PushAsync(new AutoCompletePage());
                         break;
                     case "buttons":
                         await mainPage.Navigation.PushAsync(new ButtonPage());
                         break;
-                    case "labels":
-                        await mainPage.Navigation.PushAsync(new ExtendedLabelPage());
-                        break;
-                    case "cells":
-                        await mainPage.Navigation.PushAsync(new ExtendedCellPage());
-                        break;
-                    case "hybridwebview":
-                        await mainPage.Navigation.PushAsync(new CanvasWebHybrid());
-                        break;
-                    case "webimage":
-                        await mainPage.Navigation.PushAsync(new WebImagePage());
-                        break;
-                    case "dynamiclistview":
-                        await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.DynamicList.DynamicListView());
-                        break;
-                    case "gridview":
-                        await mainPage.Navigation.PushAsync(new GridViewPage());
-                        break;
-                    case "extendedscrollview":
-                        await mainPage.Navigation.PushAsync(new Pages.Controls.ExtendedScrollView());
-                        break;
-                    case "repeaterview":
-                        await mainPage.Navigation.PushAsync(new RepeaterViewPage());
-                        break;
-                    case "checkbox":
-                        await mainPage.Navigation.PushAsync(new CheckBoxPage());
-                        break;
-                    case "imagegallery":
-                        await mainPage.Navigation.PushAsync(new Pages.Controls.ImageGallery());
+                    case "calendar":
+                        await mainPage.Navigation.PushAsync(new CalendarPage());
                         break;
                     case "cameraview":
                         await mainPage.Navigation.PushAsync(new CameraViewPage());
                         break;
-                    case "slider":
+                    case "checkbox":
+                        await mainPage.Navigation.PushAsync(new CheckBoxPage());
+                        break;
+                    case "dynamiclistview":
+                        await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.DynamicList.DynamicListView());
+                        break;
+                    case "extendedcells":
+                        await mainPage.Navigation.PushAsync(new ExtendedCellPage());
+                        break;
+                    case "extendedentries":
+                        await mainPage.Navigation.PushAsync(new ExtendedEntryPage());
+                        break;
+                    case "extendedlabels":
+                        await mainPage.Navigation.PushAsync(new ExtendedLabelPage());
+                        break;
+                    case "extendedscrollview":
+                        await mainPage.Navigation.PushAsync(new Pages.Controls.ExtendedScrollView());
+                        break;
+                    case "extendedslider":
                         await mainPage.Navigation.PushAsync(new ExtendedSliderPage());
+                        break;
+                    case "gridview":
+                        await mainPage.Navigation.PushAsync(new GridViewPage());
+                        break;
+                    case "hybridwebview":
+                        await mainPage.Navigation.PushAsync(new CanvasWebHybrid());
+                        break;
+                    case "imagegallery":
+                        await mainPage.Navigation.PushAsync(new Pages.Controls.ImageGallery());
+                        break;
+                    case "popup":
+                        await mainPage.Navigation.PushAsync(new PopupPage());
+                        break;
+                    case "repeaterview":
+                        await mainPage.Navigation.PushAsync(new RepeaterViewPage());
                         break;
                     case "segment":
                         await mainPage.Navigation.PushAsync(new SegmentPage());
                         break;
-                    case "popup":
-                        await mainPage.Navigation.PushAsync(new PopupPage());
+					case "separator":
+						await mainPage.Navigation.PushAsync(new SeparatorPage());
+						break;
+                    case "webimage":
+                        await mainPage.Navigation.PushAsync(new WebImagePage());
                         break;
                     default:
                         break;

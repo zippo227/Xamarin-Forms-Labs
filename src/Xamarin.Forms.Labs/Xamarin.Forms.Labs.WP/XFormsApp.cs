@@ -8,6 +8,7 @@ using System.Windows;
 using Windows.Storage;
 using Microsoft.Phone.Shell;
 using Xamarin.Forms.Labs.Mvvm;
+using Microsoft.Phone.Controls;
 
 namespace Xamarin.Forms.Labs.WP8
 {
@@ -24,6 +25,11 @@ namespace Xamarin.Forms.Labs.WP8
         public void RaiseBackPress()
         {
             this.OnBackPress();
+        }
+
+        public void SetOrientation(PageOrientation orientation)
+        {
+            this.Orientation = orientation.ToOrientation();
         }
 
         /// <summary>

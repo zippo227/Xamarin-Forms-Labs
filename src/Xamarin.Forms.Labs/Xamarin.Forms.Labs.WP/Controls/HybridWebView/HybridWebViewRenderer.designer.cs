@@ -16,6 +16,16 @@ namespace Xamarin.Forms.Labs.Controls
 		private static readonly Regex Expression = new Regex(Format);
 		private static readonly Regex FuncExpression = new Regex(FuncFormat);
 
+#if __ANDROID__
+        private void InjectNativeFunctionScript()
+        {
+            var builder = new StringBuilder();
+            builder.Append("function Native(action, data){ ");
+            builder.Append("Xamarin.call(action,  (typeof data == \"object\") ? JSON.stringify(data) : data);");
+            builder.Append("}");
+            this.Inject(builder.ToString());
+        }
+#else
         private void InjectNativeFunctionScript()
         {
 			var builder = new StringBuilder();
@@ -55,6 +65,7 @@ namespace Xamarin.Forms.Labs.Controls
 
 			this.Inject(builder.ToString());
         }
+#endif
 
         private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -156,6 +167,20 @@ namespace Xamarin.Forms.Labs.Controls
 			}
 
 			return m.Success || mFunc.Success;
+        }
+
+        private void TryInvoke(string function, string data)
+        {
+            Action<string> action;
+
+            if (this.Element.TryGetAction(function, out action))
+            {
+                action.Invoke(data);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Unhandled callback {0} was called from JavaScript", function);
+            }
         }
     }
 }

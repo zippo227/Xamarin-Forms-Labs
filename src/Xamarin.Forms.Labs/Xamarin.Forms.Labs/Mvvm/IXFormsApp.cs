@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
@@ -22,6 +23,14 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <value>The application data directory</value>
         string AppDataDirectory { get; set; }
+
+        Orientation Orientation { get; }
+
+        Func<Task<bool>> BackPressDelegate
+        {
+            get;
+            set;
+        }
 
         #endregion Properties
 
@@ -67,7 +76,7 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// Gets or sets the on rotation.
         /// </summary>
         /// <value>The on rotation.</value>
-        EventHandler<EventArgs> Rotation { get; set; }
+        EventHandler<EventArgs<Orientation>> Rotation { get; set; }
 
         EventHandler<EventArgs> BackPress { get; set; } 
 

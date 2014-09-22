@@ -8,7 +8,9 @@ namespace Xamarin.Forms.Labs.Controls
     {
         public GridView ()
         {
+            SelectionEnabled = true;
         }
+
 
         //
         // Static Fields
@@ -96,6 +98,11 @@ namespace Xamarin.Forms.Labs.Controls
             if (this.ItemSelected != null) {
                 this.ItemSelected.Invoke (sender, new EventArgs<object> (item));
             }
+        }
+
+        public bool SelectionEnabled {
+            get;
+            set;
         }
     }
 }

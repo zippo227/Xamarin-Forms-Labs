@@ -12,13 +12,12 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidApplication>True</AndroidApplication>
-    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>Xamarin.Forms.Labs.Sample.Droid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\Xamarin.Forms.Labs\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>06e89de8</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>51090a3b</NuGetPackageImportStamp>
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <MandroidI18n />
   </PropertyGroup>
@@ -45,7 +44,6 @@
     <ConsolePause>false</ConsolePause>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <BundleAssemblies>True</BundleAssemblies>
-    <AndroidCreatePackagePerAbi>True</AndroidCreatePackagePerAbi>
     <AndroidSupportedAbis>armeabi,armeabi-v7a</AndroidSupportedAbis>
     <MonoDroidExtraArgs>
     </MonoDroidExtraArgs>
@@ -64,6 +62,7 @@
     <Reference Include="FormsViewGroup">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -98,9 +97,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <AndroidAsset Include="Assets\fonts\Open 24 Display St.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
@@ -117,9 +119,9 @@
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>Xamarin.Forms.Labs.Charting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\ServiceStackV3\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid.csproj">
-      <Project>{F0F4B2F6-1979-4F36-A81B-5A7A44418831}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid</Name>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\Xamarin.Forms.Labs.ServiceStackSerializer\Xamarin.Forms.Labs.ServiceStackSerializer.Android.csproj">
+      <Project>{56838CD4-8EBC-4860-A3E1-1697875BBC61}</Project>
+      <Name>Xamarin.Forms.Labs.ServiceStackSerializer.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Labs.Sample\Xamarin.Forms.Labs.Sample.csproj">
       <Project>{DC133A2F-E49E-49E3-B43D-BFB957CB5482}</Project>
@@ -183,11 +185,14 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\services1_32.png" />
   </ItemGroup>
-  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <ItemGroup>
+    <AndroidResource Include="Resources\xml\nfc.xml" />
+  </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
+  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
 </Project>

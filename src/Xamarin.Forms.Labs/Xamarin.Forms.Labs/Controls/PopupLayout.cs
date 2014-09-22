@@ -62,6 +62,57 @@ namespace Xamarin.Forms.Labs.Controls
             this.UpdateChildrenLayout();
         }
 
+        public void ShowPopup(View popupView, View presenter, PopupLocation location, float paddingX = 0, float paddingY = 0)
+        {
+            this.DismissPopup();
+            this.popup = popupView;
+
+            Constraint constraintX = null, constraintY = null, constraintW = null, constraintH = null;
+
+            switch (location)
+            {
+                case PopupLocation.Bottom:
+                    constraintX = Constraint.RelativeToParent(parent => presenter.X + (presenter.Width - this.popup.WidthRequest) / 2);
+                    constraintY = Constraint.RelativeToParent(parent => parent.Y + presenter.Y + presenter.Height + paddingY);
+                    break;
+                case PopupLocation.Top:
+                    constraintX = Constraint.RelativeToParent(parent => presenter.X + (presenter.Width - this.popup.WidthRequest) / 2);
+                    constraintY = Constraint.RelativeToParent(parent => 
+                        parent.Y + presenter.Y - this.popup.HeightRequest / 2 - paddingY);
+                    break;
+                //case PopupLocation.Left:
+                //    constraintX = Constraint.RelativeToView(presenter, (parent, view) => ((view.X + view.Height / 2) - parent.X) + this.popup.HeightRequest / 2);
+                //    constraintY = Constraint.RelativeToView(presenter, (parent, view) => parent.Y + view.Y + view.Width + paddingY);
+                //    break;
+                //case PopupLocation.Right:
+                //    constraintX = Constraint.RelativeToView(presenter, (parent, view) => ((view.X + view.Height / 2) - parent.X) + this.popup.HeightRequest / 2);
+                //    constraintY = Constraint.RelativeToView(presenter, (parent, view) => parent.Y + view.Y - this.popup.WidthRequest - paddingY);
+                //    break;
+            }
+
+            constraintW = Constraint.RelativeToParent(p => this.popup.WidthRequest);
+            constraintH = Constraint.RelativeToParent(p => this.popup.HeightRequest);
+
+            this.content.InputTransparent = true;
+            this.Children.Add(
+                this.popup,
+                constraintX,
+                constraintY,
+                constraintW,
+                constraintH
+                );
+
+            if (Device.OS == TargetPlatform.Android)
+            {
+                this.Children.Remove(this.content);
+                this.Children.Add(this.content, () => this.Bounds);
+            }
+
+            //this.LowerChild(this.Content);
+
+            this.UpdateChildrenLayout();
+        }
+
         public void DismissPopup()
         {
             if (this.popup != null)
@@ -71,6 +122,29 @@ namespace Xamarin.Forms.Labs.Controls
             }
 
             this.content.InputTransparent = false;
+        }
+
+        /// <summary>
+        /// Popup location options when relative to another view
+        /// </summary>
+        public enum PopupLocation
+        {
+            /// <summary>
+            /// Will show popup on top of the specified view
+            /// </summary>
+            Top,
+            /// <summary>
+            /// Will show popup below of the specified view
+            /// </summary>
+            Bottom,
+            /// <summary>
+            /// Will show popup left to the specified view
+            /// </summary>
+            //Left,
+            /// <summary>
+            /// Will show popup right of the specified view
+            /// </summary>
+            //Right
         }
     }
 }
