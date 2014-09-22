@@ -155,7 +155,7 @@ namespace Xamarin.Forms.Labs.Controls
 				}
 			}
 
-			return m.Success;
+			return m.Success || mFunc.Success;
         }
     }
 }
