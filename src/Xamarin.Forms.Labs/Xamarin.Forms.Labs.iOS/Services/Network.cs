@@ -11,27 +11,50 @@ using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.iOS.Services
 {
-	public class Network : INetwork
+    public class Network : INetwork
     {
-		public Network()
-		{
-			Reachability.ReachabilityChanged += HandleReachabilityChanged;
-		}
+        private event Action<NetworkStatus> reachabilityChanged;
 
-		void HandleReachabilityChanged (object sender, EventArgs e)
-		{
-			var reachabilityChanged = ReachabilityChanged;
-			if (reachabilityChanged != null)
-				ReachabilityChanged(this.InternetConnectionStatus());
-		}
+        public Network()
+        {
 
-		public event Action<NetworkStatus> ReachabilityChanged;
+        }
 
-		public Xamarin.Forms.Labs.Services.NetworkStatus InternetConnectionStatus ()
-		{
-			var status = Reachability.InternetConnectionStatus ();
-			return (NetworkStatus)Enum.Parse (typeof(NetworkStatus), status.ToString ());
-		}
+        void HandleReachabilityChanged (object sender, EventArgs e)
+        {
+            var reachabilityChanged = this.reachabilityChanged;
+            if (reachabilityChanged != null)
+                reachabilityChanged(this.InternetConnectionStatus());
+        }
+
+        public event Action<NetworkStatus> ReachabilityChanged
+        {
+            add
+            {
+                if (this.reachabilityChanged == null)
+                {
+                    // TODO: check if this actually works
+                    Reachability.ReachabilityChanged += HandleReachabilityChanged;
+                }
+
+                this.reachabilityChanged += value;
+            }
+
+            remove
+            {
+                this.reachabilityChanged -= value;
+
+                if (this.reachabilityChanged == null)
+                {
+                    Reachability.ReachabilityChanged -= HandleReachabilityChanged;
+                }
+            }
+        }
+
+        public NetworkStatus InternetConnectionStatus()
+        {
+            return Reachability.InternetConnectionStatus();
+        }
 
         public Task<bool> IsReachable(string host, TimeSpan timeout)
         {
