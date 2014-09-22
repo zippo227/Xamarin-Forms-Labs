@@ -147,6 +147,7 @@
     <Compile Include="Controls\ExtendedEntryCell\ExtendedEntryCellRenderer.cs" />
     <Compile Include="Controls\Separator\SeparatorDroidView.cs" />
     <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
+    <Compile Include="Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -206,5 +207,6 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="Controls\Separator\" />
+    <Folder Include="Controls\ExtendedTableView\" />
   </ItemGroup>
 </Project>

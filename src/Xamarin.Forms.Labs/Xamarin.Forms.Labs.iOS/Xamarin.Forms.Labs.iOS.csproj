@@ -56,6 +56,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Controls\EditableListView\" />
     <Folder Include="Controls\Separator\" />
+    <Folder Include="Controls\ExtendedTableView\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -148,6 +149,7 @@
     <Compile Include="Controls\ExtendedEntryCell\ExtendedEntryCellRenderer.cs" />
     <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
     <Compile Include="Controls\Separator\UISeparator.cs" />
+    <Compile Include="Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
@@ -188,7 +190,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <PropertyGroup>
-  </PropertyGroup>  
+  </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
