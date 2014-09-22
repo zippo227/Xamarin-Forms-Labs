@@ -9,5 +9,6 @@ namespace Xamarin.Forms.Labs.Services
     public interface INetwork
     {
         Task<bool> IsReachable(string host, TimeSpan timeout);
+        Task<bool> IsReachableByWifi(string host, TimeSpan timeout);
     }
 }

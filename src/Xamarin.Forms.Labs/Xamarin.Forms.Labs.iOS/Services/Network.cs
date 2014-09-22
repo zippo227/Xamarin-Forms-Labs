@@ -17,5 +17,10 @@ namespace Xamarin.Forms.Labs.iOS.Services
         {
             return Task<bool>.Run(() => Reachability.IsHostReachable(host));
         }
+
+        public Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
+        {
+            return Task<bool>.Run(() => Reachability.RemoteHostStatus(host) == NetworkStatus.ReachableViaWiFiNetwork);
+        }
     }
 }

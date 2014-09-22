@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Net;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -34,6 +35,11 @@ namespace Xamarin.Forms.Labs.Droid.Services
                     return false;
                 }
             });
+        }
+
+        public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
+        {
+            return Reachability.InternetConnectionStatus() == NetworkStatus.ReachableViaWiFiNetwork && await this.IsReachable(host, timeout);
         }
 
         #endregion

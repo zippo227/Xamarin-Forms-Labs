@@ -49,6 +49,10 @@ namespace Xamarin.Forms.Labs
             iPhone5S_CDMA,
             [Description("iPhone 5S GSM")]
             iPhone5S_GSM,
+            [Description("iPhone 6")]
+            iPhone6,
+            [Description("iPhone 6 Plus")]
+            iPhone6Plus,
         }
 
         /// <summary>
@@ -81,12 +85,23 @@ namespace Xamarin.Forms.Labs
             case 6:
                 this.Version = minorVersion == 1 ? PhoneType.iPhone5S_CDMA : PhoneType.iPhone5S_GSM;
                 break;
+            case 7:
+                this.Version = minorVersion == 1 ? PhoneType.iPhone6Plus : PhoneType.iPhone6;
+                break;
             default:
                 this.Version = PhoneType.Unknown;
                 break;
             }
 
-            if (majorVersion > 4)
+            if (this.Version == PhoneType.iPhone6)
+            {
+                this.Display = new Display(1334, 750, 326, 326);
+            }
+            else if (this.Version == PhoneType.iPhone6Plus)
+            {
+                this.Display = new Display(1920, 1080, 401, 401);
+            }
+            else if (majorVersion > 4)
             {
                 this.Display = new Display(1136, 640, 326, 326);
             }

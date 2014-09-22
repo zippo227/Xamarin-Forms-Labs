@@ -17,7 +17,7 @@ namespace Xamarin.Forms.Labs.WP8.Services
     {
         public Network()
         {
-            DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+            //DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
         }
 
         #region INetwork Members
@@ -49,17 +49,26 @@ namespace Xamarin.Forms.Labs.WP8.Services
                 });
         }
 
-        void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
+        public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
         {
-            if (e.NotificationType == NetworkNotificationType.InterfaceConnected)
-            {
-
-            }
-            else if (e.NotificationType == NetworkNotificationType.InterfaceDisconnected)
-            {
-
-            }
+            return (
+                DeviceNetworkInformation.IsWiFiEnabled && 
+                DeviceNetworkInformation.IsNetworkAvailable &&
+                Microsoft.Phone.Net.NetworkInformation.NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 &&
+                await this.IsReachable(host, timeout));
         }
+
+        //void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
+        //{
+        //    if (e.NotificationType == NetworkNotificationType.InterfaceConnected)
+        //    {
+
+        //    }
+        //    else if (e.NotificationType == NetworkNotificationType.InterfaceDisconnected)
+        //    {
+
+        //    }
+        //}
 
         #endregion
     }
