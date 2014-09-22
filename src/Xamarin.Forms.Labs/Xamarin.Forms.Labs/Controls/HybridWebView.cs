@@ -188,19 +188,5 @@ namespace Xamarin.Forms.Labs.Controls
         internal EventHandler<string> JavaScriptLoadRequested;
         internal EventHandler<string> LoadFromContentRequested;
         internal EventHandler<string> LoadContentRequested;
-
-        internal bool TryGetAction(string name, out Action<string> action)
-        {
-            return this.registeredActions.TryGetValue(name, out action);
-        }
-
-        internal void OnLoadFinished(object sender, EventArgs e)
-        {
-            var handler = this.LoadFinished;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
     }
 }
