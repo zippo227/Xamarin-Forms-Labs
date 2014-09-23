@@ -47,6 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Definition", "Definition", 
 		.nuget\Definition\Services IoC Ninject.NuSpec = .nuget\Definition\Services IoC Ninject.NuSpec
 		.nuget\Definition\Services IoC SimpleInjector.NuSpec = .nuget\Definition\Services IoC SimpleInjector.NuSpec
 		.nuget\Definition\Services IoC TinyIOC.NuSpec = .nuget\Definition\Services IoC TinyIOC.NuSpec
+		.nuget\Definition\Services IoC Unity.NuSpec = .nuget\Definition\Services IoC Unity.NuSpec
 		.nuget\Definition\Services Serialization JSON.NuSpec = .nuget\Definition\Services Serialization JSON.NuSpec
 		.nuget\Definition\Services Serialization ProtoBuf.NuSpec = .nuget\Definition\Services Serialization ProtoBuf.NuSpec
 		.nuget\Definition\Services Serialization ServiceStack.NuSpec = .nuget\Definition\Services Serialization ServiceStack.NuSpec

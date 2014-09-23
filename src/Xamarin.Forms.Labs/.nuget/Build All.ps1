@@ -125,7 +125,7 @@ try
     $originalBackground = $host.UI.RawUI.BackgroundColor
     $originalForeground = $host.UI.RawUI.ForegroundColor
     $originalLocation = Get-Location
-    $packages = @("Core", "Services Caching", "Services Cryptography", "Services IoC AutoFac", "Services IoC Ninject", "Services IoC SimpleInjector", "Services IoC TinyIOC", "Services Serialization JSON", "Services Serialization ProtoBuf", "Services Serialization ServiceStack", "Charting")  
+    $packages = @("Core", "Services Caching", "Services Cryptography", "Services IoC AutoFac", "Services IoC Ninject", "Services IoC SimpleInjector", "Services IoC TinyIOC", "Services Serialization JSON", "Services Serialization ProtoBuf", "Services Serialization ServiceStack", "Charting", "Services IoC Unity")  
     
     $host.UI.RawUI.BackgroundColor = [System.ConsoleColor]::Black
     $host.UI.RawUI.ForegroundColor = [System.ConsoleColor]::White
