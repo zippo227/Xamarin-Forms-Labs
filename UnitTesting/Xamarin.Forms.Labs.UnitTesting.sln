@@ -62,18 +62,18 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		DeviceTests\DeviceTests.projitems*{08c1d9e7-4892-476b-a000-88a35d3517e4}*SharedItemsImports = 13
-		DeviceTests\DeviceTests.projitems*{bf012352-95c8-424a-9a57-db5699794af7}*SharedItemsImports = 4
 		SerializationTests\SerializationTests.projitems*{bf012352-95c8-424a-9a57-db5699794af7}*SharedItemsImports = 4
 		IocTests\IocTests.projitems*{bf012352-95c8-424a-9a57-db5699794af7}*SharedItemsImports = 4
+		DeviceTests\DeviceTests.projitems*{bf012352-95c8-424a-9a57-db5699794af7}*SharedItemsImports = 4
 		CachingTests\SharedCachingTests\SharedCachingTests.projitems*{2e8bf4b8-5c6f-4be0-be67-73d131604d90}*SharedItemsImports = 13
 		IocTests\IocTests.projitems*{3400f11a-e58b-40f5-86a7-d20901b7495b}*SharedItemsImports = 13
-		DeviceTests\DeviceTests.projitems*{1652df32-49a4-43b2-8c82-534bfd96135e}*SharedItemsImports = 4
 		SerializationTests\SerializationTests.projitems*{1652df32-49a4-43b2-8c82-534bfd96135e}*SharedItemsImports = 4
 		IocTests\IocTests.projitems*{1652df32-49a4-43b2-8c82-534bfd96135e}*SharedItemsImports = 4
+		DeviceTests\DeviceTests.projitems*{1652df32-49a4-43b2-8c82-534bfd96135e}*SharedItemsImports = 4
 		SerializationTests\SerializationTests.projitems*{ef5931dc-bfc8-4ec3-956e-433b7e9b9ae2}*SharedItemsImports = 13
-		DeviceTests\DeviceTests.projitems*{2873f9d8-66ef-4cd6-9314-6728638b5ecb}*SharedItemsImports = 4
 		SerializationTests\SerializationTests.projitems*{2873f9d8-66ef-4cd6-9314-6728638b5ecb}*SharedItemsImports = 4
 		IocTests\IocTests.projitems*{2873f9d8-66ef-4cd6-9314-6728638b5ecb}*SharedItemsImports = 4
+		DeviceTests\DeviceTests.projitems*{2873f9d8-66ef-4cd6-9314-6728638b5ecb}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -753,6 +753,7 @@ Global
 		{1137B5AC-2259-413C-A473-93721D2A7551}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1137B5AC-2259-413C-A473-93721D2A7551}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{1137B5AC-2259-413C-A473-93721D2A7551}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{1137B5AC-2259-413C-A473-93721D2A7551}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{1137B5AC-2259-413C-A473-93721D2A7551}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{1137B5AC-2259-413C-A473-93721D2A7551}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{1137B5AC-2259-413C-A473-93721D2A7551}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

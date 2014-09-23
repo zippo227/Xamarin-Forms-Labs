@@ -65,7 +65,7 @@ namespace Xamarin.Forms.Labs.Services.Unity
 
         public IDependencyContainer Register<T>(Func<IResolver, T> func) where T : class
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Unity container does not support registering funcs for resolving.");
         }
 
         #endregion
