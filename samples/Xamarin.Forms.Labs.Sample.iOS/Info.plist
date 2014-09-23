@@ -13,7 +13,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>7.0</string>
+	<string></string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -41,6 +41,28 @@
 		<string>Fonts/Roboto-Light.ttf</string>
 		<string>Fonts/Open 24 Display St.ttf</string>
 		<string>Fonts/fontawesome-webfont.ttf</string>
+	</array>
+	<key>NSMainNibFile</key>
+	<string></string>
+	<key>NSMainNibFile~ipad</key>
+	<string></string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icon-72@2x.png</string>
+		<string>Icon-72.png</string>
+		<string>Icon@2x.png</string>
+		<string>Icon.png</string>
+		<string>Icon-60@2x.png</string>
+		<string>Icon-76.png</string>
+		<string>Icon-76@2x.png</string>
+		<string>Default.png</string>
+		<string>Default@2x.png</string>
+		<string>Default-568h@2x.png</string>
+		<string>Icon-Small-50@2x.png</string>
+		<string>Icon-Small-50.png</string>
+		<string>Icon-Small-40.png</string>
+		<string>Icon-Small-40@2x.png</string>
+		<string>Icon-Small.png</string>
 	</array>
 </dict>
 </plist>
