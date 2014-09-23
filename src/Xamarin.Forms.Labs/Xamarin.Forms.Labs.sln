@@ -38,6 +38,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Definition", "Definition", "{00CA1022-3B1F-471C-9269-6611CAD6C9B8}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\Definition\Build.ps1 = .nuget\Definition\Build.ps1
+		.nuget\Definition\Charting.NuSpec = .nuget\Definition\Charting.NuSpec
 		.nuget\Definition\Clean.ps1 = .nuget\Definition\Clean.ps1
 		.nuget\Definition\Core.NuSpec = .nuget\Definition\Core.NuSpec
 		.nuget\Definition\Services Caching.NuSpec = .nuget\Definition\Services Caching.NuSpec
@@ -1681,6 +1682,7 @@ Global
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|iPhone.Build.0 = Release|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0E3BE08B-EE95-4385-B09A-9958B0719A5C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

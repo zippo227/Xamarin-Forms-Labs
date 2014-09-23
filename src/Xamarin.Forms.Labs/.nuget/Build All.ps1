@@ -4,7 +4,7 @@
 ##  
 ##  “Xamarin Forms Labs - Core” NuGet
 ##  •	Contents:
-##      o	Xamarin.Forms.Xaml.dll (PCL - Xamarin Android, Xamarin iOS, Windows Phone 8)
+##      o	Xamarin.Forms.Labs.dll (PCL - Xamarin Android, Xamarin iOS, Windows Phone 8)
 ##      o	Xamarin.Forms.Labs.Droid.dll (MonoAndroid - Xamarin Android)
 ##      o	Xamarin.Forms.Labs.iOS.dll (MonoIos - Xamarin iOS)
 ##      o	Xamarin.Forms.Labs.WP.dll (WinPRT - Windows Phone 8)
@@ -79,6 +79,12 @@
 ##      o	“ServiceStack.Text.MonoTouch” NuGet
 ##      o	“ServiceStack.Text.WP8” NuGet
 ##
+##  “Xamarin Forms Labs - Caching” NuGet
+##  •	Contents:
+##      o	Xamarin.Forms..Labs.Caching.dll (PCL - Xamarin Android, Xamarin iOS, Windows Phone 8)
+##      o	Xamarin.Forms.Labs.CachingDroid.dll (MonoAndroid - Xamarin Android)
+##      o	Xamarin.Forms.Labs.CachingiOS.dll (MonoIos - Xamarin iOS)
+##      o	Xamarin.Forms.Labs.CachingWP.dll (WinPRT - Windows Phone 8)
 
 param( [System.String] $commandLineOptions )
 
@@ -119,7 +125,7 @@ try
     $originalBackground = $host.UI.RawUI.BackgroundColor
     $originalForeground = $host.UI.RawUI.ForegroundColor
     $originalLocation = Get-Location
-    $packages = @("Core", "Services Caching", "Services Cryptography", "Services IoC AutoFac", "Services IoC Ninject", "Services IoC SimpleInjector", "Services IoC TinyIOC", "Services Serialization JSON", "Services Serialization ProtoBuf", "Services Serialization ServiceStack")  
+    $packages = @("Core", "Services Caching", "Services Cryptography", "Services IoC AutoFac", "Services IoC Ninject", "Services IoC SimpleInjector", "Services IoC TinyIOC", "Services Serialization JSON", "Services Serialization ProtoBuf", "Services Serialization ServiceStack", "Charting")  
     
     $host.UI.RawUI.BackgroundColor = [System.ConsoleColor]::Black
     $host.UI.RawUI.ForegroundColor = [System.ConsoleColor]::White

@@ -61,7 +61,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\..\..\..\..\ReleaseBuild\</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
-    <DocumentationFile>..\..\..\..\..\ReleaseBuild\ServiceStack.Text.WP.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\..\..\ReleaseBuild\ServiceStack.WP.XML</DocumentationFile>
     <Optimize>true</Optimize>
     <NoStdLib>true</NoStdLib>
     <DebugType>pdbonly</DebugType>
