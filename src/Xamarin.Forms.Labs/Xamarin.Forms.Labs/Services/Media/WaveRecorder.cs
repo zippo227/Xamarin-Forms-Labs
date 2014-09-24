@@ -13,8 +13,11 @@ namespace Xamarin.Forms.Labs.Services.Media
         private BinaryWriter writer;
         private int byteCount;
         private IAudioStream stream;
+	    private int channelCount;
+	    private int bitsPerSample;
+	    private int sampleRate;
 
-        ~WaveRecorder()
+	    ~WaveRecorder()
         {
             StopRecorder().Wait();
         }
@@ -40,7 +43,14 @@ namespace Xamarin.Forms.Labs.Services.Media
             this.byteCount = 0;
             this.stream.OnBroadcast += OnStreamBroadcast;
 
-            return await this.stream.Start(sampleRate);
+            var result = await this.stream.Start(sampleRate);
+	        if (result)
+	        {
+		        this.sampleRate = sampleRate;
+		        this.bitsPerSample = stream.BitsPerSample;
+		        this.channelCount = stream.ChannelCount;
+	        }
+	        return result;
         }
 
         public async Task StopRecorder()
@@ -55,9 +65,12 @@ namespace Xamarin.Forms.Labs.Services.Media
                 this.WriteHeader();
                 this.writer.Dispose();
                 this.writer = null;
+	            this.sampleRate =
+		            this.bitsPerSample =
+			            this.channelCount = -1;
             }
 
-            this.stream = null;
+			this.stream = null;
         }
 
         private void OnStreamBroadcast(object sender, EventArgs<byte[]> eventArgs)
@@ -90,11 +103,11 @@ namespace Xamarin.Forms.Labs.Services.Media
             this.writer.Write(16);
             this.writer.Write((short)1);
 
-            this.writer.Write((short)this.stream.ChannelCount);
-            this.writer.Write(this.stream.SampleRate);
-            this.writer.Write(this.stream.SampleRate * 2);
+            this.writer.Write((short)this.channelCount);
+            this.writer.Write(this.sampleRate);
+            this.writer.Write(this.sampleRate * 2);
             this.writer.Write((short)2);
-            this.writer.Write((short)this.stream.BitsPerSample);
+            this.writer.Write((short)this.bitsPerSample);
             this.writer.Write('d');
             this.writer.Write('a');
             this.writer.Write('t');
