@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xamarin.Forms.Labs.Services.Autofac
+namespace XLabs.Ioc.Autofac
 {
     /// <summary>
     /// The AutoFac container wrapper
