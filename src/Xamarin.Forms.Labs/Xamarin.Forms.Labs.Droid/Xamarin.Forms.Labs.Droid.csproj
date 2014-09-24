@@ -182,6 +182,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
+      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Name>XLabs.Ioc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
       <Project>{4D10DF5E-883D-468B-A854-4A53C7FE75AC}</Project>
       <Name>Xamarin.Forms.Labs</Name>

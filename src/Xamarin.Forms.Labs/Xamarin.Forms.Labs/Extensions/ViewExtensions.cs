@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs
 {

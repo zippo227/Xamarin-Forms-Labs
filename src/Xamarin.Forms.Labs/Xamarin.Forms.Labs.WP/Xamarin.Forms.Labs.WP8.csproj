@@ -187,6 +187,10 @@
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
+      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Name>XLabs.Ioc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
       <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
       <Name>Xamarin.Forms.Labs</Name>

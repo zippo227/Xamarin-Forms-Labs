@@ -10,6 +10,7 @@ using Xamarin.Forms.Labs.Caching.SQLiteNet;
 using SQLite.Net.Platform.XamarinIOS;
 using System;
 using System.IO;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample.iOS
 {

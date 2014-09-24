@@ -33,6 +33,7 @@ using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Serialization;
 using Xamarin.Forms.Labs.Caching.SQLiteNet;
 using System.IO;
+using XLabs.Ioc;
 
 
 namespace Xamarin.Forms.Labs.Sample.Droid

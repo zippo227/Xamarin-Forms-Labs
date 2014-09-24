@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Xamarin.Forms.Labs.Mvvm
 {
     using Services;
+    using XLabs.Ioc;
 
     /// <summary>
     /// Class ViewTypeAttribute.

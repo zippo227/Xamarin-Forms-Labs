@@ -19,6 +19,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
     using Windows.Storage;
     using System.Threading.Tasks;
     using Xamarin.Forms.Labs.Charting.WP;
+    using XLabs.Ioc;
 
     public partial class App : Application
     {

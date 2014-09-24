@@ -200,6 +200,10 @@
       <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
       <Name>Xamarin.Forms.Labs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
+      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Name>XLabs.Ioc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Labs.Sample\Xamarin.Forms.Labs.Sample.csproj">
       <Project>{dc133a2f-e49e-49e3-b43d-bfb957cb5482}</Project>
       <Name>Xamarin.Forms.Labs.Sample</Name>

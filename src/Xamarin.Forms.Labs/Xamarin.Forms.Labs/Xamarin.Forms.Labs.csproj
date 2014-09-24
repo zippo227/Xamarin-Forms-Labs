@@ -80,6 +80,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Services\Email\IEmailService.cs" />
+    <Compile Include="Services\IAsyncCacheProvider.cs" />
     <Compile Include="Services\IAsyncSimpleCache.cs" />
     <Compile Include="Services\IFontManager.cs" />
     <Compile Include="Services\INetwork.cs" />
@@ -90,10 +91,6 @@
     <Compile Include="Services\Media\MediaFile.cs" />
     <Compile Include="Services\Media\MediaFileNoteFoundException.cs" />
     <Compile Include="Services\Media\MediaStorageOptions.cs" />
-    <Compile Include="Services\DI\IDependencyContainer.cs" />
-    <Compile Include="Services\DI\IResolver.cs" />
-    <Compile Include="Services\DI\Resolver.cs" />
-    <Compile Include="Services\DI\SimpleContainer.cs" />
     <Compile Include="Services\Geolocation\PositionExtensions.cs" />
     <Compile Include="Services\ICacheProvider.cs" />
     <Compile Include="Services\IPhoneService.cs" />
@@ -164,6 +161,12 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.1.2.3.6255-pre3\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
+      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Name>XLabs.Ioc</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
   </PropertyGroup>
