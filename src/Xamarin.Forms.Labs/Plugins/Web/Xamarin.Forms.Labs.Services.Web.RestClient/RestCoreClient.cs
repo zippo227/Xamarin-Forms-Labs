@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms.Labs.Services.Serialization;
+using XLabs.Serialization;
 
 namespace Xamarin.Forms.Labs.Services.Web.RestClient
 {
