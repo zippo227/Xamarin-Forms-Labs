@@ -103,23 +103,9 @@
     <Compile Include="Services\Media\IMediaPicker.cs" />
     <Compile Include="Services\Media\WaveRecorder.cs" />
     <Compile Include="Services\NetworkStatus.cs" />
-    <Compile Include="Services\Serialization\IByteSerializer.cs" />
-    <Compile Include="Services\Serialization\IJsonSerializer.cs" />
-    <Compile Include="Services\Serialization\IProtoBufSerializer.cs" />
-    <Compile Include="Services\Serialization\ISerializer.cs" />
-    <Compile Include="Services\Serialization\IStreamSerializer.cs" />
-    <Compile Include="Services\Serialization\IStringSerializer.cs" />
-    <Compile Include="Services\Serialization\IXmlSerializer.cs" />
-    <Compile Include="Services\Serialization\SerializationFormat.cs" />
-    <Compile Include="Services\Serialization\StreamSerializer.cs" />
-    <Compile Include="Services\Serialization\StreamSerializerExtensions.cs" />
-    <Compile Include="Services\Serialization\StringSerializer.cs" />
-    <Compile Include="Services\Serialization\StringSerializerExtensions.cs" />
     <Compile Include="Mvvm\BaseView.cs" />
     <Compile Include="Mvvm\ViewFactory.cs" />
     <Compile Include="Mvvm\ViewModelNavigation.cs" />
-    <Compile Include="Services\Serialization\SystemJsonSerializer.cs" />
-    <Compile Include="Services\Serialization\SystemXmlSerializer.cs" />
     <Compile Include="Services\Geolocation\Position.cs" />
     <Compile Include="Services\Geolocation\IGeolocator.cs" />
     <Compile Include="Controls\SensorBar\SensorBarView.cs" />
@@ -166,6 +152,10 @@
     <ProjectReference Include="..\..\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
       <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
       <Name>XLabs.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XLabs\Serialization\XLabs.Serialization\XLabs.Serialization.csproj">
+      <Project>{8e7f7522-f018-466a-aa8a-147ee9341ba0}</Project>
+      <Name>XLabs.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

@@ -172,10 +172,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\Xamarin.Forms.Labs.ServiceStackSerializer\Xamarin.Forms.Labs.ServiceStackSerializer.iOS.csproj">
-      <Project>{1137B5AC-2259-413C-A473-93721D2A7551}</Project>
-      <Name>Xamarin.Forms.Labs.ServiceStackSerializer.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Charting\Xamarin.Forms.Labs.Charting.iOS\Xamarin.Forms.Labs.Charting.iOS.csproj">
       <Project>{0E3BE08B-EE95-4385-B09A-9958B0719A5C}</Project>
       <Name>Xamarin.Forms.Labs.Charting.iOS</Name>
@@ -191,6 +187,14 @@
     <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
       <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
       <Name>XLabs.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\Serialization\ServiceStack\XLabs.Serialization.ServiceStack.iOS.csproj">
+      <Project>{1f13e224-725f-41c4-9d3f-ad9850a90912}</Project>
+      <Name>XLabs.Serialization.ServiceStack.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\Serialization\XLabs.Serialization\XLabs.Serialization.csproj">
+      <Project>{8e7f7522-f018-466a-aa8a-147ee9341ba0}</Project>
+      <Name>XLabs.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Labs.Sample\Xamarin.Forms.Labs.Sample.csproj">
       <Project>{DC133A2F-E49E-49E3-B43D-BFB957CB5482}</Project>

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using ProtoBuf;
 
-namespace Xamarin.Forms.Labs.Services.Serialization.ProtoBuf
+namespace XLabs.Serialization.ProtoBuf
 {
     /// <summary>
     /// The protobuf serializer.

@@ -1,13 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Xamarin.Forms.Labs.ServiceStackSerializer
+namespace XLabs.Serialization.ServiceStack
 {
-    using ServiceStack.Text;
-    using Xamarin.Forms.Labs.Services.Serialization;
+    using global::ServiceStack.Text;
 
-    using JsConfig = ServiceStack.Text.JsConfig;
-    using JsonDateHandler = ServiceStack.Text.JsonDateHandler;
-    using Serializer = ServiceStack.Text.JsonSerializer;
+    using JsConfig = global::ServiceStack.Text.JsConfig;
+    using JsonDateHandler = global::ServiceStack.Text.JsonDateHandler;
+    using Serializer = global::ServiceStack.Text.JsonSerializer;
 
     /// <summary>
     /// JSON serializer using ServiceStack.Text library.
@@ -52,12 +51,12 @@ namespace Xamarin.Forms.Labs.ServiceStackSerializer
 
         public static void SetSerializeDelegate<T>(System.Func<T,string> serializerDelegate)
         {
-            ServiceStack.Text.JsConfig<T>.SerializeFn = serializerDelegate;
+            JsConfig<T>.SerializeFn = serializerDelegate;
         }
 
         public static void SetDeserializeDelegate<T>(System.Func<string, T> deserializerDelegate)
         {
-            ServiceStack.Text.JsConfig<T>.DeSerializeFn = deserializerDelegate;
+            JsConfig<T>.DeSerializeFn = deserializerDelegate;
         }
 
         #region ISerializer Members

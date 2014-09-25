@@ -8,7 +8,7 @@ using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLite.Net.Interop;
 using Xamarin.Forms.Labs.Services;
-using Xamarin.Forms.Labs.Services.Serialization;
+using XLabs.Serialization;
 
 namespace Xamarin.Forms.Labs.Caching.SQLiteNet
 {

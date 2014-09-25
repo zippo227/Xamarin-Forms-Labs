@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xamarin.Forms.Labs.Services.Serialization
+namespace XLabs.Serialization
 {
     public class SystemXmlSerializer : StreamSerializer, IXmlSerializer
     {

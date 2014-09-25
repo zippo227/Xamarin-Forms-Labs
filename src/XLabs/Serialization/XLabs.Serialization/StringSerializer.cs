@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Xamarin.Forms.Labs.Services.Serialization
+namespace XLabs.Serialization
 {
     /// <summary>
     /// The string serializer base class.

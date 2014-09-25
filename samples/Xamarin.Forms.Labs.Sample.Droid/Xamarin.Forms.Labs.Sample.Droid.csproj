@@ -123,13 +123,17 @@
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>Xamarin.Forms.Labs.Charting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\Xamarin.Forms.Labs.ServiceStackSerializer\Xamarin.Forms.Labs.ServiceStackSerializer.Android.csproj">
-      <Project>{56838CD4-8EBC-4860-A3E1-1697875BBC61}</Project>
-      <Name>Xamarin.Forms.Labs.ServiceStackSerializer.Android</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
       <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
       <Name>XLabs.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\Serialization\ServiceStack\XLabs.Serialization.ServiceStack.Android.csproj">
+      <Project>{bbca9f84-607a-4ff0-929f-0bb8b7c62ad4}</Project>
+      <Name>XLabs.Serialization.ServiceStack.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\Serialization\XLabs.Serialization\XLabs.Serialization.csproj">
+      <Project>{8e7f7522-f018-466a-aa8a-147ee9341ba0}</Project>
+      <Name>XLabs.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Labs.Sample\Xamarin.Forms.Labs.Sample.csproj">
       <Project>{DC133A2F-E49E-49E3-B43D-BFB957CB5482}</Project>

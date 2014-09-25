@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace Xamarin.Forms.Labs.Services.Serialization
+namespace XLabs.Serialization
 {
     public static class StreamSerializerExtensions
     {

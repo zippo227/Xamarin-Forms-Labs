@@ -1,4 +1,4 @@
-﻿namespace Xamarin.Forms.Labs.Services.Serialization
+﻿namespace XLabs.Serialization
 {
     /// <summary>
     /// The stream serializer.

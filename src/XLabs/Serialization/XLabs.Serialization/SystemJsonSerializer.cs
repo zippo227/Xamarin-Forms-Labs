@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Json;
 
-namespace Xamarin.Forms.Labs.Services.Serialization
+namespace XLabs.Serialization
 {
     /// <summary>
     /// The system JSON serializer.

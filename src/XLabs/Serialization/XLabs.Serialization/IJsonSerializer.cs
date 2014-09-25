@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Xamarin.Forms.Labs.Services.Serialization
+namespace XLabs.Serialization
 {
     /// <summary>
-    /// The protobuf Serializer interface.
+    /// The JsonSerializer interface.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
-    public interface IProtoBufSerializer : ISerializer
+    public interface IJsonSerializer : ISerializer
     {
     }
 }

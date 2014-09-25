@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms.Labs.Services;
-using Xamarin.Forms.Labs.Services.Serialization;
 using XLabs.Ioc;
+using XLabs.Serialization;
 
 [assembly: 
     InternalsVisibleTo("Xamarin.Forms.Labs.Droid"),

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Xamarin.Forms.Labs.Services.Serialization
+namespace XLabs.Serialization
 {
     /// <summary>
     /// Defines a generic interface for stream serializer.

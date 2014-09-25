@@ -1,50 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{56838CD4-8EBC-4860-A3E1-1697875BBC61}</ProjectGuid>
-    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{1F13E224-725F-41C4-9D3F-AD9850A90912}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xamarin.Forms.Labs.ServiceStackSerializer</RootNamespace>
-    <AssemblyName>Xamarin.Forms.Labs.Services.Serialization.ServiceStack.Droid</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <NuGetPackageImportStamp>4f9fd35a</NuGetPackageImportStamp>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>XLabs.Serialization.ServiceStack</RootNamespace>
+    <AssemblyName>XLabs.Serialization.ServiceStack.iOS</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>76c56ab3</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;ANDROID</DefineConstants>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;MONOTOUCH;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidLinkMode>None</AndroidLinkMode>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>True</Optimize>
-    <OutputPath>..\..\..\..\..\ReleaseBuild\</OutputPath>
-    <DefineConstants>TRACE;ANDROID</DefineConstants>
+    <OutputPath>..\..\..\..\ReleaseBuild\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
-    <DocumentationFile>..\..\..\..\..\ReleaseBuild\Xamarin.Forms.Labs.Services.Serialization.ServiceStack.Droid.xml</DocumentationFile>
+    <ConsolePause>False</ConsolePause>
+    <DefineConstants>MONOTOUCH</DefineConstants>
+    <DocumentationFile>..\..\..\..\ReleaseBuild\XLabs.Serialization.ServiceStack.iOS.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="mscorlib" />
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <Compile Include="AssemblyUtils.cs" />
     <Compile Include="CollectionExtensions.cs" />
@@ -60,8 +55,12 @@
     <Compile Include="Common\DeserializeTuple.cs" />
     <Compile Include="Common\DeserializeType.cs" />
     <Compile Include="Common\DeserializeTypeRef.cs" />
-    <Compile Include="Common\DeserializeTypeRefJson.cs" />
-    <Compile Include="Common\DeserializeTypeRefJsv.cs" />
+    <Compile Include="Common\DeserializeTypeRefJson.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\DeserializeTypeRefJsv.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Common\DeserializeTypeUtils.cs" />
     <Compile Include="Common\ITypeSerializer.cs" />
     <Compile Include="Common\JsDelegates.cs" />
@@ -81,10 +80,7 @@
     <Compile Include="CsvStreamExtensions.cs" />
     <Compile Include="CsvWriter.cs" />
     <Compile Include="DateTimeExtensions.cs" />
-    <Compile Include="DynamicJson.cs" />
-    <Compile Include="DynamicProxy.cs" />
     <Compile Include="Env.cs" />
-    <Compile Include="HashSet.cs" />
     <Compile Include="ITracer.cs" />
     <Compile Include="ITypeSerializer.Generic.cs" />
     <Compile Include="JsConfig.cs" />
@@ -127,20 +123,9 @@
     <Compile Include="XmlSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
-      <Project>{4D10DF5E-883D-468B-A854-4A53C7FE75AC}</Project>
-      <Name>Xamarin.Forms.Labs</Name>
+    <ProjectReference Include="..\XLabs.Serialization\XLabs.Serialization.csproj">
+      <Project>{8e7f7522-f018-466a-aa8a-147ee9341ba0}</Project>
+      <Name>XLabs.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

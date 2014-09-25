@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-namespace Xamarin.Forms.Labs.Services.Serialization.JsonNET
+namespace XLabs.Serialization.JsonNET
 {
     /// <summary>
     /// JSON serializer using Newtonsoft.Json library.
