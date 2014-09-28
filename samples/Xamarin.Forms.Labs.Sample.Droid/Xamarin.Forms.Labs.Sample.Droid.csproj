@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\Xamarin.Forms.Labs\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>4955530d</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>ad40718b</NuGetPackageImportStamp>
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <MandroidI18n />
   </PropertyGroup>
@@ -61,7 +61,7 @@
   <ItemGroup>
     <Reference Include="FormsViewGroup, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6255-pre3\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
@@ -80,15 +80,15 @@
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6255-pre3\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.Android, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6255-pre3\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6255-pre3\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -210,11 +210,11 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\appicon.png" />
   </ItemGroup>
-  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6255-pre3\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6255-pre3\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <Import Project="..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6255-pre3\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6255-pre3\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
 </Project>
