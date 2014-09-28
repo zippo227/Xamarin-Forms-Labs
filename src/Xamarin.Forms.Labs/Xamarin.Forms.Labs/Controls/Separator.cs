@@ -20,7 +20,9 @@ namespace Xamarin.Forms.Labs.Controls
 		 */
 		public static readonly BindableProperty OrientationProperty = BindableProperty.Create("Orientation", typeof(SeparatorOrientation), typeof(Separator), SeparatorOrientation.Horizontal, BindingMode.OneWay, null, null, null, null);
 
-		//Sorry I've implemented just horizontal implementaiton for now
+		/**
+		 * Orientation of the separator. Only
+		 */
 		public SeparatorOrientation Orientation {
 			get {
 				return (SeparatorOrientation)base.GetValue(Separator.OrientationProperty);
@@ -36,7 +38,9 @@ namespace Xamarin.Forms.Labs.Controls
 		 */
 		public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(Separator), Color.Default, BindingMode.OneWay, null, null, null, null);
 
-
+		/**
+		 * Color of the separator. Black is a default color
+		 */
 		public Color Color {
 			get {
 				return (Color)base.GetValue(Separator.ColorProperty);
@@ -48,13 +52,13 @@ namespace Xamarin.Forms.Labs.Controls
 
 
 		/**
-		 * Spacing property
+		 * SpacingBefore property
 		 */
 
 		public static readonly BindableProperty SpacingBeforeProperty = BindableProperty.Create("SpacingBefore", typeof(double), typeof(Separator), (double)1, BindingMode.OneWay, null, null, null, null);
 
 		/**
-		 * Spacing property
+		 * Padding before the separator. Default is 1.
 		 */
 		public double SpacingBefore {
 			get {
@@ -66,12 +70,12 @@ namespace Xamarin.Forms.Labs.Controls
 		}
 
 		/**
-		 * Spacing property
+		 * Spacing After property
 		 */
 		public static readonly BindableProperty SpacingAfterProperty = BindableProperty.Create("SpacingAfter", typeof(double), typeof(Separator), (double)1, BindingMode.OneWay, null, null, null, null);
 
 		/**
-		 * Spacing property
+		 * Padding after the separator. Default is 1.
 		 */
 		public double SpacingAfter {
 			get {
@@ -83,13 +87,13 @@ namespace Xamarin.Forms.Labs.Controls
 		}
 
 		/**
-		 * Spacing property
+		 * Thickness property
 		 */
 		public static readonly BindableProperty ThicknessProperty = BindableProperty.Create("Thickness", typeof(double), typeof(Separator), (double)1, BindingMode.OneWay, null, null, null, null);
 
 
 		/**
-		 * Spacing property
+		 * How thick should the separator be. Default is 1
 		 */
 
 		public double Thickness {
@@ -103,12 +107,12 @@ namespace Xamarin.Forms.Labs.Controls
 
 
 		/**
-		 * Spacing property
+		 * Stroke type property
 		 */
 		public static readonly BindableProperty StrokeTypeProperty = BindableProperty.Create("StrokeType", typeof(StrokeType), typeof(Separator), StrokeType.Solid, BindingMode.OneWay, null, null, null, null);
 
 		/**
-		 * Spacing property
+		 * Stroke style of the separator. Default is Solid.
 		 */
 		public StrokeType StrokeType {
 			get {
@@ -121,10 +125,7 @@ namespace Xamarin.Forms.Labs.Controls
 
 		public Separator()
 		{
-
 			UpdateRequestedSize();
-
-
 		}
 
 		protected override void OnPropertyChanged(string propertyName)

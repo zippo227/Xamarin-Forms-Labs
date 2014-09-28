@@ -2,6 +2,7 @@ using Android.Content;
 using Android.Util;
 using Android.Views;
 using System.Diagnostics;
+using System;
 
 namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
@@ -28,7 +29,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             stopwatch.Start();
 
             int totalWidth = MeasureSpec.GetSize(widthMeasureSpec);
-            _cellSize = totalWidth / 7;
+			int height = MeasureSpec.GetSize(heightMeasureSpec);
+			_cellSize = totalWidth / 7;
             int cellWidthSpec = MeasureSpec.MakeMeasureSpec(_cellSize, MeasureSpecMode.Exactly);
             int cellHeightSpec = IsHeaderRow
                 ? MeasureSpec.MakeMeasureSpec(_cellSize, MeasureSpecMode.AtMost)

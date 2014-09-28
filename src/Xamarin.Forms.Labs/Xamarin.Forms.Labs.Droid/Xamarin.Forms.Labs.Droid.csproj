@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -130,7 +130,6 @@
     <Compile Include="Services\Reachability.cs" />
     <Compile Include="Services\TextToSpeechService.cs" />
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
-    <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
     <Compile Include="..\Xamarin.Forms.Labs.WP\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
@@ -151,6 +150,10 @@
     <Compile Include="Controls\ExtendedEntryCell\ExtendedEntryCellRenderer.cs" />
     <Compile Include="Controls\Separator\SeparatorDroidView.cs" />
     <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\StyleDescriptor.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarArrowView.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarMonthPageTransformer.cs" />
     <Compile Include="Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +182,7 @@
     <AndroidResource Include="Resources\drawable\calendar_bg_selector.xml" />
     <AndroidResource Include="Resources\layout\calendar_picker.xml" />
     <AndroidResource Include="Resources\drawable\ad16.jpg" />
+    <AndroidResource Include="Resources\layout\calendar_pager_layout.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
