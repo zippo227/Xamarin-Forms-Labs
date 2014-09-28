@@ -45,10 +45,6 @@
     <Reference Include="ExifLib">
       <HintPath>..\packages\ExifLib.PCL.1.0.0\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
     </Reference>
-    <Reference Include="FormsViewGroup, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6255-pre3\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -57,17 +53,17 @@
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\packages\Xamarin.Android.Support.v4.20.0.0.3\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Core, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6255-pre3\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
+    <Reference Include="Xamarin.Forms.Platform.Android">
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.Android, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6255-pre3\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
+    <Reference Include="FormsViewGroup">
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Xaml, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6255-pre3\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -187,7 +183,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\..\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
-      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Project>{2E200799-1170-49BF-A4AA-2A9228F8A213}</Project>
       <Name>XLabs.Ioc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
@@ -196,6 +192,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />
@@ -211,7 +208,6 @@
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />
-  <Import Project="..\packages\Xamarin.Forms.1.2.3.6255-pre3\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6255-pre3\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>

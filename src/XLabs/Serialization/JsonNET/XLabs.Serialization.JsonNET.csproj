@@ -51,10 +51,16 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\Xamarin.Forms.Labs\packages\Newtonsoft.Json.6.0.5\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XLabs.Serialization\XLabs.Serialization.csproj">
-      <Project>{8e7f7522-f018-466a-aa8a-147ee9341ba0}</Project>
+      <Project>{8E7F7522-F018-466A-AA8A-147EE9341BA0}</Project>
       <Name>XLabs.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
@@ -69,6 +75,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
   </PropertyGroup>
   <Import Project="..\..\..\Xamarin.Forms.Labs\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
