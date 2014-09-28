@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Email;
 using Xamarin.Forms.Labs.Services.Media;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample.Pages.Services
 {

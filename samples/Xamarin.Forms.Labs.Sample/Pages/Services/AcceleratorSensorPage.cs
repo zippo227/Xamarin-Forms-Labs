@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Services;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample
 {
@@ -14,9 +15,9 @@ namespace Xamarin.Forms.Labs.Sample
         {
             var device = Resolver.Resolve<IDevice> ();
 
-			this.Title ="Accelerator Sensor";
+            this.Title ="Accelerator Sensor";
           
-			if (device.Accelerometer == null)
+            if (device.Accelerometer == null)
             {
                 this.Content = new Label () 
                 {

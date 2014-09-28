@@ -6,6 +6,7 @@ using Xamarin.Forms.Labs.Data;
 using System.Diagnostics;
 using Xamarin.Forms.Labs.Controls;
 using System.Threading.Tasks;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample
 {
@@ -225,16 +226,18 @@ namespace Xamarin.Forms.Labs.Sample
         /// <value>
         /// The call command.
         /// </value>
-        public Command CallCommand {
-            get {
+        public Command CallCommand 
+        {
+            get 
+            {
                 return callCommand ?? (callCommand = new Command (
                     () => this.device.PhoneService.DialNumber (NumberToCall),
-                    () => true)); 
+                    () => this.device.PhoneService != null)); 
             }
         }
     }
 
-    public class TestPerson : ObservableObject
+    public class TestPerson : ObservableObject, AutoCompleteSearchObject
     {
         private string firstName;
         private string lastName;

@@ -15,12 +15,55 @@ namespace Xamarin.Forms.Labs.WP8.Services
 {
     public class Network : INetwork
     {
+        private event Action<NetworkStatus> reachabilityChanged;
+
+        private NetworkStatus networkStatus;
+
         public Network()
         {
-            DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+            this.networkStatus = InternetConnectionStatus();
         }
 
-        #region INetwork Members
+        public event Action<NetworkStatus> ReachabilityChanged
+        {
+            add
+            {
+                if (this.reachabilityChanged == null)
+                {
+                    DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+                }
+
+                this.reachabilityChanged += value;
+            }
+
+            remove
+            {
+                this.reachabilityChanged -= value;
+
+                if (this.reachabilityChanged == null)
+                {
+                    DeviceNetworkInformation.NetworkAvailabilityChanged -= DeviceNetworkInformation_NetworkAvailabilityChanged;
+                }
+            }
+        }
+
+        public NetworkStatus InternetConnectionStatus()
+        {
+            if (!DeviceNetworkInformation.IsNetworkAvailable)
+            {
+                if (DeviceNetworkInformation.IsWiFiEnabled && Microsoft.Phone.Net.NetworkInformation.NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+                {
+                    return NetworkStatus.ReachableViaWiFiNetwork;
+                }
+
+                if (Microsoft.Phone.Net.NetworkInformation.NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.MobileBroadbandCdma || Microsoft.Phone.Net.NetworkInformation.NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.MobileBroadbandGsm)
+                {
+                    return NetworkStatus.ReachableViaCarrierDataNetwork;
+                }
+            }
+
+            return NetworkStatus.NotReachable;
+        }
 
         public Task<bool> IsReachable(string host, TimeSpan timeout)
         {
@@ -49,18 +92,28 @@ namespace Xamarin.Forms.Labs.WP8.Services
                 });
         }
 
+        public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
+        {
+            return (InternetConnectionStatus() == NetworkStatus.ReachableViaWiFiNetwork  &&
+                await this.IsReachable(host, timeout));
+        }
+
         void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
         {
-            if (e.NotificationType == NetworkNotificationType.InterfaceConnected)
-            {
+            var status = this.InternetConnectionStatus();
 
+            if (status == this.networkStatus)
+            {
+                return;
             }
-            else if (e.NotificationType == NetworkNotificationType.InterfaceDisconnected)
-            {
 
+            var handler = this.reachabilityChanged;
+
+            if (handler != null)
+            {
+                handler(status);
             }
         }
 
-        #endregion
     }
 }

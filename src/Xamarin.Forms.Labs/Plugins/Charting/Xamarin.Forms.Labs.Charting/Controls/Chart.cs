@@ -25,6 +25,8 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         public static readonly BindableProperty SeriesProperty = BindableProperty.Create("Series", typeof(SeriesCollection), typeof(Chart), default(SeriesCollection), BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty SpacingProperty = BindableProperty.Create("Spacing", typeof(double), typeof(Chart), 5.0, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty GridProperty = BindableProperty.Create("Grid", typeof(bool), typeof(Chart), true, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty XPathProperty = BindableProperty.Create("XPath", typeof(string), typeof(Chart), null, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty YPathProperty = BindableProperty.Create("YPath", typeof(string), typeof(Chart), null, BindingMode.OneWay, null, null, null, null);
         #endregion
 
         #region Properties
@@ -101,6 +103,40 @@ namespace Xamarin.Forms.Labs.Charting.Controls
                 base.SetValue(Chart.GridProperty, value);
             }
         }
+        /// <summary>
+        /// Determines the property on the object that contains the X-values of the chart.
+        /// </summary>
+        /// <remarks>
+        /// Will be used if the DataSource property is set.
+        /// </remarks>
+        public string XPath
+        {
+            get
+            {
+                return (string)base.GetValue(Chart.XPathProperty);
+            }
+            set
+            {
+                base.SetValue(Chart.XPathProperty, value);
+            }
+        }
+        /// <summary>
+        /// Determines the property on the object that contains the Y-values of the chart.
+        /// </summary>
+        /// <remarks>
+        /// Will be used if the DataSource property is set.
+        /// </remarks>
+        public string YPath
+        {
+            get
+            {
+                return (string)base.GetValue(Chart.YPathProperty);
+            }
+            set
+            {
+                base.SetValue(Chart.YPathProperty, value);
+            }
+        }
         #endregion
 
         public Chart()
@@ -174,7 +210,8 @@ namespace Xamarin.Forms.Labs.Charting.Controls
                     // There should be at least one value to access its type and properties.
                     if (seriesValues.Count() > 1)
                     {
-                        IEnumerable<PropertyInfo> properties = seriesValues.ElementAt(1).GetType().GetTypeInfo().DeclaredProperties;
+                        Type type = seriesValues.ElementAt(1).GetType();
+                        IEnumerable<PropertyInfo> properties = type.GetTypeInfo().DeclaredProperties;
                         // There should be at least two accessible properties on the type.
                         if (properties.Count() >= 2)
                         {
@@ -184,8 +221,30 @@ namespace Xamarin.Forms.Labs.Charting.Controls
                             foreach (var val in seriesValues)
                             {
                                 // Currently DataPoint expects a string (X) and a double (Y).
-                                string xValue = properties.ElementAt(0).GetValue(val, null).ToString();
-                                double yValue = Convert.ToDouble(properties.ElementAt(1).GetValue(val, null));
+                                string xValue = "";
+                                if (XPath != null)
+                                {
+                                    // Get value from property using reflection
+                                    PropertyInfo info = properties.FirstOrDefault(p => p.Name == XPath);
+                                    if (info != null)
+                                        xValue = info.GetValue(val).ToString();
+                                }
+                                else
+                                    // Get value from property using the first property it can find on the object
+                                    xValue = properties.ElementAt(0).GetValue(val, null).ToString();
+
+                                double yValue = 0;
+                                if (YPath != null)
+                                {
+                                    // Get value from property using reflection
+                                    PropertyInfo info = properties.FirstOrDefault(p => p.Name == YPath);
+                                    if (info != null)
+                                        yValue = Convert.ToDouble(info.GetValue(val).ToString());
+                                }
+                                else
+                                    // Get value from property using the second property it can find on the object
+                                    yValue = Convert.ToDouble(properties.ElementAt(1).GetValue(val, null));
+
                                 series.Points.Add(new DataPoint(xValue, yValue));
                             }
                         }

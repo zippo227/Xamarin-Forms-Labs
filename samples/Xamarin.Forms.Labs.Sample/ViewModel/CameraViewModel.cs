@@ -3,6 +3,7 @@ using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample
 {

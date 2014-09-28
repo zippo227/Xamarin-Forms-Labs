@@ -3,6 +3,7 @@ using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Labs.Mvvm;
 using Environment = Android.OS.Environment;
 using Xamarin.Forms.Labs.Services;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Droid
 {

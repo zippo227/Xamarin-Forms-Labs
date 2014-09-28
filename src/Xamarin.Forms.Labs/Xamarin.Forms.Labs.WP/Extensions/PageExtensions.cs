@@ -7,6 +7,8 @@ using Microsoft.Phone.Controls;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services;
 
+using XLabs.Ioc;
+
 namespace Xamarin.Forms.Labs.WP8
 {
     public static class PageExtensions

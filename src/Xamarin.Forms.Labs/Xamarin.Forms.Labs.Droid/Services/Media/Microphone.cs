@@ -121,7 +121,9 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
                     return false;
                 }
 
-                this.audioSource = new AudioRecord(
+				this.bufferSize = AudioRecord.GetMinBufferSize(sampleRate, ChannelIn.Mono, Encoding.Pcm16bit);
+
+				this.audioSource = new AudioRecord(
                     AudioSource.Mic,
                     sampleRate,
                     ChannelIn.Mono,
@@ -167,7 +169,6 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
         /// </summary>
         private async Task Record()
         {
-            this.bufferSize = AudioRecord.GetMinBufferSize(this.SampleRate, ChannelIn.Mono, Encoding.Pcm16bit);
             var buffer = new byte[this.bufferSize];
 
             var readCount = await this.audioSource.ReadAsync(buffer, 0, this.bufferSize);

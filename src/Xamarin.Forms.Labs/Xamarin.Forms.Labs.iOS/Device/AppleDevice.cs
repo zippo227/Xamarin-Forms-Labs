@@ -18,7 +18,7 @@ namespace Xamarin.Forms.Labs
     /// </summary>
     public abstract class AppleDevice : IDevice
     {
-        private const string iPhoneExpression = "iPhone([1-6]),([1-4])";
+        private const string iPhoneExpression = "iPhone([1-7]),([1-4])";
         private const string iPodExpression = "iPod([1-5]),([1])";
         private const string iPadExpression = "iPad([1-4]),([1-6])";
 

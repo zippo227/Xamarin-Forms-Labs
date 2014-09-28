@@ -40,6 +40,7 @@ using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Labs.Droid.Services;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services;
+using XLabs.Ioc;
 
 [assembly: Dependency(typeof(NfcDevice))]
 
