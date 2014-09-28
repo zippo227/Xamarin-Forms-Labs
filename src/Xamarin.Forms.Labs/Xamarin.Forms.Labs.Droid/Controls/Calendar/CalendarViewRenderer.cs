@@ -149,10 +149,10 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
 		private void SetFonts(){
 			if(Element.DateLabelFont != Font.Default){
-				_picker.StyleDescriptor.DateLabelFont = Element.DateLabelFont.ToTypeface();
+				_picker.StyleDescriptor.DateLabelFont = Element.DateLabelFont.ToExtendedTypeface(Context);
 			}
 			if(Element.MonthTitleFont != Font.Default){
-				_picker.StyleDescriptor.MonthTitleFont = Element.MonthTitleFont.ToTypeface();
+				_picker.StyleDescriptor.MonthTitleFont = Element.MonthTitleFont.ToExtendedTypeface(Context);
 			}
 		}
 

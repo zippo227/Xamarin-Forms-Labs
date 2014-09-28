@@ -60,8 +60,10 @@ namespace Xamarin.Forms.Labs.Droid
 
 	    private void SetFont(ExtendedEntry view)
 	    {
-	        if (view.Font != Font.Default)
-	            Control.TextSize = view.Font.ToScaledPixel();
+			if(view.Font != Font.Default) {
+				Control.TextSize = view.Font.ToScaledPixel();
+				Control.Typeface = view.Font.ToExtendedTypeface(Context);
+			}
 	    }
 
 	    private void SetPlaceholderTextColor(ExtendedEntry view){

@@ -56,6 +56,9 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             stopWatch.Start();
             
 			_title.Text = month.Label;
+			if(_title.Typeface != null) {
+				_title.Typeface = month.Style.MonthTitleFont;
+			}
 			_title.SetTextColor(month.Style.TitleForegroundColor);
 			_title.SetBackgroundColor(month.Style.TitleBackgroundColor);
 

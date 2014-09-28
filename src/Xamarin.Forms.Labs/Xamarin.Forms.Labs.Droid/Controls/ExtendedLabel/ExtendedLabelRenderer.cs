@@ -44,6 +44,10 @@ namespace Xamarin.Forms.Labs.Droid
             }
             //====== End of obsolete section ==========================================================
 
+			if(string.IsNullOrEmpty(view.FontNameAndroid) && string.IsNullOrEmpty(view.FontName) && view.Font != null){
+				control.Typeface = view.Font.ToExtendedTypeface(Context);
+			}
+
             if (view.FontSize > 0)
             {
                 control.TextSize = (float)view.FontSize;
