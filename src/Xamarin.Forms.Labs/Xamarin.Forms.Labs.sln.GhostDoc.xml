@@ -53,34 +53,37 @@
     <HeaderText>Xamarin Forms Labs is a open source project that aims to provide a powerful and cross platform set of controls and helpers tailored to work with Xamarin Forms.</HeaderText>
     <FooterText>See more in https://github.com/XForms/Xamarin-Forms-Labs</FooterText>
     <SelectedProjects>
+      <SelectedProject>XLabs.Ioc</SelectedProject>
+      <SelectedProject>XLabs.Serialization</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Droid</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.iOS</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Charting</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Charting.Droid</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.Android</SelectedProject>
+      <SelectedProject>XLabs.Serialization.ServiceStack.Android</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Caching.SQLiteNet</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.iOS</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Charting.iOS</SelectedProject>
+      <SelectedProject>XLabs.Serialization.ServiceStack.iOS</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Charting.WP</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.WP8</SelectedProject>
+      <SelectedProject>XLabs.Serialization.ServiceStack.WP8</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.WP8</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.JsonNET</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.ProtoBuf</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.NET45</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC.Droid</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC.iOS</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC.WP8</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.Ninject</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.SimpleInjector</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.Autofac</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Services.Unity</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Cryptography</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient.iOS</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient.Droid</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient.WP8</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Caching.Akavache</SelectedProject>
+      <SelectedProject>XLabs.Ioc.Autofac</SelectedProject>
+      <SelectedProject>XLabs.Ioc.Ninject</SelectedProject>
+      <SelectedProject>XLabs.Ioc.SimpleInjector</SelectedProject>
+      <SelectedProject>XLabs.Ioc.TinyIOC</SelectedProject>
+      <SelectedProject>XLabs.Ioc.TinyIOC.Droid</SelectedProject>
+      <SelectedProject>XLabs.Ioc.TinyIOC.iOS</SelectedProject>
+      <SelectedProject>XLabs.Ioc.TinyIOC.WP8</SelectedProject>
+      <SelectedProject>XLabs.Ioc.Unity</SelectedProject>
+      <SelectedProject>XLabs.Serialization.JsonNET</SelectedProject>
+      <SelectedProject>XLabs.Serialization.ServiceStack.NET45</SelectedProject>
+      <SelectedProject>XLabs.Serialization.ProtoBuf</SelectedProject>
     </SelectedProjects>
   </HelpConfiguration>
 </HelpConfigurations>
