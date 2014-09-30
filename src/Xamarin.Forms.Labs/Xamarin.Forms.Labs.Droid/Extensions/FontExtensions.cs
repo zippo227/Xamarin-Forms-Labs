@@ -74,9 +74,9 @@ namespace Xamarin.Forms.Labs.Droid
 		 * This method returns typeface for given typeface using following rules:
 		 * 1. Lookup in the cache
 		 * 2. If not found, look in the assets in the fonts folder. Save your font under its FontFamily name. 
-		 * If no extension is written in the family name .ttf id asumed
+		 * If no extension is written in the family name .ttf is asumed
 		 * 3. If not found look in the files under fonts/ folder
-		 * If no extension is written in the family name .ttf id asumed
+		 * If no extension is written in the family name .ttf is asumed
 		 * 4. If not found, try to return typeface from Xamarin.Forms ToTypeface() method
 		 * 5. If not successfull, return Typeface.Default
 		 * 
