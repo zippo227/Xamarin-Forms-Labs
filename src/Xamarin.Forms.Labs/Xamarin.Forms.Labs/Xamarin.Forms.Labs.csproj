@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\AutoComplete.cs" />
+    <Compile Include="Controls\ButtonGroup.cs" />
     <Compile Include="Controls\DynamicListView.cs" />
     <Compile Include="Controls\ExtendedContentView.cs" />
     <Compile Include="Controls\ExtendedEntry.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Controls\RepeaterView.cs" />
     <Compile Include="Controls\SegmentControl\SegmentedControlView.cs" />
     <Compile Include="Controls\WebImage.cs" />
+    <Compile Include="Controls\WrapLayout.cs" />
     <Compile Include="Data\ObservableObject.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />
     <Compile Include="Device\IAccelerometer.cs" />
