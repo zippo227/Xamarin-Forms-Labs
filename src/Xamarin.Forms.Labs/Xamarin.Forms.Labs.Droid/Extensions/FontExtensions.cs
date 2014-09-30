@@ -8,20 +8,37 @@ using System.Collections.Generic;
 namespace Xamarin.Forms.Labs.Droid
 {
 
-	internal class TypefaceCache{
-		private static TypefaceCache _sharedCache;
-		public static TypefaceCache SharedCache{
-			get{
-				if(_sharedCache == null){
-					_sharedCache = new TypefaceCache();
+	public interface ITypefaceCache{
+		void StoreTypeface(string key,Typeface typeface);
+		void RemoveTypeface(string key);
+		Typeface RetrieveTypeface(string key);
+	}
+
+	public static class TypefaceCache{
+		private static ITypefaceCache _sharedCache;
+		public static ITypefaceCache SharedCache {
+			get {
+				if(_sharedCache == null) {
+					_sharedCache = new DefaultTypefaceCache();
 				}
 				return _sharedCache;
 			}
+			set{
+				if(_sharedCache != null && _sharedCache.GetType() == typeof(DefaultTypefaceCache)){
+					((DefaultTypefaceCache)_sharedCache).PurgeCache();
+				}
+				_sharedCache = value;
+			}
 		}
 
+
+
+
+	}
+	internal class DefaultTypefaceCache : ITypefaceCache{
 		private Dictionary<string,Typeface> _cacheDict;
 
-		private TypefaceCache(){
+		public DefaultTypefaceCache(){
 			_cacheDict = new Dictionary<string, Typeface>();
 		}
 
@@ -47,6 +64,8 @@ namespace Xamarin.Forms.Labs.Droid
 
 
 	}
+
+
 
 
 	public static class FontExtensions
