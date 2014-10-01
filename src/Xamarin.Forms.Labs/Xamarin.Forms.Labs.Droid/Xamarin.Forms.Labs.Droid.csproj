@@ -151,6 +151,7 @@
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarArrowView.cs" />
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarMonthPageTransformer.cs" />
     <Compile Include="Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
+    <Compile Include="Extensions\FontExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
