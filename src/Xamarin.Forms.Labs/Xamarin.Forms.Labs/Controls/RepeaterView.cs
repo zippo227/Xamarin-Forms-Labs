@@ -32,10 +32,11 @@ namespace Xamarin.Forms.Labs.Controls
             foreach (var item in newValue)
             {
                 var cell = control.ItemTemplate.CreateContent();
-                control.Children.Add(((ViewCell)cell).View);
+                var view = ((ViewCell)cell).View;
+                view.BindingContext = item;
+                control.Children.Add(view);
             }
         }
-
 
         void ItemsSource_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
