@@ -8,13 +8,15 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         public int Year { get; private set; }
         public DateTime Date { get; private set; }
         public string Label { get; private set; }
+		public StyleDescriptor Style { get; private set;}
 
-        public MonthDescriptor(int month, int year, DateTime date, string label)
+		public MonthDescriptor(int month, int year, DateTime date, string label,StyleDescriptor style)
         {
             Month = month;
             Year = year;
             Date = date;
             Label = label;
+			Style = style;
         }
 
         public override string ToString()

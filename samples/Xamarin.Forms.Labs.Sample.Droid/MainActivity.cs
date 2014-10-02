@@ -30,10 +30,10 @@ using Android.OS;
 using Xamarin.Forms.Labs.Droid;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services;
-using Xamarin.Forms.Labs.Services.Serialization;
 using Xamarin.Forms.Labs.Caching.SQLiteNet;
 using System.IO;
-
+using XLabs.Ioc;
+using XLabs.Serialization;
 
 namespace Xamarin.Forms.Labs.Sample.Droid
 {
@@ -86,7 +86,7 @@ namespace Xamarin.Forms.Labs.Sample.Droid
             resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 //.Register<IJsonSerializer, Services.Serialization.JsonNET.JsonSerializer>()
-                .Register<IJsonSerializer, Xamarin.Forms.Labs.ServiceStackSerializer.JsonSerializer>()
+                .Register<IJsonSerializer, XLabs.Serialization.ServiceStack.JsonSerializer>()
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISimpleCache>(

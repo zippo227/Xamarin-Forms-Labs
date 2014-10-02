@@ -13,6 +13,7 @@ using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.WP8.Controls;
 using Xamarin.Forms.Platform.WinPhone;
+using XLabs.Ioc;
 
 [assembly: ExportRenderer(typeof(CameraView), typeof(CameraViewRenderer))]
 

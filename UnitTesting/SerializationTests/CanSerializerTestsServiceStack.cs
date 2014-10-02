@@ -17,7 +17,7 @@ namespace SerializationTests
     {
         protected override Xamarin.Forms.Labs.Services.Serialization.ISerializer Serializer
         {
-            get { return new Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.JsonSerializer(); }
+            get { return new Xamarin.Forms.Labs.ServiceStackSerializer.JsonSerializer(); }
         }
     }
 }

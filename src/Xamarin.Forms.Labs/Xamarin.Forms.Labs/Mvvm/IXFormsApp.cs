@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
@@ -24,6 +25,12 @@ namespace Xamarin.Forms.Labs.Mvvm
         string AppDataDirectory { get; set; }
 
         Orientation Orientation { get; }
+
+        Func<Task<bool>> BackPressDelegate
+        {
+            get;
+            set;
+        }
 
         #endregion Properties
 

@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite.Net;
-using Xamarin.Forms.Labs.Services.Serialization;
+using XLabs.Serialization;
 
 namespace Xamarin.Forms.Labs.Caching.SQLiteNet
 {

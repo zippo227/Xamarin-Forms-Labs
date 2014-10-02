@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Xamarin.Forms.Labs.Mvvm
 {
     using Services;
+    using XLabs.Ioc;
 
     /// <summary>
     /// Class ViewTypeAttribute.
@@ -54,7 +55,8 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <typeparam name="TView">The type of the t view.</typeparam>
         /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-        public static void Register<TView, TViewModel>()
+        /// <param name="func">Function which returns an instance of the t view model.</param>
+        public static void Register<TView, TViewModel>(Func<IResolver, TViewModel> func = null)
             where TView : Page
             where TViewModel : ViewModel
         {
@@ -66,7 +68,10 @@ namespace Xamarin.Forms.Labs.Mvvm
             if (container != null)
             {
                 // register viewmodel with DI to enable non default vm constructors / service locator
-                container.Register<TViewModel, TViewModel>();
+                if (func == null)
+                    container.Register<TViewModel, TViewModel>();
+                else 
+                    container.Register(func);
             }
         }
 

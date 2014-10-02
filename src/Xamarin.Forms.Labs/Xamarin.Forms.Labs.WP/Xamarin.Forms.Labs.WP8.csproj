@@ -18,7 +18,7 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>b741d1ee</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>4d6cedd4</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,11 +101,16 @@
       <Link>Services\FontManager.designer.cs</Link>
       <DependentUpon>FontManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Xamarin.Forms.Labs\Services\IO\FileManager.cs">
+      <Link>Services\IO\FileManager.cs</Link>
+    </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs">
       <SubType>Code</SubType>
@@ -117,6 +122,7 @@
     <Compile Include="Controls\SensorBar\SensorBarControl.xaml.cs">
       <DependentUpon>SensorBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\Battery.cs" />
@@ -131,6 +137,7 @@
     <Compile Include="Extensions\FontExtensions.cs" />
     <Compile Include="Extensions\OrientationExtensions.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />
+    <Compile Include="Extensions\UIElementExtensions.cs" />
     <Compile Include="Extensions\VectorExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
@@ -159,25 +166,28 @@
     <Reference Include="WPControls">
       <HintPath>..\packages\WPControls.1.5.2\lib\wp8\WPControls.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Core, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Core.dll</HintPath>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\WP80\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.WP8, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Platform.WP8.dll</HintPath>
+    <Reference Include="Xamarin.Forms.Platform.WP8">
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\WP80\Xamarin.Forms.Platform.WP8.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Xaml, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Xaml.dll</HintPath>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\WP80\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Settings.StyleCop" />
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
+      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Name>XLabs.Ioc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
       <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
       <Name>Xamarin.Forms.Labs</Name>
@@ -206,7 +216,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
   <PropertyGroup>
   </PropertyGroup>
@@ -218,5 +228,5 @@
   </Target>
   -->
   <ItemGroup />
-  <Import Project="..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <Import Project="..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
 </Project>

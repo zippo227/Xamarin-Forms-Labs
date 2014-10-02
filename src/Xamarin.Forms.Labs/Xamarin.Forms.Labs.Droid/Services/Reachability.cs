@@ -17,6 +17,15 @@ namespace Xamarin.Forms.Labs.Droid.Services
             }
         }
 
+        public static bool IsActiveNetworkWifi
+        {
+            get
+            {
+                var activeConnection = ConnectivityManager.ActiveNetworkInfo;
+
+                return activeConnection.Type == ConnectivityType.Wifi;
+            }
+        }
 
         public static bool IsNetworkAvailable()
         {

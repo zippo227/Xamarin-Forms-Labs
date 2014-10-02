@@ -11,7 +11,7 @@
     <AssemblyName>Xamarin.Forms.Labs.iOS</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>6901fc17</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>a4d431a6</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,7 +25,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\ReleaseBuild\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -44,13 +43,13 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.iOS">
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6256-pre4\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +76,13 @@
       <Link>Services\FontManager.designer.cs</Link>
       <DependentUpon>FontManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Xamarin.Forms.Labs\Services\IO\FileManager.cs">
+      <Link>Services\IO\FileManager.cs</Link>
+    </Compile>
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
+    <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\ExtendedTabbedPage\ExtendedTabbedPageRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="Controls\IconButton\IconButtonRenderer.cs" />
@@ -88,8 +91,9 @@
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\AppleDevice.cs" />
     <Compile Include="Device\Battery.cs" />
-    <Compile Include="Device\BluetoothDevice.cs" />
-    <Compile Include="Device\BluetoothHub.cs" />
+    <None Include="app.config" />
+    <None Include="Device\BluetoothDevice.cs" />
+    <None Include="Device\BluetoothHub.cs" />
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\Gyroscope.cs" />
     <Compile Include="Device\Pad.cs" />
@@ -97,6 +101,8 @@
     <Compile Include="Device\Pod.cs" />
     <Compile Include="Device\Simulator.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\UIImageExtensions.cs" />
+    <Compile Include="Extensions\UIViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -133,6 +139,18 @@
     <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
     <Compile Include="Controls\ImageGallery\ImageGalleryView.cs" />
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
+    <Compile Include="Controls\EditableListView\EditableListViewRenderer.cs" />
+    <Compile Include="Controls\GridView\GridDataSource.cs" />
+    <Compile Include="Controls\GridView\GridViewDelegate.cs" />
+    <Compile Include="Controls\GridView\GridViewCell.cs" />
+    <Compile Include="Controls\ExtendedEntryCell\ExtendedEntryCellRenderer.cs" />
+    <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
+    <Compile Include="Controls\Separator\UISeparator.cs" />
+    <Compile Include="Controls\Calendar\StyleDescriptor.cs" />
+    <Compile Include="Controls\Calendar\CalendarDayView.cs" />
+    <Compile Include="Controls\Calendar\MonthGridView.cs" />
+    <Compile Include="Controls\Calendar\CalendarArrowView.cs" />
+    <Compile Include="Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
@@ -161,13 +179,23 @@
     <BundleResource Include="Images\CheckBox\unchecked_checkbox%402x.png" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <PropertyGroup>
   </PropertyGroup>
-  <Import Project="..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <Import Project="..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.2.3.6256-pre4\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
 </Project>

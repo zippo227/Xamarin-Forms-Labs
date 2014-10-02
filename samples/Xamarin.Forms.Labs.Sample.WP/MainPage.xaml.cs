@@ -13,6 +13,7 @@ using Xamarin.Forms.Labs.WP8.Controls.Calendar;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.WP8;
+using System.Threading;
 
 namespace Xamarin.Forms.Labs.Sample.WP
 {
@@ -26,7 +27,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
             Forms.Init();
 
             Xamarin.Forms.Labs.Sample.App.Init();
-
+            Thread.Sleep(2000);
             Content = Xamarin.Forms.Labs.Sample.App.GetMainPage().ConvertPageToUIElement(this);
             //BuildLocalizedApplicationBar();
         }

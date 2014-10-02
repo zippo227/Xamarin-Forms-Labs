@@ -20,9 +20,10 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         public bool IsSelectable { get; set; }
         public bool IsHighlighted { get; set; }
         public RangeState RangeState { get; set; }
+		public StyleDescriptor Style{ get; set;}
 
         public MonthCellDescriptor(DateTime date, bool isCurrentMonth, bool isSelectable, bool isSelected,
-            bool isToday, bool isHighlighted, int value, RangeState rangeState)
+			bool isToday, bool isHighlighted, int value, RangeState rangeState,StyleDescriptor style)
         {
             DateTime = date;
             Value = value;
@@ -32,6 +33,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             IsToday = isToday;
             IsSelectable = isSelectable;
             RangeState = rangeState;
+			Style = style;
         }
 
         public override string ToString()

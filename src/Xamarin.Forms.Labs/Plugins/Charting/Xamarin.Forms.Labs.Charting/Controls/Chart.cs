@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms.Labs.Charting.Events;
+using System.Reflection;
 
 [assembly: InternalsVisibleTo("Xamarin.Forms.Labs.Charting.Droid"), InternalsVisibleTo("Xamarin.Forms.Labs.Charting.WP"), InternalsVisibleTo("Xamarin.Forms.Labs.Charting.iOS")]
 namespace Xamarin.Forms.Labs.Charting.Controls
@@ -19,13 +20,30 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         #endregion
 
         #region BindableProperties
+        public static readonly BindableProperty DataSourceProperty = BindableProperty.Create("DataSource", typeof(IEnumerable<IEnumerable<object>>), typeof(Chart), default(IEnumerable<IEnumerable<object>>), BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(Chart), Color.White, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty SeriesProperty = BindableProperty.Create("Series", typeof(SeriesCollection), typeof(Chart), default(SeriesCollection), BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty SpacingProperty = BindableProperty.Create("Spacing", typeof(double), typeof(Chart), 5.0, BindingMode.OneWay, null, null, null, null);
         public static readonly BindableProperty GridProperty = BindableProperty.Create("Grid", typeof(bool), typeof(Chart), true, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty XPathProperty = BindableProperty.Create("XPath", typeof(string), typeof(Chart), null, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty YPathProperty = BindableProperty.Create("YPath", typeof(string), typeof(Chart), null, BindingMode.OneWay, null, null, null, null);
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets or sets the datasource of the chart's data to display.
+        /// </summary>
+        public IEnumerable<IEnumerable<object>> DataSource
+        {
+            get
+            {
+                return (IEnumerable<IEnumerable<object>>)base.GetValue(Chart.DataSourceProperty);
+            }
+            set
+            {
+                base.SetValue(Chart.DataSourceProperty, value);
+            }
+        }
         /// <summary>
         /// Gets or sets the color of the grid and border of the chart element.
         /// </summary>
@@ -83,6 +101,40 @@ namespace Xamarin.Forms.Labs.Charting.Controls
             set
             {
                 base.SetValue(Chart.GridProperty, value);
+            }
+        }
+        /// <summary>
+        /// Determines the property on the object that contains the X-values of the chart.
+        /// </summary>
+        /// <remarks>
+        /// Will be used if the DataSource property is set.
+        /// </remarks>
+        public string XPath
+        {
+            get
+            {
+                return (string)base.GetValue(Chart.XPathProperty);
+            }
+            set
+            {
+                base.SetValue(Chart.XPathProperty, value);
+            }
+        }
+        /// <summary>
+        /// Determines the property on the object that contains the Y-values of the chart.
+        /// </summary>
+        /// <remarks>
+        /// Will be used if the DataSource property is set.
+        /// </remarks>
+        public string YPath
+        {
+            get
+            {
+                return (string)base.GetValue(Chart.YPathProperty);
+            }
+            set
+            {
+                base.SetValue(Chart.YPathProperty, value);
             }
         }
         #endregion
@@ -146,6 +198,60 @@ namespace Xamarin.Forms.Labs.Charting.Controls
         {
             int noOfBars = 0;
             double highestValue = 0;
+
+            if (DataSource != default(IEnumerable<IEnumerable>))
+            {
+                while (Series.Count < DataSource.Count())
+                    Series.Add(new Series());
+
+                for (int i = 0; i < DataSource.Count(); i++)
+                {
+                    IEnumerable<object> seriesValues = DataSource.ElementAt(i);
+                    // There should be at least one value to access its type and properties.
+                    if (seriesValues.Count() > 1)
+                    {
+                        Type type = seriesValues.ElementAt(1).GetType();
+                        IEnumerable<PropertyInfo> properties = type.GetTypeInfo().DeclaredProperties;
+                        // There should be at least two accessible properties on the type.
+                        if (properties.Count() >= 2)
+                        {
+                            Series series = Series[i];
+                            series.Points = new DataPointCollection();
+
+                            foreach (var val in seriesValues)
+                            {
+                                // Currently DataPoint expects a string (X) and a double (Y).
+                                string xValue = "";
+                                if (XPath != null)
+                                {
+                                    // Get value from property using reflection
+                                    PropertyInfo info = properties.FirstOrDefault(p => p.Name == XPath);
+                                    if (info != null)
+                                        xValue = info.GetValue(val).ToString();
+                                }
+                                else
+                                    // Get value from property using the first property it can find on the object
+                                    xValue = properties.ElementAt(0).GetValue(val, null).ToString();
+
+                                double yValue = 0;
+                                if (YPath != null)
+                                {
+                                    // Get value from property using reflection
+                                    PropertyInfo info = properties.FirstOrDefault(p => p.Name == YPath);
+                                    if (info != null)
+                                        yValue = Convert.ToDouble(info.GetValue(val).ToString());
+                                }
+                                else
+                                    // Get value from property using the second property it can find on the object
+                                    yValue = Convert.ToDouble(properties.ElementAt(1).GetValue(val, null));
+
+                                series.Points.Add(new DataPoint(xValue, yValue));
+                            }
+                        }
+                    }
+                }
+            }
+
 
             foreach (Series series in Series)
             {

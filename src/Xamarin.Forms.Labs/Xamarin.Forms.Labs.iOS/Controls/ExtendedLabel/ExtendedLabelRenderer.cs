@@ -2,7 +2,6 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms.Labs.Controls;
-using Xamarin.Forms.Labs.iOS;
 using Xamarin.Forms.Labs.iOS.Controls;
 using MonoTouch.Foundation;
 
@@ -40,11 +39,22 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         /// </param>
         private static void UpdateUi(ExtendedLabel view, UILabel control)
         {
+            if (view.FontSize > 0)
+            {
+                control.Font = UIFont.FromName(control.Font.Name,(float)view.FontSize);
+            }
+
             if (!string.IsNullOrEmpty(view.FontName))
             {
+                string fontName = view.FontName;
+                //if extension given then remove it for iOS
+                if (fontName.LastIndexOf(".", System.StringComparison.Ordinal) == fontName.Length - 4)
+                {
+                    fontName = fontName.Substring(0, fontName.Length - 4);
+                }
+
                 var font = UIFont.FromName(
-                    view.FontName,
-                    (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
+                    fontName, control.Font.PointSize);
 
                 if (font != null)
                 {
@@ -52,6 +62,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                 }
             }
 
+            //======= This is for backward compatability with obsolete attrbute 'FontNameIOS' ========
             if (!string.IsNullOrEmpty(view.FontNameIOS))
             {
                 var font = UIFont.FromName(
@@ -63,6 +74,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                     control.Font = font;
                 }
             }
+            //====== End of obsolete section ==========================================================
 
             var attrString = new NSMutableAttributedString(control.Text);
 

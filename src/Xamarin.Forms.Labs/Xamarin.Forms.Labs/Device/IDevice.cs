@@ -3,6 +3,7 @@ using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.Services.Geolocation;
 using System.Threading.Tasks;
+using Xamarin.Forms.Labs.Services.IO;
 
 namespace Xamarin.Forms.Labs
 {
@@ -59,8 +60,20 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the bluetooth hub service.
         /// </summary>
-        /// <value>The bluetooth hub service if available, otherwise null..</value>
-        IBluetoothHub BluetoothHub { get; }
+        /// <value>The bluetooth hub service if available, otherwise null.</value>
+        // IBluetoothHub BluetoothHub { get; }
+
+        /// <summary>
+        /// Gets the default microphone for the device
+        /// </summary>
+        /// <value>The default microphone if available, otherwise null.</value>
+        IAudioStream Microphone { get; }
+
+        /// <summary>
+        /// Gets the file manager for the device.
+        /// </summary>
+        /// <value>Device file manager.</value>
+        IFileManager FileManager { get; }
 
         /// <summary>
         /// Gets the name of the device.

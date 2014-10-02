@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
@@ -49,6 +50,12 @@ namespace Xamarin.Forms.Labs.Mvvm
                 this.orientation = value;
                 this.Rotation.Invoke<Orientation>(this, this.orientation);
             }
+        }
+
+        public Func<Task<bool>> BackPressDelegate
+        {
+            get;
+            set;
         }
 
         #endregion Properties

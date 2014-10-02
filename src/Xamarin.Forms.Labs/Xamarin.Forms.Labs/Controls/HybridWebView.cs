@@ -1,8 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms.Labs.Services;
-using Xamarin.Forms.Labs.Services.Serialization;
+using XLabs.Ioc;
+using XLabs.Serialization;
+
+[assembly: 
+    InternalsVisibleTo("Xamarin.Forms.Labs.Droid"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.iOS"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.WP8")]
 
 namespace Xamarin.Forms.Labs.Controls
 {
@@ -27,6 +34,11 @@ namespace Xamarin.Forms.Labs.Controls
         private readonly Dictionary<string, Action<string>> registeredActions;
 
         /// <summary>
+        /// The registered actions.
+        /// </summary>
+        private readonly Dictionary<string, Func<string, object[]>> registeredFunctions;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HybridWebView"/> class.
         /// </summary>
         /// <remarks>HybridWebView will use either <see cref="IJsonSerializer"/> configured
@@ -39,6 +51,7 @@ namespace Xamarin.Forms.Labs.Controls
             }
 
             this.registeredActions = new Dictionary<string, Action<string>>();
+            registeredFunctions = new Dictionary<string, Func<string, object[]>>();
         }
 
         /// <summary>
@@ -51,6 +64,7 @@ namespace Xamarin.Forms.Labs.Controls
         {
             this.jsonSerializer = jsonSerializer;
             this.registeredActions = new Dictionary<string, Action<string>>();
+            registeredFunctions = new Dictionary<string, Func<string, object[]>>();
         }
 
         /// <summary>
@@ -79,6 +93,20 @@ namespace Xamarin.Forms.Labs.Controls
         public void RegisterCallback(string name, Action<string> action)
         {
             this.registeredActions.Add(name, action);
+        }
+
+        /// <summary>
+        /// Registers a native callback and returns data to closure
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="action">
+        /// The action.
+        /// </param>
+        public void RegisterNativeFunction(string name, Func<string, object[]> func)
+        {
+            this.registeredFunctions.Add(name, func);
         }
 
         public bool RemoveCallback(string name)
@@ -121,6 +149,11 @@ namespace Xamarin.Forms.Labs.Controls
             return this.registeredActions.TryGetValue(name, out action);
         }
 
+        public bool TryGetFunc(string name, out Func<string, object[]> func)
+        {
+            return this.registeredFunctions.TryGetValue(name, out func);
+        }
+
         public void OnLoadFinished(object sender, EventArgs e)
         {
             var handler = this.LoadFinished;
@@ -151,9 +184,10 @@ namespace Xamarin.Forms.Labs.Controls
             this.InjectJavaScript(builder.ToString());
         }
 
-        public EventHandler<string> JavaScriptLoadRequested;
-        public EventHandler<string> LoadFromContentRequested;
-        public EventHandler<string> LoadContentRequested;
         public EventHandler LoadFinished;
+
+        internal EventHandler<string> JavaScriptLoadRequested;
+        internal EventHandler<string> LoadFromContentRequested;
+        internal EventHandler<string> LoadContentRequested;
     }
 }

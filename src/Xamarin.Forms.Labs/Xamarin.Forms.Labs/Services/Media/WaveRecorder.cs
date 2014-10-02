@@ -9,17 +9,20 @@ namespace Xamarin.Forms.Labs.Services.Media
 {
     public class WaveRecorder
     {
-        private StreamWriter streamWriter;
+        //private StreamWriter streamWriter;
         private BinaryWriter writer;
         private int byteCount;
         private IAudioStream stream;
+	    private int channelCount;
+	    private int bitsPerSample;
+	    private int sampleRate;
 
-        ~WaveRecorder()
+	    ~WaveRecorder()
         {
-            StopRecorder();
+            StopRecorder().Wait();
         }
 
-        public bool StartRecorder(IAudioStream stream, string fileName)
+        public async Task<bool> StartRecorder(IAudioStream stream, Stream fileStream, int sampleRate)
         {
             if (this.stream != null || stream == null)
             {
@@ -30,44 +33,44 @@ namespace Xamarin.Forms.Labs.Services.Media
 
             try
             {
-                //this.streamWriter = new StreamWriter(fileName, false);
-                this.writer = new BinaryWriter(this.streamWriter.BaseStream, Encoding.UTF8);
+                this.writer = new BinaryWriter(fileStream, Encoding.UTF8);
             }
             catch (Exception)
             {
                 return false;
             }
+
             this.byteCount = 0;
             this.stream.OnBroadcast += OnStreamBroadcast;
 
-            if (this.stream.Start.CanExecute(this))
-            {
-                this.stream.Start.Execute(this);
-                return true;
-            }
-
-            return false;
+            var result = await this.stream.Start(sampleRate);
+	        if (result)
+	        {
+		        this.sampleRate = sampleRate;
+		        this.bitsPerSample = stream.BitsPerSample;
+		        this.channelCount = stream.ChannelCount;
+	        }
+	        return result;
         }
 
-        public void StopRecorder()
+        public async Task StopRecorder()
         {
             if (this.stream != null)
             {
                 this.stream.OnBroadcast -= OnStreamBroadcast;
-                if (this.stream.Stop.CanExecute(this))
-                {
-                    this.stream.Stop.Execute(this);
-                }
+                await this.stream.Stop();
             }
-
-            if (this.streamWriter != null && this.streamWriter.BaseStream.CanWrite)
+            if (this.writer != null && this.writer.BaseStream.CanWrite)
             {
                 this.WriteHeader();
-                this.streamWriter.Dispose();
-                this.streamWriter = null;
+                this.writer.Dispose();
+                this.writer = null;
+	            this.sampleRate =
+		            this.bitsPerSample =
+			            this.channelCount = -1;
             }
 
-            this.stream = null;
+			this.stream = null;
         }
 
         private void OnStreamBroadcast(object sender, EventArgs<byte[]> eventArgs)
@@ -100,11 +103,11 @@ namespace Xamarin.Forms.Labs.Services.Media
             this.writer.Write(16);
             this.writer.Write((short)1);
 
-            this.writer.Write((short)this.stream.ChannelCount);
-            this.writer.Write(this.stream.SampleRate);
-            this.writer.Write(this.stream.SampleRate * 2);
+            this.writer.Write((short)this.channelCount);
+            this.writer.Write(this.sampleRate);
+            this.writer.Write(this.sampleRate * 2);
             this.writer.Write((short)2);
-            this.writer.Write((short)this.stream.BitsPerSample);
+            this.writer.Write((short)this.bitsPerSample);
             this.writer.Write('d');
             this.writer.Write('a');
             this.writer.Write('t');

@@ -6,9 +6,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.iOS.Controls;
 using Xamarin.Forms.Platform.iOS;
+using MonoTouch.Foundation;
 
 [assembly: ExportRenderer(typeof(ExtendedEntry), typeof(ExtendedEntryRenderer))]
-
 namespace Xamarin.Forms.Labs.iOS.Controls
 {
     /// <summary>
@@ -31,6 +31,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             SetFont(view);
             SetTextAlignment(view);
             SetBorder(view);
+			SetPlaceholderTextColor(view);
 
             ResizeHeight();
         }
@@ -46,14 +47,14 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
             var view = (ExtendedEntry)Element;
 
-            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Font")
+            if (e.PropertyName == ExtendedEntry.FontProperty.PropertyName)
                 SetFont(view);
-
-            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "XAlign")
+            if (e.PropertyName == ExtendedEntry.XAlignProperty.PropertyName)
                 SetTextAlignment(view);
-
-            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "HasBorder")
+            if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
                 SetBorder(view);
+            if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
+                SetPlaceholderTextColor(view);
 
             ResizeHeight();
         }
@@ -99,5 +100,17 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
             Element.HeightRequest = height;
         }
+
+		void SetPlaceholderTextColor(ExtendedEntry view)
+		{
+			/*
+UIColor *color = [UIColor lightTextColor];
+YOURTEXTFIELD.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"PlaceHolder Text" attributes:@{NSForegroundColorAttributeName: color}];
+			*/
+			if(string.IsNullOrEmpty(view.Placeholder) == false && view.PlaceholderTextColor != Color.Default) {
+				NSAttributedString placeholderString = new NSAttributedString(view.Placeholder, new UIStringAttributes(){ ForegroundColor = view.PlaceholderTextColor.ToUIColor() });
+				Control.AttributedPlaceholder = placeholderString;
+			}
+		}
     }
 }

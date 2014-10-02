@@ -1,10 +1,12 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Phone.Info;
 using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.Services.IO;
 using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.WP8;
 using Xamarin.Forms.Labs.WP8.Services;
@@ -25,6 +27,8 @@ namespace Xamarin.Forms.Labs
         private IMediaPicker mediaPicker;
 
         private INetwork network;
+
+        private IFileManager fileManager; 
 
         /// <summary>
         /// The Id for the device.
@@ -51,6 +55,14 @@ namespace Xamarin.Forms.Labs
                 if (Microsoft.Devices.Sensors.Gyroscope.IsSupported)
                 {
                     this.Gyroscope = new Gyroscope();
+                }
+            }
+
+            if (DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_MICROPHONE))
+            {
+                if (XnaMicrophone.IsAvailable)
+                {
+                    this.Microphone = new XnaMicrophone();
                 }
             }
 
@@ -186,6 +198,27 @@ namespace Xamarin.Forms.Labs
         {
             get; 
             private set;
+        }
+
+        /// <summary>
+        /// Gets the default microphone for the device
+        /// </summary>
+        public IAudioStream Microphone
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the file manager for the device.
+        /// </summary>
+        /// <value>Device file manager.</value>
+        public IFileManager FileManager 
+        { 
+            get
+            {
+                return this.fileManager ?? (this.fileManager = new FileManager(IsolatedStorageFile.GetUserStoreForApplication()));
+            }
         }
 
         /// <summary>

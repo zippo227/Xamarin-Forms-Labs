@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Android.App;
+using Android.Content.PM;
 using Android.Media;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services.Media;
@@ -11,43 +13,34 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 {
     public class Microphone : IAudioStream
     {
-        private readonly int bufferSize;
+        private int bufferSize;
 
         /// <summary>
         /// The audio source.
         /// </summary>
-        private readonly AudioRecord audioSource;
+        private AudioRecord audioSource;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.Droid.Services.Media.Microphone"/> class.
         /// </summary>
         /// <param name="sampleRate">Sample rate.</param>
         /// <param name="bufferSize">Buffer size.</param>
-        public Microphone(int sampleRate, int bufferSize)
+        public Microphone()
         {
-            this.bufferSize = bufferSize;
-            this.audioSource = new AudioRecord(
-                AudioSource.Mic,
-                sampleRate,
-                ChannelIn.Mono,
-                Encoding.Pcm16bit,
-                this.bufferSize);
-
-            this.Start = new RelayCommand<int>(
-                this.StartRecording,
-                rate => this.SupportedSampleRates.Contains(rate) && this.audioSource != null && !this.Active
-                );
-
-            this.Stop = new Command(
-                () => this.audioSource.Stop(),
-                () => this.Active
-                );
-
-            this.SupportedSampleRates = (new[] { 8000, 11025, 16000, 22050, 44100 }).Where( 
-                rate => AudioRecord.GetMinBufferSize(rate, ChannelIn.Default, Encoding.Pcm16bit) > 0
+            this.SupportedSampleRates = (new[] { 8000, 11025, 16000, 22050, 44100 }).Where(
+                rate => AudioRecord.GetMinBufferSize(rate, ChannelIn.Mono, Encoding.Pcm16bit) > 0
                 ).ToList();
         }
 
+        public static bool IsEnabled
+        {
+            get
+            {
+                return Application.Context.PackageManager.HasSystemFeature(PackageManager.FeatureMicrophone) &&
+                    Android.App.Application.Context.PackageManager.CheckPermission("android.permission.RECORD_AUDIO", Android.App.Application.Context.PackageName) == 
+                        Android.Content.PM.Permission.Granted;
+            }
+        }
         /// <summary>
         /// Occurs when new audio has been streamed.
         /// </summary>
@@ -63,7 +56,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
         {
             get
             {
-                return this.audioSource.SampleRate;
+                return this.audioSource == null ? -1 : this.audioSource.SampleRate;
             }
         }
 
@@ -74,7 +67,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
         {
             get
             {
-                return (this.audioSource.AudioFormat == Encoding.Pcm16bit) ? 16 : 8;
+                return this.audioSource == null ? -1 : (this.audioSource.AudioFormat == Encoding.Pcm16bit) ? 16 : 8;
             }
         }
 
@@ -88,7 +81,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
         {
             get
             {
-                return this.audioSource.ChannelCount;
+                return this.audioSource == null ? -1 : this.audioSource.ChannelCount;
             }
         }
 
@@ -100,7 +93,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
         {
             get
             {
-                return this.SampleRate * this.BitsPerSample / 8 * this.ChannelCount;
+                return this.audioSource == null ? -1 : this.SampleRate * this.BitsPerSample / 8 * this.ChannelCount;
             }
         }
 
@@ -108,7 +101,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
         {
             get
             {
-                return (this.audioSource.RecordingState == RecordState.Recording);
+                return (this.audioSource != null && this.audioSource.RecordingState == RecordState.Recording);
             }
         }
 
@@ -118,22 +111,45 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
             private set;
         }
 
-        public ICommand Start
+
+        public Task<bool> Start(int sampleRate)
         {
-            get;
-            private set;
+            return Task.Run<bool>(() =>
+            {
+                if (!this.SupportedSampleRates.Contains(sampleRate))
+                {
+                    return false;
+                }
+
+				this.bufferSize = AudioRecord.GetMinBufferSize(sampleRate, ChannelIn.Mono, Encoding.Pcm16bit);
+
+				this.audioSource = new AudioRecord(
+                    AudioSource.Mic,
+                    sampleRate,
+                    ChannelIn.Mono,
+                    Encoding.Pcm16bit,
+                    this.bufferSize);
+
+                this.StartRecording();
+
+                return true;
+            });
         }
 
-        public ICommand Stop
+        public Task Stop()
         {
-            get;
-            private set;
+            return Task.Run(() =>
+            {
+                this.audioSource.Stop();
+                this.audioSource = null;
+            });
         }
+
 
         /// <summary>
         /// Start recording from the hardware audio source.
         /// </summary>
-        private void StartRecording(int rate)
+        private void StartRecording()
         {
             this.audioSource.StartRecording();
 

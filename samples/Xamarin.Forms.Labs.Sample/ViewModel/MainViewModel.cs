@@ -6,6 +6,7 @@ using Xamarin.Forms.Labs.Data;
 using System.Diagnostics;
 using Xamarin.Forms.Labs.Controls;
 using System.Threading.Tasks;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample
 {
@@ -43,9 +44,11 @@ namespace Xamarin.Forms.Labs.Sample
 
         public Task AddImages()
         {
-            return Task.Run (async () => {
+            return Task.Run (async () => 
+            {
                 await Task.Delay(1000);
-                for (var i = 0; i < 5; i++) {
+                for (var i = 0; i < 5; i++) 
+                {
                     Images.Add ("http://www.stockvault.net/data/2011/05/31/124348/small.jpg");
                 }
             });
@@ -223,27 +226,22 @@ namespace Xamarin.Forms.Labs.Sample
         /// <value>
         /// The call command.
         /// </value>
-        public Command CallCommand {
-            get {
+        public Command CallCommand 
+        {
+            get 
+            {
                 return callCommand ?? (callCommand = new Command (
                     () => this.device.PhoneService.DialNumber (NumberToCall),
-                    () => true)); 
+                    () => this.device.PhoneService != null)); 
             }
         }
     }
-    public class TestPerson : ObservableObject
+
+    public class TestPerson : ObservableObject, AutoCompleteSearchObject
     {
-        public const string FirstNameProperty = "FirstName";
-        public string firstName;
-        public string FirstName{ get{ return firstName; } set {SetProperty (ref firstName, value, FirstNameProperty);}}
-
-        public const string LastNameProperty = "LastName";
+        private string firstName;
         private string lastName;
-        public string LastName { get { return lastName; } set { SetProperty (ref lastName, value, LastNameProperty); } }
-
-        public const string AgeProperty = "Age";
         private int age;
-        public int Age{ get { return age; } set { SetProperty (ref age, value, AgeProperty); } }
 
         public TestPerson(string firstnameInput, string lastnameInput, int ageInput)
         {
@@ -251,6 +249,25 @@ namespace Xamarin.Forms.Labs.Sample
             LastName = lastnameInput;
             Age = ageInput;
         }
+
+        public string FirstName
+        { 
+            get{ return firstName; } 
+            set {SetProperty (ref firstName, value);}
+        }
+
+        public string LastName 
+        { 
+            get { return lastName; } 
+            set { SetProperty (ref lastName, value); } 
+        }
+
+        public int Age
+        { 
+            get { return age; } 
+            set { SetProperty (ref age, value); } 
+        }
+
         public string StringToSearchBy ()
         {
             return FirstName;

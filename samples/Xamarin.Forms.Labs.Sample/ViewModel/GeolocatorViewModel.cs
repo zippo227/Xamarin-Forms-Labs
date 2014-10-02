@@ -6,6 +6,7 @@ using Xamarin.Forms.Labs.Services.Email;
 using System.Windows.Input;
 using System.Linq;
 using Xamarin.Forms.Labs.Services;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample
 {

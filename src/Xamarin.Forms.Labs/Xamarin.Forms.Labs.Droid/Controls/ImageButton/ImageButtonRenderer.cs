@@ -8,6 +8,8 @@ using Xamarin.Forms.Labs.Enums;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Android.Graphics;
+using Android.Runtime;
+using System;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
@@ -39,6 +41,9 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
                 return;
             }
             var targetButton = this.Control;
+			if(targetButton != null){
+				targetButton.SetOnTouchListener(TouchListener.Instance.Value);
+			}
 
             if (this.Element != null && this.ImageButton.Source != null)
             {
@@ -138,5 +143,24 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
             returnValue.SetBounds(0, 0, width, height);
             return returnValue;
         }
+
+
+		//Hot fix for the layout positioning issue on Android as described in http://forums.xamarin.com/discussion/20608/fix-for-button-layout-bug-on-android
+		private class TouchListener : Java.Lang.Object, IOnTouchListener
+		{
+			public static readonly Lazy<TouchListener> Instance =
+				new Lazy<TouchListener>(() => new TouchListener());
+
+			public bool OnTouch(Android.Views.View v, MotionEvent e)
+			{
+				var buttonRenderer = v.Tag as ButtonRenderer;
+				if (buttonRenderer != null && e.Action == MotionEventActions.Down)
+				{
+					buttonRenderer.Control.Text = buttonRenderer.Element.Text;
+				}
+				return false;
+			}
+		}
+
     }
 }

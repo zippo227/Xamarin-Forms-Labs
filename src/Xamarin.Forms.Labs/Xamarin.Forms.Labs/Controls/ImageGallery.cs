@@ -14,6 +14,7 @@ namespace Xamarin.Forms.Labs.Controls
         public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create ("ItemTemplate", typeof(DataTemplate), typeof(ImageGallery), null, BindingMode.OneWay, null, null, null, null);
 
 
+
         // Properties
         //
         public IEnumerable ItemsSource {
@@ -33,6 +34,9 @@ namespace Xamarin.Forms.Labs.Controls
                 base.SetValue (ImageGallery.ItemTemplateProperty, value);
             }
         }
+
+
+
 
     }
 }

@@ -23,6 +23,20 @@ namespace IocTests
         protected abstract IDependencyContainer GetEmptyContainer();
 
         [Test]
+        public void CanResolveWithLambda()
+        {
+            var container = this.GetEmptyContainer();
+
+            container.Register<IDependencyContainer>(t => container);
+
+            var resolver = container.GetResolver();
+
+            var c2 = resolver.Resolve<IDependencyContainer>();
+
+            Assert.AreEqual(container, c2);
+        }
+
+        [Test]
         public void ReturnsNullIfNotRegisteredForGeneric()
         {
             var empty = this.GetEmptyResolver().Resolve<IDependencyContainer>();

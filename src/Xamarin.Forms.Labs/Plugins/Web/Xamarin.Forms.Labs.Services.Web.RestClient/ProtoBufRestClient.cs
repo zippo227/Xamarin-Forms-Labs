@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
-using Xamarin.Forms.Labs.Services.Serialization;
+using XLabs.Serialization;
 
 namespace Xamarin.Forms.Labs.Services.Web.RestClient
 {

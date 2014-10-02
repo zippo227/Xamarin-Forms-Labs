@@ -48,6 +48,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\XLabs\Serialization\XLabs.Serialization\XLabs.Serialization.csproj">
+      <Project>{8E7F7522-F018-466A-AA8A-147EE9341BA0}</Project>
+      <Name>XLabs.Serialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
       <Project>{4D10DF5E-883D-468B-A854-4A53C7FE75AC}</Project>
       <Name>Xamarin.Forms.Labs</Name>
@@ -56,4 +60,7 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
   </Target>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

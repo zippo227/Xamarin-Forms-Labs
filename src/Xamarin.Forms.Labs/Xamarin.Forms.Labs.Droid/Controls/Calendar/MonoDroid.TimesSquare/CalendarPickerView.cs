@@ -9,10 +9,11 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using DroidListView = Android.Widget.ListView;
+using Android.Support.V4.View;
 
 namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
-    public class CalendarPickerView : DroidListView
+	public class CalendarPickerView : ViewPager
     {
         public enum SelectionMode
         {
@@ -20,6 +21,22 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             Multi,
             Range
         };
+
+		internal class OnPageChangeListener : SimpleOnPageChangeListener{
+			CalendarPickerView _picker;
+
+			public OnPageChangeListener(CalendarPickerView picker){
+				this._picker = picker;
+
+			}
+
+			public override void OnPageSelected(int position)
+			{
+				_picker.InvokeOnMonthChanged(position);
+
+				//base.OnPageSelected(position);
+			}
+		}
 
         private readonly Context _context;
         internal readonly MonthAdapter MyAdapter;
@@ -37,6 +54,15 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         internal DateTime MaxDate;
         private DateTime _monthCounter;
 
+		//This provides styling to the calendar elements
+		//Elements holds reference to it through Month and Week cell descriptors
+		private StyleDescriptor _styleDescriptor;
+		public StyleDescriptor StyleDescriptor{
+			get{
+				return _styleDescriptor;
+			}
+		}
+
         internal readonly string MonthNameFormat;
         internal readonly string WeekdayNameFormat;
         internal readonly string FullDateFormat;
@@ -46,9 +72,34 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         public event EventHandler<DateSelectedEventArgs> OnInvalidDateSelected;
         public event EventHandler<DateSelectedEventArgs> OnDateSelected;
         public event EventHandler<DateSelectedEventArgs> OnDateUnselected;
+		public event EventHandler<MonthChangedEventArgs> OnMonthChanged;
         public event DateSelectableHandler OnDateSelectable;
 
+
+
+
         public SelectionMode Mode { get; set; }
+
+		public DateTime CurrentMonth{
+			get{
+				return this.Months[this.CurrentItem].Date;
+			}
+		}
+
+		public int MonthCount{
+			get{
+				return this.Months.Count;
+			}
+		}
+
+
+		protected void InvokeOnMonthChanged(int position){
+			if(this.OnMonthChanged != null){
+				var month = this.Months[position];
+				this.OnMonthChanged(this,new MonthChangedEventArgs(month.Date));
+			}
+		}
+
 
         public DateTime SelectedDate
         {
@@ -64,32 +115,55 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                 return selectedDates;
             }
         }
+		/**
+		 * Forces a redraw of the calendar and thus applying of the styles
+		 */
+		public void UpdateStyles(){
+
+			base.SetBackgroundColor(_styleDescriptor.BackgroundColor);
+
+			Adapter.NotifyDataSetChanged();
+		}
+
+		Dictionary<int, bool> _hlighlightedDaysOfWeek;
 
         public CalendarPickerView(Context context, IAttributeSet attrs)
             : base(context, attrs)
         {
             ResourceIdManager.UpdateIdValues();
             _context = context;
+			_styleDescriptor = new StyleDescriptor();
             MyAdapter = new MonthAdapter(context, this);
             base.Adapter = MyAdapter;
-            base.Divider = null;
-            base.DividerHeight = 0;
+
+            //base.Divider = null;
+            //base.DividerHeight = 0;
+			this.PageMargin = 32;
+			SetPadding(0, 0, 0, 0);
+
+			//Sometimes dates could not be selected after the transform. I had to disable it. :(
+			//SetPageTransformer(true, new CalendarMonthPageTransformer());
 
             var bgColor = base.Resources.GetColor(Resource.Color.calendar_bg);
-            base.SetBackgroundColor(bgColor);
-            base.CacheColorHint = bgColor;
+			base.SetBackgroundColor(bgColor);
+            //base.CacheColorHint = bgColor;
 
             MonthNameFormat = base.Resources.GetString(Resource.String.month_name_format);
             WeekdayNameFormat = base.Resources.GetString(Resource.String.day_name_format);
             FullDateFormat = CultureInfo.CurrentCulture.DateTimeFormat.LongDatePattern;
             ClickHandler += OnCellClicked;
             OnInvalidDateSelected += OnInvalidateDateClicked;
+			this.SetOnPageChangeListener(new OnPageChangeListener(this));
+
+
 
             if (base.IsInEditMode)
             {
-                Init(DateTime.Now, DateTime.Now.AddYears(1)).WithSelectedDate(DateTime.Now);
+				Init(DateTime.Now, DateTime.Now.AddYears(1),new DayOfWeek[]{ }).WithSelectedDate(DateTime.Now);
             }
         }
+
+
 
         private void OnCellClicked(MonthCellDescriptor cell)
         {
@@ -128,7 +202,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             Toast.MakeText(_context, errorMsg, ToastLength.Short).Show();
         }
 
-        public FluentInitializer Init(DateTime minDate, DateTime maxDate)
+		public FluentInitializer Init(DateTime minDate, DateTime maxDate,DayOfWeek[] highlightedDaysOfWeek)
         {
             if (minDate == DateTime.MinValue || maxDate == DateTime.MinValue)
             {
@@ -140,6 +214,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                 throw new IllegalArgumentException("minDate must be before maxDate. " +
                                                    Debug(minDate, maxDate));
             }
+
+			HighlighDaysOfWeeks(highlightedDaysOfWeek);
 
             Mode = SelectionMode.Single;
             //Clear out any previously selected dates/cells.
@@ -158,7 +234,9 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
             // maxDate is exclusive: bump back to the previous day so if maxDate is the first of a month,
             // We don't accidentally include that month in the view.
-            MaxDate = MaxDate.AddMinutes(-1);
+			if(MaxDate.Day == 1) {
+				MaxDate = MaxDate.AddMinutes(-1);
+			}
 
             //Now iterate between minCal and maxCal and build up our list of months to show.
             _monthCounter = MinDate;
@@ -169,7 +247,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                    && _monthCounter.Year < maxYear + 1)
             {
                 var month = new MonthDescriptor(_monthCounter.Month, _monthCounter.Year, _monthCounter,
-                    _monthCounter.ToString(MonthNameFormat));
+					_monthCounter.ToString(MonthNameFormat),_styleDescriptor);
                 Cells.Add(GetMonthCells(month, _monthCounter));
                 Logr.D("Adding month {0}", month);
                 Months.Add(month);
@@ -179,6 +257,19 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             ValidateAndUpdate();
             return new FluentInitializer(this);
         }
+
+		public void HighlighDaysOfWeeks(DayOfWeek[] daysOfWeeks)
+		{
+			_hlighlightedDaysOfWeek = new Dictionary<int,bool>();
+			for(int i = 0; i <= 6; i++){
+				_hlighlightedDaysOfWeek[i] = false;
+			}
+			foreach(var dOW in daysOfWeeks){
+				_hlighlightedDaysOfWeek[(int)dOW] = true;
+			}
+		}
+
+
 
         internal List<List<MonthCellDescriptor>> GetMonthCells(MonthDescriptor month, DateTime startCal)
         {
@@ -203,7 +294,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                     bool isSelected = isCurrentMonth && ContatinsDate(SelectedCals, cal);
                     bool isSelectable = isCurrentMonth && IsBetweenDates(cal, MinDate, MaxDate);
                     bool isToday = IsSameDate(cal, Today);
-                    bool isHighlighted = ContatinsDate(_highlightedCals, cal);
+					bool isHighlighted = ContatinsDate(_highlightedCals, cal) || _hlighlightedDaysOfWeek[(int)cal.DayOfWeek];
                     int value = cal.Day;
 
                     var rangeState = RangeState.None;
@@ -224,7 +315,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                     }
 
                     weekCells.Add(new MonthCellDescriptor(date, isCurrentMonth, isSelectable, isSelected,
-                        isToday, isHighlighted, value, rangeState));
+						isToday, isHighlighted, value, rangeState,_styleDescriptor));
                     cal = cal.AddDays(1);
                 }
             }
@@ -238,17 +329,19 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         internal void ScrollToSelectedMonth(int selectedIndex, bool smoothScroll)
         {
-            Task.Factory.StartNew(() =>
-            {
-                if (smoothScroll)
-                {
-                    SmoothScrollToPosition(selectedIndex);
-                }
-                else
-                {
-                    SetSelection(selectedIndex);
-                }
-            });
+//            Task.Factory.StartNew(() =>
+//            {
+//                if (smoothScroll)
+//                {
+//                    SmoothScrollToPosition(selectedIndex);
+//                }
+//                else
+//                {
+//                    SetSelection(selectedIndex);
+//                }
+//            });
+			this.SetCurrentItem(selectedIndex, smoothScroll);
+
         }
 
         private MonthCellWithMonthIndex GetMonthCellWithIndexByDate(DateTime date)
@@ -274,6 +367,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                 throw new InvalidOperationException(
                     "Must have at least one month to display. Did you forget to call Init()?");
             }
+			Logr.D("PickerView.OnMeasure w={0} h={1}", MeasureSpec.ToString(widthMeasureSpec),
+				MeasureSpec.ToString(heightMeasureSpec));
             base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
         }
 
@@ -322,6 +417,12 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             SelectedCells.Clear();
             SelectedCals.Clear();
         }
+
+		public void DeselectDate(){
+			if(SelectedDate != DateTime.MinValue) {
+				DoSelectDate(DateTime.MinValue, null);
+			}
+		}
 
         internal bool DoSelectDate(DateTime date, MonthCellDescriptor cell)
         {
@@ -469,7 +570,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         private static bool IsBetweenDates(DateTime date, DateTime minCal, DateTime maxCal)
         {
             return (date.Equals(minCal) || date.CompareTo(minCal) > 0) // >= minCal
-                   && date.CompareTo(maxCal) < 0; // && < maxCal
+                   && date.CompareTo(maxCal) <= 0; // && < maxCal
         }
 
         private static bool IsSameDate(DateTime cal, DateTime selectedDate)
@@ -606,6 +707,12 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             return this;
         }
 
+//		public FluentInitializer WithHighlightedDaysOfWeek()
+//		{
+//			_calendar.HighlighDaysOfWeeks(daysOfWeeks);
+//			return this;
+//		}
+
         public FluentInitializer WithHighlightedDate(DateTime date)
         {
             return WithHighlightedDates(new List<DateTime> { date });
@@ -625,4 +732,14 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         public DateTime SelectedDate { get; private set; }
     }
+
+	public class MonthChangedEventArgs : EventArgs
+	{
+		public MonthChangedEventArgs(DateTime date)
+		{
+			DisplayedMonth = date;
+		}
+
+		public DateTime DisplayedMonth { get; private set; }
+	}
 }

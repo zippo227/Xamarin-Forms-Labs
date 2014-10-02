@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xamarin.forms.labs.droid.controls.calendar.MonthView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="fill_parent"
     android:gravity="center_horizontal">
     <TextView
@@ -14,39 +14,45 @@
     <xamarin.forms.labs.droid.controls.calendar.CalendarGridView
         android:id="@+id/calendar_grid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <xamarin.forms.labs.droid.controls.calendar.CalendarRowView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/calendar_day_headers_paddingbottom">
+            android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CalendarCell.DayHeader" />
+                style="@style/CalendarCell.DayHeader"
+                android:paddingBottom="@dimen/calendar_day_headers_paddingbottom" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CalendarCell.DayHeader" />
+                style="@style/CalendarCell.DayHeader"
+                android:paddingBottom="@dimen/calendar_day_headers_paddingbottom" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CalendarCell.DayHeader" />
+                style="@style/CalendarCell.DayHeader"
+                android:paddingBottom="@dimen/calendar_day_headers_paddingbottom" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CalendarCell.DayHeader" />
+                style="@style/CalendarCell.DayHeader"
+                android:paddingBottom="@dimen/calendar_day_headers_paddingbottom" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CalendarCell.DayHeader" />
+                style="@style/CalendarCell.DayHeader"
+                android:paddingBottom="@dimen/calendar_day_headers_paddingbottom" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CalendarCell.DayHeader" />
+                style="@style/CalendarCell.DayHeader"
+                android:paddingBottom="@dimen/calendar_day_headers_paddingbottom" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CalendarCell.DayHeader" />
+                style="@style/CalendarCell.DayHeader"
+                android:paddingBottom="@dimen/calendar_day_headers_paddingbottom" />
         </xamarin.forms.labs.droid.controls.calendar.CalendarRowView>
         <include
             layout="@layout/week" />

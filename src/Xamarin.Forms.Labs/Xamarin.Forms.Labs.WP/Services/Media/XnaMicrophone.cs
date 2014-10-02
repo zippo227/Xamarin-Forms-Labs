@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services.Media;
@@ -13,19 +15,26 @@ namespace Xamarin.Forms.Labs.WP8.Services.Media
     public class XnaMicrophone : IAudioStream
     {
         private Microphone microphone;
+        private DispatcherTimer timer;
 
         public XnaMicrophone()
         {
             this.microphone = Microphone.Default;
-            this.microphone.BufferReady += microphone_BufferReady;
 
-            this.Start = new RelayCommand<int>(
-                (rate) => this.microphone.Start(),
-                (rate) => this.SupportedSampleRates.Contains(rate) && this.microphone != null && this.microphone.State == MicrophoneState.Stopped);
+            this.timer = new DispatcherTimer()
+            {
+                Interval = TimeSpan.FromMilliseconds(50)
+            };
 
-            this.Stop = new Command(
-                () => this.microphone.Stop(),
-                () => this.microphone != null && this.microphone.State == MicrophoneState.Started);
+            this.timer.Tick += (s, e) => FrameworkDispatcher.Update();
+        }
+
+        public static bool IsAvailable
+        {
+            get
+            {
+                return Microphone.Default != null;
+            }
         }
 
         public event EventHandler<EventArgs<byte[]>> OnBroadcast;
@@ -47,19 +56,7 @@ namespace Xamarin.Forms.Labs.WP8.Services.Media
 
         public bool Active
         {
-            get { return this.microphone.State == MicrophoneState.Started; }
-        }
-
-        public ICommand Start
-        {
-            get;
-            private set;
-        }
-
-        public ICommand Stop
-        {
-            get;
-            private set;
+            get { return this.microphone != null && this.microphone.State == MicrophoneState.Started; }
         }
 
         public IEnumerable<int> SupportedSampleRates
@@ -70,9 +67,43 @@ namespace Xamarin.Forms.Labs.WP8.Services.Media
             }
         }
 
+        #region IAudioStream Members
+
+
+        public Task<bool> Start(int sampleRate)
+        {
+            return Task.Run<bool>(
+                () =>
+                {
+                    try
+                    {
+                        this.timer.Start();
+                        this.microphone.BufferReady += microphone_BufferReady;
+                        this.microphone.Start();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                });
+        }
+
+        public Task Stop()
+        {
+            return Task.Run(() =>
+            {
+                this.microphone.BufferReady -= microphone_BufferReady;
+                this.microphone.Stop();
+                this.timer.Stop();
+            });
+        }
+
+        #endregion
+
         void microphone_BufferReady(object sender, EventArgs e)
         {
-            var buffer = new byte[4096];
+            var buffer = new byte[this.microphone.GetSampleSizeInBytes(this.microphone.BufferDuration)];
             int read;
 
             do

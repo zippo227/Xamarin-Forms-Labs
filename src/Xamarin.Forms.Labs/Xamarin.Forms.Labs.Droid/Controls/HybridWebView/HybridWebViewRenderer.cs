@@ -18,7 +18,6 @@ namespace Xamarin.Forms.Labs.Controls
                 var webView = new Android.Webkit.WebView(this.Context);
 
                 webView.Settings.JavaScriptEnabled = true;
-                //            this.InjectNativeFunctionScript ();
 
                 webView.SetWebViewClient(new Client(this));
                 webView.SetWebChromeClient(new ChromeClient());
@@ -43,7 +42,7 @@ namespace Xamarin.Forms.Labs.Controls
             if (uri != null)
             {
                 this.Control.LoadUrl(uri.AbsoluteUri);
-                this.InjectNativeFunctionScript ();
+                this.InjectNativeFunctionScript();
             }
         }
 
@@ -55,6 +54,8 @@ namespace Xamarin.Forms.Labs.Controls
         partial void LoadContent(object sender, string contentFullName)
         {
             this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
+            // we can't really set the URI and fire up native function injection so the workaround is to do it here
+            this.InjectNativeFunctionScript();
         }
 
         private class Client : WebViewClient
@@ -79,6 +80,9 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
+        /// <summary>
+        /// Java callback class for JavaScript.
+        /// </summary>
         public class Xamarin : Java.Lang.Object
         {
             private readonly WeakReference<HybridWebViewRenderer> webHybrid;
