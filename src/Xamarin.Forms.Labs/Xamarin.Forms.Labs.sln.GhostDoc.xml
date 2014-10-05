@@ -23,6 +23,7 @@
       <Protected>false</Protected>
       <Private>false</Private>
       <Inherited>true</Inherited>
+      <InheritedFromReferences>true</InheritedFromReferences>
       <EnableTags>false</EnableTags>
       <TagList />
     </IncludeScopes>
@@ -46,6 +47,7 @@
       <Protected>false</Protected>
       <Private>false</Private>
       <Inherited>true</Inherited>
+      <InheritedFromReferences>true</InheritedFromReferences>
       <EnableTags>false</EnableTags>
       <TagList />
     </IncludeScopes>
@@ -67,12 +69,12 @@
       <SelectedProject>Xamarin.Forms.Labs.Charting.WP</SelectedProject>
       <SelectedProject>XLabs.Serialization.ServiceStack.WP8</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.WP8</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Caching.Akavache</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Cryptography</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient.iOS</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient.Droid</SelectedProject>
       <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient.WP8</SelectedProject>
-      <SelectedProject>Xamarin.Forms.Labs.Caching.Akavache</SelectedProject>
       <SelectedProject>XLabs.Ioc.Autofac</SelectedProject>
       <SelectedProject>XLabs.Ioc.Ninject</SelectedProject>
       <SelectedProject>XLabs.Ioc.SimpleInjector</SelectedProject>
