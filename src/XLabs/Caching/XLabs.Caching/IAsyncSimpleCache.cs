@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Xamarin.Forms.Labs.Services
+namespace XLabs.Caching
 {
-    /// <summary>
-    /// A common cache provider interface.
-    /// </summary>
-    public interface ISimpleCache : IDisposable
+    public interface IAsyncSimpleCache : IDisposable
     {
         /// <summary>
         /// Removes the specified item from the cache.
@@ -15,13 +15,13 @@ namespace Xamarin.Forms.Labs.Services
         /// <returns>
         /// True if the item was successfully removed from the cache; false otherwise.
         /// </returns>
-        bool Remove(string key);
+        Task<bool> RemoveAsync(string key);
 
         /// <summary>
         /// Removes the cache for all the keys provided.
         /// </summary>
         /// <param name="keys">The keys to remove.</param>
-        void RemoveAll(IEnumerable<string> keys);
+        Task RemoveAllAsync(IEnumerable<string> keys);
 
         /// <summary>
         /// Retrieves the specified item from the cache.
@@ -31,7 +31,7 @@ namespace Xamarin.Forms.Labs.Services
         /// <returns>
         /// The retrieved item, or <value>null</value> if the key was not found.
         /// </returns>
-        T Get<T>(string key);
+        Task<T> GetAsync<T>(string key);
 
         /// <summary>
         /// Adds a new item into the cache at the specified cache key only if the cache is empty.
@@ -41,7 +41,7 @@ namespace Xamarin.Forms.Labs.Services
         /// <param name="value">The object to be inserted into the cache.</param>
         /// <returns>True if item was added, otherwise false.</returns>
         /// <remarks>The item does not expire unless it is removed due memory pressure.</remarks>
-        bool Add<T>(string key, T value);
+        Task<bool> AddAsync<T>(string key, T value);
 
         /// <summary>
         /// Sets an item into the cache at the cache key specified regardless if it already exists or not.
@@ -50,7 +50,7 @@ namespace Xamarin.Forms.Labs.Services
         /// <param name="key">Key for the item.</param>
         /// <param name="value">Item to set.</param>
         /// <returns>True if item was added, otherwise false.</returns>
-        bool Set<T>(string key, T value);
+        Task<bool> SetAsync<T>(string key, T value);
 
         /// <summary>
         /// Replaces the item at the cache.
@@ -59,12 +59,12 @@ namespace Xamarin.Forms.Labs.Services
         /// <param name="key">Key for the item to replace.</param>
         /// <param name="value">Item to replace with.</param>
         /// <returns>True if the item exists, otherwise false.</returns>
-        bool Replace<T>(string key, T value);
+        Task<bool> ReplaceAsync<T>(string key, T value);
 
         /// <summary>
         /// Invalidates all data on the cache.
         /// </summary>
-        void FlushAll();
+        Task FlushAllAsync();
 
         /// <summary>
         /// Retrieves multiple items from the cache. 
@@ -75,13 +75,13 @@ namespace Xamarin.Forms.Labs.Services
         /// <returns>
         /// a Dictionary holding all items indexed by their key.
         /// </returns>
-        IDictionary<string, T> GetAll<T>(IEnumerable<string> keys);
+        Task<IDictionary<string, T>> GetAllAsync<T>(IEnumerable<string> keys);
 
         /// <summary>
         /// Sets multiple items to the cache. 
         /// </summary>
         /// <typeparam name="T">Type of values to set.</typeparam>
         /// <param name="values">The values.</param>
-        void SetAll<T>(IDictionary<string, T> values);
+        Task SetAllAsync<T>(IDictionary<string, T> values);
     }
 }

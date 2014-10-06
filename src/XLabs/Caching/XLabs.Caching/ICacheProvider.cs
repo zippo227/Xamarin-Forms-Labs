@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xamarin.Forms.Labs.Services
+namespace XLabs.Caching
 {
     /// <summary>
     /// The CacheProvider interface.

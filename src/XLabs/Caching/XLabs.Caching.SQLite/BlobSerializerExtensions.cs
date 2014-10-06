@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using SQLite.Net;
 using XLabs.Serialization;
 
-namespace Xamarin.Forms.Labs.Caching.SQLiteNet
+namespace XLabs.Caching.SQLite
 {
     public static class BlobSerializerExtensions
     {

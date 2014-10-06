@@ -14,12 +14,13 @@ namespace Xamarin.Forms.Labs.Sample.WP
 {
     using Services;
     using System.IO;
-    using Xamarin.Forms.Labs.Caching.SQLiteNet;
     using Windows.Storage;
     using System.Threading.Tasks;
     using Xamarin.Forms.Labs.Charting.WP;
     using XLabs.Ioc;
     using XLabs.Serialization;
+    using XLabs.Caching;
+    using XLabs.Caching.SQLite;
 
     public partial class App : Application
     {

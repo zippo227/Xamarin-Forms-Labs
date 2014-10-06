@@ -7,10 +7,9 @@ using SQLite.Net;
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLite.Net.Interop;
-using Xamarin.Forms.Labs.Services;
 using XLabs.Serialization;
 
-namespace Xamarin.Forms.Labs.Caching.SQLiteNet
+namespace XLabs.Caching.SQLite
 {
     public class SQLiteSimpleCache : SQLiteConnectionWithLock, ISimpleCache, IAsyncSimpleCache
     {

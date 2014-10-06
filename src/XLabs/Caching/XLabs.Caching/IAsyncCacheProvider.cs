@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xamarin.Forms.Labs.Services
+namespace XLabs.Caching
 {
     public interface IAsyncCacheProvider : IAsyncSimpleCache
     {
