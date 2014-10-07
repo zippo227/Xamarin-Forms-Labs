@@ -135,7 +135,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
         /// <returns>A scaled <see cref="Drawable"/>.</returns>
         private Drawable GetScaleDrawable(Drawable drawable, int width, int height)
         {
-            var returnValue = new ScaleDrawable(drawable, 0, width, height).Drawable;
+            var returnValue = new ScaleDrawable(drawable, 0, RequestToPixels(width), RequestToPixels(height)).Drawable;
             returnValue.SetBounds(0, 0, width, height);
             return returnValue;
         }
@@ -158,5 +158,16 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
 			}
 		}
 
-    }
+	}
+	
+	
+        /// <summary>
+        /// Returns a drawable dimension modified according to the current display DPI.
+        /// </summary>
+        /// <param name="sizeRequest">The requested size in relative units.</param>
+        /// <returns>Size in pixels.</returns>
+	public int RequestToPixels(int sizeRequest)
+	{
+    		return (int) (sizeRequest * Resources.DisplayMetrics.Density);
+	}
 }
