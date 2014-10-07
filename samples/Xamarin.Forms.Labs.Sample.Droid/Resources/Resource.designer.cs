@@ -49,7 +49,10 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 			global::Xamarin.Forms.Labs.Droid.Resource.Drawable.calendar_bg_selector = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Drawable.calendar_bg_selector;
 			global::Xamarin.Forms.Labs.Droid.Resource.Id.calendar_grid = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Id.calendar_grid;
 			global::Xamarin.Forms.Labs.Droid.Resource.Id.calendar_view = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Id.calendar_view;
+			global::Xamarin.Forms.Labs.Droid.Resource.Id.left_arrow = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Id.left_arrow;
+			global::Xamarin.Forms.Labs.Droid.Resource.Id.right_arrow = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Id.right_arrow;
 			global::Xamarin.Forms.Labs.Droid.Resource.Id.title = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Id.title;
+			global::Xamarin.Forms.Labs.Droid.Resource.Layout.calendar_pager_layout = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Layout.calendar_pager_layout;
 			global::Xamarin.Forms.Labs.Droid.Resource.Layout.calendar_picker = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Layout.calendar_picker;
 			global::Xamarin.Forms.Labs.Droid.Resource.Layout.dialog = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Layout.dialog;
 			global::Xamarin.Forms.Labs.Droid.Resource.Layout.month = global::Xamarin.Forms.Labs.Sample.Droid.Resource.Layout.month;
@@ -210,14 +213,20 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f090002
-			public const int calendar_grid = 2131296258;
-			
-			// aapt resource value: 0x7f090000
-			public const int calendar_view = 2131296256;
+			// aapt resource value: 0x7f090004
+			public const int calendar_grid = 2131296260;
 			
 			// aapt resource value: 0x7f090001
-			public const int title = 2131296257;
+			public const int calendar_view = 2131296257;
+			
+			// aapt resource value: 0x7f090003
+			public const int left_arrow = 2131296259;
+			
+			// aapt resource value: 0x7f090002
+			public const int right_arrow = 2131296258;
+			
+			// aapt resource value: 0x7f090000
+			public const int title = 2131296256;
 			
 			static Id()
 			{
@@ -233,16 +242,19 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int calendar_picker = 2130903040;
+			public const int calendar_pager_layout = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int dialog = 2130903041;
+			public const int calendar_picker = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int month = 2130903042;
+			public const int dialog = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int week = 2130903043;
+			public const int month = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int week = 2130903044;
 			
 			static Layout()
 			{

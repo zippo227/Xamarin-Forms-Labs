@@ -36,10 +36,6 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
         {
             base.OnElementChanged(e);
 
-            if (e.OldElement != null)
-            {
-                return;
-            }
             var targetButton = this.Control;
 			if(targetButton != null){
 				targetButton.SetOnTouchListener(TouchListener.Instance.Value);

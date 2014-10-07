@@ -59,7 +59,7 @@ namespace Xamarin.Forms.Labs.Sample
                 SwipeEnabled = true,
                 TintColor = Color.White,
                 BarTintColor = Color.Blue,
-                Badges = { "1", "2", "3"},
+                Badges = { "1", "2", "3" },
                 TabBarBackgroundImage = "ToolbarGradient2.png",
                 TabBarSelectedImage = "blackbackground.png",
             };
@@ -160,8 +160,6 @@ namespace Xamarin.Forms.Labs.Sample
                     case "email":
                         await mainPage.Navigation.PushAsync(new EmailPage());
                         break;
-                    default:
-                        break;
                 }
             };
             services.Content = lstServices;
@@ -187,6 +185,7 @@ namespace Xamarin.Forms.Labs.Sample
                 {
                     "Autocomplete",
                     "Buttons",
+                    "ButtonGroup",
                     "Calendar",
                     "CameraView",
                     "CheckBox",
@@ -203,7 +202,7 @@ namespace Xamarin.Forms.Labs.Sample
                     "RepeaterView",
                     "Segment",
                     "Separator",
-                    "WebImage"
+                    "WebImage",
                 }
             };
 
@@ -268,7 +267,8 @@ namespace Xamarin.Forms.Labs.Sample
                     case "webimage":
                         await mainPage.Navigation.PushAsync(new WebImagePage());
                         break;
-                    default:
+                    case "buttongroup":
+                        await mainPage.Navigation.PushAsync(new ButtonGroupPage());
                         break;
                 }
             };

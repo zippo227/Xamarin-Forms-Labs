@@ -5,12 +5,13 @@ using Xamarin.Forms.Labs.iOS;
 using Xamarin.Forms.Labs.iOS.Controls.Calendar;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services;
-using Xamarin.Forms.Labs.Caching.SQLiteNet;
 using SQLite.Net.Platform.XamarinIOS;
 using System;
 using System.IO;
 using XLabs.Ioc;
 using XLabs.Serialization;
+using XLabs.Caching;
+using XLabs.Caching.SQLite;
 
 namespace Xamarin.Forms.Labs.Sample.iOS
 {
