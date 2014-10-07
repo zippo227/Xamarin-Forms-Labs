@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Controls\ExtendedTimePick\" />
+    <Folder Include="Controls\ExtendedDatePick\" />
+    <Folder Include="Controls\BindablePick\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -154,6 +157,10 @@
     <Compile Include="Controls\Calendar\MonthGridView.cs" />
     <Compile Include="Controls\Calendar\CalendarArrowView.cs" />
     <Compile Include="Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedTimePick\ExtendedTimePickerRenderer.cs" />
+    <Compile Include="Controls\ExtendedDatePick\ExtendedDatePickerRenderer.cs" />
+    <Compile Include="Controls\BindablePick\BindablePickerRenderer.cs" />
+    <Compile Include="Controls\BindablePick\NoCaretField.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
