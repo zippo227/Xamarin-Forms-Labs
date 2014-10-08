@@ -41,7 +41,11 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
 				targetButton.SetOnTouchListener(TouchListener.Instance.Value);
 			}
 
-            if (this.Element != null && this.ImageButton.Source != null)
+			if(this.Element != null && this.Element.Font != Font.Default && targetButton != null){
+				targetButton.Typeface = Element.Font.ToExtendedTypeface(Context);
+			}
+
+            if (this.Element != null && this.ImageButton.Source != null )
             {
                 await this.SetImageSourceAsync(targetButton, this.ImageButton);
             }

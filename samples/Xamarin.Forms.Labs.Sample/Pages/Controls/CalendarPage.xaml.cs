@@ -34,7 +34,8 @@ namespace Xamarin.Forms.Labs.Sample
 				SelectionBackgroundStyle = CalendarView.BackgroundStyle.CircleFill,
 				TodayBackgroundStyle = CalendarView.BackgroundStyle.CircleOutline,
 				HighlightedDaysOfWeek = new DayOfWeek[]{DayOfWeek.Saturday,DayOfWeek.Sunday},
-				ShowNavigationArrows = true
+				ShowNavigationArrows = true,
+				MonthTitleFont = Font.OfSize("Open 24 Display St",NamedSize.Medium)
 
 			};
 
