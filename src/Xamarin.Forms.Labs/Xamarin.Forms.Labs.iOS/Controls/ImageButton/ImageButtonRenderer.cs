@@ -132,7 +132,6 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Top;
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Center;
-            targetButton.TitleLabel.Text = "Microsoft";
             targetButton.SizeToFit();
 
             var titleWidth = targetButton.TitleLabel.IntrinsicContentSize.Width;
