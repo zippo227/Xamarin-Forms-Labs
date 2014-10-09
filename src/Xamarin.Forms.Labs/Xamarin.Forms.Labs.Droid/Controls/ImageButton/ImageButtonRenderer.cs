@@ -37,13 +37,13 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
             base.OnElementChanged(e);
 
             var targetButton = this.Control;
-			if(targetButton != null){
-				targetButton.SetOnTouchListener(TouchListener.Instance.Value);
-			}
+            if(targetButton != null){
+                targetButton.SetOnTouchListener(TouchListener.Instance.Value);
+            }
 
-			if(this.Element != null && this.Element.Font != Font.Default && targetButton != null){
-				targetButton.Typeface = Element.Font.ToExtendedTypeface(Context);
-			}
+            if(this.Element != null && this.Element.Font != Font.Default && targetButton != null){
+                targetButton.Typeface = Element.Font.ToExtendedTypeface(Context);
+            }
 
             if (this.Element != null && this.ImageButton.Source != null )
             {
@@ -144,34 +144,40 @@ namespace Xamarin.Forms.Labs.Droid.Controls.ImageButton
             return returnValue;
         }
 
-
-		//Hot fix for the layout positioning issue on Android as described in http://forums.xamarin.com/discussion/20608/fix-for-button-layout-bug-on-android
-		private class TouchListener : Java.Lang.Object, IOnTouchListener
-		{
-			public static readonly Lazy<TouchListener> Instance =
-				new Lazy<TouchListener>(() => new TouchListener());
-
-			public bool OnTouch(Android.Views.View v, MotionEvent e)
-			{
-				var buttonRenderer = v.Tag as ButtonRenderer;
-				if (buttonRenderer != null && e.Action == MotionEventActions.Down)
-				{
-					buttonRenderer.Control.Text = buttonRenderer.Element.Text;
-				}
-				return false;
-			}
-		}
-
-	}
-	
-	
         /// <summary>
         /// Returns a drawable dimension modified according to the current display DPI.
         /// </summary>
         /// <param name="sizeRequest">The requested size in relative units.</param>
         /// <returns>Size in pixels.</returns>
-	public int RequestToPixels(int sizeRequest)
-	{
-    		return (int) (sizeRequest * Resources.DisplayMetrics.Density);
-	}
+        public int RequestToPixels(int sizeRequest)
+        {
+            return (int)(sizeRequest * Resources.DisplayMetrics.Density);
+        }
+
+        //Hot fix for the layout positioning issue on Android as described in http://forums.xamarin.com/discussion/20608/fix-for-button-layout-bug-on-android
+        private class TouchListener : Java.Lang.Object, IOnTouchListener
+        {
+            /// <summary>
+            /// Make TouchListener a singleton.
+            /// </summary>
+            private TouchListener()
+            {
+
+            }
+
+            public static readonly Lazy<TouchListener> Instance =
+                new Lazy<TouchListener>(() => new TouchListener());
+
+            public bool OnTouch(Android.Views.View v, MotionEvent e)
+            {
+                var buttonRenderer = v.Tag as ButtonRenderer;
+                if (buttonRenderer != null && e.Action == MotionEventActions.Down)
+                {
+                    buttonRenderer.Control.Text = buttonRenderer.Element.Text;
+                }
+
+                return false;
+            }
+        }
+    }
 }
