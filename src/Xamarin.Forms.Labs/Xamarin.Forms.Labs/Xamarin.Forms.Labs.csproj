@@ -127,6 +127,8 @@
     <Compile Include="Extensions\NumericExtensions.cs" />
     <Compile Include="Controls\ExtendedTimePicker.cs" />
     <Compile Include="Controls\ExtendedDatePicker.cs" />
+    <Compile Include="Converter\InverseBooleanConverter.cs" />
+    <Compile Include="Controls\ExtendedEditor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -138,6 +140,7 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <Folder Include="Services\Contacts\" />
+    <Folder Include="Converter\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ExifLib">
