@@ -74,6 +74,7 @@ namespace escoz
 			BackgroundColor = _mv.StyleDescriptor.InactiveDateBackgroundColor;
 			CalendarView.BackgroundStyle backgroundStyle = CalendarView.BackgroundStyle.Fill;
 
+
 			if (!Active || !Available)
 			{
 				if(Highlighted){
