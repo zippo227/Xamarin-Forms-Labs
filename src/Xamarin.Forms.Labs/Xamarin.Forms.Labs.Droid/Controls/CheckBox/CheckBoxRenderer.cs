@@ -12,16 +12,11 @@ namespace Xamarin.Forms.Labs.Droid.Controls
 {
     using NativeCheckBox = Android.Widget.CheckBox;
 
-    public class CheckBoxRenderer : ViewRenderer<CheckBox, Android.Widget.CheckBox>
+    public class CheckBoxRenderer : ViewRenderer<CheckBox, NativeCheckBox>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<CheckBox> e)
         {
             base.OnElementChanged(e);
-
-            if (e.OldElement != null)
-            {
-                e.OldElement.PropertyChanged -= ElementOnPropertyChanged;
-            }
 
             if (this.Control == null)
             {
@@ -44,27 +39,13 @@ namespace Xamarin.Forms.Labs.Droid.Controls
             {
                 Control.Typeface = TrySetFont(e.NewElement.FontName);
             }
-
-            Element.PropertyChanged += ElementOnPropertyChanged;
         }
 
-        //private void CheckedChanged(object sender, EventArgs<bool> eventArgs)
-        //{
-        //    Device.BeginInvokeOnMainThread(() =>
-        //        {
-        //            this.Control.Text = this.Element.Text;
-        //            this.Control.Checked = eventArgs.Value;
-        //        });
-        //}
-
-        void checkBox_CheckedChange(object sender, Android.Widget.CompoundButton.CheckedChangeEventArgs e)
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            this.Element.Checked = e.IsChecked;
-        }
+            base.OnElementPropertyChanged(sender, e);
 
-        private void ElementOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-        {
-            switch (propertyChangedEventArgs.PropertyName)
+            switch (e.PropertyName)
             {
                 case "Checked":
                     Control.Text = Element.Text;
@@ -90,9 +71,14 @@ namespace Xamarin.Forms.Labs.Droid.Controls
                     Control.Text = Element.Text;
                     break;
                 default:
-                    System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName);
+                    System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", e.PropertyName);
                     break;
             }
+        }
+
+        void checkBox_CheckedChange(object sender, Android.Widget.CompoundButton.CheckedChangeEventArgs e)
+        {
+            this.Element.Checked = e.IsChecked;
         }
 
         private Typeface TrySetFont(string fontName)

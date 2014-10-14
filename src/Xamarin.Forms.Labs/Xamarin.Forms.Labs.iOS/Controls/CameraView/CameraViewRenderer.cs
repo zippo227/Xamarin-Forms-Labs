@@ -32,6 +32,14 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
+
+            switch (e.PropertyName)
+            {
+                case "Camera":
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
