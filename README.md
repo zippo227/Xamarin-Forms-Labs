@@ -6,8 +6,8 @@ Xamarin Forms Labs
 Call for action for all Xamarin Developers, embrace this project and share your controls and services with the community, add your own control to the toolkit.
 
 **Important for developers**
-The master branch is the current development branch. 
-The v.1.2-pre branch is the stable branch for the next release. If you are submiting a fix, make a PR to the v.1.2 branch
+The master branch is the current development branch and the next release for 2.0.
+The v.1.2 is the stable branch.
 
 **Available controls**
 
