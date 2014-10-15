@@ -96,7 +96,18 @@ namespace Xamarin.Forms.Labs.Controls
         }
 
         /// <summary>
-        /// Registers a native callback and returns data to closure
+        /// Removes a native callback.
+        /// </summary>
+        /// <param name="name">
+        /// The name of the callback.
+        /// </param>
+        public bool RemoveCallback(string name)
+        {
+            return this.registeredActions.Remove(name);
+        }
+
+        /// <summary>
+        /// Registers a native callback and returns data to closure.
         /// </summary>
         /// <param name="name">
         /// The name.
@@ -109,9 +120,15 @@ namespace Xamarin.Forms.Labs.Controls
             this.registeredFunctions.Add(name, func);
         }
 
-        public bool RemoveCallback(string name)
+        /// <summary>
+        /// Removes a native callback function.
+        /// </summary>
+        /// <param name="name">
+        /// The name of the callback.
+        /// </param>
+        public bool RegisterNativeFunction(string name)
         {
-            return this.registeredActions.Remove(name);
+            return this.registeredFunctions.Remove(name);
         }
 
         public void LoadFromContent(string contentFullName)
@@ -144,25 +161,6 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
-        public bool TryGetAction(string name, out Action<string> action)
-        {
-            return this.registeredActions.TryGetValue(name, out action);
-        }
-
-        public bool TryGetFunc(string name, out Func<string, object[]> func)
-        {
-            return this.registeredFunctions.TryGetValue(name, out func);
-        }
-
-        public void OnLoadFinished(object sender, EventArgs e)
-        {
-            var handler = this.LoadFinished;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
         public void CallJsFunction(string funcName, params object[] parameters)
         {
             var builder = new StringBuilder();
@@ -185,6 +183,25 @@ namespace Xamarin.Forms.Labs.Controls
         }
 
         public EventHandler LoadFinished;
+
+        internal bool TryGetAction(string name, out Action<string> action)
+        {
+            return this.registeredActions.TryGetValue(name, out action);
+        }
+
+        internal bool TryGetFunc(string name, out Func<string, object[]> func)
+        {
+            return this.registeredFunctions.TryGetValue(name, out func);
+        }
+
+        internal void OnLoadFinished(object sender, EventArgs e)
+        {
+            var handler = this.LoadFinished;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
 
         internal EventHandler<string> JavaScriptLoadRequested;
         internal EventHandler<string> LoadFromContentRequested;
