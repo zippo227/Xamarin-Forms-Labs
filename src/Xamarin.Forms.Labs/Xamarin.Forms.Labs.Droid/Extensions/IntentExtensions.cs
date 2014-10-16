@@ -22,9 +22,16 @@ namespace Xamarin.Forms.Labs.Droid
                 return;
             }
 
-            intent.PutParcelableArrayListExtra(
-                Intent.ExtraStream,
-                attachments.Select(a => Uri.FromFile(new Java.IO.File(a)) as IParcelable).ToList());
+			foreach (var attachment in attachments) {
+				var file = new File(attachment);
+				// File existence check
+				if (file.Exists()) {
+					intent.PutExtra(Intent.ExtraStream, Uri.FromFile(file));
+				}
+				else {
+                    Android.Util.Log.Warn("Intent.AddAttachments", "Unable to attach file '{0}', because it doesn't exist.", attachment);
+				}
+			}
         }
     }
 }
