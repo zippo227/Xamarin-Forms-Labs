@@ -1,4 +1,4 @@
-using System;
+//using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,45 +9,67 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Xamarin.Forms;
+
+[assembly: Dependency(typeof(Xamarin.Forms.Labs.Droid.Services.Email.EmailService))]
 
 namespace Xamarin.Forms.Labs.Droid.Services.Email
 {
-    using Xamarin.Forms.Labs.Services.Email;
+	using Android.Net;
+	using Xamarin.Forms.Labs.Services.Email;
 
-    public class EmailService : IEmailService
-    {
-        #region IEmailService Members
+	public class EmailService : IEmailService
+	{
+		#region IEmailService Members
 
-        // TODO: Check if there is a way to check this on Android
-        public bool CanSend
-        {
-            get { return true; }
-        }
+		// TODO: Check if there is a way to check this on Android
+		public bool CanSend
+		{
+			get { return true; }
+		}
 
-        public void ShowDraft(string subject, string body, bool html, string[] to, string[] cc, string[] bcc)
-        {
-            var intent = new Intent(Intent.ActionSend);
+		public void ShowDraft(string subject, string body, bool html, string[] to, string[] cc, string[] bcc, IEnumerable<string> attachments)
+		{
+			var intent = new Intent(Intent.ActionSend);
 
-            intent.SetType(html ? "text/html" : "text/plain");
-            intent.PutExtra(Intent.ExtraEmail, to);
-            intent.PutExtra(Intent.ExtraCc, cc);
-            intent.PutExtra(Intent.ExtraBcc, bcc);
-            intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
-            intent.PutExtra(Intent.ExtraText, body ?? string.Empty);
+			intent.SetType(html ? "text/html" : "text/plain");
+			intent.PutExtra(Intent.ExtraEmail, to);
+			intent.PutExtra(Intent.ExtraCc, cc);
+			intent.PutExtra(Intent.ExtraBcc, bcc);
+			intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
 
-            this.StartActivity(intent);
-        }
+			if (html) {
+				intent.PutExtra (Intent.ExtraText, Android.Text.Html.FromHtml (body));
+			} else {
+				intent.PutExtra (Intent.ExtraText, body ?? string.Empty);
+			}
 
-        public void ShowDraft(string subject, string body, bool html, string to)
-        {
-            var intent = new Intent(Intent.ActionSend);
-            intent.SetType(html ? "text/html" : "text/plain");
-            intent.PutExtra(Intent.ExtraEmail, to);
-            intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
-            intent.PutExtra(Intent.ExtraText, body ?? string.Empty);
-            this.StartActivity(intent);
-        }
+			intent.AddAttachments(attachments);
 
-        #endregion
-    }
+			this.StartActivity(intent);
+		}
+
+		public void ShowDraft(string subject, string body, bool html, string to, IEnumerable<string> attachments)
+		{
+			var intent = new Intent(Intent.ActionSend);
+			intent.SetType(html ? "text/html" : "text/plain");
+			intent.PutExtra(Intent.ExtraEmail, to);
+			intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
+
+			if (html)
+			{
+				intent.PutExtra(Intent.ExtraText, body);
+			}
+			else
+			{
+				intent.PutExtra(Intent.ExtraText, body ?? string.Empty);
+			}
+
+			intent.AddAttachments(attachments);
+
+			this.StartActivity(intent);
+		}
+
+		#endregion
+	}
 }

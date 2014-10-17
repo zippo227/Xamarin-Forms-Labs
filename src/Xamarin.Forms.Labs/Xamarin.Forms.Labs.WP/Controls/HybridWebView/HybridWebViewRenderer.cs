@@ -1,35 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
 using Microsoft.Phone.Controls;
-using Xamarin.Forms.Labs.WP8.Controls;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 namespace Xamarin.Forms.Labs.Controls
 {
+    /// <summary>
+    /// The hybrid web view renderer.
+    /// </summary>
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, WebBrowser>
     {
-        protected WebBrowser webView;
+        /// <summary>
+        /// The web view.
+        /// </summary>
+        protected WebBrowser WebView;
 
         protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
         {
             base.OnElementChanged(e);
 
-            if (this.webView == null)
+            if (this.WebView == null)
             {
-                this.webView = new WebBrowser();
+                this.WebView = new WebBrowser { IsScriptEnabled = true };
 
-                this.webView.IsScriptEnabled = true;
-                this.webView.Navigating += webView_Navigating;
-                this.webView.LoadCompleted += webView_LoadCompleted;
-                this.webView.ScriptNotify += WebViewOnScriptNotify;
+                this.WebView.Navigating += webView_Navigating;
+                this.WebView.LoadCompleted += webView_LoadCompleted;
+                this.WebView.ScriptNotify += WebViewOnScriptNotify;
 
-                this.SetNativeControl(this.webView);
+                this.SetNativeControl(this.WebView);
             }
 
             this.Unbind(e.OldElement);
@@ -49,12 +50,17 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
-        void webView_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+       private void webView_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             this.InjectNativeFunctionScript();
         }
 
-        void webView_Navigating(object sender, NavigatingEventArgs e)
+       partial void LoadContent(object sender, string contentFullName)
+       {
+           LoadFromContent(sender, contentFullName);
+       }
+
+        private void webView_Navigating(object sender, NavigatingEventArgs e)
         {
             if (e.Uri.IsAbsoluteUri && this.CheckRequest(e.Uri.AbsoluteUri))
             {
@@ -66,7 +72,7 @@ namespace Xamarin.Forms.Labs.Controls
         {
             try
             {
-                this.webView.InvokeScript("eval", script);
+                this.WebView.InvokeScript("eval", script);
             }
             catch (Exception ex)
             {
@@ -78,7 +84,7 @@ namespace Xamarin.Forms.Labs.Controls
         {
             if (uri != null)
             {
-                this.webView.Source = uri;
+                this.WebView.Source = uri;
             }
         }
 

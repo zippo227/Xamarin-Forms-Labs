@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Labs.Sample
     {
         public ExtendedDeviceInfoPage(IDevice device)
         {
-			this.Title ="Extended Device Info";
+            this.Title ="Extended Device Info";
             if (device == null)
             {
                 this.Content = new Label()
@@ -78,6 +78,33 @@ namespace Xamarin.Forms.Labs.Sample
             }
 
             stack.Children.Add(batteryFrame); 
+            #endregion
+
+            #region Device Info
+
+
+
+            var idLabel = new Label() { Text = "Device Id:" };
+
+            var idText = new Label();
+
+            stack.Children.Add(new Frame()
+            {
+                Content = new StackLayout()
+                {
+                    Children = { idLabel, idText }
+                }
+            });
+
+            try
+            {
+                idText.Text = device.Id;
+            }
+            catch (Exception ex)
+            {
+                idText.Text = ex.Message;
+            }
+
             #endregion
 
             scroll.Content = stack;

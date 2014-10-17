@@ -79,13 +79,26 @@ namespace Xamarin.Forms.Labs.WP8.Services
             get { return string.Empty; }
         }
 
+        public bool CanSendSMS
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         /// <summary>
         /// Opens native dialog to dial the specified number
         /// </summary>
         /// <param name="number">Number to dial.</param>
         public void DialNumber(string number)
         {
-            new PhoneCallTask() { PhoneNumber = number }.Show();
+            new PhoneCallTask{ PhoneNumber = number }.Show();
+        }
+
+        public void SendSMS(string to, string body)
+        {
+            new SmsComposeTask{ To = to, Body = body }.Show();
         }
     }
 }

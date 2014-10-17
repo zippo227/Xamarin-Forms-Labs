@@ -3,34 +3,42 @@ using Android.OS;
 using Xamarin.Forms.Labs.Droid.Services.Media;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.Droid;
+using Xamarin.Forms.Labs.Droid.Services;
+using System.Threading.Tasks;
+using Xamarin.Forms.Labs.Services.IO;
 
 namespace Xamarin.Forms.Labs
 {
     /// <summary>
-    /// Android device implements <see cref=""/>.
+    /// Android device implements <see cref="IDevice"/>.
     /// </summary>
-    public class AndroidDevice: IDevice
+    public class AndroidDevice : IDevice
     {
         private static IDevice currentDevice;
 
+        private IBluetoothHub btHub;
+
+        private IFileManager fileManager;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.AndroidDevice"/> class.
+        /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
         /// </summary>
-        private AndroidDevice ()
+        private AndroidDevice()
         {
-            var manager = Xamarin.Forms.Labs.Services.PhoneService.Manager;
+            var manager = Services.PhoneService.Manager;
 
             if (manager != null && manager.PhoneType != PhoneType.None)
             {
                 this.PhoneService = new PhoneService();
             }
 
-            if (Xamarin.Forms.Labs.Accelerometer.IsSupported)
+            if (Labs.Accelerometer.IsSupported)
             {
                 this.Accelerometer = new Accelerometer();
             }
 
-            if (Xamarin.Forms.Labs.Gyroscope.IsSupported)
+            if (Labs.Gyroscope.IsSupported)
             {
                 this.Gyroscope = new Gyroscope();
             }
@@ -40,7 +48,13 @@ namespace Xamarin.Forms.Labs
 //                this.BluetoothHub = new BluetoothHub(BluetoothAdapter.DefaultAdapter);
 //            }
 
-            this.Display = new Display ();
+            if (Xamarin.Forms.Labs.Droid.Services.Media.Microphone.IsEnabled)
+            {
+                this.Microphone = new Microphone();
+            }
+
+
+            this.Display = new Display();
 
             this.Manufacturer = Build.Manufacturer;
             this.Name = Build.Model;
@@ -49,15 +63,32 @@ namespace Xamarin.Forms.Labs
 
             this.Battery = new Battery();
 
-	        this.MediaPicker = new MediaPicker();
+            this.MediaPicker = new MediaPicker();
+
+            this.Network = new Network();
         }
 
         /// <summary>
         /// Gets the current device.
         /// </summary>
+        /// <value>
+        /// The current device.
+        /// </value>
         public static IDevice CurrentDevice { get { return currentDevice ?? (currentDevice = new AndroidDevice()); } }
 
         #region IDevice implementation
+        /// <summary>
+        /// Gets Unique Id for the device.
+        /// </summary>
+        /// <value>
+        /// The id for the device.
+        /// </value>
+        public string Id
+        {
+            // TODO: Verify what is the best combination of Unique Id for Android
+            get { return Build.Serial; }
+        }
+
         /// <summary>
         /// Gets the phone service for this device.
         /// </summary>
@@ -71,6 +102,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the display information for the device.
         /// </summary>
+        /// <value>
+        /// The display.
+        /// </value>
         public IDisplay Display
         {
             get;
@@ -80,24 +114,37 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the battery.
         /// </summary>
+        /// <value>
+        /// The battery.
+        /// </value>
         public IBattery Battery
         {
             get;
             private set;
         }
 
-		/// <summary>
-		/// Gets the picture chooser.
-		/// </summary>
-		/// <value>The picture chooser.</value>
-	    public IMediaPicker MediaPicker
-	    {
-		    get; 
-			private set;
-	    }
+        /// <summary>
+        /// Gets the picture chooser.
+        /// </summary>
+        /// <value>The picture chooser.</value>
+        public IMediaPicker MediaPicker
+        {
+            get; 
+            private set;
+        }
 
-	    /// <summary>
-        /// Gets the accelerometer for the device if available
+        /// <summary>
+        /// Gets the network service.
+        /// </summary>
+        /// <value>The network service.</value>
+        public INetwork Network
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the accelerometer for the device if available.
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>
         public IAccelerometer Accelerometer
@@ -117,8 +164,49 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
+        /// Gets the bluetooth hub service.
+        /// </summary>
+        /// <value>The bluetooth hub service if available, otherwise null.</value>
+        public IBluetoothHub BluetoothHub
+        {
+            get
+            {
+                if (this.btHub == null && Android.Bluetooth.BluetoothAdapter.DefaultAdapter != null)
+                {
+                    this.btHub = new BluetoothHub(Android.Bluetooth.BluetoothAdapter.DefaultAdapter);
+                }
+
+                return this.btHub;
+            }
+        }
+
+        /// <summary>
+        /// Gets the default microphone for the device
+        /// </summary>
+        public IAudioStream Microphone
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the file manager for the device.
+        /// </summary>
+        /// <value>Device file manager.</value>
+        public IFileManager FileManager
+        {
+            get
+            {
+                return this.fileManager ?? (this.fileManager = new FileManager(System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication()));
+            }
+        }
+
+        /// <summary>
         /// Gets the name of the device.
         /// </summary>
+        /// <value>
+        /// The name of the device.
+        /// </value>
         public string Name
         {
             get;
@@ -128,6 +216,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the firmware version.
         /// </summary>
+        /// <value>
+        /// The firmware version.
+        /// </value>
         public string FirmwareVersion
         {
             get;
@@ -137,6 +228,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the hardware version.
         /// </summary>
+        /// <value>
+        /// The hardware version.
+        /// </value>
         public string HardwareVersion
         {
             get;
@@ -146,10 +240,35 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the manufacturer.
         /// </summary>
+        /// <value>
+        /// The manufacturer.
+        /// </value>
         public string Manufacturer
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Starts the default app associated with the URI for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>The launch operation.</returns>
+        public Task<bool> LaunchUriAsync(System.Uri uri)
+        {
+            return Task.Run(() =>
+                {
+                    try
+                    {
+                        Forms.Context.StartActivity(new Android.Content.Intent("android.intent.action.VIEW", Android.Net.Uri.Parse(uri.ToString())));
+                        return true;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Android.Util.Log.Error("Device.LaunchUriAsync", ex.Message);
+                        return false;
+                    }
+                });
         }
         #endregion
     }

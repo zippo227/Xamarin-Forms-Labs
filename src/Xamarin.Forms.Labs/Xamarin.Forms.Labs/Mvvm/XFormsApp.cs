@@ -1,13 +1,23 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
     /// <summary>
     /// Class XFormsApp.
     /// </summary>
-    /// <typeparam name="TApp">The type of the t application.</typeparam>
+    /// <typeparam name="TApp">The type of the application.</typeparam>
     public class XFormsApp<TApp> : IXFormsApp<TApp>
     {
+        private Orientation orientation;
+
+        public XFormsApp() { }
+
+        public XFormsApp(TApp context)
+        {
+            this.Init(context);
+        }
+
         #region Properties
 
         /// <summary>
@@ -27,6 +37,26 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// </summary>
         /// <value>The application context.</value>
         public TApp AppContext { get; set; }
+
+        public Orientation Orientation 
+        { 
+            get
+            {
+                return this.orientation;
+            }
+
+            protected set
+            {
+                this.orientation = value;
+                this.Rotation.Invoke<Orientation>(this, this.orientation);
+            }
+        }
+
+        public Func<Task<bool>> BackPressDelegate
+        {
+            get;
+            set;
+        }
 
         #endregion Properties
 
@@ -72,7 +102,9 @@ namespace Xamarin.Forms.Labs.Mvvm
         /// Gets or sets the on rotation.
         /// </summary>
         /// <value>The on rotation.</value>
-        public EventHandler<EventArgs> Rotation { get; set; }
+        public EventHandler<EventArgs<Orientation>> Rotation { get; set; }
+
+        public EventHandler<EventArgs> BackPress { get; set; } 
 
         #endregion Event Handlers
 
@@ -143,6 +175,15 @@ namespace Xamarin.Forms.Labs.Mvvm
         protected virtual void OnError(Exception ex)
         {
             RaiseOnError(ex);
+        }
+
+        /// <summary>
+        /// Called when [error].
+        /// </summary>
+        /// <param name="ex">The exception.</param>
+        protected virtual void OnBackPress()
+        {
+            RaiseOnBackPress();
         }
 
         #endregion Virtual Mehods
@@ -221,6 +262,16 @@ namespace Xamarin.Forms.Labs.Mvvm
         protected virtual void RaiseOnError(Exception e)
         {
             var handler = Error;
+
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
+        }
+
+        protected virtual void RaiseOnBackPress()
+        {
+            var handler = BackPress;
 
             if (handler != null)
             {

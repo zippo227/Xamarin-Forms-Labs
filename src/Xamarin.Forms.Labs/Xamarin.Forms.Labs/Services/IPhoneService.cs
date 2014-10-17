@@ -41,10 +41,17 @@
         string MNC { get; }
 
         /// <summary>
+        /// Gets whether the service can send SMS
+        /// </summary>
+        bool CanSendSMS { get; }
+
+        /// <summary>
         /// Opens native dialog to dial the specified number.
         /// </summary>
         /// <param name="number">Number to dial.</param>
         void DialNumber(string number);
+
+        void SendSMS(string to, string body);
     }
 }
 

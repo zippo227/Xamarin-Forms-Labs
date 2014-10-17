@@ -1,30 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Services.Serialization
 {
-    class SystemJsonSerializer : StreamSerializer, IJsonSerializer
+    /// <summary>
+    /// The system JSON serializer.
+    /// </summary>
+    public class SystemJsonSerializer : StreamSerializer, IJsonSerializer
     {
+        /// <summary>
+        /// Gets the format.
+        /// </summary>
         public override SerializationFormat Format
         {
             get { return SerializationFormat.Json; }
         }
 
+        /// <summary>
+        /// Cleans memory.
+        /// </summary>
         public override void Flush()
         {
-            
         }
 
         /// <summary>
-        /// Serializes object to a stream
+        /// Serializes object to a stream.
         /// </summary>
-        /// <param name="obj">Object to serialize</param>
-        /// <param name="stream">Stream to serialize to</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <param name="stream">Stream to serialize to.</param>
         public override void Serialize<T>(T obj, Stream stream)
         {
             var serializer = new DataContractJsonSerializer(obj.GetType());
@@ -32,11 +35,11 @@ namespace Xamarin.Forms.Labs.Services.Serialization
         }
 
         /// <summary>
-        /// Deserializes stream into an object
+        /// Deserializes stream into an object.
         /// </summary>
-        /// <typeparam name="T">Type of object to serialize to</typeparam>
-        /// <param name="stream">Stream to deserialize from</param>
-        /// <returns>Object of type T</returns>
+        /// <typeparam name="T">Type of object to serialize to.</typeparam>
+        /// <param name="stream">Stream to deserialize from.</param>
+        /// <returns>Object of type T.</returns>
         public override T Deserialize<T>(Stream stream)
         {
             var serializer = new DataContractJsonSerializer(typeof(T));

@@ -1,25 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Serialization;
 
+[assembly: 
+    InternalsVisibleTo("Xamarin.Forms.Labs.Droid"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.iOS"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.WP8")]
+
 namespace Xamarin.Forms.Labs.Controls
 {
+    /// <summary>
+    /// The hybrid web view.
+    /// </summary>
     public class HybridWebView : WebView
     {
-        private object InjectLock = new object();
+        /// <summary>
+        /// The inject lock.
+        /// </summary>
+        private readonly object injectLock = new object();
+
+        /// <summary>
+        /// The JSON serializer.
+        /// </summary>
         private readonly IStringSerializer jsonSerializer;
+
+        /// <summary>
+        /// The registered actions.
+        /// </summary>
         private readonly Dictionary<string, Action<string>> registeredActions;
+
+		/// <summary>
+		/// The registered actions.
+		/// </summary>
+		private readonly Dictionary<string, Func<string, object[]>> registeredFunctions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HybridWebView"/> class.
         /// </summary>
-        public HybridWebView() : this(Resolver.Resolve<IJsonSerializer>())
+        /// <remarks>HybridWebView will use either <see cref="IJsonSerializer"/> configured
+        /// with IoC or if missing it will use <see cref="SystemJsonSerializer"/> by default.</remarks>
+        public HybridWebView()
         {
+            if (!Resolver.IsSet || (this.jsonSerializer = Resolver.Resolve<IJsonSerializer>()) == null)
+            {
+                this.jsonSerializer = new SystemJsonSerializer();
+            }
+
+            this.registeredActions = new Dictionary<string, Action<string>>();
+			registeredFunctions = new Dictionary<string, Func<string, object[]>>();
         }
 
         /// <summary>
@@ -32,6 +63,7 @@ namespace Xamarin.Forms.Labs.Controls
         {
             this.jsonSerializer = jsonSerializer;
             this.registeredActions = new Dictionary<string, Action<string>>();
+			registeredFunctions = new Dictionary<string, Func<string, object[]>>();
         }
 
         /// <summary>
@@ -62,6 +94,20 @@ namespace Xamarin.Forms.Labs.Controls
             this.registeredActions.Add(name, action);
         }
 
+		/// <summary>
+		/// Registers a native callback and returns data to closure
+		/// </summary>
+		/// <param name="name">
+		/// The name.
+		/// </param>
+		/// <param name="action">
+		/// The action.
+		/// </param>
+		public void RegisterNativeFunction(string name, Func<string, object[]> func)
+		{
+			this.registeredFunctions.Add(name, func);
+		}
+
         public bool RemoveCallback(string name)
         {
             return this.registeredActions.Remove(name);
@@ -76,9 +122,18 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
+        public void LoadContent(string content)
+        {
+            var handler = this.LoadContentRequested;
+            if (handler != null)
+            {
+                handler(this, content);
+            }
+        }
+
         public void InjectJavaScript(string script)
         {
-            lock (this.InjectLock)
+            lock (this.injectLock)
             {
                 var handler = this.JavaScriptLoadRequested;
                 if (handler != null)
@@ -92,6 +147,11 @@ namespace Xamarin.Forms.Labs.Controls
         {
             return this.registeredActions.TryGetValue(name, out action);
         }
+
+		public bool TryGetFunc(string name, out Func<string, object[]> func)
+		{
+			return this.registeredFunctions.TryGetValue(name, out func);
+		}
 
         public void OnLoadFinished(object sender, EventArgs e)
         {
@@ -123,8 +183,10 @@ namespace Xamarin.Forms.Labs.Controls
             this.InjectJavaScript(builder.ToString());
         }
 
-        public EventHandler<string> JavaScriptLoadRequested;
-        public EventHandler<string> LoadFromContentRequested;
         public EventHandler LoadFinished;
+
+        internal EventHandler<string> JavaScriptLoadRequested;
+        internal EventHandler<string> LoadFromContentRequested;
+        internal EventHandler<string> LoadContentRequested;
     }
 }

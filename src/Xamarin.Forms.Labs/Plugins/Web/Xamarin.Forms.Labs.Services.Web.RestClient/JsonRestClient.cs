@@ -35,7 +35,7 @@ namespace Xamarin.Forms.Labs.Services.Web.RestClient
         /// </summary>
         protected override string StringContentType
         {
-            get { return "text/json"; }
+            get { return "application/json"; }
         }
     }
 }

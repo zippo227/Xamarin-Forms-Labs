@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
     using Xamarin.Forms.Labs.Caching.SQLiteNet;
     using Windows.Storage;
     using System.Threading.Tasks;
+    using Xamarin.Forms.Labs.Charting.WP;
 
     public partial class App : Application
     {
@@ -32,6 +33,8 @@ namespace Xamarin.Forms.Labs.Sample.WP
         /// </summary>
         public App()
         {
+
+            Charting.WP.Controls.ChartRenderer renderer = new Charting.WP.Controls.ChartRenderer();
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 
@@ -40,6 +43,8 @@ namespace Xamarin.Forms.Labs.Sample.WP
 
             // Phone-specific initialization
             InitializePhoneApplication();
+
+            RootFrame.UriMapper = new LabsUrlMapper();
 
             // Language display initialization
             InitializeLanguage();
@@ -231,9 +236,9 @@ namespace Xamarin.Forms.Labs.Sample.WP
         }
 
         /// <summary>
-        /// Sets IOC
+        /// Sets Inversion of Control.
         /// </summary>
-        private async void SetIoC()
+        private void SetIoC()
         {
             var resolverContainer = new SimpleContainer();
 
@@ -246,7 +251,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
 
             resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
-                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                .Register<IJsonSerializer, Xamarin.Forms.Labs.ServiceStackSerializer.JsonSerializer>()
                 .Register<IDependencyContainer>(t => resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISimpleCache>(

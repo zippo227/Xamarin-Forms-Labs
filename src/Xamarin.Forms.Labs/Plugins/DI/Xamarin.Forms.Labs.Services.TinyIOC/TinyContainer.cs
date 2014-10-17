@@ -74,6 +74,12 @@ namespace Xamarin.Forms.Labs.Services.TinyIOC
             return this;
         }
 
+        public IDependencyContainer RegisterSingle<T, TImpl>() where T : class where TImpl : class, T
+        {
+            this.container.Register<T, TImpl>().AsSingleton();
+            return this;
+        }
+
         /// <summary>
         /// The register.
         /// </summary>
@@ -111,7 +117,11 @@ namespace Xamarin.Forms.Labs.Services.TinyIOC
 
         public IDependencyContainer Register<T>(Func<IResolver, T> func) where T : class
         {
-            this.container.Register(func);
+            Func<TinyIoCContainer,NamedParameterOverloads,T> f;
+
+            f = (c, t) => func(new TinyResolver(c));
+
+            this.container.Register<T>(f);
             return this;
         }
     }

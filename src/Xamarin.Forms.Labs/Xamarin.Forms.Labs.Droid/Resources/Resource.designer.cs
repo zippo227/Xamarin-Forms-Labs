@@ -27,27 +27,6 @@ namespace Xamarin.Forms.Labs.Droid
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f010001
-			public static int state_current_month = 2130771969;
-			
-			// aapt resource value: 0x7f010006
-			public static int state_highlighted = 2130771974;
-			
-			// aapt resource value: 0x7f010003
-			public static int state_range_first = 2130771971;
-			
-			// aapt resource value: 0x7f010005
-			public static int state_range_last = 2130771973;
-			
-			// aapt resource value: 0x7f010004
-			public static int state_range_middle = 2130771972;
-			
-			// aapt resource value: 0x7f010000
-			public static int state_selectable = 2130771968;
-			
-			// aapt resource value: 0x7f010002
-			public static int state_today = 2130771970;
-			
 			static Attribute()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -139,7 +118,10 @@ namespace Xamarin.Forms.Labs.Droid
 		{
 			
 			// aapt resource value: 0x7f020000
-			public static int calendar_bg_selector = 2130837504;
+			public static int ad16 = 2130837504;
+			
+			// aapt resource value: 0x7f020001
+			public static int calendar_bg_selector = 2130837505;
 			
 			static Drawable()
 			{
@@ -247,49 +229,6 @@ namespace Xamarin.Forms.Labs.Droid
 			}
 			
 			private Style()
-			{
-			}
-		}
-		
-		public partial class Styleable
-		{
-			
-			public static int[] calendar_cell = new int[] {
-					2130771968,
-					2130771969,
-					2130771970,
-					2130771971,
-					2130771972,
-					2130771973,
-					2130771974};
-			
-			// aapt resource value: 1
-			public static int calendar_cell_state_current_month = 1;
-			
-			// aapt resource value: 6
-			public static int calendar_cell_state_highlighted = 6;
-			
-			// aapt resource value: 3
-			public static int calendar_cell_state_range_first = 3;
-			
-			// aapt resource value: 5
-			public static int calendar_cell_state_range_last = 5;
-			
-			// aapt resource value: 4
-			public static int calendar_cell_state_range_middle = 4;
-			
-			// aapt resource value: 0
-			public static int calendar_cell_state_selectable = 0;
-			
-			// aapt resource value: 2
-			public static int calendar_cell_state_today = 2;
-			
-			static Styleable()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Styleable()
 			{
 			}
 		}

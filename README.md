@@ -7,26 +7,36 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 
 **Available controls**
 
- - Calendar Control (beta)  
+ - [AutoComplete (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/AutoComplete)
+ - [Calendar Control (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/Calendar-Control)
+ - DynamicListView (beta)
+ - ExtendedContentView (beta) 
+ - [ExtendedEntry (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedEntry)
+ - [ExtendedLabel (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedLabel)
+ - ExtendedScrollView (IOS beta)
  - ExtendedTabbedPage  
+ - [ExtendedTextCell (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedTextCell)
+ - [ExtendedViewCell (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedViewCell)
+ - [HybridWebView (alpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/HybridWebView)
+ - GridView (IOS beta)
  - ImageButton (beta)
- - ExtendedLabel (beta)
- - ExtendedViewCell (beta)
- - ExtendedTextCell (beta)
- - AutoComplete (beta)
- - HybridWebView (alpha)
+ - RepeaterView (beta)
+ - [SegmentedControlView (IOS beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/SegmentedControl)
  - Web Image (beta)
+ 
+ - IconButton (IOS beta)
 
 **Available services (Beta)**
 
- - Text To Speech 
- - Device (battery info, device info, sensors, accelerometers)
- - Phone Service (cellular network info, make phonecalls)
- - Geolocator
- - Camera (Picture and Video picker, Take Picture, Take Video)
  - Accelerometer
- - Display
  - Cache
+ - Camera (Picture and Video picker, Take Picture, Take Video)
+ - Device (battery info, device info, sensors, accelerometers)
+ - Display
+ - Geolocator
+ - Phone Service (cellular network info, make phonecalls)
+ - SoundService
+ - Text To Speech 
 
 
 **Available Mvvm helpers (Beta)**
@@ -38,15 +48,21 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 
 **Available Plugins (Beta)**
     
-
  - Serialization (ServiceStackV3, ProtoBuf, JSON.Net)
  - Caching (SQLLiteSimpleCache)
- - Dependency Injection containers (TinyIOC, Autofac, NInject, impleInjector)
+ - Dependency Injection containers (TinyIOC, Autofac, NInject, SimpleInjector, Unity)
+ - Web (RestClient)
+ - [Charting (Line, Bar & Pie) (Alpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/Charting)
  
    
 _________________
 
+**CHAT**
 
+
+[Xamarin Forms Labs Chat room online on Jabbr ](https://jabbr.net/#/rooms/Xamarin-Labs)
+
+======
 
 **HOW-TO**
 ======
@@ -55,6 +71,16 @@ We are working in a great [wiki][1] on how to use the controls and services.
 
 
 https://github.com/XForms/Xamarin-Forms-Labs/wiki
+
+
+
+**Xamarin Forms Labs Framework Helper**
+======
+
+[Xamarin Forms Labs Framework Helper for online use](http://htmlpreview.github.io/?https://github.com/XForms/Xamarin-Forms-Labs/blob/master/Help/Web/Index.html)
+
+[Xamarin.Forms.Labs.chm file for offline use](https://github.com/XForms/Xamarin-Forms-Labs/blob/master/Help/Xamarin.Forms.Labs.chm)
+
 
 
 ------------------------------------------------------------------------
@@ -127,10 +153,6 @@ Nuget
 --------------
 **Main Packages:**
  - [Xamarin.Forms.Labs](https://www.nuget.org/packages/Xamarin.Forms.Labs/)
- - [Xamarin.Forms.Labs.IOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.iOS/)
- - [Xamarin.Forms.Labs.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Droid/)
- - [Xamarin.Forms.Labs.WP](https://www.nuget.org/packages/Xamarin.Forms.Labs.WP/)
-
 
 **Plugins:**
 
@@ -144,21 +166,15 @@ DI
  - [Xamarin.Forms.Labs.Services.Ninject](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Ninject/)
  - [Xamarin.Forms.Labs.Services.Autofac](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Autofac/)
  - [Xamarin.Forms.Labs.Services.TinyIOC](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC/)
- - [Xamarin.Forms.Labs.Services.TinyIOC.iOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.iOS/)
- - [Xamarin.Forms.Labs.Services.TinyIOC.WP8](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.WP8/)
- - [Xamarin.Forms.Labs.Services.TinyIOC.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC.Droid/)
 
 Serialization
 
  - [Xamarin.Forms.Labs.Services.Serialization.ProtoBuf](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ProtoBuf/)
  - [Xamarin.Forms.Labs.Serialization.JsonNET](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.JsonNET/)
- - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3/)
- - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.Droid/)
- - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8/)
- - [Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.iOS/)
 
+Cryptography
 
-
+ - [Xamarin.Forms.Labs.Cryptography](https://www.nuget.org/packages/Xamarin.Forms.Labs.Cryptography/)
 _________________
 
 Build the project
@@ -198,11 +214,18 @@ __________________
  - [Kevin E. Ford](http://windingroadway.blogspot.com/) [@Bowman74](https://twitter.com/Bowman74)
  - Jason Smith [@jassmith87](https://twitter.com/jassmith87)
  - Shawn Anderson
- - [Sara Silva](saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
+ - [Sara Silva](http://saramgsilva.com) [@saramgsilva](https://twitter.com/saramgsilva)
  - Ben Ishiyama-Levy [@mrbrl](http://www.monovo.io)
  - Ryan Wischkaemper
+ - [Eric Grover](http://www.ericgrover.com) [@bluechiperic](https://twitter.com/bluechiperic)
+ - [Mitch Milam](http://blogs.infinite-x.net) [@mitchmilam](https://twitter.com/mitchmilam)
+ - [Jim Bennett](http://www.jimbobbennett.io) [@jimbobbennett](https://twitter.com/jimbobbennett)
+ - Kazuki Yasufuku
+ - Petr Klíma
+ - Bart Kardol
+ - [Nicholas Rogoff](http://blog.nicholasrogoff.com/) [@nrogoff](https://twitter.com/nrogoff)
 
- **Another Project Contributions:**
+ **Other Project Contributions:**
  	Xamarin.Mobile
 
 

@@ -1,0 +1,87 @@
+<GhostDoc>
+  <SpellChecker>
+    <IncludeExtensions>
+    </IncludeExtensions>
+    <IgnoreExtensions>
+    </IgnoreExtensions>
+    <IgnoreFiles>
+    </IgnoreFiles>
+  </SpellChecker>
+<HelpConfigurations selected="Xamarin-Forms-Labs">
+  <HelpConfiguration name="HelpFile">
+    <OutputPath>.\Help</OutputPath>
+    <ImageFolderPath />
+    <HtmlFormats>
+      <HtmlHelp>true</HtmlHelp>
+      <MSHelpViewer>false</MSHelpViewer>
+      <MSHelp2>false</MSHelp2>
+      <Website>true</Website>
+    </HtmlFormats>
+    <IncludeScopes>
+      <Public>true</Public>
+      <Internal>false</Internal>
+      <Protected>false</Protected>
+      <Private>false</Private>
+      <Inherited>true</Inherited>
+      <EnableTags>false</EnableTags>
+      <TagList />
+    </IncludeScopes>
+    <ResolveCrefLinks>true</ResolveCrefLinks>
+    <HeaderText>Xamarin Forms Labs is a open source project that aims to provide a powerful and cross platform set of controls and helpers tailored to work with Xamarin Forms.</HeaderText>
+    <FooterText>See more in https://github.com/XForms/Xamarin-Forms-Labs</FooterText>
+    <SelectedProjects />
+  </HelpConfiguration>
+  <HelpConfiguration name="Xamarin-Forms-Labs">
+    <OutputPath>..\..\Help1</OutputPath>
+    <ImageFolderPath />
+    <HtmlFormats>
+      <HtmlHelp>true</HtmlHelp>
+      <MSHelpViewer>false</MSHelpViewer>
+      <MSHelp2>false</MSHelp2>
+      <Website>true</Website>
+    </HtmlFormats>
+    <IncludeScopes>
+      <Public>true</Public>
+      <Internal>false</Internal>
+      <Protected>false</Protected>
+      <Private>false</Private>
+      <Inherited>true</Inherited>
+      <EnableTags>false</EnableTags>
+      <TagList />
+    </IncludeScopes>
+    <ResolveCrefLinks>true</ResolveCrefLinks>
+    <HeaderText>Xamarin Forms Labs is a open source project that aims to provide a powerful and cross platform set of controls and helpers tailored to work with Xamarin Forms.</HeaderText>
+    <FooterText>See more in https://github.com/XForms/Xamarin-Forms-Labs</FooterText>
+    <SelectedProjects>
+      <SelectedProject>Xamarin.Forms.Labs</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Droid</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.iOS</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Charting</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Charting.Droid</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.Android</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Caching.SQLiteNet</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.iOS</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Charting.iOS</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Charting.WP</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.WP8</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.WP8</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.JsonNET</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.Serialization.ProtoBuf</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.ServiceStackSerializer.NET45</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC.Droid</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC.iOS</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.TinyIOC.WP8</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.Ninject</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.SimpleInjector</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.Autofac</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.Unity</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Cryptography</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient.iOS</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient.Droid</SelectedProject>
+      <SelectedProject>Xamarin.Forms.Labs.Services.Web.RestClient.WP8</SelectedProject>
+    </SelectedProjects>
+  </HelpConfiguration>
+</HelpConfigurations>
+</GhostDoc>

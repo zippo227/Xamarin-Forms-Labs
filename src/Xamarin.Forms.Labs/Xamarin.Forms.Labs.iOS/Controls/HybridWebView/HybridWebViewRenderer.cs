@@ -4,6 +4,7 @@ using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms.Labs.Controls;
+using System.Drawing;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 
@@ -29,20 +30,27 @@ namespace Xamarin.Forms.Labs.Controls
             if (this.webView == null)
             {
                 this.webView = new UIWebView();
-
                 this.webView.LoadFinished += LoadFinished;
                 this.webView.ShouldStartLoad += this.HandleStartLoad;
                 this.InjectNativeFunctionScript();
                 this.SetNativeControl(this.webView);
             }
 
+			Element.SizeChanged += HandleSizeChanged;
+
             this.Unbind(e.OldElement);
             this.Bind();
+        }
+
+        void HandleSizeChanged (object sender, EventArgs e)
+        {
+			LayoutViews ();
         }
 
         void LoadFinished(object sender, EventArgs e)
         {
             this.Element.OnLoadFinished(sender, e);
+			InjectNativeFunctionScript();
         }
 
         private bool HandleStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
@@ -52,8 +60,30 @@ namespace Xamarin.Forms.Labs.Controls
 
         partial void Inject(string script)
         {
-            this.webView.EvaluateJavascript(script);
+			InvokeOnMainThread(() => {
+            	this.webView.EvaluateJavascript(script);
+			});
         }
+
+		/* 
+         * This is a hack to because the base wasn't working 
+         * when within a stacklayout
+         */
+		public override void LayoutSubviews()
+		{
+			LayoutViews ();
+		}
+
+		void LayoutViews()
+		{
+			if (this.Control != null) {
+				var control = this.Control;
+				var element = base.Element;
+				control.Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
+				Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
+				Bounds = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
+			}
+		}
 
         partial void Load(Uri uri)
         {
@@ -68,6 +98,11 @@ namespace Xamarin.Forms.Labs.Controls
             this.Element.Uri = new Uri(NSBundle.MainBundle.BundlePath + "/" + contentFullName);
             //string homePageUrl = NSBundle.MainBundle.BundlePath + "/" + contentFullName;
             //this.webView.LoadRequest(new NSUrlRequest(new NSUrl(homePageUrl, false)));
+        }
+
+        partial void LoadContent(object sender, string contentFullName)
+        {
+            this.webView.LoadHtmlString(contentFullName, new NSUrl(NSBundle.MainBundle.BundlePath, true));
         }
     }
 }

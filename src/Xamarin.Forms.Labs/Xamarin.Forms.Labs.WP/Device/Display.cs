@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Phone.Info;
+using Xamarin.Forms.Labs.Services;
+using Xamarin.Forms.Labs.WP8.Services;
 
 namespace Xamarin.Forms.Labs
 {
@@ -16,6 +18,9 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.Display"/> class.
         /// </summary>
+        /// <remarks>
+        /// To get accurate display reading application should enable ID_CAP_IDENTITY_DEVICE on app manifest.
+        /// </remarks>
         public Display()
         {
             object physicalScreenResolutionObject;
@@ -44,6 +49,8 @@ namespace Xamarin.Forms.Labs
             {
                 this.Ydpi = (double)rawDpiY;
             }
+
+            this.FontManager = new FontManager(this);
         }
 
         #region IDisplay Members
@@ -67,6 +74,12 @@ namespace Xamarin.Forms.Labs
         }
 
         public double Ydpi
+        {
+            get;
+            private set;
+        }
+
+        public IFontManager FontManager
         {
             get;
             private set;

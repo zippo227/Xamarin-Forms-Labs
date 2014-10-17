@@ -12,7 +12,7 @@ using DroidListView = Android.Widget.ListView;
 
 namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
-	public class CalendarPickerView : DroidListView
+    public class CalendarPickerView : DroidListView
     {
         public enum SelectionMode
         {
@@ -85,7 +85,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             ClickHandler += OnCellClicked;
             OnInvalidDateSelected += OnInvalidateDateClicked;
 
-            if (base.IsInEditMode) {
+            if (base.IsInEditMode)
+            {
                 Init(DateTime.Now, DateTime.Now.AddYears(1)).WithSelectedDate(DateTime.Now);
             }
         }
@@ -94,18 +95,24 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         {
             var clickedDate = cell.DateTime;
 
-            if (!IsBetweenDates(clickedDate, MinDate, MaxDate) || !IsSelectable(clickedDate)) {
-                if (OnInvalidDateSelected != null) {
+            if (!IsBetweenDates(clickedDate, MinDate, MaxDate) || !IsSelectable(clickedDate))
+            {
+                if (OnInvalidDateSelected != null)
+                {
                     OnInvalidDateSelected(this, new DateSelectedEventArgs(clickedDate));
                 }
             }
-            else {
+            else
+            {
                 bool wasSelected = DoSelectDate(clickedDate, cell);
-                if (OnDateSelected != null) {
-                    if (wasSelected) {
+                if (OnDateSelected != null)
+                {
+                    if (wasSelected)
+                    {
                         OnDateSelected(this, new DateSelectedEventArgs(clickedDate));
                     }
-                    else if (OnDateUnselected != null) {
+                    else if (OnDateUnselected != null)
+                    {
                         OnDateUnselected(this, new DateSelectedEventArgs(clickedDate));
                     }
                 }
@@ -123,11 +130,13 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         public FluentInitializer Init(DateTime minDate, DateTime maxDate)
         {
-            if (minDate == DateTime.MinValue || maxDate == DateTime.MinValue) {
+            if (minDate == DateTime.MinValue || maxDate == DateTime.MinValue)
+            {
                 throw new IllegalArgumentException("minDate and maxDate must be non-zero. " +
                                                    Debug(minDate, maxDate));
             }
-            if (minDate.CompareTo(maxDate) > 0) {
+            if (minDate.CompareTo(maxDate) > 0)
+            {
                 throw new IllegalArgumentException("minDate must be before maxDate. " +
                                                    Debug(minDate, maxDate));
             }
@@ -157,7 +166,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             int maxYear = MaxDate.Year;
             while ((_monthCounter.Month <= maxMonth
                     || _monthCounter.Year < maxYear)
-                   && _monthCounter.Year < maxYear + 1) {
+                   && _monthCounter.Year < maxYear + 1)
+            {
                 var month = new MonthDescriptor(_monthCounter.Month, _monthCounter.Year, _monthCounter,
                     _monthCounter.ToString(MonthNameFormat));
                 Cells.Add(GetMonthCells(month, _monthCounter));
@@ -174,18 +184,20 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         {
             var cells = new List<List<MonthCellDescriptor>>();
             var cal = new DateTime(startCal.Year, startCal.Month, 1);
-            var firstDayOfWeek = (int) cal.DayOfWeek;
-            cal = cal.AddDays((int) CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek - firstDayOfWeek);
+            var firstDayOfWeek = (int)cal.DayOfWeek;
+            cal = cal.AddDays((int)CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek - firstDayOfWeek);
 
             var minSelectedCal = GetMinDate(SelectedCals);
             var maxSelectedCal = GetMaxDate(SelectedCals);
 
             while ((cal.Month < month.Month + 1 || cal.Year < month.Year)
-                   && cal.Year <= month.Year) {
+                   && cal.Year <= month.Year)
+            {
                 Logr.D("Building week row starting at {0}", cal);
                 var weekCells = new List<MonthCellDescriptor>();
                 cells.Add(weekCells);
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 7; i++)
+                {
                     var date = cal;
                     bool isCurrentMonth = cal.Month == month.Month;
                     bool isSelected = isCurrentMonth && ContatinsDate(SelectedCals, cal);
@@ -195,14 +207,18 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                     int value = cal.Day;
 
                     var rangeState = RangeState.None;
-                    if (SelectedCals.Count > 1) {
-                        if (IsSameDate(minSelectedCal, cal)) {
+                    if (SelectedCals.Count > 1)
+                    {
+                        if (IsSameDate(minSelectedCal, cal))
+                        {
                             rangeState = RangeState.First;
                         }
-                        else if (IsSameDate(maxSelectedCal, cal)) {
+                        else if (IsSameDate(maxSelectedCal, cal))
+                        {
                             rangeState = RangeState.Last;
                         }
-                        else if (IsBetweenDates(cal, minSelectedCal, maxSelectedCal)) {
+                        else if (IsBetweenDates(cal, minSelectedCal, maxSelectedCal))
+                        {
                             rangeState = RangeState.Middle;
                         }
                     }
@@ -224,10 +240,12 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         {
             Task.Factory.StartNew(() =>
             {
-                if (smoothScroll) {
+                if (smoothScroll)
+                {
                     SmoothScrollToPosition(selectedIndex);
                 }
-                else {
+                else
+                {
                     SetSelection(selectedIndex);
                 }
             });
@@ -237,11 +255,12 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         {
             int index = 0;
 
-            foreach (var monthCell in Cells) {
+            foreach (var monthCell in Cells)
+            {
                 foreach (var actCell in from weekCell in monthCell
-                    from actCell in weekCell
-                    where IsSameDate(actCell.DateTime, date) && actCell.IsSelectable
-                    select actCell)
+                                        from actCell in weekCell
+                                        where IsSameDate(actCell.DateTime, date) && actCell.IsSelectable
+                                        select actCell)
                     return new MonthCellWithMonthIndex(actCell, index);
                 index++;
             }
@@ -250,7 +269,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
         {
-            if (Months.Count == 0) {
+            if (Months.Count == 0)
+            {
                 throw new InvalidOperationException(
                     "Must have at least one month to display. Did you forget to call Init()?");
             }
@@ -269,8 +289,10 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         private DateTime ApplyMultiSelect(DateTime date, DateTime selectedCal)
         {
-            foreach (var selectedCell in SelectedCells) {
-                if (selectedCell.DateTime == date) {
+            foreach (var selectedCell in SelectedCells)
+            {
+                if (selectedCell.DateTime == date)
+                {
                     //De-select the currently selected cell.
                     selectedCell.IsSelected = false;
                     SelectedCells.Remove(selectedCell);
@@ -279,8 +301,10 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                 }
             }
 
-            foreach (var cal in SelectedCals) {
-                if (IsSameDate(cal, selectedCal)) {
+            foreach (var cal in SelectedCals)
+            {
+                if (IsSameDate(cal, selectedCal))
+                {
                     SelectedCals.Remove(cal);
                     break;
                 }
@@ -290,7 +314,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         private void ClearOldSelection()
         {
-            foreach (var selectedCell in SelectedCells) {
+            foreach (var selectedCell in SelectedCells)
+            {
                 //De-select the currently selected cell.
                 selectedCell.IsSelected = false;
             }
@@ -304,17 +329,21 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             SetMidnight(newlySelectedDate);
 
             //Clear any remaining range state.
-            foreach (var selectedCell in SelectedCells) {
+            foreach (var selectedCell in SelectedCells)
+            {
                 selectedCell.RangeState = RangeState.None;
             }
 
-            switch (Mode) {
+            switch (Mode)
+            {
                 case SelectionMode.Range:
-                    if (SelectedCals.Count > 1) {
+                    if (SelectedCals.Count > 1)
+                    {
                         //We've already got a range selected: clear the old one.
                         ClearOldSelection();
                     }
-                    else if (SelectedCals.Count == 1 && newlySelectedDate.CompareTo(SelectedCals[0]) < 0) {
+                    else if (SelectedCals.Count == 1 && newlySelectedDate.CompareTo(SelectedCals[0]) < 0)
+                    {
                         //We're moving the start of the range back in time: clear the old start date.
                         ClearOldSelection();
                     }
@@ -329,27 +358,34 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                     throw new IllegalStateException("Unknown SelectionMode " + Mode);
             }
 
-            if (date > DateTime.MinValue) {
-                if (SelectedCells.Count == 0 || !SelectedCells[0].Equals(cell)) {
+            if (date > DateTime.MinValue)
+            {
+                if (SelectedCells.Count == 0 || !SelectedCells[0].Equals(cell))
+                {
                     SelectedCells.Add(cell);
                     cell.IsSelected = true;
                 }
                 SelectedCals.Add(newlySelectedDate);
 
-                if (Mode == SelectionMode.Range && SelectedCells.Count > 1) {
+                if (Mode == SelectionMode.Range && SelectedCells.Count > 1)
+                {
                     //Select all days in between start and end.
                     var startDate = SelectedCells[0].DateTime;
                     var endDate = SelectedCells[1].DateTime;
                     SelectedCells[0].RangeState = RangeState.First;
                     SelectedCells[1].RangeState = RangeState.Last;
 
-                    foreach (var month in Cells) {
-                        foreach (var week in month) {
-                            foreach (var singleCell in week) {
+                    foreach (var month in Cells)
+                    {
+                        foreach (var week in month)
+                        {
+                            foreach (var singleCell in week)
+                            {
                                 var singleCellDate = singleCell.DateTime;
                                 if (singleCellDate.CompareTo(startDate) >= 0
                                     && singleCellDate.CompareTo(endDate) <= 0
-                                    && singleCell.IsSelectable) {
+                                    && singleCell.IsSelectable)
+                                {
                                     singleCell.IsSelected = true;
                                     singleCell.RangeState = RangeState.Middle;
                                     SelectedCells.Add(singleCell);
@@ -365,7 +401,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         internal void ValidateAndUpdate()
         {
-            if (Adapter == null) {
+            if (Adapter == null)
+            {
                 Adapter = MyAdapter;
             }
             MyAdapter.NotifyDataSetChanged();
@@ -381,12 +418,14 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             ValidateDate(date);
 
             var cell = GetMonthCellWithIndexByDate(date);
-            if (cell == null || !IsSelectable(date)) {
+            if (cell == null || !IsSelectable(date))
+            {
                 return false;
             }
 
             bool wasSelected = DoSelectDate(date, cell.Cell);
-            if (wasSelected) {
+            if (wasSelected)
+            {
                 ScrollToSelectedMonth(cell.MonthIndex, smoothScroll);
             }
             return wasSelected;
@@ -394,10 +433,12 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         private void ValidateDate(DateTime date)
         {
-            if (date == DateTime.MinValue) {
+            if (date == DateTime.MinValue)
+            {
                 throw new IllegalArgumentException("Selected date must be non-zero.");
             }
-            if (date.CompareTo(MinDate) < 0 || date.CompareTo(MaxDate) > 0) {
+            if (date.CompareTo(MinDate) < 0 || date.CompareTo(MaxDate) > 0)
+            {
                 throw new IllegalArgumentException(
                     string.Format("Selected date must be between minDate and maxDate. "
                                   + "minDate: {0}, maxDate: {1}, selectedDate: {2}.",
@@ -407,7 +448,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         private static DateTime GetMinDate(List<DateTime> selectedCals)
         {
-            if (selectedCals == null || selectedCals.Count == 0) {
+            if (selectedCals == null || selectedCals.Count == 0)
+            {
                 return DateTime.MinValue;
             }
             selectedCals.Sort();
@@ -416,7 +458,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         private static DateTime GetMaxDate(List<DateTime> selectedCals)
         {
-            if (selectedCals == null || selectedCals.Count == 0) {
+            if (selectedCals == null || selectedCals.Count == 0)
+            {
                 return DateTime.MinValue;
             }
             selectedCals.Sort();
@@ -448,11 +491,13 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         public void HighlightDates(ICollection<DateTime> dates)
         {
-            foreach (var date in dates) {
+            foreach (var date in dates)
+            {
                 ValidateDate(date);
 
                 var monthCellWithMonthIndex = GetMonthCellWithIndexByDate(date);
-                if (monthCellWithMonthIndex != null) {
+                if (monthCellWithMonthIndex != null)
+                {
                     var cell = monthCellWithMonthIndex.Cell;
                     _highlightedCells.Add(cell);
                     _highlightedCals.Add(date);
@@ -500,38 +545,47 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         public FluentInitializer WithSelectedDate(DateTime selectedDate)
         {
-            return WithSelectedDates(new List<DateTime> {selectedDate});
+            return WithSelectedDates(new List<DateTime> { selectedDate });
         }
 
         public FluentInitializer WithSelectedDates(ICollection<DateTime> selectedDates)
         {
-            if (_calendar.Mode == CalendarPickerView.SelectionMode.Single && _calendar.SelectedDates.Count > 1) {
+            if (_calendar.Mode == CalendarPickerView.SelectionMode.Single && _calendar.SelectedDates.Count > 1)
+            {
                 throw new IllegalArgumentException("SINGLE mode can't be used with multiple selectedDates");
             }
-            if (_calendar.SelectedDates != null) {
-                foreach (var date in selectedDates) {
+            if (_calendar.SelectedDates != null)
+            {
+                foreach (var date in selectedDates)
+                {
                     _calendar.SelectDate(date);
                 }
             }
             int selectedIndex = -1;
             int todayIndex = -1;
-            for (int i = 0; i < _calendar.Months.Count; i++) {
+            for (int i = 0; i < _calendar.Months.Count; i++)
+            {
                 var month = _calendar.Months[i];
-                if (selectedIndex == -1) {
+                if (selectedIndex == -1)
+                {
                     if (_calendar.SelectedCals.Any(
-                        selectedCal => CalendarPickerView.IsSameMonth(selectedCal, month))) {
+                        selectedCal => CalendarPickerView.IsSameMonth(selectedCal, month)))
+                    {
                         selectedIndex = i;
                     }
                     if (selectedIndex == -1 && todayIndex == -1 &&
-                        CalendarPickerView.IsSameMonth(DateTime.Now, month)) {
+                        CalendarPickerView.IsSameMonth(DateTime.Now, month))
+                    {
                         todayIndex = i;
                     }
                 }
             }
-            if (selectedIndex != -1) {
+            if (selectedIndex != -1)
+            {
                 _calendar.ScrollToSelectedMonth(selectedIndex);
             }
-            else if (todayIndex != -1) {
+            else if (todayIndex != -1)
+            {
                 _calendar.ScrollToSelectedMonth(todayIndex);
             }
 
@@ -554,7 +608,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 
         public FluentInitializer WithHighlightedDate(DateTime date)
         {
-            return WithHighlightedDates(new List<DateTime> {date});
+            return WithHighlightedDates(new List<DateTime> { date });
         }
     }
 

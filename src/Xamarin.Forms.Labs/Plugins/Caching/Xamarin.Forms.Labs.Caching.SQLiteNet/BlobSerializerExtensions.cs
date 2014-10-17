@@ -16,7 +16,7 @@ namespace Xamarin.Forms.Labs.Caching.SQLiteNet
             var gm = typeof(IByteSerializer).GetTypeInfo().GetDeclaredMethod("Deserialize");
 
             return new BlobSerializerDelegate(
-                obj => serializer.Serialize(obj),
+                obj => serializer.SerializeToBytes(obj),
                 (data, type) => gm.MakeGenericMethod(type).Invoke(serializer, new[] { data }),
                 serializer.CanDeserialize);
         }

@@ -114,7 +114,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Right;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Right;
 
-            var titleInsets = new UIEdgeInsets(0, -1 * (widthRequest + ControlPadding), 0, widthRequest + ControlPadding);
+            var titleInsets = new UIEdgeInsets(0, 0, 0, widthRequest + ControlPadding);
 
             targetButton.TitleEdgeInsets = titleInsets;
             var imageInsets = new UIEdgeInsets(0, widthRequest, 0, -1 * widthRequest);
@@ -201,19 +201,22 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             var handler = GetHandler(source);
             using (UIImage image = await handler.LoadImageAsync(source))
             {
-                UIGraphics.BeginImageContext(new SizeF(widthRequest, heightRequest));
-                image.Draw(new RectangleF(0, 0, widthRequest, heightRequest));
-                using (var resultImage = UIGraphics.GetImageFromCurrentImageContext())
+                UIImage scaled = image;
+                if (heightRequest > 0 && widthRequest > 0 && (image.Size.Height != heightRequest || image.Size.Width != widthRequest))
                 {
-                    UIGraphics.EndImageContext();
-                    using (var resizableImage =
-                        resultImage.CreateResizableImage(new UIEdgeInsets(0, 0, widthRequest, heightRequest)))
-                    {
-                        targetButton.SetImage(
-                            resizableImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal),
-                            UIControlState.Normal);
-                    }
+                    scaled = scaled.Scale(new SizeF(widthRequest, heightRequest));
                 }
+                targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), UIControlState.Normal);   
+            }
+        }
+
+        public override void LayoutSubviews()
+        {
+            base.LayoutSubviews();
+            if (ImageButton.Orientation == ImageOrientation.ImageToRight)
+            {
+                var imageInsets = new UIEdgeInsets(0, Control.Frame.Size.Width - ControlPadding - ImageButton.ImageWidthRequest, 0, 0);
+                Control.ImageEdgeInsets = imageInsets;
             }
         }
     }

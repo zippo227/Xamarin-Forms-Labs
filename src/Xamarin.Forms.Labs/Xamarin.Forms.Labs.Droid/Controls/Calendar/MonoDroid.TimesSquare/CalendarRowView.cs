@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
-	public class CalendarRowView : ViewGroup, Android.Views.View.IOnClickListener
+    public class CalendarRowView : ViewGroup, Android.Views.View.IOnClickListener
     {
         public bool IsHeaderRow { get; set; }
         public ClickHandler ClickHandler;
@@ -16,7 +16,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         {
         }
 
-		public override void AddView(Android.Views.View child, int index, LayoutParams @params)
+        public override void AddView(Android.Views.View child, int index, LayoutParams @params)
         {
             child.SetOnClickListener(this);
             base.AddView(child, index, @params);
@@ -34,11 +34,13 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
                 ? MeasureSpec.MakeMeasureSpec(_cellSize, MeasureSpecMode.AtMost)
                 : cellWidthSpec;
             int rowHeight = 0;
-            for (int c = 0; c < ChildCount; c++) {
+            for (int c = 0; c < ChildCount; c++)
+            {
                 var child = GetChildAt(c);
                 child.Measure(cellWidthSpec, cellHeightSpec);
                 //The row height is the height of the tallest cell.
-                if (child.MeasuredHeight > rowHeight) {
+                if (child.MeasuredHeight > rowHeight)
+                {
                     rowHeight = child.MeasuredHeight;
                 }
             }
@@ -56,7 +58,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             stopwatch.Start();
 
             int cellHeight = b - t;
-            for (int c = 0; c < ChildCount; c++) {
+            for (int c = 0; c < ChildCount; c++)
+            {
                 var child = GetChildAt(c);
                 child.Layout(c * _cellSize, 0, (c + 1) * _cellSize, cellHeight);
             }
@@ -65,10 +68,11 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
             Logr.D("Row.OnLayout {0} ms", stopwatch.ElapsedMilliseconds);
         }
 
-		public void OnClick(Android.Views.View v)
+        public void OnClick(Android.Views.View v)
         {
-            if (ClickHandler != null) {
-                ClickHandler((MonthCellDescriptor) v.Tag);
+            if (ClickHandler != null)
+            {
+                ClickHandler((MonthCellDescriptor)v.Tag);
             }
         }
     }

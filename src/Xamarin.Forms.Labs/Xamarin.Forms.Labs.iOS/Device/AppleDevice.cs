@@ -4,6 +4,12 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
+using Xamarin.Forms.Labs.iOS.Services.Media;
+using Xamarin.Forms.Labs.iOS.Services;
+using System.Threading.Tasks;
+using MonoTouch.Foundation;
+using Xamarin.Forms.Labs.Services.IO;
+using System.IO.IsolatedStorage;
 
 namespace Xamarin.Forms.Labs
 {
@@ -12,11 +18,13 @@ namespace Xamarin.Forms.Labs
     /// </summary>
     public abstract class AppleDevice : IDevice
     {
-        private const string iPhoneExpression = "iPhone([1-6]),([1-4])";
+        private const string iPhoneExpression = "iPhone([1-7]),([1-4])";
         private const string iPodExpression = "iPod([1-5]),([1])";
         private const string iPadExpression = "iPad([1-4]),([1-6])";
 
         private static IDevice device;
+
+        private IFileManager fileManager;
 
         [DllImport(MonoTouch.Constants.SystemLibrary)]
         static internal extern int sysctlbyname([MarshalAs(UnmanagedType.LPStr)] string property, IntPtr output, IntPtr oldLen, IntPtr newp, uint newlen);
@@ -29,16 +37,24 @@ namespace Xamarin.Forms.Labs
             this.Battery = new Battery();
             this.Accelerometer = new Accelerometer();
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
+            //this.BluetoothHub = new BluetoothHub();
 
-            if (Xamarin.Forms.Labs.Gyroscope.IsSupported)
+            if (Labs.Gyroscope.IsSupported)
             {
                 this.Gyroscope = new Gyroscope();
             }
+
+            this.MediaPicker = new MediaPicker();
+
+            this.Network = new Network();
         }
 
         /// <summary>
-        /// Gets the runtime device for Apple's devices
+        /// Gets the runtime device for Apple's devices.
         /// </summary>
+        /// <value>
+        /// The current device.
+        /// </value>
         public static IDevice CurrentDevice
         {
             get
@@ -74,8 +90,25 @@ namespace Xamarin.Forms.Labs
 
         #region IDevice implementation
         /// <summary>
-        /// Gets the display information for the device.
+        /// Gets Unique Id for the device.
         /// </summary>
+        /// <value>
+        /// The id for the device.
+        /// </value>
+        public string Id
+        {
+            get
+            {
+               return UIDevice.CurrentDevice.IdentifierForVendor.AsString();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the display information for the device.
+        /// </summary>
+        /// <value>
+        /// The display.
+        /// </value>
         public IDisplay Display
         {
             get;
@@ -83,7 +116,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the phone service for this device.
+        /// Gets or sets the phone service for this device.
         /// </summary>
         /// <value>Phone service instance if available, otherwise null.</value>
         public IPhoneService PhoneService
@@ -93,26 +126,39 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the battery for the device.
+        /// Gets or sets the battery for the device.
         /// </summary>
+        /// <value>
+        /// The battery.
+        /// </value>
         public IBattery Battery
         {
             get;
             protected set;
         }
 
-		/// <summary>
-		/// Gets the picture chooser.
-		/// </summary>
-		/// <value>The picture chooser.</value>
-	    public IMediaPicker MediaPicker
-	    {
-		    get; 
-			private set;
-	    }
+        /// <summary>
+        /// Gets the picture chooser.
+        /// </summary>
+        /// <value>The picture chooser.</value>
+        public IMediaPicker MediaPicker
+        {
+            get; 
+            private set;
+        }
 
-	    /// <summary>
-        /// Gets the accelerometer for the device if available
+        /// <summary>
+        /// Gets the network service.
+        /// </summary>
+        /// <value>The network service.</value>
+        public INetwork Network
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets or sets the accelerometer for the device if available
         /// </summary>
         /// <value>Instance of IAccelerometer if available, otherwise null.</value>
         public IAccelerometer Accelerometer
@@ -132,7 +178,38 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the name of the device.
+        /// Gets the bluetooth hub service.
+        /// </summary>
+        /// <value>The bluetooth hub service if available, otherwise null.</value>
+        //public IBluetoothHub BluetoothHub
+        //{
+        //    get;
+        //    private set;
+        //}
+
+        /// <summary>
+        /// Gets the default microphone for the device
+        /// </summary>
+        public IAudioStream Microphone
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the file manager for the device.
+        /// </summary>
+        /// <value>Device file manager.</value>
+        public IFileManager FileManager
+        {
+            get
+            {
+                return this.fileManager ?? (this.fileManager = new FileManager(IsolatedStorageFile.GetUserStoreForApplication()));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the device.
         /// </summary>
         public string Name
         {
@@ -141,7 +218,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the firmware version.
+        /// Gets or sets the firmware version.
         /// </summary>
         public string FirmwareVersion
         {
@@ -150,7 +227,7 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
-        /// Gets the hardware version.
+        /// Gets or sets the hardware version.
         /// </summary>
         public string HardwareVersion
         {
@@ -161,12 +238,25 @@ namespace Xamarin.Forms.Labs
         /// <summary>
         /// Gets the manufacturer.
         /// </summary>
+        /// <value>
+        /// The manufacturer.
+        /// </value>
         public string Manufacturer
         {
             get
             {
                 return "Apple";
             }
+        }
+
+        /// <summary>
+        /// Starts the default app associated with the URI for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>The launch operation.</returns>
+        public Task<bool> LaunchUriAsync(Uri uri)
+        {
+            return Task.Run(() => UIApplication.SharedApplication.OpenUrl(new NSUrl(uri.ToString())));
         }
         #endregion
 

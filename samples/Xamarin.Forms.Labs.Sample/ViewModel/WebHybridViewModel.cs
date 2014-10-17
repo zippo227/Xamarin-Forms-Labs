@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.Labs.Mvvm;
 using System.Collections.ObjectModel;
+using Xamarin.Forms.Labs.Data;
 
 namespace Xamarin.Forms.Labs.Sample
 {
-    public class ChartViewModel : ViewModel
+    public class ChartViewModel : Xamarin.Forms.Labs.Mvvm.ViewModel
     {
         public ChartViewModel()
         {
@@ -42,7 +43,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
             set
             {
-                this.ChangeAndNotify(ref title, value);
+                this.SetProperty(ref title, value);
             }
         }
 
@@ -56,12 +57,12 @@ namespace Xamarin.Forms.Labs.Sample
             set
             {
                 dataPoints = value;
-                this.NotifyPropertyChanged ();
+                this.NotifyPropertyChanged();
             }
         }
     }
 
-    public class DataPoint : ViewModel
+    public class DataPoint : ObservableObject
     {
         private string label;
         private double y;
@@ -70,19 +71,19 @@ namespace Xamarin.Forms.Labs.Sample
         public string Label 
         {
             get { return this.label; }
-            set { this.ChangeAndNotify (ref label, value); }
+            set { this.SetProperty (ref label, value); }
         }
 
         public double Y 
         {
             get { return this.y; }
-            set { this.ChangeAndNotify (ref y, value); }
+            set { this.SetProperty (ref y, value); }
         }
 
         public double Max
         {
             get { return this.maximum; }
-            set { this.ChangeAndNotify (ref this.maximum, value); }
+            set { this.SetProperty (ref this.maximum, value); }
         }
 
         public override string ToString()

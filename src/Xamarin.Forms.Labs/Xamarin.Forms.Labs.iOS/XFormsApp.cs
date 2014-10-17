@@ -129,6 +129,12 @@ namespace Xamarin.Forms.Labs.iOS
     /// </summary>
     public class XFormsAppiOS : XFormsApp<XFormsApplicationDelegate>
     {
+		public static void Init() { } /* allow to add assembly without extras */
+
+        public XFormsAppiOS() { }
+
+        public XFormsAppiOS(XFormsApplicationDelegate appDelegate) : base(appDelegate) { }
+
         /// <summary>
         /// Called when [initialize].
         /// </summary>

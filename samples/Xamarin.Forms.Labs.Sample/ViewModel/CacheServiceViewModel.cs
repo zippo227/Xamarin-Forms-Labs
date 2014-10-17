@@ -10,7 +10,7 @@ namespace Xamarin.Forms.Labs.Sample
     /// <summary>
     /// Sample ViewModel for the CacheService.
     /// </summary>
-    public class CacheServiceViewModel : ViewModel
+    public class CacheServiceViewModel : Xamarin.Forms.Labs.Mvvm.ViewModel
     {
         /// <summary>
         /// Key used in the cache.
@@ -60,7 +60,7 @@ namespace Xamarin.Forms.Labs.Sample
         /// Backing field for the CacheInfo property.
         /// </summary>
         private string cacheInfo;
-        
+
         /// <summary>
         /// Gets or sets a <see cref="string"/> with cache information.
         /// </summary>
@@ -73,7 +73,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
             set
             {
-                this.ChangeAndNotify(ref cacheInfo, value);
+                this.SetProperty(ref cacheInfo, value);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Xamarin.Forms.Labs.Sample
         /// Backing field for the Items property.
         /// </summary>
         private ObservableCollection<string> items;
-        
+
         /// <summary>
         /// Gets or sets a collection of items in the cache.
         /// </summary>
@@ -94,7 +94,7 @@ namespace Xamarin.Forms.Labs.Sample
             }
             set
             {
-                this.ChangeAndNotify(ref items, value);
+                this.SetProperty(ref items, value);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Xamarin.Forms.Labs.Sample
         /// Backing field to save items to the cache.
         /// </summary>
         private Command saveItemsToCacheCommand;
-        
+
         /// <summary>
         /// Gets the command to save items to the cache.
         /// </summary>

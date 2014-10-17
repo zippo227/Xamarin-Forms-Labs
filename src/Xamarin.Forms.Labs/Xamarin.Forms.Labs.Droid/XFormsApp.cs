@@ -2,6 +2,7 @@ using System;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Labs.Mvvm;
 using Environment = Android.OS.Environment;
+using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.Droid
 {
@@ -268,6 +269,35 @@ namespace Xamarin.Forms.Labs.Droid
 
             base.OnStop();
         }
+
+        public override async void OnBackPressed()
+        {
+            bool cancel = false;
+
+            var app = Resolver.Resolve<IXFormsApp>();
+
+            if (app != null)
+            {
+                var cancelDelegate = app.BackPressDelegate;
+                if (cancelDelegate != null)
+                {
+                    if ((cancel = await cancelDelegate()) == false)
+                    {
+                        var backPressHandler = app.BackPress;
+
+                        if (backPressHandler != null)
+                        {
+                            backPressHandler(this, EventArgs.Empty);
+                        }
+                    }
+                }
+            }
+            
+            if (!cancel)
+            {
+                base.OnBackPressed();
+            }
+        }
     }
 
     /// <summary>
@@ -275,6 +305,15 @@ namespace Xamarin.Forms.Labs.Droid
     /// </summary>
     public class XFormsAppDroid : XFormsApp<XFormsApplicationDroid>
     {
+        public XFormsAppDroid() { }
+
+        public XFormsAppDroid(XFormsApplicationDroid app) : base(app) { }
+
+        public void RaiseBackPress()
+        {
+            this.OnBackPress();
+        }
+
         /// <summary>
         /// Called when [initialize].
         /// </summary>

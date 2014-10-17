@@ -1,5 +1,7 @@
 ﻿using System;
 using MonoTouch.UIKit;
+using Xamarin.Forms.Labs.iOS.Services;
+using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs
 {
@@ -21,6 +23,8 @@ namespace Xamarin.Forms.Labs
             this.Width = width;
             this.Xdpi = xdpi;
             this.Ydpi = ydpi;
+
+            this.FontManager = new FontManager(this);
         }
 
         #region IScreen implementation
@@ -55,6 +59,12 @@ namespace Xamarin.Forms.Labs
         /// Gets the screens Y pixel density per inch
         /// </summary>
         public double Ydpi
+        {
+            get;
+            private set;
+        }
+
+        public IFontManager FontManager
         {
             get;
             private set;
