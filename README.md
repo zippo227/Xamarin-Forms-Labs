@@ -131,15 +131,15 @@ Using the Services
 			device.PhoneService.DialNumber("+1 (855) 926-2746");
 		}
 
-Initializing the Service 
+Initializing the Services
 -----------
-(Do this before using the services)
+Do this before using the services
 
 **Step 1:** 
-		-iOS => Make sure your AppDelegate inherits from XFormsApplicationDelegate
-		-Android => MainActivity inherits from XFormsApplicationDroid
-		-Windows Phone => Add this line to your App.cs 
-						  var app = new XFormsAppWP(); app.Init(this);
+*iOS => Make sure your AppDelegate inherits from XFormsApplicationDelegate
+*Android => MainActivity inherits from XFormsApplicationDroid
+*Windows Phone => Add this line to your App.cs 
+				  var app = new XFormsAppWP(); app.Init(this);
 
 **Step 2:** 
 		Initialize the container in your app startup code.
