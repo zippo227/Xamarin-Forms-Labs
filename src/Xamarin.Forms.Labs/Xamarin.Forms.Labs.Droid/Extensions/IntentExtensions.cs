@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Labs.Droid
             }
 
 			foreach (var attachment in attachments) {
-				var file = new File(attachment);
+				var file = new Java.IO.File(attachment);
 				// File existence check
 				if (file.Exists()) {
 					intent.PutExtra(Intent.ExtraStream, Uri.FromFile(file));
