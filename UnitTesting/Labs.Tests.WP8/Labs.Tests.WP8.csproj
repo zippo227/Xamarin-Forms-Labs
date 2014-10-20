@@ -166,38 +166,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.Autofac\Xamarin.Forms.Labs.Services.Autofac.csproj">
-      <Project>{f8c821a9-155e-48bc-8998-1ed9de5cef1a}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.Ninject\Xamarin.Forms.Labs.Services.Ninject.csproj">
-      <Project>{ec5686a6-9846-4b09-8288-cb7396331b54}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Ninject</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.SimpleInjector\Xamarin.Forms.Labs.Services.SimpleInjector.csproj">
-      <Project>{526f68e5-b35b-45fb-a54f-25793d2a1678}</Project>
-      <Name>Xamarin.Forms.Labs.Services.SimpleInjector</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.TinyIOC\Xamarin.Forms.Labs.Services.TinyIOC.WP8.csproj">
-      <Project>{f8b8c5d4-88a5-4796-9d9f-f9e43675879e}</Project>
-      <Name>Xamarin.Forms.Labs.Services.TinyIOC.WP8</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.Unity\Xamarin.Forms.Labs.Services.Unity.csproj">
-      <Project>{a224c192-e8a2-436e-9d4c-130004ba411a}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\JsonNET\Xamarin.Forms.Labs.Services.Serialization.JsonNET.csproj">
-      <Project>{a1021de4-5e69-4219-b396-64f6683b3727}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Serialization.JsonNET</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.csproj">
-      <Project>{c12f7576-1b49-44bb-9f79-fdb0ba81b846}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Serialization.ProtoBuf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\Xamarin.Forms.Labs.ServiceStackSerializer\Xamarin.Forms.Labs.ServiceStackSerializer.WP8.csproj">
-      <Project>{3f05b217-d5b3-48e4-8f82-f395880d6700}</Project>
-      <Name>Xamarin.Forms.Labs.ServiceStackSerializer.WP8</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs.WP\Xamarin.Forms.Labs.WP8.csproj">
       <Project>{e38d2aa4-d265-4ff2-90ec-e02eb59f8a73}</Project>
       <Name>Xamarin.Forms.Labs.WP8</Name>
@@ -205,6 +173,38 @@
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
       <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
       <Name>Xamarin.Forms.Labs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.Autofac\XLabs.Ioc.Autofac.csproj">
+      <Project>{f8c821a9-155e-48bc-8998-1ed9de5cef1a}</Project>
+      <Name>XLabs.Ioc.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.Ninject\XLabs.Ioc.Ninject.csproj">
+      <Project>{ec5686a6-9846-4b09-8288-cb7396331b54}</Project>
+      <Name>XLabs.Ioc.Ninject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.SimpleInjector\XLabs.Ioc.SimpleInjector.csproj">
+      <Project>{526f68e5-b35b-45fb-a54f-25793d2a1678}</Project>
+      <Name>XLabs.Ioc.SimpleInjector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.TinyIOC\XLabs.Ioc.TinyIOC.WP8.csproj">
+      <Project>{1c4a2234-76c8-45ca-8ae4-f7f8bf2dfcdc}</Project>
+      <Name>XLabs.Ioc.TinyIOC.WP8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.Unity\XLabs.Ioc.Unity.csproj">
+      <Project>{4d2d1468-bbb3-434a-84ac-b85eb7147a40}</Project>
+      <Name>XLabs.Ioc.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
+      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Name>XLabs.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\Serialization\JsonNET\XLabs.Serialization.JsonNET.csproj">
+      <Project>{fce4e482-0df8-43ac-b574-8aaf74770d1c}</Project>
+      <Name>XLabs.Serialization.JsonNET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\Serialization\ServiceStack\XLabs.Serialization.ServiceStack.WP8.csproj">
+      <Project>{17c6ff22-9420-42cf-b85b-2bc2737fdc13}</Project>
+      <Name>XLabs.Serialization.ServiceStack.WP8</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

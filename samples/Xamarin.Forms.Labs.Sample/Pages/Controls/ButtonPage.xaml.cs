@@ -16,8 +16,8 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls
 
             TwitterButton.Clicked += Button_Click;
             FacebookButton.Clicked += Button_Click;
-			//Showing custom font in image button
-			FacebookButton.Font = Font.OfSize("Open 24 Display St", 20);
+            //Showing custom font in image button
+            FacebookButton.Font = Font.OfSize("Open 24 Display St", 20);
             GoogleButton.Clicked += Button_Click;
             MicrosoftButton.Clicked += Button_Click;
         }

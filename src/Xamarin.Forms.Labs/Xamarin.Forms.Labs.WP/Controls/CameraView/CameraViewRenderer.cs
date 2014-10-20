@@ -31,7 +31,7 @@ namespace Xamarin.Forms.Labs.WP8.Controls
             {
                 
                 // TODO: determine how to dispose the camera...
-                var camera = new PhotoCamera();
+                var camera = new PhotoCamera((CameraType)((int)e.NewElement.Camera));
 
                 var app = Resolver.Resolve<IXFormsApp>();
 
@@ -68,6 +68,20 @@ namespace Xamarin.Forms.Labs.WP8.Controls
             }
         }
 
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
 
+            switch (e.PropertyName)
+            {
+                case "Camera":
+                    var brush = this.Control.Background as VideoBrush;
+                    var camera = new PhotoCamera((CameraType)((int)this.Element.Camera));
+                    brush.SetSource(camera);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

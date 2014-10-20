@@ -178,5 +178,24 @@ namespace Xamarin.Forms.Labs.Controls
                 SetValue(IsStrikeThroughProperty, value);
             }
         }
+
+        /// <summary>
+        /// This is the drop shadow property
+        /// </summary>
+        public static readonly BindableProperty IsDropShadowProperty =
+            BindableProperty.Create<ExtendedLabel, bool>(p => p.IsDropShadow, false);
+
+        public bool IsDropShadow 
+        {
+            get 
+            {
+                return (bool)GetValue (IsDropShadowProperty);
+            }
+            set 
+            {
+                SetValue (IsDropShadowProperty, value);
+            }
+        }
+
     }
 }

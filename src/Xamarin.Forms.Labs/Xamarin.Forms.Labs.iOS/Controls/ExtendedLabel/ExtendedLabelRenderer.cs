@@ -83,7 +83,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             }
 
             //Do not create attributed string if it is not necesarry
-            if(view.IsUnderline || view.IsStrikeThrough)
+            if(view.IsUnderline || view.IsStrikeThrough || view.IsDropShadow)
             {
 
                 var attrString = new NSMutableAttributedString(control.Text);
@@ -102,6 +102,18 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                     attrString.AddAttribute(UIStringAttributeKey.StrikethroughStyle, NSNumber.FromInt32((int)NSUnderlineStyle.Single), new NSRange(0, attrString.Length));
                 }
                 attrString.AddAttribute(UIStringAttributeKey.Font,control.Font,new NSRange(0, attrString.Length));
+
+                if (view.IsDropShadow)
+                {
+                    var shadow = new NSShadow();
+                    shadow.ShadowColor = UIColor.DarkGray;
+                    shadow.ShadowBlurRadius = 1.4f;
+                    shadow.ShadowOffset = new System.Drawing.SizeF(new System.Drawing.PointF(0.3f, 0.8f));
+
+                    attrString.AddAttribute(UIStringAttributeKey.Shadow, shadow, new NSRange(0, attrString.Length));
+                }
+
+                control.TextColor = view.TextColor.ToUIColor();
                 control.AttributedText = attrString;
             }
         }

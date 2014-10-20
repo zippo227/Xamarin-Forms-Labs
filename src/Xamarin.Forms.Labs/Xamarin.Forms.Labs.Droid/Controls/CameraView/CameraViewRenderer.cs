@@ -23,7 +23,21 @@ namespace Xamarin.Forms.Labs.Droid
                 this.SetNativeControl(new CameraPreview(this.Context));
             }
 
-            this.Control.PreviewCamera = this.Control.PreviewCamera ?? Camera.Open();
+            this.Control.PreviewCamera = this.Control.PreviewCamera ?? Camera.Open((int)e.NewElement.Camera);
+        }
+
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            switch (e.PropertyName)
+            {
+                case "Camera":
+                    this.Control.SwitchCamera(Camera.Open((int)this.Element.Camera));
+                    break;
+                default:
+                    break;
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -75,6 +89,12 @@ namespace Xamarin.Forms.Labs.Droid
 
         public void SwitchCamera(Camera camera)
         {
+            if (PreviewCamera != null)
+            {
+                //PreviewCamera.StopPreview();
+                PreviewCamera.Release();
+            }
+
             PreviewCamera = camera;
 
             try

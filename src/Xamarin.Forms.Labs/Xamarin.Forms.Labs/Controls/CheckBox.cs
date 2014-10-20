@@ -12,7 +12,7 @@ namespace Xamarin.Forms.Labs.Controls
     public class CheckBox : View
     {
         /// <summary>
-        /// The width request in inches property.
+        /// The checked state property.
         /// </summary>
         public static readonly BindableProperty CheckedProperty =
             BindableProperty.Create<CheckBox, bool>(
@@ -82,11 +82,7 @@ namespace Xamarin.Forms.Labs.Controls
             set
             {
                 this.SetValue(CheckedProperty, value);
-                var eventHandler = this.CheckedChanged;
-                if (eventHandler != null)
-                {
-                    eventHandler.Invoke(this, value);
-                }
+                this.CheckedChanged.Invoke(this, value);
             }
         }
 

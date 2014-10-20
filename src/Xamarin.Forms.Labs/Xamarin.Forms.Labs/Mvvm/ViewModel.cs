@@ -44,20 +44,6 @@ namespace Xamarin.Forms.Labs.Mvvm
                 SetProperty<bool>(ref _isBusy, value);
             }
         }
-        #region INotifyPropertyChanged implementation
-        /// <summary>
-        /// Occurs when property is changed.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
-
-        /// <summary>
-        /// Unbind all handlers from property changed event.
-        /// </summary>
-        public void Unbind()
-        {
-            this.PropertyChanged = null;
-        }
 
         #region Protected methods
         /// <summary>

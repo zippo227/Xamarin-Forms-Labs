@@ -38,7 +38,14 @@ namespace Xamarin.Forms.Labs.Sample
 				IsUnderline = false,
 				IsStrikeThrough = true
 			};
+            var label4 = new ExtendedLabel
+            {
+                IsDropShadow = true,
+                Text = "From code, Dropshadow with TextColor",
+                TextColor = Color.Green
+            };
 			label3.Font = font;
+            stkRoot.Children.Add(label4);
 			stkRoot.Children.Add(label3);
             stkRoot.Children.Add(label2);
 			stkRoot.Children.Add(label);

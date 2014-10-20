@@ -56,7 +56,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Email
         {
             var intent = new Intent(Intent.ActionSend);
             intent.SetType(html ? "text/html" : "text/plain");
-            intent.PutExtra(Intent.ExtraEmail, to);
+            intent.PutExtra(Intent.ExtraEmail, new string[]{ to });
             intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
 
             if (html)
