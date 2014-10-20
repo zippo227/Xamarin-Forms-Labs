@@ -136,11 +136,9 @@ Initializing the Services
 Do this before using the services
 
 **Step 1:** 
-* iOS => Make sure your AppDelegate inherits from XFormsApplicationDelegate
-
-* Android => MainActivity inherits from XFormsApplicationDroid
-
-* Windows Phone => Add this line to your App.cs 
+*iOS => Make sure your AppDelegate inherits from XFormsApplicationDelegate
+*Android => MainActivity inherits from XFormsApplicationDroid
+*Windows Phone => Add this line to your App.cs 
 				  var app = new XFormsAppWP(); app.Init(this);
 
 **Step 2:** 
