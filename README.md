@@ -13,6 +13,7 @@ The v.1.2 is the stable branch.
 
  - [AutoComplete (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/AutoComplete)
  - [Calendar Control (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/Calendar-Control)
+ - [Checkbox (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/Checkbox)
  - DynamicListView (beta)
  - ExtendedContentView (beta) 
  - [ExtendedEntry (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedEntry)
