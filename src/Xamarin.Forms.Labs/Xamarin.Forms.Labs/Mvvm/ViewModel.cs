@@ -45,14 +45,6 @@ namespace Xamarin.Forms.Labs.Mvvm
             }
         }
 
-        /// <summary>
-        /// Unbind all handlers from property changed event.
-        /// </summary>
-        public void Unbind()
-        {
-            this.PropertyChanged = null;
-        }
-
         #region Protected methods
         /// <summary>
         /// Changes the property if the value is different and invokes PropertyChangedEventHandler.
