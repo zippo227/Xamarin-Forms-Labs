@@ -16,7 +16,7 @@ namespace Xamarin.Forms.Labs.Services
         /// <summary>
         /// Gets or sets the instance.
         /// </summary>
-        /// <exception cref="NullReferenceException">IResolver instance has not been set.</exception>
+		/// <exception cref="InvalidOperationException">IResolver instance has not been set.</exception>
         /// <exception cref="InvalidOperationException">Instance can only be set once to prevent mix-ups.</exception>
         private static IResolver Instance
         {
@@ -24,7 +24,7 @@ namespace Xamarin.Forms.Labs.Services
             {
                 if (!IsSet)
                 {
-                    throw new NullReferenceException("IResolver has not been set. Please set it by calling Resolver.SetResolver(resolver) method.");
+					throw new InvalidOperationException("IResolver has not been set. Please set it by calling Resolver.SetResolver(resolver) method.");
                 }
 
                 return instance;
@@ -63,7 +63,7 @@ namespace Xamarin.Forms.Labs.Services
         /// </summary>
         /// <typeparam name="T">Type of instance to get.</typeparam>
         /// <returns>An instance of {T} if successful, otherwise null.</returns>
-        /// <exception cref="NullReferenceException">IResolver instance has not been set.</exception>
+		/// <exception cref="InvalidOperationException">IResolver instance has not been set.</exception>
         public static T Resolve<T>() where T : class
         {
             return Instance.Resolve<T>();
@@ -74,7 +74,7 @@ namespace Xamarin.Forms.Labs.Services
         /// </summary>
         /// <param name="type">Type of object.</param>
         /// <returns>An instance to type if found as <see cref="object"/>, otherwise null.</returns>
-        /// <exception cref="NullReferenceException">IResolver instance has not been set.</exception>
+		/// <exception cref="InvalidOperationException">IResolver instance has not been set.</exception>
         public static object Resolve(Type type)
         {
             return Instance.Resolve(type);
@@ -85,7 +85,7 @@ namespace Xamarin.Forms.Labs.Services
         /// </summary>
         /// <typeparam name="T">Type of instance to get.</typeparam>
         /// <returns>All instances of {T} if successful, otherwise null.</returns>
-        /// <exception cref="NullReferenceException">IResolver instance has not been set.</exception>
+		/// <exception cref="InvalidOperationException">IResolver instance has not been set.</exception>
         public static IEnumerable<T> ResolveAll<T>() where T : class
         {
             return Instance.ResolveAll<T>();
@@ -96,7 +96,7 @@ namespace Xamarin.Forms.Labs.Services
         /// </summary>
         /// <param name="type">Type of object.</param>
         /// <returns>All instances of type if found as <see cref="object"/>, otherwise null.</returns>
-        /// <exception cref="NullReferenceException">IResolver instance has not been set.</exception>
+		/// <exception cref="InvalidOperationException">IResolver instance has not been set.</exception>
         public static IEnumerable<object> ResolveAll(Type type)
         {
             return Instance.ResolveAll(type);
