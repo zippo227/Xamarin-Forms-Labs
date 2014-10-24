@@ -61,8 +61,17 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GridView
 
             collectionView.Adapter = this.DataSource;
 
+            collectionView.ItemClick += collectionView_ItemClick;
+
             base.SetNativeControl(collectionView);
 
+        }
+
+
+        void collectionView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            var item = this.Element.ItemsSource.Cast<object>().ElementAt(e.Position);
+            this.Element.InvokeItemSelectedEvent(this, item);
         }
 
         private void Unbind(Xamarin.Forms.Labs.Controls.GridView oldElement)
