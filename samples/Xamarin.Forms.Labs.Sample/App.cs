@@ -203,6 +203,7 @@ namespace Xamarin.Forms.Labs.Sample
                     "Segment",
                     "Separator",
                     "WebImage",
+                    "CircleImage"
                 }
             };
 
@@ -269,6 +270,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "buttongroup":
                         await mainPage.Navigation.PushAsync(new ButtonGroupPage());
+                        break;
+                    case "circleimage":
+                        await mainPage.Navigation.PushAsync(new CircleImagePage());
                         break;
                 }
             };

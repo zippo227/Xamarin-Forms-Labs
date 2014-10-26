@@ -227,6 +227,9 @@
     <BundleResource Include="Resources\icon_twitter.png" />
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="Resources\panic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="..\Xamarin.Forms.Labs.Sample.WP\HTML\canvasjs.min.js">
       <Link>HTML\canvasjs.min.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
