@@ -13,7 +13,7 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <title>Xamarin Forms Labs by XForms</title>
+    <title>Xamarin Forms Labs by XLabs</title>
   </head>
 
   <body>
@@ -21,7 +21,7 @@
       <div class="inner">
         <h1>Xamarin Forms Labs</h1>
         <h2>Xamarin Forms Labs is a open source project that aims to provide a powerful and cross platform set of controls and helpers tailored to work with Xamarin Forms.</h2>
-        <a href="https://github.com/XForms/Xamarin-Forms-Labs" class="button"><small>View project on</small> GitHub</a>
+        <a href="https://github.com/XLabs/Xamarin-Forms-Labs" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
 
@@ -35,11 +35,16 @@
 
 <p>Call for action for all Xamarin Developers, embrace this project and share your controls and services with the community, add your own control to the toolkit.</p>
 
+<p><strong>Important for developers</strong>
+The master branch is the current development branch and the next release for 2.0.
+The v.1.2 is the stable branch.</p>
+
 <p><strong>Available controls</strong></p>
 
 <ul>
 <li><a href="https://github.com/XForms/Xamarin-Forms-Labs/wiki/AutoComplete">AutoComplete (beta)</a></li>
 <li><a href="https://github.com/XForms/Xamarin-Forms-Labs/wiki/Calendar-Control">Calendar Control (beta)</a></li>
+<li><a href="https://github.com/XForms/Xamarin-Forms-Labs/wiki/Checkbox">Checkbox (beta)</a></li>
 <li>DynamicListView (beta)</li>
 <li>ExtendedContentView (beta) </li>
 <li><a href="https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedEntry">ExtendedEntry (beta)</a></li>
@@ -56,7 +61,10 @@
 <li><a href="https://github.com/XForms/Xamarin-Forms-Labs/wiki/SegmentedControl">SegmentedControlView (IOS beta)</a></li>
 <li>Web Image (beta) </li>
 <li>IconButton (IOS beta)</li>
-</ul><p><strong>Available services (Beta)</strong></p>
+<li><a href="https://github.com/XForms/Xamarin-Forms-Labs/wiki/CircleImage">CircleImage (IOS/Android anpha)</a></li>
+</ul>
+
+<p><strong>Available services (Beta)</strong></p>
 
 <ul>
 <li>Accelerometer</li>
@@ -68,14 +76,18 @@
 <li>Phone Service (cellular network info, make phonecalls)</li>
 <li>SoundService</li>
 <li>Text To Speech </li>
-</ul><p><strong>Available Mvvm helpers (Beta)</strong></p>
+</ul>
+
+<p><strong>Available Mvvm helpers (Beta)</strong></p>
 
 <ul>
 <li>ViewModel (navigation, isbusy)</li>
 <li>ViewFactory</li>
 <li>IOC</li>
 <li>IXFormsApp (application events)</li>
-</ul><p><strong>Available Plugins (Beta)</strong></p>
+</ul>
+
+<p><strong>Available Plugins (Beta)</strong></p>
 
 <ul>
 <li>Serialization (ServiceStackV3, ProtoBuf, JSON.Net)</li>
@@ -83,7 +95,11 @@
 <li>Dependency Injection containers (TinyIOC, Autofac, NInject, SimpleInjector, Unity)</li>
 <li>Web (RestClient)</li>
 <li><a href="https://github.com/XForms/Xamarin-Forms-Labs/wiki/Charting">Charting (Line, Bar &amp; Pie) (Alpha)</a></li>
-</ul><hr><h1>
+</ul>
+
+<hr>
+
+<h1>
 <a name="how-to" class="anchor" href="#how-to"><span class="octicon octicon-link"></span></a><strong>HOW-TO</strong>
 </h1>
 
@@ -152,21 +168,66 @@ stacker.Children.Add (button);
     }
 </code></pre>
 
-<hr><h1>
+<h2>
+<a name="initializing-the-services" class="anchor" href="#initializing-the-services"><span class="octicon octicon-link"></span></a>Initializing the Services</h2>
+
+<p>Do this before using the services</p>
+
+<p><strong>Step 1:</strong> </p>
+
+<ul>
+<li><p>iOS =&gt; Make sure your AppDelegate inherits from XFormsApplicationDelegate</p></li>
+<li><p>Android =&gt; MainActivity inherits from XFormsApplicationDroid</p></li>
+<li><p>Windows Phone =&gt; Add this line to your App.cs 
+              var app = new XFormsAppWP(); app.Init(this);</p></li>
+</ul>
+
+<p><strong>Step 2:</strong> 
+        Initialize the container in your app startup code.</p>
+
+<pre><code>    var container = new SimpleContainer ();
+    container.Register&lt;IDevice&gt; (t =&gt; AppleDevice.CurrentDevice);
+    container.Register&lt;IDisplay&gt; (t =&gt; t.Resolve&lt;IDevice&gt; ().Display);
+    container.Register&lt;INetwork&gt;(t=&gt; t.Resolve&lt;IDevice&gt;().Network);
+
+    Resolver.SetResolver (container.GetResolver ());
+</code></pre>
+
+<p><a href="https://github.com/XLabs/Xamarin-Forms-Labs/wiki">For more info on initialization go to the Labs Wiki</a></p>
+
+<hr>
+
+<h1>
 <a name="helper" class="anchor" href="#helper"><span class="octicon octicon-link"></span></a><strong>Helper</strong>
 </h1>
 
-<p><a href="http://htmlpreview.github.io/?https://github.com/XForms/Xamarin-Forms-Labs/blob/master/Help/Web/Index.html">Xamarin Forms Labs Framework Helper for online use</a></p>
+<blockquote>
+<p>Current version v1.2.0</p>
+</blockquote>
 
-<p><a href="https://github.com/XForms/Xamarin-Forms-Labs/blob/master/Help/Xamarin.Forms.Labs.chm">Xamarin.Forms.Labs.chm file for offline use</a></p>
+<p><a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/XLabs/Xamarin-Forms-Labs/master/Helper/v1.2.0/Web/Index.html">v1.2.0 - Xamarin Forms Labs Framework Helper for online use</a></p>
 
-<hr><h1>
+<p><a href="https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/Helper/v1.2.0/Xamarin.Forms.Labs.chm">v1.2.0 - Xamarin.Forms.Labs.chm file for offline use</a></p>
+
+<blockquote>
+<p>Based in last developments (master)</p>
+</blockquote>
+
+<p><a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/XLabs/Xamarin-Forms-Labs/master/Helper/master/Web/Index.html">Master- Xamarin Forms Labs Framework Helper for online use</a></p>
+
+<p><a href="https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/Helper/master/Xamarin.Forms.Labs.chm">Master - Xamarin.Forms.Labs.chm file for offline use</a></p>
+
+<hr>
+
+<h1>
 <a name="build-the-project" class="anchor" href="#build-the-project"><span class="octicon octicon-link"></span></a><strong>Build the project</strong>
 </h1>
 
 <p>To develop on this project, just clone the project to your computer, package restore is enable so build the solution first, if you get any errors try to build each project independently .</p>
 
-<hr><h1>
+<hr>
+
+<h1>
 <a name="nuget" class="anchor" href="#nuget"><span class="octicon octicon-link"></span></a><strong>Nuget</strong>
 </h1>
 
@@ -174,7 +235,9 @@ stacker.Children.Add (button);
 
 <ul>
 <li><a href="https://www.nuget.org/packages/Xamarin.Forms.Labs/">Xamarin.Forms.Labs</a></li>
-</ul><p><strong>Plugins:</strong></p>
+</ul>
+
+<p><strong>Plugins:</strong></p>
 
 <ul>
 <li>
@@ -209,7 +272,11 @@ stacker.Children.Add (button);
 <li><a href="https://www.nuget.org/packages/Xamarin.Forms.Labs.Cryptography/">Xamarin.Forms.Labs.Cryptography</a></li>
 </ul>
 </li>
-</ul><hr><h1>
+</ul>
+
+<hr>
+
+<h1>
 <a name="contributions" class="anchor" href="#contributions"><span class="octicon octicon-link"></span></a><strong>Contributions:</strong>
 </h1>
 
@@ -250,13 +317,17 @@ stacker.Children.Add (button);
 <li>
 <a href="http://blog.nicholasrogoff.com/">Nicholas Rogoff</a> <a href="https://twitter.com/nrogoff">@nrogoff</a>
 </li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="other-project-contributions" class="anchor" href="#other-project-contributions"><span class="octicon octicon-link"></span></a><strong>Other Project Contributions:</strong>
 </h2>
 
 <ul>
 <li>Xamarin.Mobile</li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="contribute" class="anchor" href="#contribute"><span class="octicon octicon-link"></span></a><strong>Contribute</strong>
 </h2>
 
@@ -264,13 +335,17 @@ stacker.Children.Add (button);
 
 <p>Twitter hashtag : <a href="https://twitter.com/search?q=xflabs">#xflabs</a></p>
 
-<hr><h1>
+<hr>
+
+<h1>
 <a name="chat" class="anchor" href="#chat"><span class="octicon octicon-link"></span></a><strong>CHAT</strong>
 </h1>
 
 <p><a href="https://jabbr.net/#/rooms/Xamarin-Labs">Xamarin Forms Labs Chat room online on Jabbr </a></p>
 
-<hr><h1>
+<hr>
+
+<h1>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a><strong>License</strong>
 </h1>
 
@@ -278,16 +353,16 @@ stacker.Children.Add (button);
         </section>
 
         <aside id="sidebar">
-          <a href="https://github.com/XForms/Xamarin-Forms-Labs/zipball/master" class="button">
+          <a href="https://github.com/XLabs/Xamarin-Forms-Labs/zipball/master" class="button">
             <small>Download</small>
             .zip file
           </a>
-          <a href="https://github.com/XForms/Xamarin-Forms-Labs/tarball/master" class="button">
+          <a href="https://github.com/XLabs/Xamarin-Forms-Labs/tarball/master" class="button">
             <small>Download</small>
             .tar.gz file
           </a>
 
-          <p class="repo-owner"><a href="https://github.com/XForms/Xamarin-Forms-Labs"></a> is maintained by <a href="https://github.com/XForms">XForms</a>.</p>
+          <p class="repo-owner"><a href="https://github.com/XLabs/Xamarin-Forms-Labs"></a> is maintained by <a href="https://github.com/XLabs">XLabs</a>.</p>
 
           <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
