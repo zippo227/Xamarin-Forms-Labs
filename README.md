@@ -163,10 +163,17 @@ ________________
 **Helper**
 ======
 
-[Xamarin Forms Labs Framework Helper for online use](http://htmlpreview.github.io/?https://github.com/XForms/Xamarin-Forms-Labs/blob/master/Help/Web/Index.html)
+> Current version v1.2.0
 
-[Xamarin.Forms.Labs.chm file for offline use](https://github.com/XForms/Xamarin-Forms-Labs/blob/master/Help/Xamarin.Forms.Labs.chm)
+[v1.2.0 - Xamarin Forms Labs Framework Helper for online use](http://htmlpreview.github.io/?https://raw.githubusercontent.com/XLabs/Xamarin-Forms-Labs/master/Helper/v1.2.0/Web/Index.html)
 
+[v1.2.0 - Xamarin.Forms.Labs.chm file for offline use](https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/Helper/v1.2.0/Xamarin.Forms.Labs.chm)
+
+> Based in last developments (master)
+
+[Master- Xamarin Forms Labs Framework Helper for online use](http://htmlpreview.github.io/?https://raw.githubusercontent.com/XLabs/Xamarin-Forms-Labs/master/Helper/master/Web/Index.html)
+
+[Master - Xamarin.Forms.Labs.chm file for offline use](https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/Helper/master/Xamarin.Forms.Labs.chm)
 ________________
 
 
