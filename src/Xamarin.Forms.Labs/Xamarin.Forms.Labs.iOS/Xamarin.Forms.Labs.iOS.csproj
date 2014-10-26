@@ -55,6 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Controls\ExtendedTimePick\" />
+    <Folder Include="Controls\ExtendedDatePick\" />   
+    <Folder Include="Controls\BindablePick\" />
+    <Folder Include="Controls\ExtendedEditor\" />
+    <Folder Include="Controls\AccessoryViewCell\" />
+    <Folder Include="Controls\CheckBoxViewCell\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
