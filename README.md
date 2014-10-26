@@ -1,4 +1,4 @@
-Xamarin Forms Labs
+﻿Xamarin Forms Labs
 =====================
 
 **Xamarin Forms Labs** is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with [Xamarin Forms](http://xamarin.com/forms).
@@ -29,6 +29,7 @@ The v.1.2 is the stable branch.
  - [SegmentedControlView (IOS beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/SegmentedControl)
  - Web Image (beta) 
  - IconButton (IOS beta)
+ - [CircleImage (IOS/Android anpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/CircleImage)
 
 **Available services (Beta)**
 
