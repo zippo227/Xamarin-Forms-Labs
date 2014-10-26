@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Controls\AutoComplete.cs" />
     <Compile Include="Controls\ButtonGroup.cs" />
+    <Compile Include="Controls\CircleImage.cs" />
     <Compile Include="Controls\DynamicListView.cs" />
     <Compile Include="Controls\ExtendedContentView.cs" />
     <Compile Include="Controls\ExtendedEntry.cs" />
@@ -143,7 +144,6 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <Folder Include="Services\Contacts\" />
-    <Folder Include="Converter\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ExifLib">

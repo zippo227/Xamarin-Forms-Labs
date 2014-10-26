@@ -167,6 +167,9 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon_twitter.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\panic.jpg" />
+  </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <AndroidAsset Include="..\Xamarin.Forms.Labs.Sample.WP\HTML\canvasjs.min.js">
