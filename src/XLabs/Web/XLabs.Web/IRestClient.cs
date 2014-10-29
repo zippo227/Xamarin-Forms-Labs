@@ -75,6 +75,29 @@ namespace XLabs.Web
         /// <param name="address">Address.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         Task<T> DeleteAsync<T>(string address);
+
+        /// <summary>
+        /// Async POST method.
+        /// </summary>
+        /// <returns>The async task.</returns>
+        /// <param name="address">Address of the service.</param>
+        /// <param name="dto">DTO to post.</param>
+        Task PostAsync(string address, object dto);
+
+        /// <summary>
+        /// Async PUT method.
+        /// </summary>
+        /// <returns>The async task.</returns>
+        /// <param name="address">Address of the service.</param>
+        /// <param name="dto">DTO to put.</param>
+        Task PutAsync(string address, object dto);
+
+        /// <summary>
+        /// Deletes the async.
+        /// </summary>
+        /// <returns>The async task.</returns>
+        /// <param name="address">Address.</param>
+        Task DeleteAsync(string address);
     }
 }
 
