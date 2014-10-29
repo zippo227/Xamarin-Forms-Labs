@@ -49,7 +49,7 @@ namespace Xamarin.Forms.Labs.WP8.Services
 
         public NetworkStatus InternetConnectionStatus()
         {
-            if (!DeviceNetworkInformation.IsNetworkAvailable)
+            if (DeviceNetworkInformation.IsNetworkAvailable)
             {
                 if (DeviceNetworkInformation.IsWiFiEnabled && Microsoft.Phone.Net.NetworkInformation.NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
                 {
