@@ -21,7 +21,7 @@ namespace Xamarin.Forms.Labs.Controls
                 //            this.InjectNativeFunctionScript ();
 
                 webView.SetWebViewClient(new Client(this));
-                webView.SetWebChromeClient(new ChromeClient());
+                webView.SetWebChromeClient(new ChromeClient(this));
 
                 webView.AddJavascriptInterface(new Xamarin(this), "Xamarin");
 
@@ -103,6 +103,23 @@ namespace Xamarin.Forms.Labs.Controls
 
         private class ChromeClient : WebChromeClient 
         {
+            private readonly HybridWebViewRenderer webHybrid;
+
+            internal ChromeClient(HybridWebViewRenderer webHybrid)
+            {
+                this.webHybrid = webHybrid;
+            }
+
+            public override void OnProgressChanged(Android.Webkit.WebView view, int newProgress)
+            {
+                base.OnProgressChanged(view, newProgress);
+
+                if (newProgress >= 100)
+                {
+                    this.webHybrid.Element.OnLoadFinished(this, EventArgs.Empty);
+                }
+            }
+
             public override bool OnJsAlert(Android.Webkit.WebView view, string url, string message, JsResult result)
             {
                 // the built-in alert is pretty ugly, you could do something different here if you wanted to
