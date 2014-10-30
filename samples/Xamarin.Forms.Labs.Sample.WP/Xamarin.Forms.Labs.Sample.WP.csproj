@@ -168,6 +168,7 @@
     <Content Include="Images\icon_google.png" />
     <Content Include="Images\icon_microsoft.png" />
     <Content Include="Images\icon_twitter.png" />
+    <Content Include="Images\panic.jpg" />
     <Content Include="Images\pie27_32.png" />
     <Content Include="Images\pie30_32.png" />
     <Content Include="Images\services1_32.png" />

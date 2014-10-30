@@ -1,15 +1,33 @@
-﻿using Android.Graphics;
+﻿using System;
+using Android.App.Backup;
+using Android.Graphics;
+using Android.Nfc.CardEmulators;
+using Android.Views;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.Droid.Controls.CircleImage;
 using Xamarin.Forms.Platform.Android;
 
+
+
 [assembly: ExportRenderer(typeof(CircleImage), typeof(CircleImageRenderer))]
 namespace Xamarin.Forms.Labs.Droid.Controls.CircleImage
 {
     public class CircleImageRenderer : ImageRenderer
     {
+        protected override void OnElementChanged(ElementChangedEventArgs<Image> e)
+        {
+            base.OnElementChanged(e);
+
+            if (e.OldElement == null)
+            {
+
+                if ((int)Android.OS.Build.VERSION.SdkInt < 18)
+                    SetLayerType(LayerType.Software, null);
+            }
+        }
+
         protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
@@ -17,23 +35,50 @@ namespace Xamarin.Forms.Labs.Droid.Controls.CircleImage
                 && this.Control.Drawable != null)
             {
                 //Should only be true right after an image is loaded
-                using (var sourceBitmap = Bitmap.CreateBitmap(this.Control.Drawable.IntrinsicWidth, this.Control.Drawable.IntrinsicHeight, Bitmap.Config.Argb8888))
+                if (this.Element.Aspect != Aspect.AspectFit)
                 {
-                    Canvas canvas = new Canvas(sourceBitmap);
-                    this.Control.Drawable.SetBounds(0, 0, canvas.Width, canvas.Height);
-                    this.Control.Drawable.Draw(canvas);
-                    this.ReshapeImage(sourceBitmap);                        
+                    using (var sourceBitmap = Bitmap.CreateBitmap(this.Control.Drawable.IntrinsicWidth, this.Control.Drawable.IntrinsicHeight, Bitmap.Config.Argb8888))
+                    {
+                        Canvas canvas = new Canvas(sourceBitmap);
+                        this.Control.Drawable.SetBounds(0, 0, canvas.Width, canvas.Height);
+                        this.Control.Drawable.Draw(canvas);
+                        this.ReshapeImage(sourceBitmap);
+                    }
+                    
                 }
             }
         }
 
+        protected override bool DrawChild(Canvas canvas, global::Android.Views.View child, long drawingTime)
+        {
+            if (this.Element.Aspect == Aspect.AspectFit)
+            {
+                var radius = Math.Min(Width, Height)/2;
+                var strokeWidth = 10;
+                radius -= strokeWidth/2;
+
+                Path path = new Path();
+                path.AddCircle(Width/2, Height/2, radius, Path.Direction.Ccw);
+                canvas.Save();
+                canvas.ClipPath(path);
+
+                var result = base.DrawChild(canvas, child, drawingTime);
+
+                path.Dispose();
+
+                return result;
+
+            }
+
+            return base.DrawChild(canvas, child, drawingTime);
+        }
+
         private void ReshapeImage(Bitmap sourceBitmap)
         {
-            //May need some scaling code
             if (sourceBitmap != null)
             {
-                var sourceRect = GetScaledRect(sourceBitmap);
-                var rect = this.GetTargetRect(sourceBitmap);
+                var sourceRect = GetScaledRect(sourceBitmap.Height, sourceBitmap.Width);
+                var rect = this.GetTargetRect(sourceBitmap.Height, sourceBitmap.Width);
                 using (var output = Bitmap.CreateBitmap(rect.Width(), rect.Height(), Bitmap.Config.Argb8888))
                 {
                     var canvas = new Canvas(output);
@@ -51,6 +96,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.CircleImage
                     paint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.SrcIn));
                     canvas.DrawBitmap(sourceBitmap, sourceRect, rect, paint);
 
+                    //this.DrawBorder(canvas, rect.Width(), rect.Height());
+
                     this.Control.SetImageBitmap(output);
                     // Forces the internal method of InvalidateMeasure to be called.
                     this.Element.WidthRequest = this.Element.WidthRequest;
@@ -58,7 +105,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.CircleImage
             }
         }
 
-        private Rect GetScaledRect(Bitmap sourceBitmap)
+        private Rect GetScaledRect(int sourceHeight, int sourceWidth)
         {
             int height = 0;
             int width = 0;
@@ -68,23 +115,25 @@ namespace Xamarin.Forms.Labs.Droid.Controls.CircleImage
             switch (this.Element.Aspect)
             {
                 case Aspect.AspectFill:
-                    height = sourceBitmap.Height;
-                    width = sourceBitmap.Width;
+                    height = sourceHeight;
+                    width = sourceWidth;
                     height = this.MakeSquare(height, ref width);
-                    left = (int)((sourceBitmap.Width - width) / 2);
-                    top = (int)((sourceBitmap.Height - height) / 2);
+                    left = (int)((sourceWidth - width) / 2);
+                    top = (int)((sourceHeight - height) / 2);
                     break;
                 case Aspect.Fill:
-                    height = sourceBitmap.Height;
-                    width = sourceBitmap.Width;
+                    height = sourceHeight;
+                    width = sourceWidth;
+                    break;
+                case Aspect.AspectFit:
+                    height = sourceHeight;
+                    width = sourceWidth;
+                    height = this.MakeSquare(height, ref width);
+                    left = (int)((sourceWidth - width) / 2);
+                    top = (int)((sourceHeight - height) / 2);
                     break;
                 default:
-                    height = sourceBitmap.Height;
-                    width = sourceBitmap.Width;
-                    height = this.MakeSquare(height, ref width);
-                    left = (int)((sourceBitmap.Width - width) / 2);
-                    top = (int)((sourceBitmap.Height - height) / 2);
-                    break;
+                    throw new NotImplementedException();
             }
 
             var rect = new Rect(left, top, width + left, height + top);
@@ -105,31 +154,22 @@ namespace Xamarin.Forms.Labs.Droid.Controls.CircleImage
             return height;
         }
 
-        private Rect GetTargetRect(Bitmap sourceBitmap)
+        private Rect GetTargetRect(int sourceHeight, int sourceWidth)
         {
             int height = 0;
             int width = 0;
 
             height = this.Element.HeightRequest > 0
                        ? (int)System.Math.Round(this.Element.HeightRequest, 0)
-                       : sourceBitmap.Height; 
+                       : sourceHeight; 
             width = this.Element.WidthRequest > 0
                        ? (int)System.Math.Round(this.Element.WidthRequest, 0)
-                       : sourceBitmap.Width; 
+                       : sourceWidth; 
 
             // Make Square
-            if (height < width)
-            {
-                width = height;
-            }
-            else
-            {
-                height = width;
-            }
+            height = MakeSquare(height, ref width);
 
-            var rect = new Rect(0, 0, width, height);
-
-            return rect;
+            return new Rect(0, 0, width, height);
         }
     }
 }
