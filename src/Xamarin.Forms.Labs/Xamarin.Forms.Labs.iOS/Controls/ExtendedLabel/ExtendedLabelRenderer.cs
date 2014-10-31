@@ -5,6 +5,7 @@ using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.iOS;
 using Xamarin.Forms.Labs.iOS.Controls;
 using MonoTouch.Foundation;
+using System;
 
 [assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRenderer))]
 
@@ -27,6 +28,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             var view = (ExtendedLabel)Element;
 
             UpdateUi(view, this.Control);
+			SetThePlaceholder(view, this.Control);
         }
 
         /// <summary>
@@ -82,6 +84,28 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 
             control.AttributedText = attrString;
         }
+
+		private UIFont originalFont;
+		private UIColor originalTextColor;
+		private void SetThePlaceholder(ExtendedLabel view, UILabel control)
+		{
+			if(!string.IsNullOrWhiteSpace(view.Text))
+			{
+				if(originalFont != null) control.Font = originalFont;
+				if(originalTextColor != null) control.TextColor = originalTextColor;
+				return;
+			}
+
+			if(string.IsNullOrWhiteSpace(view.Placeholder)) return;
+
+			originalFont = control.Font;
+			control.TextColor = control.TextColor ?? Color.Black.ToUIColor();
+			originalTextColor = control.TextColor;
+
+			control.Text = view.Placeholder;
+			control.Font = Font.SystemFontOfSize(Convert.ToDouble(originalFont.PointSize), FontAttributes.Italic).ToUIFont();
+			control.TextColor = Color.Gray.ToUIColor();
+		}
     }
 }
 

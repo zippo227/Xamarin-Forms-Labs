@@ -178,5 +178,21 @@ namespace Xamarin.Forms.Labs.Controls
                 SetValue(IsStrikeThroughProperty, value);
             }
         }
+
+		/// <summary>
+		/// The placeholder property.
+		/// </summary>
+		public static readonly BindableProperty PlaceholderProperty = 
+			BindableProperty.Create<ExtendedLabel, string>(p => p.Placeholder, default(string));
+
+		/// <summary>
+		/// Gets or sets the string value that is used when the label's Text property is empty.
+		/// </summary>
+		/// <value>The placeholder string.</value>
+		public string Placeholder
+		{
+			get { return (string)GetValue(PlaceholderProperty); }
+			set { SetValue(PlaceholderProperty, value); }
+		}
     }
 }
