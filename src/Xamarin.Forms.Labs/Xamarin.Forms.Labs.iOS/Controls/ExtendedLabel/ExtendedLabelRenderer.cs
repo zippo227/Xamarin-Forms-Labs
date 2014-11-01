@@ -4,6 +4,7 @@ using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms.Labs.iOS.Controls;
 using MonoTouch.Foundation;
+using System;
 
 [assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRenderer))]
 
@@ -26,7 +27,29 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             var view = (ExtendedLabel)Element;
 
             UpdateUi(view, this.Control);
+			SetPlaceholder(view);
         }
+
+		/// <summary>
+		/// Raises the element property changed event.
+		/// </summary>
+		/// <param name="sender">Sender</param>
+		/// <param name="e">The event arguments</param>
+		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged(sender, e);
+
+			var view = (ExtendedLabel)Element;
+
+			if (e.PropertyName == ExtendedLabel.TextProperty.PropertyName)
+				SetPlaceholder(view);
+			if (e.PropertyName == ExtendedLabel.FormattedTextProperty.PropertyName)
+				SetPlaceholder(view);
+			if (e.PropertyName == ExtendedLabel.PlaceholderProperty.PropertyName)
+				SetPlaceholder(view);
+			if (e.PropertyName == ExtendedLabel.FormattedPlaceholderProperty.PropertyName)
+				SetPlaceholder(view);
+		}
 
         /// <summary>
         /// Updates the UI.
@@ -117,6 +140,23 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                 control.AttributedText = attrString;
             }
         }
+
+		private void SetPlaceholder(ExtendedLabel view)
+		{
+			if(!string.IsNullOrWhiteSpace(view.Text))
+			{
+				FormattedString formattedString = view.FormattedText ?? view.Text;
+				this.Control.AttributedText = formattedString.ToAttributed(view.Font, view.TextColor);
+				this.LayoutSubviews();
+				return;
+			}
+
+			if(string.IsNullOrWhiteSpace(view.Placeholder) && view.FormattedPlaceholder == null) return;
+
+			FormattedString formattedPlaceholder = view.FormattedPlaceholder ?? view.Placeholder;
+			this.Control.AttributedText = formattedPlaceholder.ToAttributed(view.Font, view.TextColor);
+			this.LayoutSubviews();
+		}
     }
 }
 
