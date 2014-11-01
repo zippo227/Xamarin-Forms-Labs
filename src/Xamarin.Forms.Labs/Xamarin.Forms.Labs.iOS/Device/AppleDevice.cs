@@ -6,6 +6,10 @@ using Xamarin.Forms.Labs.Services;
 using Xamarin.Forms.Labs.Services.Media;
 using Xamarin.Forms.Labs.iOS.Services.Media;
 using Xamarin.Forms.Labs.iOS.Services;
+using System.Threading.Tasks;
+using MonoTouch.Foundation;
+using Xamarin.Forms.Labs.Services.IO;
+using System.IO.IsolatedStorage;
 
 namespace Xamarin.Forms.Labs
 {
@@ -14,11 +18,13 @@ namespace Xamarin.Forms.Labs
     /// </summary>
     public abstract class AppleDevice : IDevice
     {
-        private const string iPhoneExpression = "iPhone([1-6]),([1-4])";
+        private const string iPhoneExpression = "iPhone([1-7]),([1-4])";
         private const string iPodExpression = "iPod([1-5]),([1])";
         private const string iPadExpression = "iPad([1-4]),([1-6])";
 
         private static IDevice device;
+
+        private IFileManager fileManager;
 
         [DllImport(MonoTouch.Constants.SystemLibrary)]
         static internal extern int sysctlbyname([MarshalAs(UnmanagedType.LPStr)] string property, IntPtr output, IntPtr oldLen, IntPtr newp, uint newlen);
@@ -31,7 +37,7 @@ namespace Xamarin.Forms.Labs
             this.Battery = new Battery();
             this.Accelerometer = new Accelerometer();
             this.FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
-            this.BluetoothHub = new BluetoothHub();
+            //this.BluetoothHub = new BluetoothHub();
 
             if (Labs.Gyroscope.IsSupported)
             {
@@ -175,10 +181,31 @@ namespace Xamarin.Forms.Labs
         /// Gets the bluetooth hub service.
         /// </summary>
         /// <value>The bluetooth hub service if available, otherwise null.</value>
-        public IBluetoothHub BluetoothHub
+        //public IBluetoothHub BluetoothHub
+        //{
+        //    get;
+        //    private set;
+        //}
+
+        /// <summary>
+        /// Gets the default microphone for the device
+        /// </summary>
+        public IAudioStream Microphone
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Gets the file manager for the device.
+        /// </summary>
+        /// <value>Device file manager.</value>
+        public IFileManager FileManager
+        {
+            get
+            {
+                return this.fileManager ?? (this.fileManager = new FileManager(IsolatedStorageFile.GetUserStoreForApplication()));
+            }
         }
 
         /// <summary>
@@ -220,6 +247,16 @@ namespace Xamarin.Forms.Labs
             {
                 return "Apple";
             }
+        }
+
+        /// <summary>
+        /// Starts the default app associated with the URI for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>The launch operation.</returns>
+        public Task<bool> LaunchUriAsync(Uri uri)
+        {
+            return Task.Run(() => UIApplication.SharedApplication.OpenUrl(new NSUrl(uri.ToString())));
         }
         #endregion
 

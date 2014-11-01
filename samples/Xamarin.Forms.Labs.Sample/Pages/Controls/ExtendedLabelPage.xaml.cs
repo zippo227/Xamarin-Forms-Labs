@@ -14,23 +14,41 @@ namespace Xamarin.Forms.Labs.Sample
 
             var label = new ExtendedLabel
             {
-                Text = "and From code",
-                FontName = Device.OnPlatform<String>("Roboto-Light", "fonts/Roboto-Light.ttf", "Courier New"),
+                Text = "From code, using Device.OnPlatform, Underlined",
+                FontName = "Open 24 Display St.ttf",
+                FriendlyFontName = Device.OnPlatform<String>("", "", "Open 24 Display St"),
                 IsUnderline = true,
                 FontSize = 22,
             };
 
             var label2 = new ExtendedLabel
             {
-                Text = "and From code",
-                FontName = Device.OnPlatform<String>("Roboto-Light", "fonts/Roboto-Light.ttf", "Courier New"),
+                Text = "From code, Strikethrough",
+                FontName = "Open 24 Display St.ttf",
+                FriendlyFontName = Device.OnPlatform<String>("", "", "Open 24 Display St"),
                 IsUnderline = false,
                 IsStrikeThrough = true,
                 FontSize = 22,
             };
+			var font = Font.OfSize("Open 24 Display St", 22);
+			var label3 = new ExtendedLabel
+			{
+				Text = "From code, Strikethrough and using Font property",
 
-            stkRoot.Children.Add(label);
+				IsUnderline = false,
+				IsStrikeThrough = true
+			};
+            var label4 = new ExtendedLabel
+            {
+                IsDropShadow = true,
+                Text = "From code, Dropshadow with TextColor",
+                TextColor = Color.Green
+            };
+			label3.Font = font;
+            stkRoot.Children.Add(label4);
+			stkRoot.Children.Add(label3);
             stkRoot.Children.Add(label2);
+			stkRoot.Children.Add(label);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Xamarin.Forms.Labs.Services.Email
     public interface IEmailService
     {
         bool CanSend { get; }
-        void ShowDraft(string subject, string body, bool html, string to);
-        void ShowDraft(string subject, string body, bool html, string[] to, string[] cc, string[] bcc);
+        void ShowDraft(string subject, string body, bool html, string to, IEnumerable<string> attachments);
+        void ShowDraft(string subject, string body, bool html, string[] to, string[] cc, string[] bcc, IEnumerable<string> attachments);
     }
 }

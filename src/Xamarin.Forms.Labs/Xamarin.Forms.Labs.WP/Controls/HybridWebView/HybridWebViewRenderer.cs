@@ -53,7 +53,8 @@ namespace Xamarin.Forms.Labs.Controls
        private void webView_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             this.InjectNativeFunctionScript();
-        }
+            this.Element.OnLoadFinished(sender,EventArgs.Empty);
+       }
 
        partial void LoadContent(object sender, string contentFullName)
        {

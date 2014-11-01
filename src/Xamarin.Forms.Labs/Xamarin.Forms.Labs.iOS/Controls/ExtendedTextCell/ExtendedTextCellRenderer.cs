@@ -6,16 +6,43 @@ using Xamarin.Forms.Labs;
 using MonoTouch.UIKit;
 using System.Drawing;
 using Xamarin.Forms.Labs.Controls;
+using System.ComponentModel;
 
 [assembly: ExportRenderer(typeof(ExtendedTextCell), typeof(ExtendedTextCellRenderer))]
 namespace Xamarin.Forms.Labs.iOS.Controls
 {
 	public class ExtendedTextCellRenderer : TextCellRenderer
 	{
+		private static readonly Color DefaultDetailColor = new Color(0.32, 0.4, 0.57);
+		private static readonly Color DefaultTextColor = Color.Black;
+
 		public override UITableViewCell GetCell(Cell item, UITableView tv)
 		{
 			var extendedCell = (ExtendedTextCell)item;
-			var cell = base.GetCell (item, tv);
+
+			TextCell textCell = (TextCell)item;
+			UITableViewCellStyle style = UITableViewCellStyle.Subtitle;
+			if (extendedCell.DetailLocation == Xamarin.Forms.Labs.Enums.TextCellDetailLocation.Right)
+				style = UITableViewCellStyle.Value1;
+
+			string fullName = item.GetType ().FullName;
+			CellTableViewCell cell = tv.DequeueReusableCell (fullName) as CellTableViewCell;
+			if (cell == null) {
+				cell = new CellTableViewCell (style, fullName);
+			}
+			else {
+				cell.Cell.PropertyChanged -= new PropertyChangedEventHandler (cell.HandlePropertyChanged);
+			}
+			cell.Cell = textCell;
+			textCell.PropertyChanged += new PropertyChangedEventHandler (cell.HandlePropertyChanged);
+			cell.PropertyChanged = new Action<object, PropertyChangedEventArgs> (this.HandlePropertyChanged);
+			cell.TextLabel.Text = textCell.Text;
+			cell.DetailTextLabel.Text = textCell.Detail;
+			cell.TextLabel.TextColor = textCell.TextColor.ToUIColor (ExtendedTextCellRenderer.DefaultTextColor);
+			cell.DetailTextLabel.TextColor = textCell.DetailColor.ToUIColor (ExtendedTextCellRenderer.DefaultDetailColor);
+
+			base.UpdateBackground (cell, item);
+
 			if (cell != null) {
 				cell.BackgroundColor = extendedCell.BackgroundColor.ToUIColor ();
 				cell.SeparatorInset = new UIEdgeInsets ((float)extendedCell.SeparatorPadding.Top, (float)extendedCell.SeparatorPadding.Left,
@@ -43,7 +70,6 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 				tv.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 
 			tv.SeparatorColor = extendedCell.SeparatorColor.ToUIColor();
-
 
 			return cell;
 		}

@@ -40,7 +40,7 @@ namespace Xamarin.Forms.Labs.Controls
         /// <summary>
         /// The font name android property.
         /// </summary>
-        [Obsolete]
+        [Obsolete("This is now obsolete. Please rather use FontName and FriendlyFontName to cover all platforms.")]
         public static readonly BindableProperty FontNameAndroidProperty =
             BindableProperty.Create<ExtendedLabel, string>(
                 p => p.FontNameAndroid, string.Empty);
@@ -49,7 +49,7 @@ namespace Xamarin.Forms.Labs.Controls
         /// Gets or sets the font name android.
         /// </summary>
         /// <value>The font name android.</value>
-        [Obsolete]
+        [Obsolete("This is now obsolete. Please rather use FontName and FriendlyFontName to cover all platforms.")]
         public string FontNameAndroid
         {
             get
@@ -65,7 +65,7 @@ namespace Xamarin.Forms.Labs.Controls
         /// <summary>
         /// The font name ios property.
         /// </summary>
-        [Obsolete]
+        [Obsolete("This is now obsolete. Please rather use FontName and FriendlyFontName to cover all platforms.")]
         public static readonly BindableProperty FontNameIOSProperty =
             BindableProperty.Create<ExtendedLabel, string>(
                 p => p.FontNameIOS, string.Empty);
@@ -88,31 +88,6 @@ namespace Xamarin.Forms.Labs.Controls
         }
 
         /// <summary>
-        /// The font name wp property.
-        /// </summary>
-        [Obsolete]
-        public static readonly BindableProperty FontNameWPProperty =
-            BindableProperty.Create<ExtendedLabel, string>(
-                p => p.FontNameWP, string.Empty);
-
-        /// <summary>
-        /// Gets or sets the font name wp.
-        /// </summary>
-        /// <value>The font name wp.</value>
-        [Obsolete]
-        public string FontNameWP
-        {
-            get
-            {
-                return (string)GetValue(FontNameWPProperty);
-            }
-            set
-            {
-                SetValue(FontNameWPProperty, value);
-            }
-        }
-
-        /// <summary>
         /// The font name property.
         /// </summary>
         public static readonly BindableProperty FontNameProperty =
@@ -120,9 +95,10 @@ namespace Xamarin.Forms.Labs.Controls
                 p => p.FontName, string.Empty);
 
         /// <summary>
-        /// Gets or sets the name of the font.
+        /// Gets or sets the name of the font file including extension. If no extension given then ttf is assumed.
+        /// Fonts need to be included in projects accoring to the documentation.
         /// </summary>
-        /// <value>The name of the font.</value>
+        /// <value>The full name of the font file including extension.</value>
         public string FontName
         {
             get
@@ -132,6 +108,30 @@ namespace Xamarin.Forms.Labs.Controls
             set
             {
                 SetValue(FontNameProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// The friendly font name property. This can be found on the first line of the font or in the font preview. 
+        /// This is only required on Windows Phone. If not given then the file name excl. the extension is used.
+        /// </summary>
+        public static readonly BindableProperty FriendlyFontNameProperty =
+            BindableProperty.Create<ExtendedLabel, string>(
+                p => p.FriendlyFontName, string.Empty);
+
+        /// <summary>
+        /// Gets or sets the name of the font.
+        /// </summary>
+        /// <value>The name of the font.</value>
+        public string FriendlyFontName
+        {
+            get
+            {
+                return (string)GetValue(FriendlyFontNameProperty);
+            }
+            set
+            {
+                SetValue(FriendlyFontNameProperty, value);
             }
         }
 
@@ -184,6 +184,11 @@ namespace Xamarin.Forms.Labs.Controls
 		/// </summary>
 		public static readonly BindableProperty PlaceholderProperty = 
 			BindableProperty.Create<ExtendedLabel, string>(p => p.Placeholder, default(string));
+        /// <summary>
+        /// This is the drop shadow property
+        /// </summary>
+        public static readonly BindableProperty IsDropShadowProperty =
+            BindableProperty.Create<ExtendedLabel, bool>(p => p.IsDropShadow, false);
 
 		/// <summary>
 		/// Gets or sets the string value that is used when the label's Text property is empty.
@@ -194,5 +199,17 @@ namespace Xamarin.Forms.Labs.Controls
 			get { return (string)GetValue(PlaceholderProperty); }
 			set { SetValue(PlaceholderProperty, value); }
 		}
+        public bool IsDropShadow 
+        {
+            get 
+            {
+                return (bool)GetValue (IsDropShadowProperty);
+            }
+            set 
+            {
+                SetValue (IsDropShadowProperty, value);
+            }
+        }
+
     }
 }

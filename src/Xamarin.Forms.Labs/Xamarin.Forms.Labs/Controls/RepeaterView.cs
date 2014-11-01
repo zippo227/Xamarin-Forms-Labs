@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,33 +33,41 @@ namespace Xamarin.Forms.Labs.Controls
             foreach (var item in newValue)
             {
                 var cell = control.ItemTemplate.CreateContent();
-                control.Children.Add(((ViewCell)cell).View);
+                var view = ((ViewCell)cell).View;
+                view.BindingContext = item;
+                control.Children.Add(view);
             }
         }
 
-
         void ItemsSource_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.OldItems != null)
-            {
-                this.Children.RemoveAt(e.OldStartingIndex);
+            if (e.Action == NotifyCollectionChangedAction.Reset) 
+			{
+                this.Children.Clear();
                 this.UpdateChildrenLayout();
                 this.InvalidateLayout();
-            }
+            } else {
+                if (e.OldItems != null) {
+	                this.Children.RemoveAt(e.OldStartingIndex);
+	                this.UpdateChildrenLayout();
+	                this.InvalidateLayout();
+	            }
 
-            if (e.NewItems != null)
-            {
-                foreach (T item in e.NewItems)
-                {
-                    var cell = this.ItemTemplate.CreateContent();
-                    var view = ((ViewCell)cell).View;
-                    view.BindingContext = item;
-                    this.Children.Insert(ItemsSource.IndexOf(item), view);
-                }
+	            if (e.NewItems != null)
+	            {
+	                foreach (T item in e.NewItems)
+	                {
+	                    var cell = this.ItemTemplate.CreateContent();
+	                        var viewCell = (ViewCell) cell;
+	                        viewCell.BindingContext = item;
+	                        viewCell.View.BindingContext = item;
+	                        this.Children.Insert(ItemsSource.IndexOf(item), viewCell.View);
+	                }
 
-                this.UpdateChildrenLayout();
-                this.InvalidateLayout();
-            }
+	                this.UpdateChildrenLayout();
+	                this.InvalidateLayout();
+	            }
+	        }
         }
 
         public static readonly BindableProperty ItemTemplateProperty =

@@ -24,6 +24,7 @@
     <ValidateXaml>false</ValidateXaml>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <NuGetPackageImportStamp>08a12bfa</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -74,34 +75,35 @@
     <Reference Include="ExifLib">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\ExifLib.PCL.1.0.0\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    <Reference Include="Microsoft.Phone.Controls.Toolkit">
+      <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Ninject.3.2.2.0\lib\sl4-windowsphone71\Ninject.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.5.1405-prerelease\lib\wp80\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1405-prerelease\lib\wp80\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.3-unstable-001\lib\sl4-windowsphone71\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector">
+      <HintPath>..\packages\SimpleInjector.2.6.0-beta1\lib\portable-net4+sl4+wp8+win8+wpa81\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Diagnostics">
+      <HintPath>..\packages\SimpleInjector.2.6.0-beta1\lib\portable-net4+sl4+wp8+win8+wpa81\SimpleInjector.Diagnostics.dll</HintPath>
     </Reference>
     <Reference Include="WPControls">
       <HintPath>..\..\src\Xamarin.Forms.Labs\packages\WPControls.1.5.2\lib\wp8\WPControls.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\lib\WP80\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.WP8">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\lib\WP80\Xamarin.Forms.Platform.WP8.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Platform.WP8.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.2.6238-pre1\lib\WP80\Xamarin.Forms.Xaml.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleInjector">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\SimpleInjector.2.5.0\lib\portable-net4+sl4+wp8+win8\SimpleInjector.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleInjector.Diagnostics">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\SimpleInjector.2.5.0\lib\portable-net4+sl4+wp8+win8\SimpleInjector.Diagnostics.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\..\src\Xamarin.Forms.Labs\packages\Unity.3.5.1404.0\lib\portable-net45+wp80+win8+MonoAndroid10+MonoTouch10\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\WP80\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +152,12 @@
     <Content Include="Assets\Tiles\FlipCycleTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="README_FIRST.txt" />
+    <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">
@@ -158,38 +166,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.Autofac\Xamarin.Forms.Labs.Services.Autofac.csproj">
-      <Project>{f8c821a9-155e-48bc-8998-1ed9de5cef1a}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.Ninject\Xamarin.Forms.Labs.Services.Ninject.csproj">
-      <Project>{ec5686a6-9846-4b09-8288-cb7396331b54}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Ninject</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.SimpleInjector\Xamarin.Forms.Labs.Services.SimpleInjector.csproj">
-      <Project>{526f68e5-b35b-45fb-a54f-25793d2a1678}</Project>
-      <Name>Xamarin.Forms.Labs.Services.SimpleInjector</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.TinyIOC\Xamarin.Forms.Labs.Services.TinyIOC.WP8.csproj">
-      <Project>{f8b8c5d4-88a5-4796-9d9f-f9e43675879e}</Project>
-      <Name>Xamarin.Forms.Labs.Services.TinyIOC.WP8</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\DI\Xamarin.Forms.Labs.Services.Unity\Xamarin.Forms.Labs.Services.Unity.csproj">
-      <Project>{a224c192-e8a2-436e-9d4c-130004ba411a}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\JsonNET\Xamarin.Forms.Labs.Services.Serialization.JsonNET.csproj">
-      <Project>{a1021de4-5e69-4219-b396-64f6683b3727}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Serialization.JsonNET</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\ServiceStackV3\Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8.csproj">
-      <Project>{b8fe27b3-f683-4b12-bca7-344ef9a71046}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Serialization.ServiceStackV3.WP8</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Plugins\Serialization\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf\Xamarin.Forms.Labs.Services.Serialization.ProtoBuf.csproj">
-      <Project>{c12f7576-1b49-44bb-9f79-fdb0ba81b846}</Project>
-      <Name>Xamarin.Forms.Labs.Services.Serialization.ProtoBuf</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Xamarin.Forms.Labs\Xamarin.Forms.Labs.WP\Xamarin.Forms.Labs.WP8.csproj">
       <Project>{e38d2aa4-d265-4ff2-90ec-e02eb59f8a73}</Project>
       <Name>Xamarin.Forms.Labs.WP8</Name>
@@ -198,9 +174,49 @@
       <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
       <Name>Xamarin.Forms.Labs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.Autofac\XLabs.Ioc.Autofac.csproj">
+      <Project>{f8c821a9-155e-48bc-8998-1ed9de5cef1a}</Project>
+      <Name>XLabs.Ioc.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.Ninject\XLabs.Ioc.Ninject.csproj">
+      <Project>{ec5686a6-9846-4b09-8288-cb7396331b54}</Project>
+      <Name>XLabs.Ioc.Ninject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.SimpleInjector\XLabs.Ioc.SimpleInjector.csproj">
+      <Project>{526f68e5-b35b-45fb-a54f-25793d2a1678}</Project>
+      <Name>XLabs.Ioc.SimpleInjector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.TinyIOC\XLabs.Ioc.TinyIOC.WP8.csproj">
+      <Project>{1c4a2234-76c8-45ca-8ae4-f7f8bf2dfcdc}</Project>
+      <Name>XLabs.Ioc.TinyIOC.WP8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc.Unity\XLabs.Ioc.Unity.csproj">
+      <Project>{4d2d1468-bbb3-434a-84ac-b85eb7147a40}</Project>
+      <Name>XLabs.Ioc.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
+      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Name>XLabs.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\Serialization\JsonNET\XLabs.Serialization.JsonNET.csproj">
+      <Project>{fce4e482-0df8-43ac-b574-8aaf74770d1c}</Project>
+      <Name>XLabs.Serialization.JsonNET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\XLabs\Serialization\ServiceStack\XLabs.Serialization.ServiceStack.WP8.csproj">
+      <Project>{17c6ff22-9420-42cf-b85b-2bc2737fdc13}</Project>
+      <Name>XLabs.Serialization.ServiceStack.WP8</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="MSTestFramework, Version=11.0">
+      <Name>MSTest for Managed Projects</Name>
+    </SDKReference>
+    <SDKReference Include="TestPlatform, Version=11.0">
+      <Name>Microsoft Visual Studio Windows Phone Test Core</Name>
+    </SDKReference>
   </ItemGroup>
   <Import Project="..\SerializationTests\SerializationTests.projitems" Label="Shared" Condition="Exists('..\SerializationTests\SerializationTests.projitems')" />
   <Import Project="..\DeviceTests\DeviceTests.projitems" Label="Shared" Condition="Exists('..\DeviceTests\DeviceTests.projitems')" />
@@ -215,4 +231,11 @@
   </Target>
   -->
   <ProjectExtensions />
+  <Import Project="..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+  </Target>
 </Project>

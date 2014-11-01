@@ -18,10 +18,11 @@ namespace Xamarin.Forms.Labs.Controls
                 var webView = new Android.Webkit.WebView(this.Context);
 
                 webView.Settings.JavaScriptEnabled = true;
-                //            this.InjectNativeFunctionScript ();
 
                 webView.SetWebViewClient(new Client(this));
-                webView.SetWebChromeClient(new ChromeClient());
+                webView.SetWebChromeClient(new ChromeClient(this));
+
+                webView.AddJavascriptInterface(new Xamarin(this), "Xamarin");
 
                 this.SetNativeControl(webView);
             }
@@ -41,7 +42,7 @@ namespace Xamarin.Forms.Labs.Controls
             if (uri != null)
             {
                 this.Control.LoadUrl(uri.AbsoluteUri);
-                this.InjectNativeFunctionScript ();
+                this.InjectNativeFunctionScript();
             }
         }
 
@@ -53,6 +54,8 @@ namespace Xamarin.Forms.Labs.Controls
         partial void LoadContent(object sender, string contentFullName)
         {
             this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
+            // we can't really set the URI and fire up native function injection so the workaround is to do it here
+            this.InjectNativeFunctionScript();
         }
 
         private class Client : WebViewClient
@@ -77,8 +80,50 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
+        /// <summary>
+        /// Java callback class for JavaScript.
+        /// </summary>
+        public class Xamarin : Java.Lang.Object
+        {
+            private readonly WeakReference<HybridWebViewRenderer> webHybrid;
+
+            public Xamarin(HybridWebViewRenderer webHybrid)
+            {
+                this.webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
+            }
+
+            [JavascriptInterface]
+            [Java.Interop.Export("call")]
+            public void Call(string function, string data)
+            {
+                HybridWebViewRenderer hybrid;
+
+                if (this.webHybrid.TryGetTarget(out hybrid))
+                {
+                    hybrid.TryInvoke(function, data);
+                }
+            }
+        }
+
         private class ChromeClient : WebChromeClient 
         {
+            private readonly HybridWebViewRenderer webHybrid;
+
+            internal ChromeClient(HybridWebViewRenderer webHybrid)
+            {
+                this.webHybrid = webHybrid;
+            }
+
+            public override void OnProgressChanged(Android.Webkit.WebView view, int newProgress)
+            {
+                base.OnProgressChanged(view, newProgress);
+
+                if (newProgress >= 100)
+                {
+                    this.webHybrid.Element.OnLoadFinished(this, EventArgs.Empty);
+                }
+            }
+
             public override bool OnJsAlert(Android.Webkit.WebView view, string url, string message, JsResult result)
             {
                 // the built-in alert is pretty ugly, you could do something different here if you wanted to

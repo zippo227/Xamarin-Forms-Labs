@@ -8,13 +8,6 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
 {
     public class CalendarCellView : TextView
     {
-        private static readonly int[] StateSelectable = { Resource.Attribute.state_selectable };
-        private static readonly int[] StateCurrentMonth = { Resource.Attribute.state_current_month };
-        private static readonly int[] StateToday = { Resource.Attribute.state_today };
-        private static readonly int[] StateHighlighted = { Resource.Attribute.state_highlighted };
-        private static readonly int[] StateRangeFirst = { Resource.Attribute.state_range_first };
-        private static readonly int[] StateRangeMiddle = { Resource.Attribute.state_range_middle };
-        private static readonly int[] StateRangeLast = { Resource.Attribute.state_range_last };
 
         private bool _isSelectable;
         private bool _isCurrentMonth;
@@ -42,88 +35,71 @@ namespace Xamarin.Forms.Labs.Droid.Controls.Calendar
         {
         }
 
-        public bool Selectable
-        {
-            set
-            {
+        public bool Selectable {
+            set {
                 _isSelectable = value;
-                RefreshDrawableState();
             }
         }
 
-        public bool IsCurrentMonth
-        {
-            set
-            {
+        public bool IsCurrentMonth {
+            set {
                 _isCurrentMonth = value;
-                RefreshDrawableState();
             }
         }
 
-        public bool IsToday
-        {
-            set
-            {
+        public bool IsToday {
+            set {
                 _isToday = value;
-                RefreshDrawableState();
             }
         }
 
-        public bool IsHighlighted
-        {
-            set
-            {
+        public bool IsHighlighted {
+            set {
                 _isHighlighted = value;
-                RefreshDrawableState();
             }
         }
 
-        public RangeState RangeState
-        {
-            set
-            {
+        public RangeState RangeState {
+            set {
                 _rangeState = value;
-                RefreshDrawableState();
             }
         }
 
-        protected override int[] OnCreateDrawableState(int extraSpace)
+        public void SetStyle(StyleDescriptor style)
         {
-            int[] drawableState = base.OnCreateDrawableState(extraSpace + 5);
-
-            if (_isSelectable)
+            if(style.DateLabelFont != null)
             {
-                MergeDrawableStates(drawableState, StateSelectable);
+                this.Typeface = (style.DateLabelFont);
             }
-
-            if (_isCurrentMonth)
+            if(this.Selected)
             {
-                MergeDrawableStates(drawableState, StateCurrentMonth);
-            }
-
-            if (_isToday)
+                SetBackgroundColor(style.SelectedDateBackgroundColor);
+                SetTextColor(style.SelectedDateForegroundColor);
+            } else if(_isToday)
             {
-                MergeDrawableStates(drawableState, StateToday);
-            }
-
-            if (_isHighlighted)
+                SetBackgroundColor(style.TodayBackgroundColor);
+                SetTextColor(style.TodayForegroundColor);
+            } else if(_isHighlighted)
             {
-                MergeDrawableStates(drawableState, StateHighlighted);
-            }
-
-            switch (_rangeState)
+                SetBackgroundColor(style.HighlightedDateBackgroundColor);
+                if(_isCurrentMonth)
+                {
+                    SetTextColor(style.HighlightedDateForegroundColor);
+                } else
+                {
+                    SetTextColor(style.InactiveDateForegroundColor);
+                }
+            } else if(!_isCurrentMonth)
             {
-                case RangeState.First:
-                    MergeDrawableStates(drawableState, StateRangeFirst);
-                    break;
-                case RangeState.Middle:
-                    MergeDrawableStates(drawableState, StateRangeMiddle);
-                    break;
-                case RangeState.Last:
-                    MergeDrawableStates(drawableState, StateRangeLast);
-                    break;
+                SetBackgroundColor(style.InactiveDateBackgroundColor);
+                SetTextColor(style.InactiveDateForegroundColor);
+            } else
+            {
+                SetBackgroundColor(style.DateBackgroundColor);
+                SetTextColor(style.DateForegroundColor);
             }
-            return drawableState;
         }
+
+
     }
 }

@@ -5,11 +5,13 @@ using Xamarin.Forms.Labs.iOS;
 using Xamarin.Forms.Labs.iOS.Controls.Calendar;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services;
-using Xamarin.Forms.Labs.Services.Serialization;
-using Xamarin.Forms.Labs.Caching.SQLiteNet;
 using SQLite.Net.Platform.XamarinIOS;
 using System;
 using System.IO;
+using XLabs.Ioc;
+using XLabs.Serialization;
+using XLabs.Caching;
+using XLabs.Caching.SQLite;
 
 namespace Xamarin.Forms.Labs.Sample.iOS
 {
@@ -79,7 +81,7 @@ namespace Xamarin.Forms.Labs.Sample.iOS
 
             resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
-                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                .Register<IJsonSerializer, XLabs.Serialization.ServiceStack.JsonSerializer>()
                 //.Register<IJsonSerializer, Services.Serialization.SystemJsonSerializer>()
                 .Register<IXFormsApp>(app)
                 .Register<IDependencyContainer>(t => resolverContainer)

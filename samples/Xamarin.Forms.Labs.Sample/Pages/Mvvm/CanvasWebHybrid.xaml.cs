@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 namespace Xamarin.Forms.Labs.Sample
 {	
     public partial class CanvasWebHybrid : BaseView
-	{	
-		public CanvasWebHybrid ()
-		{
-			InitializeComponent ();
+    {	
+        public CanvasWebHybrid ()
+        {
+            InitializeComponent ();
 
             this.hybridWebView.RegisterCallback("dataCallback", t =>
+                System.Diagnostics.Debug.WriteLine(t)
+            );
+
+            this.hybridWebView.RegisterCallback("chartUpdated", t =>
                 System.Diagnostics.Debug.WriteLine(t)
             );
 
@@ -36,7 +40,7 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 this.hybridWebView.CallJsFunction ("onViewModelData", this.BindingContext);
             };
-		}
+        }
 
         void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -62,6 +66,6 @@ namespace Xamarin.Forms.Labs.Sample
 
             this.hybridWebView.LoadFromContent("HTML/home.html");
         }
-	}
+    }
 }
 

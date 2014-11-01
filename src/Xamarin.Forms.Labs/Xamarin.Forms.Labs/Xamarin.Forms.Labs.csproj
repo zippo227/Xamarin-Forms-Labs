@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>24bc45de</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>eb18a995</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,18 +35,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\AutoComplete.cs" />
+    <Compile Include="Controls\ButtonGroup.cs" />
+    <Compile Include="Controls\CircleImage.cs" />
     <Compile Include="Controls\DynamicListView.cs" />
     <Compile Include="Controls\ExtendedContentView.cs" />
     <Compile Include="Controls\ExtendedEntry.cs" />
     <Compile Include="Controls\ExtendedSlider.cs" />
+    <Compile Include="Controls\ExtendedSwitch.cs" />
     <Compile Include="Controls\ExtendedTabbedPage.cs" />
     <Compile Include="Controls\HybridWebView.cs" />
+    <Compile Include="Controls\IconButton.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
     <Compile Include="Controls\PopupLayout.cs" />
     <Compile Include="Controls\RepeaterView.cs" />
     <Compile Include="Controls\SegmentControl\SegmentedControlView.cs" />
     <Compile Include="Controls\WebImage.cs" />
+    <Compile Include="Controls\WrapLayout.cs" />
     <Compile Include="Data\ObservableObject.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />
     <Compile Include="Device\IAccelerometer.cs" />
@@ -61,9 +66,11 @@
     <Compile Include="Device\Sensor.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
+    <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Helpers\EventArgs{T}.cs" />
     <Compile Include="Helpers\EventExtensions.cs" />
+    <Compile Include="Helpers\Icons.cs" />
     <Compile Include="Helpers\TaskUtils.cs" />
     <Compile Include="Helpers\Vector3.cs" />
     <Compile Include="Mvvm\INavigationAware.cs" />
@@ -75,60 +82,56 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Services\IAsyncSimpleCache.cs" />
+    <Compile Include="Services\Email\IEmailService.cs" />
     <Compile Include="Services\IFontManager.cs" />
     <Compile Include="Services\INetwork.cs" />
+    <Compile Include="Services\INfcDevice.cs" />
+    <Compile Include="Services\IO\IFileManager.cs" />
+    <Compile Include="Services\Media\IAudioStream.cs" />
     <Compile Include="Services\Media\MediaExtensions.cs" />
     <Compile Include="Services\Media\MediaFile.cs" />
     <Compile Include="Services\Media\MediaFileNoteFoundException.cs" />
     <Compile Include="Services\Media\MediaStorageOptions.cs" />
-    <Compile Include="Services\DI\IDependencyContainer.cs" />
-    <Compile Include="Services\DI\IResolver.cs" />
-    <Compile Include="Services\DI\Resolver.cs" />
-    <Compile Include="Services\DI\SimpleContainer.cs" />
     <Compile Include="Services\Geolocation\PositionExtensions.cs" />
-    <Compile Include="Services\ICacheProvider.cs" />
     <Compile Include="Services\IPhoneService.cs" />
-    <Compile Include="Services\ISimpleCache.cs" />
     <Compile Include="Services\ITextToSpeechService.cs" />
     <Compile Include="Controls\CalendarView.cs" />
     <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
     <Compile Include="Controls\ExtendedTextCell.cs" />
     <Compile Include="Services\Media\IMediaPicker.cs" />
+    <Compile Include="Services\Media\WaveRecorder.cs" />
     <Compile Include="Services\NetworkStatus.cs" />
-    <Compile Include="Services\Serialization\IByteSerializer.cs" />
-    <Compile Include="Services\Serialization\IJsonSerializer.cs" />
-    <Compile Include="Services\Serialization\IProtoBufSerializer.cs" />
-    <Compile Include="Services\Serialization\ISerializer.cs" />
-    <Compile Include="Services\Serialization\IStreamSerializer.cs" />
-    <Compile Include="Services\Serialization\IStringSerializer.cs" />
-    <Compile Include="Services\Serialization\IXmlSerializer.cs" />
-    <Compile Include="Services\Serialization\SerializationFormat.cs" />
-    <Compile Include="Services\Serialization\StreamSerializer.cs" />
-    <Compile Include="Services\Serialization\StreamSerializerExtensions.cs" />
-    <Compile Include="Services\Serialization\StringSerializer.cs" />
-    <Compile Include="Services\Serialization\StringSerializerExtensions.cs" />
     <Compile Include="Mvvm\BaseView.cs" />
     <Compile Include="Mvvm\ViewFactory.cs" />
     <Compile Include="Mvvm\ViewModelNavigation.cs" />
-    <Compile Include="Services\Serialization\SystemJsonSerializer.cs" />
-    <Compile Include="Services\Serialization\SystemXmlSerializer.cs" />
     <Compile Include="Services\Geolocation\Position.cs" />
     <Compile Include="Services\Geolocation\IGeolocator.cs" />
     <Compile Include="Controls\SensorBar\SensorBarView.cs" />
     <Compile Include="Controls\ExtendedViewCell.cs" />
-    <Compile Include="Services\Web\IRestClient.cs" />
     <Compile Include="Services\SoundService\ISoundService.cs" />
     <Compile Include="Services\SoundService\SoundFile.cs" />
     <Compile Include="Services\SoundService\SoundFinishedEventArgs.cs" />
     <Compile Include="Controls\GridView.cs" />
     <Compile Include="Controls\ExtendedScrollView.cs" />
-    <Compile Include="Services\Web\WebResponseException.cs" />
     <Compile Include="Controls\SegmentControl\SegmentControl.cs" />
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\ImageGallery.cs" />
     <Compile Include="Controls\CameraView.cs" />
+    <Compile Include="Controls\EditableListView.cs" />
+    <Compile Include="Controls\ExtendedEntryCell.cs" />
+    <Compile Include="Controls\Separator.cs" />
+    <Compile Include="Controls\ExtendedTableView.cs" />
+    <Compile Include="Controls\BindablePicker.cs" />
+    <Compile Include="Extensions\NumericExtensions.cs" />
+    <Compile Include="Controls\ExtendedTimePicker.cs" />
+    <Compile Include="Controls\ExtendedDatePicker.cs" />
+    <Compile Include="Converter\InverseBooleanConverter.cs" />
+    <Compile Include="Controls\ExtendedEditor.cs" />
+    <Compile Include="Controls\SelectCell.cs" />
+    <Compile Include="Controls\AccessoryViewCell.cs" />
+    <Compile Include="Controls\CheckboxCell.cs" />
+    <Compile Include="Enums\TextCellDetailLocation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -140,26 +143,30 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <Folder Include="Services\Contacts\" />
-    <Folder Include="Services\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ExifLib">
       <HintPath>..\packages\ExifLib.PCL.1.0.0\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6257\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\packages\Xamarin.Forms.1.2.3.6246-pre1\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.1.2.3.6257\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="XLabs.Ioc">
+      <HintPath>..\..\XLabs\IOC\XLabs.Ioc\obj\Debug\XLabs.Ioc.dll</HintPath>
+    </Reference>
+    <Reference Include="XLabs.Serialization">
+      <HintPath>..\..\XLabs\Serialization\XLabs.Serialization\bin\Debug\XLabs.Serialization.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
   </PropertyGroup>
-  <Import Project="..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.2.3.6246-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
   </Target>
 </Project>

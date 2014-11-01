@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services;
+using XLabs.Caching;
+using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample
 {

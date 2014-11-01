@@ -1,13 +1,21 @@
 ﻿using System;
 using Xamarin.Forms;
+using Xamarin.Forms.Labs.Enums;
 
 namespace Xamarin.Forms.Labs.Controls
 {
-    public class ExtendedTextCell : TextCell
+	public class ExtendedTextCell : TextCell
     {
-        public ExtendedTextCell()
+		public ExtendedTextCell()
         {
         }
+
+		public static readonly BindableProperty DetailLocationProperty = BindableProperty.Create<ExtendedTextCell, TextCellDetailLocation> (p => p.DetailLocation, default(TextCellDetailLocation));
+
+		public TextCellDetailLocation DetailLocation {
+			get { return (TextCellDetailLocation)GetValue (DetailLocationProperty); }
+			set { SetValue (DetailLocationProperty, value); }
+		}
 
         public static readonly BindableProperty FontSizeProperty =
             BindableProperty.Create<ExtendedTextCell, double>(

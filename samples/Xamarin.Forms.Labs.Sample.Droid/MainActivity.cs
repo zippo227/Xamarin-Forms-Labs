@@ -3,8 +3,8 @@
 // Author           : Shawn Anderson
 // Created          : 06-16-2014
 //
-// Last Modified By : Shawn Anderson
-// Last Modified On : 06-16-2014
+// Last Modified By : Sami Kallio
+// Last Modified On : 09-01-2014
 // ***********************************************************************
 // <copyright file="MainActivity.cs" company="">
 //     Copyright (c) 2014 . All rights reserved.
@@ -30,10 +30,11 @@ using Android.OS;
 using Xamarin.Forms.Labs.Droid;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services;
-using Xamarin.Forms.Labs.Services.Serialization;
-using Xamarin.Forms.Labs.Caching.SQLiteNet;
 using System.IO;
-
+using XLabs.Ioc;
+using XLabs.Serialization;
+using XLabs.Caching;
+using XLabs.Caching.SQLite;
 
 namespace Xamarin.Forms.Labs.Sample.Droid
 {
@@ -45,11 +46,6 @@ namespace Xamarin.Forms.Labs.Sample.Droid
     public class MainActivity : XFormsApplicationDroid
     {
         /// <summary>
-        /// Indicated if the application has been initialized
-        /// </summary>
-        private static bool _initialized;
-
-        /// <summary>
         /// Called when [create].
         /// </summary>
         /// <param name="bundle">The bundle.</param>
@@ -57,9 +53,14 @@ namespace Xamarin.Forms.Labs.Sample.Droid
         {
             base.OnCreate(bundle);
 
-            if (!_initialized)
+            if (!Resolver.IsSet)
             {
                 this.SetIoc();
+            }
+            else
+            {
+                var app = Resolver.Resolve<IXFormsApp>() as IXFormsApp<XFormsApplicationDroid>;
+                app.AppContext = this;
             }
 
             Xamarin.Forms.Forms.Init(this, bundle);
@@ -86,7 +87,7 @@ namespace Xamarin.Forms.Labs.Sample.Droid
             resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 //.Register<IJsonSerializer, Services.Serialization.JsonNET.JsonSerializer>()
-                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                .Register<IJsonSerializer, XLabs.Serialization.ServiceStack.JsonSerializer>()
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISimpleCache>(
@@ -95,8 +96,6 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 
 
             Resolver.SetResolver(resolverContainer.GetResolver());
-
-            _initialized = true;
         }
     }
 }

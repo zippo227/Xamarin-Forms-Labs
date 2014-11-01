@@ -183,3 +183,5 @@ src/Xamarin.Forms.Labs/Xamarin.Forms.Labs.userprefs
 
 *.userprefs
 *.jf
+
+ReleaseBuild/*

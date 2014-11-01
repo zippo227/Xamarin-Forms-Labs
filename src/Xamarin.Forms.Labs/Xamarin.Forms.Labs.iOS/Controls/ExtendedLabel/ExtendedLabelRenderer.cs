@@ -2,7 +2,6 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms.Labs.Controls;
-using Xamarin.Forms.Labs.iOS;
 using Xamarin.Forms.Labs.iOS.Controls;
 using MonoTouch.Foundation;
 using System;
@@ -42,47 +41,83 @@ namespace Xamarin.Forms.Labs.iOS.Controls
         /// </param>
         private static void UpdateUi(ExtendedLabel view, UILabel control)
         {
-            if (!string.IsNullOrEmpty(view.FontName))
-            {
-                var font = UIFont.FromName(
-                    view.FontName,
-                    (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
-
-                if (font != null)
+            // Prefer font set through Font property.
+            if(view.Font == Font.Default){
+                if (view.FontSize > 0)
                 {
-                    control.Font = font;
+                    control.Font = UIFont.FromName(control.Font.Name,(float)view.FontSize);
                 }
-            }
 
-            if (!string.IsNullOrEmpty(view.FontNameIOS))
-            {
-                var font = UIFont.FromName(
-                    view.FontNameIOS,
-                   (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
-
-                if (font != null)
+                if (!string.IsNullOrEmpty(view.FontName))
                 {
-                    control.Font = font;
+                    string fontName = view.FontName;
+                    //if extension given then remove it for iOS
+                    if (fontName.LastIndexOf(".", System.StringComparison.Ordinal) == fontName.Length - 4)
+                    {
+                        fontName = fontName.Substring(0, fontName.Length - 4);
+                    }
+
+                    var font = UIFont.FromName(
+                        fontName, control.Font.PointSize);
+
+                    if (font != null)
+                    {
+                        control.Font = font;
+                    }
                 }
+
+                //======= This is for backward compatability with obsolete attrbute 'FontNameIOS' ========
+                if (!string.IsNullOrEmpty(view.FontNameIOS))
+                {
+                    var font = UIFont.FromName(
+                        view.FontNameIOS,
+                        (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
+
+                    if (font != null)
+                    {
+                        control.Font = font;
+                    }
+                }
+                //====== End of obsolete section ==========================================================
+
+            }else{
+                //Font si set by the base class
             }
 
-            var attrString = new NSMutableAttributedString(control.Text);
-
-            if (view.IsUnderline)
+            //Do not create attributed string if it is not necesarry
+            if(view.IsUnderline || view.IsStrikeThrough || view.IsDropShadow)
             {
-                //control.AttributedText = new NSAttributedString(
-                //    control.Text,
-                //    underlineStyle: NSUnderlineStyle.Single);
 
-                attrString.AddAttribute(UIStringAttributeKey.UnderlineStyle, NSNumber.FromInt32((int)NSUnderlineStyle.Single), new NSRange(0, attrString.Length));
+                var attrString = new NSMutableAttributedString(control.Text);
+
+                if(view.IsUnderline)
+                {
+                    //control.AttributedText = new NSAttributedString(
+                    //    control.Text,
+                    //    underlineStyle: NSUnderlineStyle.Single);
+
+                    attrString.AddAttribute(UIStringAttributeKey.UnderlineStyle, NSNumber.FromInt32((int)NSUnderlineStyle.Single), new NSRange(0, attrString.Length));
+                }
+
+                if(view.IsStrikeThrough)
+                {
+                    attrString.AddAttribute(UIStringAttributeKey.StrikethroughStyle, NSNumber.FromInt32((int)NSUnderlineStyle.Single), new NSRange(0, attrString.Length));
+                }
+                attrString.AddAttribute(UIStringAttributeKey.Font,control.Font,new NSRange(0, attrString.Length));
+
+                if (view.IsDropShadow)
+                {
+                    var shadow = new NSShadow();
+                    shadow.ShadowColor = UIColor.DarkGray;
+                    shadow.ShadowBlurRadius = 1.4f;
+                    shadow.ShadowOffset = new System.Drawing.SizeF(new System.Drawing.PointF(0.3f, 0.8f));
+
+                    attrString.AddAttribute(UIStringAttributeKey.Shadow, shadow, new NSRange(0, attrString.Length));
+                }
+
+                control.TextColor = view.TextColor.ToUIColor();
+                control.AttributedText = attrString;
             }
-
-            if (view.IsStrikeThrough)
-            {
-                attrString.AddAttribute(UIStringAttributeKey.StrikethroughStyle, NSNumber.FromInt32((int)NSUnderlineStyle.Single), new NSRange(0, attrString.Length));
-            }
-
-            control.AttributedText = attrString;
         }
 
 		private UIFont originalFont;

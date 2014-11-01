@@ -29,9 +29,11 @@ namespace Xamarin.Forms.Labs.iOS.Controls
                 SetNativeControl(checkBox);
             }
 
+			this.Control.Frame = Frame;
+			this.Control.Bounds = Bounds;
+
             UpdateFont();
             
-
             Control.LineBreakMode = UILineBreakMode.CharacterWrap;
             Control.VerticalAlignment = UIControlContentVerticalAlignment.Top;
             Control.CheckedTitle = string.IsNullOrEmpty(e.NewElement.CheckedText) ? e.NewElement.DefaultText : e.NewElement.CheckedText;

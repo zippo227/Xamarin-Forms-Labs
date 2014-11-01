@@ -13,12 +13,14 @@ using Xamarin.Forms.Labs.WP8;
 namespace Xamarin.Forms.Labs.Sample.WP
 {
     using Services;
-    using Services.Serialization;
     using System.IO;
-    using Xamarin.Forms.Labs.Caching.SQLiteNet;
     using Windows.Storage;
     using System.Threading.Tasks;
     using Xamarin.Forms.Labs.Charting.WP;
+    using XLabs.Ioc;
+    using XLabs.Serialization;
+    using XLabs.Caching;
+    using XLabs.Caching.SQLite;
 
     public partial class App : Application
     {
@@ -33,6 +35,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
         /// </summary>
         public App()
         {
+
             Charting.WP.Controls.ChartRenderer renderer = new Charting.WP.Controls.ChartRenderer();
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
@@ -42,6 +45,8 @@ namespace Xamarin.Forms.Labs.Sample.WP
 
             // Phone-specific initialization
             InitializePhoneApplication();
+
+            RootFrame.UriMapper = new LabsUrlMapper();
 
             // Language display initialization
             InitializeLanguage();
@@ -248,7 +253,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
 
             resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
-                .Register<IJsonSerializer, Services.Serialization.ServiceStackV3.JsonSerializer>()
+                .Register<IJsonSerializer, XLabs.Serialization.ServiceStack.JsonSerializer>()
                 .Register<IDependencyContainer>(t => resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISimpleCache>(

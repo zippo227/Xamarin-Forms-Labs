@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.Labs.Controls;
-using Xamarin.Forms.Labs.Sample.ViewModel;
 
 namespace Xamarin.Forms.Labs.Sample.Pages.Controls
 {

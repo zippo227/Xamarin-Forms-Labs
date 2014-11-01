@@ -132,7 +132,6 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Top;
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Center;
-            targetButton.TitleLabel.Text = "Microsoft";
             targetButton.SizeToFit();
 
             var titleWidth = targetButton.TitleLabel.IntrinsicContentSize.Width;
@@ -201,9 +200,12 @@ namespace Xamarin.Forms.Labs.iOS.Controls.ImageButton
             var handler = GetHandler(source);
             using (UIImage image = await handler.LoadImageAsync(source))
             {
-                targetButton.SetImage (
-                    image.Scale(new SizeF(widthRequest, heightRequest)).ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-                    , UIControlState.Normal);
+                UIImage scaled = image;
+                if (heightRequest > 0 && widthRequest > 0 && (image.Size.Height != heightRequest || image.Size.Width != widthRequest))
+                {
+                    scaled = scaled.Scale(new SizeF(widthRequest, heightRequest));
+                }
+                targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), UIControlState.Normal);   
             }
         }
 
