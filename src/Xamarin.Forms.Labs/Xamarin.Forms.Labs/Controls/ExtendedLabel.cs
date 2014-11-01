@@ -180,25 +180,11 @@ namespace Xamarin.Forms.Labs.Controls
         }
 
 		/// <summary>
-		/// The placeholder property.
+		/// This is the drop shadow property
 		/// </summary>
-		public static readonly BindableProperty PlaceholderProperty = 
-			BindableProperty.Create<ExtendedLabel, string>(p => p.Placeholder, default(string));
-        /// <summary>
-        /// This is the drop shadow property
-        /// </summary>
-        public static readonly BindableProperty IsDropShadowProperty =
-            BindableProperty.Create<ExtendedLabel, bool>(p => p.IsDropShadow, false);
+		public static readonly BindableProperty IsDropShadowProperty =
+			BindableProperty.Create<ExtendedLabel, bool>(p => p.IsDropShadow, false);
 
-		/// <summary>
-		/// Gets or sets the string value that is used when the label's Text property is empty.
-		/// </summary>
-		/// <value>The placeholder string.</value>
-		public string Placeholder
-		{
-			get { return (string)GetValue(PlaceholderProperty); }
-			set { SetValue(PlaceholderProperty, value); }
-		}
         public bool IsDropShadow 
         {
             get 
@@ -209,7 +195,47 @@ namespace Xamarin.Forms.Labs.Controls
             {
                 SetValue (IsDropShadowProperty, value);
             }
-        }
+		}
+
+		/// <summary>
+		/// The placeholder property.
+		/// </summary>
+		public static readonly BindableProperty PlaceholderProperty = 
+			BindableProperty.Create<ExtendedLabel, string>(p => p.Placeholder, default(string));
+
+		/// <summary>
+		/// Gets or sets the string value that is used when the label's Text property is empty.
+		/// </summary>
+		/// <value>The placeholder string.</value>
+		public string Placeholder
+		{
+			get { return (string)GetValue(PlaceholderProperty); }
+			set 
+			{
+				SetValue(FormattedPlaceholderProperty, null);
+				SetValue(PlaceholderProperty, value); 
+			}
+		}
+
+		/// <summary>
+		/// The formatted placeholder property.
+		/// </summary>
+		public static readonly BindableProperty FormattedPlaceholderProperty = 
+			BindableProperty.Create<ExtendedLabel, FormattedString>(p => p.FormattedPlaceholder, default(FormattedString));
+
+		/// <summary>
+		/// Gets or sets the FormattedString value that is used when the label's Text property is empty.
+		/// </summary>
+		/// <value>The placeholder FormattedString.</value>
+		public FormattedString FormattedPlaceholder
+		{
+			get { return (FormattedString)GetValue(FormattedPlaceholderProperty); }
+			set 
+			{  
+				SetValue(PlaceholderProperty, null);
+				SetValue(FormattedPlaceholderProperty, value);
+			}
+		}
 
     }
 }

@@ -27,8 +27,29 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             var view = (ExtendedLabel)Element;
 
             UpdateUi(view, this.Control);
-			SetThePlaceholder(view, this.Control);
+			SetPlaceholder(view);
         }
+
+		/// <summary>
+		/// Raises the element property changed event.
+		/// </summary>
+		/// <param name="sender">Sender</param>
+		/// <param name="e">The event arguments</param>
+		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged(sender, e);
+
+			var view = (ExtendedLabel)Element;
+
+			if (e.PropertyName == ExtendedLabel.TextProperty.PropertyName)
+				SetPlaceholder(view);
+			if (e.PropertyName == ExtendedLabel.FormattedTextProperty.PropertyName)
+				SetPlaceholder(view);
+			if (e.PropertyName == ExtendedLabel.PlaceholderProperty.PropertyName)
+				SetPlaceholder(view);
+			if (e.PropertyName == ExtendedLabel.FormattedPlaceholderProperty.PropertyName)
+				SetPlaceholder(view);
+		}
 
         /// <summary>
         /// Updates the UI.
@@ -120,26 +141,21 @@ namespace Xamarin.Forms.Labs.iOS.Controls
             }
         }
 
-		private UIFont originalFont;
-		private UIColor originalTextColor;
-		private void SetThePlaceholder(ExtendedLabel view, UILabel control)
+		private void SetPlaceholder(ExtendedLabel view)
 		{
 			if(!string.IsNullOrWhiteSpace(view.Text))
 			{
-				if(originalFont != null) control.Font = originalFont;
-				if(originalTextColor != null) control.TextColor = originalTextColor;
+				FormattedString formattedString = view.FormattedText ?? view.Text;
+				this.Control.AttributedText = formattedString.ToAttributed(view.Font, view.TextColor);
+				this.LayoutSubviews();
 				return;
 			}
 
-			if(string.IsNullOrWhiteSpace(view.Placeholder)) return;
+			if(string.IsNullOrWhiteSpace(view.Placeholder) && view.FormattedPlaceholder == null) return;
 
-			originalFont = control.Font;
-			control.TextColor = control.TextColor ?? Color.Black.ToUIColor();
-			originalTextColor = control.TextColor;
-
-			control.Text = view.Placeholder;
-			control.Font = Font.SystemFontOfSize(Convert.ToDouble(originalFont.PointSize), FontAttributes.Italic).ToUIFont();
-			control.TextColor = Color.Gray.ToUIColor();
+			FormattedString formattedPlaceholder = view.FormattedPlaceholder ?? view.Placeholder;
+			this.Control.AttributedText = formattedPlaceholder.ToAttributed(view.Font, view.TextColor);
+			this.LayoutSubviews();
 		}
     }
 }
