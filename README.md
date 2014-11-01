@@ -1,4 +1,4 @@
-﻿Xamarin Forms Labs
+Xamarin Forms Labs
 =====================
 
 **Xamarin Forms Labs** is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with [Xamarin Forms](http://xamarin.com/forms).
@@ -235,6 +235,7 @@ __________________
  - Petr Klíma
  - Bart Kardol
  - [Nicholas Rogoff](http://blog.nicholasrogoff.com/) [@nrogoff](https://twitter.com/nrogoff)
+ - Chris Riesgo [@chrisriesgo](https://twitter.com/chrisriesgo)
 
  
 **Other Project Contributions:**
