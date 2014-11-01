@@ -50,6 +50,7 @@
     <Compile Include="Controls\PopupLayout.cs" />
     <Compile Include="Controls\RepeaterView.cs" />
     <Compile Include="Controls\SegmentControl\SegmentedControlView.cs" />
+    <Compile Include="Controls\TemplateSelector.cs" />
     <Compile Include="Controls\WebImage.cs" />
     <Compile Include="Controls\WrapLayout.cs" />
     <Compile Include="Data\ObservableObject.cs" />
