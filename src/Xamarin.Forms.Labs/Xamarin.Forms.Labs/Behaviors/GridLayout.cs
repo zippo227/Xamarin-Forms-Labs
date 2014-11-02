@@ -10,6 +10,7 @@
     /// <example>
     /// Move from this:
     /// <code>
+    /// <![CDATA[
     /// <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
     ///     <Grid.RowDefinitions>
     ///         <RowDefinition Height="Auto"/>
@@ -24,11 +25,15 @@
     ///         <ColumnDefinition Width="64"/>
     ///     </Grid.ColumnDefinitions>
     /// </Grid>
+    /// ]]>
     /// </code>
     /// To this:(where lb is the Xamarin.Forms.Labs.Behavior namespace prefix
+    /// 
     /// <code>
+    /// <![CDATA[
     /// <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" lb:GridLayout.RowHeights="Auto,Auto,*,24" lb.GridLayout.ColumnWidths="Auto,*,2*,64">
     /// </Grid>
+    /// ]]>
     /// </code>
     /// 
     /// </example>
