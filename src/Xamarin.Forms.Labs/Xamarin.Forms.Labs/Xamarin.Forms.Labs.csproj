@@ -51,6 +51,7 @@
     <Compile Include="Controls\RepeaterView.cs" />
     <Compile Include="Controls\SegmentControl\SegmentedControlView.cs" />
     <Compile Include="Controls\TemplateSelector.cs" />
+    <Compile Include="Controls\TemplateContentView.cs" />
     <Compile Include="Controls\WebImage.cs" />
     <Compile Include="Controls\WrapLayout.cs" />
     <Compile Include="Data\ObservableObject.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="Device\Orientation.cs" />
     <Compile Include="Device\Sensor.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
+    <Compile Include="Exceptions\InvalidBindableException.cs" />
+    <Compile Include="Exceptions\NoDataTemplateMatchException.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />

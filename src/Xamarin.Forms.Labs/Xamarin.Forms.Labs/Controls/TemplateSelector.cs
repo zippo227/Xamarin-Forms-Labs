@@ -4,14 +4,26 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
+using Xamarin.Forms.Labs.Exceptions;
 
 namespace Xamarin.Forms.Labs.Controls
 {
-        public class TemplateSelector : BindableObject
-        {
-            public static BindableProperty TemplatesProperty = BindableProperty.Create<TemplateSelector, DataTemplateCollection>(x => x.Templates, new DataTemplateCollection(), BindingMode.OneWay, null, TemplatesChanged);
-            public static BindableProperty SelectorFunctionProperty = BindableProperty.Create<TemplateSelector, Func<Type, DataTemplate>>(x => x.SelectorFunction, null);
+    using System.Diagnostics;
 
+    public class TemplateSelector : BindableObject
+        {
+            public static BindableProperty TemplatesProperty = BindableProperty.Create<TemplateSelector, DataTemplateCollection>(x => x.Templates, default(DataTemplateCollection), BindingMode.OneWay, null, TemplatesChanged);
+            public static BindableProperty SelectorFunctionProperty = BindableProperty.Create<TemplateSelector, Func<Type, DataTemplate>>(x => x.SelectorFunction, null);
+            public static BindableProperty ExceptionOnNoMatchProperty = BindableProperty.Create<TemplateSelector, bool>(x => x.ExceptionOnNoMatch, true);
+
+            /// <summary>
+            /// Initialize the TemplateCollections so that each 
+            /// instance gets it's own collection
+            /// </summary>
+            public TemplateSelector()
+            {
+                Templates = new DataTemplateCollection();
+            }
             /// <summary>
             ///  Clears the cache when the set of templates change
             /// </summary>
@@ -42,6 +54,11 @@ namespace Xamarin.Forms.Labs.Controls
 
             private Dictionary<Type, DataTemplate> Cache { get; set; }
 
+            public bool ExceptionOnNoMatch
+            {
+                get { return (bool) GetValue(ExceptionOnNoMatchProperty); }
+                set { SetValue(ExceptionOnNoMatchProperty,value);}
+            }
             public DataTemplateCollection Templates
             {
                 get { return (DataTemplateCollection)GetValue(TemplatesProperty); }
@@ -54,15 +71,27 @@ namespace Xamarin.Forms.Labs.Controls
                 set { SetValue(SelectorFunctionProperty, value); }
             }
 
+
             /// <summary>
             /// Matches a type with a datatemplate
             /// Order of matching=>Cache, SelectorFunction, SpecificTypeMatch,InterfaceMatch,BaseTypeMatch DefaultTempalte
             /// </summary>
             /// <param name="type">Type object type that needs a datatemplate</param>
-            /// <returns></returns>
+            /// <returns>The DataTemplate from the WrappedDataTemplates Collection that closest matches 
+            /// the type paramater.</returns>
             public DataTemplate TemplateFor(Type type)
             {
+                var typesExamined = new List<Type>();
+                var template = TemplateForImpl(type,typesExamined);
+                if (template == null && ExceptionOnNoMatch)
+                    throw new NoDataTemplateMatchException(type, typesExamined);
+                return template;
+            }
+
+            private DataTemplate TemplateForImpl(Type type,List<Type>examined )
+            {
                 if (type == null) return null;//This can happen when we recusively check base types (object.BaseType==null)
+                examined.Add(type);
                 Contract.Assert(Templates != null, "Templates cannot be null");
                 Cache = Cache ?? new Dictionary<Type, DataTemplate>();
                 //Happy case we already have the type in our cache
@@ -73,16 +102,25 @@ namespace Xamarin.Forms.Labs.Controls
                 if (SelectorFunction != null) retTemplate = SelectorFunction(type);
 
                 //check our list
-                retTemplate = retTemplate ?? Templates.Where(x => x.Type == type).Select(x => x.WrappedTemplate).FirstOrDefault();
+                retTemplate = retTemplate ?? Templates.Where(x =>x.Type == type).Select(x => x.WrappedTemplate).FirstOrDefault();
                 //Check for interfaces
-                retTemplate = retTemplate ?? type.GetTypeInfo().ImplementedInterfaces.Select(TemplateFor).FirstOrDefault();
+                retTemplate = retTemplate ?? type.GetTypeInfo().ImplementedInterfaces.Select(x=>TemplateForImpl(x,examined)).FirstOrDefault();
                 //look at base types
-                retTemplate = retTemplate ?? TemplateFor(type.GetTypeInfo().BaseType);
+                retTemplate = retTemplate ?? TemplateForImpl(type.GetTypeInfo().BaseType,examined);
                 //If all else fails try to find a Default Template
                 retTemplate = retTemplate ?? Templates.Where(x => x.IsDefault).Select(x => x.WrappedTemplate).FirstOrDefault();
 
                 Cache[type] = retTemplate;
                 return retTemplate;
+            }
+
+            public View ViewFor(object item)
+            {
+                var template = TemplateFor(item.GetType());
+                var content = template.CreateContent();
+                var view = ((ViewCell) content).View;
+                view.BindingContext = item;
+                return view;
             }
         }
 
