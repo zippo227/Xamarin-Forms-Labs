@@ -8,8 +8,6 @@ using Xamarin.Forms.Labs.Exceptions;
 
 namespace Xamarin.Forms.Labs.Controls
 {
-    using System.Diagnostics;
-
     public class TemplateSelector : BindableObject
         {
             /// <summary>
@@ -132,13 +130,20 @@ namespace Xamarin.Forms.Labs.Controls
                 if (type == null) return null;//This can happen when we recusively check base types (object.BaseType==null)
                 examined.Add(type);
                 Contract.Assert(Templates != null, "Templates cannot be null");
+
                 Cache = Cache ?? new Dictionary<Type, DataTemplate>();
+                DataTemplate retTemplate = null;
+
+                //Prefer the selector function if present
+                //This has been moved before the cache check so that
+                //the user supplied function has an opportunity to 
+                //Make a decision with more information than simply
+                //the requested type (perhaps the Ux or Network states...)
+                if (SelectorFunction != null) retTemplate = SelectorFunction(type);
+
                 //Happy case we already have the type in our cache
                 if (Cache.ContainsKey(type)) return Cache[type];
 
-                DataTemplate retTemplate = null;
-                //Prefer the selector function if present
-                if (SelectorFunction != null) retTemplate = SelectorFunction(type);
 
                 //check our list
                 retTemplate = retTemplate ?? Templates.Where(x =>x.Type == type).Select(x => x.WrappedTemplate).FirstOrDefault();
