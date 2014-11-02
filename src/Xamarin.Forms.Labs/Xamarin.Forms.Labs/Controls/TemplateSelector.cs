@@ -12,8 +12,17 @@ namespace Xamarin.Forms.Labs.Controls
 
     public class TemplateSelector : BindableObject
         {
+            /// <summary>
+            /// Property definition for the <see cref="Templates"/> Bindable Property
+            /// </summary>
             public static BindableProperty TemplatesProperty = BindableProperty.Create<TemplateSelector, DataTemplateCollection>(x => x.Templates, default(DataTemplateCollection), BindingMode.OneWay, null, TemplatesChanged);
+            /// <summary>
+            /// Property definition for the <see cref="SelectorFunction"/> Bindable Property
+            /// </summary>
             public static BindableProperty SelectorFunctionProperty = BindableProperty.Create<TemplateSelector, Func<Type, DataTemplate>>(x => x.SelectorFunction, null);
+            /// <summary>
+            /// Property definition for the <see cref="ExceptionOnNoMatch"/> Bindable Property
+            /// </summary>
             public static BindableProperty ExceptionOnNoMatchProperty = BindableProperty.Create<TemplateSelector, bool>(x => x.ExceptionOnNoMatch, true);
 
             /// <summary>
@@ -51,20 +60,37 @@ namespace Xamarin.Forms.Labs.Controls
                 Cache = null;
             }
 
-
+            /// <summary>
+            /// Private cache of matched types with datatemplates
+            /// The cache is reset on any change to <see cref="Templates"/>
+            /// </summary>
             private Dictionary<Type, DataTemplate> Cache { get; set; }
 
+            /// <summary>
+            /// Bindable property that allows the user to 
+            /// determine if a <see cref="NoDataTemplateMatchException"/> is thrown when 
+            /// there is no matching template found
+            /// </summary>
             public bool ExceptionOnNoMatch
             {
                 get { return (bool) GetValue(ExceptionOnNoMatchProperty); }
                 set { SetValue(ExceptionOnNoMatchProperty,value);}
             }
+            /// <summary>
+            /// The collection of DataTemplates
+            /// </summary>
             public DataTemplateCollection Templates
             {
                 get { return (DataTemplateCollection)GetValue(TemplatesProperty); }
                 set { SetValue(TemplatesProperty, value); }
             }
 
+            /// <summary>
+            /// A user supplied function of type
+            /// <code>Func<typeparamname name="Type"></typeparamname>,<typeparamname name="DataTemplate"></typeparamname></code>
+            /// If this function has been supplied it is always called first in the match 
+            /// process.
+            /// </summary>
             public Func<Type, DataTemplate> SelectorFunction
             {
                 get { return (Func<Type, DataTemplate>)GetValue(SelectorFunctionProperty); }
@@ -74,11 +100,18 @@ namespace Xamarin.Forms.Labs.Controls
 
             /// <summary>
             /// Matches a type with a datatemplate
-            /// Order of matching=>Cache, SelectorFunction, SpecificTypeMatch,InterfaceMatch,BaseTypeMatch DefaultTempalte
+            /// Order of matching=>
+            ///     SelectorFunction, 
+            ///     Cache, 
+            ///     SpecificTypeMatch,
+            ///     InterfaceMatch,
+            ///     BaseTypeMatch 
+            ///     DefaultTempalte
             /// </summary>
             /// <param name="type">Type object type that needs a datatemplate</param>
             /// <returns>The DataTemplate from the WrappedDataTemplates Collection that closest matches 
             /// the type paramater.</returns>
+            /// <exception cref="NoDataTemplateMatchException"></exception>Thrown if there is no datatemplate that matches the supplied type
             public DataTemplate TemplateFor(Type type)
             {
                 var typesExamined = new List<Type>();
@@ -88,6 +121,12 @@ namespace Xamarin.Forms.Labs.Controls
                 return template;
             }
 
+            /// <summary>
+            /// Interal implementation of <see cref="TemplateFor"/>.
+            /// </summary>
+            /// <param name="type">The type to match on</param>
+            /// <param name="examined">A list of all types examined during the matching process</param>
+            /// <returns>A DataTemplate or null</returns>
             private DataTemplate TemplateForImpl(Type type,List<Type>examined )
             {
                 if (type == null) return null;//This can happen when we recusively check base types (object.BaseType==null)
@@ -114,6 +153,13 @@ namespace Xamarin.Forms.Labs.Controls
                 return retTemplate;
             }
 
+            /// <summary>
+            /// Finds a template for the type of the passed in item (<code>item.GetType()</code>)
+            /// and creates the content and sets the Binding context of the View
+            /// Currently the root of the DataTemplate must be a ViewCell.
+            /// </summary>
+            /// <param name="item">The item to instantiate a DataTemplate for</param>
+            /// <returns>a View with it's binding context set</returns>
             public View ViewFor(object item)
             {
                 var template = TemplateFor(item.GetType());
@@ -124,12 +170,22 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
+        /// <summary>
+        /// Interface to enable DataTemplateCollection to hold
+        /// typesafe instances of DataTemplateWrapper
+        /// </summary>
         public interface IDataTemplateWrapper
         {
             bool IsDefault { get; set; }
             DataTemplate WrappedTemplate { get; set; }
             Type Type { get; }
         }
+        /// <summary>
+        /// Wrapper for a DataTemplate.
+        /// Unfortunately the default constructor for DataTemplate is internal
+        /// so I had to wrap the DataTemplate instead of inheriting it.
+        /// </summary>
+        /// <typeparam name="T">The object type that this DataTemplateWrapper matches</typeparam>
         public class DataTemplateWrapper<T> : BindableObject, IDataTemplateWrapper
         {
             public static readonly BindableProperty WrappedTemplateProperty = BindableProperty.Create<DataTemplateWrapper<T>, DataTemplate>(x => x.WrappedTemplate, null);
@@ -152,5 +208,9 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
 
+        /// <summary>
+        /// Collection class of IDataTemplateWrapper
+        /// Enables xaml definitions of collections.
+        /// </summary>
         public class DataTemplateCollection : ObservableCollection<IDataTemplateWrapper> { }
 }
