@@ -34,6 +34,7 @@
     <DocumentationFile>..\..\..\ReleaseBuild\Xamarin.Forms.Labs.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\GridLayout.cs" />
     <Compile Include="Controls\AutoComplete.cs" />
     <Compile Include="Controls\ButtonGroup.cs" />
     <Compile Include="Controls\CircleImage.cs" />
