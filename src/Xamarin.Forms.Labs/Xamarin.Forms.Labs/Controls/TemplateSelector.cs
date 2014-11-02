@@ -165,11 +165,16 @@ namespace Xamarin.Forms.Labs.Controls
             /// </summary>
             /// <param name="item">The item to instantiate a DataTemplate for</param>
             /// <returns>a View with it's binding context set</returns>
+            /// <exception cref="InvalidVisualObjectException"></exception>Thrown when the matched datatemplate inflates to an object not derived from either 
+            /// <see cref="Xamarin.Forms.View"/> or <see cref="Xamarin.Forms.ViewCell"/>
             public View ViewFor(object item)
             {
                 var template = TemplateFor(item.GetType());
                 var content = template.CreateContent();
-                var view = ((ViewCell) content).View;
+                if (!(content is View) && !(content is ViewCell))
+                    throw new InvalidVisualObjectException(content.GetType());
+
+                var view = (content is View) ? content as View : ((ViewCell)content).View;
                 view.BindingContext = item;
                 return view;
             }

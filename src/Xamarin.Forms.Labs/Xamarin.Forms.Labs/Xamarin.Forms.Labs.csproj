@@ -68,6 +68,7 @@
     <Compile Include="Device\Sensor.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="Exceptions\InvalidBindableException.cs" />
+    <Compile Include="Exceptions\InvalidVisualObjectException.cs" />
     <Compile Include="Exceptions\NoDataTemplateMatchException.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />

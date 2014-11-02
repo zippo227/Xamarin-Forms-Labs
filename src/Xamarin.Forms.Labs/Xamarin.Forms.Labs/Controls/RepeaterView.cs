@@ -5,6 +5,8 @@ using System.Windows.Input;
 
 namespace Xamarin.Forms.Labs.Controls
 {
+    using Xamarin.Forms.Labs.Exceptions;
+
     public class RepeaterView<T> : StackLayout
     {
         public static readonly BindableProperty ItemTemplateProperty =
@@ -79,16 +81,22 @@ namespace Xamarin.Forms.Labs.Controls
         /// While we do have T, T could very well be
         /// a common superclass or an interface by 
         /// using the items actual type we support
-        /// both inheritance base polymorphism
+        /// both inheritance based polymorphism
         /// and shape based polymorphism
+        /// 
         /// </summary>
         /// <param name="item"></param>
-        /// <returns>A View that has been initialized with item as it's BindingContext</returns>
+        /// <returns>A View that has been initialized with <see cref="item"/> as it's BindingContext</returns>
+        /// <exception cref="InvalidVisualObjectException"></exception>Thrown when the matched datatemplate inflates to an object not derived from either 
+        /// <see cref="Xamarin.Forms.View"/> or <see cref="Xamarin.Forms.ViewCell"/>
         protected virtual View ViewFor(T item)
         {
             var template = GetTemplateFor(item.GetType());
             var content = template.CreateContent();
-            var view = ((ViewCell)content).View;
+            
+            if(!(content is View) && !(content is ViewCell))
+                throw new InvalidVisualObjectException(content.GetType());
+            var view = (content is View) ? content as View : ((ViewCell)content).View;
             view.BindingContext = item;
             view.GestureRecognizers.Add(new TapGestureRecognizer { Command = ItemClickCommand, CommandParameter = item });
             return view;
