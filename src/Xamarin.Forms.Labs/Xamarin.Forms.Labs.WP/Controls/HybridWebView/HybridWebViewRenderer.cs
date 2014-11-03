@@ -4,6 +4,8 @@ using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
 using Microsoft.Phone.Controls;
+using System.Windows.Input;
+using System.Windows;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 namespace Xamarin.Forms.Labs.Controls
@@ -26,6 +28,14 @@ namespace Xamarin.Forms.Labs.Controls
             {
                 this.WebView = new WebBrowser { IsScriptEnabled = true };
 
+                //Touch.FrameReported += Touch_FrameReported;
+
+                //this.WebView.ManipulationStarted += WebView_ManipulationStarted;
+                //this.ManipulationCompleted += HybridWebViewRenderer_ManipulationCompleted;
+
+                //this.WebView.ManipulationDelta += WebView_ManipulationDelta;
+                //this.WebView.ManipulationCompleted += WebView_ManipulationCompleted;
+
                 this.WebView.Navigating += webView_Navigating;
                 this.WebView.LoadCompleted += webView_LoadCompleted;
                 this.WebView.ScriptNotify += WebViewOnScriptNotify;
@@ -35,6 +45,58 @@ namespace Xamarin.Forms.Labs.Controls
 
             this.Unbind(e.OldElement);
             this.Bind();
+        }
+
+        void WebView_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void HybridWebViewRenderer_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void Touch_FrameReported(object sender, TouchFrameEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(e);
+
+            var points = e.GetTouchPoints(this.WebView);
+
+            if (points.Count == 1)
+            {
+                var point = points[0];
+
+                
+
+                if (point.Action == TouchAction.Move)
+                {
+                    var pos = point.Position;
+                }
+            }
+        }
+
+        void WebView_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        {
+            var delta = e.CumulativeManipulation.Translation;
+
+            //If Change in X > Change in Y, its considered a horizontal swipe
+            if (Math.Abs(delta.X) > Math.Abs(delta.Y))
+            {
+                if (delta.X > 0)
+                {
+                    this.Element.OnRightSwipe(this, EventArgs.Empty);
+                }
+                else
+                {
+                    this.Element.OnLeftSwipe(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        void WebView_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
+        {
+
         }
 
         private void WebViewOnScriptNotify(object sender, NotifyEventArgs notifyEventArgs)

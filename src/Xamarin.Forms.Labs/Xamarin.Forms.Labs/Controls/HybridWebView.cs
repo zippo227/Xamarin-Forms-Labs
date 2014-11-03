@@ -183,6 +183,8 @@ namespace Xamarin.Forms.Labs.Controls
         }
 
         public EventHandler LoadFinished;
+        public EventHandler LeftSwipe;
+        public EventHandler RightSwipe;
 
         internal bool TryGetAction(string name, out Action<string> action)
         {
@@ -197,6 +199,24 @@ namespace Xamarin.Forms.Labs.Controls
         internal void OnLoadFinished(object sender, EventArgs e)
         {
             var handler = this.LoadFinished;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        internal void OnLeftSwipe(object sender, EventArgs e)
+        {
+            var handler = this.LeftSwipe;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        internal void OnRightSwipe(object sender, EventArgs e)
+        {
+            var handler = this.RightSwipe;
             if (handler != null)
             {
                 handler(this, e);

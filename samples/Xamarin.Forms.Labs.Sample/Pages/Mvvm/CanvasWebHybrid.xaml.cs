@@ -40,6 +40,12 @@ namespace Xamarin.Forms.Labs.Sample
             {
                 this.hybridWebView.CallJsFunction ("onViewModelData", this.BindingContext);
             };
+
+            this.hybridWebView.LeftSwipe += (s, e) =>
+                System.Diagnostics.Debug.WriteLine("Left swipe from HybridWebView");
+
+            this.hybridWebView.RightSwipe += (s, e) =>
+                System.Diagnostics.Debug.WriteLine("Right swipe from HybridWebView");
         }
 
         void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

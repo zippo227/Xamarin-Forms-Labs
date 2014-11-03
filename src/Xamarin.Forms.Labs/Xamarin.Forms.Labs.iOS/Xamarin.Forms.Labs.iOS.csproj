@@ -12,7 +12,6 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>a4d431a6</NuGetPackageImportStamp>
-    <ReleaseVersion>0.0.0.3</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,6 +60,7 @@
     <Folder Include="Controls\ExtendedEditor\" />
     <Folder Include="Controls\AccessoryViewCell\" />
     <Folder Include="Controls\CheckBoxViewCell\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -166,6 +166,7 @@
     <Compile Include="Controls\ExtendedEditor\ExtendedEditorRenderer.cs" />
     <Compile Include="Controls\AccessoryViewCell\AccessoryViewCellRenderer.cs" />
     <Compile Include="Controls\CheckBoxViewCell\CheckBoxCellRenderer.cs" />
+    <Compile Include="Pages\ExtendedMasterDetailPageRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

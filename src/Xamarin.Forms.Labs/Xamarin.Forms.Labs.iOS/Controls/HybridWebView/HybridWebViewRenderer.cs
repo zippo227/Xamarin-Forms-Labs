@@ -16,6 +16,8 @@ namespace Xamarin.Forms.Labs.Controls
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, UIWebView>
     {
         private UIWebView webView;
+        private UISwipeGestureRecognizer leftSwipeGestureRecognizer;
+        private UISwipeGestureRecognizer rightSwipeGestureRecognizer;
 
         /// <summary>
         /// The on element changed callback.
@@ -34,6 +36,25 @@ namespace Xamarin.Forms.Labs.Controls
                 this.webView.ShouldStartLoad += this.HandleStartLoad;
                 this.InjectNativeFunctionScript();
                 this.SetNativeControl(this.webView);
+
+                this.leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => this.Element.OnLeftSwipe(this, EventArgs.Empty))
+                {
+                    Direction = UISwipeGestureRecognizerDirection.Left
+                };
+
+                this.rightSwipeGestureRecognizer = new UISwipeGestureRecognizer(()=> this.Element.OnRightSwipe(this, EventArgs.Empty))
+                {
+                    Direction = UISwipeGestureRecognizerDirection.Right
+                };
+
+                this.Control.AddGestureRecognizer(this.leftSwipeGestureRecognizer);
+                this.Control.AddGestureRecognizer(this.rightSwipeGestureRecognizer);
+            }
+
+            if (e.NewElement == null)
+            {
+                this.Control.RemoveGestureRecognizer(this.leftSwipeGestureRecognizer);
+                this.Control.RemoveGestureRecognizer(this.rightSwipeGestureRecognizer);
             }
 
             Element.SizeChanged += HandleSizeChanged;

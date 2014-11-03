@@ -138,6 +138,7 @@
     <Compile Include="Controls\AccessoryViewCell.cs" />
     <Compile Include="Controls\CheckboxCell.cs" />
     <Compile Include="Enums\TextCellDetailLocation.cs" />
+    <Compile Include="Pages\ExtendedMasterDetailPage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -149,6 +150,7 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <Folder Include="Services\Contacts\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ExifLib">

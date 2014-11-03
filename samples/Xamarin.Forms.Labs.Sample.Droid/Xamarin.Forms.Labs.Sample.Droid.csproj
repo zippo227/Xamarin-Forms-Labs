@@ -123,11 +123,11 @@
       <Name>Xamarin.Forms.Labs.Charting</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\XLabs\Caching\XLabs.Caching.SQLite\XLabs.Caching.SQLite.csproj">
-      <Project>{edc5424b-fbbb-47c3-95ba-8fc14743aedd}</Project>
+      <Project>{EDC5424B-FBBB-47C3-95BA-8FC14743AEDD}</Project>
       <Name>XLabs.Caching.SQLite</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\XLabs\Caching\XLabs.Caching\XLabs.Caching.csproj">
-      <Project>{8dea9048-3715-4f76-9c7c-390a4256d833}</Project>
+      <Project>{8DEA9048-3715-4F76-9C7C-390A4256D833}</Project>
       <Name>XLabs.Caching</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
