@@ -14,6 +14,7 @@ namespace Xamarin.Forms.Labs.Controls
         public static readonly BindableProperty SelectedTextColorProperty = BindableProperty.Create("SelectedTextColor", typeof(Color), typeof(ButtonGroup), Color.Default);
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create("BorderColor", typeof(Color), typeof(ButtonGroup), Color.Default);
         public static readonly BindableProperty SelectedBorderColorProperty = BindableProperty.Create("SelectedBorderColor", typeof(Color), typeof(ButtonGroup), Color.Black);
+        public static readonly BindableProperty SelectedFrameBackgroundColorProperty = BindableProperty.Create("SelectedFrameBackgroundColor", typeof(Color), typeof(ButtonGroup), Color.Black);
         public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create<ButtonGroup, int>(p => p.SelectedIndex, 0, BindingMode.TwoWay);
         public static readonly BindableProperty ItemsPropertyProperty = BindableProperty.Create<ButtonGroup, List<string>>(p => p.Items, null, BindingMode.TwoWay);
         public static readonly BindableProperty FontProperty = BindableProperty.Create("Font", typeof(Font), typeof(ButtonGroup), Font.Default);
@@ -26,7 +27,7 @@ namespace Xamarin.Forms.Labs.Controls
         private const int ButtonBorderWidth = 1;
         private const int FramePadding = 1;
         private const int ButtonBorderRadius = 5;
-        private const int ButtonHeight= 44;
+        private const int ButtonHeight = 44;
         private const int ButtonHeightWp = 72;
         private const int ButtonHalfHeight = 22;
         private const int ButtonHalfHeightWp = 36;
@@ -120,6 +121,12 @@ namespace Xamarin.Forms.Labs.Controls
             get { return (Color)GetValue(SelectedBorderColorProperty); }
             set { SetValue(SelectedBorderColorProperty, value); }
         }
+        public Color SelectedFrameBackgroundColor
+        {
+            get { return (Color)GetValue(SelectedFrameBackgroundColorProperty); }
+            set { SetValue(SelectedFrameBackgroundColorProperty, value); }
+        }
+
 
         public Font Font
         {
@@ -222,7 +229,6 @@ namespace Xamarin.Forms.Labs.Controls
                         : ButtonBorderRadius,
                 HeightRequest = Device.OnPlatform(ButtonHeight, ButtonHeight, ButtonHeightWp),
                 MinimumHeightRequest = Device.OnPlatform(ButtonHeight, ButtonHeight, ButtonHeightWp),
-                Text = string.Format("  {0}  ", text),
                 Font = Font,
                 Command = ClickedCommand,
                 CommandParameter = ButtonLayout.Children.Count,
@@ -230,8 +236,13 @@ namespace Xamarin.Forms.Labs.Controls
 
             if (IsNumber)
             {
+                button.Text = string.Format("{0}", text);
                 button.WidthRequest = Device.OnPlatform(44, 44, 72);
                 button.MinimumWidthRequest = Device.OnPlatform(44, 44, 72);
+            }
+            else
+            {
+                button.Text = string.Format("  {0}  ", text);
             }
 
             var frame = new Frame
@@ -263,6 +274,8 @@ namespace Xamarin.Forms.Labs.Controls
             var frame = (Frame)ButtonLayout.Children[index];
 
             frame.HasShadow = isSelected;
+
+            frame.BackgroundColor = isSelected ? SelectedFrameBackgroundColor : ViewBackgroundColor;
 
             var button = (Button)frame.Content;
 
