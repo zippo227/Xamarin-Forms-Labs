@@ -140,6 +140,7 @@
     <Compile Include="Extensions\PageExtensions.cs" />
     <Compile Include="Extensions\UIElementExtensions.cs" />
     <Compile Include="Extensions\VectorExtensions.cs" />
+    <Compile Include="Pages\ExtendedMasterDetailRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
