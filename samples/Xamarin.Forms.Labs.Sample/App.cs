@@ -184,26 +184,26 @@ namespace Xamarin.Forms.Labs.Sample
                 ItemsSource = new List<string>
                 {
                     "Autocomplete",
-                    "Buttons",
                     "ButtonGroup",
                     "Calendar",
                     "CameraView",
                     "CheckBox",
+                    "CircleImage",
                     "DynamicListView",
-                    "ExtendedCells",
-                    "ExtendedEntries",
-                    "ExtendedLabels",
+                    "ExtendedCell",
+                    "ExtendedEntry",
+                    "ExtendedLabel",
                     "ExtendedScrollView",
                     "ExtendedSlider",
                     "GridView",
                     "HybridWebView",
+                    "ImageButton",
                     "ImageGallery",
                     "Popup",
                     "RepeaterView",
                     "Segment",
                     "Separator",
                     "WebImage",
-                    "CircleImage"
                 }
             };
 
@@ -214,7 +214,7 @@ namespace Xamarin.Forms.Labs.Sample
                     case "autocomplete":
                         await mainPage.Navigation.PushAsync(new AutoCompletePage());
                         break;
-                    case "buttons":
+                    case "imagebutton":
                         await mainPage.Navigation.PushAsync(new ButtonPage());
                         break;
                     case "calendar":
@@ -229,13 +229,13 @@ namespace Xamarin.Forms.Labs.Sample
                     case "dynamiclistview":
                         await mainPage.Navigation.PushAsync(new Xamarin.Forms.Labs.Sample.Pages.Controls.DynamicList.DynamicListView());
                         break;
-                    case "extendedcells":
+                    case "extendedcell":
                         await mainPage.Navigation.PushAsync(new ExtendedCellPage());
                         break;
-                    case "extendedentries":
+                    case "extendedentry":
                         await mainPage.Navigation.PushAsync(new ExtendedEntryPage());
                         break;
-                    case "extendedlabels":
+                    case "extendedlabel":
                         await mainPage.Navigation.PushAsync(new ExtendedLabelPage());
                         break;
                     case "extendedscrollview":

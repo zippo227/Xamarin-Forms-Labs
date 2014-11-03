@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <!-- Removed scrollview as this makes the Windows Phone not render the font substitutions. This is bug reported to the Xamarin team. 
         Works on other platforms. !-->
-        <!--<ScrollView>-->
+        <!--<ScrollView> -->
         <StackLayout x:Name="stkRoot" Padding="0,40,0,0">
             <controls:ExtendedLabel
                 Text="Plain unspecified Extended Label" HorizontalOptions="StartAndExpand">
@@ -21,12 +21,14 @@
             </controls:ExtendedLabel>
             <controls:ExtendedLabel
                 Text="Text with strikethrough size 14"
-                IsStrikeThrough="True" FontSize="14"
+                IsStrikeThrough="True" 
+                FontSize="14"
                 HorizontalOptions="StartAndExpand">
             </controls:ExtendedLabel>
             <controls:ExtendedLabel
                 Text="Text with strikethrough 20"
-                IsStrikeThrough="True" FontSize="20"
+                IsStrikeThrough="True" 
+                FontSize="20"
                 HorizontalOptions="StartAndExpand">
             </controls:ExtendedLabel>
             <controls:ExtendedLabel
@@ -80,6 +82,6 @@
                 HorizontalOptions="StartAndExpand">
             </controls:ExtendedLabel>
         </StackLayout>
-        <!--</ScrollView>-->
+       <!-- </ScrollView> -->
     </ContentPage.Content>
 </ContentPage>
