@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.Labs
 {
-    public class ExtendedMasterDetailPage
+    public class ExtendedMasterDetailPage : MasterDetailPage
     {
         public ExtendedMasterDetailPage()
         {
