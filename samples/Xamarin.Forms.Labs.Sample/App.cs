@@ -179,32 +179,43 @@ namespace Xamarin.Forms.Labs.Sample
                 Icon = Device.OnPlatform("settings20_32.png", "settings20.png", "Images/settings20.png"),
             };
 
+            var listItems = new List<string>
+            {
+                "Autocomplete",
+                "ButtonGroup",
+                "Calendar",
+                "CameraView",
+                "CheckBox",
+                "CircleImage",
+                "DynamicListView",
+                "ExtendedCell",
+                "ExtendedEntry",
+                "ExtendedLabel",
+                "ExtendedScrollView",
+                "ExtendedSlider",
+                "GridView",
+                "HybridWebView",
+                "ImageButton",
+                "ImageGallery",
+                "Popup",
+                "RepeaterView",
+                "Segment",
+                "Separator",
+                "WebImage",
+            };
+
+            // This is actually a lot of work just to enable something
+            // for iOS only, but oh well.
+            if (Device.OS == TargetPlatform.iOS)
+            {
+                var index = listItems.IndexOf("Segment");
+
+                listItems.Insert(index + 1, "SegmentedControlView");
+            }
+
             var lstControls = new ListView
             {
-                ItemsSource = new List<string>
-                {
-                    "Autocomplete",
-                    "ButtonGroup",
-                    "Calendar",
-                    "CameraView",
-                    "CheckBox",
-                    "CircleImage",
-                    "DynamicListView",
-                    "ExtendedCell",
-                    "ExtendedEntry",
-                    "ExtendedLabel",
-                    "ExtendedScrollView",
-                    "ExtendedSlider",
-                    "GridView",
-                    "HybridWebView",
-                    "ImageButton",
-                    "ImageGallery",
-                    "Popup",
-                    "RepeaterView",
-                    "Segment",
-                    "Separator",
-                    "WebImage",
-                }
+                ItemsSource = listItems
             };
 
             lstControls.ItemSelected += async (sender, e) =>
@@ -261,6 +272,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "segment":
                         await mainPage.Navigation.PushAsync(new SegmentPage());
+                        break;
+                    case "segmentedcontrolview":
+                        await mainPage.Navigation.PushAsync(new SegmentedControlViewPage());
                         break;
                     case "separator":
                         await mainPage.Navigation.PushAsync(new SeparatorPage());
