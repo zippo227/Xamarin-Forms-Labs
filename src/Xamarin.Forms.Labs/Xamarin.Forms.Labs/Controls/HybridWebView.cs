@@ -185,7 +185,7 @@ namespace Xamarin.Forms.Labs.Controls
         public EventHandler LoadFinished;
         public EventHandler LeftSwipe;
         public EventHandler RightSwipe;
-        public EventHandler<Uri> Navigating;
+        public EventHandler<EventArgs<Uri>> Navigating;
 
         internal bool TryGetAction(string name, out Action<string> action)
         {
@@ -229,7 +229,7 @@ namespace Xamarin.Forms.Labs.Controls
             var handler = this.Navigating;
             if (handler != null)
             {
-                handler(this, uri);
+                handler(this, new EventArgs<Uri>(uri));
             }
         }
 
