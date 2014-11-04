@@ -47,12 +47,13 @@ namespace Xamarin.Forms.Labs.Droid.Services
 
         public Task<bool> IsReachable(string host, TimeSpan timeout)
         {
-            return Task<bool>.Run(() =>
+            return Task.Run(() =>
             {
                 try
                 {
                     var address = InetAddress.GetByName(host);
-                    return address == null ? false : address.IsReachable((int)timeout.TotalMilliseconds);
+
+                    return address != null;// && (address.IsReachable((int)timeout.TotalMilliseconds) || );
                 }
                 catch (Java.Net.UnknownHostException)
                 {
@@ -60,6 +61,15 @@ namespace Xamarin.Forms.Labs.Droid.Services
                 }
             });
         }
+
+//        public bool CanPing(string host)
+//        {
+//            Process p1 = Java.Lang.Runtime.GetRuntime().Exec(string.Format("ping -c 1 {0}", host));
+//
+//
+//            int returnVal = p1.();
+//            boolean reachable = (returnVal==0);
+//        }
 
         public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
         {

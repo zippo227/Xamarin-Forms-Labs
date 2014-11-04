@@ -6,52 +6,61 @@ using System.Drawing;
 using Xamarin.Forms.Labs.iOS.Controls;
 using Xamarin.Forms.Labs.Controls;
 
-[assembly: ExportRenderer (typeof (SegmentedControlView), typeof (SegmentedControlViewRenderer))]
+[assembly: ExportRenderer(typeof(SegmentedControlView), typeof(SegmentedControlViewRenderer))]
 
 namespace Xamarin.Forms.Labs.iOS.Controls
 {
-    public class SegmentedControlViewRenderer : ViewRenderer<SegmentedControlView , UISegmentedControl>
-	{
-		//
-		// Methods
-		//
-		protected override void Dispose (bool disposing)
-		{
-			if (disposing) {
-				base.Control.ValueChanged -= new EventHandler (this.HandleControlValueChanged);
+    public class SegmentedControlViewRenderer : ViewRenderer<SegmentedControlView, UISegmentedControl>
+    {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Control.ValueChanged -= HandleControlValueChanged;
+            }
 
-			}
-			base.Dispose (disposing);
-		}
+            base.Dispose(disposing);
+        }
 
-		private void HandleControlValueChanged (object sender, EventArgs e)
-		{
-			base.Element.SelectedItem = base.Control.SelectedSegment;
-		}
+        private void HandleControlValueChanged(object sender, EventArgs e)
+        {
+            Element.SelectedItem = Control.SelectedSegment;
+        }
 
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
 
+            if (e.PropertyName == "SelectedItem")
+            {
+                Control.SelectedSegment = Element.SelectedItem;
+            }
+        }
 
-		protected override void OnElementChanged (ElementChangedEventArgs<SegmentedControlView> e)
-		{
-			base.OnElementChanged (e);
+        protected override void OnElementChanged(ElementChangedEventArgs<SegmentedControlView> e)
+        {
+            base.OnElementChanged(e);
 
-			if (e.OldElement == null) {   
-				// perform initial setup
-				var native = new UISegmentedControl (RectangleF.Empty);
-				var segments = this.Element.SegmentsItens.Split (';');
+            if (e.OldElement != null)
+            {
+                return;
+            }
 
-				for (int i = 0; i < segments.Length; i++) {
-					native.InsertSegment (segments[i], i, false);
-				}
+            var native = new UISegmentedControl(RectangleF.Empty);
+            var segments = e.NewElement.SegmentsItens.Split(';');
 
-				native.TintColor = this.Element.TintColor.ToUIColor();
-				native.SelectedSegment = 0;
+            for (var i = 0; i < segments.Length; i++)
+            {
+                native.InsertSegment(segments[i], i, false);
+            }
 
-				base.SetNativeControl (native);
+            native.TintColor = e.NewElement.TintColor.ToUIColor();
+            native.SelectedSegment = e.NewElement.SelectedItem;
 
-				base.Control.ValueChanged += new EventHandler (this.HandleControlValueChanged);
-			}
-		}
-	}
+            SetNativeControl(native);
+
+            Control.ValueChanged += HandleControlValueChanged;
+        }
+    }
 }
 

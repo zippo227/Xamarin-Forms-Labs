@@ -21,5 +21,16 @@
                           WinPhone="White"/>
       </controls:CheckBox.TextColor>
     </controls:CheckBox>
+    <ListView x:Name="listView">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <ViewCell.View>
+              <controls:CheckBox DefaultText="{Binding}" CheckedText="{Binding}" UncheckedText="{Binding}" HorizontalOptions="FillAndExpand" TextColor="White" FontSize="25" />
+            </ViewCell.View>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
   </StackLayout>
 </ContentPage>

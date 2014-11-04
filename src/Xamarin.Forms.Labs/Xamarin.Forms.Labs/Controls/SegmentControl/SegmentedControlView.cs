@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Labs.Controls
 
         public static readonly BindableProperty SegmentsItensProperty =
             BindableProperty.Create<SegmentedControlView, string>(
-                p => p.SegmentsItens, default(string));
+                p => p.SegmentsItens, default(string), BindingMode.TwoWay);
 
         public string SegmentsItens
         {
