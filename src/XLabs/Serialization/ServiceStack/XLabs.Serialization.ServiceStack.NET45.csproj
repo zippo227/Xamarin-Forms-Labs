@@ -259,6 +259,7 @@
     <Compile Include="TypeSerializer.Generic.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Wrapper\JsonSerializer.cs" />
     <Compile Include="XmlSerializer.cs">
       <SubType>Code</SubType>
     </Compile>
