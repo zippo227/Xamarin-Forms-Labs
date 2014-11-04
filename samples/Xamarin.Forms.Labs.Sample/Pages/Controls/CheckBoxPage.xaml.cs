@@ -1,6 +1,7 @@
 ﻿﻿using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
+﻿using System.Linq;
+﻿using Xamarin.Forms;
 
 namespace Xamarin.Forms.Labs.Sample.Pages.Controls
 {    
@@ -9,6 +10,8 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls
         public CheckBoxPage ()
         {
             InitializeComponent ();
+
+            listView.ItemsSource = Enum.GetValues(typeof(DayOfWeek)).OfType<DayOfWeek>().Select(c => c.ToString());
         }
     }
 }
