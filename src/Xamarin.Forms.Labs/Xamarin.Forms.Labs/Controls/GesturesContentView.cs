@@ -11,6 +11,37 @@
     public class GesturesContentView : ContentView
     {
         private readonly List<ViewInterest> viewInterests=new List<ViewInterest>();
+
+        /// <summary>
+        /// Property Definition for the <see cref="Accuracy"/> Property
+        /// </summary>
+        public static BindableProperty AccuracyProperty =BindableProperty.Create<GesturesContentView, float>(x=>x.Accuracy,5.0f,BindingMode.OneWay,(bo, val) => val >= 5 && val<=25);
+
+        /// <summary>
+        /// Property Definition for the Bindable <see cref="MinimumSwipeLength"/> property
+        /// </summary>
+        public static BindableProperty MinimumSwipeLengthProperty =BindableProperty.Create<GesturesContentView, float>(x => x.MinimumSwipeLength,25,BindingMode.OneWay,(bo, val) => val >= 10);
+
+        /// <summary>
+        /// The minimum gesture length to be considered a valid swipe
+        /// Default value is 25
+        /// Minimum value is 10 there is no predefined maximum
+        /// </summary>
+        public float MinimumSwipeLength
+        {
+            get { return (float)GetValue(MinimumSwipeLengthProperty); }
+            set { SetValue(MinimumSwipeLengthProperty,value);}
+        }
+        /// <summary>
+        /// The maximum distance a gesture origin point can be from
+        /// an interested view.  ie: How close the user must be to the view
+        /// Minimum value is 5 maximum is 25
+        /// </summary>
+        public float Accuracy
+        {
+            get { return (float)GetValue(AccuracyProperty); }
+            set { SetValue(AccuracyProperty,value);}
+        }
         /// <summary>
         /// Event that can be hooked from codebehind files.
         /// When invoked the sender is the view where the gesture originated.
@@ -100,21 +131,68 @@
         /// For now only consider the origin point.
         /// Once the kinks are worked out switch to a 
         /// closest approach based on nearest point intersection
+        /// ordering by area on the presumption that the smallest
+        /// view will be the innermost
         /// </summary>
         /// <param name="rawGesture">The <see cref="RawGestures"/></param>
         /// <param name="d">The directionality of the gesture <see cref="Directionality"/></param>
-        /// <param name="r">The origin point of the gesture</param>
+        /// <param name="point">The origin point of the gesture</param>
         /// <returns></returns>
-        private ViewInterest InterestedView(RawGestures rawGesture,Directionality d, Point r)
+        private ViewInterest InterestedView(RawGestures rawGesture,Directionality d, Point point)
         {
-            return viewInterests.FirstOrDefault(v => v.Gesture==rawGesture && 
-                                               ( 
-                                                    (v.Directon & Directionality.HorizontalMask)==(d & Directionality.HorizontalMask) || 
-                                                    (v.Directon & Directionality.VerticalMask)== (d & Directionality.VerticalMask)
-                                               ) &&  
-                                               v.View.Bounds.Contains(r));            
+            var allinterested = viewInterests.Where(v =>v.Gesture == rawGesture && 
+                                (
+                                    (v.Directon & Directionality.HorizontalMask) == (d & Directionality.HorizontalMask) || 
+                                    (v.Directon & Directionality.VerticalMask) == (d & Directionality.VerticalMask))
+                                ).ToList();
+
+            if (!allinterested.Any()) return null;
+
+            //Smallest view that contains the origin point wins
+            //In most cases smallest will be the innermost
+            //TODO:Check to see if RaiseView and LowerView have an effect on this
+            var originview = allinterested.Where(v => v.View.Bounds.Contains(point)).OrderBy(v => v.View.Bounds.Width * v.View.Bounds.Height).FirstOrDefault();
+            if (originview == null)
+            {
+                //No result Check for interescection based on Accuracy
+                var range = Accuracy;
+                var inflaterect = new Rectangle(point.X - range, point.Y - range, point.X + range, point.Y + range);
+                var canidates = allinterested.Where(v => v.View.Bounds.IntersectsWith(inflaterect)).ToList();
+                if (canidates.Any())
+                {
+                    originview = canidates.Count() == 1? canidates.First(): canidates.OrderBy(v => DistanceToClosestEdge(v.View.Bounds, point)).First();
+                }
+            }
+            return originview;
         }
 
+        private double DistanceToClosestEdge(Rectangle r, Point pt)
+        {
+            //Distance from the top edge of the rectangle
+            // ReSharper disable InconsistentNaming
+            var distAB = DistanceToEdge(pt, new Point(r.Left, r.Top),new Point(r.Left + r.Width, r.Top));
+            //Distance from the left edge of the rectangle
+            var distAC = DistanceToEdge(pt, new Point(r.Left, r.Top), new Point(r.Left, r.Top + r.Height));
+            //Distance from the bottom edge of the rectangle
+            var distCD = DistanceToEdge(pt,new Point(r.Left, r.Top + r.Height),new Point(r.Left + r.Width, r.Top + r.Height));
+            //Distance from the right edge of the rectable
+            var distBD = DistanceToEdge(pt,new Point(r.Left + r.Width, r.Top),new Point(r.Left + r.Width, r.Top + r.Height));
+            // ReSharper restore InconsistentNaming
+
+            return Math.Min(distAB, Math.Min(distAC, Math.Min(distCD, distBD)));
+        }
+
+        private double DistanceToEdge(Point originPoint, Point vertex1Point, Point vertex2Point)
+        {
+            // normalize points
+            var cn = new Point(vertex2Point.X - originPoint.X, vertex2Point.Y - originPoint.Y);
+            var bn = new Point(vertex1Point.X - originPoint.X, vertex1Point.Y - originPoint.Y);
+
+            var angle = Math.Atan2(bn.Y, bn.X) - Math.Atan2(cn.Y, cn.X);
+            var abLength = Math.Sqrt(bn.X * bn.X + bn.Y * bn.Y);
+
+            return Math.Sin(angle) * abLength;
+        }
         private void SatisfyInterest(ViewInterest vi,GestureEventArgs args)
         {
             var commandparam = vi.ComamndParameter??BindingContext;
