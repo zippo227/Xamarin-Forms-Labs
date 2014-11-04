@@ -157,10 +157,10 @@
                 //No result Check for interescection based on Accuracy
                 var range = Accuracy;
                 var inflaterect = new Rectangle(point.X - range, point.Y - range, point.X + range, point.Y + range);
-                var canidates = allinterested.Where(v => v.View.Bounds.IntersectsWith(inflaterect)).ToList();
-                if (canidates.Any())
+                var candidates = allinterested.Where(v => v.View.Bounds.IntersectsWith(inflaterect)).ToList();
+                if (candidates.Any())
                 {
-                    originview = canidates.Count() == 1? canidates.First(): canidates.OrderBy(v => DistanceToClosestEdge(v.View.Bounds, point)).First();
+                    originview = candidates.Count() == 1? candidates.First(): candidates.OrderBy(v => DistanceToClosestEdge(v.View.Bounds, point)).First();
                 }
             }
             return originview;
