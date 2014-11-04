@@ -64,6 +64,10 @@ namespace XLabs.Web
             }
         }
 
+        #if DEBUG
+        public EventHandler<System.Net.Http.Headers.HttpResponseHeaders> OnHttpResponse;
+        #endif
+
         /// <summary>
         /// Gets the string content type.
         /// </summary>
@@ -205,8 +209,17 @@ namespace XLabs.Web
         /// <param name="response">Http response message</param>
         /// <param name="serializer">Serializer to use.</param>
         /// <returns>The async task.</returns>
-        private static async Task<T> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
+        private async Task<T> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
         {
+            #if DEBUG
+            var handler = this.OnHttpResponse;
+
+            if (handler != null)
+            {
+                handler(this, response.Headers);
+            }
+            #endif
+
             if (!response.IsSuccessStatusCode)
             {
                 throw new WebResponseException(response.ReasonPhrase);
