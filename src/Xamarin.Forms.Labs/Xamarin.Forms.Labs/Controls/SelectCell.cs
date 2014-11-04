@@ -16,7 +16,19 @@ namespace Xamarin.Forms.Labs.Controls
 		public string SelectedItem
 		{
 			get { return (string)GetValue(SelectedItemProperty);  }
-			set { SetValue(SelectedItemProperty, value); Detail = value; }
+			set 
+			{ 
+				SetValue(SelectedItemProperty, value); 
+				Detail = value; 
+
+				if (cells != null && cells.Count > 0) {
+					foreach (var cell in cells) {
+						cell.Checked = cell.Text == value;
+					}
+
+					selectionTableView.Root = new TableRoot { new TableSection () { cells } };
+				}
+			}
 		}
 
 		public Func<INavigation> Navigation { get; set; }
