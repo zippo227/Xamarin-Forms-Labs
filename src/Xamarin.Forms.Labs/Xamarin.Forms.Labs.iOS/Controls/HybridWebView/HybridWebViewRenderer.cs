@@ -15,7 +15,7 @@ namespace Xamarin.Forms.Labs.Controls
     /// </summary>
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, UIWebView>
     {
-        private UIWebView webView;
+        //private UIWebView webView;
         private UISwipeGestureRecognizer leftSwipeGestureRecognizer;
         private UISwipeGestureRecognizer rightSwipeGestureRecognizer;
 
@@ -29,13 +29,13 @@ namespace Xamarin.Forms.Labs.Controls
         {
             base.OnElementChanged(e);
 
-            if (this.webView == null)
+            if (this.Control == null)
             {
-                this.webView = new UIWebView();
-                this.webView.LoadFinished += LoadFinished;
-                this.webView.ShouldStartLoad += this.HandleStartLoad;
+                var webView = new UIWebView();
+                webView.LoadFinished += LoadFinished;
+                webView.ShouldStartLoad += this.HandleStartLoad;
                 this.InjectNativeFunctionScript();
-                this.SetNativeControl(this.webView);
+                this.SetNativeControl(webView);
 
                 this.leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => this.Element.OnLeftSwipe(this, EventArgs.Empty))
                 {
@@ -70,8 +70,8 @@ namespace Xamarin.Forms.Labs.Controls
 
         void LoadFinished(object sender, EventArgs e)
         {
-            this.Element.OnLoadFinished(sender, e);
             InjectNativeFunctionScript();
+            this.Element.OnLoadFinished(sender, e);
         }
 
         private bool HandleStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
@@ -82,7 +82,7 @@ namespace Xamarin.Forms.Labs.Controls
         partial void Inject(string script)
         {
             InvokeOnMainThread(() => {
-                this.webView.EvaluateJavascript(script);
+                this.Control.EvaluateJavascript(script);
             });
         }
 
@@ -110,7 +110,7 @@ namespace Xamarin.Forms.Labs.Controls
         {
             if (uri != null)
             {
-                this.webView.LoadRequest(new NSUrlRequest(new NSUrl(uri.AbsoluteUri)));
+                this.Control.LoadRequest(new NSUrlRequest(new NSUrl(uri.AbsoluteUri)));
             }
         }
 
@@ -123,7 +123,12 @@ namespace Xamarin.Forms.Labs.Controls
 
         partial void LoadContent(object sender, string contentFullName)
         {
-            this.webView.LoadHtmlString(contentFullName, new NSUrl(NSBundle.MainBundle.BundlePath, true));
+            this.Control.LoadHtmlString(contentFullName, new NSUrl(NSBundle.MainBundle.BundlePath, true));
+        }
+
+        partial void LoadFromString(string html)
+        {
+            this.LoadContent(null, html);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Xamarin.Forms.Labs.Controls
     /// <summary>
     /// The hybrid web view.
     /// </summary>
-    public class HybridWebView : WebView
+    public class HybridWebView : View
     {
         /// <summary>
         /// The inject lock.
@@ -73,12 +73,23 @@ namespace Xamarin.Forms.Labs.Controls
         public static readonly BindableProperty UriProperty = BindableProperty.Create<HybridWebView, Uri>(p => p.Uri, default(Uri));
 
         /// <summary>
+        /// The source property.
+        /// </summary>
+        public static readonly BindableProperty SourceProperty = BindableProperty.Create<HybridWebView, WebViewSource>(p => p.Source, default(WebViewSource));
+
+        /// <summary>
         /// Gets or sets the uri.
         /// </summary>
         public Uri Uri
         {
-            get { return (Uri)GetValue(UriProperty); }
-            set { SetValue(UriProperty, value); }
+            get { return this.GetValue<Uri>(UriProperty); }
+            set { this.SetValue(UriProperty, value); }
+        }
+
+        public WebViewSource Source
+        {
+            get { return this.GetValue<WebViewSource>(SourceProperty); }
+            set { this.SetValue(SourceProperty, value); }
         }
 
         /// <summary>

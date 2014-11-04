@@ -46,7 +46,7 @@ namespace Xamarin.Forms.Labs.iOS
         {
             get
             {
-                return ShouldHideMenu == null ? true : ShouldHideMenu();
+                return ShouldHideMenu == null || ShouldHideMenu();
             }
         }
 

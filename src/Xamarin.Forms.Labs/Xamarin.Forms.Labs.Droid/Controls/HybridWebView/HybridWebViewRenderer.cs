@@ -59,6 +59,12 @@ namespace Xamarin.Forms.Labs.Controls
             this.InjectNativeFunctionScript();
         }
 
+        partial void LoadFromString(string html)
+        {
+            this.Control.LoadData(html, "text/html", "UTF-8");
+            this.InjectNativeFunctionScript();
+        }
+
         private class Client : WebViewClient
         {
             private readonly WeakReference<HybridWebViewRenderer> webHybrid;

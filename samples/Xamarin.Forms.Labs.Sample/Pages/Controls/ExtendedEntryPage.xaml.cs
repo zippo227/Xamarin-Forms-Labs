@@ -20,6 +20,16 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls
 
 			stackLayout.Children.Add(entryFromCode);
 
+            var swipeEntry = new ExtendedEntry()
+            {
+                    Placeholder = "Swipe me..."
+            };
+
+            swipeEntry.LeftSwipe += (s, e) => swipeEntry.Text = "Swiped left";
+
+            swipeEntry.RightSwipe += (s, e) => swipeEntry.Text = "Swiped right";
+
+            stackLayout.Children.Add(swipeEntry);
         }
     }
 }
