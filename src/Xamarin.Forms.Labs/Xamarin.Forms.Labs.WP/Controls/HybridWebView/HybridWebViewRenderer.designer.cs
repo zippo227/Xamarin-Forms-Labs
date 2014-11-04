@@ -156,7 +156,7 @@ namespace Xamarin.Forms.Labs.Controls
                 } 
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine ("Unhandled callback {0} was called from JavaScript", name);
+                    System.Diagnostics.Debug.WriteLine(string.Format("Unhandled callback {0} was called from JavaScript", name));
                 }
             }
 

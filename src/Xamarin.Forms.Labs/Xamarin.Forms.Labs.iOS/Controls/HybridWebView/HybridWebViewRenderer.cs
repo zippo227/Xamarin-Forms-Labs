@@ -34,7 +34,7 @@ namespace Xamarin.Forms.Labs.Controls
                 var webView = new UIWebView();
                 webView.LoadFinished += LoadFinished;
                 webView.ShouldStartLoad += this.HandleStartLoad;
-                this.InjectNativeFunctionScript();
+                //this.InjectNativeFunctionScript();
                 this.SetNativeControl(webView);
 
                 this.leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => this.Element.OnLeftSwipe(this, EventArgs.Empty))
