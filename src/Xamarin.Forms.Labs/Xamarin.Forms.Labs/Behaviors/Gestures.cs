@@ -1,10 +1,9 @@
 ﻿namespace Xamarin.Forms.Labs.Behaviors
 {
-    using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
+    using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Windows.Input;
+
     using Xamarin.Forms.Labs.Controls;
     using Xamarin.Forms.Labs.Exceptions;
 
@@ -15,114 +14,53 @@
     /// more readable
     /// </summary>
     public class Gestures : BindableObject
-    {   
+    {
         /// <summary>
-        /// Definition for the Bindable LongPress Property.
+        /// Definition for the attachable Interests Property
         /// </summary>
-        public static BindableProperty LongPressProperty = BindableProperty.CreateAttached<GesturesContentView, ICommand>((x) => x.GetValue<ICommand>(LongPressProperty), default(ICommand), BindingMode.OneWay, null,(bo,o,n)=> RegisterInterest(bo,n,RawGestures.LongPress,Directionality.None));
-        /// <summary>
-        /// Definition for the Bindable SingleTapProperty
-        /// </summary>
-        public static BindableProperty SingleTapProperty = BindableProperty.CreateAttached<GesturesContentView, ICommand>((x) => x.GetValue<ICommand>(SingleTapProperty), default(ICommand), BindingMode.OneWay, null, (bo, o, n) => RegisterInterest(bo, n, RawGestures.SingleTap, Directionality.None));
-        /// <summary>
-        /// Definition for the Bindable DoubleTapProperty
-        /// </summary>
-        public static BindableProperty DoubleTapProperty = BindableProperty.CreateAttached<GesturesContentView, ICommand>((x) => x.GetValue<ICommand>(DoubleTapProperty), default(ICommand), BindingMode.OneWay, null, (bo, o, n) => RegisterInterest(bo, n, RawGestures.DoubleTap, Directionality.None));
-        /// <summary>
-        /// Defintion for the Bindable SwipeLeft Proprety
-        /// </summary>
-        public static BindableProperty SwipeLeftProperty = BindableProperty.CreateAttached<GesturesContentView, ICommand>((x) => x.GetValue<ICommand>(SwipeLeftProperty), default(ICommand), BindingMode.OneWay, null, (bo, o, n) => RegisterInterest(bo, n, RawGestures.Swipe, Directionality.Left));
-        /// <summary>
-        /// Defintion for the Bindable SwipeRight Property
-        /// </summary>
-        public static BindableProperty SwipeRightProperty = BindableProperty.CreateAttached<GesturesContentView, ICommand>((x) => x.GetValue<ICommand>(SwipeRightProperty), default(ICommand), BindingMode.OneWay, null, (bo, o, n) => RegisterInterest(bo, n, RawGestures.Swipe, Directionality.Right));
-        /// <summary>
-        /// Defintion for the Bindable SwipeUp Property
-        /// </summary>
-        public static BindableProperty SwipeUpProperty = BindableProperty.CreateAttached<GesturesContentView, ICommand>((x) => x.GetValue<ICommand>(SwipeUpProperty), default(ICommand), BindingMode.OneWay, null, (bo, o, n) => RegisterInterest(bo, n, RawGestures.Swipe, Directionality.Up));
-        /// <summary>
-        /// Defintion for the Bindable SwipeDown Property
-        /// </summary>
-        public static BindableProperty SwipeDownProperty = BindableProperty.CreateAttached<GesturesContentView, ICommand>((x) => x.GetValue<ICommand>(SwipeDownProperty), default(ICommand), BindingMode.OneWay, null, (bo, o, n) => RegisterInterest(bo, n, RawGestures.Swipe, Directionality.Down));
-
+        public static BindableProperty InterestsProperty =BindableProperty.CreateAttached<Gestures, GestureInterests>(
+                                                            x => x.GetValue<GestureInterests>(InterestsProperty),
+                                                            null,
+                                                            BindingMode.OneWay,  
+                                                            null,
+                                                            InterestsChanged);
 
         /// <summary>
-        /// Definition for the Bindable LongPressParameter Property.
+        /// ctor guarenttess that <see cref="Interests"/> is not null
         /// </summary>
-        public static BindableProperty LongPressParameterProperty = BindableProperty.CreateAttached<GesturesContentView, object>((x) => x.GetValue<object>(LongPressParameterProperty), default(object), BindingMode.OneWay, null, (bo, o, n) => RegisterInterestParameter(bo, n, RawGestures.LongPress, Directionality.None));
-        /// <summary>
-        /// Definition for the Bindable SingleTapParameter Property
-        /// </summary>
-        public static BindableProperty SingleTapParameterProperty = BindableProperty.CreateAttached<GesturesContentView, object>((x) => x.GetValue<object>(SingleTapParameterProperty), default(object), BindingMode.OneWay, null, (bo, o, n) => RegisterInterestParameter(bo, n, RawGestures.SingleTap, Directionality.None));
-        /// <summary>
-        /// Definition for the Bindable DoubleTapParameter Property
-        /// </summary>
-        public static BindableProperty DoubleTapParameterProperty = BindableProperty.CreateAttached<GesturesContentView, object>((x) => x.GetValue<object>(DoubleTapParameterProperty), default(object), BindingMode.OneWay, null, (bo, o, n) => RegisterInterestParameter(bo, n, RawGestures.DoubleTap, Directionality.None));
-        /// <summary>
-        /// Defintion for the Bindable SwipeLeftParameter Proprety
-        /// </summary>
-        public static BindableProperty SwipeLeftParameterProperty = BindableProperty.CreateAttached<GesturesContentView, object>((x) => x.GetValue<object>(SwipeLeftParameterProperty), default(object), BindingMode.OneWay, null, (bo, o, n) => RegisterInterestParameter(bo, n, RawGestures.Swipe, Directionality.Left));
-        /// <summary>
-        /// Defintion for the Bindable SwipeRightParameter Property
-        /// </summary>
-        public static BindableProperty SwipeRightParameterProperty = BindableProperty.CreateAttached<GesturesContentView, object>((x) => x.GetValue<object>(SwipeRightParameterProperty), default(object), BindingMode.OneWay, null, (bo, o, n) => RegisterInterestParameter(bo, n, RawGestures.Swipe, Directionality.Right));
-        /// <summary>
-        /// Defintion for the Bindable SwipeUpParameter Property
-        /// </summary>
-        public static BindableProperty SwipeUpParameterProperty = BindableProperty.CreateAttached<GesturesContentView, object>((x) => x.GetValue<object>(SwipeUpParameterProperty), default(object), BindingMode.OneWay, null, (bo, o, n) => RegisterInterestParameter(bo, n, RawGestures.Swipe, Directionality.Up));
-        /// <summary>
-        /// Defintion for the Bindable SwipeDownParameter Property
-        /// </summary>
-        public static BindableProperty SwipeDownParameterProperty = BindableProperty.CreateAttached<GesturesContentView, object>((x) => x.GetValue<object>(SwipeDownParameterProperty), default(object), BindingMode.OneWay, null, (bo, o, n) => RegisterInterestParameter(bo, n, RawGestures.Swipe, Directionality.Down));
-
-
-        /// <summary>
-        /// Used by the lamda expression in the various property definions
-        /// to register interest in a gesture with the containing <see cref="GesturesContentView"/>
-        /// </summary>
-        /// <param name="bo">The bindable object this property is attached to</param>
-        /// <param name="command">The Command to execute</param>
-        /// <param name="r">The <see cref="RawGestures"/> of interest</param>
-        /// <param name="d">The <see cref="Directionality"/> of interest (SingleTap,DoubleTap and LongPress have a directionality of None)</param>
-        internal static void RegisterInterest(BindableObject bo, ICommand command,RawGestures r,Directionality d)
+        public Gestures()
         {
-            //Find the specific GesturesContentView that is needed....
-            var gcv = FindContentViewParent(bo);
-            gcv.RegisterInterest(bo as View,r,d,command);
-
+            Interests= new GestureInterests();
+            
         }
-
         /// <summary>
-        /// Used by the lamda expression in the various property parameter definions
-        /// to register interest in a gesture with the containing <see cref="GesturesContentView"/>
-        /// If the param is not a bound item (ie a constant like "boo") this will fail
-        /// constants are set before there is a parent.  
+        /// The set of interests for this view
         /// </summary>
-        /// <param name="bo">The bindable object this property is attached to</param>
-        /// <param name="param">The Command Parameter</param>
-        /// <param name="r">The <see cref="RawGestures"/> of interest</param>
-        /// <param name="d">The <see cref="Directionality"/> of interest (SingleTap,DoubleTap and LongPress have a directionality of None)</param>
-        internal static void RegisterInterestParameter(BindableObject bo, object param, RawGestures r, Directionality d)
+        public GestureInterests Interests
         {
-            var gcv = FindContentViewParent(bo,false);
-            if (gcv == null)//This can happen if the param is a non bound value.  
+            get { return (GestureInterests)GetValue(InterestsProperty); }
+            set { SetValue(InterestsProperty,value);}
+        }
+        private static void InterestsChanged(BindableObject bo, GestureInterests oldvalue, GestureInterests newvalue)
+        {
+            var view = bo as View;
+            if (view == null)
+                throw new InvalidBindableException(bo, typeof(View));
+
+            var gcv = FindContentViewParent(view,false);
+            if (gcv == null)
             {
-                var view = bo as View;
-                if (view != null)
-                {
-                    PendingInterestParameterss.Add(new PendingInterestParams { View = view, Gesture = r, Direction = d, ParamValue = param });
-                    view.PropertyChanged += ViewPropertyChanged;
-                }
-                else
-                {
-                    throw new InvalidBindableException(bo, typeof(View));
-                }
+                PendingInterestParameters.Add(new PendingInterestParams { View = view, Interests = newvalue });
+                view.PropertyChanged += ViewPropertyChanged;
+
             }
             else
-                gcv.RegisterInterestParamaeter(bo as View,r,d,param);
-
+                gcv.RegisterInterests(view,newvalue);
+            
         }
 
+
+        
         private static void ViewPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             //Unfortunately the Parent property doesn't signal a change
@@ -130,29 +68,26 @@
             if (e.PropertyName == "Renderer")
             {
                 var view = sender as View;
-                var pending = PendingInterestParameterss.Where(x => x.View == view).ToList();
+                var gcv = FindContentViewParent(view);
+                var pending = PendingInterestParameters.Where(x => x.View == view).ToList();
                 foreach (var pendingparam in pending)
                 {
-                    var gcv = FindContentViewParent(sender as BindableObject);
-                    gcv.RegisterInterestParamaeter(view,pendingparam.Gesture,pendingparam.Direction,pendingparam.ParamValue);
-                    PendingInterestParameterss.Remove(pendingparam);
+                    gcv.RegisterInterests(view,pendingparam.Interests);
+                    PendingInterestParameters.Remove(pendingparam);
                 }
                 view.PropertyChanged -= ViewPropertyChanged;
             }
 
         }
-
+        
         /// <summary>
         /// Utility function to find the first containing <see cref="GesturesContentView"/>
         /// </summary>
         /// <param name="bo">The Bindable object to start from</param>
         /// <param name="throwException">True to throw an excpetion if the parent is not found</param>
         /// <returns></returns>
-        private static GesturesContentView FindContentViewParent(BindableObject bo,bool throwException=true)
+        private static GesturesContentView FindContentViewParent(View view,bool throwException=true)
         {
-            var view = bo as View;
-            if (view == null)
-                throw new InvalidBindableException(bo, typeof(View));
             var history = new List<string>();
             if (view is GesturesContentView) return view as GesturesContentView;
             history.Add(view.GetType().Name);
@@ -166,17 +101,21 @@
                 throw new InvalidNestingException(typeof(Gestures),typeof(GesturesContentView),history);
             return parent as GesturesContentView;
         }
-
-        private static readonly List<PendingInterestParams>  PendingInterestParameterss=new List<PendingInterestParams>();
+        
+        private static readonly List<PendingInterestParams>  PendingInterestParameters=new List<PendingInterestParams>();
 
         private class PendingInterestParams
         {
             public View View { get; set; }
-            public RawGestures Gesture { get; set; }
-            public Directionality Direction { get; set; }
-            public object ParamValue { get; set; }
+            public GestureInterests Interests { get; set; }
         }
+
+
     }
 
 
+    /// <summary>
+    /// Container class for Gesture Interests
+    /// </summary>
+    public class GestureInterests : ObservableCollection<GestureInterest> { }
 }

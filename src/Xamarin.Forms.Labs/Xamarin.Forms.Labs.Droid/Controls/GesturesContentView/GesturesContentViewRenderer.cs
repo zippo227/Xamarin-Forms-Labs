@@ -5,8 +5,11 @@ using Xamarin.Forms;
 namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
 {
     using System;
+    using System.Text.RegularExpressions;
 
     using Android.Views;
+
+    using Xamarin.Forms.Labs.Behaviors;
     using Xamarin.Forms.Labs.Controls;
     using Xamarin.Forms.Platform.Android;
 
@@ -96,26 +99,39 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// <returns></returns>
         public bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
         {
-            var distance =Math.Abs(Math.Sqrt(Math.Pow(e1.GetX() - e2.GetX(), 2) + Math.Pow(e1.GetY() - e2.GetY(), 2)));
-            if (distance < Element.MinimumSwipeLength) return true;
+            var e1X = ConvertPixelsToDp(e1.GetX());
+            var e2X = ConvertPixelsToDp(e2.GetX());
+            var e1Y=ConvertPixelsToDp(e1.GetY());
+            var e2Y=ConvertPixelsToDp(e2.GetY());
 
-            Element.VectorGesture(RawGestures.Swipe, new VectorGestureLoci
-                                                         {
-                                                             RelativeX = e1.GetX(),
-                                                             RelativeY = e1.GetY(),
-                                                             RelativeX2 = e2.GetX(),
-                                                             RelativeY2 = e2.GetY()
-                                                         });
+            var distance =Math.Abs(Math.Sqrt(Math.Pow(e1X - e2X, 2) + Math.Pow(e1Y - e2Y, 2)));
+            if (distance < Element.MinimumSwipeLength) return true;
+            
+            Element.ProcessGesture(new GestureResult
+                                {
+                                        GestureType=GestureType.Swipe,
+                                        Direction=(Math.Abs(e1X - e2X) < 3 ? Directionality.None : e1X < e2X ? Directionality.Right : Directionality.Left)
+                                                | (Math.Abs(e1Y-e2Y)<3 ? Directionality.None: e1Y < e2Y ? Directionality.Down : Directionality.Up),
+                                        Origin= new Point(e1X,e1Y),
+                                        VerticalDistance = Math.Abs(e1Y - e2Y),
+                                        HorizontalDistance = Math.Abs(e1X - e2X),
+                                        Length=distance
+                                    });
             return false;
         }
 
+        private int ConvertPixelsToDp(float pixelValue)
+        {
+            var dp = (int)((pixelValue) / Resources.DisplayMetrics.Density);
+            return dp;
+        }
         /// <summary>
         /// Pass the longpress to the <see cref="GesturesContentView"/>
         /// </summary>
         /// <param name="e"></param>
         public void OnLongPress(MotionEvent e)
         {
-            Element.NonVectorGesture(RawGestures.LongPress, new NonVectorGestureLoci { RelativeX = e.GetX(),RelativeY = e.GetY() });
+            Element.ProcessGesture(new GestureResult { GestureType = GestureType.LongPress, Direction = Directionality.None, Origin = new Point(e.GetX(), e.GetY()) });
         }
 
         /// <summary>
@@ -154,7 +170,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// <returns></returns>
         public bool OnDoubleTapEvent(MotionEvent e)
         {
-            return !Element.NonVectorGesture(RawGestures.DoubleTap, new NonVectorGestureLoci { RelativeX = e.GetX(), RelativeY = e.GetY() });
+            return !Element.ProcessGesture(new GestureResult { GestureType = GestureType.DoubleTap, Direction = Directionality.None, Origin = new Point(e.GetX(), e.GetY()) });
         }
 
         /// <summary>
@@ -164,7 +180,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// <returns></returns>
         public bool OnSingleTapConfirmed(MotionEvent e)
         {
-            return !Element.NonVectorGesture(RawGestures.SingleTap, new NonVectorGestureLoci { RelativeX = e.GetX(), RelativeY = e.GetY() });
+            return !Element.ProcessGesture(new GestureResult { GestureType = GestureType.SingleTap, Direction = Directionality.None, Origin = new Point(e.GetX(), e.GetY()) });
         }
         #endregion
 

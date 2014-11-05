@@ -2,15 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
-    using System.Windows.Input;
+
+    using Xamarin.Forms.Labs.Behaviors;
+    using Xamarin.Forms.Xaml;
 
     /// <summary>
     /// Uses attached properties to 
     /// </summary>
     public class GesturesContentView : ContentView
-    {
-        private readonly List<ViewInterest> viewInterests=new List<ViewInterest>();
+    {                                     
 
         /// <summary>
         /// Property Definition for the <see cref="Accuracy"/> Property
@@ -46,85 +48,97 @@
         /// Event that can be hooked from codebehind files.
         /// When invoked the sender is the view where the gesture originated.
         /// </summary>
-        public event EventHandler<GestureEventArgs> GestureRecognized;
-        /// <summary>
-        /// Used to register interest ina gesture on behalf of a contained view
-        /// </summary>
-        /// <param name="view">The contained View <see cref="Xamarin.Forms.View"/></param>
-        /// <param name="gesture">The <see cref="RawGestures"/> of interest</param>
-        /// <param name="direction">The <see cref="Directionality"/> of interest</param>
-        /// <param name="command">The command to execute when the gesture is received</param>
-        public void RegisterInterest(View view, RawGestures gesture,Directionality direction, ICommand command)
-        {
-          
-            FindInterest(view,gesture,direction).Command = command;
-        }
-        /// <summary>
-        /// Attach a command parameter to the getsure command
-        /// </summary>
-        /// <param name="view">The contained View <see cref="Xamarin.Forms.View"/></param>
-        /// <param name="gesture">The <see cref="RawGestures"/> of interest</param>
-        /// <param name="direction">The <see cref="Directionality"/> of interest</param>
-        /// <param name="param">The parameter can be an object or a binding expression</param>
-        public void RegisterInterestParamaeter(View view, RawGestures gesture, Directionality direction, object param)
-        {
-            FindInterest(view,gesture,direction).ComamndParameter = param;
-        }
+        public event EventHandler<GestureResult> GestureRecognized;
+
+        private readonly List<ViewInterest> viewInterests =new List<ViewInterest>();
+
         /// <summary>
         /// Utility function to locate a specific interest
         /// </summary>
         /// <param name="view">The view that has the interest</param>
-        /// <param name="gesture">The gesture of interest</param>
-        /// <param name="direction">The direction of itnerest</param>
-        /// <returns></returns>
-        private ViewInterest FindInterest(View view, RawGestures gesture, Directionality direction)
+        /// <param name="interestedin">The collection of <see cref="GestureInterest"/></param>
+        /// <returns>A <see cref="ViewInterest"/></returns>
+        internal void RegisterInterests(View view,IEnumerable<GestureInterest>interestedin )
         {
-            var vi = viewInterests.FirstOrDefault(x => x.View == view && x.Gesture == gesture && x.Directon == direction);
+            var vi = viewInterests.FirstOrDefault(x => x.View == view);
             if (vi == null)
             {
-                vi = new ViewInterest { View = view, Gesture = gesture, Directon = direction };
-                viewInterests.Add(vi);
+                vi = new ViewInterest { View = view };
+                viewInterests.Add(vi);                
             }
-            return vi;
+             vi.Interests=new List<GestureInterest>(interestedin.ToList());
+            BindInterests(vi);
+        }
+
+        internal void RemoveInterestsFor(View view)
+        {
+            viewInterests.RemoveAll(x => x.View == view);
+        }
+        private void BindInterests(ViewInterest vi)
+        {
+            var bc = FindBindingContext(vi.View);
+            foreach (var interest in vi.Interests)
+            {
+                interest.BindingContext = bc;
+            }
+        }
+
+        private object FindBindingContext(View view)
+        {
+            var bc = view.BindingContext;
+            if (bc != null) return bc;
+            var parent = view.Parent;
+            while (parent != null)
+            {
+                bc = parent.BindingContext;
+                if (bc != null) break;
+                parent = parent.Parent;
+            }
+            return bc;
         }
         /// <summary>
         /// Used by the Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// </summary>
-        /// <param name="gesture">The gesture</param>
-        /// <param name="nvgi"><see cref="NonVectorGestureLoci"/></param>
+        /// <param name="gesture">The resulting gesture<see cref="GestureResult"/></param>
         /// <returns>True if the gesture was handled,false otherwise</returns>
-        internal bool NonVectorGesture(RawGestures gesture,NonVectorGestureLoci nvgi)
+        internal bool ProcessGesture(GestureResult gesture)
         {
-            var interestedview = InterestedView(gesture,new Point( nvgi.RelativeX, nvgi.RelativeY));
-            if(interestedview != null)
-                SatisfyInterest(interestedview, new GestureEventArgs { Direction = Directionality.None, Gesture = gesture, Origin = new Point(nvgi.RelativeX, nvgi.RelativeY) });
-            return interestedview != null;
-        }
+            var interestedview = InterestedView(gesture.Origin);
+            if (interestedview == null) return false;
+            gesture.StartView = interestedview.View;
 
-        /// <summary>
-        /// Used by the Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
-        /// </summary>
-        /// <param name="gesture">The gesture</param>
-        /// <param name="vgi"><see cref="NonVectorGestureLoci"/></param>
-        /// <returns>True if the gesture was handled,false otherwise</returns>
-        internal bool VectorGesture(RawGestures gesture, VectorGestureLoci vgi)
-        {
-            var interestedview = InterestedView(gesture, vgi.Direction, new Point(vgi.RelativeX, vgi.RelativeY));
-            if(interestedview != null)
-               SatisfyInterest(interestedview, new GestureEventArgs{Direction = vgi.Direction,Gesture = gesture,Origin = new Point(vgi.RelativeX,vgi.RelativeY)});
-            
-            return interestedview != null;
-        }
+            //Check for perfect matches first
+            var interest = interestedview.Interests.Where(x => x.GestureType == gesture.GestureType &&
+                                                           (
+                                                               (x.Direction & Directionality.HorizontalMask) == (gesture.Direction & Directionality.HorizontalMask) &&
+                                                               (x.Direction & Directionality.VerticalMask) == (gesture.Direction & Directionality.VerticalMask))
+                                                            ).ToList();
 
-        /// <summary>
-        /// For non swipe gestures we only look at containment
-        /// </summary>
-        /// <param name="rawGesture">The raw gesture</param>
-        /// <param name="pt">The origin point of the gesture (relative to the top left of the <see cref="GesturesContentView"/></param>
-        /// <returns></returns>
-        private ViewInterest InterestedView(RawGestures rawGesture, Point pt)
-        {            
-            return viewInterests.FirstOrDefault(v => v.Gesture==rawGesture && v.View.Bounds.Contains(pt));
+            if (!interest.Any())
+            {
+                //Check for match on the dominant axis
+                var horizontaldirection = gesture.HorizontalDistance < gesture.VerticalDistance
+                    ? Directionality.None :gesture.Direction & Directionality.HorizontalMask;
+
+                var verticaldirection = gesture.HorizontalDistance < gesture.VerticalDistance
+                                              ? gesture.Direction & Directionality.VerticalMask
+                                              : Directionality.None;
+
+                
+                interest =interestedview.Interests.Where(x =>x.GestureType == gesture.GestureType && 
+                                                                              (x.Direction & Directionality.HorizontalMask)== horizontaldirection &&
+                                                                              (x.Direction & Directionality.VerticalMask) == verticaldirection).ToList();
+            }
+            //Winnow out the swipe gestures to match on either a perfect direction match (ie Up,Left) or based on the dominant axis
+
+
+            //Is there one or more interest int this gesture?
+            if (!interest.Any()) return false;
+            var final = interest.First();
+            //Finish setting up our gestureresult
+            gesture.Origin=new Point(Math.Max(gesture.Origin.X-interestedview.View.X,0),Math.Max(gesture.Origin.Y-interestedview.View.Y,0));
+            SatisfyInterest(final,gesture);
+            return true;
         }
 
         /// <summary>
@@ -134,34 +148,24 @@
         /// ordering by area on the presumption that the smallest
         /// view will be the innermost
         /// </summary>
-        /// <param name="rawGesture">The <see cref="RawGestures"/></param>
-        /// <param name="d">The directionality of the gesture <see cref="Directionality"/></param>
         /// <param name="point">The origin point of the gesture</param>
         /// <returns></returns>
-        private ViewInterest InterestedView(RawGestures rawGesture,Directionality d, Point point)
+        private ViewInterest InterestedView(Point point)
         {
-            var allinterested = viewInterests.Where(v =>v.Gesture == rawGesture && 
-                                (
-                                    (v.Directon & Directionality.HorizontalMask) == (d & Directionality.HorizontalMask) || 
-                                    (v.Directon & Directionality.VerticalMask) == (d & Directionality.VerticalMask))
-                                ).ToList();
-
-            if (!allinterested.Any()) return null;
-
             //Smallest view that contains the origin point wins
             //In most cases smallest will be the innermost
             //TODO:Check to see if RaiseView and LowerView have an effect on this
-            var originview = allinterested.Where(v => v.View.Bounds.Contains(point)).OrderBy(v => v.View.Bounds.Width * v.View.Bounds.Height).FirstOrDefault();
+            var originview = viewInterests.Where(v => v.View.Bounds.Contains(point)).OrderBy(v => v.View.Bounds.Width * v.View.Bounds.Height).FirstOrDefault();
             if (originview == null)
             {
                 //No result Check for interescection based on Accuracy
                 var range = Accuracy;
                 var inflaterect = new Rectangle(point.X - range, point.Y - range, point.X + range, point.Y + range);
-                var candidates = allinterested.Where(v => v.View.Bounds.IntersectsWith(inflaterect)).ToList();
+                var candidates = viewInterests.Where(v => v.View.Bounds.IntersectsWith(inflaterect)).ToList();
                 if (candidates.Any())
                 {
                     originview = candidates.Count() == 1? candidates.First(): candidates.OrderBy(v => DistanceToClosestEdge(v.View.Bounds, point)).First();
-                }
+                }                
             }
             return originview;
         }
@@ -193,15 +197,17 @@
 
             return Math.Sin(angle) * abLength;
         }
-        private void SatisfyInterest(ViewInterest vi,GestureEventArgs args)
+
+
+        private void SatisfyInterest(GestureInterest gi,GestureResult args)
         {
-            var commandparam = vi.ComamndParameter??BindingContext;
-            if(vi.Command.CanExecute(commandparam))
-                vi.Command.Execute(commandparam);
+            var commandparam = gi.GestureParameter??args.StartView.BindingContext??BindingContext;
+            if(gi.GestureCommand.CanExecuteGesture(args,gi.GestureParameter))
+                gi.GestureCommand.ExecuteGesture(args,commandparam);
             var handler = GestureRecognized;
             if (handler != null)
             {
-                handler(vi.View, args);
+                handler(args.StartView, args);
             }
 
         }
@@ -211,67 +217,27 @@
         private class ViewInterest
         {
             public View View { get; set; }
-            public RawGestures Gesture { get; set; }
-            public Directionality Directon { get; set; }
-            public ICommand Command { get; set; }
-            public object ComamndParameter { get; set; }
+            public List<GestureInterest> Interests { get; set; }
         }
 
     }
 
     /// <summary>
-    /// Passed to the eventhandler for gestures
+    /// How should the user be notified that a 
+    /// gesture has been recognized
     /// </summary>
-    public class GestureEventArgs : EventArgs
+    public enum GestureNotification
     {
         /// <summary>
-        /// The origin point of the gesture, relative to the container
+        /// No notification
         /// </summary>
-        public Point Origin { get; set; }
+        None=0,
         /// <summary>
-        /// The actual gesture <see cref="RawGestures"/>
+        /// A short vibration of
+        /// the device
         /// </summary>
-        public RawGestures Gesture { get; set; }
-        /// <summary>
-        /// The directionof the gesture, will be None for none swipe events
-        /// <see cref="Directionality"/>
-        /// </summary>
-        public Directionality Direction { get; set; }       
+        Vibrate
     }
-    /// <summary>
-    /// Class to store information about non swipe events
-    /// internal as it is of no use to a user
-    /// </summary>
-    internal class NonVectorGestureLoci
-    {
-        public float RelativeX { get; set; }
-        public float RelativeY { get; set; }
-    }
-
-    /// <summary>
-    /// Class to store information about swipe events
-    /// internal as it is of no use to a user
-    /// </summary>
-    internal class VectorGestureLoci : NonVectorGestureLoci
-    {
-        public float RelativeX2 { get; set; }
-        public float RelativeY2 { get; set; }
-        public double Scale 
-        {
-            get { return Math.Sqrt(Math.Pow(RelativeX - RelativeX2, 2) + Math.Pow(RelativeY - RelativeY2, 2)); }  
-        }
-
-        public Directionality Direction
-        {
-            get
-            {
-                return 
-                    (Math.Abs(RelativeX - RelativeX2) < 3 ? Directionality.None : RelativeX < RelativeX2 ? Directionality.Right : Directionality.Left)
-                    | (Math.Abs(RelativeY-RelativeY2)<3 ? Directionality.None: RelativeY < RelativeY2 ? Directionality.Down : Directionality.Up);
-            }    
-        } 
-    }
-
     /// <summary>
     /// For swipe gestures determines the general
     /// direction of the swipe
@@ -311,7 +277,7 @@
     /// <summary>
     /// The base supported gestures
     /// </summary>
-    public enum RawGestures
+    public enum GestureType
     {
         /// <summary>
         /// No Gesture
