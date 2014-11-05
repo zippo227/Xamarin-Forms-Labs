@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Debug\Xamarin.Forms.Labs.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -34,6 +35,12 @@
     <DocumentationFile>..\..\..\ReleaseBuild\Xamarin.Forms.Labs.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\GestureInterest.cs" />
+    <Compile Include="Behaviors\GestureResult.cs" />
+    <Compile Include="Behaviors\Gestures.cs" />
+    <Compile Include="Behaviors\IGesture.cs" />
+    <Compile Include="Controls\CarouselView.cs" />
+    <Compile Include="Controls\GesturesContentView.cs" />
     <Compile Include="Behaviors\GridLayout.cs" />
     <Compile Include="Controls\AutoComplete.cs" />
     <Compile Include="Controls\ButtonGroup.cs" />
@@ -69,6 +76,7 @@
     <Compile Include="Device\Sensor.cs" />
     <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="Exceptions\InvalidBindableException.cs" />
+    <Compile Include="Exceptions\InvalidNestingException.cs" />
     <Compile Include="Exceptions\InvalidVisualObjectException.cs" />
     <Compile Include="Exceptions\NoDataTemplateMatchException.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
