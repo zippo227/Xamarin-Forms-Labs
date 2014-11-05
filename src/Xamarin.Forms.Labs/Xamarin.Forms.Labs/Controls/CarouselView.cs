@@ -210,14 +210,10 @@ namespace Xamarin.Forms.Labs.Controls
             var newval = currentview + (increment ? 1 : -1);
             
             if (newval < 0 || newval > ViewModels.Count() - 1) return;
-            if(myGrid.Children.Count > 1)
-                myGrid.Children.Remove(marker);//Should be the only other child of the grid
+            
+            myGrid.Children.Clear();
             currentview = newval;
-            if (contentView.Content != null)
-                gestureView.RemoveInterestsFor(contentView.Content);
             contentView.ViewModel = ViewModels[currentview];
-            if (contentView.Content != null)
-                gestureView.RegisterInterests(contentView.Content, interests);
             myGrid.Children.Add(marker, currentview, 0);
         }
 
