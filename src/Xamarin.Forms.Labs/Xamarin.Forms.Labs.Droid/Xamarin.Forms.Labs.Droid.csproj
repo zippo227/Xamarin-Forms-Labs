@@ -96,6 +96,7 @@
     <Compile Include="Controls\CircleImage\CircleImageRenderer.cs" />
     <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\GesturesContentView\GesturesContentViewRenderer.cs" />
+    <Compile Include="Controls\HyperLinkLabel\HyperLinkLabelRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.shared.cs" />
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
