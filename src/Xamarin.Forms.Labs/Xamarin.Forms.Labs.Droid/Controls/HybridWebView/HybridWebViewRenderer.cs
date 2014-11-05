@@ -89,7 +89,7 @@ namespace Xamarin.Forms.Labs.Controls
                 }
                 if (!hybrid.CheckRequest(url))
                 {
-                    hybrid.Element.OnNavigating(url);
+                    hybrid.Element.OnNavigating(new Uri(url));
                     return base.ShouldOverrideUrlLoading(view, url);
                 }
 
