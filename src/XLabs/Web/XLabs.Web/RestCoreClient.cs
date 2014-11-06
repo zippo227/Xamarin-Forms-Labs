@@ -178,18 +178,18 @@ namespace XLabs.Web
             return await GetResponse<T>(response, this.Serializer);
         }
 
-        public Task PostAsync(string address, object dto)
+        public async Task PostAsync(string address, object dto)
         {
             var content = this.Serializer.Serialize(dto);
-
-            return this.Client.PostAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
+            var response = await this.Client.PostAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
+            this.CheckResponse(response);
         }
 
-        public Task PutAsync(string address, object dto)
+        public async Task PutAsync(string address, object dto)
         {
             var content = this.Serializer.Serialize(dto);
-
-            return this.Client.PutAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
+            var response = await this.Client.PutAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
+            this.CheckResponse(response);
         }
 
         /// <summary>
@@ -197,9 +197,10 @@ namespace XLabs.Web
         /// </summary>
         /// <returns>The async task.</returns>
         /// <param name="address">Address.</param>
-        public Task DeleteAsync(string address)
+        public async Task DeleteAsync(string address)
         {
-            return this.Client.DeleteAsync(address);
+            var response = await this.Client.DeleteAsync(address);
+            this.CheckResponse(response);
         }
 
         /// <summary>
