@@ -65,7 +65,7 @@ namespace XLabs.Web
         }
 
         #if DEBUG
-        public EventHandler<System.Net.Http.Headers.HttpResponseHeaders> OnHttpResponse;
+        public EventHandler<HttpResponseMessage> OnHttpResponse;
         #endif
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace XLabs.Web
 
             if (handler != null)
             {
-                handler(this, response.Headers);
+                handler(this, response);
             }
             #endif
 
@@ -232,6 +232,25 @@ namespace XLabs.Web
             //var content = await response.Content.ReadAsStringAsync();
             //// serialize the response to object
             //return serializer.Deserialize<T>(content);
+        }
+
+        private HttpResponseMessage CheckResponse(HttpResponseMessage response)
+        {
+#if DEBUG
+            var handler = this.OnHttpResponse;
+
+            if (handler != null)
+            {
+                handler(this, response);
+            }
+#endif
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new WebResponseException(response.ReasonPhrase);
+            }
+
+            return response;
         }
     }
 }
