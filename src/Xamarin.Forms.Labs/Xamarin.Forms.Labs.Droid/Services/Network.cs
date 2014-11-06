@@ -46,7 +46,7 @@ namespace Xamarin.Forms.Labs.Droid.Services
                 else if (name.Contains("MOBILE"))
                 {
                     status = NetworkStatus.ReachableViaCarrierDataNetwork;
-                }   
+                }
             }
 
             return status;
