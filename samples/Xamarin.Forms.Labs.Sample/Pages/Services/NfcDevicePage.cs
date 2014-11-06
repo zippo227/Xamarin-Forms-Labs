@@ -7,6 +7,8 @@ using Xamarin.Forms.Labs.Services;
 
 namespace Xamarin.Forms.Labs.Sample.Pages.Services
 {
+    using XLabs;
+
     public class NfcDevicePage : ContentPage
     {
         private INfcDevice device;

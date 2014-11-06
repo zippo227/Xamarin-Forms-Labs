@@ -4,6 +4,8 @@ using Xamarin.Forms;
 
 namespace Xamarin.Forms.Labs.Controls
 {
+    using XLabs;
+
     public class GridView : ContentView
     {
         public GridView ()

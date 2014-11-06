@@ -8,6 +8,8 @@ using MonoTouch.UIKit;
 
 namespace Xamarin.Forms.Labs
 {
+    using XLabs;
+
     /// <summary>
     /// Battery portion for Apple devices.
     /// </summary>

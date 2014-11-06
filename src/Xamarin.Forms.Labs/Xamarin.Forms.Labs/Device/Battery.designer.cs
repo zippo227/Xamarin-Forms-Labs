@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs
 {
+    using XLabs;
+
     public partial class Battery : IBattery
     {
         /// <summary>

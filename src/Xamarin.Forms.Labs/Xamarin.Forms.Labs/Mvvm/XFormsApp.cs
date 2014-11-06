@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Mvvm
 {
+    using XLabs;
+
     /// <summary>
     /// Class XFormsApp.
     /// </summary>

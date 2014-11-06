@@ -7,7 +7,7 @@ using Android.Content;
 using Android.Database;
 using Android.OS;
 using Android.Provider;
-using Xamarin.Forms.Labs.Helpers;
+using XLabs;
 using Xamarin.Forms.Labs.Services.Media;
 using Environment = Android.OS.Environment;
 using FileNotFoundException = Java.IO.FileNotFoundException;

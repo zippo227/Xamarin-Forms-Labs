@@ -6,6 +6,8 @@ using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample
 {
+    using XLabs;
+
     public class AcceleratorSensorPage : ContentPage
     {
         private IAccelerometer accelerometer;
@@ -90,7 +92,7 @@ namespace Xamarin.Forms.Labs.Sample
             base.OnDisappearing();
         }
 
-        void accelerometer_ReadingAvailable(object sender, EventArgs<Helpers.Vector3> e)
+        void accelerometer_ReadingAvailable(object sender, EventArgs<Vector3> e)
         {
             this.xsensor.CurrentValue = e.Value.X;
             this.ysensor.CurrentValue = e.Value.Y;

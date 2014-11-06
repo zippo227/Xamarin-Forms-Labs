@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Labs.Sample.Pages.Controls
         {
             InitializeComponent ();
             BindingContext = ViewModelLocator.Main;
-            this.grdView.ItemSelected += (object sender, EventArgs<object> e) => {
+            this.grdView.ItemSelected += (sender, e) => {
                 DisplayAlert ("selected value", e.Value.ToString (), "ok");
             };
         }

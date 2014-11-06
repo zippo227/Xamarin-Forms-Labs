@@ -12,6 +12,8 @@ using Xamarin.Forms.Labs.Services.Media;
 
 namespace Xamarin.Forms.Labs.iOS.Services.Media
 {
+    using XLabs;
+
     public class Microphone : IAudioStream
     {
         private InputAudioQueue audioQueue;

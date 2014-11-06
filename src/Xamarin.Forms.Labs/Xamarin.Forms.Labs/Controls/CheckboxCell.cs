@@ -2,43 +2,45 @@
 
 namespace Xamarin.Forms.Labs.Controls
 {
-	public class CheckboxCell : ExtendedTextCell
-	{
-		public EventHandler<EventArgs<bool>> CheckedChanged;
+    using XLabs;
 
-		public static readonly BindableProperty CheckedProperty = BindableProperty.Create<CheckboxCell, bool> (p => p.Checked, default(bool));
-		public bool Checked {
-			get { return (bool)GetValue (CheckedProperty); }
-			set { SetValue (CheckedProperty, value); }
-		}
+    public class CheckboxCell : ExtendedTextCell
+    {
+        public EventHandler<EventArgs<bool>> CheckedChanged;
 
-		bool turnOnOnly;
+        public static readonly BindableProperty CheckedProperty = BindableProperty.Create<CheckboxCell, bool> (p => p.Checked, default(bool));
+        public bool Checked {
+            get { return (bool)GetValue (CheckedProperty); }
+            set { SetValue (CheckedProperty, value); }
+        }
 
-		public CheckboxCell (bool turnOnOnly = false)
-		{
-			this.turnOnOnly = turnOnOnly;
-			Tapped += HandleTapped;
-			BackgroundColor = Color.White;
-		}
+        bool turnOnOnly;
 
-		void HandleTapped (object sender, EventArgs e)
-		{
-			if (turnOnOnly) {
-				if (!Checked) {
-					Checked = true;
-					RaiseCheckedChanged (Checked);
-				}
-			} else {
-				Checked = !Checked;
-				RaiseCheckedChanged (Checked);
-			}
-		}
+        public CheckboxCell (bool turnOnOnly = false)
+        {
+            this.turnOnOnly = turnOnOnly;
+            Tapped += HandleTapped;
+            BackgroundColor = Color.White;
+        }
 
-		void RaiseCheckedChanged(bool val)
-		{
-			if (CheckedChanged != null)
-				CheckedChanged (this, new EventArgs<bool> (val));
-		}
-	}
+        void HandleTapped (object sender, EventArgs e)
+        {
+            if (turnOnOnly) {
+                if (!Checked) {
+                    Checked = true;
+                    RaiseCheckedChanged (Checked);
+                }
+            } else {
+                Checked = !Checked;
+                RaiseCheckedChanged (Checked);
+            }
+        }
+
+        void RaiseCheckedChanged(bool val)
+        {
+            if (CheckedChanged != null)
+                CheckedChanged (this, new EventArgs<bool> (val));
+        }
+    }
 }
 

@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 
 namespace Xamarin.Forms.Labs.Controls
 {
+    using XLabs;
+
     /// <summary>
     /// The dynamic native list view.
     /// </summary>

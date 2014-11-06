@@ -12,6 +12,8 @@ using Android.Widget;
 
 namespace Xamarin.Forms.Labs
 {
+    using XLabs;
+
     /// <summary>
     /// Battery information class.
     /// </summary>

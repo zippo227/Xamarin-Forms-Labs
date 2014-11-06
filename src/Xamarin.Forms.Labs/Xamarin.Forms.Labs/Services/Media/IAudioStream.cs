@@ -7,6 +7,8 @@ using System.Windows.Input;
 
 namespace Xamarin.Forms.Labs.Services.Media
 {
+    using XLabs;
+
     public interface IAudioStream
     {
         /// <summary>

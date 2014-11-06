@@ -7,6 +7,8 @@ using Microsoft.Phone.Info;
 
 namespace Xamarin.Forms.Labs
 {
+    using XLabs;
+
     /// <summary>
     /// Windows Phone Battery class.
     /// </summary>

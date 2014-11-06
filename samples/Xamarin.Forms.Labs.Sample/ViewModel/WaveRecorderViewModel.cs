@@ -11,6 +11,8 @@ using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample
 {
+    using XLabs;
+
     public class WaveRecorderViewModel : ViewModel
     {
         private string fileName;

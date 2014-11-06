@@ -38,6 +38,8 @@ using Xamarin.Forms.Labs.WP8.Services;
 
 namespace Xamarin.Forms.Labs.WP8.Services
 {
+    using XLabs;
+
     public class NfcDevice : INfcDevice
     {
         private readonly ProximityDevice device;
