@@ -18,32 +18,34 @@ using Android.Net;
 
 namespace Xamarin.Forms.Labs.Droid.Services
 {
-	public class Network : INetwork
+    public class Network : INetwork
     {
-		public Network()
-		{
-			/* TODO: reachability changed */
-		}
+        public Network()
+        {
+            /* TODO: reachability changed */
+        }
 
-		public event Action<NetworkStatus> ReachabilityChanged;
+        public event Action<NetworkStatus> ReachabilityChanged;
 
-		public NetworkStatus InternetConnectionStatus ()
-		{
-			NetworkStatus status = NetworkStatus.NotReachable;
+        public NetworkStatus InternetConnectionStatus ()
+        {
+            NetworkStatus status = NetworkStatus.NotReachable;
 
-			ConnectivityManager cm = (ConnectivityManager) Application.Context.GetSystemService(Context.ConnectivityService);
-			NetworkInfo ni = cm.ActiveNetworkInfo;
+            ConnectivityManager cm = (ConnectivityManager) Application.Context.GetSystemService(Context.ConnectivityService);
+            NetworkInfo ni = cm.ActiveNetworkInfo;
 
-			if (ni.TypeName.ToUpper ().Contains ("WIFI")
-			    && ni.IsConnectedOrConnecting)
-				status = NetworkStatus.ReachableViaWiFiNetwork;
+            if (ni != null)
+            {
+                if (ni.TypeName.ToUpper().Contains("WIFI") && ni.IsConnectedOrConnecting)
+                    status = NetworkStatus.ReachableViaWiFiNetwork;
 
-			if (ni.TypeName.ToUpper ().Contains ("MOBILE")
-				&& ni.IsConnectedOrConnecting)
-				status = NetworkStatus.ReachableViaCarrierDataNetwork;
+                if (ni.TypeName.ToUpper().Contains("MOBILE")
+                    && ni.IsConnectedOrConnecting)
+                    status = NetworkStatus.ReachableViaCarrierDataNetwork;
+            }
 
-			return status;
-		}
+            return status;
+        }
 
         public Task<bool> IsReachable(string host, TimeSpan timeout)
         {
