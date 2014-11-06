@@ -86,6 +86,7 @@
     <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\ExtendedTabbedPage\ExtendedTabbedPageRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
+    <Compile Include="Controls\HyperLinkLabel\HyperLinkLabelRenderer.cs" />
     <Compile Include="Controls\IconButton\IconButtonRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
