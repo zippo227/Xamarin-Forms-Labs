@@ -30,6 +30,7 @@ The v.1.2 is the stable branch.
  - Web Image (beta) 
  - IconButton (IOS beta)
  - [CircleImage (IOS/Android anpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/CircleImage)
+ - HyperLinkLabel
 
 **Available services (Beta)**
 
