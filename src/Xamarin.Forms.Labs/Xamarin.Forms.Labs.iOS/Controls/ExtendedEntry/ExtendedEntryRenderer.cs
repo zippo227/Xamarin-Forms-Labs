@@ -16,6 +16,9 @@ namespace Xamarin.Forms.Labs.iOS.Controls
     /// </summary>
     public class ExtendedEntryRenderer : EntryRenderer
     {
+        private UISwipeGestureRecognizer leftSwipeGestureRecognizer;
+        private UISwipeGestureRecognizer rightSwipeGestureRecognizer;
+
         /// <summary>
         /// The on element changed callback.
         /// </summary>
@@ -34,6 +37,28 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 			SetPlaceholderTextColor(view);
 
             ResizeHeight();
+
+            if (e.OldElement == null)
+            {
+                this.leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => view.OnLeftSwipe(this, EventArgs.Empty))
+                    {
+                        Direction = UISwipeGestureRecognizerDirection.Left
+                    };
+
+                this.rightSwipeGestureRecognizer = new UISwipeGestureRecognizer(()=> view.OnRightSwipe(this, EventArgs.Empty))
+                    {
+                        Direction = UISwipeGestureRecognizerDirection.Right
+                    };
+
+                this.Control.AddGestureRecognizer(this.leftSwipeGestureRecognizer);
+                this.Control.AddGestureRecognizer(this.rightSwipeGestureRecognizer);
+            }
+
+            if (e.NewElement == null)
+            {
+                this.Control.RemoveGestureRecognizer(this.leftSwipeGestureRecognizer);
+                this.Control.RemoveGestureRecognizer(this.rightSwipeGestureRecognizer);
+            }
         }
 
         /// <summary>

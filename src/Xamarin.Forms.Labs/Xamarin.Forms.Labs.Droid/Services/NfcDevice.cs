@@ -46,6 +46,8 @@ using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Droid.Services
 {
+    using XLabs;
+
     public class NfcDevice : Java.Lang.Object, INfcDevice, NfcAdapter.ICreateNdefMessageCallback
     {
         private readonly NfcAdapter device;

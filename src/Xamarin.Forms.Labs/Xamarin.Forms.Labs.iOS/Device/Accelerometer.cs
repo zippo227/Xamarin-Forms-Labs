@@ -1,5 +1,5 @@
 using MonoTouch.UIKit;
-using Xamarin.Forms.Labs.Helpers;
+using XLabs;
 
 namespace Xamarin.Forms.Labs
 {

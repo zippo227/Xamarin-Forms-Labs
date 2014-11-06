@@ -12,12 +12,14 @@ using Android.Views;
 using Android.Widget;
 using Java.Net;
 using Xamarin.Forms.Labs.Services;
-using Android.Net;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Xamarin.Forms.Labs.Droid.Services.Network))]
 
 namespace Xamarin.Forms.Labs.Droid.Services
 {
+    /// <summary>
+    /// Android <see cref="INetwork"/> implementation.
+    /// </summary>
     public class Network : INetwork
     {
         public Network()
@@ -34,14 +36,17 @@ namespace Xamarin.Forms.Labs.Droid.Services
             ConnectivityManager cm = (ConnectivityManager) Application.Context.GetSystemService(Context.ConnectivityService);
             NetworkInfo ni = cm.ActiveNetworkInfo;
 
-            if (ni != null)
+            if (ni != null && ni.IsConnectedOrConnecting)
             {
-                if (ni.TypeName.ToUpper().Contains("WIFI") && ni.IsConnectedOrConnecting)
+                var name = ni.TypeName.ToUpper();
+                if (name.Contains("WIFI"))
+                {
                     status = NetworkStatus.ReachableViaWiFiNetwork;
-
-                if (ni.TypeName.ToUpper().Contains("MOBILE")
-                    && ni.IsConnectedOrConnecting)
+                }
+                else if (name.Contains("MOBILE"))
+                {
                     status = NetworkStatus.ReachableViaCarrierDataNetwork;
+                }
             }
 
             return status;

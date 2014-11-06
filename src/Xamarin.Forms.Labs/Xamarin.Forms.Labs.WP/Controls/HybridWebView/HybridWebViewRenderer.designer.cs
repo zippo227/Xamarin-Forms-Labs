@@ -73,6 +73,10 @@ namespace Xamarin.Forms.Labs.Controls
             {
                 this.Load(this.Element.Uri);
             }
+            else if (e.PropertyName == "Source")
+            {
+                LoadSource();
+            }
         }
 
         private void Bind()
@@ -82,21 +86,32 @@ namespace Xamarin.Forms.Labs.Controls
             {
                 this.Load (this.Element.Uri);
             }
-            else if (this.Element.Source is HtmlWebViewSource)
+            else
             {
-                var htmlSource = this.Element.Source as HtmlWebViewSource;
-                this.LoadContent(null, htmlSource.Html);
-            }
-            else if (this.Element.Source is UrlWebViewSource)
-            {
-                var webViewSource = this.Element.Source as UrlWebViewSource;
-                this.Load(new Uri(webViewSource.Url));
+                LoadSource();
             }
 
             this.Element.PropertyChanged += this.Model_PropertyChanged;
             this.Element.JavaScriptLoadRequested += OnInjectRequest;
             this.Element.LoadFromContentRequested += LoadFromContent;
             this.Element.LoadContentRequested += LoadContent;
+        }
+
+        private void LoadSource()
+        {
+            var htmlSource = this.Element.Source as HtmlWebViewSource;
+            if (htmlSource != null)
+            {
+                this.LoadFromString(htmlSource.Html);
+                return;
+            }
+
+            var webViewSource = this.Element.Source as UrlWebViewSource;
+
+            if (webViewSource != null)
+            {
+                this.Load(new Uri(webViewSource.Url));
+            }
         }
 
         private void Unbind(HybridWebView oldElement)
@@ -123,6 +138,8 @@ namespace Xamarin.Forms.Labs.Controls
 
         partial void LoadContent(object sender, string contentFullName);
 
+        partial void LoadFromString(string html);
+
         private bool CheckRequest(string request)
         {
             var m = Expression.Match(request);
@@ -139,7 +156,7 @@ namespace Xamarin.Forms.Labs.Controls
                 } 
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine ("Unhandled callback {0} was called from JavaScript", name);
+                    System.Diagnostics.Debug.WriteLine(string.Format("Unhandled callback {0} was called from JavaScript", name));
                 }
             }
 

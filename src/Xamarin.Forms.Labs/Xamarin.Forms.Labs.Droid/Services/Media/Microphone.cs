@@ -11,6 +11,8 @@ using Xamarin.Forms.Labs.Services.Media;
 
 namespace Xamarin.Forms.Labs.Droid.Services.Media
 {
+    using XLabs;
+
     public class Microphone : IAudioStream
     {
         private int bufferSize;

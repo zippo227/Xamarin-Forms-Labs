@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+
+[assembly: 
+    InternalsVisibleTo("Xamarin.Forms.Labs.Droid"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.iOS"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.WP8")]
 
 namespace Xamarin.Forms.Labs.Controls
 {
@@ -17,7 +23,8 @@ namespace Xamarin.Forms.Labs.Controls
         /// <summary>
         /// Gets or sets IsPassword 
         /// </summary>
-        public bool IsPassword {
+        public bool IsPassword 
+        {
             get { return (bool)GetValue (IsPasswordProperty); }
             set { SetValue (IsPasswordProperty,value); }
         }

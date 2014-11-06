@@ -1,4 +1,12 @@
-﻿namespace Xamarin.Forms.Labs.Controls
+﻿using System;
+using System.Runtime.CompilerServices;
+
+[assembly: 
+    InternalsVisibleTo("Xamarin.Forms.Labs.Droid"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.iOS"),
+    InternalsVisibleTo("Xamarin.Forms.Labs.WP8")]
+
+namespace Xamarin.Forms.Labs.Controls
 {
     /// <summary>
     /// An extended entry control that allows the Font and text X alignment to be set
@@ -65,5 +73,26 @@
 			get { return (Color)GetValue(PlaceholderTextColorProperty); }
 			set { SetValue(PlaceholderTextColorProperty, value); }
 		}
+
+        public EventHandler LeftSwipe;
+        public EventHandler RightSwipe;
+
+        internal void OnLeftSwipe(object sender, EventArgs e)
+        {
+            var handler = this.LeftSwipe;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        internal void OnRightSwipe(object sender, EventArgs e)
+        {
+            var handler = this.RightSwipe;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
     }
 }

@@ -155,5 +155,10 @@ namespace Xamarin.Forms.Labs.Controls
         {
             this.Element.Uri = new Uri(contentFullName, UriKind.Relative);
         }
+
+        partial void LoadFromString(string html)
+        {
+            this.Control.NavigateToString(html);
+        }
     }
 }

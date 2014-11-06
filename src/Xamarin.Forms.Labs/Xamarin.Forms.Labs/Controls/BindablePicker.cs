@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Xamarin.Forms.Labs.Helpers;
+using XLabs;
 using System.Linq;
 
 namespace Xamarin.Forms.Labs.Controls

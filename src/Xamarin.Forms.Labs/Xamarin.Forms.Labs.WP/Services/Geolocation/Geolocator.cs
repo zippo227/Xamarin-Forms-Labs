@@ -31,6 +31,7 @@ using Xamarin.Forms;
 
 namespace Xamarin.Forms.Labs.Services.Geolocation
 {
+    using XLabs;
     using Windows.Devices.Geolocation;
     using Locator = Windows.Devices.Geolocation.Geolocator;
 

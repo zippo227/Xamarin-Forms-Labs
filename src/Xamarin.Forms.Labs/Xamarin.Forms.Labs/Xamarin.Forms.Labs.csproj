@@ -82,11 +82,6 @@
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
-    <Compile Include="Helpers\EventArgs{T}.cs" />
-    <Compile Include="Helpers\EventExtensions.cs" />
-    <Compile Include="Helpers\Icons.cs" />
-    <Compile Include="Helpers\TaskUtils.cs" />
-    <Compile Include="Helpers\Vector3.cs" />
     <Compile Include="Mvvm\INavigationAware.cs" />
     <Compile Include="Mvvm\IXFormsApp.cs" />
     <Compile Include="Mvvm\NavigationAwareViewModel.cs" />
@@ -158,7 +153,6 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <Folder Include="Services\Contacts\" />
-    <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ExifLib">
@@ -172,13 +166,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\XLabs\Serialization\XLabs.Serialization\XLabs.Serialization.csproj">
+      <Project>{8E7F7522-F018-466A-AA8A-147EE9341BA0}</Project>
+      <Name>XLabs.Serialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
-      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Project>{2E200799-1170-49BF-A4AA-2A9228F8A213}</Project>
       <Name>XLabs.Ioc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\XLabs\Serialization\XLabs.Serialization\XLabs.Serialization.csproj">
-      <Project>{8e7f7522-f018-466a-aa8a-147ee9341ba0}</Project>
-      <Name>XLabs.Serialization</Name>
+    <ProjectReference Include="..\..\XLabs\XLabs.Core\XLabs.Core.csproj">
+      <Project>{15d9c404-f7e2-49f0-acc9-63c4c008c860}</Project>
+      <Name>XLabs.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

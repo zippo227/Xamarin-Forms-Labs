@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Services.Media
 {
+    using XLabs;
+
     public class WaveRecorder
     {
         //private StreamWriter streamWriter;
         private BinaryWriter writer;
         private int byteCount;
         private IAudioStream stream;
-	    private int channelCount;
-	    private int bitsPerSample;
-	    private int sampleRate;
+        private int channelCount;
+        private int bitsPerSample;
+        private int sampleRate;
 
-	    ~WaveRecorder()
+        ~WaveRecorder()
         {
             StopRecorder().Wait();
         }
@@ -44,13 +46,13 @@ namespace Xamarin.Forms.Labs.Services.Media
             this.stream.OnBroadcast += OnStreamBroadcast;
 
             var result = await this.stream.Start(sampleRate);
-	        if (result)
-	        {
-		        this.sampleRate = sampleRate;
-		        this.bitsPerSample = stream.BitsPerSample;
-		        this.channelCount = stream.ChannelCount;
-	        }
-	        return result;
+            if (result)
+            {
+                this.sampleRate = sampleRate;
+                this.bitsPerSample = stream.BitsPerSample;
+                this.channelCount = stream.ChannelCount;
+            }
+            return result;
         }
 
         public async Task StopRecorder()
@@ -65,12 +67,12 @@ namespace Xamarin.Forms.Labs.Services.Media
                 this.WriteHeader();
                 this.writer.Dispose();
                 this.writer = null;
-	            this.sampleRate =
-		            this.bitsPerSample =
-			            this.channelCount = -1;
+                this.sampleRate =
+                    this.bitsPerSample =
+                        this.channelCount = -1;
             }
 
-			this.stream = null;
+            this.stream = null;
         }
 
         private void OnStreamBroadcast(object sender, EventArgs<byte[]> eventArgs)

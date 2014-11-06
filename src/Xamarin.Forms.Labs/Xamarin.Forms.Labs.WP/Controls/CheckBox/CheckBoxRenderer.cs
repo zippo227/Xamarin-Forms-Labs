@@ -16,6 +16,7 @@ using Xamarin.Forms.Platform.WinPhone;
 
 namespace Xamarin.Forms.Labs.WP8.Controls
 {
+    using XLabs;
     using NativeCheckBox = System.Windows.Controls.CheckBox;
 
     public class CheckBoxRenderer : ViewRenderer<CheckBox, NativeCheckBox>

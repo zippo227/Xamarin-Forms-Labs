@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Xamarin.Forms.Labs
 {
     using Microsoft.Devices.Sensors;
-    using Xamarin.Forms.Labs.Helpers;
+    using XLabs;
     using Meter = Microsoft.Devices.Sensors.Accelerometer;
 
     public partial class Accelerometer

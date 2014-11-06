@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xamarin.Forms.Labs.Helpers
+namespace Xamarin.Forms.Labs
 {
 	public static class NumericExtensions
 	{

@@ -12,6 +12,8 @@ using Xamarin.Forms.Labs.Services.Media;
 
 namespace Xamarin.Forms.Labs.WP8.Services.Media
 {
+    using XLabs;
+
     public class XnaMicrophone : IAudioStream
     {
         private Microphone microphone;

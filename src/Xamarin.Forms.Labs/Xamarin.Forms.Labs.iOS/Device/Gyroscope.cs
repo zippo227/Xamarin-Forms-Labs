@@ -9,6 +9,8 @@ using MonoTouch.CoreMotion;
 
 namespace Xamarin.Forms.Labs
 {
+    using XLabs;
+
     public partial class Gyroscope
     {
         public AccelerometerInterval Interval { get; set; }
@@ -42,7 +44,7 @@ namespace Xamarin.Forms.Labs
             {
                 this.readingAvailable.Invoke(
                     this, 
-                    new Helpers.Vector3(
+                    new Vector3(
                         gyroData.RotationRate.x,
                         gyroData.RotationRate.y,
                         gyroData.RotationRate.z

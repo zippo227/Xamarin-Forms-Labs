@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Sample.Pages.Controls.DynamicList
 {
+    using XLabs;
+
     public partial class DynamicListView
     {
         private int count;
