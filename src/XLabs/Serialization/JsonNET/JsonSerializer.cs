@@ -22,30 +22,20 @@ namespace XLabs.Serialization.JsonNET
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// <see cref="Xamarin.Forms.Labs.Services.Serialization.JsonNET.JsonSerializer"/> class
-        /// with the most flexible settings.
+        /// <see cref="Xamarin.Forms.Labs.Services.Serialization.JsonNET.JsonSerializer"/> classs.
         /// </summary>
-        /// <remarks>
-        /// These settings might not be the most efficient so consider using the constructor
-        /// with options.
-        /// </remarks> 
         public JsonSerializer()
         {
-            //JsonConvert.DefaultSettings = JsonConvert.DefaultSettings ?? new Func<JsonSerializerSettings>(() => 
-            //    new JsonSerializerSettings()
-            //    {
-            //        TypeNameHandling = TypeNameHandling.All,
-            //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //    });
         }
 
-        public JsonSerializer(TypeNameHandling typeNameHandling, ReferenceLoopHandling referenceLoopHandling)
+        public JsonSerializer(TypeNameHandling typeNameHandling, ReferenceLoopHandling referenceLoopHandling, bool ignoreNulls = true)
         {
             JsonConvert.DefaultSettings = JsonConvert.DefaultSettings ?? new Func<JsonSerializerSettings>(() => 
                 new JsonSerializerSettings()
                 {
                     TypeNameHandling = typeNameHandling,
-                    ReferenceLoopHandling = referenceLoopHandling
+                    ReferenceLoopHandling = referenceLoopHandling,
+                    NullValueHandling = ignoreNulls ? NullValueHandling.Ignore : NullValueHandling.Include
                 });
         }
 

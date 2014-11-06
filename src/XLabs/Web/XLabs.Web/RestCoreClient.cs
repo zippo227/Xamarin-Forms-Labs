@@ -64,6 +64,10 @@ namespace XLabs.Web
             }
         }
 
+        #if DEBUG
+        public EventHandler<HttpResponseMessage> OnHttpResponse;
+        #endif
+
         /// <summary>
         /// Gets the string content type.
         /// </summary>
@@ -174,18 +178,18 @@ namespace XLabs.Web
             return await GetResponse<T>(response, this.Serializer);
         }
 
-        public Task PostAsync(string address, object dto)
+        public async Task PostAsync(string address, object dto)
         {
             var content = this.Serializer.Serialize(dto);
-
-            return this.Client.PostAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
+            var response = await this.Client.PostAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
+            this.CheckResponse(response);
         }
 
-        public Task PutAsync(string address, object dto)
+        public async Task PutAsync(string address, object dto)
         {
             var content = this.Serializer.Serialize(dto);
-
-            return this.Client.PutAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
+            var response = await this.Client.PutAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
+            this.CheckResponse(response);
         }
 
         /// <summary>
@@ -193,9 +197,10 @@ namespace XLabs.Web
         /// </summary>
         /// <returns>The async task.</returns>
         /// <param name="address">Address.</param>
-        public Task DeleteAsync(string address)
+        public async Task DeleteAsync(string address)
         {
-            return this.Client.DeleteAsync(address);
+            var response = await this.Client.DeleteAsync(address);
+            this.CheckResponse(response);
         }
 
         /// <summary>
@@ -205,8 +210,17 @@ namespace XLabs.Web
         /// <param name="response">Http response message</param>
         /// <param name="serializer">Serializer to use.</param>
         /// <returns>The async task.</returns>
-        private static async Task<T> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
+        private async Task<T> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
         {
+            #if DEBUG
+            var handler = this.OnHttpResponse;
+
+            if (handler != null)
+            {
+                handler(this, response);
+            }
+            #endif
+
             if (!response.IsSuccessStatusCode)
             {
                 throw new WebResponseException(response.ReasonPhrase);
@@ -219,6 +233,25 @@ namespace XLabs.Web
             //var content = await response.Content.ReadAsStringAsync();
             //// serialize the response to object
             //return serializer.Deserialize<T>(content);
+        }
+
+        private HttpResponseMessage CheckResponse(HttpResponseMessage response)
+        {
+#if DEBUG
+            var handler = this.OnHttpResponse;
+
+            if (handler != null)
+            {
+                handler(this, response);
+            }
+#endif
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new WebResponseException(response.ReasonPhrase);
+            }
+
+            return response;
         }
     }
 }

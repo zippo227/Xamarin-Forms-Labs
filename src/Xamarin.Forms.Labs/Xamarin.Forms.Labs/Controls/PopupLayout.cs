@@ -53,11 +53,8 @@ namespace Xamarin.Forms.Labs.Controls
 
             if (Device.OS == TargetPlatform.Android)
             {
-                this.Children.Remove(this.content);
-                this.Children.Add(this.content, () => this.Bounds);
+                this.LowerChild(this.popup);
             }
-
-            //this.LowerChild(this.Content);
 
             this.UpdateChildrenLayout();
         }
@@ -104,11 +101,8 @@ namespace Xamarin.Forms.Labs.Controls
 
             if (Device.OS == TargetPlatform.Android)
             {
-                this.Children.Remove(this.content);
-                this.Children.Add(this.content, () => this.Bounds);
+                this.LowerChild(this.popup);
             }
-
-            //this.LowerChild(this.Content);
 
             this.UpdateChildrenLayout();
         }
