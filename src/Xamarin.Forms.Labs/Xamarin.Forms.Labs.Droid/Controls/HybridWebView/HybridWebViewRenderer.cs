@@ -132,6 +132,13 @@ namespace Xamarin.Forms.Labs.Controls
                 this.webHybrid = webHybrid;
             }
 
+            public override void OnGeolocationPermissionsShowPrompt(string origin, GeolocationPermissions.ICallback callback)
+            {
+                // Always grant permission since the app itself requires location
+                // permission and the user has therefore already granted it
+                callback.Invoke(origin, true, false);
+            }
+
 //            public override void OnProgressChanged(Android.Webkit.WebView view, int newProgress)
 //            {
 //                base.OnProgressChanged(view, newProgress);
