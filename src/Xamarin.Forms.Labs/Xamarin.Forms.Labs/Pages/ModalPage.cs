@@ -26,7 +26,6 @@ namespace Xamarin.Forms.Labs.Pages
     /// }
     /// var host = new ModalHost<string,myModalPage>(this.Navigation,new myModalPage(),(x)=>{ ... your success code},()=>{...your cancel code});
     /// host.show();
-    /// var mymodal = new myModal();
     /// 
     /// 
     /// ]]>
