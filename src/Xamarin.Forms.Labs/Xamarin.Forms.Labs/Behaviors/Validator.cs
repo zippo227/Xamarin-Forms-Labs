@@ -364,6 +364,13 @@
         /// Element created at 07/11/2014,11:49 AM by Charles
         public static BindableProperty RuleNameProperty = BindableProperty.Create<ValidationRule, string>(x => x.RuleName, default(string));
 
+        /// <summary>
+        /// The minimum length property
+        /// </summary>
+        /// Element created at 07/11/2014,4:00 PM by Charles
+        public static BindableProperty MinimumLengthProperty = BindableProperty.Create<ValidationRule, int>(x => x.MinimumLength, default(int));
+
+        public static BindableProperty MaximumLengthProperty = BindableProperty.Create<ValidationRule, int>(x => x.MaximumLength, default(int));
         /// <summary>Property Definition for <see cref="Validators" /></summary>
         /// Element created at 07/11/2014,2:54 AM by Charles
         public static BindableProperty ValidatorsProperty = BindableProperty.Create<ValidationRule, Validators>(x => x.Validators, default(Validators));
@@ -377,46 +384,51 @@
                 }
                 return false;
             }),
-                                                                             new ValidatorPredicate(Validators.Maximum, (rule, val) =>
-                                                                                 {
-                                                                                     double d;
-                                                                                     if (double.TryParse(val, out d))
-                                                                                     {
-                                                                                         return rule.Maximum >= d;
-                                                                                     }
-                                                                                     return false;
-                                                                                 }),
-                                                                             new ValidateEmailAddress(), new ValidatorPredicate(Validators.Pattern, (rule, val) =>
-                                                                                 {
-                                                                                     try
-                                                                                     {
-                                                                                         var regex = new Regex(val);
-                                                                                         return regex.IsMatch(val);
-                                                                                     }
-                                                                                     catch (Exception)
-                                                                                     {
-                                                                                         return false;
-                                                                                     }
-                                                                                 }),
-                                                                             new ValidatorPredicate(Validators.Between, (rule, val) =>
-                                                                                 {
-                                                                                     double value;
-                                                                                     if (double.TryParse(val, out value))
-                                                                                     {
-                                                                                         return value >= rule.Minimum && value <= rule.Minimum;
-                                                                                     }
-                                                                                     return false;
-                                                                                 }),
-                                                                             new ValidatorPredicate(Validators.Predicate, (rule, val) => rule.Callback != null && rule.Callback(val)), new ValidateDateTime(), new ValidatorPredicate(Validators.Numeric, (rule, val) =>
-                                                                                 {
-                                                                                     double d;
-                                                                                     return double.TryParse(val, out d);
-                                                                                 }),
-                                                                             new ValidatorPredicate(Validators.Integer, (rule, val) =>
-                                                                                 {
-                                                                                     long i;
-                                                                                     return long.TryParse(val, out i);
-                                                                                 }) };
+            new ValidatorPredicate(Validators.Maximum, (rule, val) =>
+                {
+                    double d;
+                    if (double.TryParse(val, out d))
+                    {
+                        return rule.Maximum >= d;
+                    }
+                    return false;
+                }),
+            new ValidateEmailAddress(), new ValidatorPredicate(Validators.Pattern, (rule, val) =>
+                {
+                    try
+                    {
+                        var regex = new Regex(val);
+                        return regex.IsMatch(val);
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }),
+            new ValidatorPredicate(Validators.Between, (rule, val) =>
+                {
+                    double value;
+                    if (double.TryParse(val, out value))
+                    {
+                        return value >= rule.Minimum && value <= rule.Minimum;
+                    }
+                    return false;
+                }),
+            new ValidatorPredicate(Validators.Predicate, (rule, val) => rule.Callback != null && rule.Callback(val)), new ValidateDateTime(), new ValidatorPredicate(Validators.Numeric, (rule, val) =>
+                {
+                    double d;
+                    return double.TryParse(val, out d);
+                }),
+            new ValidatorPredicate(Validators.Integer, (rule, val) =>
+                {
+                    long i;
+                    return long.TryParse(val, out i);
+                }),
+            new ValidatorPredicate(Validators.MinLength, (rule, val) => val != null && val.Length >= rule.MinimumLength),
+            new ValidatorPredicate(Validators.MaxLength,(rule,val)=>val != null && val.Length <=rule.MaximumLength), 
+            new ValidateAlphaOnly(), 
+            new ValidateAlphaNumeric()
+           };
 
         #endregion
 
@@ -430,6 +442,15 @@
 
         #region Public Properties
 
+        /// <summary>Gets or sets the minimum string length.</summary>
+        /// <value>The minimum length.</value>
+        /// Element created at 07/11/2014,4:01 PM by Charles
+        public int MinimumLength { get { return (int)GetValue(MinimumLengthProperty); } set { SetValue(MinimumLengthProperty,value);} }
+
+        /// <summary>Gets or sets the maximum string length.</summary>
+        /// <value>The maximum length.</value>
+        /// Element created at 07/11/2014,4:01 PM by Charles
+        public int MaximumLength { get { return (int)GetValue(MaximumLengthProperty); } set { SetValue(MaximumLengthProperty,value);} }
         /// <summary>Gets or sets the user predicate.</summary>
         /// <value>The predicate.</value>
         /// Element created at 07/11/2014,10:48 AM by Charles
@@ -593,6 +614,22 @@
         #endregion
     }
 
+    internal class ValidateAlphaOnly : ValidatorPredicate
+    {
+        private static readonly Regex AlphaOnly=new Regex(@"^[\p{L}]*$");
+        public ValidateAlphaOnly() : base(Validators.AlphaOnly, IsAlphaOnly) { }
+
+        private static bool IsAlphaOnly(ValidationRule rule, string value) { return AlphaOnly.IsMatch(value); }
+    }
+
+    internal class ValidateAlphaNumeric : ValidatorPredicate
+    {
+        private static readonly Regex AlphaNumeric = new Regex(@"^[\p{L}\p{N}]*$");
+        public ValidateAlphaNumeric() : base(Validators.AlphaOnly, IsAlphaNumeric) { }
+
+        private static bool IsAlphaNumeric(ValidationRule rule, string value) { return AlphaNumeric.IsMatch(value); }
+    }
+
     internal class ValidateEmailAddress : ValidatorPredicate
     {
         #region Static Fields
@@ -680,38 +717,54 @@
 
         /// <summary>The string value must be a valid email address</summary>
         /// Element created at 07/11/2014,2:56 AM by Charles
-        Email = 0x0000000000000002,
+        Email       =   0x0000000000000002,
 
         /// <summary>The minimum numeric value</summary>
         /// Element created at 07/11/2014,2:57 AM by Charles
-        Minimum = 0x0000000000000004,
+        Minimum     =   0x0000000000000004,
 
         /// <summary>The maximum numeric value</summary>
         /// Element created at 07/11/2014,2:57 AM by Charles
-        Maximum = 0x0000000000000008,
+        Maximum     =   0x0000000000000008,
 
         /// <summary>A regex pattern that must be matched</summary>
         /// Element created at 07/11/2014,2:58 AM by Charles
-        Pattern = 0x0000000000000010,
+        Pattern     =   0x0000000000000010,
 
         /// <summary>The numeric value is between <see cref="ValidationRule.Minimum" /> and <see cref="ValidationRule.Maximum" />/></summary>
         /// Element created at 07/11/2014,10:41 AM by Charles
-        Between = 0x0000000000000011,
+        Between     =   0x0000000000000011,
 
         /// <summary>Calls a user supplied predicate to validate the value</summary>
         /// Element created at 07/11/2014,10:49 AM by Charles
-        Predicate = 0x0000000000000012,
+        Predicate   =   0x0000000000000012,
 
         /// <summary>Verifies the value is a datetime</summary>
         /// Element created at 07/11/2014,11:07 AM by Charles
-        DateTime = 0x0000000000000014,
+        DateTime    =   0x0000000000000014,
 
         /// <summary>Verifies the value is numeric</summary>
         /// Element created at 07/11/2014,11:17 AM by Charles
-        Numeric = 0x0000000000000018,
+        Numeric     =   0x0000000000000018,
 
         /// <summary>Verifies the value is an integer</summary>
         /// Element created at 07/11/2014,11:21 AM by Charles
-        Integer = 0x0000000000000020,
+        Integer     =   0x0000000000000020,
+
+        /// <summary>Verifies the minimum string length of the property</summary>
+        /// Element created at 07/11/2014,3:52 PM by Charles
+        MinLength   =   0x0000000000000021,
+
+        /// <summary>Verifies the maximum string length of the property</summary>
+        /// Element created at 07/11/2014,3:52 PM by Charles
+        MaxLength   =   0x0000000000000022,
+
+        /// <summary>Allows letters only (Unicode support)</summary>
+        /// Element created at 07/11/2014,3:56 PM by Charles
+        AlphaOnly   =   0x0000000000000024,
+
+        /// <summary>Allows letters and numbers (Unicode support)</summary>
+        /// Element created at 07/11/2014,3:57 PM by Charles
+        AlphaNumeric=   0x0000000000000028
     }
 }
