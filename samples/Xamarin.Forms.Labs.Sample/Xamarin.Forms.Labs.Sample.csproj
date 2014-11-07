@@ -151,8 +151,8 @@
     <Compile Include="Pages\Controls\CheckBoxPage.xaml.cs">
       <DependentUpon>CheckBoxPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Controls\ImageGallery.xaml.cs">
-      <DependentUpon>ImageGallery.xaml</DependentUpon>
+    <Compile Include="Pages\Controls\ImageGalleryPage.xaml.cs">
+      <DependentUpon>ImageGalleryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Controls\CameraViewPage.xaml.cs">
       <DependentUpon>CameraViewPage.xaml</DependentUpon>
@@ -186,9 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
       <LogicalName>CheckBoxPage.xaml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\Controls\ImageGallery.xaml">
+    <EmbeddedResource Include="Pages\Controls\ImageGalleryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <LogicalName>ImageGallery.xaml</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Controls\CameraViewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
