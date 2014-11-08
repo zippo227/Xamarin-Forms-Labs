@@ -11,6 +11,8 @@ using XLabs.Ioc;
 
 namespace Xamarin.Forms.Labs.Sample
 {
+    using Xamarin.Forms.Labs.Sample.Pages;
+
     /// <summary>
     /// Class App.
     /// </summary>
@@ -202,6 +204,7 @@ namespace Xamarin.Forms.Labs.Sample
                 "RepeaterView",
                 "Segment",
                 "Separator",
+                "Validation",
                 "WebImage",
             };
 
@@ -291,6 +294,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "gesturecontentview":
                         await mainPage.Navigation.PushAsync(new GestureSample());
+                        break;
+                    case "validation":
+                        await mainPage.Navigation.PushAsync(new ValidatorSample());
                         break;
                 }
             };

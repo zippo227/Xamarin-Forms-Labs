@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:lp="clr-namespace:Xamarin.Forms.Labs.Pages;assembly=Xamarin.Forms.Labs"
+             xmlns:lcon="clr-namespace:Xamarin.Forms.Labs.Converter;assembly=Xamarin.Forms.Labs"
+             xmlns:lb="clr-namespace:Xamarin.Forms.Labs.Behaviors;assembly=Xamarin.Forms.Labs"
+             xmlns:lc="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=Xamarin.Forms.Labs"             
+             x:Class="Xamarin.Forms.Labs.Sample.Pages.Controls.ValidatorSample">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <lb:Validator x:Key="anynamehere">
+        <lb:Validator.Sets>
+          <lb:ValidationSets>
+            <lb:ValidationSet>
+              <!--Start of rules-->
+              <lb:ValidationSet.Rules>
+                <lb:ValidationRules>
+                  <lb:ValidationRule Element="{x:Reference Required}" Property="Text" Validators="Required" RuleName="Rule1"/>
+                  <lb:ValidationRule Element="{x:Reference RequiredEmail}" Property="Text" Validators="Required,Email" RuleName="Rule2"/>
+                  <lb:ValidationRule Element="{x:Reference Email}" Property="Text" Validators="Email" RuleName="Rule3"/>
+                </lb:ValidationRules>
+              </lb:ValidationSet.Rules>
+              <!--End of rules-->
+              <!--Start of Actions-->
+              <lb:ValidationSet.Actions>
+                <lb:ValidationActions>
+                  <lb:ValidationAction Trigger="Rule1" Element="{x:Reference RequiredImage}" Property="Source" ValidValue="valid.png" InvalidValue="invalid.png"/>
+                  <lb:ValidationAction Trigger="Rule2" Element="{x:Reference RequiredEmailImage}" Property="Source" ValidValue="valid.png" InvalidValue="invalid.png"/>
+                  <lb:ValidationAction Trigger="Rule3" Element="{x:Reference EmailImage}" Property="Source" ValidValue="valid.png" InvalidValue="invalid.png"/>
+                  <!--A wildcard trigger '*' applies to each element that was validated....be sure that each validated element has the property-->
+                  <!--If needed create a validationset containing just the elements that you want to be wildcarded-->
+                  <lb:ValidationAction Trigger="*" Property="TextColor" ValidValue="Green" InvalidValue="Red"/>
+                  <lb:ValidationAction Element="{x:Reference AllPassed}" Property="Text" ValidValue="All Validations Passed" InvalidValue="Validation Failure"/>
+                  <lb:ValidationAction Element="{x:Reference AllPassed}" Property="IsEnabled" ValidValue="true" InvalidValue="false"/>
+                </lb:ValidationActions>
+              </lb:ValidationSet.Actions>
+              <!--End of Actions-->
+            </lb:ValidationSet>
+          </lb:ValidationSets>
+        </lb:Validator.Sets>
+      </lb:Validator>
+
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <ScrollView.Padding>
+      <OnPlatform x:TypeArguments="Thickness"
+                  iOS="20,40,20,20"
+                  Android="20,20,20,20"
+                  WinPhone="20,20,20,20" />
+    </ScrollView.Padding>
+
+    <StackLayout>
+      <Button x:Name="AllPassed"/>
+      <Grid lb:GridLayout.RowHeights="Auto,Auto,Auto" lb:GridLayout.ColumnWidths="*,18">
+        <!--Rule1 Required Only-->
+        <Entry Placeholder="Required" Grid.Row="0" Grid.Column="0" x:Name="Required"/>
+        <Image Grid.Column="1" x:Name="RequiredImage"/>
+        <!--Rule2 Required and Email-->
+        <Entry Placeholder="RequiredEmail" Grid.Row="1" Grid.Column="0" x:Name="RequiredEmail"/>
+        <Image Grid.Row="1" Grid.Column="1" x:Name="RequiredEmailImage"/>
+        <!--Rule 3 Email-->
+        <Entry Placeholder="Email" Grid.Row="2" Grid.Column="0" x:Name="Email"/>
+        <Image Grid.Row="2" Grid.Column="1" x:Name="EmailImage"/>
+      </Grid>
+    </StackLayout>
+  </ScrollView>
+</ContentPage>
