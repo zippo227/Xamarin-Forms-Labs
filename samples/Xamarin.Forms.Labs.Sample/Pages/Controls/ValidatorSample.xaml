@@ -11,33 +11,43 @@
     <ResourceDictionary>
       <lb:Validator x:Key="anynamehere">
         <lb:Validator.Sets>
-          <lb:ValidationSets>
             <lb:ValidationSet>
               <!--Start of rules-->
+              <!--Each rule has it's own set of actions.-->
+              <!--An action without an element is applied to the Element named in the rule definition-->
               <lb:ValidationSet.Rules>
-                <lb:ValidationRules>
-                  <lb:ValidationRule Element="{x:Reference Required}" Property="Text" Validators="Required" RuleName="Rule1"/>
-                  <lb:ValidationRule Element="{x:Reference RequiredEmail}" Property="Text" Validators="Required,Email" RuleName="Rule2"/>
-                  <lb:ValidationRule Element="{x:Reference Email}" Property="Text" Validators="Email" RuleName="Rule3"/>
-                </lb:ValidationRules>
+                
+                <lb:ValidationRule Element="{x:Reference Required}" Property="Text" Validators="Required">
+                  <lb:ValidationRule.Actions>
+                    <lb:ValidationAction Element="{x:Reference RequiredImage}" Property="Source" ValidValue="valid.png" InvalidValue="invalid.png"/>
+                  </lb:ValidationRule.Actions> 
+                </lb:ValidationRule>
+                
+                <lb:ValidationRule Element="{x:Reference RequiredEmail}" Property="Text" Validators="Required,Email">
+                  <lb:ValidationRule.Actions>
+                    <lb:ValidationAction Element="{x:Reference RequiredEmailImage}" Property="Source" ValidValue="valid.png" InvalidValue="invalid.png"/>
+                  </lb:ValidationRule.Actions>
+                </lb:ValidationRule>
+                
+                <lb:ValidationRule Element="{x:Reference Email}" Property="Text" Validators="Email" RuleName="Rule3">
+                  <lb:ValidationRule.Actions>
+                    <lb:ValidationAction Element="{x:Reference EmailImage}" Property="Source" ValidValue="valid.png" InvalidValue="invalid.png"/>
+                  </lb:ValidationRule.Actions>
+                </lb:ValidationRule>
+                
               </lb:ValidationSet.Rules>
               <!--End of rules-->
-              <!--Start of Actions-->
+              <!--Start of  ValidationSet.Actions-->
+              <!--The ValidationSet rules are applied based on the total success or total failure of the validationset-->
+              <!--An action without a Element defined is applied to all rule elements within that the Validationset -->
+              <!-- that have the property defined-->
               <lb:ValidationSet.Actions>
-                <lb:ValidationActions>
-                  <lb:ValidationAction Trigger="Rule1" Element="{x:Reference RequiredImage}" Property="Source" ValidValue="valid.png" InvalidValue="invalid.png"/>
-                  <lb:ValidationAction Trigger="Rule2" Element="{x:Reference RequiredEmailImage}" Property="Source" ValidValue="valid.png" InvalidValue="invalid.png"/>
-                  <lb:ValidationAction Trigger="Rule3" Element="{x:Reference EmailImage}" Property="Source" ValidValue="valid.png" InvalidValue="invalid.png"/>
-                  <!--A wildcard trigger '*' applies to each element that was validated....be sure that each validated element has the property-->
-                  <!--If needed create a validationset containing just the elements that you want to be wildcarded-->
-                  <lb:ValidationAction Trigger="*" Property="TextColor" ValidValue="Green" InvalidValue="Red"/>
+                  <lb:ValidationAction Property="TextColor" ValidValue="Green" InvalidValue="Red"/>
                   <lb:ValidationAction Element="{x:Reference AllPassed}" Property="Text" ValidValue="All Validations Passed" InvalidValue="Validation Failure"/>
                   <lb:ValidationAction Element="{x:Reference AllPassed}" Property="IsEnabled" ValidValue="true" InvalidValue="false"/>
-                </lb:ValidationActions>
               </lb:ValidationSet.Actions>
               <!--End of Actions-->
             </lb:ValidationSet>
-          </lb:ValidationSets>
         </lb:Validator.Sets>
       </lb:Validator>
 
