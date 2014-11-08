@@ -23,6 +23,8 @@
     <StackLayout>
       <Label HorizontalOptions="Center" Text="{Binding FrameText}"/>
       <lc:GesturesContentView  ExcludeChildren="{Binding ExcludeChildren}"><!--Enclosing gesture content view MUST be present-->
+        <!--Same as any content view a GesturesContentView can only have one direct child-->
+        <StackLayout>
         <Frame OutlineColor="White" Padding="10,0" HorizontalOptions="FillAndExpand" HeightRequest="50">
           <lb:Gestures.Interests>
             <lb:GestureCollection>
@@ -40,7 +42,20 @@
           </lb:Gestures.Interests>
           <Label HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding LabelText}" BackgroundColor="Green"/>
         </Frame>
+        <Label Text="This frame only accepts taps events"/>
+        <Frame OutlineColor="White" Padding="10,0" HorizontalOptions="FillAndExpand" HeightRequest="25">
+          <lb:Gestures.Interests>
+            <lb:GestureCollection>
+              <lb:GestureInterest GestureType="SingleTap" GestureCommand="{Binding DumpGesture}" GestureParameter="{Binding GestureCount}"/>
+              <lb:GestureInterest GestureType="DoubleTap" GestureCommand="{Binding DumpGesture}" GestureParameter="{Binding GestureCount}"/>
+              <lb:GestureInterest GestureType="LongPress" GestureCommand="{Binding DumpGesture}" GestureParameter="{Binding GestureCount}"/>
+            </lb:GestureCollection>
+          </lb:Gestures.Interests>
+          <Label VerticalOptions="Start" HorizontalOptions="Center" Text="Tap only area"/>
+        </Frame>
+        </StackLayout>
       </lc:GesturesContentView>
+      
     </StackLayout>
     <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
       <ListView ItemsSource="{Binding Gestures}"/>
