@@ -193,6 +193,7 @@ namespace Xamarin.Forms.Labs.Sample
                 "ExtendedLabel",
                 "ExtendedScrollView",
                 "ExtendedSlider",
+                "GestureContentView",
                 "GridView",
                 "HybridWebView",
                 "ImageButton",
@@ -287,6 +288,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "circleimage":
                         await mainPage.Navigation.PushAsync(new CircleImagePage());
+                        break;
+                    case "gesturecontentview":
+                        await mainPage.Navigation.PushAsync(new GestureSample());
                         break;
                 }
             };
