@@ -54,13 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Controls\ExtendedTimePick\" />
-    <Folder Include="Controls\ExtendedDatePick\" />
-    <Folder Include="Controls\BindablePick\" />
-    <Folder Include="Controls\ExtendedEditor\" />
-    <Folder Include="Controls\AccessoryViewCell\" />
-    <Folder Include="Controls\CheckBoxViewCell\" />
-    <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
@@ -92,6 +85,7 @@
     <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
     <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\ExtendedTabbedPage\ExtendedTabbedPageRenderer.cs" />
+    <Compile Include="Controls\GesturesContentView\GesturesContentViewRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="Controls\IconButton\IconButtonRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
@@ -174,12 +168,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
-      <Project>{4D10DF5E-883D-468B-A854-4A53C7FE75AC}</Project>
-      <Name>Xamarin.Forms.Labs</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Images\Calendar\datecell.png" />
     <BundleResource Include="Images\Calendar\datecellmarked.png" />
     <BundleResource Include="Images\Calendar\datecellselected.png" />
@@ -193,6 +181,12 @@
     <BundleResource Include="Images\CheckBox\checked_checkbox%402x.png" />
     <BundleResource Include="Images\CheckBox\unchecked_checkbox.png" />
     <BundleResource Include="Images\CheckBox\unchecked_checkbox%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Forms.Labs\Xamarin.Forms.Labs.csproj">
+      <Project>{4d10df5e-883d-468b-a854-4a53c7fe75ac}</Project>
+      <Name>Xamarin.Forms.Labs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />

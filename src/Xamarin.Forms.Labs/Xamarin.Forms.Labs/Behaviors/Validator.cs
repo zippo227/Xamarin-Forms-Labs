@@ -15,22 +15,21 @@
     using Xamarin.Forms.Labs.Exceptions;
 
     /// <summary>
-    ///     A non visible view that performs validation and
+    ///     A bindable object that performs validation and
     ///     allows the setting of properties based on
     ///     validation results.
     ///     A Validator must be put in the ResourceDictionary
-    ///     As it has does not inherit form VisualElement.
+    ///     As it does not inherit form VisualElement.
     /// </summary>
     /// Element created at 07/11/2014,6:09 AM by Charles
     public class Validator : BindableObject
     {
-        //Inheriting from View is unfortunate, but Xamarin wants all outer elments to be view dervied..the idea of non visual elements seems to have not occured to anyone
-
         #region Static Fields
 
         /// <summary>The Set of Validations</summary>
         /// Element created at 07/11/2014,12:00 PM by Charles
-        public static BindableProperty SetsProperty = BindableProperty.Create<Validator, ValidationSets>(x => x.Sets, default(ValidationSets));
+        public static BindableProperty SetsProperty =
+            BindableProperty.Create<Validator, ValidationSets>(x => x.Sets, default(ValidationSets));
 
         #endregion
 
@@ -40,7 +39,10 @@
         ///     Initializes a new instance of the <see cref="Validator" /> class.
         /// </summary>
         /// Element created at 07/11/2014,6:10 AM by Charles
-        public Validator() { Sets = new ValidationSets(); }
+        public Validator()
+        {
+            Sets = new ValidationSets();
+        }
 
         #endregion
 
@@ -49,7 +51,11 @@
         /// <summary>Gets or sets the list of ValiationSets.</summary>
         /// <value>The sets.</value>
         /// Element created at 07/11/2014,6:11 AM by Charles
-        public ValidationSets Sets { get { return (ValidationSets)GetValue(SetsProperty); } set { SetValue(SetsProperty, value); } }
+        public ValidationSets Sets
+        {
+            get { return (ValidationSets)GetValue(SetsProperty); }
+            set { SetValue(SetsProperty, value); }
+        }
 
         #endregion
     }
@@ -78,15 +84,25 @@
 
         /// <summary>Property Defintion for <see cref="Actions" /></summary>
         /// Element created at 07/11/2014,6:12 AM by Charles
-        public static BindableProperty ActionsProperty = BindableProperty.Create<ValidationSet, ValidationActions>(x => x.Actions, default(ValidationActions));
+        public static BindableProperty ActionsProperty =
+            BindableProperty.Create<ValidationSet, ValidationActions>(x => x.Actions,
+                default(ValidationActions));
 
         /// <summary>Property Definition for <see cref="IsValid" /></summary>
         /// Element created at 07/11/2014,6:12 AM by Charles
-        public static BindableProperty IsValidProperty = BindableProperty.Create<ValidationSet, bool>(x => x.IsValid, default(bool), BindingMode.TwoWay);
+        public static BindableProperty IsValidProperty =
+            BindableProperty.Create<ValidationSet, bool>(x => x.IsValid,
+                default(bool),
+                BindingMode.TwoWay);
 
         /// <summary>Property Definition for <see cref="Rules" /></summary>
         /// Element created at 07/11/2014,6:13 AM by Charles
-        public static BindableProperty RulesProperty = BindableProperty.Create<ValidationSet, ValidationRules>(x => x.Rules, default(ValidationRules), BindingMode.OneWay, null, (bo, o, n) => ((ValidationSet)bo).RulesChanged(o, n));
+        public static BindableProperty RulesProperty =
+            BindableProperty.Create<ValidationSet, ValidationRules>(x => x.Rules,
+                default(ValidationRules),
+                BindingMode.OneWay,
+                null,
+                (bo, o, n) => ((ValidationSet)bo).RulesChanged(o, n));
 
         #endregion
 
@@ -110,19 +126,31 @@
         /// <summary>Gets or sets the actions.</summary>
         /// <value>The actions.</value>
         /// Element created at 07/11/2014,6:14 AM by Charles
-        public ValidationActions Actions { get { return (ValidationActions)GetValue(ActionsProperty); } set { SetValue(ActionsProperty, value); } }
+        public ValidationActions Actions
+        {
+            get { return (ValidationActions)GetValue(ActionsProperty); }
+            set { SetValue(ActionsProperty, value); }
+        }
 
         /// <summary>
         ///     Gets or sets a value indicating whether this ValidationSet is valid.
         /// </summary>
         /// <value><c>true</c> if this instance is valid; otherwise, <c>false</c>.</value>
         /// Element created at 07/11/2014,6:13 AM by Charles
-        public bool IsValid { get { return (bool)GetValue(IsValidProperty); } set { SetValue(IsValidProperty, value); } }
+        public bool IsValid
+        {
+            get { return (bool)GetValue(IsValidProperty); }
+            set { SetValue(IsValidProperty, value); }
+        }
 
         /// <summary>Gets or sets the rules.</summary>
         /// <value>The rules.</value>
         /// Element created at 07/11/2014,6:14 AM by Charles
-        public ValidationRules Rules { get { return (ValidationRules)GetValue(RulesProperty); } set { SetValue(RulesProperty, value); } }
+        public ValidationRules Rules
+        {
+            get { return (ValidationRules)GetValue(RulesProperty); }
+            set { SetValue(RulesProperty, value); }
+        }
 
         #endregion
 
@@ -130,11 +158,11 @@
 
         /// <summary>
         ///     Checks the state on each property change.
-        ///     If performance becomes an issue this is the
-        ///     most obvious spot to optimze.  Start by
-        ///     giving the rules a memory as to the
-        ///     last result and only fire actions
-        ///     when a change has occured.
+        ///     Actions are applied from the least specific
+        ///     to the most specific:
+        ///     Generic Validation set actions
+        ///     Targeted Validation set actions
+        ///     Actions owned by a rule
         /// </summary>
         /// Element created at 08/11/2014,3:02 AM by Charles
         internal void CheckState()
@@ -146,33 +174,39 @@
             }
 
             //Gather up our results
-            var results = Rules.Select(x => new { State = x.IsSatisfied(), Source = x.Element, Name = x.RuleName, Actions = Actions.Where(y => string.Compare(x.RuleName, y.Trigger, StringComparison.OrdinalIgnoreCase) == 0 || y.Trigger == "*").ToList() }).ToList();
-
-            List<ValidationAction> setactions = Actions.Where(x => string.IsNullOrEmpty(x.Trigger) || x.Trigger == "Set").ToList();
-            IsValid = results.All(x => x.State);
-            //Apply triggers first
-            foreach (var r in results.Where(x => x.Actions.Any()))
-            {
-                foreach (ValidationAction a in r.Actions)
+            var results = Rules.Select(x => new
                 {
-                    if (a.Trigger == "*")
-                    {
-                        a.ApplyResultTo(r.State, r.Source);
-                    }
-                    else
-                    {
-                        a.ApplyResult(r.State);
-                    }
-                }
-            }
-            //Apply set options last
-            foreach (ValidationAction a in setactions)
+                    State = x.IsSatisfied(),
+                    Source = x.Element,
+                    Passed = x.LastResult.HasValue && x.LastResult.Value,
+                    x.Actions
+                }).ToList();
+
+            IsValid = results.All(x => x.Passed);
+
+            //Apply generic Validation set actions
+            foreach (var a in Actions.Where(x => x.Element == null))
             {
-                a.ApplyResult(IsValid);
+                foreach (var e in Rules)
+                    a.ApplyResult(e.LastResult.HasValue && e.LastResult.Value, e.Element);
             }
+
+            //Apply Targeted Validation set actions 
+            foreach (var a in Actions.Where(a => a.Element != null))
+                a.ApplyResult(IsValid);
+
+            //Apply Rule based actions
+            foreach (var r in results.Where(x => x.State != ValidationRuleResult.ValidationNoChange && x.Actions.Any()))
+            {
+                foreach (var va in r.Actions)
+                    va.ApplyResult(r.Passed, va.Element==null ? r.Source : null);
+            }
+
         }
 
-        private void RulesChanged(ObservableCollection<ValidationRule> oldvalue, ObservableCollection<ValidationRule> newvalue)
+        private void RulesChanged(
+            ObservableCollection<ValidationRule> oldvalue,
+            ObservableCollection<ValidationRule> newvalue)
         {
             if (oldvalue != null)
             {
@@ -235,25 +269,40 @@
 
         /// <summary>Property Definition for <see cref="Element" /></summary>
         /// Element created at 07/11/2014,6:15 AM by Charles
-        public static BindableProperty ElementProperty = BindableProperty.Create<ValidationAction, BindableObject>(x => x.Element, default(BindableObject));
+        public static BindableProperty ElementProperty =
+            BindableProperty.Create<ValidationAction, BindableObject>(x => x.Element,
+                default(BindableObject));
 
         /// <summary>Property Defintion for <see cref="InvalidValue" /></summary>
         /// Element created at 07/11/2014,6:16 AM by Charles
-        public static BindableProperty InvalidValueProperty = BindableProperty.Create<ValidationAction, object>(x => x.InvalidValue, null);
+        public static BindableProperty InvalidValueProperty =
+            BindableProperty.Create<ValidationAction, object>(x => x.InvalidValue, null);
 
         /// <summary>Property definition for <see cref="Property" /></summary>
         /// Element created at 07/11/2014,6:15 AM by Charles
-        public static BindableProperty PropertyProperty = BindableProperty.Create<ValidationAction, string>(x => x.Property, default(string));
-
-        /// <summary>Property Definition for <see cref="Trigger" /></summary>
-        /// Element created at 08/11/2014,2:40 AM by Charles
-        public static BindableProperty TriggerProperty = BindableProperty.Create<ValidationAction, string>(x => x.Trigger, "Set", BindingMode.OneWay, (bo, x) => x != "Set");
+        public static BindableProperty PropertyProperty =
+            BindableProperty.Create<ValidationAction, string>(x => x.Property, default(string));
 
         /// <summary>Property Definition for <see cref="ValidValue" /> </summary>
         /// Element created at 07/11/2014,6:15 AM by Charles
-        public static BindableProperty ValidValueProperty = BindableProperty.Create<ValidationAction, object>(x => x.ValidValue, null);
+        public static BindableProperty ValidValueProperty =
+            BindableProperty.Create<ValidationAction, object>(x => x.ValidValue, null);
 
-        private static readonly Dictionary<Type, TypeConverter> Converters = new Dictionary<Type, TypeConverter> { { typeof(Color), new ColorTypeConverter() }, { typeof(Rectangle), new BoundsTypeConverter() }, { typeof(Constraint), new ConstraintTypeConverter() }, { typeof(Font), new FontTypeConverter() }, { typeof(GridLength), new GridLengthTypeConverter() }, { typeof(ImageSource), new ImageSourceConverter() }, { typeof(Keyboard), new KeyboardTypeConverter() }, { typeof(Point), new PointTypeConverter() }, { typeof(Thickness), new ThicknessTypeConverter() }, { typeof(Uri), new UriTypeConverter() }, { typeof(WebViewSource), new WebViewSourceTypeConverter() } };
+        private static readonly Dictionary<Type, TypeConverter> Converters = new Dictionary
+            <Type, TypeConverter>
+            {
+                { typeof(Color), new ColorTypeConverter() },
+                { typeof(Rectangle), new BoundsTypeConverter() },
+                { typeof(Constraint), new ConstraintTypeConverter() },
+                { typeof(Font), new FontTypeConverter() },
+                { typeof(GridLength), new GridLengthTypeConverter() },
+                { typeof(ImageSource), new ImageSourceConverter() },
+                { typeof(Keyboard), new KeyboardTypeConverter() },
+                { typeof(Point), new PointTypeConverter() },
+                { typeof(Thickness), new ThicknessTypeConverter() },
+                { typeof(Uri), new UriTypeConverter() },
+                { typeof(WebViewSource), new WebViewSourceTypeConverter() }
+            };
 
         #endregion
 
@@ -268,34 +317,38 @@
         /// <summary>Gets or sets the element to be modified.</summary>
         /// <value>The element.</value>
         /// Element created at 07/11/2014,6:16 AM by Charles
-        public BindableObject Element { get { return (BindableObject)GetValue(ElementProperty); } set { SetValue(ElementProperty, value); } }
+        public BindableObject Element
+        {
+            get { return (BindableObject)GetValue(ElementProperty); }
+            set { SetValue(ElementProperty, value); }
+        }
 
         /// <summary>Gets or sets the invalid value.</summary>
         /// <value>The valud to be applied to the property when the ValidationSet is invalid value.</value>
         /// Element created at 07/11/2014,6:17 AM by Charles
-        public object InvalidValue { get { return GetValue(InvalidValueProperty); } set { SetValue(InvalidValueProperty, value); } }
+        public object InvalidValue
+        {
+            get { return GetValue(InvalidValueProperty); }
+            set { SetValue(InvalidValueProperty, value); }
+        }
 
         /// <summary>Gets or sets the property.</summary>
         /// <value>The property to be modified.</value>
         /// Element created at 07/11/2014,6:16 AM by Charles
-        public string Property { get { return (string)GetValue(PropertyProperty); } set { SetValue(PropertyProperty, value); } }
-
-        /// <summary>Gets or sets the trigger name.</summary>
-        /// <value>
-        ///     The trigger name is a name defined on a validation rule.
-        ///     When a rule with a name is evaluated all actions
-        ///     with the name are executed.  One name "Set" is reserved
-        ///     The default Trigger name is "Set".  All Actions with a trigger
-        ///     of "Set" are executed based on the success or failure
-        ///     of the entire validation set.
-        /// </value>
-        /// Element created at 08/11/2014,2:41 AM by Charles
-        public string Trigger { get { return (string)GetValue(TriggerProperty); } set { SetValue(TriggerProperty, value); } }
+        public string Property
+        {
+            get { return (string)GetValue(PropertyProperty); }
+            set { SetValue(PropertyProperty, value); }
+        }
 
         /// <summary>Gets or sets the valid value.</summary>
         /// <value>The value to be applied to the property when the ValidationSet is valid.</value>
         /// Element created at 07/11/2014,6:16 AM by Charles
-        public object ValidValue { get { return GetValue(ValidValueProperty); } set { SetValue(ValidValueProperty, value); } }
+        public object ValidValue
+        {
+            get { return GetValue(ValidValueProperty); }
+            set { SetValue(ValidValueProperty, value); }
+        }
 
         #endregion
 
@@ -305,7 +358,10 @@
         /// <value>The property information.</value>
         /// Element created at 07/11/2014,6:18 AM by Charles
         /// <exception cref="Xamarin.Forms.Labs.Exceptions.PropertyNotFoundException"></exception>
-        protected virtual PropertyInfo PropertyInfo { get { return _pi ?? (_pi = GetPropertyInfo(Property, Element.GetType())); } }
+        protected virtual PropertyInfo PropertyInfo
+        {
+            get { return _pi ?? (_pi = GetPropertyInfo(Property, Element.GetType())); }
+        }
 
         #endregion
 
@@ -315,38 +371,36 @@
         ///     Applies the result of the validation, valid if result is true, invalid otherwise
         /// </summary>
         /// <param name="result">Flag indicating the state of the ValidationSet</param>
+        /// <param name="sourceElement">If this action has no target target this 
+        /// instead (The source from the rule)</param>
         /// Element created at 07/11/2014,6:17 AM by Charles
-        internal void ApplyResult(bool result)
+        internal void ApplyResult(bool result,BindableObject sourceElement=null)
         {
             try
             {
-                object value = TryConvert(result ? ValidValue : InvalidValue, PropertyInfo.PropertyType);
-                PropertyInfo.SetValue(Element, value);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidCastException(string.Format("Could not convert {0} to {1}", result ? ValidValue : InvalidValue, PropertyInfo.PropertyType.Name), ex);
-            }
-        }
+                var pi = sourceElement != null
+                    ? GetPropertyInfo(Property, sourceElement.GetType())
+                    : PropertyInfo;
+                if (pi == null)  return;
 
-        internal void ApplyResultTo(bool result, BindableObject target)
-        {
-            PropertyInfo prop = GetPropertyInfo(Property, target.GetType());
-            try
-            {
-                object value = TryConvert(result ? ValidValue : InvalidValue, prop.PropertyType);
-                prop.SetValue(target, value);
+                var target = sourceElement ?? Element;
+                var value = TryConvert(result ? ValidValue : InvalidValue, pi.PropertyType);
+                pi.SetValue(target, value);
             }
             catch (Exception ex)
             {
-                throw new InvalidCastException(string.Format("Could not convert {0} to {1}", result ? ValidValue : InvalidValue, prop.PropertyType.Name), ex);
+                throw new InvalidCastException(
+                    string.Format("Could not convert {0} to {1}",
+                        result ? ValidValue : InvalidValue,
+                        PropertyInfo.PropertyType.Name),ex);
             }
         }
 
         private static object TryConvert(object value, Type targetType)
         {
             object retval;
-            if (Converters.ContainsKey(targetType) && Converters[targetType].CanConvertFrom(value.GetType()))
+            if (Converters.ContainsKey(targetType)
+                && Converters[targetType].CanConvertFrom(value.GetType()))
             {
                 retval = Converters[targetType].ConvertFrom(CultureInfo.InvariantCulture, value);
             }
@@ -360,11 +414,9 @@
         private PropertyInfo GetPropertyInfo(string property, Type type)
         {
             List<PropertyInfo> allprops = type.GetRuntimeProperties().ToList();
-            PropertyInfo propinfo = allprops.FirstOrDefault(x => string.Compare(x.Name, property, StringComparison.OrdinalIgnoreCase) == 0);
-            if (propinfo == null)
-            {
-                throw new PropertyNotFoundException(type, Property, allprops.Select(x => x.Name));
-            }
+            PropertyInfo propinfo =
+                allprops.FirstOrDefault(
+                    x => string.Compare(x.Name, property, StringComparison.OrdinalIgnoreCase) == 0);
             return propinfo;
         }
 
@@ -389,133 +441,196 @@
     {
         #region Static Fields
 
+        /// <summary>Actions to run when this Validation rule evaluates</summary>
+        /// Element created at 08/11/2014,12:43 PM by Charles
+        public static BindableProperty ActionsProperty =
+            BindableProperty.Create<ValidationRule, ValidationActions>(x => x.Actions,
+                default(ValidationActions));
+
         /// <summary>Property definition for <see cref="Callback" /></summary>
         /// Element created at 07/11/2014,10:48 AM by Charles
-        public static BindableProperty CallbackProperty = BindableProperty.Create<ValidationRule, Predicate<string>>(x => x.Callback, default(Predicate<string>));
+        public static BindableProperty CallbackProperty =
+            BindableProperty.Create<ValidationRule, Predicate<string>>(x => x.Callback,
+                default(Predicate<string>));
 
         /// <summary>Property Definition for <see cref="Element" /></summary>
         /// Element created at 07/11/2014,2:54 AM by Charles
-        public static BindableProperty ElementProperty = BindableProperty.Create<ValidationRule, BindableObject>(x => x.Element, default(BindableObject));
+        public static BindableProperty ElementProperty =
+            BindableProperty.Create<ValidationRule, BindableObject>(x => x.Element,
+                default(BindableObject));
 
         /// <summary>
         ///     The maximum length property
         /// </summary>
         /// Element created at 08/11/2014,2:46 AM by Charles
-        public static BindableProperty MaximumLengthProperty = BindableProperty.Create<ValidationRule, int>(x => x.MaximumLength, default(int));
+        public static BindableProperty MaximumLengthProperty =
+            BindableProperty.Create<ValidationRule, int>(x => x.MaximumLength, default(int));
 
         /// <summary>Property Definition for <see cref="Maximum" /></summary>
         /// Element created at 07/11/2014,3:02 AM by Charles
-        public static BindableProperty MaximumProperty = BindableProperty.Create<ValidationRule, double>(x => x.Maximum, default(double));
+        public static BindableProperty MaximumProperty =
+            BindableProperty.Create<ValidationRule, double>(x => x.Maximum, default(double));
 
         /// <summary>
         ///     The minimum length property
         /// </summary>
         /// Element created at 07/11/2014,4:00 PM by Charles
-        public static BindableProperty MinimumLengthProperty = BindableProperty.Create<ValidationRule, int>(x => x.MinimumLength, default(int));
+        public static BindableProperty MinimumLengthProperty =
+            BindableProperty.Create<ValidationRule, int>(x => x.MinimumLength, default(int));
 
         /// <summary>Property Definition for <see cref="Minimum" /></summary>
         /// Element created at 07/11/2014,3:01 AM by Charles
-        public static BindableProperty MinimumProperty = BindableProperty.Create<ValidationRule, double>(x => x.Minimum, default(double));
+        public static BindableProperty MinimumProperty =
+            BindableProperty.Create<ValidationRule, double>(x => x.Minimum, default(double));
 
         /// <summary>Property definition for <see cref="Property" /></summary>
         /// Element created at 07/11/2014,4:45 AM by Charles
-        public static BindableProperty PropertyProperty = BindableProperty.Create<ValidationRule, string>(x => x.Property, default(string));
+        public static BindableProperty PropertyProperty =
+            BindableProperty.Create<ValidationRule, string>(x => x.Property, default(string));
 
         /// <summary>Property Definition for <see cref="Regex" /></summary>
         /// Element created at 07/11/2014,3:03 AM by Charles
-        public static BindableProperty RegexProperty = BindableProperty.Create<ValidationRule, string>(x => x.Regex, default(string));
+        public static BindableProperty RegexProperty =
+            BindableProperty.Create<ValidationRule, string>(x => x.Regex, default(string));
 
         /// <summary> Property definition for <see cref="ResultCallback" /> </summary>
         /// Element created at 07/11/2014,11:49 AM by Charles
-        public static BindableProperty ResultCallbackProperty = BindableProperty.Create<ValidationRule, Action<BindableObject, string, bool>>(x => x.ResultCallback, default(Action<BindableObject, string, bool>));
+        public static BindableProperty ResultCallbackProperty =
+            BindableProperty.Create<ValidationRule, Action<BindableObject, string, ValidationRuleResult>>(
+                x => x.ResultCallback,
+                default(Action<BindableObject, string, ValidationRuleResult>));
 
         /// <summary>Property definition for <see cref="RuleName" /></summary>
         /// Element created at 07/11/2014,11:49 AM by Charles
-        public static BindableProperty RuleNameProperty = BindableProperty.Create<ValidationRule, string>(x => x.RuleName, default(string));
+        public static BindableProperty RuleNameProperty =
+            BindableProperty.Create<ValidationRule, string>(x => x.RuleName, default(string));
 
         /// <summary>Property Definition for <see cref="Validators" /></summary>
         /// Element created at 07/11/2014,2:54 AM by Charles
-        public static BindableProperty ValidatorsProperty = BindableProperty.Create<ValidationRule, Validators>(x => x.Validators, default(Validators));
+        public static BindableProperty ValidatorsProperty =
+            BindableProperty.Create<ValidationRule, Validators>(x => x.Validators,
+                default(Validators));
 
-        private static readonly ValidatorPredicate[] AvailablePredicates = { new ValidatorPredicate(Validators.Required, (rule, val) => !string.IsNullOrEmpty(val)), new ValidatorPredicate(Validators.GreaterThan, (rule, val) =>
+        private static readonly ValidatorPredicate[] AvailablePredicates =
             {
-                double d;
-                if (double.TryParse(val, out d))
-                {
-                    return rule.Minimum <= d;
-                }
-                return false;
-            }),
-                                                                             new ValidatorPredicate(Validators.LessThan, (rule, val) =>
-                                                                                 {
-                                                                                     double d;
-                                                                                     if (double.TryParse(val, out d))
-                                                                                     {
-                                                                                         return rule.Maximum >= d;
-                                                                                     }
-                                                                                     return false;
-                                                                                 }),
-                                                                             new ValidateEmailAddress(), new ValidatorPredicate(Validators.Pattern, (rule, val) =>
-                                                                                 {
-                                                                                     if (string.IsNullOrEmpty(val))
-                                                                                     {
-                                                                                         return true;
-                                                                                     }
-                                                                                     try
-                                                                                     {
-                                                                                         var regex = new Regex(val);
-                                                                                         return regex.IsMatch(val);
-                                                                                     }
-                                                                                     catch (Exception)
-                                                                                     {
-                                                                                         return false;
-                                                                                     }
-                                                                                 }),
-                                                                             new ValidatorPredicate(Validators.Between, (rule, val) =>
-                                                                                 {
-                                                                                     double value;
-                                                                                     if (double.TryParse(val, out value))
-                                                                                     {
-                                                                                         return value >= rule.Minimum && value <= rule.Minimum;
-                                                                                     }
-                                                                                     return false;
-                                                                                 }),
-                                                                             new ValidatorPredicate(Validators.Predicate, (rule, val) => rule.Callback == null || rule.Callback(val)), new ValidateDateTime(), new ValidatorPredicate(Validators.Numeric, (rule, val) =>
-                                                                                 {
-                                                                                     if (string.IsNullOrEmpty(val))
-                                                                                     {
-                                                                                         return true;
-                                                                                     }
-                                                                                     DateTime d;
-                                                                                     return DateTime.TryParse(val, out d);
-                                                                                 }),
-                                                                             new ValidatorPredicate(Validators.Integer, (rule, val) =>
-                                                                                 {
-                                                                                     if (string.IsNullOrEmpty(val))
-                                                                                     {
-                                                                                         return true;
-                                                                                     }
-                                                                                     long i;
-                                                                                     return long.TryParse(val, out i);
-                                                                                 }),
-                                                                             new ValidatorPredicate(Validators.MinLength, (rule, val) => val != null && val.Length >= rule.MinimumLength), new ValidatorPredicate(Validators.MaxLength, (rule, val) => val != null && val.Length <= rule.MaximumLength), new ValidateAlphaOnly(), new ValidateAlphaNumeric() };
+                new ValidatorPredicate(Validators.Required, (rule, val) => !string.IsNullOrEmpty(val)),
+                new ValidatorPredicate(Validators.GreaterThan,
+                    (rule, val) =>
+                        {
+                            double d;
+                            if (double.TryParse(val, out d))
+                            {
+                                return rule.Minimum <= d;
+                            }
+                            return false;
+                        }),
+                new ValidatorPredicate(Validators.LessThan,
+                    (rule, val) =>
+                        {
+                            double d;
+                            if (double.TryParse(val, out d))
+                            {
+                                return rule.Maximum >= d;
+                            }
+                            return false;
+                        }),
+                new ValidateEmailAddress(),
+                new ValidatorPredicate(Validators.Pattern,
+                    (rule, val) =>
+                        {
+                            if (string.IsNullOrEmpty(val))
+                            {
+                                return true;
+                            }
+                            try
+                            {
+                                var regex = new Regex(val);
+                                return regex.IsMatch(val);
+                            }
+                            catch (Exception)
+                            {
+                                return false;
+                            }
+                        }),
+                new ValidatorPredicate(Validators.Between,
+                    (rule, val) =>
+                        {
+                            double value;
+                            if (double.TryParse(val, out value))
+                            {
+                                return value >= rule.Minimum && value <= rule.Minimum;
+                            }
+                            return false;
+                        }),
+                new ValidatorPredicate(Validators.Predicate,
+                    (rule, val) => rule.Callback == null || rule.Callback(val)),
+                new ValidateDateTime(),
+                new ValidatorPredicate(Validators.Numeric,
+                    (rule, val) =>
+                        {
+                            if (string.IsNullOrEmpty(val))
+                            {
+                                return true;
+                            }
+                            DateTime d;
+                            return DateTime.TryParse(val, out d);
+                        }),
+                new ValidatorPredicate(Validators.Integer,
+                    (rule, val) =>
+                        {
+                            if (string.IsNullOrEmpty(val))
+                            {
+                                return true;
+                            }
+                            long i;
+                            return long.TryParse(val, out i);
+                        }),
+                new ValidatorPredicate(Validators.MinLength,
+                    (rule, val) => val != null && val.Length >= rule.MinimumLength),
+                new ValidatorPredicate(Validators.MaxLength,
+                    (rule, val) => val != null && val.Length <= rule.MaximumLength),
+                new ValidateAlphaOnly(),
+                new ValidateAlphaNumeric()
+            };
 
         #endregion
 
         #region Fields
 
-        private readonly List<Func<ValidationRule, string, bool>> _predicates = new List<Func<ValidationRule, string, bool>>();
+        private readonly List<Func<ValidationRule, string, bool>> _predicates =
+            new List<Func<ValidationRule, string, bool>>();
 
         private PropertyInfo _pi;
 
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValidationRule"/> class.
+        /// </summary>
+        /// Element created at 08/11/2014,1:11 PM by Charles
+        public ValidationRule()
+        {
+            Actions=new ValidationActions();
+        }
         #region Public Properties
+
+        /// <summary>Gets or sets the actions to run when this rule is evaluated.</summary>
+        /// <value>The actions.</value>
+        /// Element created at 08/11/2014,12:44 PM by Charles
+        public ValidationActions Actions
+        {
+            get { return (ValidationActions)GetValue(ActionsProperty); }
+            set { SetValue(ActionsProperty, value); }
+        }
 
         /// <summary>Gets or sets the user predicate.</summary>
         /// <value>The predicate.</value>
         /// Element created at 07/11/2014,10:48 AM by Charles
-        public Predicate<string> Callback { get { return (Predicate<string>)GetValue(CallbackProperty); } set { SetValue(CallbackProperty, value); } }
+        public Predicate<string> Callback
+        {
+            get { return (Predicate<string>)GetValue(CallbackProperty); }
+            set { SetValue(CallbackProperty, value); }
+        }
 
         /// <summary>
         ///     Gets or sets the element the element to be validated.
@@ -523,37 +638,65 @@
         /// </summary>
         /// <value>The element.</value>
         /// Element created at 07/11/2014,2:54 AM by Charles
-        public BindableObject Element { get { return (BindableObject)GetValue(ElementProperty); } set { SetValue(ElementProperty, value); } }
+        public BindableObject Element
+        {
+            get { return (BindableObject)GetValue(ElementProperty); }
+            set { SetValue(ElementProperty, value); }
+        }
 
         /// <summary>Gets or sets the maximum.</summary>
         /// <value>The maximum value for numeric comparsions.</value>
         /// Element created at 07/11/2014,6:18 AM by Charles
-        public double Maximum { get { return (double)GetValue(MaximumProperty); } set { SetValue(MaximumProperty, value); } }
+        public double Maximum
+        {
+            get { return (double)GetValue(MaximumProperty); }
+            set { SetValue(MaximumProperty, value); }
+        }
 
         /// <summary>Gets or sets the maximum string length.</summary>
         /// <value>The maximum length.</value>
         /// Element created at 07/11/2014,4:01 PM by Charles
-        public int MaximumLength { get { return (int)GetValue(MaximumLengthProperty); } set { SetValue(MaximumLengthProperty, value); } }
+        public int MaximumLength
+        {
+            get { return (int)GetValue(MaximumLengthProperty); }
+            set { SetValue(MaximumLengthProperty, value); }
+        }
 
         /// <summary>Gets or sets the minimum.</summary>
         /// <value>The minimum value for numeric comparsions.</value>
         /// Element created at 07/11/2014,6:18 AM by Charles
-        public double Minimum { get { return (double)GetValue(MinimumProperty); } set { SetValue(MinimumProperty, value); } }
+        public double Minimum
+        {
+            get { return (double)GetValue(MinimumProperty); }
+            set { SetValue(MinimumProperty, value); }
+        }
 
         /// <summary>Gets or sets the minimum string length.</summary>
         /// <value>The minimum length.</value>
         /// Element created at 07/11/2014,4:01 PM by Charles
-        public int MinimumLength { get { return (int)GetValue(MinimumLengthProperty); } set { SetValue(MinimumLengthProperty, value); } }
+        public int MinimumLength
+        {
+            get { return (int)GetValue(MinimumLengthProperty); }
+            set { SetValue(MinimumLengthProperty, value); }
+        }
 
         /// <summary>Gets or sets the property.</summary>
         /// <value>The property whose value is being validated.</value>
         /// Element created at 07/11/2014,6:19 AM by Charles
-        public string Property { get { return (string)GetValue(PropertyProperty); } set { SetValue(PropertyProperty, value); } }
+        public string Property
+        {
+            get { return (string)GetValue(PropertyProperty); }
+            set { SetValue(PropertyProperty, value); }
+        }
 
         /// <summary>Gets or sets the regular expression to match against</summary>
         /// <value>The regular expression <see cref="Regex" /></value>
         /// Element created at 07/11/2014,3:04 AM by Charles
-        public string Regex { get { return (string)GetValue(RegexProperty); } set { SetValue(RegexProperty, value); } }
+        public string Regex
+        {
+            get { return (string)GetValue(RegexProperty); }
+            set { SetValue(RegexProperty, value); }
+        }
 
         /// <summary>
         ///     Gets or sets the result callback.
@@ -561,19 +704,31 @@
         /// </summary>
         /// <value>The result callback.</value>
         /// Element created at 07/11/2014,11:50 AM by Charles
-        public Action<BindableObject, string, bool> ResultCallback { get { return (Action<BindableObject, string, bool>)GetValue(ResultCallbackProperty); } set { SetValue(ResultCallbackProperty, value); } }
+        public Action<BindableObject, string, ValidationRuleResult> ResultCallback
+        {
+            get { return (Action<BindableObject, string, ValidationRuleResult>)GetValue(ResultCallbackProperty); }
+            set { SetValue(ResultCallbackProperty, value); }
+        }
 
         /// <summary>Gets or sets the name of the rule, this value is passed into the ResultCallback.</summary>
         /// <value>The name of the rule.</value>
         /// Element created at 07/11/2014,11:50 AM by Charles
-        public string RuleName { get { return (string)GetValue(RuleNameProperty); } set { SetValue(RuleNameProperty, value); } }
+        public string RuleName
+        {
+            get { return (string)GetValue(RuleNameProperty); }
+            set { SetValue(RuleNameProperty, value); }
+        }
 
         /// <summary>Gets or sets the set of validators to exectue.</summary>
         /// <value>
         ///     <see cref="Validators" />
         /// </value>
         /// Element created at 07/11/2014,2:55 AM by Charles
-        public Validators Validators { get { return (Validators)GetValue(ValidatorsProperty); } set { SetValue(ValidatorsProperty, value); } }
+        public Validators Validators
+        {
+            get { return (Validators)GetValue(ValidatorsProperty); }
+            set { SetValue(ValidatorsProperty, value); }
+        }
 
         #endregion
 
@@ -591,10 +746,16 @@
                 {
                     Type type = Element.GetType();
                     List<PropertyInfo> allprops = type.GetRuntimeProperties().ToList();
-                    _pi = allprops.FirstOrDefault(x => string.Compare(x.Name, Property, StringComparison.OrdinalIgnoreCase) == 0);
+                    _pi =
+                        allprops.FirstOrDefault(
+                            x =>
+                                string.Compare(x.Name, Property, StringComparison.OrdinalIgnoreCase)
+                                == 0);
                     if (_pi == null)
                     {
-                        throw new PropertyNotFoundException(type, Property, allprops.Select(x => x.Name));
+                        throw new PropertyNotFoundException(type,
+                            Property,
+                            allprops.Select(x => x.Name));
                     }
                 }
                 return _pi;
@@ -602,7 +763,7 @@
         }
 
         private ValidationSet Host { get; set; }
-
+        internal bool? LastResult { get; set; }
         #endregion
 
         #region Methods
@@ -614,7 +775,8 @@
         {
             Host = vs;
             _predicates.Clear();
-            foreach (var pred in AvailablePredicates.Where(x => x.IsA(Validators)).Select(x => x.Predicate))
+            foreach (var pred in
+                AvailablePredicates.Where(x => x.IsA(Validators)).Select(x => x.Predicate))
             {
                 _predicates.Add(pred);
             }
@@ -627,11 +789,26 @@
             Element.PropertyChanged -= ElementPropertyChanged;
         }
 
-        internal bool IsSatisfied()
+        internal ValidationRuleResult IsSatisfied()
         {
-            object val = PropertyInfo.GetValue(Element) ?? string.Empty;
-            bool result = _predicates.All(x => x(this, val.ToString()));
-
+            var val = PropertyInfo.GetValue(Element) ?? string.Empty;
+            var thisresult = _predicates.All(x => x(this, val.ToString()));
+            ValidationRuleResult result;
+            if (LastResult.HasValue)
+            {
+                result = LastResult.Value == thisresult
+                    ? ValidationRuleResult.ValidationNoChange
+                    : thisresult
+                        ? ValidationRuleResult.ValidationSuccess
+                        : ValidationRuleResult.ValidationFailure;                
+            }
+            else
+            {
+                result = thisresult
+                        ? ValidationRuleResult.ValidationSuccess
+                        : ValidationRuleResult.ValidationFailure;                
+            }
+            LastResult = thisresult;
             if (ResultCallback != null)
             {
                 ResultCallback(Element, RuleName, result);
@@ -701,7 +878,10 @@
 
         #region Methods
 
-        private static bool IsAlphaOnly(ValidationRule rule, string value) { return string.IsNullOrEmpty(value) || AlphaOnly.IsMatch(value); }
+        private static bool IsAlphaOnly(ValidationRule rule, string value)
+        {
+            return string.IsNullOrEmpty(value) || AlphaOnly.IsMatch(value);
+        }
 
         #endregion
     }
@@ -722,7 +902,10 @@
 
         #region Methods
 
-        private static bool IsAlphaNumeric(ValidationRule rule, string value) { return string.IsNullOrEmpty(value) || AlphaNumeric.IsMatch(value); }
+        private static bool IsAlphaNumeric(ValidationRule rule, string value)
+        {
+            return string.IsNullOrEmpty(value) || AlphaNumeric.IsMatch(value);
+        }
 
         #endregion
     }
@@ -731,7 +914,10 @@
     {
         #region Static Fields
 
-        private static readonly Regex EmailAddress = new Regex(@"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" + @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$");
+        private static readonly Regex EmailAddress =
+            new Regex(
+                @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))"
+                + @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$");
 
         #endregion
 
@@ -787,11 +973,13 @@
             value = value.Trim();
             if (ShortDate.Match(value).Success)
             {
-                value = value.Substring(0, 2) + "/" + value.Substring(2, 2) + "/" + value.Substring(4, 2);
+                value = value.Substring(0, 2) + "/" + value.Substring(2, 2) + "/"
+                        + value.Substring(4, 2);
             }
             if (LongDate.Match(value).Success)
             {
-                value = value.Substring(0, 2) + "/" + value.Substring(2, 2) + "/" + value.Substring(4, 4);
+                value = value.Substring(0, 2) + "/" + value.Substring(2, 2) + "/"
+                        + value.Substring(4, 4);
             }
             DateTime d;
             return DateTime.TryParse(value, out d);
@@ -800,6 +988,29 @@
         #endregion
     }
 
+    /// <summary>
+    /// The result of a validation (a single rule or an entire validationset)
+    /// </summary>
+    /// Element created at 08/11/2014,12:57 PM by Charles
+    public enum ValidationRuleResult
+    {
+        /// <summary>Empty value, we should never see it in the wild</summary>
+        /// Element created at 08/11/2014,12:57 PM by Charles
+        Unknown=0,
+        /// <summary>The validation was successful</summary>
+        /// Element created at 08/11/2014,12:58 PM by Charles
+        ValidationSuccess,
+
+        /// <summary>The validation failed</summary>
+        /// Element created at 08/11/2014,12:58 PM by Charles
+        ValidationFailure,
+
+        /// <summary>
+        /// There was no change from the last validation attempt
+        /// </summary>
+        /// Element created at 08/11/2014,12:58 PM by Charles
+        ValidationNoChange
+    }
     /// <summary>The set of available validators</summary>
     /// Element created at 07/11/2014,2:56 AM by Charles
     [Flags]
