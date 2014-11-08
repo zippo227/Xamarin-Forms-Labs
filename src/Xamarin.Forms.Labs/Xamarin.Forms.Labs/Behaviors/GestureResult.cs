@@ -2,6 +2,8 @@
 
 namespace Xamarin.Forms.Labs.Behaviors
 {
+    using System.Collections.Generic;
+
     using Xamarin.Forms.Labs.Controls;
 
     /// <summary>
@@ -14,11 +16,11 @@ namespace Xamarin.Forms.Labs.Behaviors
         /// <summary>
         /// The gesture type
         /// </summary>
-        public GestureType GestureType { get; set; }
+        public GestureType GestureType { get; internal set; }
         /// <summary>
         /// The direction (if any) of the direction
         /// </summary>
-        public Directionality Direction { get; set; }
+        public Directionality Direction { get;  internal set; }
         /// <summary>
         /// The point, relative to the start view where the 
         /// gesture started
@@ -31,15 +33,20 @@ namespace Xamarin.Forms.Labs.Behaviors
         /// <summary>
         /// The Vector Length of the gesture (if appropiate)
         /// </summary>
-        public Double Length { get; internal set; }
+        public Double Length { get; set; }
         /// <summary>
         /// The Vertical distance the gesture travelled
         /// </summary>
-        public Double VerticalDistance { get; internal set; }
+        internal Double VerticalDistance { get; set; }
         /// <summary>
         /// The horizontal distance the gesture travelled
         /// </summary>
-        public Double HorizontalDistance { get; internal set; }
+        internal Double HorizontalDistance { get; set; }
+
+        /// <summary>Gets or sets the view stack.</summary>
+        /// <value>A list of all view elements containing the origin point.</value>
+        /// Element created at 07/11/2014,11:54 PM by Charles
+        internal List<View> ViewStack { get; set; }
 
     }
 }

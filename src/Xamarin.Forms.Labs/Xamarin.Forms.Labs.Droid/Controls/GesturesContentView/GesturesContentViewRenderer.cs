@@ -5,12 +5,18 @@ using Xamarin.Forms;
 namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
+    using Android.Graphics;
     using Android.Views;
 
     using Xamarin.Forms.Labs.Behaviors;
     using Xamarin.Forms.Labs.Controls;
     using Xamarin.Forms.Platform.Android;
+
+    using Point = Xamarin.Forms.Point;
+    using View = Xamarin.Forms.View;
 
     /// <summary>
     /// Android renderer for the GestureContentView
@@ -20,27 +26,29 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
     /// <see cref="GestureDetector.IOnGestureListener"/>
     /// <see cref="GestureDetector.IOnDoubleTapListener"/>
     /// </summary>
-    public class GesturesContentViewRenderer  : ViewRenderer<GesturesContentView,View>  , GestureDetector.IOnGestureListener ,GestureDetector.IOnDoubleTapListener
+    public class GesturesContentViewRenderer  : ViewRenderer<GesturesContentView,Android.Views.View>  , GestureDetector.IOnGestureListener ,GestureDetector.IOnDoubleTapListener 
     {
         /// <summary>
         /// Standard Android detector
         /// </summary>
-        private readonly GestureDetector detector;
+        private readonly GestureDetector _detector;
 
         /// <summary>
         /// Initialize the detector with a listener(this)
         /// </summary>
         public GesturesContentViewRenderer()
         {
-            detector=new GestureDetector(this);   
+            _detector=new GestureDetector(this);   
         }
 
+        
         /// <summary>
         /// Follow the xamarin rules for element changing.
         /// </summary>
         /// <param name="e">Change event parameter</param>
         protected override void OnElementChanged(ElementChangedEventArgs<GesturesContentView> e)
         {
+            
             base.OnElementChanged(e);
             if (e.NewElement == null)
             {
@@ -48,13 +56,11 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
                 Touch -= HandleTouch;
             }
             if (e.OldElement != null)return;
-            //Turn off clickable support...
             Element.GestureRecognizers.Clear();            
-            Clickable = false;
             GenericMotion += HandleGenericMotion;
             Touch += HandleTouch;
         }
-
+        
         /// <summary>
         /// Forward touch events to the detector
         /// </summary>
@@ -62,7 +68,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// <param name="e"></param>
         private void HandleTouch(object sender, TouchEventArgs e)
         {
-            detector.OnTouchEvent(e.Event);
+            _detector.OnTouchEvent(e.Event);
         }
 
         /// <summary>
@@ -72,10 +78,31 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// <param name="e"></param>
         private void HandleGenericMotion(object sender, GenericMotionEventArgs e)
         {
-            detector.OnTouchEvent(e.Event);
+            _detector.OnTouchEvent(e.Event);
         }
 
+        private List<View> ViewsContaing(Point pt)
+        {
+            var ret = new List<View>();
+            return ViewsContainingImpl(pt,ret,ViewGroup).OrderBy(x=>x.Bounds.Width*x.Bounds.Height).ToList();
+        }
 
+        private IEnumerable<View> ViewsContainingImpl(Point pt,List<View>views,ViewGroup root )
+        {
+            for (var i = 0; i <root.ChildCount; i++)
+            {
+                var child = root.GetChildAt(i);
+                var bounds = new Rect();
+                child.GetHitRect(bounds);
+                var ver = child as IVisualElementRenderer;
+                if (ver == null || !(ver.Element is View) || !bounds.Contains(Convert.ToInt32(pt.X), Convert.ToInt32(pt.Y)))
+                    continue;
+                views.Add(ver.Element as View);
+                //check to see if this containing child has any other containing children
+                ViewsContainingImpl(pt, views,ver.ViewGroup);
+            }
+            return views;
+        }
         #region Gesture Events
         /// <summary>
         /// Do noting
@@ -98,6 +125,7 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// <returns></returns>
         public bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
         {
+
             var e1X = ConvertPixelsToDp(e1.GetX());
             var e2X = ConvertPixelsToDp(e2.GetX());
             var e1Y=ConvertPixelsToDp(e1.GetY());
@@ -114,7 +142,8 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
                                         Origin= new Point(e1X,e1Y),
                                         VerticalDistance = Math.Abs(e1Y - e2Y),
                                         HorizontalDistance = Math.Abs(e1X - e2X),
-                                        Length=distance
+                                        Length=distance,
+                                        ViewStack = Element.ExcludeChildren ? ViewsContaing(new Point(e1.GetX(), e1.GetY())) : null
                                     });
             return false;
         }
@@ -130,9 +159,16 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// <param name="e"></param>
         public void OnLongPress(MotionEvent e)
         {
-            Element.ProcessGesture(new GestureResult { GestureType = GestureType.LongPress, Direction = Directionality.None, Origin = new Point(e.GetX(), e.GetY()) });
+            Element.ProcessGesture(new GestureResult
+                                       {
+                                           ViewStack = Element.ExcludeChildren ? ViewsContaing(new Point(e.GetX(), e.GetY())) : null, 
+                                           GestureType = GestureType.LongPress, 
+                                           Direction = Directionality.None, 
+                                           Origin = new Point(ConvertPixelsToDp(e.GetX()), ConvertPixelsToDp(e.GetY()))
+                                       });
         }
 
+        
         /// <summary>
         /// Ignored
         /// </summary>
@@ -160,17 +196,23 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
-        public bool OnDoubleTap(MotionEvent e){return true;}
+        public bool OnDoubleTap(MotionEvent e)
+        {
+            return !Element.ProcessGesture(new GestureResult
+                                               {
+                                                   ViewStack = Element.ExcludeChildren ? ViewsContaing(new Point(e.GetX(), e.GetY())) : null, 
+                                                   GestureType = GestureType.DoubleTap, 
+                                                   Direction = Directionality.None, 
+                                                   Origin = new Point(ConvertPixelsToDp(e.GetX()), ConvertPixelsToDp(e.GetY()))
+                                               });
+        }
 
         /// <summary>
         /// Send double tap to the <see cref="GesturesContentView"/> for processing
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
-        public bool OnDoubleTapEvent(MotionEvent e)
-        {
-            return !Element.ProcessGesture(new GestureResult { GestureType = GestureType.DoubleTap, Direction = Directionality.None, Origin = new Point(e.GetX(), e.GetY()) });
-        }
+        public bool OnDoubleTapEvent(MotionEvent e){return true;}
 
         /// <summary>
         /// Send the Single tap to the <see cref="GesturesContentView"/> for processing
@@ -179,7 +221,13 @@ namespace Xamarin.Forms.Labs.Droid.Controls.GesturesContentView
         /// <returns></returns>
         public bool OnSingleTapConfirmed(MotionEvent e)
         {
-            return !Element.ProcessGesture(new GestureResult { GestureType = GestureType.SingleTap, Direction = Directionality.None, Origin = new Point(e.GetX(), e.GetY()) });
+                return !Element.ProcessGesture(new GestureResult
+                                                   {
+                                                       ViewStack = Element.ExcludeChildren ? ViewsContaing(new Point(e.GetX(), e.GetY())) : null,
+                                                       GestureType = GestureType.SingleTap,
+                                                       Direction = Directionality.None,
+                                                       Origin = new Point(ConvertPixelsToDp(e.GetX()), ConvertPixelsToDp(e.GetY()))
+                                                   });
         }
         #endregion
 
