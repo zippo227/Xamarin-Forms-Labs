@@ -20,7 +20,6 @@ namespace XLabs.Serialization
 
         public static string SerializeToString<T>(this IStreamSerializer serializer, T obj, Encoding encoding = null)
         {
-            var encoder = encoding ?? Encoding.UTF8;
             using (var stream = new MemoryStream())
             {
                 serializer.Serialize<T>(obj, stream);
@@ -28,7 +27,14 @@ namespace XLabs.Serialization
                 var bytes = new byte[stream.Length];
                 stream.Read(bytes, 0, (int)stream.Length);
 
-                return Convert.ToBase64String(bytes);
+                if (encoding == null)
+                {
+                    return Convert.ToBase64String(bytes);
+                }
+                else
+                {
+                    return encoding.GetString(bytes, 0, bytes.Length);
+                }
             }
         }
 

@@ -32,6 +32,26 @@ namespace Xamarin.Forms.Labs.Controls
 
             this.Bind();
         }
+
+        /// <summary>
+        /// Gets the desired size of the view.
+        /// </summary>
+        /// <returns>The desired size.</returns>
+        /// <param name="widthConstraint">Width constraint.</param>
+        /// <param name="heightConstraint">Height constraint.</param>
+        /// <remarks>
+        /// We need to override this method and set the request height to 0. Otherwise on view refresh
+        /// we will get incorrect view height and might lose the ability to scroll the webview
+        /// completely.
+        /// </remarks>
+        public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
+        {
+//            var sizeRequest = base.GetDesiredSize(widthConstraint, heightConstraint);
+//            sizeRequest.Request = new Size(sizeRequest.Request.Width, 0);
+//            return sizeRequest;
+
+            return new SizeRequest(Size.Zero, Size.Zero);
+        }
             
         partial void Inject(string script)
         {
@@ -130,13 +150,6 @@ namespace Xamarin.Forms.Labs.Controls
             internal ChromeClient(HybridWebViewRenderer webHybrid)
             {
                 this.webHybrid = webHybrid;
-            }
-
-            public override void OnGeolocationPermissionsShowPrompt(string origin, GeolocationPermissions.ICallback callback)
-            {
-                // Always grant permission since the app itself requires location
-                // permission and the user has therefore already granted it
-                callback.Invoke(origin, true, false);
             }
 
 //            public override void OnProgressChanged(Android.Webkit.WebView view, int newProgress)
@@ -256,9 +269,5 @@ namespace Xamarin.Forms.Labs.Controls
             }
         }
     }
-
-
-
-
 }
 
