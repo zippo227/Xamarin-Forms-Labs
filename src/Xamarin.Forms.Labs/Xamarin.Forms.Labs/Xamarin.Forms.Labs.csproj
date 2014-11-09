@@ -39,7 +39,22 @@
     <Compile Include="Behaviors\GestureResult.cs" />
     <Compile Include="Behaviors\Gestures.cs" />
     <Compile Include="Behaviors\IGesture.cs" />
-    <Compile Include="Behaviors\Validator.cs" />
+    <Compile Include="Validation\PredicatePriority.cs" />
+    <Compile Include="Validation\PropertySetter.cs" />
+    <Compile Include="Validation\PropertySetters.cs" />
+    <Compile Include="Validation\UserValidator.cs" />
+    <Compile Include="Validation\ValidateAlphaNumeric.cs" />
+    <Compile Include="Validation\ValidateAlphaOnly.cs" />
+    <Compile Include="Validation\ValidateDateTime.cs" />
+    <Compile Include="Validation\ValidateEmailAddress.cs" />
+    <Compile Include="Validation\Action.cs" />
+    <Compile Include="Validation\Actions.cs" />
+    <Compile Include="Validation\Rule.cs" />
+    <Compile Include="Validation\RuleResult.cs" />
+    <Compile Include="Validation\Rules.cs" />
+    <Compile Include="Validation\RuleSet.cs" />
+    <Compile Include="Validation\ValidationSets.cs" />
+    <Compile Include="Validation\Validator.cs" />
     <Compile Include="Controls\CarouselView.cs" />
     <Compile Include="Controls\GesturesContentView.cs" />
     <Compile Include="Behaviors\GridLayout.cs" />
@@ -148,6 +163,8 @@
     <Compile Include="Controls\CheckboxCell.cs" />
     <Compile Include="Enums\TextCellDetailLocation.cs" />
     <Compile Include="Pages\ExtendedMasterDetailPage.cs" />
+    <Compile Include="Validation\ValidatorPredicate.cs" />
+    <Compile Include="Validation\Validators.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
