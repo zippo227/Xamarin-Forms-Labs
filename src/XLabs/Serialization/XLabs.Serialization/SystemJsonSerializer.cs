@@ -45,5 +45,15 @@ namespace XLabs.Serialization
             var serializer = new DataContractJsonSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);
         }
+
+        public override T Deserialize<T>(string data)
+        {
+            return (this as IStreamSerializer).DeserializeFromString<T>(data, System.Text.Encoding.UTF8);
+        }
+
+        public override string Serialize<T>(T obj)
+        {
+            return (this as IStreamSerializer).SerializeToString(obj, System.Text.Encoding.UTF8);
+        }
     }
 }
