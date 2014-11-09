@@ -68,7 +68,15 @@
       </lc:TemplateSelector>
     </ResourceDictionary>
   </ContentPage.Resources>
+  
   <StackLayout>
+    <StackLayout.Padding>
+      <OnPlatform x:TypeArguments="Thickness"
+                  iOS="20,40,20,20"
+                  Android="20,20,20,20"
+                  WinPhone="20,20,20,20" />
+    </StackLayout.Padding>
+
     <lc:CarouselView x:TypeArguments="my:PageWidget" ViewModels="{Binding Models}" TemplateSelector="{StaticResource carouselselector}" HeightRequest="100" Padding="10,25"/>
     <Label Text="The view obove is bound to a collection that contains workoders and message objects"/>
     <Label Text="As you swipe back and forth the view uses it's template selector to determine which datatemplate to instantiate and bind to the current item."/>     
