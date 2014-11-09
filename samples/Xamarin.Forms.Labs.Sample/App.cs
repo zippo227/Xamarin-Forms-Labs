@@ -186,6 +186,7 @@ namespace Xamarin.Forms.Labs.Sample
                 "Autocomplete",
                 "ButtonGroup",
                 "Calendar",
+                "Carousel View",
                 "CameraView",
                 "CheckBox",
                 "CircleImage",
@@ -297,6 +298,9 @@ namespace Xamarin.Forms.Labs.Sample
                         break;
                     case "validation":
                         await mainPage.Navigation.PushAsync(new ValidatorSample());
+                        break;
+                    case "carousel view":
+                        await mainPage.Navigation.PushAsync(new CarouselSample());
                         break;
                 }
             };

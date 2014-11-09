@@ -50,20 +50,20 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Xamarin.Forms.Labs.Validation.UserValidator" Collapsed="true">
-    <Position X="0.75" Y="2" Width="1.5" />
+    <Position X="2.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Validation\UserValidator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Xamarin.Forms.Labs.Validation.ValidateAlphaNumeric" Collapsed="true">
-    <Position X="0.75" Y="5" Width="1.5" />
+    <Position X="0.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Validation\ValidateAlphaNumeric.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Xamarin.Forms.Labs.Validation.ValidatorPredicate" Collapsed="true">
+  <Class Name="Xamarin.Forms.Labs.Validation.ValidatorPredicate">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAgEAABAAAAAAABAAAAAAAAAAAEAAAA=</HashCode>
@@ -71,21 +71,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Xamarin.Forms.Labs.Validation.ValidateAlphaOnly" Collapsed="true">
-    <Position X="0.75" Y="3" Width="1.5" />
+    <Position X="0.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Validation\ValidateAlphaOnly.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Xamarin.Forms.Labs.Validation.ValidateDateTime" Collapsed="true">
-    <Position X="0.75" Y="4" Width="1.5" />
+    <Position X="0.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAAAAAIAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Validation\ValidateDateTime.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Xamarin.Forms.Labs.Validation.ValidateEmailAddress" Collapsed="true">
-    <Position X="0.75" Y="6" Width="1.5" />
+    <Position X="0.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAA=</HashCode>
       <FileName>Validation\ValidateEmailAddress.cs</FileName>
