@@ -169,7 +169,8 @@ namespace Xamarin.Forms.Labs.Validation
                 new ValidatorPredicate(Validators.MaxLength,PredicatePriority.Medium,
                     (rule, val) => string.IsNullOrEmpty(val) || val.Length <= rule.MaximumLength),
                 new ValidateAlphaOnly(),
-                new ValidateAlphaNumeric()
+                new ValidateAlphaNumeric() ,
+                new ValidateNumericOnly()
             };
 
         #endregion

@@ -67,6 +67,10 @@
         /// Element created at 07/11/2014,3:57 PM by Charles
         AlphaNumeric = 0x0000000000002000,
 
+        /// <summary>Allows only numbers</summary>
+        /// Element created at 09/11/2014,9:50 PM by Charles
+        NumericOnly =  0x0000000000004000,
+
         /// <summary>A user created Validator</summary>
         /// Element created at 08/11/2014,2:44 PM by Charles
         UserSupplied = 0x8000000000000000
