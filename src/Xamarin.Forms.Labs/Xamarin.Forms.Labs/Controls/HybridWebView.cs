@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using XLabs;
 using XLabs.Ioc;
 using XLabs.Serialization;
 
-[assembly: 
+[assembly:
     InternalsVisibleTo("Xamarin.Forms.Labs.Droid"),
     InternalsVisibleTo("Xamarin.Forms.Labs.iOS"),
     InternalsVisibleTo("Xamarin.Forms.Labs.WP8")]
