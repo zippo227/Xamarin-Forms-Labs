@@ -39,6 +39,25 @@
     <Compile Include="Behaviors\GestureResult.cs" />
     <Compile Include="Behaviors\Gestures.cs" />
     <Compile Include="Behaviors\IGesture.cs" />
+    <Compile Include="Converter\CollectionEmptyToBool.cs" />
+    <Compile Include="Extensions\CollectionTypeExtension.cs" />
+    <Compile Include="Validation\PredicatePriority.cs" />
+    <Compile Include="Validation\PropertySetter.cs" />
+    <Compile Include="Validation\PropertySetters.cs" />
+    <Compile Include="Validation\UserValidator.cs" />
+    <Compile Include="Validation\ValidateAlphaNumeric.cs" />
+    <Compile Include="Validation\ValidateAlphaOnly.cs" />
+    <Compile Include="Validation\ValidateDateTime.cs" />
+    <Compile Include="Validation\ValidateEmailAddress.cs" />
+    <Compile Include="Validation\Action.cs" />
+    <Compile Include="Validation\Actions.cs" />
+    <Compile Include="Validation\Rule.cs" />
+    <Compile Include="Validation\RuleResult.cs" />
+    <Compile Include="Validation\Rules.cs" />
+    <Compile Include="Validation\RuleSet.cs" />
+    <Compile Include="Validation\ValidateNumericOnly.cs" />
+    <Compile Include="Validation\ValidationSets.cs" />
+    <Compile Include="Validation\Validator.cs" />
     <Compile Include="Controls\CarouselView.cs" />
     <Compile Include="Controls\GesturesContentView.cs" />
     <Compile Include="Behaviors\GridLayout.cs" />
@@ -63,6 +82,7 @@
     <Compile Include="Controls\TemplateContentView.cs" />
     <Compile Include="Controls\WebImage.cs" />
     <Compile Include="Controls\WrapLayout.cs" />
+    <Compile Include="Converter\ObjectRefToBooleanConverter.cs" />
     <Compile Include="Data\ObservableObject.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />
     <Compile Include="Device\IAccelerometer.cs" />
@@ -80,7 +100,9 @@
     <Compile Include="Exceptions\InvalidNestingException.cs" />
     <Compile Include="Exceptions\InvalidVisualObjectException.cs" />
     <Compile Include="Exceptions\NoDataTemplateMatchException.cs" />
+    <Compile Include="Exceptions\PropertyNotFoundException.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
+    <Compile Include="Extensions\OnPlatformList.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Mvvm\INavigationAware.cs" />
@@ -89,6 +111,7 @@
     <Compile Include="Mvvm\NavigationView.cs" />
     <Compile Include="Mvvm\ViewModel.cs" />
     <Compile Include="Mvvm\XFormsApp.cs" />
+    <Compile Include="Pages\ModalPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -143,6 +166,8 @@
     <Compile Include="Controls\CheckboxCell.cs" />
     <Compile Include="Enums\TextCellDetailLocation.cs" />
     <Compile Include="Pages\ExtendedMasterDetailPage.cs" />
+    <Compile Include="Validation\ValidatorPredicate.cs" />
+    <Compile Include="Validation\Validators.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -150,6 +175,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Validation\Validation.cd" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>

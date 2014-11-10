@@ -18,8 +18,8 @@
         /// <summary>
         /// Definition for the attachable Interests Property
         /// </summary>
-        public static BindableProperty InterestsProperty =BindableProperty.CreateAttached<Gestures, GestureInterests>(
-                                                            x => x.GetValue<GestureInterests>(InterestsProperty),
+        public static BindableProperty InterestsProperty =BindableProperty.CreateAttached<Gestures, GestureCollection>(
+                                                            x => x.GetValue<GestureCollection>(InterestsProperty),
                                                             null,
                                                             BindingMode.OneWay,  
                                                             null,
@@ -30,18 +30,18 @@
         /// </summary>
         public Gestures()
         {
-            Interests= new GestureInterests();
+            Interests= new GestureCollection();
             
         }
         /// <summary>
         /// The set of interests for this view
         /// </summary>
-        public GestureInterests Interests
+        public GestureCollection Interests
         {
-            get { return (GestureInterests)GetValue(InterestsProperty); }
+            get { return (GestureCollection)GetValue(InterestsProperty); }
             set { SetValue(InterestsProperty,value);}
         }
-        private static void InterestsChanged(BindableObject bo, GestureInterests oldvalue, GestureInterests newvalue)
+        private static void InterestsChanged(BindableObject bo, GestureCollection oldvalue, GestureCollection newvalue)
         {
             var view = bo as View;
             if (view == null)
@@ -55,10 +55,8 @@
 
             }
             else
-                gcv.RegisterInterests(view,newvalue);
-            
+                gcv.RegisterInterests(view,newvalue);            
         }
-
 
         
         private static void ViewPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -107,7 +105,7 @@
         private class PendingInterestParams
         {
             public View View { get; set; }
-            public GestureInterests Interests { get; set; }
+            public GestureCollection Interests { get; set; }
         }
 
 
@@ -117,5 +115,5 @@
     /// <summary>
     /// Container class for Gesture Interests
     /// </summary>
-    public class GestureInterests : ObservableCollection<GestureInterest> { }
+    public class GestureCollection : ObservableCollection<GestureInterest> { }
 }

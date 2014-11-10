@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
 
     using Xamarin.Forms.Labs.Behaviors;
-    using Xamarin.Forms.Xaml;
 
     /// <summary>
     /// Uses attached properties to 
@@ -23,6 +21,26 @@
         /// Property Definition for the Bindable <see cref="MinimumSwipeLength"/> property
         /// </summary>
         public static BindableProperty MinimumSwipeLengthProperty =BindableProperty.Create<GesturesContentView, float>(x => x.MinimumSwipeLength,25,BindingMode.OneWay,(bo, val) => val >= 10);
+
+        /// <summary>
+        /// Property Definition for the exclude children property
+        /// </summary>
+        /// Element created at 08/11/2014,12:45 AM by Charles
+        public static BindableProperty ExcludeChildrenProperty = BindableProperty.Create<GesturesContentView, bool>(x => x.ExcludeChildren, true);
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not to exclude children views.
+        /// If set then children views cannot be the source of a gesture.
+        /// If not set than all children views can be the source of a gesture
+        /// ie: The gesture will bubble up
+        /// </summary>
+        /// <value><c>true</c> if [exclude children]; otherwise, <c>false</c>.</value>
+        /// Element created at 08/11/2014,12:46 AM by Charles
+        public bool ExcludeChildren
+        {
+            get { return (bool)GetValue(ExcludeChildrenProperty); }
+            set { SetValue(ExcludeChildrenProperty,value);}
+        }
 
         /// <summary>
         /// The minimum gesture length to be considered a valid swipe
@@ -103,6 +121,8 @@
         /// <returns>True if the gesture was handled,false otherwise</returns>
         internal bool ProcessGesture(GestureResult gesture)
         {
+            //Check the view stack first
+            if (ExcludeChildren && gesture.ViewStack != null && viewInterests.All(x => x.View != gesture.ViewStack[0])) return false;//The innermost (source) is not an actual interested view
             var interestedview = InterestedView(gesture.Origin);
             if (interestedview == null) return false;
             gesture.StartView = interestedview.View;
@@ -124,7 +144,9 @@
                                               ? gesture.Direction & Directionality.VerticalMask
                                               : Directionality.None;
 
-                
+                //Swap in the new direction so the user knows what the final match was
+                gesture.Direction = horizontaldirection | verticaldirection;
+
                 interest =interestedview.Interests.Where(x =>x.GestureType == gesture.GestureType && 
                                                                               (x.Direction & Directionality.HorizontalMask)== horizontaldirection &&
                                                                               (x.Direction & Directionality.VerticalMask) == verticaldirection).ToList();
@@ -167,6 +189,8 @@
                     originview = candidates.Count() == 1? candidates.First(): candidates.OrderBy(v => DistanceToClosestEdge(v.View.Bounds, point)).First();
                 }                
             }
+            //check the originview for noninterested children that contain the point
+            //var child=originview.View.
             return originview;
         }
 
