@@ -22,7 +22,9 @@ namespace Xamarin.Forms.Labs.Converter
         /// <remarks>To be added.</remarks>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null;
+            var reverse = parameter != null && parameter.ToString().ToLower() == "invert";
+
+            return reverse ? value==null : value != null;
         }
 
         /// <summary>
