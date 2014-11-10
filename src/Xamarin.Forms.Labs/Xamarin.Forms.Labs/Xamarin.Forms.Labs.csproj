@@ -54,6 +54,7 @@
     <Compile Include="Validation\RuleResult.cs" />
     <Compile Include="Validation\Rules.cs" />
     <Compile Include="Validation\RuleSet.cs" />
+    <Compile Include="Validation\ValidateNumericOnly.cs" />
     <Compile Include="Validation\ValidationSets.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="Controls\CarouselView.cs" />
