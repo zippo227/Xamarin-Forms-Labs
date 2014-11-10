@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Xamarin.Forms.Labs.Services;
 using XLabs.Ioc;
 using XLabs.Serialization;
 
@@ -196,6 +195,7 @@ namespace Xamarin.Forms.Labs.Controls
         public EventHandler LoadFinished;
         public EventHandler LeftSwipe;
         public EventHandler RightSwipe;
+        public EventHandler<EventArgs<Uri>> Navigating;
 
         internal bool TryGetAction(string name, out Action<string> action)
         {
@@ -231,6 +231,15 @@ namespace Xamarin.Forms.Labs.Controls
             if (handler != null)
             {
                 handler(this, e);
+            }
+        }
+
+        internal void OnNavigating(Uri uri)
+        {
+            var handler = this.Navigating;
+            if (handler != null)
+            {
+                handler(this, new EventArgs<Uri>(uri));
             }
         }
 

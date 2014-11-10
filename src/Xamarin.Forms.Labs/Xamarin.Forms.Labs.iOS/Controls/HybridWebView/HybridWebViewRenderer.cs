@@ -37,6 +37,9 @@ namespace Xamarin.Forms.Labs.Controls
                 //this.InjectNativeFunctionScript();
                 this.SetNativeControl(webView);
 
+                //webView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+                //webView.ScalesPageToFit = true;
+
                 this.leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => this.Element.OnLeftSwipe(this, EventArgs.Empty))
                 {
                     Direction = UISwipeGestureRecognizerDirection.Left
@@ -57,15 +60,24 @@ namespace Xamarin.Forms.Labs.Controls
                 this.Control.RemoveGestureRecognizer(this.rightSwipeGestureRecognizer);
             }
 
-            Element.SizeChanged += HandleSizeChanged;
-
             this.Unbind(e.OldElement);
             this.Bind();
         }
 
-        void HandleSizeChanged (object sender, EventArgs e)
+        /// <summary>
+        /// Gets the desired size of the view.
+        /// </summary>
+        /// <returns>The desired size.</returns>
+        /// <param name="widthConstraint">Width constraint.</param>
+        /// <param name="heightConstraint">Height constraint.</param>
+        /// <remarks>
+        /// We need to override this method and set the request to 0. Otherwise on view refresh
+        /// we will get incorrect view height and might lose the ability to scroll the webview
+        /// completely.
+        /// </remarks>
+        public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
         {
-            LayoutViews ();
+            return new SizeRequest(Size.Zero, Size.Zero);
         }
 
         void LoadFinished(object sender, EventArgs e)
@@ -76,14 +88,17 @@ namespace Xamarin.Forms.Labs.Controls
 
         private bool HandleStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
         {
-            return !this.CheckRequest(request.Url.RelativeString);
+            var shouldStartLoad = !this.CheckRequest(request.Url.RelativeString);
+            if (shouldStartLoad) 
+            {
+                this.Element.OnNavigating(new Uri(request.Url.AbsoluteUrl.AbsoluteString));
+            }
+            return shouldStartLoad;
         }
 
         partial void Inject(string script)
         {
-            InvokeOnMainThread(() => {
-                this.Control.EvaluateJavascript(script);
-            });
+            InvokeOnMainThread(() => this.Control.EvaluateJavascript(script));
         }
 
         /* 
@@ -92,18 +107,8 @@ namespace Xamarin.Forms.Labs.Controls
          */
         public override void LayoutSubviews()
         {
-            LayoutViews ();
-        }
-
-        void LayoutViews()
-        {
-            if (this.Control != null) {
-                var control = this.Control;
-                var element = base.Element;
-                control.Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
-                Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
-                Bounds = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
-            }
+            base.LayoutSubviews();
+            this.Control.ScrollView.Frame = this.Control.Bounds;
         }
 
         partial void Load(Uri uri)
@@ -117,8 +122,6 @@ namespace Xamarin.Forms.Labs.Controls
         partial void LoadFromContent(object sender, string contentFullName)
         {
             this.Element.Uri = new Uri(NSBundle.MainBundle.BundlePath + "/" + contentFullName);
-            //string homePageUrl = NSBundle.MainBundle.BundlePath + "/" + contentFullName;
-            //this.webView.LoadRequest(new NSUrlRequest(new NSUrl(homePageUrl, false)));
         }
 
         partial void LoadContent(object sender, string contentFullName)
