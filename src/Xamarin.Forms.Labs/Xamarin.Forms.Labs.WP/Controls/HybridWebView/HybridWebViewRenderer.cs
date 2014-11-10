@@ -26,7 +26,7 @@ namespace Xamarin.Forms.Labs.Controls
 
             if (this.WebView == null)
             {
-                this.WebView = new WebBrowser { IsScriptEnabled = true };
+                this.WebView = new WebBrowser { IsScriptEnabled = true, IsGeolocationEnabled = true };
 
                 //Touch.FrameReported += Touch_FrameReported;
 
