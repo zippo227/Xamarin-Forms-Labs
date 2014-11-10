@@ -36,21 +36,26 @@ namespace Xamarin.Forms.Labs.Controls
                 this.SetNativeControl(this.webView);
             }
 
-			Element.SizeChanged += HandleSizeChanged;
+            Element.SizeChanged += HandleSizeChanged;
 
             this.Unbind(e.OldElement);
             this.Bind();
         }
 
+        public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
+        {
+            return new SizeRequest(Size.Zero, Size.Zero);
+        }
+
         void HandleSizeChanged (object sender, EventArgs e)
         {
-			LayoutViews ();
+            LayoutViews ();
         }
 
         void LoadFinished(object sender, EventArgs e)
         {
             this.Element.OnLoadFinished(sender, e);
-			InjectNativeFunctionScript();
+            InjectNativeFunctionScript();
         }
 
         private bool HandleStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
@@ -60,30 +65,30 @@ namespace Xamarin.Forms.Labs.Controls
 
         partial void Inject(string script)
         {
-			InvokeOnMainThread(() => {
-            	this.webView.EvaluateJavascript(script);
-			});
+            InvokeOnMainThread(() => {
+                this.webView.EvaluateJavascript(script);
+            });
         }
 
-		/* 
+        /* 
          * This is a hack to because the base wasn't working 
          * when within a stacklayout
          */
-		public override void LayoutSubviews()
-		{
-			LayoutViews ();
-		}
+        public override void LayoutSubviews()
+        {
+            LayoutViews ();
+        }
 
-		void LayoutViews()
-		{
-			if (this.Control != null) {
-				var control = this.Control;
-				var element = base.Element;
-				control.Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
-				Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
-				Bounds = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
-			}
-		}
+        void LayoutViews()
+        {
+            if (this.Control != null) {
+                var control = this.Control;
+                var element = base.Element;
+                control.Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
+                Frame = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
+                Bounds = new RectangleF ((float)element.X, (float)element.Y, (float)element.Width, (float)element.Height);
+            }
+        }
 
         partial void Load(Uri uri)
         {

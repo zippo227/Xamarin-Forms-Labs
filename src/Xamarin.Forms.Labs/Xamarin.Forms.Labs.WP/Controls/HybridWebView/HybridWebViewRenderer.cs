@@ -37,6 +37,11 @@ namespace Xamarin.Forms.Labs.Controls
             this.Bind();
         }
 
+        public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
+        {
+            return new SizeRequest(Size.Zero, Size.Zero);
+        }
+
         private void WebViewOnScriptNotify(object sender, NotifyEventArgs notifyEventArgs)
         {
             Action<string> action;

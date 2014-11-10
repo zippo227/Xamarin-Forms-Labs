@@ -32,7 +32,12 @@ namespace Xamarin.Forms.Labs.Controls
 
             this.Bind();
         }
-            
+
+        public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
+        {
+            return new SizeRequest(Size.Zero, Size.Zero);
+        }
+
         partial void Inject(string script)
         {
             this.Control.LoadUrl(string.Format("javascript: {0}", script));
