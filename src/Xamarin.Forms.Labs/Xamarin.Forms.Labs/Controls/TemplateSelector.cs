@@ -141,6 +141,10 @@ namespace Xamarin.Forms.Labs.Controls
                 //the requested type (perhaps the Ux or Network states...)
                 if (SelectorFunction != null) retTemplate = SelectorFunction(type);
 
+                // The selector function is supreme, if it has
+                // returned a template use it.
+                if (retTemplate != null) return retTemplate;
+
                 //Happy case we already have the type in our cache
                 if (Cache.ContainsKey(type)) return Cache[type];
 
