@@ -192,9 +192,17 @@ namespace Xamarin.Forms.Labs.Controls
                     foreach (T item in e.NewItems)
                     {
                         var comparer = EqualityComparer<T>.Default;
-                        var index = ItemsSource.Where(t => comparer.Equals(t, item))
-                                               .Select((t, i) => (int?)i)
-                                               .FirstOrDefault() ?? -1;
+                        var index = -1;
+                        var i = 0;
+                        foreach (var t in ItemsSource)
+                        {
+                            if (comparer.Equals(t, item))
+                            {
+                                index = i;
+                                break;
+                            }
+                            i++;
+                        }
                         var view = ViewFor(item);
                         Children.Insert(index, view);
                         NotifyItemAdded(view, item);
