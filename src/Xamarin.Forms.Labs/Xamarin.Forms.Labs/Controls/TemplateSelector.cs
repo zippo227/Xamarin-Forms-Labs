@@ -150,7 +150,7 @@ namespace Xamarin.Forms.Labs.Controls
 
 
                 //check our list
-                retTemplate = retTemplate ?? Templates.Where(x =>x.Type == type).Select(x => x.WrappedTemplate).FirstOrDefault();
+                retTemplate =  Templates.Where(x =>x.Type == type).Select(x => x.WrappedTemplate).FirstOrDefault();
                 //Check for interfaces
                 retTemplate = retTemplate ?? type.GetTypeInfo().ImplementedInterfaces.Select(x=>TemplateForImpl(x,examined)).FirstOrDefault();
                 //look at base types
