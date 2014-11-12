@@ -22,8 +22,8 @@ namespace Xamarin.Forms.Labs.Controls
 
                 if (_itemsSource != null)
                 {
-                    _eventHandler = new NotifyCollectionChangedEventHandler(repeater.ItemsSource_CollectionChanged);
-                    _itemsSource.CollectionChanged += repeater.ItemsSource_CollectionChanged;
+                    _eventHandler = repeater.ItemsSource_CollectionChanged;
+                    _itemsSource.CollectionChanged += _eventHandler;
                 }
             }
 
