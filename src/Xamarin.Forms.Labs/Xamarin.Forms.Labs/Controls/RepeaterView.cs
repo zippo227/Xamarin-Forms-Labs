@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -6,7 +7,6 @@ using System.Windows.Input;
 
 namespace Xamarin.Forms.Labs.Controls
 {
-    using System.Collections.Generic;
     using Xamarin.Forms.Labs.Exceptions;
 
     public class RepeaterView<T> : StackLayout
@@ -22,8 +22,8 @@ namespace Xamarin.Forms.Labs.Controls
 
                 if (_itemsSource != null)
                 {
-                    _eventHandler = new NotifyCollectionChangedEventHandler(repeater.ItemsSource_CollectionChanged);
-                    _itemsSource.CollectionChanged += repeater.ItemsSource_CollectionChanged;
+                    _eventHandler = repeater.ItemsSource_CollectionChanged;
+                    _itemsSource.CollectionChanged += _eventHandler;
                 }
             }
 
@@ -62,7 +62,7 @@ namespace Xamarin.Forms.Labs.Controls
 
         public IEnumerable<T> ItemsSource
         {
-            get { return (ObservableCollection<T>)GetValue(ItemsSourceProperty); }
+            get { return (IEnumerable<T>)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
@@ -192,9 +192,17 @@ namespace Xamarin.Forms.Labs.Controls
                     foreach (T item in e.NewItems)
                     {
                         var comparer = EqualityComparer<T>.Default;
-                        var index = ItemsSource.Where(t => comparer.Equals(t, item))
-                                               .Select((t, i) => (int?)i)
-                                               .FirstOrDefault() ?? -1;
+                        var index = -1;
+                        var i = 0;
+                        foreach (var t in ItemsSource)
+                        {
+                            if (comparer.Equals(t, item))
+                            {
+                                index = i;
+                                break;
+                            }
+                            i++;
+                        }
                         var view = ViewFor(item);
                         Children.Insert(index, view);
                         NotifyItemAdded(view, item);
