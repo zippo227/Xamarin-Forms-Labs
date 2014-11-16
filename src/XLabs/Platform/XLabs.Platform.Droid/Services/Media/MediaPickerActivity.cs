@@ -1,4 +1,4 @@
-namespace XLabs.Platform.Droid.Services.Media
+namespace XLabs.Platform.Services.Media
 {
 	using System;
 	using System.IO;
@@ -10,8 +10,6 @@ namespace XLabs.Platform.Droid.Services.Media
 	using Android.Database;
 	using Android.OS;
 	using Android.Provider;
-
-	using XLabs.Platform.Services.Media;
 
 	using Environment = Android.OS.Environment;
 	using Uri = Android.Net.Uri;
@@ -27,32 +25,32 @@ namespace XLabs.Platform.Droid.Services.Media
 		/// <summary>
 		/// The extra path
 		/// </summary>
-		internal const string EXTRA_PATH = "path";
+		internal const string ExtraPath = "path";
 		/// <summary>
 		/// The extra location
 		/// </summary>
-		internal const string EXTRA_LOCATION = "location";
+		internal const string ExtraLocation = "location";
 		/// <summary>
 		/// The extra type
 		/// </summary>
-		internal const string EXTRA_TYPE = "type";
+		internal const string ExtraType = "type";
 		/// <summary>
 		/// The extra identifier
 		/// </summary>
-		internal const string EXTRA_ID = "id";
+		internal const string ExtraId = "id";
 		/// <summary>
 		/// The extra action
 		/// </summary>
-		internal const string EXTRA_ACTION = "action";
+		internal const string ExtraAction = "action";
 		/// <summary>
 		/// The extra tasked
 		/// </summary>
-		internal const string EXTRA_TASKED = "tasked";
+		internal const string ExtraTasked = "tasked";
 
 		/// <summary>
 		/// The medi a_ fil e_ extr a_ name
 		/// </summary>
-		internal const string MEDIA_FILE_EXTRA_NAME = "MediaFile";
+		internal const string MediaFileExtraName = "MediaFile";
 		#endregion Constants
 
 		#region Private Member Variables
@@ -170,15 +168,15 @@ namespace XLabs.Platform.Droid.Services.Media
 			outState.PutBoolean("ran", true);
 			outState.PutString(MediaStore.MediaColumns.Title, _title);
 			outState.PutString(MediaStore.Images.ImageColumns.Description, _description);
-			outState.PutInt(EXTRA_ID, _id);
-			outState.PutString(EXTRA_TYPE, _type);
-			outState.PutString(EXTRA_ACTION, _action);
+			outState.PutInt(ExtraId, _id);
+			outState.PutString(ExtraType, _type);
+			outState.PutString(ExtraAction, _action);
 			outState.PutInt(MediaStore.ExtraDurationLimit, _seconds);
 			outState.PutInt(MediaStore.ExtraVideoQuality, (int) _quality);
-			outState.PutBoolean(EXTRA_TASKED, _tasked);
+			outState.PutBoolean(ExtraTasked, _tasked);
 
 			if (_path != null)
-				outState.PutString(EXTRA_PATH, _path.Path);
+				outState.PutString(ExtraPath, _path.Path);
 
 			base.OnSaveInstanceState(outState);
 		}
@@ -227,16 +225,16 @@ namespace XLabs.Platform.Droid.Services.Media
 			_title = b.GetString(MediaStore.MediaColumns.Title);
 			_description = b.GetString(MediaStore.Images.ImageColumns.Description);
 
-			_tasked = b.GetBoolean(EXTRA_TASKED);
-			_id = b.GetInt(EXTRA_ID, 0);
-			_type = b.GetString(EXTRA_TYPE);
+			_tasked = b.GetBoolean(ExtraTasked);
+			_id = b.GetInt(ExtraId, 0);
+			_type = b.GetString(ExtraType);
 			
 			if (_type == "image/*")
 			{
 				_isPhoto = true;
 			}
 
-			_action = b.GetString(EXTRA_ACTION);
+			_action = b.GetString(ExtraAction);
 			Intent pickIntent = null;
 
 			try
@@ -260,13 +258,13 @@ namespace XLabs.Platform.Droid.Services.Media
 
 					if (!ran)
 					{
-						_path = GetOutputMediaFile(this, b.GetString(EXTRA_PATH), _title, _isPhoto);
+						_path = GetOutputMediaFile(this, b.GetString(ExtraPath), _title, _isPhoto);
 
 						Touch();
 						pickIntent.PutExtra(MediaStore.ExtraOutput, _path);
 					}
 					else
-						_path = Uri.Parse(b.GetString(EXTRA_PATH));
+						_path = Uri.Parse(b.GetString(ExtraPath));
 				}
 
 				if (!ran)
@@ -337,10 +335,10 @@ namespace XLabs.Platform.Droid.Services.Media
 				else
 				{
 					var resultData = new Intent();
-					resultData.PutExtra(MEDIA_FILE_EXTRA_NAME, (data != null) ? data.Data : null);
-					resultData.PutExtra(EXTRA_PATH, _path);
+					resultData.PutExtra(MediaFileExtraName, (data != null) ? data.Data : null);
+					resultData.PutExtra(ExtraPath, _path);
 					resultData.PutExtra("isPhoto", _isPhoto);
-					resultData.PutExtra(EXTRA_ACTION, _action);
+					resultData.PutExtra(ExtraAction, _action);
 
 					SetResult(Result.Ok, resultData);
 				}

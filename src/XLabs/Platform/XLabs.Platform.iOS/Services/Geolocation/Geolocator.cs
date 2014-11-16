@@ -1,23 +1,4 @@
-﻿//
-//  Copyright 2011-2013, Xamarin Inc.
-//
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//
-//        http://www.apache.org/licenses/LICENSE-2.0
-//
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-//
-
-using XLabs.Platform.iOS.Services.Geolocation;
-
-[assembly: Dependency(typeof(Geolocator))]
-namespace XLabs.Platform.iOS.Services.Geolocation
+﻿namespace XLabs.Platform.Services.Geolocation
 {
 	using System;
 	using System.Threading;
@@ -30,258 +11,427 @@ namespace XLabs.Platform.iOS.Services.Geolocation
 
 	using XLabs.Platform.Services.GeoLocation;
 
+	/// <summary>
+	/// Class Geolocator.
+	/// </summary>
 	public class Geolocator : IGeolocator
-    {
-        public Geolocator()
-        {
-            this.manager = GetManager();
-            this.manager.AuthorizationChanged += OnAuthorizationChanged;
-            this.manager.Failed += OnFailed;
-            if (this.manager.RespondsToSelector(new Selector("requestWhenInUseAuthorization")))
-            {
-                this.manager.RequestWhenInUseAuthorization();
-            }
-            if (UIDevice.CurrentDevice.CheckSystemVersion (6, 0))
-                this.manager.LocationsUpdated += OnLocationsUpdated;
-            else
-                this.manager.UpdatedLocation += OnUpdatedLocation;
+	{
+		/// <summary>
+		/// The _position
+		/// </summary>
+		private Position _position;
 
-            this.manager.UpdatedHeading += OnUpdatedHeading;
-        }
+		/// <summary>
+		/// The _manager
+		/// </summary>
+		private readonly CLLocationManager _manager;
 
-        public event EventHandler<PositionErrorEventArgs> PositionError;
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Geolocator"/> class.
+		/// </summary>
+		public Geolocator()
+		{
+			_manager = GetManager();
+			_manager.AuthorizationChanged += OnAuthorizationChanged;
+			_manager.Failed += OnFailed;
+			if (_manager.RespondsToSelector(new Selector("requestWhenInUseAuthorization")))
+			{
+				_manager.RequestWhenInUseAuthorization();
+			}
+			if (UIDevice.CurrentDevice.CheckSystemVersion(6, 0))
+			{
+				_manager.LocationsUpdated += OnLocationsUpdated;
+			}
+			else
+			{
+				_manager.UpdatedLocation += OnUpdatedLocation;
+			}
 
-        public event EventHandler<PositionEventArgs> PositionChanged;
+			_manager.UpdatedHeading += OnUpdatedHeading;
+		}
 
-        public double DesiredAccuracy
-        {
-            get;
-            set;
-        }
+		/// <summary>
+		/// Gets or sets the desired accuracy.
+		/// </summary>
+		/// <value>The desired accuracy.</value>
+		public double DesiredAccuracy { get; set; }
 
-        public bool IsListening
-        {
-            get { return this.isListening; }
-        }
+		/// <summary>
+		/// Gets a value indicating whether this instance is listening.
+		/// </summary>
+		/// <value><c>true</c> if this instance is listening; otherwise, <c>false</c>.</value>
+		public bool IsListening { get; private set; }
 
-        public bool SupportsHeading
-        {
-            get { return CLLocationManager.HeadingAvailable; }
-        }
+		/// <summary>
+		/// Gets a value indicating whether [supports heading].
+		/// </summary>
+		/// <value><c>true</c> if [supports heading]; otherwise, <c>false</c>.</value>
+		public bool SupportsHeading
+		{
+			get
+			{
+				return CLLocationManager.HeadingAvailable;
+			}
+		}
 
-        public bool IsGeolocationAvailable
-        {
-            get { return true; } // all iOS devices support at least wifi geolocation
-        }
+		/// <summary>
+		/// Gets a value indicating whether this instance is geolocation available.
+		/// </summary>
+		/// <value><c>true</c> if this instance is geolocation available; otherwise, <c>false</c>.</value>
+		public bool IsGeolocationAvailable
+		{
+			get
+			{
+				return true;
+			} // all iOS devices support at least wifi geolocation
+		}
 
-        public bool IsGeolocationEnabled
-        {
-            get { return CLLocationManager.Status >= CLAuthorizationStatus.AuthorizedAlways; }
-        }
+		/// <summary>
+		/// Gets a value indicating whether this instance is geolocation enabled.
+		/// </summary>
+		/// <value><c>true</c> if this instance is geolocation enabled; otherwise, <c>false</c>.</value>
+		public bool IsGeolocationEnabled
+		{
+			get
+			{
+				return CLLocationManager.Status >= CLAuthorizationStatus.AuthorizedAlways;
+			}
+		}
 
-        public Task<Position> GetPositionAsync (int timeout)
-        {
-            return GetPositionAsync (timeout, CancellationToken.None, false);
-        }
+		/// <summary>
+		/// Stop listening to location changes
+		/// </summary>
+		public void StopListening()
+		{
+			if (!IsListening)
+			{
+				return;
+			}
 
-        public Task<Position> GetPositionAsync (int timeout, bool includeHeading)
-        {
-            return GetPositionAsync (timeout, CancellationToken.None, includeHeading);
-        }
+			IsListening = false;
+			if (CLLocationManager.HeadingAvailable)
+			{
+				_manager.StopUpdatingHeading();
+			}
 
-        public Task<Position> GetPositionAsync (CancellationToken cancelToken)
-        {
-            return GetPositionAsync (Timeout.Infinite, cancelToken, false);
-        }
+			_manager.StopUpdatingLocation();
+			_position = null;
+		}
 
-        public Task<Position> GetPositionAsync (CancellationToken cancelToken, bool includeHeading)
-        {
-            return GetPositionAsync (Timeout.Infinite, cancelToken, includeHeading);
-        }
+		/// <summary>
+		/// Occurs when [position error].
+		/// </summary>
+		public event EventHandler<PositionErrorEventArgs> PositionError;
 
-        public Task<Position> GetPositionAsync (int timeout, CancellationToken cancelToken)
-        {
-            return GetPositionAsync (timeout, cancelToken, false);
-        }
+		/// <summary>
+		/// Occurs when [position changed].
+		/// </summary>
+		public event EventHandler<PositionEventArgs> PositionChanged;
 
-        public Task<Position> GetPositionAsync (int timeout, CancellationToken cancelToken, bool includeHeading)
-        {
-            if (timeout <= 0 && timeout != Timeout.Infinite)
-                throw new ArgumentOutOfRangeException ("timeout", "Timeout must be positive or Timeout.Infinite");
+		/// <summary>
+		/// Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public Task<Position> GetPositionAsync(int timeout)
+		{
+			return GetPositionAsync(timeout, CancellationToken.None, false);
+		}
 
-            TaskCompletionSource<Position> tcs;
-            if (!IsListening)
-            {
-                var m = GetManager();
+		/// <summary>
+		/// Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public Task<Position> GetPositionAsync(int timeout, bool includeHeading)
+		{
+			return GetPositionAsync(timeout, CancellationToken.None, includeHeading);
+		}
 
-                tcs = new TaskCompletionSource<Position> (m);
-                var singleListener = new GeolocationSingleUpdateDelegate (m, DesiredAccuracy, includeHeading, timeout, cancelToken);
-                m.Delegate = singleListener;
+		/// <summary>
+		/// Gets the position asynchronous.
+		/// </summary>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public Task<Position> GetPositionAsync(CancellationToken cancelToken)
+		{
+			return GetPositionAsync(Timeout.Infinite, cancelToken, false);
+		}
 
-                m.StartUpdatingLocation ();
-                if (includeHeading && SupportsHeading)
-                    m.StartUpdatingHeading ();
+		/// <summary>
+		/// Gets the position asynchronous.
+		/// </summary>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public Task<Position> GetPositionAsync(CancellationToken cancelToken, bool includeHeading)
+		{
+			return GetPositionAsync(Timeout.Infinite, cancelToken, includeHeading);
+		}
 
-                return singleListener.Task;
-            }
-            else
-            {
-                tcs = new TaskCompletionSource<Position>();
-                if (this.position == null)
-                {
-                    EventHandler<PositionErrorEventArgs> gotError = null;
-                    gotError = (s,e) =>
-                    {
-                        tcs.TrySetException (new GeolocationException (e.Error));
-                        PositionError -= gotError;
-                    };
+		/// <summary>
+		/// Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public Task<Position> GetPositionAsync(int timeout, CancellationToken cancelToken)
+		{
+			return GetPositionAsync(timeout, cancelToken, false);
+		}
 
-                    PositionError += gotError;
+		/// <summary>
+		/// Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">timeout;Timeout must be positive or Timeout.Infinite</exception>
+		public Task<Position> GetPositionAsync(int timeout, CancellationToken cancelToken, bool includeHeading)
+		{
+			if (timeout <= 0 && timeout != Timeout.Infinite)
+			{
+				throw new ArgumentOutOfRangeException("timeout", "Timeout must be positive or Timeout.Infinite");
+			}
 
-                    EventHandler<PositionEventArgs> gotPosition = null;
-                    gotPosition = (s, e) =>
-                    {
-                        tcs.TrySetResult (e.Position);
-                        PositionChanged -= gotPosition;
-                    };
+			TaskCompletionSource<Position> tcs;
+			if (!IsListening)
+			{
+				var m = GetManager();
 
-                    PositionChanged += gotPosition;
-                }
-                else
-                    tcs.SetResult (this.position);
-            }
+				tcs = new TaskCompletionSource<Position>(m);
+				var singleListener = new GeolocationSingleUpdateDelegate(m, DesiredAccuracy, includeHeading, timeout, cancelToken);
+				m.Delegate = singleListener;
 
-            return tcs.Task;
-        }
+				m.StartUpdatingLocation();
+				if (includeHeading && SupportsHeading)
+				{
+					m.StartUpdatingHeading();
+				}
 
-        public void StartListening (uint minTime, double minDistance)
-        {
-            StartListening (minTime, minDistance, false);
-        }
+				return singleListener.Task;
+			}
+			tcs = new TaskCompletionSource<Position>();
+			if (_position == null)
+			{
+				EventHandler<PositionErrorEventArgs> gotError = null;
+				gotError = (s, e) =>
+					{
+						tcs.TrySetException(new GeolocationException(e.Error));
+						PositionError -= gotError;
+					};
 
-        public void StartListening (uint minTime, double minDistance, bool includeHeading)
-        {
-            if (minTime < 0)
-                throw new ArgumentOutOfRangeException ("minTime");
-            if (minDistance < 0)
-                throw new ArgumentOutOfRangeException ("minDistance");
-            if (this.isListening)
-                throw new InvalidOperationException ("Already listening");
+				PositionError += gotError;
 
-            this.isListening = true;
-            this.manager.DesiredAccuracy = DesiredAccuracy;
-            this.manager.DistanceFilter = minDistance;
-            this.manager.StartUpdatingLocation ();
+				EventHandler<PositionEventArgs> gotPosition = null;
+				gotPosition = (s, e) =>
+					{
+						tcs.TrySetResult(e.Position);
+						PositionChanged -= gotPosition;
+					};
 
-            if (includeHeading && CLLocationManager.HeadingAvailable)
-                this.manager.StartUpdatingHeading ();
-        }
+				PositionChanged += gotPosition;
+			}
+			else
+			{
+				tcs.SetResult(_position);
+			}
 
-        public void StopListening ()
-        {
-            if (!this.isListening)
-                return;
+			return tcs.Task;
+		}
 
-            this.isListening = false;
-            if (CLLocationManager.HeadingAvailable)
-                this.manager.StopUpdatingHeading ();
+		/// <summary>
+		/// Start listening to location changes
+		/// </summary>
+		/// <param name="minTime">Minimum interval in milliseconds</param>
+		/// <param name="minDistance">Minimum distance in meters</param>
+		public void StartListening(uint minTime, double minDistance)
+		{
+			StartListening(minTime, minDistance, false);
+		}
 
-            this.manager.StopUpdatingLocation ();
-            this.position = null;
-        }
+		/// <summary>
+		/// Start listening to location changes
+		/// </summary>
+		/// <param name="minTime">Minimum interval in milliseconds</param>
+		/// <param name="minDistance">Minimum distance in meters</param>
+		/// <param name="includeHeading">Include heading information</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// minTime
+		/// or
+		/// minDistance
+		/// </exception>
+		/// <exception cref="InvalidOperationException">Already listening</exception>
+		public void StartListening(uint minTime, double minDistance, bool includeHeading)
+		{
+			if (minTime < 0)
+			{
+				throw new ArgumentOutOfRangeException("minTime");
+			}
+			if (minDistance < 0)
+			{
+				throw new ArgumentOutOfRangeException("minDistance");
+			}
+			if (IsListening)
+			{
+				throw new InvalidOperationException("Already listening");
+			}
 
-        private readonly CLLocationManager manager;
-        private bool isListening;
-        private Position position;
+			IsListening = true;
+			_manager.DesiredAccuracy = DesiredAccuracy;
+			_manager.DistanceFilter = minDistance;
+			_manager.StartUpdatingLocation();
 
-        private CLLocationManager GetManager()
-        {
-            CLLocationManager m = null;
-            new NSObject().InvokeOnMainThread (() => m = new CLLocationManager());
-            return m;
-        }
+			if (includeHeading && CLLocationManager.HeadingAvailable)
+			{
+				_manager.StartUpdatingHeading();
+			}
+		}
 
-        private void OnUpdatedHeading (object sender, CLHeadingUpdatedEventArgs e)
-        {
-            if (e.NewHeading.TrueHeading == -1)
-                return;
+		/// <summary>
+		/// Gets the manager.
+		/// </summary>
+		/// <returns>CLLocationManager.</returns>
+		private CLLocationManager GetManager()
+		{
+			CLLocationManager m = null;
+			new NSObject().InvokeOnMainThread(() => m = new CLLocationManager());
+			return m;
+		}
 
-            Position p = (this.position == null) ? new Position () : new Position (this.position);
+		/// <summary>
+		/// Handles the <see cref="E:UpdatedHeading" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="CLHeadingUpdatedEventArgs"/> instance containing the event data.</param>
+		private void OnUpdatedHeading(object sender, CLHeadingUpdatedEventArgs e)
+		{
+			if (e.NewHeading.TrueHeading == -1)
+			{
+				return;
+			}
 
-            p.Heading = e.NewHeading.TrueHeading;
+			var p = (_position == null) ? new Position() : new Position(_position);
 
-            this.position = p;
+			p.Heading = e.NewHeading.TrueHeading;
 
-            OnPositionChanged (new PositionEventArgs (p));
-        }
+			_position = p;
 
-        private void OnLocationsUpdated (object sender, CLLocationsUpdatedEventArgs e)
-        {
-            foreach (CLLocation location in e.Locations)
-                UpdatePosition (location);
-        }
+			OnPositionChanged(new PositionEventArgs(p));
+		}
 
-        private void OnUpdatedLocation (object sender, CLLocationUpdatedEventArgs e)
-        {
-            UpdatePosition (e.NewLocation);
-        }
+		/// <summary>
+		/// Handles the <see cref="E:LocationsUpdated" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="CLLocationsUpdatedEventArgs"/> instance containing the event data.</param>
+		private void OnLocationsUpdated(object sender, CLLocationsUpdatedEventArgs e)
+		{
+			foreach (var location in e.Locations)
+			{
+				UpdatePosition(location);
+			}
+		}
 
-        private void UpdatePosition (CLLocation location)
-        {
-            Position p = (this.position == null) ? new Position () : new Position (this.position);
+		/// <summary>
+		/// Handles the <see cref="E:UpdatedLocation" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="CLLocationUpdatedEventArgs"/> instance containing the event data.</param>
+		private void OnUpdatedLocation(object sender, CLLocationUpdatedEventArgs e)
+		{
+			UpdatePosition(e.NewLocation);
+		}
 
-            if (location.HorizontalAccuracy > -1)
-            {
-                p.Accuracy = location.HorizontalAccuracy;
-                p.Latitude = location.Coordinate.Latitude;
-                p.Longitude = location.Coordinate.Longitude;
-            }
+		/// <summary>
+		/// Updates the position.
+		/// </summary>
+		/// <param name="location">The location.</param>
+		private void UpdatePosition(CLLocation location)
+		{
+			var p = (_position == null) ? new Position() : new Position(_position);
 
-            if (location.VerticalAccuracy > -1)
-            {
-                p.Altitude = location.Altitude;
-                p.AltitudeAccuracy = location.VerticalAccuracy;
-            }
+			if (location.HorizontalAccuracy > -1)
+			{
+				p.Accuracy = location.HorizontalAccuracy;
+				p.Latitude = location.Coordinate.Latitude;
+				p.Longitude = location.Coordinate.Longitude;
+			}
 
-            if (location.Speed > -1)
-                p.Speed = location.Speed;
+			if (location.VerticalAccuracy > -1)
+			{
+				p.Altitude = location.Altitude;
+				p.AltitudeAccuracy = location.VerticalAccuracy;
+			}
 
-            p.Timestamp = new DateTimeOffset (location.Timestamp);
+			if (location.Speed > -1)
+			{
+				p.Speed = location.Speed;
+			}
 
-            this.position = p;
+			p.Timestamp = new DateTimeOffset(location.Timestamp);
 
-            OnPositionChanged (new PositionEventArgs (p));
+			_position = p;
 
-            location.Dispose();
-        }
+			OnPositionChanged(new PositionEventArgs(p));
 
-        private void OnFailed (object sender, MonoTouch.Foundation.NSErrorEventArgs e)
-        {
-            if ((CLError)e.Error.Code == CLError.Network)
-                OnPositionError (new PositionErrorEventArgs (GeolocationError.PositionUnavailable));
-        }
+			location.Dispose();
+		}
 
-        private void OnAuthorizationChanged (object sender, CLAuthorizationChangedEventArgs e)
-        {
-            if (e.Status == CLAuthorizationStatus.Denied || e.Status == CLAuthorizationStatus.Restricted)
-                OnPositionError (new PositionErrorEventArgs (GeolocationError.Unauthorized));
-        }
+		/// <summary>
+		/// Handles the <see cref="E:Failed" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="NSErrorEventArgs"/> instance containing the event data.</param>
+		private void OnFailed(object sender, NSErrorEventArgs e)
+		{
+			if ((CLError)e.Error.Code == CLError.Network)
+			{
+				OnPositionError(new PositionErrorEventArgs(GeolocationError.PositionUnavailable));
+			}
+		}
 
-        private void OnPositionChanged (PositionEventArgs e)
-        {
-            var changed = PositionChanged;
-            if (changed != null)
-                changed (this, e);
-        }
+		/// <summary>
+		/// Handles the <see cref="E:AuthorizationChanged" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="CLAuthorizationChangedEventArgs"/> instance containing the event data.</param>
+		private void OnAuthorizationChanged(object sender, CLAuthorizationChangedEventArgs e)
+		{
+			if (e.Status == CLAuthorizationStatus.Denied || e.Status == CLAuthorizationStatus.Restricted)
+			{
+				OnPositionError(new PositionErrorEventArgs(GeolocationError.Unauthorized));
+			}
+		}
 
-        private void OnPositionError (PositionErrorEventArgs e)
-        {
-            StopListening();
+		/// <summary>
+		/// Handles the <see cref="E:PositionChanged" /> event.
+		/// </summary>
+		/// <param name="e">The <see cref="PositionEventArgs"/> instance containing the event data.</param>
+		private void OnPositionChanged(PositionEventArgs e)
+		{
+			var changed = PositionChanged;
+			if (changed != null)
+			{
+				changed(this, e);
+			}
+		}
 
-            var error = PositionError;
-            if (error != null)
-                error (this, e);
-        }
-    }
+		/// <summary>
+		/// Handles the <see cref="E:PositionError" /> event.
+		/// </summary>
+		/// <param name="e">The <see cref="PositionErrorEventArgs"/> instance containing the event data.</param>
+		private void OnPositionError(PositionErrorEventArgs e)
+		{
+			StopListening();
+
+			var error = PositionError;
+			if (error != null)
+			{
+				error(this, e);
+			}
+		}
+	}
 }
-

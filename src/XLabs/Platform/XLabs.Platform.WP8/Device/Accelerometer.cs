@@ -1,39 +1,66 @@
-﻿namespace XLabs.Platform.WP8.Device
+﻿namespace XLabs.Platform.Device
 {
 	using System;
 
 	using Microsoft.Devices.Sensors;
 
-	using XLabs.Platform.WP8.Extensions;
+	using XLabs.Platform.Extensions;
 
+	/// <summary>
+	/// Class Accelerometer.
+	/// </summary>
 	public partial class Accelerometer
-    {
-        private Microsoft.Devices.Sensors.Accelerometer accelerometer;
+	{
+		/// <summary>
+		/// The _accelerometer
+		/// </summary>
+		private Microsoft.Devices.Sensors.Accelerometer _accelerometer;
 
-        public AccelerometerInterval Interval { get; set; }
+		/// <summary>
+		/// Gets or sets the interval.
+		/// </summary>
+		/// <value>The interval.</value>
+		public AccelerometerInterval Interval { get; set; }
 
-        partial void Start()
-        {
-            this.accelerometer = new Microsoft.Devices.Sensors.Accelerometer { TimeBetweenUpdates = TimeSpan.FromMilliseconds((long)this.Interval) };
+		/// <summary>
+		/// Starts this instance.
+		/// </summary>
+		partial void Start()
+		{
+			_accelerometer = new Microsoft.Devices.Sensors.Accelerometer
+				                 {
+					                 TimeBetweenUpdates =
+						                 TimeSpan.FromMilliseconds((long)Interval)
+				                 };
 
-            this.accelerometer.CurrentValueChanged += this.AccelerometerOnCurrentValueChanged;
-            this.accelerometer.Start();
-        }
+			_accelerometer.CurrentValueChanged += AccelerometerOnCurrentValueChanged;
+			_accelerometer.Start();
+		}
 
-        partial void Stop()
-        {
-            if (this.accelerometer != null)
-            {
-                this.accelerometer.CurrentValueChanged -= this.AccelerometerOnCurrentValueChanged;
-                this.accelerometer.Stop();
-                this.accelerometer = null;
-            }
-        }
+		/// <summary>
+		/// Stops this instance.
+		/// </summary>
+		partial void Stop()
+		{
+			if (_accelerometer != null)
+			{
+				_accelerometer.CurrentValueChanged -= AccelerometerOnCurrentValueChanged;
+				_accelerometer.Stop();
+				_accelerometer = null;
+			}
+		}
 
-        private void AccelerometerOnCurrentValueChanged(object sender, SensorReadingEventArgs<AccelerometerReading> sensorReadingEventArgs)
-        {
-            this.LatestReading = sensorReadingEventArgs.SensorReading.Acceleration.AsVector3();
-            readingAvailable.Invoke(sender, this.LatestReading);
-        }
-    }
+		/// <summary>
+		/// Accelerometers the on current value changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="sensorReadingEventArgs">The sensor reading event arguments.</param>
+		private void AccelerometerOnCurrentValueChanged(
+			object sender,
+			SensorReadingEventArgs<AccelerometerReading> sensorReadingEventArgs)
+		{
+			this.LatestReading = sensorReadingEventArgs.SensorReading.Acceleration.AsVector3();
+			readingAvailable.Invoke(sender, this.LatestReading);
+		}
+	}
 }

@@ -1,116 +1,147 @@
-﻿using XLabs.Platform.WP8.Services;
-
-[assembly: Xamarin.Forms.Dependency(typeof(Network))]
-
-namespace XLabs.Platform.WP8.Services
+﻿namespace XLabs.Platform.Services
 {
 	using System;
+	using System.Net;
 	using System.Threading;
 	using System.Threading.Tasks;
 
 	using Microsoft.Phone.Net.NetworkInformation;
 
+	/// <summary>
+	/// Class Network.
+	/// </summary>
 	public class Network : INetwork
-    {
-        private event Action<NetworkStatus> reachabilityChanged;
+	{
+		/// <summary>
+		/// The _network status
+		/// </summary>
+		private readonly NetworkStatus _networkStatus;
 
-        private NetworkStatus networkStatus;
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Network"/> class.
+		/// </summary>
+		public Network()
+		{
+			_networkStatus = InternetConnectionStatus();
+		}
 
-        public Network()
-        {
-            this.networkStatus = InternetConnectionStatus();
-        }
+		/// <summary>
+		/// Internets the connection status.
+		/// </summary>
+		/// <returns>NetworkStatus.</returns>
+		public NetworkStatus InternetConnectionStatus()
+		{
+			if (DeviceNetworkInformation.IsNetworkAvailable)
+			{
+				if (DeviceNetworkInformation.IsWiFiEnabled
+				    && NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+				{
+					return NetworkStatus.ReachableViaWiFiNetwork;
+				}
 
-        public event Action<NetworkStatus> ReachabilityChanged
-        {
-            add
-            {
-                if (this.reachabilityChanged == null)
-                {
-                    DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
-                }
+				if (NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.MobileBroadbandCdma
+				    || NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.MobileBroadbandGsm)
+				{
+					return NetworkStatus.ReachableViaCarrierDataNetwork;
+				}
+			}
 
-                this.reachabilityChanged += value;
-            }
+			return NetworkStatus.NotReachable;
+		}
 
-            remove
-            {
-                this.reachabilityChanged -= value;
+		/// <summary>
+		/// Occurs when [reachability changed].
+		/// </summary>
+		private event Action<NetworkStatus> reachabilityChanged;
 
-                if (this.reachabilityChanged == null)
-                {
-                    DeviceNetworkInformation.NetworkAvailabilityChanged -= DeviceNetworkInformation_NetworkAvailabilityChanged;
-                }
-            }
-        }
+		/// <summary>
+		/// Occurs when [reachability changed].
+		/// </summary>
+		public event Action<NetworkStatus> ReachabilityChanged
+		{
+			add
+			{
+				if (reachabilityChanged == null)
+				{
+					DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformationNetworkAvailabilityChanged;
+				}
 
-        public NetworkStatus InternetConnectionStatus()
-        {
-            if (DeviceNetworkInformation.IsNetworkAvailable)
-            {
-                if (DeviceNetworkInformation.IsWiFiEnabled && Microsoft.Phone.Net.NetworkInformation.NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
-                {
-                    return NetworkStatus.ReachableViaWiFiNetwork;
-                }
+				reachabilityChanged += value;
+			}
 
-                if (Microsoft.Phone.Net.NetworkInformation.NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.MobileBroadbandCdma || Microsoft.Phone.Net.NetworkInformation.NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.MobileBroadbandGsm)
-                {
-                    return NetworkStatus.ReachableViaCarrierDataNetwork;
-                }
-            }
+			remove
+			{
+				reachabilityChanged -= value;
 
-            return NetworkStatus.NotReachable;
-        }
+				if (reachabilityChanged == null)
+				{
+					DeviceNetworkInformation.NetworkAvailabilityChanged -= DeviceNetworkInformationNetworkAvailabilityChanged;
+				}
+			}
+		}
 
-        public Task<bool> IsReachable(string host, TimeSpan timeout)
-        {
-            return Task<bool>.Run(() =>
-                {
-                    if (!DeviceNetworkInformation.IsNetworkAvailable)
-                    {
-                        return false;
-                    }
+		/// <summary>
+		/// Determines whether the specified host is reachable.
+		/// </summary>
+		/// <param name="host">The host.</param>
+		/// <param name="timeout">The timeout.</param>
+		public Task<bool> IsReachable(string host, TimeSpan timeout)
+		{
+			return Task.Run(
+				() =>
+					{
+						if (!DeviceNetworkInformation.IsNetworkAvailable)
+						{
+							return false;
+						}
 
-                    AutoResetEvent e = new AutoResetEvent(false);
+						var e = new AutoResetEvent(false);
 
-                    bool isReachable = false;
-                    NameResolutionCallback d = delegate(NameResolutionResult result) 
-                    {
-                        isReachable = result.NetworkErrorCode == NetworkError.Success;
-                        e.Set();
-                    };
+						var isReachable = false;
+						NameResolutionCallback d = delegate(NameResolutionResult result)
+							{
+								isReachable = result.NetworkErrorCode == NetworkError.Success;
+								e.Set();
+							};
 
-                    DeviceNetworkInformation.ResolveHostNameAsync(new System.Net.DnsEndPoint(host, 0), d, this);
+						DeviceNetworkInformation.ResolveHostNameAsync(new DnsEndPoint(host, 0), d, this);
 
+						e.WaitOne(timeout);
 
-                    e.WaitOne(timeout);
+						return isReachable;
+					});
+		}
 
-                    return isReachable;
-                });
-        }
+		/// <summary>
+		/// Determines whether [is reachable by wifi] [the specified host].
+		/// </summary>
+		/// <param name="host">The host.</param>
+		/// <param name="timeout">The timeout.</param>
+		public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
+		{
+			return (InternetConnectionStatus() == NetworkStatus.ReachableViaWiFiNetwork && await IsReachable(host, timeout));
+		}
 
-        public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
-        {
-            return (InternetConnectionStatus() == NetworkStatus.ReachableViaWiFiNetwork  &&
-                await this.IsReachable(host, timeout));
-        }
+		/// <summary>
+		/// Devices the network information network availability changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="NetworkNotificationEventArgs"/> instance containing the event data.</param>
+		private void DeviceNetworkInformationNetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
+		{
+			var status = InternetConnectionStatus();
 
-        void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
-        {
-            var status = this.InternetConnectionStatus();
+			if (status == _networkStatus)
+			{
+				return;
+			}
 
-            if (status == this.networkStatus)
-            {
-                return;
-            }
+			var handler = reachabilityChanged;
 
-            var handler = this.reachabilityChanged;
-
-            if (handler != null)
-            {
-                handler(status);
-            }
-        }
-
-    }
+			if (handler != null)
+			{
+				handler(status);
+			}
+		}
+	}
 }

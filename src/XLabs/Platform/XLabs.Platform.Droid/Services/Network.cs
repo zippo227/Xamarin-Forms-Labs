@@ -1,8 +1,4 @@
-using XLabs.Platform.Droid.Services;
-
-[assembly: Xamarin.Forms.Dependency(typeof(Network))]
-
-namespace XLabs.Platform.Droid.Services
+namespace XLabs.Platform.Services
 {
 	using System;
 	using System.Threading.Tasks;
@@ -13,72 +9,83 @@ namespace XLabs.Platform.Droid.Services
 
 	using Java.Net;
 
-	using XLabs.Platform.Services;
-
 	/// <summary>
-    /// Android <see cref="INetwork"/> implementation.
-    /// </summary>
-    public class Network : INetwork
-    {
-        public Network()
-        {
-            /* TODO: reachability changed */
-        }
+	/// Android <see cref="INetwork" /> implementation.
+	/// </summary>
+	public class Network : INetwork
+	{
+		/// <summary>
+		/// Internets the connection status.
+		/// </summary>
+		/// <returns>NetworkStatus.</returns>
+		public NetworkStatus InternetConnectionStatus()
+		{
+			var status = NetworkStatus.NotReachable;
 
-        public event Action<NetworkStatus> ReachabilityChanged;
+			var cm = (ConnectivityManager)Application.Context.GetSystemService(Context.ConnectivityService);
+			var ni = cm.ActiveNetworkInfo;
 
-        public NetworkStatus InternetConnectionStatus ()
-        {
-            NetworkStatus status = NetworkStatus.NotReachable;
+			if (ni != null && ni.IsConnectedOrConnecting)
+			{
+				var name = ni.TypeName.ToUpper();
+				if (name.Contains("WIFI"))
+				{
+					status = NetworkStatus.ReachableViaWiFiNetwork;
+				}
+				else if (name.Contains("MOBILE"))
+				{
+					status = NetworkStatus.ReachableViaCarrierDataNetwork;
+				}
+			}
 
-            ConnectivityManager cm = (ConnectivityManager) Application.Context.GetSystemService(Context.ConnectivityService);
-            NetworkInfo ni = cm.ActiveNetworkInfo;
+			return status;
+		}
 
-            if (ni != null && ni.IsConnectedOrConnecting)
-            {
-                var name = ni.TypeName.ToUpper();
-                if (name.Contains("WIFI"))
-                {
-                    status = NetworkStatus.ReachableViaWiFiNetwork;
-                }
-                else if (name.Contains("MOBILE"))
-                {
-                    status = NetworkStatus.ReachableViaCarrierDataNetwork;
-                }
-            }
+		/// <summary>
+		/// Occurs when [reachability changed].
+		/// </summary>
+		public event Action<NetworkStatus> ReachabilityChanged;
 
-            return status;
-        }
+		/// <summary>
+		/// Determines whether the specified host is reachable.
+		/// </summary>
+		/// <param name="host">The host.</param>
+		/// <param name="timeout">The timeout.</param>
+		public Task<bool> IsReachable(string host, TimeSpan timeout)
+		{
+			return Task.Run(
+				() =>
+					{
+						try
+						{
+							var address = InetAddress.GetByName(host);
 
-        public Task<bool> IsReachable(string host, TimeSpan timeout)
-        {
-            return Task.Run(() =>
-            {
-                try
-                {
-                    var address = InetAddress.GetByName(host);
+							return address != null; // && (address.IsReachable((int)timeout.TotalMilliseconds) || );
+						}
+						catch (UnknownHostException)
+						{
+							return false;
+						}
+					});
+		}
 
-                    return address != null;// && (address.IsReachable((int)timeout.TotalMilliseconds) || );
-                }
-                catch (Java.Net.UnknownHostException)
-                {
-                    return false;
-                }
-            });
-        }
+		//        public bool CanPing(string host)
+		//        {
+		//            Process p1 = Java.Lang.Runtime.GetRuntime().Exec(string.Format("ping -c 1 {0}", host));
+		//
+		//
+		//            int returnVal = p1.();
+		//            boolean reachable = (returnVal==0);
+		//        }
 
-//        public bool CanPing(string host)
-//        {
-//            Process p1 = Java.Lang.Runtime.GetRuntime().Exec(string.Format("ping -c 1 {0}", host));
-//
-//
-//            int returnVal = p1.();
-//            boolean reachable = (returnVal==0);
-//        }
-
-        public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
-        {
-            return this.InternetConnectionStatus() == NetworkStatus.ReachableViaWiFiNetwork && await this.IsReachable(host, timeout);
-        }
-    }
+		/// <summary>
+		/// Determines whether [is reachable by wifi] [the specified host].
+		/// </summary>
+		/// <param name="host">The host.</param>
+		/// <param name="timeout">The timeout.</param>
+		public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
+		{
+			return InternetConnectionStatus() == NetworkStatus.ReachableViaWiFiNetwork && await IsReachable(host, timeout);
+		}
+	}
 }

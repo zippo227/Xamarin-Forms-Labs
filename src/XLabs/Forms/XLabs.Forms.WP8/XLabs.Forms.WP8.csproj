@@ -7,7 +7,7 @@
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XLabs.Forms.WP8</RootNamespace>
+    <RootNamespace>XLabs.Forms</RootNamespace>
     <AssemblyName>XLabs.Forms.WP8</AssemblyName>
     <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
@@ -16,6 +16,9 @@
     <ValidateXaml>true</ValidateXaml>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\Xamarin.Forms.Labs\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>18e0e934</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -81,11 +84,84 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\XLabs.Forms\services\FontManager.designer.cs">
+      <Link>Services\FontManager.designer.cs</Link>
+      <DependentUpon>FontManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\FontExtensions.cs" />
+    <Compile Include="Extensions\PageExtensions.cs" />
+    <Compile Include="Services\FontManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
+      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Name>XLabs.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Platform\XLabs.Platform.WP8\XLabs.Platform.WP8.csproj">
+      <Project>{c721d749-63d9-4da4-acd4-8d028ad0a3d0}</Project>
+      <Name>XLabs.Platform.WP8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Platform\XLabs.Platform\XLabs.Platform.csproj">
+      <Project>{2a4d9dd4-326c-4824-aa3c-a9ed45cc898c}</Project>
+      <Name>XLabs.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XLabs.Core\XLabs.Core.csproj">
+      <Project>{15d9c404-f7e2-49f0-acc9-63c4c008c860}</Project>
+      <Name>XLabs.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XLabs.Forms\XLabs.Forms.csproj">
+      <Project>{dc0bdd11-9352-44e4-bceb-8ae56794bb41}</Project>
+      <Name>XLabs.Forms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Toolkit.Content\ApplicationBar.Select.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Toolkit.Content\ApplicationBar.Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Toolkit.Content\ApplicationBar.Check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Toolkit.Content\ApplicationBar.Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README_FIRST.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Phone.Controls.Toolkit">
+      <HintPath>..\..\..\Xamarin.Forms.Labs\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\lib\WP80\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform.WP8">
+      <HintPath>..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\lib\WP80\Xamarin.Forms.Platform.WP8.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\lib\WP80\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <ProjectExtensions />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+  </Target>
+  <Import Project="..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

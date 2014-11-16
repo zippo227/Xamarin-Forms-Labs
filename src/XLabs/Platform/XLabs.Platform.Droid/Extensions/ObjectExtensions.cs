@@ -1,4 +1,4 @@
-﻿namespace XLabs.Platform.Droid.Extensions
+﻿namespace XLabs.Platform.Extensions
 {
 	using Android.App;
 	using Android.Content;
@@ -28,6 +28,11 @@
             }
         }
 
+		/// <summary>
+		/// Starts the activity for result.
+		/// </summary>
+		/// <param name="o">The o.</param>
+		/// <param name="intent">The intent.</param>
         public static void StartActivityForResult(this object o, Intent intent)
         {
             var context = o as Context;

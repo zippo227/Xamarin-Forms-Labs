@@ -6,9 +6,12 @@
     <ProjectGuid>{0809F6EE-7FB2-4995-8D01-0E6C7E1E79B4}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>XLabs.Forms.iOS</RootNamespace>
+    <RootNamespace>XLabs.Forms</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>XLabsFormsiOS</AssemblyName>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\Xamarin.Forms.Labs\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>8b63e09e</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,12 +35,31 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\XLabs.Forms\services\FontManager.designer.cs">
+      <Link>Services\FontManager.designer.cs</Link>
+      <DependentUpon>FontManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\LabelExtensions.cs" />
+    <Compile Include="Extensions\UIImageExtensions.cs" />
+    <Compile Include="Services\FontManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Platform\XLabs.Platform.iOS\XLabs.Platform.iOS.csproj">
+      <Project>{8d5a69a1-2f3a-4fb6-9067-3a0d6a0567a0}</Project>
+      <Name>XLabs.Platform.iOS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Platform\XLabs.Platform\XLabs.Platform.csproj">
       <Project>{2A4D9DD4-326C-4824-AA3C-A9ED45CC898C}</Project>
       <Name>XLabs.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XLabs.Core\XLabs.Core.csproj">
+      <Project>{15d9c404-f7e2-49f0-acc9-63c4c008c860}</Project>
+      <Name>XLabs.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XLabs.Forms\XLabs.Forms.csproj">
+      <Project>{dc0bdd11-9352-44e4-bceb-8ae56794bb41}</Project>
+      <Name>XLabs.Forms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +67,28 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\lib\MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform.iOS">
+      <HintPath>..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+  </Target>
+  <Import Project="..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\..\Xamarin.Forms.Labs\packages\Xamarin.Forms.1.2.3.6257\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
 </Project>

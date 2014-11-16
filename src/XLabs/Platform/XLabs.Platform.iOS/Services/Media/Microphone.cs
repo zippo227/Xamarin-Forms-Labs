@@ -1,172 +1,215 @@
-namespace XLabs.Platform.iOS.Services.Media
+namespace XLabs.Platform.Services.Media
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.InteropServices;
 	using System.Threading.Tasks;
 
 	using MonoTouch.AudioToolbox;
 
-	using XLabs.Platform.Services.Media;
-
+	/// <summary>
+	/// Class Microphone.
+	/// </summary>
 	public class Microphone : IAudioStream
-    {
-        private InputAudioQueue audioQueue;
+	{
+		/// <summary>
+		/// The _audio queue
+		/// </summary>
+		private InputAudioQueue _audioQueue;
 
-        private readonly int bufferSize;
+		/// <summary>
+		/// The _buffer size
+		/// </summary>
+		private readonly int _bufferSize;
 
-        public Microphone(int bufferSize = 4098)
-        {
-            this.bufferSize = bufferSize;
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Microphone"/> class.
+		/// </summary>
+		/// <param name="bufferSize">Size of the buffer.</param>
+		public Microphone(int bufferSize = 4098)
+		{
+			_bufferSize = bufferSize;
+		}
 
-        #region IAudioStream implementation
+		/// <summary>
+		/// Starts the recording.
+		/// </summary>
+		/// <param name="rate">The rate.</param>
+		private void StartRecording(int rate)
+		{
+			if (Active)
+			{
+				Clear();
+			}
 
-        public event EventHandler<EventArgs<byte[]>> OnBroadcast;
+			SampleRate = rate;
 
-        public int SampleRate
-        {
-            get;
-            private set;
-        }
+			var audioFormat = new AudioStreamBasicDescription
+								  {
+									  SampleRate = SampleRate,
+									  Format = AudioFormatType.LinearPCM,
+									  FormatFlags =
+										  AudioFormatFlags.LinearPCMIsSignedInteger
+										  | AudioFormatFlags.LinearPCMIsPacked,
+									  FramesPerPacket = 1,
+									  ChannelsPerFrame = 1,
+									  BitsPerChannel = BitsPerSample,
+									  BytesPerPacket = 2,
+									  BytesPerFrame = 2,
+									  Reserved = 0
+								  };
 
-        public int ChannelCount
-        {
-            get
-            {
-                return 1;
-            }
-        }
+			_audioQueue = new InputAudioQueue(audioFormat);
+			_audioQueue.InputCompleted += QueueInputCompleted;
 
-        public int BitsPerSample
-        {
-            get
-            {
-                return 16;
-            }
-        }
+			var bufferByteSize = _bufferSize * audioFormat.BytesPerPacket;
 
-        public bool Active
-        {
-            get
-            {
-                return this.audioQueue != null && this.audioQueue.IsRunning;
-            }
-        }
+			IntPtr bufferPtr;
+			for (var index = 0; index < 3; index++)
+			{
+				_audioQueue.AllocateBufferWithPacketDescriptors(bufferByteSize, _bufferSize, out bufferPtr);
+				_audioQueue.EnqueueBuffer(bufferPtr, bufferByteSize, null);
+			}
 
-        public IEnumerable<int> SupportedSampleRates
-        {
-            get 
-            {
-                return new[]
-                {
-                    8000,
-                    16000,
-                    22050,
-                    41000,
-                    44100
-                };
-            }
-        }
+			_audioQueue.Start();
+		}
 
-        public Task<bool> Start(int sampleRate)
-        {
-            return Task.Run<bool>(() =>
-                {
-                    if (!this.SupportedSampleRates.Contains(sampleRate))
-                    {
-                        return false;
-                    }
+		/// <summary>
+		/// Clears this instance.
+		/// </summary>
+		private void Clear()
+		{
+			if (_audioQueue != null)
+			{
+				_audioQueue.Stop(true);
+				_audioQueue.InputCompleted -= QueueInputCompleted;
+				_audioQueue.Dispose();
+				_audioQueue = null;
+			}
+		}
 
-                    this.StartRecording(sampleRate);
+		/// <summary>
+		/// Handles iOS audio buffer queue completed message.
+		/// </summary>
+		/// <param name="sender">Sender object</param>
+		/// <param name="e">Input completed parameters.</param>
+		private void QueueInputCompleted(object sender, InputCompletedEventArgs e)
+		{
+			// return if we aren't actively monitoring audio packets
+			if (!Active)
+			{
+				return;
+			}
 
-                    return this.Active;
-                });
-        }
+			var buffer = (AudioQueueBuffer)Marshal.PtrToStructure(e.IntPtrBuffer, typeof(AudioQueueBuffer));
+			if (OnBroadcast != null)
+			{
+				var send = new byte[buffer.AudioDataByteSize];
+				Marshal.Copy(buffer.AudioData, send, 0, (int)buffer.AudioDataByteSize);
 
-        public Task Stop()
-        {
-            return Task.Run(() => this.Clear());
-        }
+				OnBroadcast(this, new EventArgs<byte[]>(send));
+			}
 
-        #endregion
+			var status = _audioQueue.EnqueueBuffer(e.IntPtrBuffer, _bufferSize, e.PacketDescriptions);
 
-        private void StartRecording(int rate)
-        {
-            if (this.Active)
-            {
-                this.Clear();
-            }
+			if (status != AudioQueueStatus.Ok)
+			{
+				// todo: 
+			}
+		}
 
-            this.SampleRate = rate;
+		#region IAudioStream implementation
 
-            var audioFormat = new AudioStreamBasicDescription()
-            {
-                SampleRate = this.SampleRate,
-                Format = AudioFormatType.LinearPCM,
-                FormatFlags = AudioFormatFlags.LinearPCMIsSignedInteger | AudioFormatFlags.LinearPCMIsPacked,
-                FramesPerPacket = 1,
-                ChannelsPerFrame = 1,
-                BitsPerChannel = this.BitsPerSample,
-                BytesPerPacket = 2,
-                BytesPerFrame = 2,
-                Reserved = 0
-            };
+		/// <summary>
+		/// Occurs when new audio has been streamed.
+		/// </summary>
+		public event EventHandler<EventArgs<byte[]>> OnBroadcast;
 
-            audioQueue = new InputAudioQueue(audioFormat);
-            audioQueue.InputCompleted += QueueInputCompleted;
+		/// <summary>
+		/// Gets the sample rate.
+		/// </summary>
+		/// <value>The sample rate in hertz.</value>
+		public int SampleRate { get; private set; }
 
-            var bufferByteSize = this.bufferSize * audioFormat.BytesPerPacket;
+		/// <summary>
+		/// Gets the channel count.
+		/// </summary>
+		/// <value>The channel count.</value>
+		public int ChannelCount
+		{
+			get
+			{
+				return 1;
+			}
+		}
 
-            IntPtr bufferPtr;
-            for (var index = 0; index < 3; index++)
-            {
-                audioQueue.AllocateBufferWithPacketDescriptors(bufferByteSize, this.bufferSize, out bufferPtr);
-                audioQueue.EnqueueBuffer(bufferPtr, bufferByteSize, null);
-            }
+		/// <summary>
+		/// Gets bits per sample.
+		/// </summary>
+		/// <value>The bits per sample.</value>
+		public int BitsPerSample
+		{
+			get
+			{
+				return 16;
+			}
+		}
 
-            this.audioQueue.Start();
-        }
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Microphone"/> is active.
+		/// </summary>
+		/// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
+		public bool Active
+		{
+			get
+			{
+				return _audioQueue != null && _audioQueue.IsRunning;
+			}
+		}
 
-        private void Clear()
-        {
-            if (this.audioQueue != null)
-            {
-                this.audioQueue.Stop(true);
-                this.audioQueue.InputCompleted -= QueueInputCompleted;
-                this.audioQueue.Dispose();
-                this.audioQueue = null;
-            }
-        }
+		/// <summary>
+		/// Gets the average data transfer rate
+		/// </summary>
+		/// <value>The average data transfer rate in bytes per second.</value>
+		public IEnumerable<int> SupportedSampleRates
+		{
+			get
+			{
+				return new[] { 8000, 16000, 22050, 41000, 44100 };
+			}
+		}
 
-        /// <summary>
-        /// Handles iOS audio buffer queue completed message.
-        /// </summary>
-        /// <param name='sender'>Sender object</param>
-        /// <param name='e'> Input completed parameters.</param>
-        private void QueueInputCompleted(object sender, InputCompletedEventArgs e)
-        {
-            // return if we aren't actively monitoring audio packets
-            if (!this.Active)
-            {
-                return;
-            }
+		/// <summary>
+		/// Starts the specified sample rate.
+		/// </summary>
+		/// <param name="sampleRate">The sample rate.</param>
+		/// <returns>Task&lt;System.Boolean&gt;.</returns>
+		public Task<bool> Start(int sampleRate)
+		{
+			return Task.Run(
+				() =>
+					{
+						if (!SupportedSampleRates.Contains(sampleRate))
+						{
+							return false;
+						}
 
-            var buffer = (AudioQueueBuffer)System.Runtime.InteropServices.Marshal.PtrToStructure(e.IntPtrBuffer, typeof(AudioQueueBuffer));
-            if (this.OnBroadcast != null)
-            {
-                var send = new byte[buffer.AudioDataByteSize];
-                System.Runtime.InteropServices.Marshal.Copy(buffer.AudioData, send, 0, (int)buffer.AudioDataByteSize);
+						StartRecording(sampleRate);
 
-                this.OnBroadcast(this, new EventArgs<byte[]>(send));
-            }
-                               
-            var status = audioQueue.EnqueueBuffer(e.IntPtrBuffer, this.bufferSize, e.PacketDescriptions);  
+						return Active;
+					});
+		}
 
-            if (status != AudioQueueStatus.Ok)
-            {
-                // todo: 
-            }
-        }
-    }
+		/// <summary>
+		/// Stops this instance.
+		/// </summary>
+		/// <returns>Task.</returns>
+		public Task Stop()
+		{
+			return Task.Run(() => Clear());
+		}
+
+		#endregion
+	}
 }

@@ -1,111 +1,111 @@
-﻿namespace XLabs.Platform.WP8.Device
+﻿namespace XLabs.Platform.Device
 {
 	using System.Windows;
 
 	using Microsoft.Phone.Info;
 
-	using XLabs.Platform.WP8.Services;
-
 	/// <summary>
-    /// Windows Phone 8 Display.
-    /// </summary>
-    public class Display : IDisplay
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Display"/> class.
-        /// </summary>
-        /// <remarks>
-        /// To get accurate display reading application should enable ID_CAP_IDENTITY_DEVICE on app manifest.
-        /// </remarks>
-        public Display()
-        {
-            object physicalScreenResolutionObject;
+	/// Windows Phone 8 Display.
+	/// </summary>
+	public class Display : IDisplay
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Display" /> class.
+		/// </summary>
+		/// <remarks>To get accurate display reading application should enable ID_CAP_IDENTITY_DEVICE on app manifest.</remarks>
+		public Display()
+		{
+			object physicalScreenResolutionObject;
 
-            if (DeviceExtendedProperties.TryGetValue("PhysicalScreenResolution", out physicalScreenResolutionObject))
-            {
-                var physicalScreenResolution = (System.Windows.Size)physicalScreenResolutionObject;
-                this.Height = (int)physicalScreenResolution.Height;
-                this.Width = (int)physicalScreenResolution.Width;
-            }
-            else
-            {
-                var scaleFactor = Application.Current.Host.Content.ScaleFactor;
-                this.Height = (int)(Application.Current.Host.Content.ActualHeight * scaleFactor);
-                this.Width = (int)(Application.Current.Host.Content.ActualWidth * scaleFactor);
-            }
+			if (DeviceExtendedProperties.TryGetValue("PhysicalScreenResolution", out physicalScreenResolutionObject))
+			{
+				var physicalScreenResolution = (Size)physicalScreenResolutionObject;
+				Height = (int)physicalScreenResolution.Height;
+				Width = (int)physicalScreenResolution.Width;
+			}
+			else
+			{
+				var scaleFactor = Application.Current.Host.Content.ScaleFactor;
+				Height = (int)(Application.Current.Host.Content.ActualHeight * scaleFactor);
+				Width = (int)(Application.Current.Host.Content.ActualWidth * scaleFactor);
+			}
 
-            object rawDpiX, rawDpiY;
+			object rawDpiX, rawDpiY;
 
-            if (DeviceExtendedProperties.TryGetValue("RawDpiX", out rawDpiX))
-            {
-                this.Xdpi = (double)rawDpiX;
-            }
+			if (DeviceExtendedProperties.TryGetValue("RawDpiX", out rawDpiX))
+			{
+				Xdpi = (double)rawDpiX;
+			}
 
-            if (DeviceExtendedProperties.TryGetValue("RawDpiY", out rawDpiY))
-            {
-                this.Ydpi = (double)rawDpiY;
-            }
+			if (DeviceExtendedProperties.TryGetValue("RawDpiY", out rawDpiY))
+			{
+				Ydpi = (double)rawDpiY;
+			}
 
-            this.FontManager = new FontManager(this);
-        }
+			FontManager = new FontManager(this);
+		}
 
-        #region IDisplay Members
+		/// <summary>
+		/// Returns a <see cref="System.String" /> that represents the current <see cref="Display" />.
+		/// </summary>
+		/// <returns>A <see cref="System.String" /> that represents the current <see cref="Display" />.</returns>
+		public override string ToString()
+		{
+			return string.Format("[Screen: Height={0}, Width={1}, Xdpi={2:0.0}, Ydpi={3:0.0}]", Height, Width, Xdpi, Ydpi);
+		}
 
-        public int Height
-        {
-            get;
-            private set;
-        }
+		#region IDisplay Members
 
-        public int Width
-        {
-            get;
-            private set;
-        }
+		/// <summary>
+		/// Gets the screen height in pixels
+		/// </summary>
+		/// <value>The height.</value>
+		public int Height { get; private set; }
 
-        public double Xdpi
-        {
-            get;
-            private set;
-        }
+		/// <summary>
+		/// Gets the screen width in pixels
+		/// </summary>
+		/// <value>The width.</value>
+		public int Width { get; private set; }
 
-        public double Ydpi
-        {
-            get;
-            private set;
-        }
+		/// <summary>
+		/// Gets the screens X pixel density per inch
+		/// </summary>
+		/// <value>The xdpi.</value>
+		public double Xdpi { get; private set; }
 
-        public IFontManager FontManager
-        {
-            get;
-            private set;
-        }
+		/// <summary>
+		/// Gets the screens Y pixel density per inch
+		/// </summary>
+		/// <value>The ydpi.</value>
+		public double Ydpi { get; private set; }
 
-        /// <summary>
-        /// Convert width in inches to runtime pixels
-        /// </summary>
-        public double WidthRequestInInches(double inches)
-        {
-            return inches * this.Xdpi * 100 / Application.Current.Host.Content.ScaleFactor;
-        }
+		/// <summary>
+		/// Gets the font manager.
+		/// </summary>
+		/// <value>The font manager.</value>
+		//public IFontManager FontManager { get; private set; }
 
-        /// <summary>
-        /// Convert height in inches to runtime pixels
-        /// </summary>
-        public double HeightRequestInInches(double inches)
-        {
-            return inches * this.Ydpi * 100 / Application.Current.Host.Content.ScaleFactor;
-        }
+		/// <summary>
+		/// Convert width in inches to runtime pixels
+		/// </summary>
+		/// <param name="inches">The inches.</param>
+		/// <returns>System.Double.</returns>
+		public double WidthRequestInInches(double inches)
+		{
+			return inches * Xdpi * 100 / Application.Current.Host.Content.ScaleFactor;
+		}
 
-        #endregion
+		/// <summary>
+		/// Convert height in inches to runtime pixels
+		/// </summary>
+		/// <param name="inches">The inches.</param>
+		/// <returns>System.Double.</returns>
+		public double HeightRequestInInches(double inches)
+		{
+			return inches * Ydpi * 100 / Application.Current.Host.Content.ScaleFactor;
+		}
 
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="Display"/>.
-        /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents the current <see cref="Display"/>.</returns>
-        public override string ToString()
-        {
-            return string.Format("[Screen: Height={0}, Width={1}, Xdpi={2:0.0}, Ydpi={3:0.0}]", Height, Width, Xdpi, Ydpi);
-        }
-    }
+		#endregion
+	}
 }

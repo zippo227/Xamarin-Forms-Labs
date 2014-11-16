@@ -1,230 +1,373 @@
-// ***********************************************************************
-// Assembly         : Xamarin.Forms.Labs.Droid
-// Author           : Sami Kallio
-// Created          : 08-30-2014
-//
-// Last Modified By : Sami Kallio
-// Last Modified On : 08-30-2014
-// ***********************************************************************
-// <copyright file="NfcDevice.cs" company="">
-//     Copyright (c) 2014 . All rights reserved.
-//
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//
-//        http://www.apache.org/licenses/LICENSE-2.0
-//
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-using XLabs.Platform.Droid.Services;
-
-[assembly: Dependency(typeof(NfcDevice))]
-
-namespace XLabs.Platform.Droid.Services
+namespace XLabs.Platform.Services
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Linq;
 
 	using Android.App;
 	using Android.Content;
 	using Android.Nfc;
+	using Android.Util;
 
+	using XLabs.Ioc;
 	using XLabs.Platform.Device;
-	using XLabs.Platform.Droid.Device;
-	using XLabs.Platform.Services;
 
-	public class NfcDevice : Java.Lang.Object, INfcDevice, NfcAdapter.ICreateNdefMessageCallback
-    {
-        private readonly NfcAdapter device;
-        private event EventHandler<EventArgs<INfcDevice>> inRange;
-        private event EventHandler<EventArgs<INfcDevice>> outOfRange;
-        private NfcMonitor monitor;
+	using Object = Java.Lang.Object;
 
-        private Dictionary<Guid, NdefRecord> published = new Dictionary<Guid, NdefRecord>();
+	/// <summary>
+	///     Class NfcDevice.
+	/// </summary>
+	public class NfcDevice : Object, INfcDevice, NfcAdapter.ICreateNdefMessageCallback
+	{
+		/// <summary>
+		///     The _monitor
+		/// </summary>
+		private NfcMonitor _monitor;
 
-        public NfcDevice() : this(Manager.DefaultAdapter)
-        {
-        }
+		/// <summary>
+		///     The _device
+		/// </summary>
+		private readonly NfcAdapter _device;
 
-        public NfcDevice(NfcAdapter adapter)
-        {
-            this.device = adapter;
+		/// <summary>
+		///     The _published
+		/// </summary>
+		private readonly Dictionary<Guid, NdefRecord> _published = new Dictionary<Guid, NdefRecord>();
 
-            if (this.device != null)
-            {
-                var app = Resolver.Resolve<IXFormsApp>();
-                var tapp = app as IXFormsApp<XFormsApplicationDroid>;
+		/// <summary>
+		///     Initializes a new instance of the <see cref="NfcDevice" /> class.
+		/// </summary>
+		public NfcDevice()
+			: this(Manager.DefaultAdapter)
+		{
+		}
 
-                this.device.SetNdefPushMessageCallback(this, tapp.AppContext);
-            }
-            else
-            {
-                Android.Util.Log.Info("INfcDevice", "NFC adapter is null. Either device does not support NFC or the application does not have NFC priviledges.");
-            }
-        }
+		/// <summary>
+		///     Initializes a new instance of the <see cref="NfcDevice" /> class.
+		/// </summary>
+		/// <param name="adapter">The adapter.</param>
+		public NfcDevice(NfcAdapter adapter)
+		{
+			_device = adapter;
 
-        public static NfcManager Manager
-        {
-            get
-            {
-                return (NfcManager)Application.Context.GetSystemService(Context.NfcService);
-            }
-        }
+			if (_device != null)
+			{
+				var app = Resolver.Resolve<IXFormsApp>();
+				var tapp = app as IXFormsApp<XFormsApplicationDroid>;
 
-        public static bool SupportsNfc
-        {
-            get
-            {
-                return Manager.DefaultAdapter != null;
-            }
-        }
+				_device.SetNdefPushMessageCallback(this, tapp.AppContext);
+			}
+			else
+			{
+				Log.Info(
+					"INfcDevice",
+					"NFC adapter is null. Either device does not support NFC or the application does not have NFC priviledges.");
+			}
+		}
 
-        #region INfcDevice Members
-        /// TODO: figure out if the NFC device has an ID or name. 
-        /// The below method will not identify external NFC devices.
-        public string DeviceId 
-        { 
-            get
-            {
-                var d = Resolver.Resolve<IDevice>();
+		/// <summary>
+		///     Gets the manager.
+		/// </summary>
+		/// <value>The manager.</value>
+		public static NfcManager Manager
+		{
+			get
+			{
+				return (NfcManager)Application.Context.GetSystemService(Context.NfcService);
+			}
+		}
 
-                if (this.device == null || d == null)
-                {
-                    return "Unknown";
-                }
+		/// <summary>
+		///     Gets a value indicating whether [supports NFC].
+		/// </summary>
+		/// <value><c>true</c> if [supports NFC]; otherwise, <c>false</c>.</value>
+		public static bool SupportsNfc
+		{
+			get
+			{
+				return Manager.DefaultAdapter != null;
+			}
+		}
 
-                return d.Name;
-            }
-        }
+		#region ICreateNdefMessageCallback Members
 
-        public bool IsEnabled
-        {
-            get { return this.device != null && this.device.IsEnabled; }
-        }
+		/// <summary>
+		///     Creates the ndef message.
+		/// </summary>
+		/// <param name="e">The e.</param>
+		/// <returns>NdefMessage.</returns>
+		public NdefMessage CreateNdefMessage(NfcEvent e)
+		{
+			InRange.Invoke<INfcDevice>(this, this);
+			return new NdefMessage(_published.Values.ToArray());
+		}
 
-        public event EventHandler<EventArgs<INfcDevice>> DeviceInRange
-        {
-            add
-            {
-                if (this.inRange == null)
-                {
-                    this.RegisterNfcCallback();
-                }
+		#endregion
 
-                this.inRange += value;
-            }
-            remove
-            {
-                this.inRange -= value;
+		/// <summary>
+		///     Occurs when [in range].
+		/// </summary>
+		private event EventHandler<EventArgs<INfcDevice>> InRange;
 
-                if (this.inRange == null)
-                {
-                    this.UnregisterNfcCallback();
-                }
-            }
-        }
+		/// <summary>
+		///     Occurs when [out of range].
+		/// </summary>
+		private event EventHandler<EventArgs<INfcDevice>> OutOfRange;
 
-        public event EventHandler<EventArgs<INfcDevice>> DeviceOutOfRange
-        {
-            add
-            {
-                if (this.outOfRange == null)
-                {
-                    //this.device.DeviceDeparted += DeviceDeparted;
-                }
+		/// <summary>
+		///     Registers the NFC callback.
+		/// </summary>
+		private void RegisterNfcCallback()
+		{
+			UnregisterNfcCallback();
+			_monitor = new NfcMonitor(this);
+			_monitor.Start();
+		}
 
-                this.outOfRange += value;
-            }
+		/// <summary>
+		///     Unregisters the NFC callback.
+		/// </summary>
+		private void UnregisterNfcCallback()
+		{
+			if (_monitor != null)
+			{
+				_monitor.Stop();
+				_monitor = null;
+			}
+		}
 
-            remove
-            {
-                this.outOfRange -= value;
+		/// <summary>
+		///     Class NfcMonitor.
+		/// </summary>
+		private class NfcMonitor : BroadcastMonitor
+		{
+			/// <summary>
+			///     The _device reference
+			/// </summary>
+			private readonly WeakReference<NfcDevice> _deviceReference;
 
-                if (this.outOfRange == null)
-                {
-                    //this.device.DeviceDeparted -= DeviceDeparted;
-                }
-            }
-        }
+			/// <summary>
+			///     Initializes a new instance of the <see cref="NfcMonitor" /> class.
+			/// </summary>
+			/// <param name="device">The device.</param>
+			public NfcMonitor(NfcDevice device)
+			{
+				_deviceReference = new WeakReference<NfcDevice>(device);
+			}
 
-        public Guid PublishUri(Uri uri)
-        {
-            var key = Guid.NewGuid();
+			/// <summary>
+			///     Gets the intent filter to use for monitoring.
+			/// </summary>
+			/// <value>The filter.</value>
+			protected override IntentFilter Filter
+			{
+				get
+				{
+					var filter = new IntentFilter(NfcAdapter.ActionTechDiscovered);
+					filter.AddAction(NfcAdapter.ActionTagDiscovered);
+					filter.AddAction(NfcAdapter.ActionNdefDiscovered);
 
-            this.published.Add(key, NdefRecord.CreateUri(uri.AbsoluteUri));
+					return filter;
+				}
+			}
 
-            return key;
-        }
+			/// <summary>
+			///     This method is called when the BroadcastReceiver is receiving an Intent
+			///     broadcast.
+			/// </summary>
+			/// <param name="context">The Context in which the receiver is running.</param>
+			/// <param name="intent">The Intent being received.</param>
+			/// <since version="Added in API level 1" />
+			/// <remarks>
+			///     <para tool="javadoc-to-mdoc">
+			///         This method is called when the BroadcastReceiver is receiving an Intent
+			///         broadcast.  During this time you can use the other methods on
+			///         BroadcastReceiver to view/modify the current result values.  This method
+			///         is always called within the main thread of its process, unless you
+			///         explicitly asked for it to be scheduled on a different thread using
+			///         <c>
+			///             <see
+			///                 cref="M:Android.Content.Context.RegisterReceiver(Android.Content.BroadcastReceiver, Android.Content.IntentFilter, Android.Content.IntentFilter, Android.Content.IntentFilter)" />
+			///         </c>
+			///         . When it runs on the main
+			///         thread you should
+			///         never perform long-running operations in it (there is a timeout of
+			///         10 seconds that the system allows before considering the receiver to
+			///         be blocked and a candidate to be killed). You cannot launch a popup dialog
+			///         in your implementation of onReceive().
+			///     </para>
+			///     <para tool="javadoc-to-mdoc">
+			///         <format type="text/html">
+			///             <b>
+			///                 If this BroadcastReceiver was launched through a &lt;receiver&gt; tag,
+			///                 then the object is no longer alive after returning from this
+			///                 function.
+			///             </b>
+			///         </format>
+			///         This means you should not perform any operations that
+			///         return a result to you asynchronously -- in particular, for interacting
+			///         with services, you should use
+			///         <c>
+			///             <see cref="M:Android.Content.Context.StartService(Android.Content.Intent)" />
+			///         </c>
+			///         instead of
+			///         <c>
+			///             <see
+			///                 cref="M:Android.Content.Context.BindService(Android.Content.Intent, Android.Content.IServiceConnection, Android.Content.IServiceConnection)" />
+			///         </c>
+			///         .  If you wish
+			///         to interact with a service that is already running, you can use
+			///         <c>
+			///             <see
+			///                 cref="M:Android.Content.BroadcastReceiver.PeekService(Android.Content.Context, Android.Content.Intent)" />
+			///         </c>
+			///         .
+			///     </para>
+			///     <para tool="javadoc-to-mdoc">
+			///         The Intent filters used in
+			///         <c>
+			///             <see
+			///                 cref="M:Android.Content.Context.RegisterReceiver(Android.Content.BroadcastReceiver, Android.Content.IntentFilter)" />
+			///         </c>
+			///         and in application manifests are <i>not</i> guaranteed to be exclusive. They
+			///         are hints to the operating system about how to find suitable recipients. It is
+			///         possible for senders to force delivery to specific recipients, bypassing filter
+			///         resolution.  For this reason,
+			///         <c>
+			///             <see cref="M:Android.Content.BroadcastReceiver.OnReceive(Android.Content.Context, Android.Content.Intent)" />
+			///         </c>
+			///         implementations should respond only to known actions, ignoring any unexpected
+			///         Intents that they may receive.
+			///     </para>
+			///     <para tool="javadoc-to-mdoc">
+			///         <format type="text/html">
+			///             <a
+			///                 href="http://developer.android.com/reference/android/content/BroadcastReceiver.html#onReceive(android.content.Context, android.content.Intent)"
+			///                 target="_blank">
+			///                 [Android Documentation]
+			///             </a>
+			///         </format>
+			///     </para>
+			/// </remarks>
+			public override void OnReceive(Context context, Intent intent)
+			{
+				Debug.WriteLine(intent.Action);
+			}
+		}
 
-        public void Unpublish(Guid id)
-        {
-            if (this.published.ContainsKey(id))
-            {
-                this.published.Remove(id);
-            }
-        }
-        #endregion
+		#region INfcDevice Members
 
-        private void RegisterNfcCallback()
-        {
-            UnregisterNfcCallback();
-            this.monitor = new NfcMonitor(this);
-            this.monitor.Start();
-        }
+		/// <summary>
+		///     Gets the device identifier.
+		/// </summary>
+		/// <value>The device identifier.</value>
+		/// TODO: figure out if the NFC device has an ID or name.
+		/// The below method will not identify external NFC devices.
+		public string DeviceId
+		{
+			get
+			{
+				var d = Resolver.Resolve<IDevice>();
 
-        private void UnregisterNfcCallback()
-        {
-            if (this.monitor != null)
-            {
-                this.monitor.Stop();
-                this.monitor = null;
-            }
-        }
+				if (_device == null || d == null)
+				{
+					return "Unknown";
+				}
 
-        private class NfcMonitor : BroadcastMonitor
-        {
-            private readonly WeakReference<NfcDevice> deviceReference;
+				return d.Name;
+			}
+		}
 
-            public NfcMonitor(NfcDevice device)
-            {
-                deviceReference = new WeakReference<NfcDevice>(device);
-            }
+		/// <summary>
+		///     Gets a value indicating whether this instance is enabled.
+		/// </summary>
+		/// <value><c>true</c> if this instance is enabled; otherwise, <c>false</c>.</value>
+		public bool IsEnabled
+		{
+			get
+			{
+				return _device != null && _device.IsEnabled;
+			}
+		}
 
-            protected override IntentFilter Filter
-            {
-                get 
-                {
-                    var filter = new IntentFilter(NfcAdapter.ActionTechDiscovered);
-                    filter.AddAction(NfcAdapter.ActionTagDiscovered);
-                    filter.AddAction(NfcAdapter.ActionNdefDiscovered);
-                    
-                    return filter;
-                }
-            }
+		/// <summary>
+		///     Occurs when [device in range].
+		/// </summary>
+		public event EventHandler<EventArgs<INfcDevice>> DeviceInRange
+		{
+			add
+			{
+				if (InRange == null)
+				{
+					RegisterNfcCallback();
+				}
 
-            public override void OnReceive(Context context, Intent intent)
-            {
-                System.Diagnostics.Debug.WriteLine(intent.Action);
-            }
-        }
+				InRange += value;
+			}
+			remove
+			{
+				InRange -= value;
 
-        #region ICreateNdefMessageCallback Members
+				if (InRange == null)
+				{
+					UnregisterNfcCallback();
+				}
+			}
+		}
 
-        public NdefMessage CreateNdefMessage(NfcEvent e)
-        {
-            this.inRange.Invoke<INfcDevice>(this, this);
-            return new NdefMessage(this.published.Values.ToArray());
-        }
+		/// <summary>
+		///     Occurs when [device out of range].
+		/// </summary>
+		public event EventHandler<EventArgs<INfcDevice>> DeviceOutOfRange
+		{
+			add
+			{
+				if (OutOfRange == null)
+				{
+					//this.device.DeviceDeparted += DeviceDeparted;
+				}
 
-        #endregion
-    }
+				OutOfRange += value;
+			}
+
+			remove
+			{
+				OutOfRange -= value;
+
+				if (OutOfRange == null)
+				{
+					//this.device.DeviceDeparted -= DeviceDeparted;
+				}
+			}
+		}
+
+		/// <summary>
+		///     Publishes the URI.
+		/// </summary>
+		/// <param name="uri">The URI.</param>
+		/// <returns>Guid.</returns>
+		public Guid PublishUri(Uri uri)
+		{
+			var key = Guid.NewGuid();
+
+			_published.Add(key, NdefRecord.CreateUri(uri.AbsoluteUri));
+
+			return key;
+		}
+
+		/// <summary>
+		///     Unpublishes the specified identifier.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		public void Unpublish(Guid id)
+		{
+			if (_published.ContainsKey(id))
+			{
+				_published.Remove(id);
+			}
+		}
+
+		#endregion
+	}
 }

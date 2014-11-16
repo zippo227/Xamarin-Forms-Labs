@@ -1,4 +1,4 @@
-﻿namespace XLabs.Platform.Droid.Device
+﻿namespace XLabs.Platform.Device
 {
 	using System.IO;
 	using System.Threading.Tasks;
@@ -8,77 +8,126 @@
 
 	using Java.Util;
 
-	using XLabs.Platform.Device;
+	using IOException = Java.IO.IOException;
 
+	/// <summary>
+	///     Class AndroidBluetoothDevice.
+	/// </summary>
 	public class AndroidBluetoothDevice : IBluetoothDevice
-    {
-        private const string BtUuid = "00001101-0000-1000-8000-00805F9B34FB";
+	{
+		/// <summary>
+		///     The bt UUID
+		/// </summary>
+		private const string BT_UUID = "00001101-0000-1000-8000-00805F9B34FB";
 
-        private readonly BluetoothDevice device;
-        private BluetoothSocket socket;
-        private readonly UUID uuid;
+		/// <summary>
+		///     The socket
+		/// </summary>
+		private BluetoothSocket _socket;
 
-        public AndroidBluetoothDevice(BluetoothDevice device)
-        {
-            this.device = device;
-            this.uuid = UUID.RandomUUID();
-        }
+		/// <summary>
+		///     The device
+		/// </summary>
+		private readonly BluetoothDevice _device;
 
-        #region IBluetoothDevice implementation
+		/// <summary>
+		///     The UUID
+		/// </summary>
+		private readonly UUID _uuid;
 
-        public async Task Connect()
-        {
-            if (this.socket == null)
-            {
-                this.socket = this.device.CreateRfcommSocketToServiceRecord(this.uuid);
-            }
-            
-            await this.socket.ConnectAsync();
-        }
+		/// <summary>
+		///     Initializes a new instance of the <see cref="AndroidBluetoothDevice" /> class.
+		/// </summary>
+		/// <param name="device">The device.</param>
+		public AndroidBluetoothDevice(BluetoothDevice device)
+		{
+			_device = device;
+			_uuid = UUID.RandomUUID();
+		}
 
-        public void Disconnect()
-        {
-            if (this.socket != null)
-            {
-                try
-                {
-                    this.socket.Close();
-                    this.socket = null;
-                }
-                catch (Java.IO.IOException ex)
-                {
-                    Log.Error("BluetoothSocket.Close()", ex.Message);
-                }
-            }
-        }
+		#region IBluetoothDevice implementation
 
-        public string Name
-        {
-            get { return this.device.Name; }
-        }
+		/// <summary>
+		///     Connects this instance.
+		/// </summary>
+		/// <returns>Task.</returns>
+		public async Task Connect()
+		{
+			if (_socket == null)
+			{
+				_socket = _device.CreateRfcommSocketToServiceRecord(_uuid);
+			}
 
-        public string Address
-        {
-            get { return this.device.Address; }
-        }
+			await _socket.ConnectAsync();
+		}
 
-        public Stream InputStream 
-        { 
-            get 
-            { 
-                return (this.socket == null) ? null : this.socket.InputStream; 
-            } 
-        }
+		/// <summary>
+		///     Disconnects this instance.
+		/// </summary>
+		public void Disconnect()
+		{
+			if (_socket != null)
+			{
+				try
+				{
+					_socket.Close();
+					_socket = null;
+				}
+				catch (IOException ex)
+				{
+					Log.Error("BluetoothSocket.Close()", ex.Message);
+				}
+			}
+		}
 
-        public Stream OutputStream 
-        { 
-            get 
-            { 
-                return (this.socket == null) ? null : this.socket.OutputStream; 
-            } 
-        }
+		/// <summary>
+		///     Gets the name.
+		/// </summary>
+		/// <value>The name.</value>
+		public string Name
+		{
+			get
+			{
+				return _device.Name;
+			}
+		}
 
-        #endregion
-        
-    }
+		/// <summary>
+		///     Gets the address.
+		/// </summary>
+		/// <value>The address.</value>
+		public string Address
+		{
+			get
+			{
+				return _device.Address;
+			}
+		}
+
+		/// <summary>
+		///     Gets the input stream.
+		/// </summary>
+		/// <value>The input stream.</value>
+		public Stream InputStream
+		{
+			get
+			{
+				return (_socket == null) ? null : _socket.InputStream;
+			}
+		}
+
+		/// <summary>
+		///     Gets the output stream.
+		/// </summary>
+		/// <value>The output stream.</value>
+		public Stream OutputStream
+		{
+			get
+			{
+				return (_socket == null) ? null : _socket.OutputStream;
+			}
+		}
+
+		#endregion
+	}
 }

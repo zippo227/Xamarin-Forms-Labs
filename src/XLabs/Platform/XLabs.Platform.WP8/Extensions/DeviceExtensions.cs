@@ -1,12 +1,24 @@
-﻿namespace XLabs.Platform.WP8.Extensions
+﻿namespace XLabs.Platform.Extensions
 {
 	using System.Threading.Tasks;
 
+	using XLabs.Platform.Device;
+	using XLabs.Platform.Services.GeoLocation;
+
+	/// <summary>
+	///     Class DeviceExtensions.
+	/// </summary>
 	public static class DeviceExtensions
-    {
-        public static Task<bool> DriveTo(this IDevice device, Position position)
-        {
-            return device.LaunchUriAsync(position.DriveToLink());
-        }
-    }
+	{
+		/// <summary>
+		///     Drives to.
+		/// </summary>
+		/// <param name="device">The device.</param>
+		/// <param name="position">The position.</param>
+		/// <returns>Task&lt;System.Boolean&gt;.</returns>
+		public static Task<bool> DriveTo(this IDevice device, Position position)
+		{
+			return device.LaunchUriAsync(position.DriveToLink());
+		}
+	}
 }

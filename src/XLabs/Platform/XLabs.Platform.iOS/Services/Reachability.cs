@@ -1,4 +1,4 @@
-namespace XLabs.Platform.iOS.Services
+namespace XLabs.Platform.Services
 {
 	using System;
 	using System.Net;
@@ -6,203 +6,191 @@ namespace XLabs.Platform.iOS.Services
 	using MonoTouch.CoreFoundation;
 	using MonoTouch.SystemConfiguration;
 
-	using XLabs.Platform.Services;
-
 	/// <summary>
-    /// The reachability utility class.
-    /// </summary>
-    public static class Reachability
-    {
-        private static NetworkReachability adHocWiFiNetworkReachability;
-        private static NetworkReachability defaultRouteReachability;
-        private static NetworkReachability remoteHostReachability;
+	/// The reachability utility class.
+	/// </summary>
+	public static class Reachability
+	{
+		/// <summary>
+		/// The ad hoc wi fi network reachability
+		/// </summary>
+		private static NetworkReachability adHocWiFiNetworkReachability;
 
+		/// <summary>
+		/// The default route reachability
+		/// </summary>
+		private static NetworkReachability defaultRouteReachability;
 
-        /// <summary>
-        /// Checks if network is reachable without requiring connection.
-        /// </summary>
-        /// <param name="flags">
-        /// The reachability flags.
-        /// </param>
-        /// <returns>
-        /// True if reachable, false if connection is required.
-        /// </returns>
-        public static bool IsReachableWithoutRequiringConnection(NetworkReachabilityFlags flags)
-        {
-            return (flags & NetworkReachabilityFlags.Reachable) != 0 &&
-                (((flags & NetworkReachabilityFlags.IsWWAN) != 0) || (flags & NetworkReachabilityFlags.ConnectionRequired) == 0);
-        }
+		/// <summary>
+		/// The remote host reachability
+		/// </summary>
+		private static NetworkReachability remoteHostReachability;
 
-        /// <summary>
-        /// Determines if host is reachable.
-        /// </summary>
-        /// <param name="host">
-        /// The host address.
-        /// </param>
-        /// <returns>
-        /// True if host is reachable, otherwise false.
-        /// </returns>
-        public static bool IsHostReachable(string host)
-        {
-            if (string.IsNullOrEmpty(host))
-            {
-                return false;
-            }
+		/// <summary>
+		/// Checks if network is reachable without requiring connection.
+		/// </summary>
+		/// <param name="flags">The reachability flags.</param>
+		/// <returns>True if reachable, false if connection is required.</returns>
+		public static bool IsReachableWithoutRequiringConnection(NetworkReachabilityFlags flags)
+		{
+			return (flags & NetworkReachabilityFlags.Reachable) != 0
+			       && (((flags & NetworkReachabilityFlags.IsWWAN) != 0)
+			           || (flags & NetworkReachabilityFlags.ConnectionRequired) == 0);
+		}
 
-            using (var r = new NetworkReachability(host))
-            {
-                NetworkReachabilityFlags flags;
+		/// <summary>
+		/// Determines if host is reachable.
+		/// </summary>
+		/// <param name="host">The host address.</param>
+		/// <returns>True if host is reachable, otherwise false.</returns>
+		public static bool IsHostReachable(string host)
+		{
+			if (string.IsNullOrEmpty(host))
+			{
+				return false;
+			}
 
-                if (r.TryGetFlags(out flags))
-                {
-                    return IsReachableWithoutRequiringConnection(flags);
-                }
-            }
-            return false;
-        }
+			using (var r = new NetworkReachability(host))
+			{
+				NetworkReachabilityFlags flags;
 
-        /// <summary>
-        /// The reachability changed event.
-        /// </summary>
-        /// <remarks>
-        /// Raised every time there is an interesting reachable event, 
-        /// we do not even pass the info as to what changed, and 
-        /// we lump all three status we probe into one.
-        /// </remarks>
-        public static event EventHandler ReachabilityChanged;
+				if (r.TryGetFlags(out flags))
+				{
+					return IsReachableWithoutRequiringConnection(flags);
+				}
+			}
+			return false;
+		}
 
-        /// <summary>
-        /// Determines if AdHoc WiFi network is available.
-        /// </summary>
-        /// <param name="flags">
-        /// Optional extra network reachability flags.
-        /// </param>
-        /// <returns>
-        /// Returns true if it is possible to reach the AdHoc WiFi network, otherwise false.
-        /// </returns>
-        public static bool IsAdHocWiFiNetworkAvailable(out NetworkReachabilityFlags flags)
-        {
-            if (adHocWiFiNetworkReachability == null)
-            {
-                adHocWiFiNetworkReachability = new NetworkReachability(new IPAddress(new byte[] { 169, 254, 0, 0 }));
-                adHocWiFiNetworkReachability.SetCallback(OnChange);
-                adHocWiFiNetworkReachability.Schedule(CFRunLoop.Current, CFRunLoop.ModeDefault);
-            }
+		/// <summary>
+		/// The reachability changed event.
+		/// </summary>
+		/// <remarks>Raised every time there is an interesting reachable event,
+		/// we do not even pass the info as to what changed, and
+		/// we lump all three status we probe into one.</remarks>
+		public static event EventHandler ReachabilityChanged;
 
-            if (!adHocWiFiNetworkReachability.TryGetFlags(out flags))
-                return false;
+		/// <summary>
+		/// Determines if AdHoc WiFi network is available.
+		/// </summary>
+		/// <param name="flags">Optional extra network reachability flags.</param>
+		/// <returns>Returns true if it is possible to reach the AdHoc WiFi network, otherwise false.</returns>
+		public static bool IsAdHocWiFiNetworkAvailable(out NetworkReachabilityFlags flags)
+		{
+			if (adHocWiFiNetworkReachability == null)
+			{
+				adHocWiFiNetworkReachability = new NetworkReachability(new IPAddress(new byte[] { 169, 254, 0, 0 }));
+				adHocWiFiNetworkReachability.SetCallback(OnChange);
+				adHocWiFiNetworkReachability.Schedule(CFRunLoop.Current, CFRunLoop.ModeDefault);
+			}
 
-            return IsReachableWithoutRequiringConnection(flags);
-        }
+			if (!adHocWiFiNetworkReachability.TryGetFlags(out flags))
+			{
+				return false;
+			}
 
-        /// <summary>
-        /// The remote host status.
-        /// </summary>
-        /// <param name="hostName">
-        /// The host name.
-        /// </param>
-        /// <returns>
-        /// The <see cref="NetworkStatus"/>.
-        /// </returns>
-        public static NetworkStatus RemoteHostStatus(string hostName)
-        {
-            NetworkReachabilityFlags flags;
-            bool reachable;
+			return IsReachableWithoutRequiringConnection(flags);
+		}
 
-            if (remoteHostReachability == null)
-            {
-                remoteHostReachability = new NetworkReachability(hostName);
+		/// <summary>
+		/// The remote host status.
+		/// </summary>
+		/// <param name="hostName">The host name.</param>
+		/// <returns>The <see cref="NetworkStatus" />.</returns>
+		public static NetworkStatus RemoteHostStatus(string hostName)
+		{
+			NetworkReachabilityFlags flags;
+			bool reachable;
 
-                // Need to probe before we queue, or we wont get any meaningful values
-                // this only happens when you create NetworkReachability from a hostname
-                reachable = remoteHostReachability.TryGetFlags(out flags);
+			if (remoteHostReachability == null)
+			{
+				remoteHostReachability = new NetworkReachability(hostName);
 
-                remoteHostReachability.SetCallback(OnChange);
-                remoteHostReachability.Schedule(CFRunLoop.Current, CFRunLoop.ModeDefault);
-            }
-            else
-            {
-                reachable = remoteHostReachability.TryGetFlags(out flags);
-            }
+				// Need to probe before we queue, or we wont get any meaningful values
+				// this only happens when you create NetworkReachability from a hostname
+				reachable = remoteHostReachability.TryGetFlags(out flags);
 
-            if (!reachable)
-            {
-                return NetworkStatus.NotReachable;
-            }
+				remoteHostReachability.SetCallback(OnChange);
+				remoteHostReachability.Schedule(CFRunLoop.Current, CFRunLoop.ModeDefault);
+			}
+			else
+			{
+				reachable = remoteHostReachability.TryGetFlags(out flags);
+			}
 
-            if (!IsReachableWithoutRequiringConnection(flags))
-            {
-                return NetworkStatus.NotReachable;
-            }
+			if (!reachable)
+			{
+				return NetworkStatus.NotReachable;
+			}
 
-            return (flags & NetworkReachabilityFlags.IsWWAN) != 0 ? 
-                NetworkStatus.ReachableViaCarrierDataNetwork : 
-                NetworkStatus.ReachableViaWiFiNetwork;
-        }
+			if (!IsReachableWithoutRequiringConnection(flags))
+			{
+				return NetworkStatus.NotReachable;
+			}
 
-        /// <summary>
-        /// The internet connection status.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="NetworkStatus"/>.
-        /// </returns>
-        public static NetworkStatus InternetConnectionStatus()
-        {
-            NetworkReachabilityFlags flags;
+			return (flags & NetworkReachabilityFlags.IsWWAN) != 0
+				       ? NetworkStatus.ReachableViaCarrierDataNetwork
+				       : NetworkStatus.ReachableViaWiFiNetwork;
+		}
 
-            if ((IsNetworkAvailable(out flags) && ((flags & NetworkReachabilityFlags.IsDirect) != 0)) || flags == 0)
-            {
-                return NetworkStatus.NotReachable;
-            }
-            
-            return (flags & NetworkReachabilityFlags.IsWWAN) != 0 ? 
-                NetworkStatus.ReachableViaCarrierDataNetwork : 
-                NetworkStatus.ReachableViaWiFiNetwork;
-        }
+		/// <summary>
+		/// The internet connection status.
+		/// </summary>
+		/// <returns>The <see cref="NetworkStatus" />.</returns>
+		public static NetworkStatus InternetConnectionStatus()
+		{
+			NetworkReachabilityFlags flags;
 
-        /// <summary>
-        /// The local WiFi connection status.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="NetworkStatus"/>.
-        /// </returns>
-        public static NetworkStatus LocalWifiConnectionStatus()
-        {
-            NetworkReachabilityFlags flags;
-            return (!IsAdHocWiFiNetworkAvailable(out flags) || (flags & NetworkReachabilityFlags.IsDirect) == 0) ?
-                NetworkStatus.NotReachable :
-                NetworkStatus.ReachableViaWiFiNetwork;
-        }
+			if ((IsNetworkAvailable(out flags) && ((flags & NetworkReachabilityFlags.IsDirect) != 0)) || flags == 0)
+			{
+				return NetworkStatus.NotReachable;
+			}
 
-        private static void OnChange(NetworkReachabilityFlags flags)
-        {
-            var h = ReachabilityChanged;
-            if (h != null)
-            {
-                h(null, EventArgs.Empty);
-            }
-        }
+			return (flags & NetworkReachabilityFlags.IsWWAN) != 0
+				       ? NetworkStatus.ReachableViaCarrierDataNetwork
+				       : NetworkStatus.ReachableViaWiFiNetwork;
+		}
 
-        /// <summary>
-        /// Returns network reachability flags and network availability.
-        /// </summary>
-        /// <param name="flags">
-        /// The network reachability flags.
-        /// </param>
-        /// <returns>
-        /// True if network is available, otherwise false.
-        /// </returns>
-        public static bool IsNetworkAvailable(out NetworkReachabilityFlags flags)
-        {
-            if (defaultRouteReachability == null)
-            {
-                defaultRouteReachability = new NetworkReachability(new IPAddress(0));
-                defaultRouteReachability.SetCallback(OnChange);
-                defaultRouteReachability.Schedule(CFRunLoop.Current, CFRunLoop.ModeDefault);
-            }
+		/// <summary>
+		/// The local WiFi connection status.
+		/// </summary>
+		/// <returns>The <see cref="NetworkStatus" />.</returns>
+		public static NetworkStatus LocalWifiConnectionStatus()
+		{
+			NetworkReachabilityFlags flags;
+			return (!IsAdHocWiFiNetworkAvailable(out flags) || (flags & NetworkReachabilityFlags.IsDirect) == 0)
+				       ? NetworkStatus.NotReachable
+				       : NetworkStatus.ReachableViaWiFiNetwork;
+		}
 
-            return defaultRouteReachability.TryGetFlags(out flags) && IsReachableWithoutRequiringConnection(flags);
-        }
-    }
+		/// <summary>
+		/// Called when [change].
+		/// </summary>
+		/// <param name="flags">The flags.</param>
+		private static void OnChange(NetworkReachabilityFlags flags)
+		{
+			var h = ReachabilityChanged;
+			if (h != null)
+			{
+				h(null, EventArgs.Empty);
+			}
+		}
 
+		/// <summary>
+		/// Returns network reachability flags and network availability.
+		/// </summary>
+		/// <param name="flags">The network reachability flags.</param>
+		/// <returns>True if network is available, otherwise false.</returns>
+		public static bool IsNetworkAvailable(out NetworkReachabilityFlags flags)
+		{
+			if (defaultRouteReachability == null)
+			{
+				defaultRouteReachability = new NetworkReachability(new IPAddress(0));
+				defaultRouteReachability.SetCallback(OnChange);
+				defaultRouteReachability.Schedule(CFRunLoop.Current, CFRunLoop.ModeDefault);
+			}
+
+			return defaultRouteReachability.TryGetFlags(out flags) && IsReachableWithoutRequiringConnection(flags);
+		}
+	}
 }

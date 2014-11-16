@@ -11,7 +11,7 @@
 
 [assembly: global::Android.Runtime.ResourceDesignerAttribute("XLabs.Platform.Droid.Resource", IsApplication=false)]
 
-namespace XLabs.Platform.Droid
+namespace XLabs.Forms.Resources
 {
 	
 	

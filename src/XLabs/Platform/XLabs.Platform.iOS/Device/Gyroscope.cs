@@ -1,49 +1,68 @@
-namespace XLabs.Platform.iOS.Device
+namespace XLabs.Platform.Device
 {
 	using MonoTouch.CoreMotion;
 	using MonoTouch.Foundation;
 
-	using XLabs.Platform.Device;
-
+	/// <summary>
+	/// Class Gyroscope.
+	/// </summary>
 	public partial class Gyroscope
-    {
-        public AccelerometerInterval Interval { get; set; }
+	{
+		/// <summary>
+		/// The _motion manager
+		/// </summary>
+		private CMMotionManager _motionManager;
 
-        private CMMotionManager motionManager;
+		/// <summary>
+		/// Gets or sets the interval.
+		/// </summary>
+		/// <value>The interval.</value>
+		public AccelerometerInterval Interval { get; set; }
 
-        public static bool IsSupported
-        {
-            get
-            {
-                return new MonoTouch.CoreMotion.CMMotionManager().GyroAvailable;
-            }
-        }
+		/// <summary>
+		/// Gets a value indicating whether this instance is supported.
+		/// </summary>
+		/// <value><c>true</c> if this instance is supported; otherwise, <c>false</c>.</value>
+		public static bool IsSupported
+		{
+			get
+			{
+				return new CMMotionManager().GyroAvailable;
+			}
+		}
 
-        partial void Start()
-        {
-            this.motionManager = new CMMotionManager();
-            this.motionManager.GyroUpdateInterval = (long)this.Interval / 1000;
-            this.motionManager.StartGyroUpdates(NSOperationQueue.MainQueue, this.OnUpdate);
-        }
+		/// <summary>
+		/// Starts this instance.
+		/// </summary>
+		partial void Start()
+		{
+			_motionManager = new CMMotionManager();
+			_motionManager.GyroUpdateInterval = (long)Interval / 1000;
+			_motionManager.StartGyroUpdates(NSOperationQueue.MainQueue, OnUpdate);
+		}
 
-        partial void Stop()
-        {
-            this.motionManager.StopGyroUpdates();
-            this.motionManager = null;
-        }
+		/// <summary>
+		/// Stops this instance.
+		/// </summary>
+		partial void Stop()
+		{
+			_motionManager.StopGyroUpdates();
+			_motionManager = null;
+		}
 
-        private void OnUpdate(CMGyroData gyroData, NSError error)
-        {
-            if (error != null)
-            {
-                this.readingAvailable.Invoke(
-                    this, 
-                    new Vector3(
-                        gyroData.RotationRate.x,
-                        gyroData.RotationRate.y,
-                        gyroData.RotationRate.z
-                        ));
-            }
-        }
-    }
+		/// <summary>
+		/// Called when [update].
+		/// </summary>
+		/// <param name="gyroData">The gyro data.</param>
+		/// <param name="error">The error.</param>
+		private void OnUpdate(CMGyroData gyroData, NSError error)
+		{
+			if (error != null)
+			{
+				this.readingAvailable.Invoke(
+					this,
+					new Vector3(gyroData.RotationRate.x, gyroData.RotationRate.y, gyroData.RotationRate.z));
+			}
+		}
+	}
 }

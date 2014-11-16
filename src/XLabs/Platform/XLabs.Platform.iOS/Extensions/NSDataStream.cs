@@ -1,43 +1,45 @@
-﻿//
-//  Copyright 2011-2013, Xamarin Inc.
-//
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//
-//        http://www.apache.org/licenses/LICENSE-2.0
-//
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-//
-
-namespace XLabs.Platform.iOS.Extensions
+﻿namespace XLabs.Platform.Extensions
 {
 	using System.IO;
 
 	using MonoTouch.Foundation;
 
-	internal unsafe class NSDataStream
-		: UnmanagedMemoryStream
+	/// <summary>
+	///     Class NsDataStream.
+	/// </summary>
+	internal unsafe class NsDataStream : UnmanagedMemoryStream
 	{
-		public NSDataStream (NSData data)
-			: base ((byte*)data.Bytes, data.Length)
+		/// <summary>
+		///     The _data
+		/// </summary>
+		private readonly NSData _data;
+
+		/// <summary>
+		///     Initializes a new instance of the <see cref="NsDataStream" /> class.
+		/// </summary>
+		/// <param name="data">The data.</param>
+		public NsDataStream(NSData data)
+			: base((byte*)data.Bytes, data.Length)
 		{
-			this.data = data;
+			_data = data;
 		}
 
-		private readonly NSData data;
-
-		protected override void Dispose (bool disposing)
+		/// <summary>
+		///     Releases the unmanaged resources used by the <see cref="T:System.IO.UnmanagedMemoryStream" /> and optionally
+		///     releases the managed resources.
+		/// </summary>
+		/// <param name="disposing">
+		///     true to release both managed and unmanaged resources; false to release only unmanaged
+		///     resources.
+		/// </param>
+		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
-				this.data.Dispose();
+			{
+				_data.Dispose();
+			}
 
-			base.Dispose (disposing);
+			base.Dispose(disposing);
 		}
 	}
 }
-

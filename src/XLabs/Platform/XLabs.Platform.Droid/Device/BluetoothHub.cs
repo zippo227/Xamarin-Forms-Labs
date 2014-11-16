@@ -1,48 +1,73 @@
-﻿namespace XLabs.Platform.Droid.Device
+﻿namespace XLabs.Platform.Device
 {
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
+	using System.Windows.Input;
 
 	using Android.Bluetooth;
+	using Android.Content;
 
-	using XLabs.Platform.Device;
-
+	/// <summary>
+	/// Class BluetoothHub.
+	/// </summary>
 	public class BluetoothHub : IBluetoothHub
-    {
-        readonly BluetoothAdapter adapter;
+	{
+		/// <summary>
+		/// The _adapter
+		/// </summary>
+		private readonly BluetoothAdapter _adapter;
 
-        public bool Enabled
-        {
-            get
-            {
-                return this.adapter.IsEnabled;
-            }
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BluetoothHub"/> class.
+		/// </summary>
+		public BluetoothHub()
+			: this(BluetoothAdapter.DefaultAdapter)
+		{
+		}
 
-        public BluetoothHub() : this(BluetoothAdapter.DefaultAdapter) { }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BluetoothHub"/> class.
+		/// </summary>
+		/// <param name="adapter">The adapter.</param>
+		public BluetoothHub(BluetoothAdapter adapter)
+		{
+			_adapter = adapter;
 
-        public BluetoothHub(BluetoothAdapter adapter)
-        {
-            this.adapter = adapter;
+			OpenSettings = new Command(
+				o => o.StartActivityForResult(new Intent(BluetoothAdapter.ActionRequestEnable)),
+				o => true);
+		}
 
-            this.OpenSettings = new Command(
-                o => o.StartActivityForResult(new Android.Content.Intent(BluetoothAdapter.ActionRequestEnable)),
-                o => true
-                );
-        }
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="IBluetoothHub" /> is enabled.
+		/// </summary>
+		/// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
+		public bool Enabled
+		{
+			get
+			{
+				return _adapter.IsEnabled;
+			}
+		}
 
-        #region IBluetoothHub implementation
-        public async Task<IReadOnlyList<IBluetoothDevice>> GetPairedDevices()
-        {
-            return await Task.Factory.StartNew(() => this.adapter.BondedDevices.Select(a => new AndroidBluetoothDevice(a)).ToList());
-        }
+		#region IBluetoothHub implementation
 
-        public System.Windows.Input.ICommand OpenSettings
-        {
-            get;
-            private set;
-        }
-        #endregion
-    }
+		/// <summary>
+		/// Gets the paired devices.
+		/// </summary>
+		/// <returns>Task&lt;IReadOnlyList&lt;IBluetoothDevice&gt;&gt;.</returns>
+		public async Task<IReadOnlyList<IBluetoothDevice>> GetPairedDevices()
+		{
+			return await Task.Factory.StartNew(() => _adapter.BondedDevices.Select(a => new AndroidBluetoothDevice(a)).ToList());
+		}
+
+		/// <summary>
+		/// Gets the open settings.
+		/// </summary>
+		/// <value>The open settings.</value>
+		public ICommand OpenSettings { get; private set; }
+
+		#endregion
+	}
 }

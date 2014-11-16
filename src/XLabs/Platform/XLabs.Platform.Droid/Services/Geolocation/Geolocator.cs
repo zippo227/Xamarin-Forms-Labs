@@ -1,24 +1,4 @@
-﻿//
-//  Copyright 2011-2013, Xamarin Inc.
-//
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//
-//        http://www.apache.org/licenses/LICENSE-2.0
-//
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-//
-
-using XLabs.Platform.Droid.Services.Geolocation;
-
-[assembly: Dependency(typeof (Geolocator))]
-
-namespace XLabs.Platform.Droid.Services.Geolocation
+﻿namespace XLabs.Platform.Services.Geolocation
 {
 	using System;
 	using System.Linq;
@@ -34,32 +14,77 @@ namespace XLabs.Platform.Droid.Services.Geolocation
 
 	using XLabs.Platform.Services.GeoLocation;
 
+	/// <summary>
+	///     Class Geolocator.
+	/// </summary>
 	public class Geolocator : IGeolocator
 	{
+		/// <summary>
+		///     The epoch
+		/// </summary>
 		private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-		private readonly LocationManager manager;
-		private readonly object positionSync = new object();
-		private readonly string[] providers;
-		private string headingProvider;
-		private Position lastPosition;
-		private GeolocationContinuousListener listener;
 
+		/// <summary>
+		///     The _heading provider
+		/// </summary>
+		private string _headingProvider;
+
+		/// <summary>
+		///     The _last position
+		/// </summary>
+		private Position _lastPosition;
+
+		/// <summary>
+		///     The _listener
+		/// </summary>
+		private GeolocationContinuousListener _listener;
+
+		/// <summary>
+		///     The _manager
+		/// </summary>
+		private readonly LocationManager _manager;
+
+		/// <summary>
+		///     The _position synchronize
+		/// </summary>
+		private readonly object _positionSync = new object();
+
+		/// <summary>
+		///     The _providers
+		/// </summary>
+		private readonly string[] _providers;
+
+		/// <summary>
+		///     Initializes a new instance of the <see cref="Geolocator" /> class.
+		/// </summary>
 		public Geolocator()
 		{
-			manager = (LocationManager) Application.Context.GetSystemService(Context.LocationService);
-			providers = manager.GetProviders(false).Where(s => s != LocationManager.PassiveProvider).ToArray();
+			_manager = (LocationManager)Application.Context.GetSystemService(Context.LocationService);
+			_providers = _manager.GetProviders(false).Where(s => s != LocationManager.PassiveProvider).ToArray();
 		}
 
-		public event EventHandler<PositionErrorEventArgs> PositionError;
-		public event EventHandler<PositionEventArgs> PositionChanged;
-
+		/// <summary>
+		///     Gets a value indicating whether this instance is listening.
+		/// </summary>
+		/// <value><c>true</c> if this instance is listening; otherwise, <c>false</c>.</value>
 		public bool IsListening
 		{
-			get { return listener != null; }
+			get
+			{
+				return _listener != null;
+			}
 		}
 
+		/// <summary>
+		///     Gets or sets the desired accuracy.
+		/// </summary>
+		/// <value>The desired accuracy.</value>
 		public double DesiredAccuracy { get; set; }
 
+		/// <summary>
+		///     Gets a value indicating whether [supports heading].
+		/// </summary>
+		/// <value><c>true</c> if [supports heading]; otherwise, <c>false</c>.</value>
 		public bool SupportsHeading
 		{
 			get
@@ -88,86 +113,182 @@ namespace XLabs.Platform.Droid.Services.Geolocation
 			}
 		}
 
+		/// <summary>
+		///     Gets a value indicating whether this instance is geolocation available.
+		/// </summary>
+		/// <value><c>true</c> if this instance is geolocation available; otherwise, <c>false</c>.</value>
 		public bool IsGeolocationAvailable
 		{
-			get { return providers.Length > 0; }
+			get
+			{
+				return _providers.Length > 0;
+			}
 		}
 
+		/// <summary>
+		///     Gets a value indicating whether this instance is geolocation enabled.
+		/// </summary>
+		/// <value><c>true</c> if this instance is geolocation enabled; otherwise, <c>false</c>.</value>
 		public bool IsGeolocationEnabled
 		{
-			get { return providers.Any(manager.IsProviderEnabled); }
+			get
+			{
+				return _providers.Any(_manager.IsProviderEnabled);
+			}
 		}
 
+		/// <summary>
+		///     Stop listening to location changes
+		/// </summary>
+		public void StopListening()
+		{
+			if (_listener == null)
+			{
+				return;
+			}
+
+			_listener.PositionChanged -= OnListenerPositionChanged;
+			_listener.PositionError -= OnListenerPositionError;
+
+			for (var i = 0; i < _providers.Length; ++i)
+			{
+				_manager.RemoveUpdates(_listener);
+			}
+
+			_listener = null;
+		}
+
+		/// <summary>
+		///     Occurs when [position error].
+		/// </summary>
+		public event EventHandler<PositionErrorEventArgs> PositionError;
+
+		/// <summary>
+		///     Occurs when [position changed].
+		/// </summary>
+		public event EventHandler<PositionEventArgs> PositionChanged;
+
+		/// <summary>
+		///     Gets the position asynchronous.
+		/// </summary>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
 		public Task<Position> GetPositionAsync(CancellationToken cancelToken)
 		{
 			return GetPositionAsync(cancelToken, false);
 		}
 
+		/// <summary>
+		///     Gets the position asynchronous.
+		/// </summary>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
 		public Task<Position> GetPositionAsync(CancellationToken cancelToken, bool includeHeading)
 		{
 			return GetPositionAsync(Timeout.Infinite, cancelToken);
 		}
 
+		/// <summary>
+		///     Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
 		public Task<Position> GetPositionAsync(int timeout)
 		{
 			return GetPositionAsync(timeout, false);
 		}
 
+		/// <summary>
+		///     Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
 		public Task<Position> GetPositionAsync(int timeout, bool includeHeading)
 		{
 			return GetPositionAsync(timeout, CancellationToken.None);
 		}
 
+		/// <summary>
+		///     Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
 		public Task<Position> GetPositionAsync(int timeout, CancellationToken cancelToken)
 		{
 			return GetPositionAsync(timeout, cancelToken, false);
 		}
 
+		/// <summary>
+		///     Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		/// <exception cref="System.ArgumentOutOfRangeException">timeout;timeout must be greater than or equal to 0</exception>
 		public Task<Position> GetPositionAsync(int timeout, CancellationToken cancelToken, bool includeHeading)
 		{
 			if (timeout <= 0 && timeout != Timeout.Infinite)
+			{
 				throw new ArgumentOutOfRangeException("timeout", "timeout must be greater than or equal to 0");
+			}
 
 			var tcs = new TaskCompletionSource<Position>();
 
 			if (!IsListening)
 			{
 				GeolocationSingleListener singleListener = null;
-				singleListener = new GeolocationSingleListener((float) DesiredAccuracy, timeout,
-					providers.Where(manager.IsProviderEnabled), () =>
-					{
-						for (int i = 0; i < providers.Length; ++i)
-							manager.RemoveUpdates(singleListener);
-					});
+				singleListener = new GeolocationSingleListener(
+					(float)DesiredAccuracy,
+					timeout,
+					_providers.Where(_manager.IsProviderEnabled),
+					() =>
+						{
+							for (var i = 0; i < _providers.Length; ++i)
+							{
+								_manager.RemoveUpdates(singleListener);
+							}
+						});
 
 				if (cancelToken != CancellationToken.None)
 				{
-					cancelToken.Register(() =>
-					{
-						singleListener.Cancel();
+					cancelToken.Register(
+						() =>
+							{
+								singleListener.Cancel();
 
-						for (int i = 0; i < providers.Length; ++i)
-							manager.RemoveUpdates(singleListener);
-					}, true);
+								for (var i = 0; i < _providers.Length; ++i)
+								{
+									_manager.RemoveUpdates(singleListener);
+								}
+							},
+						true);
 				}
 
 				try
 				{
-					Looper looper = Looper.MyLooper() ?? Looper.MainLooper;
+					var looper = Looper.MyLooper() ?? Looper.MainLooper;
 
-					int enabled = 0;
-					for (int i = 0; i < providers.Length; ++i)
+					var enabled = 0;
+					for (var i = 0; i < _providers.Length; ++i)
 					{
-						if (manager.IsProviderEnabled(providers[i]))
+						if (_manager.IsProviderEnabled(_providers[i]))
+						{
 							enabled++;
+						}
 
-						manager.RequestLocationUpdates(providers[i], 0, 0, singleListener, looper);
+						_manager.RequestLocationUpdates(_providers[i], 0, 0, singleListener, looper);
 					}
 
 					if (enabled == 0)
 					{
-						for (int i = 0; i < providers.Length; ++i)
-							manager.RemoveUpdates(singleListener);
+						for (var i = 0; i < _providers.Length; ++i)
+						{
+							_manager.RemoveUpdates(singleListener);
+						}
 
 						tcs.SetException(new GeolocationException(GeolocationError.PositionUnavailable));
 						return tcs.Task;
@@ -183,9 +304,9 @@ namespace XLabs.Platform.Droid.Services.Geolocation
 			}
 
 			// If we're already listening, just use the current listener
-			lock (positionSync)
+			lock (_positionSync)
 			{
-				if (lastPosition == null)
+				if (_lastPosition == null)
 				{
 					if (cancelToken != CancellationToken.None)
 					{
@@ -194,83 +315,115 @@ namespace XLabs.Platform.Droid.Services.Geolocation
 
 					EventHandler<PositionEventArgs> gotPosition = null;
 					gotPosition = (s, e) =>
-					{
-						tcs.TrySetResult(e.Position);
-						PositionChanged -= gotPosition;
-					};
+						{
+							tcs.TrySetResult(e.Position);
+							PositionChanged -= gotPosition;
+						};
 
 					PositionChanged += gotPosition;
 				}
 				else
 				{
-					tcs.SetResult(lastPosition);
+					tcs.SetResult(_lastPosition);
 				}
 			}
 
 			return tcs.Task;
 		}
 
+		/// <summary>
+		///     Start listening to location changes
+		/// </summary>
+		/// <param name="minTime">Minimum interval in milliseconds</param>
+		/// <param name="minDistance">Minimum distance in meters</param>
 		public void StartListening(uint minTime, double minDistance)
 		{
 			StartListening(minTime, minDistance, false);
 		}
 
+		/// <summary>
+		///     Start listening to location changes
+		/// </summary>
+		/// <param name="minTime">Minimum interval in milliseconds</param>
+		/// <param name="minDistance">Minimum distance in meters</param>
+		/// <param name="includeHeading">Include heading information</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		///     minTime
+		///     or
+		///     minDistance
+		/// </exception>
+		/// <exception cref="System.InvalidOperationException">This Geolocator is already listening</exception>
 		public void StartListening(uint minTime, double minDistance, bool includeHeading)
 		{
 			if (minTime < 0)
-				throw new ArgumentOutOfRangeException("minTime");
-			if (minDistance < 0)
-				throw new ArgumentOutOfRangeException("minDistance");
-			if (IsListening)
-				throw new InvalidOperationException("This Geolocator is already listening");
-
-			listener = new GeolocationContinuousListener(manager, TimeSpan.FromMilliseconds(minTime), providers);
-			listener.PositionChanged += OnListenerPositionChanged;
-			listener.PositionError += OnListenerPositionError;
-
-			Looper looper = Looper.MyLooper() ?? Looper.MainLooper;
-			for (int i = 0; i < providers.Length; ++i)
-				manager.RequestLocationUpdates(providers[i], minTime, (float) minDistance, listener, looper);
-		}
-
-		public void StopListening()
-		{
-			if (listener == null)
-				return;
-
-			listener.PositionChanged -= OnListenerPositionChanged;
-			listener.PositionError -= OnListenerPositionError;
-
-			for (int i = 0; i < providers.Length; ++i)
-				manager.RemoveUpdates(listener);
-
-			listener = null;
-		}
-
-		private void OnListenerPositionChanged(object sender, PositionEventArgs e)
-		{
-			if (!IsListening) // ignore anything that might come in afterwards
-				return;
-
-			lock (positionSync)
 			{
-				lastPosition = e.Position;
+				throw new ArgumentOutOfRangeException("minTime");
+			}
+			if (minDistance < 0)
+			{
+				throw new ArgumentOutOfRangeException("minDistance");
+			}
+			if (IsListening)
+			{
+				throw new InvalidOperationException("This Geolocator is already listening");
+			}
 
-				EventHandler<PositionEventArgs> changed = PositionChanged;
-				if (changed != null)
-					changed(this, e);
+			_listener = new GeolocationContinuousListener(_manager, TimeSpan.FromMilliseconds(minTime), _providers);
+			_listener.PositionChanged += OnListenerPositionChanged;
+			_listener.PositionError += OnListenerPositionError;
+
+			var looper = Looper.MyLooper() ?? Looper.MainLooper;
+			for (var i = 0; i < _providers.Length; ++i)
+			{
+				_manager.RequestLocationUpdates(_providers[i], minTime, (float)minDistance, _listener, looper);
 			}
 		}
 
+		/// <summary>
+		///     Handles the <see cref="E:ListenerPositionChanged" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="PositionEventArgs" /> instance containing the event data.</param>
+		private void OnListenerPositionChanged(object sender, PositionEventArgs e)
+		{
+			if (!IsListening) // ignore anything that might come in afterwards
+			{
+				return;
+			}
+
+			lock (_positionSync)
+			{
+				_lastPosition = e.Position;
+
+				var changed = PositionChanged;
+				if (changed != null)
+				{
+					changed(this, e);
+				}
+			}
+		}
+
+		/// <summary>
+		///     Handles the <see cref="E:ListenerPositionError" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="PositionErrorEventArgs" /> instance containing the event data.</param>
 		private void OnListenerPositionError(object sender, PositionErrorEventArgs e)
 		{
 			StopListening();
 
-			EventHandler<PositionErrorEventArgs> error = PositionError;
+			var error = PositionError;
 			if (error != null)
+			{
 				error(this, e);
+			}
 		}
 
+		/// <summary>
+		///     Gets the timestamp.
+		/// </summary>
+		/// <param name="location">The location.</param>
+		/// <returns>DateTimeOffset.</returns>
 		internal static DateTimeOffset GetTimestamp(Location location)
 		{
 			return new DateTimeOffset(Epoch.AddMilliseconds(location.Time));

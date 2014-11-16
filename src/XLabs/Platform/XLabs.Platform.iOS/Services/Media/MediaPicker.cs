@@ -1,7 +1,4 @@
-﻿using XLabs.Platform.iOS.Services.Media;
-
-[assembly: Dependency(typeof(MediaPicker))]
-namespace XLabs.Platform.iOS.Services.Media
+﻿namespace XLabs.Platform.Services.Media
 {
 	using System;
 	using System.IO;
@@ -11,151 +8,73 @@ namespace XLabs.Platform.iOS.Services.Media
 
 	using MonoTouch.UIKit;
 
-	using XLabs.Platform.Services.Media;
-
+	/// <summary>
+	/// Class MediaPicker.
+	/// </summary>
 	public class MediaPicker : IMediaPicker
 	{
-		public MediaPicker ()
+		/// <summary>
+		/// The type image
+		/// </summary>
+		internal const string TypeImage = "public.image";
+
+		/// <summary>
+		/// The type movie
+		/// </summary>
+		internal const string TypeMovie = "public.movie";
+
+		/// <summary>
+		/// The _picker delegate
+		/// </summary>
+		private UIImagePickerControllerDelegate _pickerDelegate;
+
+		/// <summary>
+		/// The _popover
+		/// </summary>
+		private UIPopoverController _popover;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MediaPicker"/> class.
+		/// </summary>
+		public MediaPicker()
 		{
+			IsCameraAvailable = UIImagePickerController.IsSourceTypeAvailable(UIImagePickerControllerSourceType.Camera);
 
-			IsCameraAvailable = UIImagePickerController.IsSourceTypeAvailable (UIImagePickerControllerSourceType.Camera);
+			var availableCameraMedia = UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.Camera)
+			                           ?? new string[0];
+			var avaialbleLibraryMedia =
+				UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.PhotoLibrary) ?? new string[0];
 
-			string[] availableCameraMedia = UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.Camera) ?? new string[0];
-			string[] avaialbleLibraryMedia = UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.PhotoLibrary) ?? new string[0];
-
-			foreach (string type in availableCameraMedia.Concat (avaialbleLibraryMedia))
+			foreach (var type in availableCameraMedia.Concat(avaialbleLibraryMedia))
 			{
 				if (type == TypeMovie)
+				{
 					IsVideosSupported = true;
-				else if (type == TypeImage)
-					IsPhotosSupported = true;
-			}
-		}
-
-		public bool IsCameraAvailable
-		{
-			get;
-			private set;
-		}
-
-		public bool IsPhotosSupported
-		{
-			get;
-			private set;
-		}
-
-		public bool IsVideosSupported
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// Select a picture from library.
-		/// </summary>
-		/// <param name="options">The storage options.</param>
-		/// <returns>Task&lt;IMediaFile&gt;.</returns>
-		public Task<MediaFile> SelectPhotoAsync(CameraMediaStorageOptions options)
-		{
-			if (!IsPhotosSupported)
-				throw new NotSupportedException();
-
-			return GetMediaAsync (UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
-
-
-		}
-
-		/// <summary>
-		/// Takes the picture.
-		/// </summary>
-		/// <param name="options">The storage options.</param>
-		/// <returns>Task&lt;IMediaFile&gt;.</returns>
-		public Task<MediaFile> TakePhotoAsync(CameraMediaStorageOptions options){
-			if (!IsPhotosSupported)
-				throw new NotSupportedException();
-			if (!IsCameraAvailable)
-				throw new NotSupportedException();
-
-			VerifyCameraOptions (options);
-
-			return GetMediaAsync (UIImagePickerControllerSourceType.Camera, TypeImage, options);
-
-		}
-
-		/// <summary>
-		/// Selects the video asynchronous.
-		/// </summary>
-		/// <param name="options">The options.</param>
-		/// <returns>Task&lt;IMediaFile&gt;.</returns>
-		public Task<MediaFile> SelectVideoAsync(VideoMediaStorageOptions options){
-		
-			if (!IsPhotosSupported)
-				throw new NotSupportedException();
-
-			return GetMediaAsync (UIImagePickerControllerSourceType.PhotoLibrary, TypeMovie);
-
-		}
-
-		/// <summary>
-		/// Takes the video asynchronous.
-		/// </summary>
-		/// <param name="options">The options.</param>
-		/// <returns>Task&lt;IMediaFile&gt;.</returns>
-		public Task<MediaFile> TakeVideoAsync(VideoMediaStorageOptions options)
-		{
-			if (!IsVideosSupported)
-				throw new NotSupportedException();
-			if (!IsCameraAvailable)
-				throw new NotSupportedException();
-
-			//VerifyCameraOptions (options);
-
-			return GetMediaAsync (UIImagePickerControllerSourceType.Camera, TypeMovie, options);
-		}
-
-		private Task<MediaFile> GetMediaAsync (UIImagePickerControllerSourceType sourceType, string mediaType, MediaStorageOptions options = null)
-		{
-			UIWindow window = UIApplication.SharedApplication.KeyWindow;
-			if (window == null)
-				throw new InvalidOperationException ("There's no current active window");
-
-			UIViewController viewController = window.RootViewController;
-
-			if (viewController == null) {
-				window = UIApplication.SharedApplication.Windows.OrderByDescending (w => w.WindowLevel).FirstOrDefault (w => w.RootViewController != null);
-				if (window == null)
-					throw new InvalidOperationException ("Could not find current view controller");
-				else
-					viewController = window.RootViewController;	
-			}
-
-			while (viewController.PresentedViewController != null)
-				viewController = viewController.PresentedViewController;
-
-			MediaPickerDelegate ndelegate = new MediaPickerDelegate (viewController, sourceType, options);
-			var od = Interlocked.CompareExchange (ref this.pickerDelegate, ndelegate, null);
-			if (od != null)
-				throw new InvalidOperationException ("Only one operation can be active at at time");
-
-			var picker = SetupController (ndelegate, sourceType, mediaType, options);
-
-			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad && sourceType == UIImagePickerControllerSourceType.PhotoLibrary) {	
-				ndelegate.Popover = new UIPopoverController (picker);
-				ndelegate.Popover.Delegate = new MediaPickerPopoverDelegate (ndelegate, picker);
-				ndelegate.DisplayPopover();
-			} else
-				viewController.PresentViewController (picker, true, null);
-
-			return ndelegate.Task.ContinueWith (t => {
-				if (this.popover != null) {
-					this.popover.Dispose();
-					this.popover = null;
 				}
-
-				Interlocked.Exchange (ref this.pickerDelegate, null);
-				return t;
-			}).Unwrap();
+				else if (type == TypeImage)
+				{
+					IsPhotosSupported = true;
+				}
+			}
 		}
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is camera available.
+		/// </summary>
+		/// <value><c>true</c> if this instance is camera available; otherwise, <c>false</c>.</value>
+		public bool IsCameraAvailable { get; private set; }
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is photos supported.
+		/// </summary>
+		/// <value><c>true</c> if this instance is photos supported; otherwise, <c>false</c>.</value>
+		public bool IsPhotosSupported { get; private set; }
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is videos supported.
+		/// </summary>
+		/// <value><c>true</c> if this instance is videos supported; otherwise, <c>false</c>.</value>
+		public bool IsVideosSupported { get; private set; }
 
 		/// <summary>
 		/// Event the fires when media has been selected
@@ -169,27 +88,195 @@ namespace XLabs.Platform.iOS.Services.Media
 		/// <value>The on error.</value>
 		public EventHandler<MediaPickerErrorArgs> OnError { get; set; }
 
-		private UIPopoverController popover;
-		private UIImagePickerControllerDelegate pickerDelegate;
-		internal const string TypeImage = "public.image";
-		internal const string TypeMovie = "public.movie";
-
-		private static MediaPickerController SetupController (MediaPickerDelegate mpDelegate, UIImagePickerControllerSourceType sourceType, string mediaType, MediaStorageOptions options = null)
+		/// <summary>
+		/// Select a picture from library.
+		/// </summary>
+		/// <param name="options">The storage options.</param>
+		/// <returns>Task&lt;IMediaFile&gt;.</returns>
+		/// <exception cref="NotSupportedException"></exception>
+		public Task<MediaFile> SelectPhotoAsync(CameraMediaStorageOptions options)
 		{
-			var picker = new MediaPickerController (mpDelegate);
+			if (!IsPhotosSupported)
+			{
+				throw new NotSupportedException();
+			}
+
+			return GetMediaAsync(UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
+		}
+
+		/// <summary>
+		/// Takes the picture.
+		/// </summary>
+		/// <param name="options">The storage options.</param>
+		/// <returns>Task&lt;IMediaFile&gt;.</returns>
+		/// <exception cref="NotSupportedException">
+		/// </exception>
+		public Task<MediaFile> TakePhotoAsync(CameraMediaStorageOptions options)
+		{
+			if (!IsPhotosSupported)
+			{
+				throw new NotSupportedException();
+			}
+			if (!IsCameraAvailable)
+			{
+				throw new NotSupportedException();
+			}
+
+			VerifyCameraOptions(options);
+
+			return GetMediaAsync(UIImagePickerControllerSourceType.Camera, TypeImage, options);
+		}
+
+		/// <summary>
+		/// Selects the video asynchronous.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		/// <returns>Task&lt;IMediaFile&gt;.</returns>
+		/// <exception cref="NotSupportedException"></exception>
+		public Task<MediaFile> SelectVideoAsync(VideoMediaStorageOptions options)
+		{
+			if (!IsPhotosSupported)
+			{
+				throw new NotSupportedException();
+			}
+
+			return GetMediaAsync(UIImagePickerControllerSourceType.PhotoLibrary, TypeMovie);
+		}
+
+		/// <summary>
+		/// Takes the video asynchronous.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		/// <returns>Task&lt;IMediaFile&gt;.</returns>
+		/// <exception cref="NotSupportedException">
+		/// </exception>
+		public Task<MediaFile> TakeVideoAsync(VideoMediaStorageOptions options)
+		{
+			if (!IsVideosSupported)
+			{
+				throw new NotSupportedException();
+			}
+			if (!IsCameraAvailable)
+			{
+				throw new NotSupportedException();
+			}
+
+			//VerifyCameraOptions (options);
+
+			return GetMediaAsync(UIImagePickerControllerSourceType.Camera, TypeMovie, options);
+		}
+
+		/// <summary>
+		/// Gets the media asynchronous.
+		/// </summary>
+		/// <param name="sourceType">Type of the source.</param>
+		/// <param name="mediaType">Type of the media.</param>
+		/// <param name="options">The options.</param>
+		/// <returns>Task&lt;MediaFile&gt;.</returns>
+		/// <exception cref="InvalidOperationException">
+		/// There's no current active window
+		/// or
+		/// Could not find current view controller
+		/// or
+		/// Only one operation can be active at at time
+		/// </exception>
+		private Task<MediaFile> GetMediaAsync(
+			UIImagePickerControllerSourceType sourceType,
+			string mediaType,
+			MediaStorageOptions options = null)
+		{
+			var window = UIApplication.SharedApplication.KeyWindow;
+			if (window == null)
+			{
+				throw new InvalidOperationException("There's no current active window");
+			}
+
+			var viewController = window.RootViewController;
+
+			if (viewController == null)
+			{
+				window =
+					UIApplication.SharedApplication.Windows.OrderByDescending(w => w.WindowLevel)
+						.FirstOrDefault(w => w.RootViewController != null);
+				if (window == null)
+				{
+					throw new InvalidOperationException("Could not find current view controller");
+				}
+				viewController = window.RootViewController;
+			}
+
+			while (viewController.PresentedViewController != null)
+			{
+				viewController = viewController.PresentedViewController;
+			}
+
+			var ndelegate = new MediaPickerDelegate(viewController, sourceType, options);
+			var od = Interlocked.CompareExchange(ref _pickerDelegate, ndelegate, null);
+			if (od != null)
+			{
+				throw new InvalidOperationException("Only one operation can be active at at time");
+			}
+
+			var picker = SetupController(ndelegate, sourceType, mediaType, options);
+
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad
+			    && sourceType == UIImagePickerControllerSourceType.PhotoLibrary)
+			{
+				ndelegate.Popover = new UIPopoverController(picker);
+				ndelegate.Popover.Delegate = new MediaPickerPopoverDelegate(ndelegate, picker);
+				ndelegate.DisplayPopover();
+			}
+			else
+			{
+				viewController.PresentViewController(picker, true, null);
+			}
+
+			return ndelegate.Task.ContinueWith(
+				t =>
+					{
+						if (_popover != null)
+						{
+							_popover.Dispose();
+							_popover = null;
+						}
+
+						Interlocked.Exchange(ref _pickerDelegate, null);
+						return t;
+					}).Unwrap();
+		}
+
+		/// <summary>
+		/// Setups the controller.
+		/// </summary>
+		/// <param name="mpDelegate">The mp delegate.</param>
+		/// <param name="sourceType">Type of the source.</param>
+		/// <param name="mediaType">Type of the media.</param>
+		/// <param name="options">The options.</param>
+		/// <returns>MediaPickerController.</returns>
+		private static MediaPickerController SetupController(
+			MediaPickerDelegate mpDelegate,
+			UIImagePickerControllerSourceType sourceType,
+			string mediaType,
+			MediaStorageOptions options = null)
+		{
+			var picker = new MediaPickerController(mpDelegate);
 			picker.MediaTypes = new[] { mediaType };
 			picker.SourceType = sourceType;
 
-			if (sourceType == UIImagePickerControllerSourceType.Camera) {
-				picker.CameraDevice = GetUICameraDevice ((options as CameraMediaStorageOptions) .DefaultCamera);
+			if (sourceType == UIImagePickerControllerSourceType.Camera)
+			{
+				picker.CameraDevice = GetUiCameraDevice((options as CameraMediaStorageOptions).DefaultCamera);
 
 				if (mediaType == TypeImage)
+				{
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo;
-				else if (mediaType == TypeMovie) {
-					VideoMediaStorageOptions voptions = (VideoMediaStorageOptions)options;
+				}
+				else if (mediaType == TypeMovie)
+				{
+					var voptions = (VideoMediaStorageOptions)options;
 
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video;
-					picker.VideoQuality = GetQuailty (voptions.Quality);
+					picker.VideoQuality = GetQuailty(voptions.Quality);
 					picker.VideoMaximumDuration = voptions.DesiredLength.TotalSeconds;
 				}
 			}
@@ -197,47 +284,73 @@ namespace XLabs.Platform.iOS.Services.Media
 			return picker;
 		}
 
-		private static UIImagePickerControllerCameraDevice GetUICameraDevice (CameraDevice device)
+		/// <summary>
+		/// Gets the UI camera device.
+		/// </summary>
+		/// <param name="device">The device.</param>
+		/// <returns>UIImagePickerControllerCameraDevice.</returns>
+		/// <exception cref="NotSupportedException"></exception>
+		private static UIImagePickerControllerCameraDevice GetUiCameraDevice(CameraDevice device)
 		{
-			switch (device) {
-			case CameraDevice.Front:
-				return UIImagePickerControllerCameraDevice.Front;
-			case CameraDevice.Rear:
-				return UIImagePickerControllerCameraDevice.Rear;
-			default:
-				throw new NotSupportedException();
+			switch (device)
+			{
+				case CameraDevice.Front:
+					return UIImagePickerControllerCameraDevice.Front;
+				case CameraDevice.Rear:
+					return UIImagePickerControllerCameraDevice.Rear;
+				default:
+					throw new NotSupportedException();
 			}
 		}
 
-		private static UIImagePickerControllerQualityType GetQuailty (VideoQuality quality)
+		/// <summary>
+		/// Gets the quailty.
+		/// </summary>
+		/// <param name="quality">The quality.</param>
+		/// <returns>UIImagePickerControllerQualityType.</returns>
+		private static UIImagePickerControllerQualityType GetQuailty(VideoQuality quality)
 		{
-			switch (quality) {
-			case VideoQuality.Low:
-				return UIImagePickerControllerQualityType.Low;
-			case VideoQuality.Medium:
-				return UIImagePickerControllerQualityType.Medium;
-			default:
-				return UIImagePickerControllerQualityType.High;
+			switch (quality)
+			{
+				case VideoQuality.Low:
+					return UIImagePickerControllerQualityType.Low;
+				case VideoQuality.Medium:
+					return UIImagePickerControllerQualityType.Medium;
+				default:
+					return UIImagePickerControllerQualityType.High;
 			}
 		}
 
-		private void VerifyOptions (MediaStorageOptions options)
+		/// <summary>
+		/// Verifies the options.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		/// <exception cref="ArgumentNullException">options</exception>
+		/// <exception cref="ArgumentException">options.Directory must be a relative path;options</exception>
+		private void VerifyOptions(MediaStorageOptions options)
 		{
 			if (options == null)
-				throw new ArgumentNullException ("options");
-			if (options.Directory != null && Path.IsPathRooted (options.Directory))
-				throw new ArgumentException ("options.Directory must be a relative path", "options");
+			{
+				throw new ArgumentNullException("options");
+			}
+			if (options.Directory != null && Path.IsPathRooted(options.Directory))
+			{
+				throw new ArgumentException("options.Directory must be a relative path", "options");
+			}
 		}
 
-		private void VerifyCameraOptions (CameraMediaStorageOptions options)
+		/// <summary>
+		/// Verifies the camera options.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		/// <exception cref="ArgumentException">options.Camera is not a member of CameraDevice</exception>
+		private void VerifyCameraOptions(CameraMediaStorageOptions options)
 		{
-			VerifyOptions (options);
-			if (!Enum.IsDefined (typeof(CameraDevice), options.DefaultCamera))
-				throw new ArgumentException ("options.Camera is not a member of CameraDevice");
+			VerifyOptions(options);
+			if (!Enum.IsDefined(typeof(CameraDevice), options.DefaultCamera))
+			{
+				throw new ArgumentException("options.Camera is not a member of CameraDevice");
+			}
 		}
-	
-
-
 	}
 }
-

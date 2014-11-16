@@ -7,7 +7,7 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XLabs.Platform.Droid</RootNamespace>
+    <RootNamespace>XLabs.Platform</RootNamespace>
     <AssemblyName>XLabs.Platform.Droid</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
@@ -48,23 +48,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\xamarin.forms.labs\xamarin.forms.labs\device\Accelerometer.designer.cs">
+    <Compile Include="..\XLabs.Platform\device\Accelerometer.designer.cs">
       <Link>Device\Accelerometer.designer.cs</Link>
       <DependentUpon>Accelerometer.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\xamarin.forms.labs\xamarin.forms.labs\device\Battery.designer.cs">
+    <Compile Include="..\XLabs.Platform\device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
       <DependentUpon>Battery.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\xamarin.forms.labs\xamarin.forms.labs\device\Gyroscope.designer.cs">
+    <Compile Include="..\XLabs.Platform\device\Gyroscope.designer.cs">
       <Link>Device\Gyroscope.designer.cs</Link>
       <DependentUpon>Gyroscope.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\xamarin.forms.labs\xamarin.forms.labs\services\FontManager.designer.cs">
-      <Link>Services\FontManager.designer.cs</Link>
-      <DependentUpon>FontManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\..\..\xamarin.forms.labs\xamarin.forms.labs\services\io\FileManager.cs">
+    <Compile Include="..\XLabs.Platform\services\io\FileManager.cs">
       <Link>Services\IO\FileManager.cs</Link>
     </Compile>
     <Compile Include="Device\Accelerometer.cs" />
@@ -76,16 +72,13 @@
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\Gyroscope.cs" />
     <Compile Include="Extensions\BroadcastReceiverExtensions.cs" />
-    <Compile Include="Extensions\FontExtensions.cs" />
     <Compile Include="Extensions\IntentExtensions.cs" />
     <Compile Include="Extensions\IntentFilterExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
-    <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Email\EmailService.cs" />
-    <Compile Include="Services\FontManager.cs" />
     <Compile Include="Services\Geolocation\GeolocationContinuousListener.cs" />
     <Compile Include="Services\Geolocation\GeolocationSingleListener.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />
@@ -107,6 +100,10 @@
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
+      <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
+      <Name>XLabs.Ioc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\XLabs.Core\XLabs.Core.csproj">
       <Project>{15d9c404-f7e2-49f0-acc9-63c4c008c860}</Project>
       <Name>XLabs.Core</Name>

@@ -1,4 +1,4 @@
-namespace XLabs.Platform.Droid.Extensions
+namespace XLabs.Platform.Extensions
 {
 	using System.Collections.Generic;
 	using System.Linq;
@@ -6,8 +6,16 @@ namespace XLabs.Platform.Droid.Extensions
 	using Android.Content;
 	using Android.Net;
 
+	/// <summary>
+	/// Class IntentExtensions.
+	/// </summary>
 	public static class IntentExtensions
     {
+		/// <summary>
+		/// Adds the attachments.
+		/// </summary>
+		/// <param name="intent">The intent.</param>
+		/// <param name="attachments">The attachments.</param>
         public static void AddAttachments(this Intent intent, IEnumerable<string> attachments)
         {
             if (attachments == null || !attachments.Any())

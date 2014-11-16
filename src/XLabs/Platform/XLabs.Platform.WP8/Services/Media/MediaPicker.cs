@@ -1,8 +1,4 @@
-﻿using XLabs.Platform.WP8.Services.Media;
-
-[assembly: Dependency(typeof(MediaPicker))]
-
-namespace XLabs.Platform.WP8.Services.Media
+﻿namespace XLabs.Platform.Services.Media
 {
 	using System;
 	using System.IO;
@@ -15,346 +11,393 @@ namespace XLabs.Platform.WP8.Services.Media
 	using Microsoft.Devices;
 	using Microsoft.Phone.Tasks;
 
-	using XLabs.Platform.WP8.Device;
+	using XLabs.Platform.Device;
 
 	/// <summary>
-    ///     Class MediaPicker.
-    /// </summary>
-    public class MediaPicker : IMediaPicker
-    {
-        #region Private Member Variables
-        /// <summary>
-        ///     The _camera capture
-        /// </summary>
-        private readonly CameraCaptureTask _cameraCapture = new CameraCaptureTask();
+	/// Class MediaPicker.
+	/// </summary>
+	public class MediaPicker : IMediaPicker
+	{
+		#region Constructors
 
-        /// <summary>
-        ///     The _photo chooser
-        /// </summary>
-        private readonly PhotoChooserTask _photoChooser = new PhotoChooserTask();
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MediaPicker" /> class.
+		/// </summary>
+		public MediaPicker()
+		{
+			//if (!DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_MEDIALIB_PHOTO))
+			//{
+			//    throw new UnauthorizedAccessException(string.Format("Access to MediaPicker requires {0} to be defined in the manifest.", DeviceCapabilities.Capability.ID_CAP_MEDIALIB_PHOTO));
+			//}
 
-        /// <summary>
-        ///     The _completion source
-        /// </summary>
-        private TaskCompletionSource<MediaFile> _completionSource;
-        #endregion Private Member Variables
+			_photoChooser.Completed += InternalOnPhotoChosen;
+			_cameraCapture.Completed += InternalOnPhotoChosen;
 
-        #region Constructors
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="MediaPicker" /> class.
-        /// </summary>
-        public MediaPicker()
-        {
-            //if (!DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_MEDIALIB_PHOTO))
-            //{
-            //    throw new UnauthorizedAccessException(string.Format("Access to MediaPicker requires {0} to be defined in the manifest.", DeviceCapabilities.Capability.ID_CAP_MEDIALIB_PHOTO));
-            //}
+			_photoChooser.ShowCamera = false;
 
-            _photoChooser.Completed += InternalOnPhotoChosen;
-            _cameraCapture.Completed += InternalOnPhotoChosen;
+			IsCameraAvailable = //DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_ISV_CAMERA) && 
+				(Camera.IsCameraTypeSupported(CameraType.Primary) || Camera.IsCameraTypeSupported(CameraType.FrontFacing));
 
-            _photoChooser.ShowCamera = false;
+			IsPhotosSupported = DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.IdCapMedialibPhoto);
+			IsVideosSupported = IsCameraAvailable;
+		}
 
-            IsCameraAvailable = //DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_ISV_CAMERA) && 
-                (Microsoft.Devices.Camera.IsCameraTypeSupported(CameraType.Primary) ||
-                Microsoft.Devices.Camera.IsCameraTypeSupported(CameraType.FrontFacing));
+		#endregion Constructors
 
+		#region Private Member Variables
 
-            IsPhotosSupported = DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.ID_CAP_MEDIALIB_PHOTO);
-            IsVideosSupported = IsCameraAvailable;
-        }
-        #endregion Constructors
+		/// <summary>
+		/// The _camera capture
+		/// </summary>
+		private readonly CameraCaptureTask _cameraCapture = new CameraCaptureTask();
 
-        #region Public Properties
-        /// <summary>
-        ///     Gets a value indicating whether this instance is camera available.
-        /// </summary>
-        /// <value><c>true</c> if this instance is camera available; otherwise, <c>false</c>.</value>
-        public bool IsCameraAvailable { get; private set; }
+		/// <summary>
+		/// The _photo chooser
+		/// </summary>
+		private readonly PhotoChooserTask _photoChooser = new PhotoChooserTask();
 
-        /// <summary>
-        ///     Gets a value indicating whether this instance is photos supported.
-        /// </summary>
-        /// <value><c>true</c> if this instance is photos supported; otherwise, <c>false</c>.</value>
-        public bool IsPhotosSupported { get; private set; }
+		/// <summary>
+		/// The _completion source
+		/// </summary>
+		private TaskCompletionSource<MediaFile> _completionSource;
 
-        /// <summary>
-        ///     Gets a value indicating whether this instance is videos supported.
-        /// </summary>
-        /// <value><c>true</c> if this instance is videos supported; otherwise, <c>false</c>.</value>
-        public bool IsVideosSupported { get; private set; }
-        #endregion Public Properties
+		#endregion Private Member Variables
 
-        #region Public Methods
-        /// <summary>
-        ///     Select a picture from library.
-        /// </summary>
-        /// <param name="options">The storage options.</param>
-        /// <returns>Task&lt;IMediaFile&gt;.</returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public Task<MediaFile> SelectPhotoAsync(CameraMediaStorageOptions options)
-        {
-            options.VerifyOptions();
+		#region Public Properties
 
-            var ntcs = new TaskCompletionSource<MediaFile>(options);
-            if (Interlocked.CompareExchange(ref _completionSource, ntcs, null) != null)
-                throw new InvalidOperationException("Only one operation can be active at at time");
+		/// <summary>
+		/// Gets a value indicating whether this instance is camera available.
+		/// </summary>
+		/// <value><c>true</c> if this instance is camera available; otherwise, <c>false</c>.</value>
+		public bool IsCameraAvailable { get; private set; }
 
-            _photoChooser.Show();
+		/// <summary>
+		/// Gets a value indicating whether this instance is photos supported.
+		/// </summary>
+		/// <value><c>true</c> if this instance is photos supported; otherwise, <c>false</c>.</value>
+		public bool IsPhotosSupported { get; private set; }
 
-            return ntcs.Task;
-        }
+		/// <summary>
+		/// Gets a value indicating whether this instance is videos supported.
+		/// </summary>
+		/// <value><c>true</c> if this instance is videos supported; otherwise, <c>false</c>.</value>
+		public bool IsVideosSupported { get; private set; }
 
-        /// <summary>
-        ///     Takes the picture.
-        /// </summary>
-        /// <param name="options">The storage options.</param>
-        /// <returns>Task&lt;IMediaFile&gt;.</returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public Task<MediaFile> TakePhotoAsync(CameraMediaStorageOptions options)
-        {
-            options.VerifyOptions();
+		#endregion Public Properties
 
-            var ntcs = new TaskCompletionSource<MediaFile>(options);
-            if (Interlocked.CompareExchange(ref _completionSource, ntcs, null) != null)
-                throw new InvalidOperationException("Only one operation can be active at a time");
+		#region Public Methods
 
-            _cameraCapture.Show();
+		/// <summary>
+		/// Select a picture from library.
+		/// </summary>
+		/// <param name="options">The storage options.</param>
+		/// <returns>Task&lt;IMediaFile&gt;.</returns>
+		/// <exception cref="InvalidOperationException">Only one operation can be active at at time</exception>
+		/// <exception cref="System.NotImplementedException"></exception>
+		public Task<MediaFile> SelectPhotoAsync(CameraMediaStorageOptions options)
+		{
+			options.VerifyOptions();
 
-            return ntcs.Task;
-        }
+			var ntcs = new TaskCompletionSource<MediaFile>(options);
+			if (Interlocked.CompareExchange(ref _completionSource, ntcs, null) != null)
+			{
+				throw new InvalidOperationException("Only one operation can be active at at time");
+			}
 
-        /// <summary>
-        ///     Selects the video asynchronous.
-        /// </summary>
-        /// <param name="options"></param>
-        /// <returns>Task&lt;IMediaFile&gt;.</returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public Task<MediaFile> SelectVideoAsync(VideoMediaStorageOptions options)
-        {
-            throw new NotImplementedException();
-        }
+			_photoChooser.Show();
 
-        /// <summary>
-        ///     Takes the video asynchronous.
-        /// </summary>
-        /// <param name="options">The options.</param>
-        /// <returns>Task&lt;IMediaFile&gt;.</returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public Task<MediaFile> TakeVideoAsync(VideoMediaStorageOptions options)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion Public Methods
+			return ntcs.Task;
+		}
 
-        #region Event Handlers
-        /// <summary>
-        /// Event the fires when media has been selected
-        /// </summary>
-        /// <value>The on photo selected.</value>
-        public EventHandler<MediaPickerArgs> OnMediaSelected { get; set; }
+		/// <summary>
+		/// Takes the picture.
+		/// </summary>
+		/// <param name="options">The storage options.</param>
+		/// <returns>Task&lt;IMediaFile&gt;.</returns>
+		/// <exception cref="InvalidOperationException">Only one operation can be active at a time</exception>
+		/// <exception cref="System.NotImplementedException"></exception>
+		public Task<MediaFile> TakePhotoAsync(CameraMediaStorageOptions options)
+		{
+			options.VerifyOptions();
 
-        /// <summary>
-        /// Gets or sets the on error.
-        /// </summary>
-        /// <value>The on error.</value>
-        public EventHandler<MediaPickerErrorArgs> OnError { get; set; }
-        #endregion Event Handlers
+			var ntcs = new TaskCompletionSource<MediaFile>(options);
+			if (Interlocked.CompareExchange(ref _completionSource, ntcs, null) != null)
+			{
+				throw new InvalidOperationException("Only one operation can be active at a time");
+			}
 
-        #region Private Methods
-        /// <summary>
-        /// Internals the on photo chosen.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="photoResult">The photo result.</param>
-        private void InternalOnPhotoChosen(object sender, PhotoResult photoResult)
-        {
-            var tcs = Interlocked.Exchange(ref _completionSource, null);
+			_cameraCapture.Show();
 
-            if (photoResult.TaskResult == TaskResult.Cancel)
-            {
-                tcs.SetCanceled();
-                return;
-            }
+			return ntcs.Task;
+		}
 
-            var path = string.Empty;
+		/// <summary>
+		/// Selects the video asynchronous.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		/// <returns>Task&lt;IMediaFile&gt;.</returns>
+		/// <exception cref="NotImplementedException"></exception>
+		/// <exception cref="System.NotImplementedException"></exception>
+		public Task<MediaFile> SelectVideoAsync(VideoMediaStorageOptions options)
+		{
+			throw new NotImplementedException();
+		}
 
-            var pos = photoResult.ChosenPhoto.Position;
-            var options = tcs.Task.AsyncState as CameraMediaStorageOptions;
-            var streamImage = photoResult.ChosenPhoto;
-            var saveImage = true;
-            Action<bool> dispose = null;
+		/// <summary>
+		/// Takes the video asynchronous.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		/// <returns>Task&lt;IMediaFile&gt;.</returns>
+		/// <exception cref="NotImplementedException"></exception>
+		/// <exception cref="System.NotImplementedException"></exception>
+		public Task<MediaFile> TakeVideoAsync(VideoMediaStorageOptions options)
+		{
+			throw new NotImplementedException();
+		}
 
-            if (options != null)
-            {
-                ResizeImageStream(options.MaxPixelDimension, options.PercentQuality, streamImage, stream => SafeAsyncCall(stream, (o) => streamImage = o));
-                saveImage = options.SaveMediaOnCapture;
-            }
+		#endregion Public Methods
 
-            if (saveImage)
-            {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    path = options.GetUniqueMediaFileWithPath((options == null) ? "temp" : options.Directory, p => store.FileExists(p));
+		#region Event Handlers
 
-                    var dir = Path.GetDirectoryName(path);
-                    if (!String.IsNullOrWhiteSpace(dir))
-                    {
-                        store.CreateDirectory(dir);
-                    }
+		/// <summary>
+		/// Event the fires when media has been selected
+		/// </summary>
+		/// <value>The on photo selected.</value>
+		public EventHandler<MediaPickerArgs> OnMediaSelected { get; set; }
 
-                    using (var fs = store.CreateFile(path))
-                    {
-                        var buffer = new byte[20480];
-                        int len;
-                        //while ((len = photoResult.ChosenPhoto.Read(buffer, 0, buffer.Length)) > 0)
-                        while ((len = streamImage.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            fs.Write(buffer, 0, len);
-                        }
+		/// <summary>
+		/// Gets or sets the on error.
+		/// </summary>
+		/// <value>The on error.</value>
+		public EventHandler<MediaPickerErrorArgs> OnError { get; set; }
 
-                        fs.Flush(true);
-                    }
-                }
+		#endregion Event Handlers
 
-                if (options == null)
-                {
-                    dispose = d =>
-                    {
-                        using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                        {
-                            store.DeleteFile(path);
-                        }
-                    };
-                }
-            }
+		#region Private Methods
 
-            switch (photoResult.TaskResult)
-            {
-                case TaskResult.OK:
-                    photoResult.ChosenPhoto.Position = pos;
-                    var mf = new MediaFile(path, () => streamImage, dispose);
+		/// <summary>
+		/// Internals the on photo chosen.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="photoResult">The photo result.</param>
+		private void InternalOnPhotoChosen(object sender, PhotoResult photoResult)
+		{
+			var tcs = Interlocked.Exchange(ref _completionSource, null);
 
-                    if (OnMediaSelected != null) OnMediaSelected(this, new MediaPickerArgs(mf));
+			if (photoResult.TaskResult == TaskResult.Cancel)
+			{
+				tcs.SetCanceled();
+				return;
+			}
 
-                    tcs.SetResult(mf);
-                    break;
+			var path = string.Empty;
 
-                case TaskResult.None:
-                    photoResult.ChosenPhoto.Dispose();
-                    if (photoResult.Error != null)
-                    {
-                        if (OnError != null) OnError(this, new MediaPickerErrorArgs(photoResult.Error));
+			var pos = photoResult.ChosenPhoto.Position;
+			var options = tcs.Task.AsyncState as CameraMediaStorageOptions;
+			var streamImage = photoResult.ChosenPhoto;
+			var saveImage = true;
+			Action<bool> dispose = null;
 
-                        tcs.SetException(photoResult.Error);
-                    }
+			if (options != null)
+			{
+				ResizeImageStream(
+					options.MaxPixelDimension,
+					options.PercentQuality,
+					streamImage,
+					stream => SafeAsyncCall(stream, o => streamImage = o));
+				saveImage = options.SaveMediaOnCapture;
+			}
 
-                    break;
-            }
-        }
+			if (saveImage)
+			{
+				using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+				{
+					path = options.GetUniqueMediaFileWithPath((options == null) ? "temp" : options.Directory, p => store.FileExists(p));
 
-        /// <summary>
-        ///     Resizes the JPEG stream.
-        /// </summary>
-        /// <param name="maxPixelDimension">The maximum pixel dimension ratio (used to resize the image).</param>
-        /// <param name="percentQuality">The percent quality.</param>
-        /// <param name="input">The stream that contains the image.</param>
-        /// <param name="success">The action to execute on actionSuccess of resizing the image.</param>
-        private static void ResizeImageStream(int? maxPixelDimension, int? percentQuality, Stream input, Action<Stream> success)
-        {
-            int targetHeight;
-            int targetWidth;
+					var dir = Path.GetDirectoryName(path);
+					if (!String.IsNullOrWhiteSpace(dir))
+					{
+						store.CreateDirectory(dir);
+					}
 
-            if (!percentQuality.HasValue) percentQuality = 100;
+					using (var fs = store.CreateFile(path))
+					{
+						var buffer = new byte[20480];
+						int len;
+						//while ((len = photoResult.ChosenPhoto.Read(buffer, 0, buffer.Length)) > 0)
+						while ((len = streamImage.Read(buffer, 0, buffer.Length)) > 0)
+						{
+							fs.Write(buffer, 0, len);
+						}
 
-            var bitmap = new BitmapImage();
-            bitmap.SetSource(input);
-            var writeable = new WriteableBitmap(bitmap);
+						fs.Flush(true);
+					}
+				}
 
-            ResizeBasedOnPixelDimension(maxPixelDimension, writeable.PixelWidth, writeable.PixelHeight, out targetWidth,
-                out targetHeight);
+				if (options == null)
+				{
+					dispose = d =>
+						{
+							using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+							{
+								store.DeleteFile(path);
+							}
+						};
+				}
+			}
 
-            // Note: We are NOT using a "using" statement here on purpose. It is the callers responsibility to handle the dispose of the stream correctly
-            var memoryStream = new MemoryStream();
-            writeable.SaveJpeg(memoryStream, targetWidth, targetHeight, 0, percentQuality.Value);
-            memoryStream.Seek(0L, SeekOrigin.Begin);
+			switch (photoResult.TaskResult)
+			{
+				case TaskResult.OK:
+					photoResult.ChosenPhoto.Position = pos;
+					var mf = new MediaFile(path, () => streamImage, dispose);
 
-            // Execute the call back with the valid stream
-            success(memoryStream);
-        }
+					if (OnMediaSelected != null)
+					{
+						OnMediaSelected(this, new MediaPickerArgs(mf));
+					}
 
-        /// <summary>
-        ///     Calls the asynchronous.
-        /// </summary>
-        /// <param name="input">The stream that contains the image.</param>
-        /// <param name="success">The action to execute on actionSuccess of resizing the image.</param>
-        private static void SafeAsyncCall(Stream input, Action<Stream> success)
-        {
-            if (Deployment.Current.Dispatcher.CheckAccess())
-            {
-                try
-                {
-                    success(input);
-                }
-                catch
-                {
-                }
-            }
-            else
-            {
-                Deployment.Current.Dispatcher.BeginInvoke(() => success(input));
-            }
-        }
+					tcs.SetResult(mf);
+					break;
 
-        /// <summary>
-        ///     Does the with invalid operation protection.
-        /// </summary>
-        /// <param name="action">The action.</param>
-        private void SafeAsyncCall(Action action)
-        {
-            if (Deployment.Current.Dispatcher.CheckAccess())
-            {
-                try
-                {
-                    action();
-                }
-                catch
-                {
-                }
-            }
-            else
-            {
-                Deployment.Current.Dispatcher.BeginInvoke(action);
-            }
-        }
+				case TaskResult.None:
+					photoResult.ChosenPhoto.Dispose();
+					if (photoResult.Error != null)
+					{
+						if (OnError != null)
+						{
+							OnError(this, new MediaPickerErrorArgs(photoResult.Error));
+						}
 
-        /// <summary>
-        ///     Calcualtes the target height and width of the image based on the max pixel dimension.
-        /// </summary>
-        /// <param name="maxPixelDimension">The maximum pixel dimension ratio (used to resize the image).</param>
-        /// <param name="currentWidth">Current Width of the image.</param>
-        /// <param name="currentHeight">Current Height of the image.</param>
-        /// <param name="targetWidth">Target Width of the image.</param>
-        /// <param name="targetHeight">Target Height of the image.</param>
-        public static void ResizeBasedOnPixelDimension(int? maxPixelDimension, int currentWidth, int currentHeight,
-            out int targetWidth, out int targetHeight)
-        {
-            if (!maxPixelDimension.HasValue)
-            {
-                targetWidth = currentWidth;
-                targetHeight = currentHeight;
-                return;
-            }
+						tcs.SetException(photoResult.Error);
+					}
 
-            double ratio;
-            if (currentWidth > currentHeight)
-                ratio = (maxPixelDimension.Value) / ((double)currentWidth);
-            else
-                ratio = (maxPixelDimension.Value) / ((double)currentHeight);
+					break;
+			}
+		}
 
-            targetWidth = (int)Math.Round(ratio * currentWidth);
-            targetHeight = (int)Math.Round(ratio * currentHeight);
-        }
-        #endregion Private Methods
-    }
+		/// <summary>
+		/// Resizes the JPEG stream.
+		/// </summary>
+		/// <param name="maxPixelDimension">The maximum pixel dimension ratio (used to resize the image).</param>
+		/// <param name="percentQuality">The percent quality.</param>
+		/// <param name="input">The stream that contains the image.</param>
+		/// <param name="success">The action to execute on actionSuccess of resizing the image.</param>
+		private static void ResizeImageStream(
+			int? maxPixelDimension,
+			int? percentQuality,
+			Stream input,
+			Action<Stream> success)
+		{
+			int targetHeight;
+			int targetWidth;
+
+			if (!percentQuality.HasValue)
+			{
+				percentQuality = 100;
+			}
+
+			var bitmap = new BitmapImage();
+			bitmap.SetSource(input);
+			var writeable = new WriteableBitmap(bitmap);
+
+			ResizeBasedOnPixelDimension(
+				maxPixelDimension,
+				writeable.PixelWidth,
+				writeable.PixelHeight,
+				out targetWidth,
+				out targetHeight);
+
+			// Note: We are NOT using a "using" statement here on purpose. It is the callers responsibility to handle the dispose of the stream correctly
+			var memoryStream = new MemoryStream();
+			writeable.SaveJpeg(memoryStream, targetWidth, targetHeight, 0, percentQuality.Value);
+			memoryStream.Seek(0L, SeekOrigin.Begin);
+
+			// Execute the call back with the valid stream
+			success(memoryStream);
+		}
+
+		/// <summary>
+		/// Calls the asynchronous.
+		/// </summary>
+		/// <param name="input">The stream that contains the image.</param>
+		/// <param name="success">The action to execute on actionSuccess of resizing the image.</param>
+		private static void SafeAsyncCall(Stream input, Action<Stream> success)
+		{
+			if (Deployment.Current.Dispatcher.CheckAccess())
+			{
+				try
+				{
+					success(input);
+				}
+				catch
+				{
+				}
+			}
+			else
+			{
+				Deployment.Current.Dispatcher.BeginInvoke(() => success(input));
+			}
+		}
+
+		/// <summary>
+		/// Does the with invalid operation protection.
+		/// </summary>
+		/// <param name="action">The action.</param>
+		private void SafeAsyncCall(Action action)
+		{
+			if (Deployment.Current.Dispatcher.CheckAccess())
+			{
+				try
+				{
+					action();
+				}
+				catch
+				{
+				}
+			}
+			else
+			{
+				Deployment.Current.Dispatcher.BeginInvoke(action);
+			}
+		}
+
+		/// <summary>
+		/// Calcualtes the target height and width of the image based on the max pixel dimension.
+		/// </summary>
+		/// <param name="maxPixelDimension">The maximum pixel dimension ratio (used to resize the image).</param>
+		/// <param name="currentWidth">Current Width of the image.</param>
+		/// <param name="currentHeight">Current Height of the image.</param>
+		/// <param name="targetWidth">Target Width of the image.</param>
+		/// <param name="targetHeight">Target Height of the image.</param>
+		public static void ResizeBasedOnPixelDimension(
+			int? maxPixelDimension,
+			int currentWidth,
+			int currentHeight,
+			out int targetWidth,
+			out int targetHeight)
+		{
+			if (!maxPixelDimension.HasValue)
+			{
+				targetWidth = currentWidth;
+				targetHeight = currentHeight;
+				return;
+			}
+
+			double ratio;
+			if (currentWidth > currentHeight)
+			{
+				ratio = (maxPixelDimension.Value) / ((double)currentWidth);
+			}
+			else
+			{
+				ratio = (maxPixelDimension.Value) / ((double)currentHeight);
+			}
+
+			targetWidth = (int)Math.Round(ratio * currentWidth);
+			targetHeight = (int)Math.Round(ratio * currentHeight);
+		}
+
+		#endregion Private Methods
+	}
 }

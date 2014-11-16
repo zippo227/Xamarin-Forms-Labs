@@ -1,7 +1,4 @@
-﻿using XLabs.Platform.Droid.Services;
-
-[assembly: Dependency (typeof(SoundService))]
-namespace XLabs.Platform.Droid.Services
+﻿namespace XLabs.Platform.Services
 {
 	using System;
 	using System.IO;
@@ -11,145 +8,230 @@ namespace XLabs.Platform.Droid.Services
 	using Android.Content.Res;
 	using Android.Media;
 
-	using XLabs.Platform.Services.SoundService;
-
-	public class SoundService : ISoundService
+	/// <summary>
+	/// Class SoundService.
+	/// </summary>
+	public class SoundService : XLabs.Platform.Services.SoundService.ISoundService
 	{
-		bool _isPlayerPrepared = false;
-		bool _isScrubbing = false;
+		/// <summary>
+		/// The _is player prepared
+		/// </summary>
+		private bool _isPlayerPrepared;
 
-		public SoundService ()
+		/// <summary>
+		/// The _is scrubbing
+		/// </summary>
+		private bool _isScrubbing;
+
+		/// <summary>
+		/// The _player
+		/// </summary>
+		private MediaPlayer _player;
+
+		/// <summary>
+		/// Starts the player asynchronous from assets folder.
+		/// </summary>
+		/// <param name="fp">The fp.</param>
+		/// <returns>Task.</returns>
+		/// <exception cref="FileNotFoundException">Make sure you set your file in the Assets folder</exception>
+		private async Task StartPlayerAsyncFromAssetsFolder(AssetFileDescriptor fp)
 		{
+			try
+			{
+				if (_player == null)
+				{
+					_player = new MediaPlayer();
+				}
+				else
+				{
+					_player.Reset();
+				}
+
+				if (fp == null)
+				{
+					throw new FileNotFoundException("Make sure you set your file in the Assets folder");
+				}
+
+				await _player.SetDataSourceAsync(fp.FileDescriptor);
+				_player.Prepared += (s, e) =>
+					{
+						_player.SetVolume(0, 0);
+						_isPlayerPrepared = true;
+					};
+				_player.Prepare();
+			}
+			catch (Exception ex)
+			{
+				Console.Out.WriteLine(ex.StackTrace);
+			}
 		}
 
 		#region ISoundService implementation
 
+		/// <summary>
+		/// Occurs when [sound file finished].
+		/// </summary>
 		public event EventHandler SoundFileFinished;
 
-		public System.Threading.Tasks.Task<SoundFile> PlayAsync (string filename, string extension = null)
+		/// <summary>
+		/// Plays the asynchronous.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		/// <param name="extension">The extension.</param>
+		/// <returns>Task&lt;SoundFile&gt;.</returns>
+		public Task<SoundFile> PlayAsync(string filename, string extension = null)
 		{
-			return Task.Run<SoundFile> (async () => {
-				if (player == null || string.Compare (filename, _currentFile.Filename) > 0) {
-					await SetMediaAsync (filename);
-				}
-				player.Start ();
-				return _currentFile;
-			});
+			return Task.Run<SoundFile>(
+				async () =>
+					{
+						if (_player == null || string.Compare(filename, CurrentFile.Filename) > 0)
+						{
+							await SetMediaAsync(filename);
+						}
+						_player.Start();
+						return CurrentFile;
+					});
 		}
 
-		public async System.Threading.Tasks.Task<SoundFile> SetMediaAsync (string filename)
+		/// <summary>
+		/// set media as an asynchronous operation.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		/// <returns>Task&lt;SoundFile&gt;.</returns>
+		public async Task<SoundFile> SetMediaAsync(string filename)
 		{
-			_currentFile = new SoundFile ();
-			_currentFile.Filename = filename;
-			await StartPlayerAsyncFromAssetsFolder (Application.Context.Assets.OpenFd (filename));
-			_currentFile.Duration =  TimeSpan.FromSeconds( player.Duration);
-			return _currentFile;
+			CurrentFile = new SoundFile();
+			CurrentFile.Filename = filename;
+			await StartPlayerAsyncFromAssetsFolder(Application.Context.Assets.OpenFd(filename));
+			CurrentFile.Duration = TimeSpan.FromSeconds(_player.Duration);
+			return CurrentFile;
 		}
 
-		public System.Threading.Tasks.Task GoToAsync (double position)
+		/// <summary>
+		/// Goes to asynchronous.
+		/// </summary>
+		/// <param name="position">The position.</param>
+		/// <returns>Task.</returns>
+		public Task GoToAsync(double position)
 		{
-			return Task.Run (() => {
-				if (!_isScrubbing) {
-					_isScrubbing = true;
-					player.SeekTo (TimeSpan.FromSeconds (position).Milliseconds);
-					_isScrubbing = false;
-				}
-			});
+			return Task.Run(
+				() =>
+					{
+						if (!_isScrubbing)
+						{
+							_isScrubbing = true;
+							_player.SeekTo(TimeSpan.FromSeconds(position).Milliseconds);
+							_isScrubbing = false;
+						}
+					});
 		}
 
-		public void Play ()
+		/// <summary>
+		/// Plays this instance.
+		/// </summary>
+		public void Play()
 		{
-			if ((player != null)) {
-				if (!player.IsPlaying) {
-					player.Start ();
+			if ((_player != null))
+			{
+				if (!_player.IsPlaying)
+				{
+					_player.Start();
 				}
 			}
 		}
 
-		public void Stop ()
+		/// <summary>
+		/// Stops this instance.
+		/// </summary>
+		public void Stop()
 		{
-			if ((player != null)) {
-				if (player.IsPlaying) {
-					player.Stop ();
+			if ((_player != null))
+			{
+				if (_player.IsPlaying)
+				{
+					_player.Stop();
 				}
-				player.Release ();
-				player = null;
+				_player.Release();
+				_player = null;
 			}
 		}
 
-		public void Pause ()
+		/// <summary>
+		/// Pauses this instance.
+		/// </summary>
+		public void Pause()
 		{
-			if ((player != null)) {
-				if (player.IsPlaying) {
-					player.Pause ();
+			if ((_player != null))
+			{
+				if (_player.IsPlaying)
+				{
+					_player.Pause();
 				}
 			}
 		}
 
-		public double Volume {
-			get {
+		/// <summary>
+		/// Gets or sets the volume.
+		/// </summary>
+		/// <value>The volume.</value>
+		public double Volume
+		{
+			get
+			{
 				return 0.5;
 			}
-			set {
-				if(player != null && _isPlayerPrepared)
-					player.SetVolume((float)value,(float)value);
+			set
+			{
+				if (_player != null && _isPlayerPrepared)
+				{
+					_player.SetVolume((float)value, (float)value);
+				}
 			}
 		}
 
+		/// <summary>
+		/// The _current time
+		/// </summary>
 		private double _currentTime;
-		public double CurrentTime {
-			get {
-				if (player == null)
+
+		/// <summary>
+		/// Gets the current time.
+		/// </summary>
+		/// <value>The current time.</value>
+		public double CurrentTime
+		{
+			get
+			{
+				if (_player == null)
+				{
 					return 0;
-				return TimeSpan.FromMilliseconds( player.CurrentPosition).TotalSeconds;
+				}
+				return TimeSpan.FromMilliseconds(_player.CurrentPosition).TotalSeconds;
 			}
-			set {
+			set
+			{
 				_currentTime = value;
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether this instance is playing.
+		/// </summary>
+		/// <value><c>true</c> if this instance is playing; otherwise, <c>false</c>.</value>
+		public bool IsPlaying
+		{
+			get
+			{
+				return _player.IsPlaying;
+			}
+		}
 
-		public bool IsPlaying {
-			get{ 
-				return player.IsPlaying;
-			}
-		}
-		private SoundFile _currentFile;
-		public SoundFile CurrentFile {
-			get {
-				return _currentFile;
-			}
-		}
+		/// <summary>
+		/// Gets the current file.
+		/// </summary>
+		/// <value>The current file.</value>
+		public SoundFile CurrentFile { get; private set; }
 
 		#endregion
-
-		MediaPlayer player = null;
-
-		private async Task StartPlayerAsyncFromAssetsFolder (AssetFileDescriptor fp)
-		{
-			try {
-				if (player == null) {
-					player = new MediaPlayer ();
-				} else {
-					player.Reset ();
-				}
-
-				if(fp == null)
-					throw new FileNotFoundException("Make sure you set your file in the Assets folder");
-
-				await player.SetDataSourceAsync (fp.FileDescriptor);
-				player.Prepared+=(s,e)=>{
-
-					player.SetVolume(0,0);
-					_isPlayerPrepared = true;
-
-				};
-				player.Prepare ();
-			} catch (Exception ex) {
-				Console.Out.WriteLine (ex.StackTrace);
-			}
-		}
-
 	}
 }
-

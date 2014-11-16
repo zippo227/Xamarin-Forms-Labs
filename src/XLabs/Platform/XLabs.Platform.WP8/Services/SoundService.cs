@@ -1,7 +1,4 @@
-﻿using XLabs.Platform.WP8.Services;
-
-[assembly: Dependency(typeof(SoundService))]
-namespace XLabs.Platform.WP8.Services
+﻿namespace XLabs.Platform.Services
 {
 	using System;
 	using System.Threading.Tasks;
@@ -9,237 +6,241 @@ namespace XLabs.Platform.WP8.Services
 	using System.Windows.Controls;
 
 	/// <summary>
-    /// SoundService implementation on the Windows Phone platform
-    /// Nees a GlobalMEdiaElement instance on the App resources dictionary
-    /// </summary>
-    public class SoundService : ISoundService
-    {
+	/// SoundService implementation on the Windows Phone platform
+	/// Nees a GlobalMEdiaElement instance on the App resources dictionary
+	/// </summary>
+	public class SoundService : ISoundService
+	{
+		/// <summary>
+		/// The _is scrubbing
+		/// </summary>
+		private bool _isScrubbing;
 
-        private bool _isScrubbing = false;
-        private bool _isPlaying = false;
-        private SoundFile _currentFile = null;
+		/// <summary>
+		/// The _TCS set media
+		/// </summary>
+		private TaskCompletionSource<SoundFile> _tcsSetMedia;
 
-        /// <summary>
-        /// Occurs when [sound file finished].
-        /// </summary>
-        public event EventHandler SoundFileFinished;
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SoundService"/> class.
+		/// </summary>
+		public SoundService()
+		{
+			IsPlaying = false;
+			CurrentFile = null;
+		}
 
-        /// <summary>
-        /// Raises the <see cref="E:FileFinished" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="SoundFinishedEventArgs"/> instance containing the event data.</param>
-        protected virtual void OnFileFinished(SoundFinishedEventArgs e)
-        {
-            if (SoundFileFinished != null)
-            {
-                SoundFileFinished(this, e);
-            }
-        }
+		/// <summary>
+		/// Gets the global media element.
+		/// </summary>
+		/// <value>The global media element.</value>
+		/// <exception cref="ArgumentNullException">GlobalMedia is missing</exception>
+		public static MediaElement GlobalMediaElement
+		{
+			get
+			{
+				if (Application.Current.Resources.Contains("GlobalMedia"))
+				{
+					return Application.Current.Resources["GlobalMedia"] as MediaElement;
+				}
+				throw new ArgumentNullException("GlobalMedia is missing");
+			}
+		}
 
-        /// <summary>
-        /// Plays the asynchronous.
-        /// </summary>
-        /// <param name="filename">The filename.</param>
-        /// <param name="extension">The extension.</param>
-        /// <returns></returns>
-        public async Task<SoundFile> PlayAsync(string filename, string extension = null)
-        {
-            if (GlobalMediaElement != null || string.Compare(filename, _currentFile.Filename) > 0)
-            {
-                await SetMediaAsync(filename);
+		/// <summary>
+		/// Gets a value indicating whether this instance is playing.
+		/// </summary>
+		/// <value><c>true</c> if this instance is playing; otherwise, <c>false</c>.</value>
+		public bool IsPlaying { get; private set; }
 
-                GlobalMediaElement.Play();
+		/// <summary>
+		/// Gets the current time.
+		/// </summary>
+		/// <value>The current time.</value>
+		public double CurrentTime
+		{
+			get
+			{
+				if (GlobalMediaElement == null)
+				{
+					return 0;
+				}
+				return GlobalMediaElement.NaturalDuration.TimeSpan.TotalSeconds;
+			}
+		}
 
-                _isPlaying = true;
-                return _currentFile;
-            }
-            return null;
-        }
-        /// <summary>
-        /// Gets the global media element.
-        /// </summary>
-        /// <value>
-        /// The global media element.
-        /// </value>
-        public static MediaElement GlobalMediaElement
-        {
-            get
-            {
-                if (Application.Current.Resources.Contains("GlobalMedia"))
-                    return Application.Current.Resources["GlobalMedia"] as MediaElement;
-                else
-                    throw new ArgumentNullException("GlobalMedia is missing");
-            }
+		/// <summary>
+		/// Gets or sets the volume.
+		/// </summary>
+		/// <value>The volume.</value>
+		public double Volume
+		{
+			get
+			{
+				if (GlobalMediaElement == null)
+				{
+					return 0;
+				}
+				return GlobalMediaElement.Volume;
+			}
+			set
+			{
+				if (GlobalMediaElement != null)
+				{
+					GlobalMediaElement.Volume = value;
+				}
+			}
+		}
 
-        }
+		/// <summary>
+		/// Gets the current file.
+		/// </summary>
+		/// <value>The current file.</value>
+		public SoundFile CurrentFile { get; private set; }
 
-        TaskCompletionSource<SoundFile> tcsSetMedia;
-        /// <summary>
-        /// Sets the media asynchronous.
-        /// </summary>
-        /// <param name="filename">The filename.</param>
-        /// <returns></returns>
-        public Task<SoundFile> SetMediaAsync(string filename)
-        {
-            tcsSetMedia = new TaskCompletionSource<SoundFile>();
+		/// <summary>
+		/// Plays this instance.
+		/// </summary>
+		public void Play()
+		{
+			if (GlobalMediaElement != null && !IsPlaying)
+			{
+				GlobalMediaElement.Play();
+				IsPlaying = true;
+			}
+		}
 
-            _currentFile = new SoundFile();
-            _currentFile.Filename = filename;
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                if (Application.GetResourceStream(new Uri(_currentFile.Filename, UriKind.Relative)) == null)
-                    MessageBox.Show("File doesn't exist!");
+		/// <summary>
+		/// Stops this instance.
+		/// </summary>
+		public void Stop()
+		{
+			if (GlobalMediaElement != null)
+			{
+				GlobalMediaElement.Stop();
+				IsPlaying = false;
+				//   player.du = 0.0;
+			}
+		}
 
-                //TODO: need to clean this events
-                GlobalMediaElement.MediaEnded += GlobalMediaElement_MediaEnded;
-                GlobalMediaElement.MediaOpened += GlobalMediaElement_MediaOpened;
+		/// <summary>
+		/// Pauses this instance.
+		/// </summary>
+		public void Pause()
+		{
+			if (GlobalMediaElement != null && IsPlaying)
+			{
+				GlobalMediaElement.Pause();
+				IsPlaying = false;
+			}
+		}
 
-                GlobalMediaElement.Source = new Uri(_currentFile.Filename, UriKind.Relative);
+		/// <summary>
+		/// Occurs when [sound file finished].
+		/// </summary>
+		public event EventHandler SoundFileFinished;
 
-            });
-            return tcsSetMedia.Task;
-        }
+		/// <summary>
+		/// Raises the <see cref="E:FileFinished" /> event.
+		/// </summary>
+		/// <param name="e">The <see cref="SoundFinishedEventArgs" /> instance containing the event data.</param>
+		protected virtual void OnFileFinished(SoundFinishedEventArgs e)
+		{
+			if (SoundFileFinished != null)
+			{
+				SoundFileFinished(this, e);
+			}
+		}
 
-        void GlobalMediaElement_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            if (tcsSetMedia != null)
-            {
-                _currentFile.Duration = TimeSpan.FromSeconds(GlobalMediaElement.NaturalDuration.TimeSpan.TotalSeconds);
-                tcsSetMedia.SetResult(_currentFile);
-            }
-        }
+		/// <summary>
+		/// Plays the asynchronous.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		/// <param name="extension">The extension.</param>
+		/// <returns>Task&lt;SoundFile&gt;.</returns>
+		public async Task<SoundFile> PlayAsync(string filename, string extension = null)
+		{
+			if (GlobalMediaElement != null || string.Compare(filename, CurrentFile.Filename) > 0)
+			{
+				await SetMediaAsync(filename);
 
-        /// <summary>
-        /// Handles the MediaEnded event of the player control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        void GlobalMediaElement_MediaEnded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            this.OnFileFinished(new SoundFinishedEventArgs(this._currentFile));
-        }
+				GlobalMediaElement.Play();
 
-        /// <summary>
-        /// Goes to asynchronous.
-        /// </summary>
-        /// <param name="position">The position.</param>
-        /// <returns></returns>
-        public Task GoToAsync(double position)
-        {
-            return Task.Run(() =>
-            {
-                if (!_isScrubbing)
-                {
-                    _isScrubbing = true;
-                    //    player.CurrentTime = position;
-                    _isScrubbing = false;
-                }
-            });
-        }
+				IsPlaying = true;
+				return CurrentFile;
+			}
+			return null;
+		}
 
-        /// <summary>
-        /// Gets the current file.
-        /// </summary>
-        /// <value>
-        /// The current file.
-        /// </value>
-        public SoundFile CurrentFile
-        {
-            get
-            {
-                return _currentFile;
-            }
-        }
+		/// <summary>
+		/// Sets the media asynchronous.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		/// <returns>Task&lt;SoundFile&gt;.</returns>
+		public Task<SoundFile> SetMediaAsync(string filename)
+		{
+			_tcsSetMedia = new TaskCompletionSource<SoundFile>();
 
-        /// <summary>
-        /// Gets a value indicating whether this instance is playing.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance is playing; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsPlaying
-        {
-            get
-            {
-                return _isPlaying;
-            }
-        }
+			CurrentFile = new SoundFile();
+			CurrentFile.Filename = filename;
+			Device.BeginInvokeOnMainThread(
+				() =>
+					{
+						if (Application.GetResourceStream(new Uri(CurrentFile.Filename, UriKind.Relative)) == null)
+						{
+							MessageBox.Show("File doesn't exist!");
+						}
 
-        /// <summary>
-        /// Gets the current time.
-        /// </summary>
-        /// <value>
-        /// The current time.
-        /// </value>
-        public double CurrentTime
-        {
-            get
-            {
-                if (GlobalMediaElement == null)
-                    return 0;
-                return (double)GlobalMediaElement.NaturalDuration.TimeSpan.TotalSeconds;
-            }
-        }
+						//TODO: need to clean this events
+						GlobalMediaElement.MediaEnded += GlobalMediaElementMediaEnded;
+						GlobalMediaElement.MediaOpened += GlobalMediaElementMediaOpened;
 
-        /// <summary>
-        /// Plays this instance.
-        /// </summary>
-        public void Play()
-        {
-            if (GlobalMediaElement != null && !_isPlaying)
-            {
-                GlobalMediaElement.Play();
-                _isPlaying = true;
-            }
-        }
+						GlobalMediaElement.Source = new Uri(CurrentFile.Filename, UriKind.Relative);
+					});
+			return _tcsSetMedia.Task;
+		}
 
-        /// <summary>
-        /// Stops this instance.
-        /// </summary>
-        public void Stop()
-        {
-            if (GlobalMediaElement != null)
-            {
-                GlobalMediaElement.Stop();
-                _isPlaying = false;
-                //   player.du = 0.0;
-            }
+		/// <summary>
+		/// Globals the media element media opened.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+		private void GlobalMediaElementMediaOpened(object sender, RoutedEventArgs e)
+		{
+			if (_tcsSetMedia != null)
+			{
+				CurrentFile.Duration = TimeSpan.FromSeconds(GlobalMediaElement.NaturalDuration.TimeSpan.TotalSeconds);
+				_tcsSetMedia.SetResult(CurrentFile);
+			}
+		}
 
-        }
+		/// <summary>
+		/// Handles the MediaEnded event of the player control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+		private void GlobalMediaElementMediaEnded(object sender, RoutedEventArgs e)
+		{
+			OnFileFinished(new SoundFinishedEventArgs(CurrentFile));
+		}
 
-        /// <summary>
-        /// Pauses this instance.
-        /// </summary>
-        public void Pause()
-        {
-            if (GlobalMediaElement != null && _isPlaying)
-            {
-                GlobalMediaElement.Pause();
-                _isPlaying = false;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the volume.
-        /// </summary>
-        /// <value>
-        /// The volume.
-        /// </value>
-        public double Volume
-        {
-            get
-            {
-                if (GlobalMediaElement == null)
-                    return 0;
-                return GlobalMediaElement.Volume;
-            }
-            set
-            {
-                if (GlobalMediaElement != null)
-                {
-                    GlobalMediaElement.Volume = value;
-                }
-            }
-        }
-    }
+		/// <summary>
+		/// Goes to asynchronous.
+		/// </summary>
+		/// <param name="position">The position.</param>
+		/// <returns>Task.</returns>
+		public Task GoToAsync(double position)
+		{
+			return Task.Run(
+				() =>
+					{
+						if (!_isScrubbing)
+						{
+							_isScrubbing = true;
+							//    player.CurrentTime = position;
+							_isScrubbing = false;
+						}
+					});
+		}
+	}
 }

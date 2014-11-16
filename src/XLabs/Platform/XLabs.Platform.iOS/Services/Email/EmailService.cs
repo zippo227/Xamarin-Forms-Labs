@@ -1,8 +1,4 @@
-using XLabs.Platform.iOS.Services.Email;
-
-[assembly: Dependency(typeof(EmailService))]
-
-namespace XLabs.Platform.iOS.Services.Email
+namespace XLabs.Platform.Services.Email
 {
 	using System.Collections.Generic;
 	using System.IO;
@@ -11,73 +7,112 @@ namespace XLabs.Platform.iOS.Services.Email
 	using MonoTouch.MessageUI;
 	using MonoTouch.UIKit;
 
-	using XLabs.Platform.Services.Email;
-
+	/// <summary>
+	/// Class EmailService.
+	/// </summary>
 	public class EmailService : IEmailService
-    {
-        #region IEmailService Members
-        public bool CanSend
-        {
-            get { return MFMailComposeViewController.CanSendMail; }
-        }
+	{
+		#region IEmailService Members
 
-        public void ShowDraft(string subject, string body, bool html, string[] to, string[] cc, string[] bcc, IEnumerable<string> attachments)
-        {
-            var mailer = new MFMailComposeViewController();
+		/// <summary>
+		/// Gets a value indicating whether this instance can send.
+		/// </summary>
+		/// <value><c>true</c> if this instance can send; otherwise, <c>false</c>.</value>
+		public bool CanSend
+		{
+			get
+			{
+				return MFMailComposeViewController.CanSendMail;
+			}
+		}
 
-            mailer.SetMessageBody(body ?? string.Empty, html);
-            mailer.SetSubject(subject ?? string.Empty);
-            mailer.SetCcRecipients(cc);
-            mailer.SetToRecipients(to);
-            mailer.Finished += (s, e) => ((MFMailComposeViewController)s).DismissViewController(true, () => { });
+		/// <summary>
+		/// Shows the draft.
+		/// </summary>
+		/// <param name="subject">The subject.</param>
+		/// <param name="body">The body.</param>
+		/// <param name="html">if set to <c>true</c> [HTML].</param>
+		/// <param name="to">To.</param>
+		/// <param name="cc">The cc.</param>
+		/// <param name="bcc">The BCC.</param>
+		/// <param name="attachments">The attachments.</param>
+		public void ShowDraft(
+			string subject,
+			string body,
+			bool html,
+			string[] to,
+			string[] cc,
+			string[] bcc,
+			IEnumerable<string> attachments)
+		{
+			var mailer = new MFMailComposeViewController();
 
-            foreach (var attachment in attachments)
-            {
-                mailer.AddAttachmentData(NSData.FromFile(attachment), GetMimeType(attachment), Path.GetFileName(attachment));
-            }
+			mailer.SetMessageBody(body ?? string.Empty, html);
+			mailer.SetSubject(subject ?? string.Empty);
+			mailer.SetCcRecipients(cc);
+			mailer.SetToRecipients(to);
+			mailer.Finished += (s, e) => ((MFMailComposeViewController)s).DismissViewController(true, () => { });
 
-            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(mailer, true, null);
-        }
+			foreach (var attachment in attachments)
+			{
+				mailer.AddAttachmentData(NSData.FromFile(attachment), GetMimeType(attachment), Path.GetFileName(attachment));
+			}
 
-        public void ShowDraft(string subject, string body, bool html, string to, IEnumerable<string> attachments)
-        {
-            ShowDraft(subject, body, html, new[] { to }, new string[] { }, new string[] { }, attachments);
-        }
+			UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(mailer, true, null);
+		}
 
-        // TODO: make this more robust
-        private string GetMimeType(string filename)
-        {
-            if (string.IsNullOrEmpty(filename))
-            {
-                return null;
-            }
+		/// <summary>
+		/// Shows the draft.
+		/// </summary>
+		/// <param name="subject">The subject.</param>
+		/// <param name="body">The body.</param>
+		/// <param name="html">if set to <c>true</c> [HTML].</param>
+		/// <param name="to">To.</param>
+		/// <param name="attachments">The attachments.</param>
+		public void ShowDraft(string subject, string body, bool html, string to, IEnumerable<string> attachments)
+		{
+			ShowDraft(subject, body, html, new[] { to }, new string[] { }, new string[] { }, attachments);
+		}
 
-            var extension = Path.GetExtension(filename.ToLowerInvariant());
+		// TODO: make this more robust
+		/// <summary>
+		/// Gets the type of the MIME.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		/// <returns>System.String.</returns>
+		private string GetMimeType(string filename)
+		{
+			if (string.IsNullOrEmpty(filename))
+			{
+				return null;
+			}
 
-            switch (extension)
-            {
-                case "png":
-                    return "image/png";
-                case "doc":
-                    return "application/msword";
-                case "pdf":
-                    return "application/pdf";
-                case "jpeg":
-                case "jpg":
-                    return "image/jpeg";
-                case "zip":
-                case "docx":
-                case "xlsx":
-                case "pptx":
-                    return "application/zip";
-                case "htm":
-                case "html":
-                    return "text/html";
-            }
+			var extension = Path.GetExtension(filename.ToLowerInvariant());
 
-            return "application/octet-stream";
-        }
+			switch (extension)
+			{
+				case "png":
+					return "image/png";
+				case "doc":
+					return "application/msword";
+				case "pdf":
+					return "application/pdf";
+				case "jpeg":
+				case "jpg":
+					return "image/jpeg";
+				case "zip":
+				case "docx":
+				case "xlsx":
+				case "pptx":
+					return "application/zip";
+				case "htm":
+				case "html":
+					return "text/html";
+			}
 
-        #endregion
-    }
+			return "application/octet-stream";
+		}
+
+		#endregion
+	}
 }

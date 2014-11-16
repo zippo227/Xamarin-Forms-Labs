@@ -1,74 +1,71 @@
-﻿using XLabs.Platform.Droid.Services;
-
-[assembly: Dependency(typeof(TextToSpeechService))]
-
-namespace XLabs.Platform.Droid.Services
+﻿namespace XLabs.Platform.Services
 {
 	using System.Collections.Generic;
 	using System.Linq;
 
 	using Android.Speech.Tts;
 
+	using Java.Lang;
 	using Java.Util;
 
-	using XLabs.Platform.Services;
-
 	/// <summary>
-    /// The text to speech service implements <see cref="ITextToSpeechService"/> for Android.
-    /// </summary>
-    public class TextToSpeechService : Java.Lang.Object, ITextToSpeechService, TextToSpeech.IOnInitListener
+	///     The text to speech service implements <see cref="ITextToSpeechService" /> for Android.
+	/// </summary>
+	public class TextToSpeechService : Object, ITextToSpeechService, TextToSpeech.IOnInitListener
 	{
-		private TextToSpeech speaker;
-		private string toSpeak;
+		private TextToSpeech _speaker;
 
-	    /// <summary>
-	    /// The speak.
-	    /// </summary>
-	    /// <param name="text">
-	    /// The text.
-	    /// </param>
-	    public void Speak(string text)
-		{
-			var ctx = Xamarin.Forms.Context; // useful for many Android SDK features
-			toSpeak = text;
-			if (speaker == null)
-			{
-				speaker = new TextToSpeech(ctx, this);
-			}
-			else
-			{
-				var p = new Dictionary<string, string>();
-				speaker.Speak(toSpeak, QueueMode.Flush, p);
-			}
-		}
+		private string _toSpeak;
 
 		#region IOnInitListener implementation
 
-	    /// <summary>
-        /// Implementation for <see cref="TextToSpeech.IOnInitListener.OnInit"/>.
-	    /// </summary>
-	    /// <param name="status">
-	    /// The status.
-	    /// </param>
-	    public void OnInit(OperationResult status)
+		/// <summary>
+		///     Implementation for <see cref="TextToSpeech.IOnInitListener.OnInit" />.
+		/// </summary>
+		/// <param name="status">
+		///     The status.
+		/// </param>
+		public void OnInit(OperationResult status)
 		{
 			if (status.Equals(OperationResult.Success))
 			{
 				var p = new Dictionary<string, string>();
-                this.speaker.Speak(this.toSpeak, QueueMode.Flush, p);
+				_speaker.Speak(_toSpeak, QueueMode.Flush, p);
 			}
 		}
+
 		#endregion
 
-	    /// <summary>
-	    /// Get installed languages.
-	    /// </summary>
-	    /// <returns>
-	    /// The installed language names.
-	    /// </returns>
-	    public IEnumerable<string> GetInstalledLanguages()
-        {
-            return Locale.GetAvailableLocales().Select(a => a.Language).Distinct();
-        }
-    }
+		/// <summary>
+		///     The speak.
+		/// </summary>
+		/// <param name="text">
+		///     The text.
+		/// </param>
+		public void Speak(string text)
+		{
+			var ctx = Xamarin.Forms.Context; // useful for many Android SDK features
+			_toSpeak = text;
+			if (_speaker == null)
+			{
+				_speaker = new TextToSpeech(ctx, this);
+			}
+			else
+			{
+				var p = new Dictionary<string, string>();
+				_speaker.Speak(_toSpeak, QueueMode.Flush, p);
+			}
+		}
+
+		/// <summary>
+		///     Get installed languages.
+		/// </summary>
+		/// <returns>
+		///     The installed language names.
+		/// </returns>
+		public IEnumerable<string> GetInstalledLanguages()
+		{
+			return Locale.GetAvailableLocales().Select(a => a.Language).Distinct();
+		}
+	}
 }

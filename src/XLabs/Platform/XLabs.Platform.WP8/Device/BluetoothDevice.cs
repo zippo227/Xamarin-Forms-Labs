@@ -1,4 +1,4 @@
-﻿namespace XLabs.Platform.WP8.Device
+﻿namespace XLabs.Platform.Device
 {
 	using System;
 	using System.IO;
@@ -7,76 +7,119 @@
 	using Windows.Networking.Proximity;
 	using Windows.Networking.Sockets;
 
+	/// <summary>
+	/// Class BluetoothDevice.
+	/// </summary>
 	public class BluetoothDevice : IBluetoothDevice
-    {
-        private readonly PeerInformation device;
-        private StreamSocket socket;
+	{
+		/// <summary>
+		/// The _socket
+		/// </summary>
+		private StreamSocket _socket;
 
-        public BluetoothDevice(PeerInformation peerInfo)
-        {
-            this.device = peerInfo;
-        }
+		/// <summary>
+		/// The _device
+		/// </summary>
+		private readonly PeerInformation _device;
 
-        public string Name
-        {
-            get { return this.device.DisplayName; }
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BluetoothDevice"/> class.
+		/// </summary>
+		/// <param name="peerInfo">The peer information.</param>
+		public BluetoothDevice(PeerInformation peerInfo)
+		{
+			_device = peerInfo;
+		}
 
-        public string Address
-        {
-            get { return this.device.HostName.DisplayName; }
-        }
+		/// <summary>
+		/// Gets the name.
+		/// </summary>
+		/// <value>The name.</value>
+		public string Name
+		{
+			get
+			{
+				return _device.DisplayName;
+			}
+		}
 
-        public Stream InputStream
-        {
-            get
-            {
-                return this.socket == null ? null : this.socket.InputStream.AsStreamForRead();
-            }
-        }
+		/// <summary>
+		/// Gets the address.
+		/// </summary>
+		/// <value>The address.</value>
+		public string Address
+		{
+			get
+			{
+				return _device.HostName.DisplayName;
+			}
+		}
 
-        public Stream OutputStream
-        {
-            get
-            {
-                return this.socket == null ? null : this.socket.OutputStream.AsStreamForWrite();
-            }
-        }
+		/// <summary>
+		/// Gets the input stream.
+		/// </summary>
+		/// <value>The input stream.</value>
+		public Stream InputStream
+		{
+			get
+			{
+				return _socket == null ? null : _socket.InputStream.AsStreamForRead();
+			}
+		}
 
-        public async Task Connect()
-        {
-            if (this.socket != null)
-            {
-                this.socket.Dispose();
-            }
+		/// <summary>
+		/// Gets the output stream.
+		/// </summary>
+		/// <value>The output stream.</value>
+		public Stream OutputStream
+		{
+			get
+			{
+				return _socket == null ? null : _socket.OutputStream.AsStreamForWrite();
+			}
+		}
 
-            try
-            {
-                this.socket = new StreamSocket();
+		/// <summary>
+		/// Connects this instance.
+		/// </summary>
+		/// <returns>Task.</returns>
+		public async Task Connect()
+		{
+			if (_socket != null)
+			{
+				_socket.Dispose();
+			}
 
-                await this.socket.ConnectAsync(device.HostName, device.ServiceName);
+			try
+			{
+				_socket = new StreamSocket();
 
-                //return true;
-            }
-            catch //(Exception ex)
-            {
-                if (this.socket != null)
-                {
-                    this.socket.Dispose();
-                    this.socket = null;
-                }
+				await _socket.ConnectAsync(_device.HostName, _device.ServiceName);
 
-                throw;
-            }
-        }
+				//return true;
+			}
+			catch //(Exception ex)
+			{
+				if (_socket != null)
+				{
+					_socket.Dispose();
+					_socket = null;
+				}
 
-        public void Disconnect()
-        {
-            if (this.socket != null)
-            {
-                this.socket.Dispose();
-                this.socket = null;
-            }
-        }
-    }
+				throw;
+			}
+		}
+
+		/// <summary>
+		/// Disconnects this instance.
+		/// </summary>
+		public void Disconnect()
+		{
+			if (_socket != null)
+			{
+				_socket.Dispose();
+				_socket = null;
+			}
+		}
+	}
 }

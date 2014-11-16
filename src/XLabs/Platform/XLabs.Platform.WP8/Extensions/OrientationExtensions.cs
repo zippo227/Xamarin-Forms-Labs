@@ -1,17 +1,30 @@
-﻿namespace XLabs.Platform.WP8.Extensions
+﻿namespace XLabs.Platform.Extensions
 {
 	using Microsoft.Phone.Controls;
 
+	/// <summary>
+	/// Class OrientationExtensions.
+	/// </summary>
 	public static class OrientationExtensions
-    {
-        public static Orientation ToOrientation(this PageOrientation orientation)
-        {
-            return (Orientation)((int)orientation);
-        }
+	{
+		/// <summary>
+		/// To the orientation.
+		/// </summary>
+		/// <param name="orientation">The orientation.</param>
+		/// <returns>Orientation.</returns>
+		public static Orientation ToOrientation(this PageOrientation orientation)
+		{
+			return (Orientation)((int)orientation);
+		}
 
-        public static PageOrientation ToPageOrientation(this Orientation orientation)
-        {
-            return (PageOrientation)((int)orientation);
-        }
-    }
+		/// <summary>
+		/// To the page orientation.
+		/// </summary>
+		/// <param name="orientation">The orientation.</param>
+		/// <returns>PageOrientation.</returns>
+		public static PageOrientation ToPageOrientation(this Orientation orientation)
+		{
+			return (PageOrientation)((int)orientation);
+		}
+	}
 }

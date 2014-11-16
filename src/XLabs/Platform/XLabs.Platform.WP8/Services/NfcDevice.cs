@@ -1,151 +1,186 @@
-﻿// ***********************************************************************
-// Assembly         : Xamarin.Forms.Labs.WP8
-// Author           : Sami Kallio
-// Created          : 08-30-2014
-//
-// Last Modified By : Sami Kallio
-// Last Modified On : 08-30-2014
-// ***********************************************************************
-// <copyright file="NfcDevice.cs" company="">
-//     Copyright (c) 2014 . All rights reserved.
-//
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//
-//        http://www.apache.org/licenses/LICENSE-2.0
-//
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-using XLabs.Platform.WP8.Services;
-
-[assembly: Dependency(typeof(NfcDevice))]
-
-namespace XLabs.Platform.WP8.Services
+﻿namespace XLabs.Platform.Services
 {
 	using System;
 	using System.Collections.Generic;
 
 	using Windows.Networking.Proximity;
 
+	/// <summary>
+	/// Class NfcDevice.
+	/// </summary>
 	public class NfcDevice : INfcDevice
-    {
-        private readonly ProximityDevice device;
-        private event EventHandler<EventArgs<INfcDevice>> inRange;
-        private event EventHandler<EventArgs<INfcDevice>> outOfRange;
-        private long? publishId;
+	{
+		/// <summary>
+		/// The _publish identifier
+		/// </summary>
+		private long? _publishId;
 
-        private Dictionary<Guid, long> published = new Dictionary<Guid,long>();
+		/// <summary>
+		/// The _device
+		/// </summary>
+		private readonly ProximityDevice _device;
 
-        public NfcDevice() : this(ProximityDevice.GetDefault())
-        {
-        }
+		/// <summary>
+		/// The _published
+		/// </summary>
+		private readonly Dictionary<Guid, long> _published = new Dictionary<Guid, long>();
 
-        public NfcDevice(ProximityDevice proximityDevice)
-        {
-            this.device = proximityDevice;
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NfcDevice"/> class.
+		/// </summary>
+		public NfcDevice()
+			: this(ProximityDevice.GetDefault())
+		{
+		}
 
-        #region INfcDevice Members
-        public string DeviceId
-        {
-            get
-            {
-                return this.device == null ? "Unknown" : this.device.DeviceId;
-            }
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NfcDevice"/> class.
+		/// </summary>
+		/// <param name="proximityDevice">The proximity device.</param>
+		public NfcDevice(ProximityDevice proximityDevice)
+		{
+			_device = proximityDevice;
+		}
 
-        public bool IsEnabled
-        {
-            get { return this.device != null; }
-        }
+		/// <summary>
+		/// Occurs when [in range].
+		/// </summary>
+		private event EventHandler<EventArgs<INfcDevice>> InRange;
 
-        public event EventHandler<EventArgs<INfcDevice>> DeviceInRange
-        {
-            add
-            {
-                if (this.inRange == null)
-                {
-                    this.device.DeviceArrived += DeviceArrived;
-                }
+		/// <summary>
+		/// Occurs when [out of range].
+		/// </summary>
+		private event EventHandler<EventArgs<INfcDevice>> OutOfRange;
 
-                this.inRange += value;
-            }
-            remove
-            {
-                this.inRange -= value;
+		/// <summary>
+		/// Devices the arrived.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		private void DeviceArrived(ProximityDevice sender)
+		{
+			//if (sender == this.device)
+			//{
+			//    System.Diagnostics.Debug.WriteLine("Sender is the same NFC device.");
+			//}
 
-                if (this.inRange == null)
-                {
-                    this.device.DeviceArrived -= DeviceArrived;
-                }
-            }
-        }
+			//this.inRange.Invoke<INfcDevice>(this, new NfcDevice(sender));
+			InRange.Invoke<INfcDevice>(this, this);
+		}
 
-        public event EventHandler<EventArgs<INfcDevice>> DeviceOutOfRange
-        {
-            add
-            {
-                if (this.outOfRange == null)
-                {
-                    this.device.DeviceDeparted += DeviceDeparted;
-                }
+		/// <summary>
+		/// Devices the departed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		private void DeviceDeparted(ProximityDevice sender)
+		{
+			OutOfRange.Invoke<INfcDevice>(this, this);
+		}
 
-                this.outOfRange += value;
-            }
+		#region INfcDevice Members
 
-            remove
-            {
-                this.outOfRange -= value;
+		/// <summary>
+		/// Gets the device identifier.
+		/// </summary>
+		/// <value>The device identifier.</value>
+		public string DeviceId
+		{
+			get
+			{
+				return _device == null ? "Unknown" : _device.DeviceId;
+			}
+		}
 
-                if (this.outOfRange == null)
-                {
-                    this.device.DeviceDeparted -= DeviceDeparted;
-                }
-            }
-        }
+		/// <summary>
+		/// Gets a value indicating whether this instance is enabled.
+		/// </summary>
+		/// <value><c>true</c> if this instance is enabled; otherwise, <c>false</c>.</value>
+		public bool IsEnabled
+		{
+			get
+			{
+				return _device != null;
+			}
+		}
 
-        public Guid PublishUri(Uri uri)
-        {
-            var id = this.device.PublishUriMessage(uri);
-            var key = Guid.NewGuid();
+		/// <summary>
+		/// Occurs when [device in range].
+		/// </summary>
+		public event EventHandler<EventArgs<INfcDevice>> DeviceInRange
+		{
+			add
+			{
+				if (InRange == null)
+				{
+					_device.DeviceArrived += DeviceArrived;
+				}
 
-            this.published.Add(key, id);
+				InRange += value;
+			}
+			remove
+			{
+				InRange -= value;
 
-            return key;
-        }
+				if (InRange == null)
+				{
+					_device.DeviceArrived -= DeviceArrived;
+				}
+			}
+		}
 
-        public void Unpublish(Guid id)
-        {
-            if (this.published.ContainsKey(id))
-            {
-                this.device.StopPublishingMessage(this.published[id]);
-                this.published.Remove(id);
-            }
-        }
-        #endregion
+		/// <summary>
+		/// Occurs when [device out of range].
+		/// </summary>
+		public event EventHandler<EventArgs<INfcDevice>> DeviceOutOfRange
+		{
+			add
+			{
+				if (OutOfRange == null)
+				{
+					_device.DeviceDeparted += DeviceDeparted;
+				}
 
-        private void DeviceArrived(ProximityDevice sender)
-        {
-            //if (sender == this.device)
-            //{
-            //    System.Diagnostics.Debug.WriteLine("Sender is the same NFC device.");
-            //}
+				OutOfRange += value;
+			}
 
-            //this.inRange.Invoke<INfcDevice>(this, new NfcDevice(sender));
-            this.inRange.Invoke<INfcDevice>(this, this);
-        }
+			remove
+			{
+				OutOfRange -= value;
 
-        void DeviceDeparted(ProximityDevice sender)
-        {
-            this.outOfRange.Invoke<INfcDevice>(this, this);
-        }
-    }
+				if (OutOfRange == null)
+				{
+					_device.DeviceDeparted -= DeviceDeparted;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Publishes the URI.
+		/// </summary>
+		/// <param name="uri">The URI.</param>
+		/// <returns>Guid.</returns>
+		public Guid PublishUri(Uri uri)
+		{
+			var id = _device.PublishUriMessage(uri);
+			var key = Guid.NewGuid();
+
+			_published.Add(key, id);
+
+			return key;
+		}
+
+		/// <summary>
+		/// Unpublishes the specified identifier.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		public void Unpublish(Guid id)
+		{
+			if (_published.ContainsKey(id))
+			{
+				_device.StopPublishingMessage(_published[id]);
+				_published.Remove(id);
+			}
+		}
+
+		#endregion
+	}
 }

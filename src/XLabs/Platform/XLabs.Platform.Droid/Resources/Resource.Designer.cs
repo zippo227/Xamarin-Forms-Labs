@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("XLabs.Platform.Droid.Resource", IsApplication=false)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("XLabs.Platform.Resource", IsApplication=false)]
 
-namespace XLabs.Platform.Droid.Resources
+namespace XLabs.Platform
 {
 	
 	

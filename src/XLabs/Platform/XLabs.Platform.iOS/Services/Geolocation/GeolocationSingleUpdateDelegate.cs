@@ -1,152 +1,236 @@
-﻿//
-//  Copyright 2011-2013, Xamarin Inc.
-//
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//
-//        http://www.apache.org/licenses/LICENSE-2.0
-//
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-//
-
-namespace XLabs.Platform.iOS.Services.Geolocation
+﻿namespace XLabs.Platform.Services.Geolocation
 {
 	using System;
 	using System.Threading;
 	using System.Threading.Tasks;
 
 	using MonoTouch.CoreLocation;
+	using MonoTouch.Foundation;
 
 	using XLabs.Platform.Services.GeoLocation;
 
-	internal class GeolocationSingleUpdateDelegate
-		: CLLocationManagerDelegate
+	/// <summary>
+	/// Class GeolocationSingleUpdateDelegate.
+	/// </summary>
+	internal class GeolocationSingleUpdateDelegate : CLLocationManagerDelegate
 	{
-		public GeolocationSingleUpdateDelegate (CLLocationManager manager, double desiredAccuracy, bool includeHeading, int timeout, CancellationToken cancelToken)
+		/// <summary>
+		/// The _best heading
+		/// </summary>
+		private CLHeading _bestHeading;
+
+		/// <summary>
+		/// The _have heading
+		/// </summary>
+		private bool _haveHeading;
+
+		/// <summary>
+		/// The _have location
+		/// </summary>
+		private bool _haveLocation;
+
+		/// <summary>
+		/// The _desired accuracy
+		/// </summary>
+		private readonly double _desiredAccuracy;
+
+		/// <summary>
+		/// The _include heading
+		/// </summary>
+		private readonly bool _includeHeading;
+
+		/// <summary>
+		/// The _manager
+		/// </summary>
+		private readonly CLLocationManager _manager;
+
+		/// <summary>
+		/// The _position
+		/// </summary>
+		private readonly Position _position = new Position();
+
+		/// <summary>
+		/// The _TCS
+		/// </summary>
+		private readonly TaskCompletionSource<Position> _tcs;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GeolocationSingleUpdateDelegate"/> class.
+		/// </summary>
+		/// <param name="manager">The manager.</param>
+		/// <param name="desiredAccuracy">The desired accuracy.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="cancelToken">The cancel token.</param>
+		public GeolocationSingleUpdateDelegate(
+			CLLocationManager manager,
+			double desiredAccuracy,
+			bool includeHeading,
+			int timeout,
+			CancellationToken cancelToken)
 		{
-			this.manager = manager;
-			this.tcs = new TaskCompletionSource<Position> (manager);
-			this.desiredAccuracy = desiredAccuracy;
-			this.includeHeading = includeHeading;
+			_manager = manager;
+			_tcs = new TaskCompletionSource<Position>(manager);
+			_desiredAccuracy = desiredAccuracy;
+			_includeHeading = includeHeading;
 
 			if (timeout != Timeout.Infinite)
 			{
 				Timer t = null;
-				t = new Timer (s =>
-					{
-						if (this.haveLocation)
-							this.tcs.TrySetResult (new Position (this.position));
-						else
-							this.tcs.TrySetCanceled();
+				t = new Timer(
+					s =>
+						{
+							if (_haveLocation)
+							{
+								_tcs.TrySetResult(new Position(_position));
+							}
+							else
+							{
+								_tcs.TrySetCanceled();
+							}
 
-						StopListening();
-						t.Dispose();
-					}, null, timeout, 0);
+							StopListening();
+							t.Dispose();
+						},
+					null,
+					timeout,
+					0);
 			}
 
-			cancelToken.Register (() =>
-				{
-					StopListening();
-					this.tcs.TrySetCanceled();
-				});
+			cancelToken.Register(
+				() =>
+					{
+						StopListening();
+						_tcs.TrySetCanceled();
+					});
 		}
 
+		/// <summary>
+		/// Gets the task.
+		/// </summary>
+		/// <value>The task.</value>
 		public Task<Position> Task
 		{
-			get { return this.tcs.Task; }
+			get
+			{
+				return _tcs.Task;
+			}
 		}
 
-		public override void AuthorizationChanged (CLLocationManager manager, CLAuthorizationStatus status)
+		/// <summary>
+		/// Authorizations the changed.
+		/// </summary>
+		/// <param name="manager">The manager.</param>
+		/// <param name="status">The status.</param>
+		public override void AuthorizationChanged(CLLocationManager manager, CLAuthorizationStatus status)
 		{
 			// If user has services disabled, we're just going to throw an exception for consistency.
 			if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.Restricted)
 			{
 				StopListening();
-				this.tcs.TrySetException (new GeolocationException (GeolocationError.Unauthorized));
+				_tcs.TrySetException(new GeolocationException(GeolocationError.Unauthorized));
 			}
 		}
 
-		public override void Failed (CLLocationManager manager, MonoTouch.Foundation.NSError error)
+		/// <summary>
+		/// Faileds the specified manager.
+		/// </summary>
+		/// <param name="manager">The manager.</param>
+		/// <param name="error">The error.</param>
+		public override void Failed(CLLocationManager manager, NSError error)
 		{
 			switch ((CLError)error.Code)
 			{
-			case CLError.Network:
-				StopListening();	
-				this.tcs.SetException (new GeolocationException (GeolocationError.PositionUnavailable));
-				break;
+				case CLError.Network:
+					StopListening();
+					_tcs.SetException(new GeolocationException(GeolocationError.PositionUnavailable));
+					break;
 			}
 		}
 
-		public override bool ShouldDisplayHeadingCalibration (CLLocationManager manager)
+		/// <summary>
+		/// Shoulds the display heading calibration.
+		/// </summary>
+		/// <param name="manager">The manager.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+		public override bool ShouldDisplayHeadingCalibration(CLLocationManager manager)
 		{
 			return true;
 		}
 
-		public override void UpdatedLocation (CLLocationManager manager, CLLocation newLocation, CLLocation oldLocation)
+		/// <summary>
+		/// Updateds the location.
+		/// </summary>
+		/// <param name="manager">The manager.</param>
+		/// <param name="newLocation">The new location.</param>
+		/// <param name="oldLocation">The old location.</param>
+		public override void UpdatedLocation(CLLocationManager manager, CLLocation newLocation, CLLocation oldLocation)
 		{
 			if (newLocation.HorizontalAccuracy < 0)
-				return;
-
-			if (this.haveLocation && newLocation.HorizontalAccuracy > this.position.Accuracy)
-				return;
-
-			this.position.Accuracy = newLocation.HorizontalAccuracy;
-			this.position.Altitude = newLocation.Altitude;
-			this.position.AltitudeAccuracy = newLocation.VerticalAccuracy;
-			this.position.Latitude = newLocation.Coordinate.Latitude;
-			this.position.Longitude = newLocation.Coordinate.Longitude;
-			this.position.Speed = newLocation.Speed;
-			this.position.Timestamp = new DateTimeOffset (newLocation.Timestamp);
-
-			this.haveLocation = true;
-
-			if ((!this.includeHeading || this.haveHeading) && this.position.Accuracy <= this.desiredAccuracy)
 			{
-				this.tcs.TrySetResult (new Position (this.position));
+				return;
+			}
+
+			if (_haveLocation && newLocation.HorizontalAccuracy > _position.Accuracy)
+			{
+				return;
+			}
+
+			_position.Accuracy = newLocation.HorizontalAccuracy;
+			_position.Altitude = newLocation.Altitude;
+			_position.AltitudeAccuracy = newLocation.VerticalAccuracy;
+			_position.Latitude = newLocation.Coordinate.Latitude;
+			_position.Longitude = newLocation.Coordinate.Longitude;
+			_position.Speed = newLocation.Speed;
+			_position.Timestamp = new DateTimeOffset(newLocation.Timestamp);
+
+			_haveLocation = true;
+
+			if ((!_includeHeading || _haveHeading) && _position.Accuracy <= _desiredAccuracy)
+			{
+				_tcs.TrySetResult(new Position(_position));
 				StopListening();
 			}
 		}
 
-		public override void UpdatedHeading (CLLocationManager manager, CLHeading newHeading)
+		/// <summary>
+		/// Updateds the heading.
+		/// </summary>
+		/// <param name="manager">The manager.</param>
+		/// <param name="newHeading">The new heading.</param>
+		public override void UpdatedHeading(CLLocationManager manager, CLHeading newHeading)
 		{
 			if (newHeading.HeadingAccuracy < 0)
-				return;
-			if (this.bestHeading != null && newHeading.HeadingAccuracy >= this.bestHeading.HeadingAccuracy)
-				return;
-
-			this.bestHeading = newHeading;
-			this.position.Heading = newHeading.TrueHeading;
-			this.haveHeading = true;
-
-			if (this.haveLocation && this.position.Accuracy <= this.desiredAccuracy)
 			{
-				this.tcs.TrySetResult (new Position (this.position));
+				return;
+			}
+			if (_bestHeading != null && newHeading.HeadingAccuracy >= _bestHeading.HeadingAccuracy)
+			{
+				return;
+			}
+
+			_bestHeading = newHeading;
+			_position.Heading = newHeading.TrueHeading;
+			_haveHeading = true;
+
+			if (_haveLocation && _position.Accuracy <= _desiredAccuracy)
+			{
+				_tcs.TrySetResult(new Position(_position));
 				StopListening();
 			}
 		}
 
-		private bool haveHeading;
-		private bool haveLocation;
-		private readonly Position position = new Position();
-		private CLHeading bestHeading;
-
-		private readonly double desiredAccuracy;
-		private readonly bool includeHeading;
-		private readonly TaskCompletionSource<Position> tcs;
-		private readonly CLLocationManager manager;
-
+		/// <summary>
+		/// Stops the listening.
+		/// </summary>
 		private void StopListening()
 		{
 			if (CLLocationManager.HeadingAvailable)
-				this.manager.StopUpdatingHeading();
+			{
+				_manager.StopUpdatingHeading();
+			}
 
-			this.manager.StopUpdatingLocation();
+			_manager.StopUpdatingLocation();
 		}
 	}
 }
-

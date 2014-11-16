@@ -1,40 +1,63 @@
-﻿namespace XLabs.Platform.WP8.Device
+﻿namespace XLabs.Platform.Device
 {
 	using System;
 
-	using XLabs.Platform.WP8.Extensions;
+	using Microsoft.Devices.Sensors;
 
+	using XLabs.Platform.Extensions;
+
+	/// <summary>
+	/// Class Gyroscope.
+	/// </summary>
 	public partial class Gyroscope
-    {
-        Microsoft.Devices.Sensors.Gyroscope gyroscope;
+	{
+		/// <summary>
+		/// The _gyroscope
+		/// </summary>
+		private Microsoft.Devices.Sensors.Gyroscope _gyroscope;
 
-        public AccelerometerInterval Interval { get; set; }
+		/// <summary>
+		/// Gets or sets the interval.
+		/// </summary>
+		/// <value>The interval.</value>
+		public AccelerometerInterval Interval { get; set; }
 
-        partial void Start()
-        {
-            this.gyroscope = new Microsoft.Devices.Sensors.Gyroscope()
-            {
-                TimeBetweenUpdates = TimeSpan.FromMilliseconds((long)this.Interval)
-            };
+		/// <summary>
+		/// Starts this instance.
+		/// </summary>
+		partial void Start()
+		{
+			_gyroscope = new Microsoft.Devices.Sensors.Gyroscope
+				             {
+					             TimeBetweenUpdates = TimeSpan.FromMilliseconds((long)Interval)
+				             };
 
-            this.gyroscope.CurrentValueChanged += gyroscope_CurrentValueChanged;
-            this.gyroscope.Start();
-        }
+			_gyroscope.CurrentValueChanged += GyroscopeCurrentValueChanged;
+			_gyroscope.Start();
+		}
 
-        partial void Stop()
-        {
-            this.gyroscope.CurrentValueChanged -= gyroscope_CurrentValueChanged;
-            this.gyroscope.Stop();
-            this.gyroscope = null;
-        }
+		/// <summary>
+		/// Stops this instance.
+		/// </summary>
+		partial void Stop()
+		{
+			_gyroscope.CurrentValueChanged -= GyroscopeCurrentValueChanged;
+			_gyroscope.Stop();
+			_gyroscope = null;
+		}
 
-        void gyroscope_CurrentValueChanged(object sender, Microsoft.Devices.Sensors.SensorReadingEventArgs<Microsoft.Devices.Sensors.GyroscopeReading> e)
-        {
-            if (this.gyroscope.IsDataValid)
-            {
-                this.LatestReading = e.SensorReading.RotationRate.AsVector3();
-                this.readingAvailable.Invoke(this, this.LatestReading);
-            }
-        }
-    }
+		/// <summary>
+		/// Gyroscopes the current value changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The e.</param>
+		private void GyroscopeCurrentValueChanged(object sender, SensorReadingEventArgs<GyroscopeReading> e)
+		{
+			if (_gyroscope.IsDataValid)
+			{
+				this.LatestReading = e.SensorReading.RotationRate.AsVector3();
+				this.readingAvailable.Invoke(this, this.LatestReading);
+			}
+		}
+	}
 }

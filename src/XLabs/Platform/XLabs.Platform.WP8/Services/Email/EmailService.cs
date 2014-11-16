@@ -1,8 +1,4 @@
-﻿using XLabs.Platform.WP8.Services.Email;
-
-[assembly: Dependency(typeof(EmailService))]
-
-namespace XLabs.Platform.WP8.Services.Email
+﻿namespace XLabs.Platform.Services.Email
 {
 	using System.Collections.Generic;
 	using System.Linq;
@@ -10,77 +6,102 @@ namespace XLabs.Platform.WP8.Services.Email
 
 	using Microsoft.Phone.Tasks;
 
+	/// <summary>
+	/// Class EmailService.
+	/// </summary>
 	public class EmailService : IEmailService
-    {
-        #region IEmailService Members
-        public bool CanSend
-        {
-            get { return true; }
-        }
+	{
+		#region IEmailService Members
 
-        public void ShowDraft(string subject, string body, bool html, string to, IEnumerable<string> attachments)
-        {
-            var task = new EmailComposeTask()
-            {
-                Subject = subject,
-                Body = body,
-                To = to
-            };
+		/// <summary>
+		/// Gets a value indicating whether this instance can send.
+		/// </summary>
+		/// <value><c>true</c> if this instance can send; otherwise, <c>false</c>.</value>
+		public bool CanSend
+		{
+			get
+			{
+				return true;
+			}
+		}
 
-            task.Show();
-        }
+		/// <summary>
+		/// Shows the draft.
+		/// </summary>
+		/// <param name="subject">The subject.</param>
+		/// <param name="body">The body.</param>
+		/// <param name="html">if set to <c>true</c> [HTML].</param>
+		/// <param name="to">To.</param>
+		/// <param name="attachments">The attachments.</param>
+		public void ShowDraft(string subject, string body, bool html, string to, IEnumerable<string> attachments)
+		{
+			var task = new EmailComposeTask { Subject = subject, Body = body, To = to };
 
-        public void ShowDraft(string subject, string body, bool html, string[] to, string[] cc, string[] bcc, IEnumerable<string> attachments)
-        {
-            var task = new EmailComposeTask()
-            {
-                Subject = subject,
-                Body = body,
-                
-            };
+			task.Show();
+		}
 
-            var stringBuilder = new StringBuilder();
+		/// <summary>
+		/// Shows the draft.
+		/// </summary>
+		/// <param name="subject">The subject.</param>
+		/// <param name="body">The body.</param>
+		/// <param name="html">if set to <c>true</c> [HTML].</param>
+		/// <param name="to">To.</param>
+		/// <param name="cc">The cc.</param>
+		/// <param name="bcc">The BCC.</param>
+		/// <param name="attachments">The attachments.</param>
+		public void ShowDraft(
+			string subject,
+			string body,
+			bool html,
+			string[] to,
+			string[] cc,
+			string[] bcc,
+			IEnumerable<string> attachments)
+		{
+			var task = new EmailComposeTask { Subject = subject, Body = body };
 
-            if (to.Any())
-            {
-                foreach (var t in to)
-                {
-                    stringBuilder.Append(t);
-                    stringBuilder.Append(";");
-                }
+			var stringBuilder = new StringBuilder();
 
-                task.To = stringBuilder.ToString();
-                stringBuilder.Clear();
-            }
+			if (to.Any())
+			{
+				foreach (var t in to)
+				{
+					stringBuilder.Append(t);
+					stringBuilder.Append(";");
+				}
 
-            if (cc.Any())
-            {
-                foreach (var c in cc)
-                {
-                    stringBuilder.Append(c);
-                    stringBuilder.Append(";");
-                }
+				task.To = stringBuilder.ToString();
+				stringBuilder.Clear();
+			}
 
-                task.Cc = stringBuilder.ToString();
-                stringBuilder.Clear();
-            }
+			if (cc.Any())
+			{
+				foreach (var c in cc)
+				{
+					stringBuilder.Append(c);
+					stringBuilder.Append(";");
+				}
 
-            if (bcc.Any())
-            {
-                foreach (var b in bcc)
-                {
-                    stringBuilder.Append(b);
-                    stringBuilder.Append(";");
-                }
+				task.Cc = stringBuilder.ToString();
+				stringBuilder.Clear();
+			}
 
-                task.Bcc = stringBuilder.ToString();
-                stringBuilder.Clear();
-            }
+			if (bcc.Any())
+			{
+				foreach (var b in bcc)
+				{
+					stringBuilder.Append(b);
+					stringBuilder.Append(";");
+				}
 
-            task.Show();
+				task.Bcc = stringBuilder.ToString();
+				stringBuilder.Clear();
+			}
 
-        }
+			task.Show();
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -1,204 +1,260 @@
-﻿// ***********************************************************************
-// Assembly         : Xamarin.Forms.Labs.WP8
-// Author           : Sami M. Kallio
-// Created          : 06-16-2014
-//
-// Last Modified By : Sami M. Kallio
-// Last Modified On : 06-16-2014
-// ***********************************************************************
-// <copyright file="Geolocator.cs" company="">
-//     Copyright (c) 2014 . All rights reserved.
-//
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//
-//        http://www.apache.org/licenses/LICENSE-2.0
-//
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-using XLabs.Platform.WP8.Services.Geolocation;
-
-[assembly: Dependency(typeof(Geolocator))]
-
-namespace XLabs.Platform.WP8.Services.Geolocation
+﻿namespace XLabs.Platform.Services.Geolocation
 {
 	using System;
+	using System.Threading;
 	using System.Threading.Tasks;
 
 	using Windows.Devices.Geolocation;
 
+	using XLabs.Platform.Services.GeoLocation;
+
 	/// <summary>
-    /// The geolocator implements <see cref="IGeolocator"/> interface for Windows Phone 8.
-    /// </summary>
-    public class Geolocator : IGeolocator
-    {
-        private Windows.Devices.Geolocation.Geolocator locator;
+	/// The geolocator implements <see cref="Windows.Devices.Geolocation.IGeolocator" /> interface for Windows Phone 8.
+	/// </summary>
+	public class Geolocator : IGeolocator
+	{
+		/// <summary>
+		/// The _locator
+		/// </summary>
+		private readonly Windows.Devices.Geolocation.Geolocator _locator;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Geolocator"/> class.
-        /// </summary>
-        public Geolocator()
-        {
-            locator = new Windows.Devices.Geolocation.Geolocator();
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Geolocator" /> class.
+		/// </summary>
+		public Geolocator()
+		{
+			_locator = new Windows.Devices.Geolocation.Geolocator();
+		}
 
-        #region IGeolocator Members
+		/// <summary>
+		/// Locators the position changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="PositionChangedEventArgs"/> instance containing the event data.</param>
+		private void LocatorPositionChanged(Windows.Devices.Geolocation.Geolocator sender, PositionChangedEventArgs args)
+		{
+			PositionChanged.TryInvoke(sender, new PositionEventArgs(args.Position.Coordinate.GetPosition()));
+		}
 
-        public event EventHandler<PositionErrorEventArgs> PositionError;
+		/// <summary>
+		/// Locators the status changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="StatusChangedEventArgs"/> instance containing the event data.</param>
+		private void LocatorStatusChanged(Windows.Devices.Geolocation.Geolocator sender, StatusChangedEventArgs args)
+		{
+			switch (args.Status)
+			{
+				case PositionStatus.Disabled:
+					PositionError.TryInvoke(sender, new PositionErrorEventArgs(GeolocationError.Unauthorized));
+					break;
+				case PositionStatus.Initializing:
+					break;
+				case PositionStatus.NoData:
+					PositionError.TryInvoke(sender, new PositionErrorEventArgs(GeolocationError.PositionUnavailable));
+					break;
+				case PositionStatus.NotInitialized:
+					IsListening = false;
+					break;
+				case PositionStatus.Ready:
+					IsListening = true;
+					break;
+			}
+		}
 
-        public event EventHandler<PositionEventArgs> PositionChanged;
+		#region IGeolocator Members
 
-        public double DesiredAccuracy
-        {
-            get
-            {
-                return (locator.DesiredAccuracy == PositionAccuracy.Default)
-                           ? 100
-                           : 10;
-            }
+		/// <summary>
+		/// Occurs when [position error].
+		/// </summary>
+		public event EventHandler<PositionErrorEventArgs> PositionError;
 
-            set
-            {
-                locator.DesiredAccuracy = (value > 10) ?
-                        PositionAccuracy.Default :
-                        PositionAccuracy.High;
-            }
-        }
+		/// <summary>
+		/// Occurs when [position changed].
+		/// </summary>
+		public event EventHandler<PositionEventArgs> PositionChanged;
 
-        public bool IsListening
-        {
-            get;
-            private set;
-        }
+		/// <summary>
+		/// Gets or sets the desired accuracy.
+		/// </summary>
+		/// <value>The desired accuracy.</value>
+		public double DesiredAccuracy
+		{
+			get
+			{
+				return (_locator.DesiredAccuracy == PositionAccuracy.Default) ? 100 : 10;
+			}
 
-        public bool SupportsHeading
-        {
-            get { return true; }
-        }
+			set
+			{
+				_locator.DesiredAccuracy = (value > 10) ? PositionAccuracy.Default : PositionAccuracy.High;
+			}
+		}
 
-        public bool IsGeolocationAvailable
-        {
-            get { return locator.LocationStatus != PositionStatus.NotAvailable; }
-        }
+		/// <summary>
+		/// Gets a value indicating whether this instance is listening.
+		/// </summary>
+		/// <value><c>true</c> if this instance is listening; otherwise, <c>false</c>.</value>
+		public bool IsListening { get; private set; }
 
-        public bool IsGeolocationEnabled
-        {
-            get { return locator.LocationStatus != PositionStatus.Disabled; }
-        }
+		/// <summary>
+		/// Gets a value indicating whether [supports heading].
+		/// </summary>
+		/// <value><c>true</c> if [supports heading]; otherwise, <c>false</c>.</value>
+		public bool SupportsHeading
+		{
+			get
+			{
+				return true;
+			}
+		}
 
-        public async Task<Position> GetPositionAsync(int timeout)
-        {
-            var position = await locator.GetGeopositionAsync(TimeSpan.MaxValue, TimeSpan.FromMilliseconds(timeout));
-            return position.Coordinate.GetPosition();
-        }
+		/// <summary>
+		/// Gets a value indicating whether this instance is geolocation available.
+		/// </summary>
+		/// <value><c>true</c> if this instance is geolocation available; otherwise, <c>false</c>.</value>
+		public bool IsGeolocationAvailable
+		{
+			get
+			{
+				return _locator.LocationStatus != PositionStatus.NotAvailable;
+			}
+		}
 
-        public async Task<Position> GetPositionAsync(int timeout, bool includeHeading)
-        {
-            return await GetPositionAsync(timeout);
-        }
+		/// <summary>
+		/// Gets a value indicating whether this instance is geolocation enabled.
+		/// </summary>
+		/// <value><c>true</c> if this instance is geolocation enabled; otherwise, <c>false</c>.</value>
+		public bool IsGeolocationEnabled
+		{
+			get
+			{
+				return _locator.LocationStatus != PositionStatus.Disabled;
+			}
+		}
 
-        public async Task<Position> GetPositionAsync(System.Threading.CancellationToken cancelToken)
-        {
-            var t = locator.GetGeopositionAsync().AsTask();
+		/// <summary>
+		/// get position as an asynchronous operation.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public async Task<Position> GetPositionAsync(int timeout)
+		{
+			var position = await _locator.GetGeopositionAsync(TimeSpan.MaxValue, TimeSpan.FromMilliseconds(timeout));
+			return position.Coordinate.GetPosition();
+		}
 
-            while (t.Status == TaskStatus.Running)
-            {
-                cancelToken.ThrowIfCancellationRequested();
-            }
+		/// <summary>
+		/// get position as an asynchronous operation.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public async Task<Position> GetPositionAsync(int timeout, bool includeHeading)
+		{
+			return await GetPositionAsync(timeout);
+		}
 
-            var position = await t;
-            
-            return position.Coordinate.GetPosition();
-        }
+		/// <summary>
+		/// get position as an asynchronous operation.
+		/// </summary>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public async Task<Position> GetPositionAsync(CancellationToken cancelToken)
+		{
+			var t = _locator.GetGeopositionAsync().AsTask();
 
-        public Task<Position> GetPositionAsync(System.Threading.CancellationToken cancelToken, bool includeHeading)
-        {
-            return this.GetPositionAsync(cancelToken);
-        }
+			while (t.Status == TaskStatus.Running)
+			{
+				cancelToken.ThrowIfCancellationRequested();
+			}
 
-        public Task<Position> GetPositionAsync(int timeout, System.Threading.CancellationToken cancelToken)
-        {
-            var t = GetPositionAsync(timeout);
+			var position = await t;
 
-            while (t.Status == TaskStatus.Running)
-            {
-                cancelToken.ThrowIfCancellationRequested();
-            }
+			return position.Coordinate.GetPosition();
+		}
 
-            return t;
-        }
+		/// <summary>
+		/// Gets the position asynchronous.
+		/// </summary>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public Task<Position> GetPositionAsync(CancellationToken cancelToken, bool includeHeading)
+		{
+			return GetPositionAsync(cancelToken);
+		}
 
-        public Task<Position> GetPositionAsync(int timeout, System.Threading.CancellationToken cancelToken, bool includeHeading)
-        {
-            var t = GetPositionAsync(timeout, includeHeading);
+		/// <summary>
+		/// Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public Task<Position> GetPositionAsync(int timeout, CancellationToken cancelToken)
+		{
+			var t = GetPositionAsync(timeout);
 
-            while (t.Status == TaskStatus.Running)
-            {
-                cancelToken.ThrowIfCancellationRequested();
-            }
+			while (t.Status == TaskStatus.Running)
+			{
+				cancelToken.ThrowIfCancellationRequested();
+			}
 
-            return t;
-        }
+			return t;
+		}
 
-        public void StartListening(uint minTime, double minDistance)
-        {
-            locator.MovementThreshold = minDistance;
-            locator.ReportInterval = minTime;
-            locator.PositionChanged += locator_PositionChanged;
-            locator.StatusChanged += locator_StatusChanged;
-        }
+		/// <summary>
+		/// Gets the position asynchronous.
+		/// </summary>
+		/// <param name="timeout">The timeout.</param>
+		/// <param name="cancelToken">The cancel token.</param>
+		/// <param name="includeHeading">if set to <c>true</c> [include heading].</param>
+		/// <returns>Task&lt;Position&gt;.</returns>
+		public Task<Position> GetPositionAsync(int timeout, CancellationToken cancelToken, bool includeHeading)
+		{
+			var t = GetPositionAsync(timeout, includeHeading);
 
-        public void StartListening(uint minTime, double minDistance, bool includeHeading)
-        {
-            this.StartListening(minTime, minDistance);
-        }
+			while (t.Status == TaskStatus.Running)
+			{
+				cancelToken.ThrowIfCancellationRequested();
+			}
 
-        public void StopListening()
-        {
-            locator.PositionChanged -= locator_PositionChanged;
-            locator.StatusChanged -= locator_StatusChanged;
-        }
+			return t;
+		}
 
-        #endregion
+		/// <summary>
+		/// Start listening to location changes
+		/// </summary>
+		/// <param name="minTime">Minimum interval in milliseconds</param>
+		/// <param name="minDistance">Minimum distance in meters</param>
+		public void StartListening(uint minTime, double minDistance)
+		{
+			_locator.MovementThreshold = minDistance;
+			_locator.ReportInterval = minTime;
+			_locator.PositionChanged += LocatorPositionChanged;
+			_locator.StatusChanged += LocatorStatusChanged;
+		}
 
-        void locator_PositionChanged(Windows.Devices.Geolocation.Geolocator sender, PositionChangedEventArgs args)
-        {
-            this.PositionChanged.TryInvoke(
-                sender, 
-                new PositionEventArgs(args.Position.Coordinate.GetPosition()));
-        }
+		/// <summary>
+		/// Start listening to location changes
+		/// </summary>
+		/// <param name="minTime">Minimum interval in milliseconds</param>
+		/// <param name="minDistance">Minimum distance in meters</param>
+		/// <param name="includeHeading">Include heading information</param>
+		public void StartListening(uint minTime, double minDistance, bool includeHeading)
+		{
+			StartListening(minTime, minDistance);
+		}
 
-        void locator_StatusChanged(Windows.Devices.Geolocation.Geolocator sender, StatusChangedEventArgs args)
-        {
-            switch (args.Status)
-            {
-                case PositionStatus.Disabled:
-                    this.PositionError.TryInvoke(
-                        sender, 
-                        new PositionErrorEventArgs(GeolocationError.Unauthorized));
-                    break;
-                case PositionStatus.Initializing:
-                    break;
-                case PositionStatus.NoData:
-                    this.PositionError.TryInvoke(
-                        sender, 
-                        new PositionErrorEventArgs(GeolocationError.PositionUnavailable));
-                    break;
-                case PositionStatus.NotInitialized:
-                    this.IsListening = false;
-                    break;
-                case PositionStatus.Ready:
-                    this.IsListening = true;
-                    break;
-            }
-        }
-    }
+		/// <summary>
+		/// Stop listening to location changes
+		/// </summary>
+		public void StopListening()
+		{
+			_locator.PositionChanged -= LocatorPositionChanged;
+			_locator.StatusChanged -= LocatorStatusChanged;
+		}
+
+		#endregion
+	}
 }

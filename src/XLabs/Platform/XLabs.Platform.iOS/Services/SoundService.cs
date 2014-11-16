@@ -1,7 +1,4 @@
-﻿using XLabs.Platform.iOS.Services;
-
-[assembly: Dependency (typeof(SoundService))]
-namespace XLabs.Platform.iOS.Services
+﻿namespace XLabs.Platform.Services
 {
 	using System;
 	using System.Threading.Tasks;
@@ -9,125 +6,199 @@ namespace XLabs.Platform.iOS.Services
 	using MonoTouch.AVFoundation;
 	using MonoTouch.Foundation;
 
-	using XLabs.Platform.Services.SoundService;
-
+	/// <summary>
+	/// Class SoundService.
+	/// </summary>
 	public class SoundService : ISoundService
 	{
+		/// <summary>
+		/// The _is scrubbing
+		/// </summary>
+		private bool _isScrubbing;
 
-		AVAudioPlayer player;
-		bool _isScrubbing = false;
+		/// <summary>
+		/// The _player
+		/// </summary>
+		private AVAudioPlayer _player;
 
-		public SoundService ()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SoundService"/> class.
+		/// </summary>
+		public SoundService()
 		{
+			IsPlaying = false;
+			CurrentFile = null;
 		}
 
+		/// <summary>
+		/// Gets or sets the volume.
+		/// </summary>
+		/// <value>The volume.</value>
+		public double Volume
+		{
+			get
+			{
+				if (_player == null)
+				{
+					return 0.5;
+				}
+				return _player.Volume;
+			}
+			set
+			{
+				if (_player != null)
+				{
+					_player.Volume = (float)value;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is playing.
+		/// </summary>
+		/// <value><c>true</c> if this instance is playing; otherwise, <c>false</c>.</value>
+		public bool IsPlaying { get; private set; }
+
+		/// <summary>
+		/// Gets the current time.
+		/// </summary>
+		/// <value>The current time.</value>
+		public double CurrentTime
+		{
+			get
+			{
+				if (_player == null)
+				{
+					return 0;
+				}
+				return _player.CurrentTime;
+			}
+		}
+
+		/// <summary>
+		/// Gets the current file.
+		/// </summary>
+		/// <value>The current file.</value>
+		public SoundFile CurrentFile { get; private set; }
+
+		/// <summary>
+		/// Plays this instance.
+		/// </summary>
+		public void Play()
+		{
+			if (_player != null && !IsPlaying)
+			{
+				_player.Play();
+				IsPlaying = true;
+			}
+		}
+
+		/// <summary>
+		/// Stops this instance.
+		/// </summary>
+		public void Stop()
+		{
+			if (_player != null)
+			{
+				_player.Stop();
+				IsPlaying = false;
+				_player.CurrentTime = 0.0;
+			}
+		}
+
+		/// <summary>
+		/// Pauses this instance.
+		/// </summary>
+		public void Pause()
+		{
+			if (_player != null && IsPlaying)
+			{
+				_player.Pause();
+				IsPlaying = false;
+			}
+		}
+
+		/// <summary>
+		/// Occurs when [sound file finished].
+		/// </summary>
 		public event EventHandler SoundFileFinished;
 
-		protected virtual void OnFileFinished (SoundFinishedEventArgs e)
+		/// <summary>
+		/// Handles the <see cref="E:FileFinished" /> event.
+		/// </summary>
+		/// <param name="e">The <see cref="SoundFinishedEventArgs"/> instance containing the event data.</param>
+		protected virtual void OnFileFinished(SoundFinishedEventArgs e)
 		{
-			if (SoundFileFinished != null) {
-				SoundFileFinished (this, e);
+			if (SoundFileFinished != null)
+			{
+				SoundFileFinished(this, e);
 			}
 		}
 
-		public Task<SoundFile> SetMediaAsync (string filename)
+		/// <summary>
+		/// Sets the media asynchronous.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		/// <returns>Task&lt;SoundFile&gt;.</returns>
+		public Task<SoundFile> SetMediaAsync(string filename)
 		{
-			return Task.Run<SoundFile> (() => {
-				_currentFile = new SoundFile ();
-				_currentFile.Filename = filename;
-				NSUrl url = NSUrl.FromFilename (_currentFile.Filename);
-				player = AVAudioPlayer.FromUrl (url);
-				player.FinishedPlaying += (object sender, AVStatusEventArgs e) => {
-					if (e.Status) {
-						this.OnFileFinished (new SoundFinishedEventArgs (this._currentFile));
-					}
-				};
-				_currentFile.Duration = TimeSpan.FromSeconds (player.Duration);
-				return _currentFile;
-			});
+			return Task.Run(
+				() =>
+					{
+						CurrentFile = new SoundFile();
+						CurrentFile.Filename = filename;
+						var url = NSUrl.FromFilename(CurrentFile.Filename);
+						_player = AVAudioPlayer.FromUrl(url);
+						_player.FinishedPlaying += (object sender, AVStatusEventArgs e) =>
+							{
+								if (e.Status)
+								{
+									OnFileFinished(new SoundFinishedEventArgs(CurrentFile));
+								}
+							};
+						CurrentFile.Duration = TimeSpan.FromSeconds(_player.Duration);
+						return CurrentFile;
+					});
 		}
 
-		public Task<SoundFile> PlayAsync (string filename, string extension = null)
+		/// <summary>
+		/// Plays the asynchronous.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		/// <param name="extension">The extension.</param>
+		/// <returns>Task&lt;SoundFile&gt;.</returns>
+		public Task<SoundFile> PlayAsync(string filename, string extension = null)
 		{
-			return Task.Run<SoundFile> (async () => {
-				if (player == null || string.Compare (filename, _currentFile.Filename) > 0) {
-					await SetMediaAsync (filename);
-				}
-				player.Play ();
-				_isPlaying = true;
-				return _currentFile;
-			});
+			return Task.Run<SoundFile>(
+				async () =>
+					{
+						if (_player == null || string.Compare(filename, CurrentFile.Filename) > 0)
+						{
+							await SetMediaAsync(filename);
+						}
+						_player.Play();
+						IsPlaying = true;
+						return CurrentFile;
+					});
 		}
 
-		public Task GoToAsync (double position)
+		/// <summary>
+		/// Goes to asynchronous.
+		/// </summary>
+		/// <param name="position">The position.</param>
+		/// <returns>Task.</returns>
+		public Task GoToAsync(double position)
 		{
-			return Task.Run (() => {
-				if (!_isScrubbing) {
-					_isScrubbing = true;
-					player.CurrentTime = position;
-					_isScrubbing = false;
-				}
-			});
-		}
-
-		public double Volume {
-			get {
-				if (player == null)
-					return 0.5;
-				return (double)player.Volume;
-			}
-			set {
-				if (player != null)
-					player.Volume = (float)value;
-			}
-		}
-
-		private SoundFile _currentFile = null;
-		public SoundFile  CurrentFile {
-			get { 
-				return _currentFile;
-			}
-		}
-
-		private bool _isPlaying = false;
-		public bool IsPlaying {
-			get { 
-				return _isPlaying;
-			}
-		}
-
-		public double CurrentTime {
-			get {
-				if (player == null)
-					return 0;
-				return (double)player.CurrentTime;
-			}
-		}
-
-		public void Play ()
-		{
-			if (player != null && !_isPlaying) {
-				player.Play ();
-				_isPlaying = true;
-			}
-		}
-
-		public void Stop ()
-		{
-			if (player != null) {
-				player.Stop ();
-				_isPlaying = false;
-				player.CurrentTime = 0.0;
-			}
-
-		}
-
-		public void Pause ()
-		{
-			if (player != null && _isPlaying) {
-				player.Pause ();
-				_isPlaying = false;
-			}
+			return Task.Run(
+				() =>
+					{
+						if (!_isScrubbing)
+						{
+							_isScrubbing = true;
+							_player.CurrentTime = position;
+							_isScrubbing = false;
+						}
+					});
 		}
 	}
 }
