@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Labs.Services.IO
 {
+	using XLabs.Platform.Services.IO;
 
-    public class FileManager : IFileManager
+	public class FileManager : IFileManager
     {
         private readonly IsolatedStorageFile isolatedStorageFile;
 

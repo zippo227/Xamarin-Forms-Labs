@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace Xamarin.Forms.Labs
 {
     using XLabs;
+    using XLabs.Platform.Device;
 
-    public partial class Battery : IBattery
+	public partial class Battery : IBattery
     {
         /// <summary>
         /// Event handler for battery level changes. 

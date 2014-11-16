@@ -7,7 +7,10 @@ using XLabs;
 
 namespace Xamarin.Forms.Labs
 {
-    public partial class Accelerometer : IAccelerometer
+	using XLabs.Platform.Device;
+	using XLabs.Platform.Droid.Device;
+
+	public partial class Accelerometer : IAccelerometer
     {
         /// <summary>
         /// Gravitational force is 9.81 m/s^2
@@ -15,7 +18,7 @@ namespace Xamarin.Forms.Labs
         public const double Gravitation = 9.81;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Accelerometer"/> class.
+        /// Initializes a new instance of the <see cref="XLabs.Platform.Droid.Device.Accelerometer"/> class.
         /// </summary>
         public Accelerometer()
         {

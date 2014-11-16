@@ -7,7 +7,9 @@ using XLabs;
 
 namespace Xamarin.Forms.Labs
 {
-    public partial class Gyroscope : IGyroscope
+	using XLabs.Platform.Device;
+
+	public partial class Gyroscope : IGyroscope
     {
         private event EventHandler<EventArgs<Vector3>> readingAvailable;
 
