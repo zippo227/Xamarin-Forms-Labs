@@ -6,6 +6,8 @@
 	using MonoTouch.AVFoundation;
 	using MonoTouch.Foundation;
 
+	using XLabs.Platform.Services.Sound;
+
 	/// <summary>
 	/// Class SoundService.
 	/// </summary>

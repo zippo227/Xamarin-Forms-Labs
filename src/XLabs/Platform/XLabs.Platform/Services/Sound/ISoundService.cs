@@ -1,4 +1,4 @@
-﻿namespace XLabs.Platform.Services.SoundService
+﻿namespace XLabs.Platform.Services.Sound
 {
 	using System;
 	using System.Threading.Tasks;

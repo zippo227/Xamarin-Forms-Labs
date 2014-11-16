@@ -174,6 +174,11 @@
 			number.StartActivity(new Intent(Intent.ActionDial, Uri.Parse("tel:" + number)));
 		}
 
+		/// <summary>
+		/// Sends the SMS.
+		/// </summary>
+		/// <param name="to">To.</param>
+		/// <param name="body">The body.</param>
 		public void SendSms(string to, string body)
 		{
 			SmsManager.Default.SendTextMessage(to, null, body, null, null);

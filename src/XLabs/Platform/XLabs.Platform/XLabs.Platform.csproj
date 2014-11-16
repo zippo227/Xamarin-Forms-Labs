@@ -77,9 +77,9 @@
     <Compile Include="Services\Media\MediaStorageOptions.cs" />
     <Compile Include="Services\Media\WaveRecorder.cs" />
     <Compile Include="Services\NetworkStatus.cs" />
-    <Compile Include="Services\SoundService\ISoundService.cs" />
-    <Compile Include="Services\SoundService\SoundFile.cs" />
-    <Compile Include="Services\SoundService\SoundFinishedEventArgs.cs" />
+    <Compile Include="Services\Sound\ISoundService.cs" />
+    <Compile Include="Services\Sound\SoundFile.cs" />
+    <Compile Include="Services\Sound\SoundFinishedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\XLabs.Core\XLabs.Core.csproj">

@@ -8,10 +8,12 @@
 	using Android.Content.Res;
 	using Android.Media;
 
+	using XLabs.Platform.Services.Sound;
+
 	/// <summary>
 	/// Class SoundService.
 	/// </summary>
-	public class SoundService : XLabs.Platform.Services.SoundService.ISoundService
+	public class SoundService : ISoundService
 	{
 		/// <summary>
 		/// The _is player prepared

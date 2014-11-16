@@ -5,6 +5,8 @@
 	using System.Windows;
 	using System.Windows.Controls;
 
+	using XLabs.Platform.Services.Sound;
+
 	/// <summary>
 	/// SoundService implementation on the Windows Phone platform
 	/// Nees a GlobalMEdiaElement instance on the App resources dictionary
