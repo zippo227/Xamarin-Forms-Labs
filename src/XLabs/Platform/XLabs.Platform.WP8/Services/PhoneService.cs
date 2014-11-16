@@ -4,12 +4,12 @@
 	using Microsoft.Phone.Tasks;
 
 	/// <summary>
-	/// Phone service for Windows Phone devices.
+	///     Phone service for Windows Phone devices.
 	/// </summary>
 	public class PhoneService : IPhoneService
 	{
 		/// <summary>
-		/// Gets the cellular provider.
+		///     Gets the cellular provider.
 		/// </summary>
 		/// <value>The cellular provider.</value>
 		public string CellularProvider
@@ -21,9 +21,12 @@
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether this instance has cellular data enabled.
+		///     Gets a value indicating whether this instance has cellular data enabled.
 		/// </summary>
-		/// <value><c>null</c> if [is cellular data enabled] contains no value, <c>true</c> if [is cellular data enabled]; otherwise, <c>false</c>.</value>
+		/// <value>
+		///     <c>null</c> if [is cellular data enabled] contains no value, <c>true</c> if [is cellular data enabled];
+		///     otherwise, <c>false</c>.
+		/// </value>
 		public bool? IsCellularDataEnabled
 		{
 			get
@@ -33,9 +36,12 @@
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether this instance has cellular data roaming enabled.
+		///     Gets a value indicating whether this instance has cellular data roaming enabled.
 		/// </summary>
-		/// <value><c>null</c> if [is cellular data roaming enabled] contains no value, <c>true</c> if [is cellular data roaming enabled]; otherwise, <c>false</c>.</value>
+		/// <value>
+		///     <c>null</c> if [is cellular data roaming enabled] contains no value, <c>true</c> if [is cellular data roaming
+		///     enabled]; otherwise, <c>false</c>.
+		/// </value>
 		public bool? IsCellularDataRoamingEnabled
 		{
 			get
@@ -45,9 +51,12 @@
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether this instance is network available.
+		///     Gets a value indicating whether this instance is network available.
 		/// </summary>
-		/// <value><c>null</c> if [is network available] contains no value, <c>true</c> if [is network available]; otherwise, <c>false</c>.</value>
+		/// <value>
+		///     <c>null</c> if [is network available] contains no value, <c>true</c> if [is network available]; otherwise,
+		///     <c>false</c>.
+		/// </value>
 		public bool? IsNetworkAvailable
 		{
 			get
@@ -57,7 +66,7 @@
 		}
 
 		/// <summary>
-		/// Gets the ISO Country Code
+		///     Gets the ISO Country Code
 		/// </summary>
 		/// <value>The icc.</value>
 		public string Icc
@@ -69,7 +78,7 @@
 		}
 
 		/// <summary>
-		/// Gets the Mobile Country Code
+		///     Gets the Mobile Country Code
 		/// </summary>
 		/// <value>The MCC.</value>
 		public string Mcc
@@ -81,7 +90,7 @@
 		}
 
 		/// <summary>
-		/// Gets the Mobile Network Code
+		///     Gets the Mobile Network Code
 		/// </summary>
 		/// <value>The MNC.</value>
 		public string Mnc
@@ -93,7 +102,7 @@
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether this instance can send SMS.
+		///     Gets a value indicating whether this instance can send SMS.
 		/// </summary>
 		/// <value><c>true</c> if this instance can send SMS; otherwise, <c>false</c>.</value>
 		public bool CanSendSms
@@ -105,7 +114,7 @@
 		}
 
 		/// <summary>
-		/// Opens native dialog to dial the specified number
+		///     Opens native dialog to dial the specified number
 		/// </summary>
 		/// <param name="number">Number to dial.</param>
 		public void DialNumber(string number)
@@ -114,7 +123,7 @@
 		}
 
 		/// <summary>
-		/// Sends the SMS.
+		///     Sends the SMS.
 		/// </summary>
 		/// <param name="to">To.</param>
 		/// <param name="body">The body.</param>

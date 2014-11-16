@@ -95,10 +95,6 @@
       <Link>Device\Gyroscope.designer.cs</Link>
       <DependentUpon>Gyroscope.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\XLabs.Platform\services\FontManager.designer.cs">
-      <Link>Services\FontManager.designer.cs</Link>
-      <DependentUpon>FontManager.cs</DependentUpon>
-    </Compile>
     <Compile Include="..\XLabs.Platform\services\io\FileManager.cs">
       <Link>Services\IO\FileManager.cs</Link>
     </Compile>

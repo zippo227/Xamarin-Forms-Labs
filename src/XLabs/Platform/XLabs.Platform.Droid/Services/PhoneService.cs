@@ -175,7 +175,7 @@
 		}
 
 		/// <summary>
-		/// Sends the SMS.
+		///     Sends the SMS.
 		/// </summary>
 		/// <param name="to">To.</param>
 		/// <param name="body">The body.</param>
