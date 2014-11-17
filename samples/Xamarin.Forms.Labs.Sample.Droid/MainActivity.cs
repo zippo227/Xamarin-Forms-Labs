@@ -65,6 +65,19 @@ namespace Xamarin.Forms.Labs.Sample.Droid
 
             Xamarin.Forms.Forms.Init(this, bundle);
 
+            // ContentDescription is needed for Drag renderer to work
+            Forms.ViewInitialized += (object sender, ViewInitializedEventArgs e) =>
+            {
+                if (!string.IsNullOrWhiteSpace(e.View.StyleId))
+                {
+                    e.NativeView.ContentDescription = e.View.StyleId;
+                }
+                else
+                {
+                    e.NativeView.ContentDescription = e.View.StyleId = e.View.Id.ToString();
+                }
+            };
+
             App.Init();
 
             this.SetPage(App.GetMainPage());
@@ -75,6 +88,7 @@ namespace Xamarin.Forms.Labs.Sample.Droid
         /// </summary>
         private void SetIoc()
         {
+
             var resolverContainer = new SimpleContainer();
 
             var app = new XFormsAppDroid();
