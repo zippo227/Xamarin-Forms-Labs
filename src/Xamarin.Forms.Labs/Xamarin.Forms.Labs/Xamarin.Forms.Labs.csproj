@@ -39,6 +39,7 @@
     <Compile Include="Behaviors\GestureResult.cs" />
     <Compile Include="Behaviors\Gestures.cs" />
     <Compile Include="Behaviors\IGesture.cs" />
+    <Compile Include="Controls\DragContentView.cs" />
     <Compile Include="Converter\CollectionEmptyToBool.cs" />
     <Compile Include="Converter\HeightToMillimeters.cs" />
     <Compile Include="Extensions\CollectionTypeExtension.cs" />

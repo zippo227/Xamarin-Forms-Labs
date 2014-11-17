@@ -192,6 +192,7 @@ namespace Xamarin.Forms.Labs.Sample
                 {"CameraView", typeof(CameraViewPage)},
                 {"CheckBox", typeof(CheckBoxPage)},
                 {"CircleImage", typeof(CircleImagePage)},
+                {"Drag", typeof(DragPage)},
                 {"DynamicListView", typeof(DynamicListView)},
                 {"ExtendedCell", typeof(ExtendedCellPage)},
                 {"ExtendedEntry", typeof(ExtendedEntryPage)},

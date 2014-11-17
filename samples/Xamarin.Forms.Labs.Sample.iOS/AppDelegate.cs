@@ -52,6 +52,18 @@ namespace Xamarin.Forms.Labs.Sample.iOS
 
             Forms.Init();
 
+            Forms.ViewInitialized += (object sender, ViewInitializedEventArgs e) =>
+            {
+                if (!string.IsNullOrWhiteSpace(e.View.StyleId))
+                {
+                    e.NativeView.AccessibilityIdentifier = e.View.StyleId;
+                }
+                else
+                {
+                    e.NativeView.AccessibilityIdentifier = e.View.StyleId = e.View.Id.ToString();
+                }
+            };
+
             App.Init();
 
             this._window = new UIWindow(UIScreen.MainScreen.Bounds)

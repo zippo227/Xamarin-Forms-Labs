@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Android.App;
 using Android.Content;
-using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -12,26 +12,48 @@ using Android.Widget;
 
 namespace Xamarin.Forms.Labs.Droid
 {
-    using System.IO;
-    using System.Threading.Tasks;
-    using Android.Graphics;
+    using System.Collections.ObjectModel;
+    using System.Reflection;
+    using NativeView = global::Android.Views.View;
 
     public static class ViewExtensions
     {
-        public static Android.Graphics.Bitmap ToBitmap(this Android.Views.View view)
+        public static View FindFormsViewFromAccessibilityId(this View view, NativeView nativeView)
         {
-            var bitmap = Bitmap.CreateBitmap(view.Width, view.Height, Bitmap.Config.Argb8888);
-            using (var c = new Canvas(bitmap))
+            View formsView = null;
+
+            var id = nativeView.ContentDescription;
+
+            if (string.IsNullOrWhiteSpace(id))
             {
-                view.Draw(c);
+                formsView = null;
+            }
+            else if (view.StyleId == id)
+            {
+                formsView = view;
+            }
+            else
+            {
+                var d = view.GetInternalChildren();
+
+                formsView = d == null ? null : d.OfType<View>().FirstOrDefault(a => a.StyleId == id);
             }
 
-            return bitmap;
+            return formsView;
         }
 
-        public static async Task StreamToPng(this Android.Views.View view, Stream stream)
+        public static ObservableCollection<Element> GetInternalChildren(this View view)
         {
-            await view.ToBitmap().CompressAsync(Bitmap.CompressFormat.Png, 100, stream);
+            var internalPropertyInfo = view.GetType().GetProperty("InternalChildren", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            return (internalPropertyInfo == null) ? null : internalPropertyInfo.GetValue(view) as ObservableCollection<Element>;
+        }
+
+        public static NativeView GetNativeContent(this View view)
+        {
+            PropertyInfo controlProperty= view.GetType().GetProperty("Control", BindingFlags.Public | BindingFlags.Instance);
+
+            return (controlProperty == null) ? null : controlProperty.GetValue(view) as NativeView;
         }
     }
 }

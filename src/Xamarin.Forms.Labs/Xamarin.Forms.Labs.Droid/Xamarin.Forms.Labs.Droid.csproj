@@ -94,6 +94,7 @@
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthDescriptor.cs" />
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthView.cs" />
     <Compile Include="Controls\CircleImage\CircleImageRenderer.cs" />
+    <Compile Include="Controls\DragContentView\DragContentViewRenderer.cs" />
     <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\GesturesContentView\GesturesContentViewRenderer.cs" />
     <Compile Include="Controls\HyperLinkLabel\HyperLinkLabelRenderer.cs" />
@@ -190,6 +191,14 @@
     <ProjectReference Include="..\..\XLabs\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
       <Project>{2E200799-1170-49BF-A4AA-2A9228F8A213}</Project>
       <Name>XLabs.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XLabs\Platform\XLabs.Platform.Droid\XLabs.Platform.Droid.csproj">
+      <Project>{f422fd34-e431-4758-a981-03552a7bcf13}</Project>
+      <Name>XLabs.Platform.Droid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XLabs\Platform\XLabs.Platform\XLabs.Platform.csproj">
+      <Project>{2a4d9dd4-326c-4824-aa3c-a9ed45cc898c}</Project>
+      <Name>XLabs.Platform</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XLabs\XLabs.Core\XLabs.Core.csproj">
       <Project>{15d9c404-f7e2-49f0-acc9-63c4c008c860}</Project>
