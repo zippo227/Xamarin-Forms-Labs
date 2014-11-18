@@ -139,6 +139,8 @@ namespace Xamarin.Forms.Labs.iOS.Services
                     Recipients = new[] { to }
                 };
 
+                smsController.Finished += (sender, e) => smsController.DismissViewController(true, null);
+
                 UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(smsController, true, null);
             }
         }
