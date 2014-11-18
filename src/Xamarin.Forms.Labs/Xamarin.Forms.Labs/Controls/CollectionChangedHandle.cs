@@ -34,6 +34,7 @@ namespace Xamarin.Forms.Labs.Controls
         /// <param name="cleanup">A function that performs any needed cleanup when {TSyncType} is removed from the <see cref="target"/></param>
         public CollectionChangedHandle(IList<TSyncType>target, IEnumerable<T>source, Func<T,TSyncType>projector, Action<TSyncType,T,int>postadd =null, Action<TSyncType>cleanup=null)
         {
+            if (source == null) return;//Nothing to do 
             this._itemsSourceCollectionChangedImplementation = source as INotifyCollectionChanged;
             _sourceCollection = source;
             _target = target;
