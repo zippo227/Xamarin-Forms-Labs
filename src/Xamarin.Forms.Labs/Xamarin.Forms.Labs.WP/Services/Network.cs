@@ -60,6 +60,7 @@ namespace Xamarin.Forms.Labs.WP8.Services
                 {
                     return NetworkStatus.ReachableViaCarrierDataNetwork;
                 }
+                return NetworkStatus.ReachableViaUnknownNetwork;
             }
 
             return NetworkStatus.NotReachable;

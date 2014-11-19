@@ -29,11 +29,11 @@ namespace Xamarin.Forms.Labs.Droid.Services
 
         public event Action<NetworkStatus> ReachabilityChanged;
 
-        public NetworkStatus InternetConnectionStatus ()
+        public NetworkStatus InternetConnectionStatus()
         {
             NetworkStatus status = NetworkStatus.NotReachable;
 
-            ConnectivityManager cm = (ConnectivityManager) Application.Context.GetSystemService(Context.ConnectivityService);
+            ConnectivityManager cm = (ConnectivityManager)Application.Context.GetSystemService(Context.ConnectivityService);
             NetworkInfo ni = cm.ActiveNetworkInfo;
 
             if (ni != null && ni.IsConnectedOrConnecting)
@@ -46,6 +46,10 @@ namespace Xamarin.Forms.Labs.Droid.Services
                 else if (name.Contains("MOBILE"))
                 {
                     status = NetworkStatus.ReachableViaCarrierDataNetwork;
+                }
+                else
+                {
+                    status = NetworkStatus.ReachableViaUnknownNetwork;
                 }
             }
 
@@ -69,14 +73,14 @@ namespace Xamarin.Forms.Labs.Droid.Services
             });
         }
 
-//        public bool CanPing(string host)
-//        {
-//            Process p1 = Java.Lang.Runtime.GetRuntime().Exec(string.Format("ping -c 1 {0}", host));
-//
-//
-//            int returnVal = p1.();
-//            boolean reachable = (returnVal==0);
-//        }
+        //        public bool CanPing(string host)
+        //        {
+        //            Process p1 = Java.Lang.Runtime.GetRuntime().Exec(string.Format("ping -c 1 {0}", host));
+        //
+        //
+        //            int returnVal = p1.();
+        //            boolean reachable = (returnVal==0);
+        //        }
 
         public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
         {
