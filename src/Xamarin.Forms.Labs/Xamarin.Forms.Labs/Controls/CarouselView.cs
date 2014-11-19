@@ -210,10 +210,16 @@ namespace Xamarin.Forms.Labs.Controls
             var newval = currentview + (increment ? 1 : -1);
             
             if (newval < 0 || newval > ViewModels.Count() - 1) return;
-            
+            var oldview = currentview >=0 ?  ViewModels[currentview] as ICarouselView : null;
+            var newview = ViewModels[newval] as ICarouselView;
+
             myGrid.Children.Clear();
+            if(oldview != null) oldview.Hiding();
+            if(newview != null) newview.Showing();
             currentview = newval;
             contentView.ViewModel = ViewModels[currentview];
+            if(oldview != null) oldview.Hiden();
+            if(newview != null) newview.Shown();
             myGrid.Children.Add(marker, currentview, 0);
         }
 
