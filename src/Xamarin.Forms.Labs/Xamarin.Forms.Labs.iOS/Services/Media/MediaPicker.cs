@@ -119,7 +119,7 @@ namespace Xamarin.Forms.Labs.iOS.Services.Media
 
 			UIViewController viewController = window.RootViewController;
 
-			if (viewController == null) {
+			if (viewController == null || (viewController.PresentedViewController != null && viewController.PresentedViewController.GetType() == typeof(UIAlertController))){
 				window = UIApplication.SharedApplication.Windows.OrderByDescending (w => w.WindowLevel).FirstOrDefault (w => w.RootViewController != null);
 				if (window == null)
 					throw new InvalidOperationException ("Could not find current view controller");
