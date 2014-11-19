@@ -19,6 +19,11 @@ namespace Xamarin.Forms.Labs.Services
         /// <summary>
         /// Network reachable via WiFi network.
         /// </summary>
-        ReachableViaWiFiNetwork
+        ReachableViaWiFiNetwork,
+
+        /// <summary>
+        /// Network reachable via an unknown network
+        /// </summary>
+        ReachableViaUnknownNetwork
     }
 }
