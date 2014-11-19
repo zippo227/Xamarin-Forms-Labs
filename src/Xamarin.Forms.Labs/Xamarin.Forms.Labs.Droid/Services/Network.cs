@@ -19,6 +19,10 @@ using AApplication = Android.App.Application;
 
 namespace Xamarin.Forms.Labs.Droid.Services
 {
+
+    /// <summary>
+    /// Android <see cref="INetwork"/> implementation.
+    /// </summary>
     public class Network : INetwork
     {
         public Network()
@@ -28,21 +32,28 @@ namespace Xamarin.Forms.Labs.Droid.Services
 
         public event Action<NetworkStatus> ReachabilityChanged;
 
-        public NetworkStatus InternetConnectionStatus ()
+        public NetworkStatus InternetConnectionStatus()
         {
             NetworkStatus status = NetworkStatus.NotReachable;
 
-            ConnectivityManager cm = (ConnectivityManager) AApplication.Context.GetSystemService(Context.ConnectivityService);
-            NetworkInfo ni = cm.ActiveNetworkInfo;
+            ConnectivityManager cm = (ConnectivityManager)AApplication.Context.GetSystemService(Context.ConnectivityService);
+			NetworkInfo ni = cm.ActiveNetworkInfo;
 
-            if (ni != null)
+            if (ni != null && ni.IsConnectedOrConnecting)
             {
-                if (ni.TypeName.ToUpper().Contains("WIFI") && ni.IsConnectedOrConnecting)
+                var name = ni.TypeName.ToUpper();
+                if (name.Contains("WIFI"))
+                {
                     status = NetworkStatus.ReachableViaWiFiNetwork;
-
-                if (ni.TypeName.ToUpper().Contains("MOBILE")
-                    && ni.IsConnectedOrConnecting)
+                }
+                else if (name.Contains("MOBILE"))
+                {
                     status = NetworkStatus.ReachableViaCarrierDataNetwork;
+                }
+                else
+                {
+                    status = NetworkStatus.ReachableViaUnknownNetwork;
+                }
             }
 
             return status;
@@ -63,6 +74,15 @@ namespace Xamarin.Forms.Labs.Droid.Services
                 }
             });
         }
+
+        //        public bool CanPing(string host)
+        //        {
+        //            Process p1 = Java.Lang.Runtime.GetRuntime().Exec(string.Format("ping -c 1 {0}", host));
+        //
+        //
+        //            int returnVal = p1.();
+        //            boolean reachable = (returnVal==0);
+        //        }
 
         public async Task<bool> IsReachableByWifi(string host, TimeSpan timeout)
         {
