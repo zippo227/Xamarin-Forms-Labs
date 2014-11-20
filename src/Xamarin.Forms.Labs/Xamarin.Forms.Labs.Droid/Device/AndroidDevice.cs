@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Labs
 
         private IFileManager fileManager;
 
-		private static readonly long totalMemory = GetTotalMemory();
+        private static readonly long totalMemory = GetTotalMemory();
 
         /// <summary>
         /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
