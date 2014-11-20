@@ -21,6 +21,8 @@ namespace Xamarin.Forms.Labs
         private const string iPhoneExpression = "iPhone([1-7]),([1-4])";
         private const string iPodExpression = "iPod([1-5]),([1])";
         private const string iPadExpression = "iPad([1-4]),([1-6])";
+        private const int CTL_HW = 6; /* generic cpu/io */
+        private const int HW_PHYSMEM = 5; /* int: total memory */
 
         private static IDevice device;
 
@@ -30,9 +32,6 @@ namespace Xamarin.Forms.Labs
 		
         [DllImport(MonoTouch.Constants.SystemLibrary)]
         static internal extern int sysctlbyname([MarshalAs(UnmanagedType.LPStr)] string property, IntPtr output, IntPtr oldLen, IntPtr newp, uint newlen);
-
-        private static int CTL_HW = 6; /* generic cpu/io */
-        private static int HW_PHYSMEM = 5; /* int: total memory */
 
         [DllImport(MonoTouch.Constants.SystemLibrary)]
         static internal extern int sysctl([MarshalAs(UnmanagedType.LPArray)] int[] name, uint namelen, out uint oldp, ref int oldlenp, IntPtr newp, uint newlen);
