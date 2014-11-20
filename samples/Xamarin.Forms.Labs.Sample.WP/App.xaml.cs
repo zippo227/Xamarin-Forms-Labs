@@ -20,7 +20,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
     using System.Threading.Tasks;
     using Xamarin.Forms.Labs.Charting.WP;
 
-    public partial class App : Application
+    public partial class App : System.Windows.Application
     {
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -53,7 +53,7 @@ namespace Xamarin.Forms.Labs.Sample.WP
             if (Debugger.IsAttached)
             {
                 // Display the current frame rate counters.
-                Application.Current.Host.Settings.EnableFrameRateCounter = false;
+                System.Windows.Application.Current.Host.Settings.EnableFrameRateCounter = false;
 
                 // Show the areas of the app that are being redrawn in each frame.
                 //Application.Current.Host.Settings.EnableRedrawRegions = true;

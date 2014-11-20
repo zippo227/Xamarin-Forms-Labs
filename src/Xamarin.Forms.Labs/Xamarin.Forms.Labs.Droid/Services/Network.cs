@@ -13,6 +13,7 @@ using Android.Widget;
 using Java.Net;
 using Xamarin.Forms.Labs.Services;
 using Android.Net;
+using AApplication = Android.App.Application;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Xamarin.Forms.Labs.Droid.Services.Network))]
 
@@ -31,7 +32,7 @@ namespace Xamarin.Forms.Labs.Droid.Services
         {
             NetworkStatus status = NetworkStatus.NotReachable;
 
-            ConnectivityManager cm = (ConnectivityManager) Application.Context.GetSystemService(Context.ConnectivityService);
+            ConnectivityManager cm = (ConnectivityManager) AApplication.Context.GetSystemService(Context.ConnectivityService);
             NetworkInfo ni = cm.ActiveNetworkInfo;
 
             if (ni != null)
