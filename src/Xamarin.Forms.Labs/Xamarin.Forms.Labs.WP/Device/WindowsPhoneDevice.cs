@@ -257,6 +257,15 @@ namespace Xamarin.Forms.Labs
             get { return DeviceStatus.DeviceManufacturer; }
         }
 
+		/// <summary>
+        /// Gets the total memory in bytes.
+        /// </summary>
+        /// <value>The total memory in bytes.</value>
+		public long TotalMemory
+		{
+			get { return DeviceStatus.DeviceTotalMemory; }
+		}
+		
         /// <summary>
         /// Starts the default app associated with the URI for the specified URI.
         /// </summary>

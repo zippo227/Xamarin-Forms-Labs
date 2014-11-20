@@ -26,9 +26,17 @@ namespace Xamarin.Forms.Labs
 
         private IFileManager fileManager;
 
+        private static readonly long totalMemory = GetTotalMemory();
+		
         [DllImport(MonoTouch.Constants.SystemLibrary)]
         static internal extern int sysctlbyname([MarshalAs(UnmanagedType.LPStr)] string property, IntPtr output, IntPtr oldLen, IntPtr newp, uint newlen);
 
+        private static int CTL_HW = 6; /* generic cpu/io */
+        private static int HW_PHYSMEM = 5; /* int: total memory */
+
+        [DllImport(MonoTouch.Constants.SystemLibrary)]
+        static internal extern int sysctl([MarshalAs(UnmanagedType.LPArray)] int[] name, uint namelen, out uint oldp, ref int oldlenp, IntPtr newp, uint newlen);
+		
         /// <summary>
         /// Initializes a new instance of the <see cref="Xamarin.Forms.Labs.AppleDevice"/> class.
         /// </summary>
@@ -250,6 +258,18 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
+        /// Gets the total memory in bytes.
+        /// </summary>
+        /// <value>The total memory in bytes.</value>
+        public long TotalMemory 
+        {
+            get 
+            { 
+                return totalMemory; 
+            }
+        }
+
+        /// <summary>
         /// Starts the default app associated with the URI for the specified URI.
         /// </summary>
         /// <param name="uri">The URI.</param>
@@ -273,6 +293,17 @@ namespace Xamarin.Forms.Labs
             var pStr = Marshal.AllocHGlobal(length);
             sysctlbyname(property, pStr, pLen, IntPtr.Zero, 0);
             return Marshal.PtrToStringAnsi(pStr);
+        }
+
+        private static uint GetTotalMemory() 
+        {
+            var oldlenp = sizeof(int);
+            var mib = new int[2] { CTL_HW, HW_PHYSMEM };
+
+            uint mem;
+            sysctl(mib, 2, out mem, ref oldlenp, IntPtr.Zero, 0);
+
+            return mem;
         }
     }
 }

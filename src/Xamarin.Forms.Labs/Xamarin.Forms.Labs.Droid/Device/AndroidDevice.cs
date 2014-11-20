@@ -7,6 +7,8 @@ using Xamarin.Forms.Labs.Droid;
 using Xamarin.Forms.Labs.Droid.Services;
 using System.Threading.Tasks;
 using Xamarin.Forms.Labs.Services.IO;
+using Java.IO;
+using System;
 
 namespace Xamarin.Forms.Labs
 {
@@ -20,6 +22,8 @@ namespace Xamarin.Forms.Labs
         private IBluetoothHub btHub;
 
         private IFileManager fileManager;
+
+		private static readonly long totalMemory = GetTotalMemory();
 
         /// <summary>
         /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
@@ -250,6 +254,18 @@ namespace Xamarin.Forms.Labs
         }
 
         /// <summary>
+        /// Gets the total memory in bytes.
+        /// </summary>
+        /// <value>The total memory in bytes.</value>
+        public long TotalMemory 
+        {
+            get 
+            {
+                return totalMemory;
+            }
+        }
+
+        /// <summary>
         /// Starts the default app associated with the URI for the specified URI.
         /// </summary>
         /// <param name="uri">The URI.</param>
@@ -271,6 +287,16 @@ namespace Xamarin.Forms.Labs
                 });
         }
         #endregion
+
+        private static long GetTotalMemory() 
+        {
+            using (var reader = new RandomAccessFile("/proc/meminfo", "r")) 
+            {
+                var line = reader.ReadLine(); // first line --> MemTotal: xxxxxx kB
+                var split = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                return Convert.ToInt64(split[1]) * 1024;
+            }
+        }
     }
 }
 
