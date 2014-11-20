@@ -97,6 +97,11 @@ namespace Xamarin.Forms.Labs
         string Manufacturer { get; }
 
         /// <summary>
+        /// Gets the total memory in bytes.
+        /// </summary>
+        long TotalMemory { get; }
+
+        /// <summary>
         /// Starts the default app associated with the URI for the specified URI.
         /// </summary>
         /// <param name="uri">The URI.</param>

@@ -80,6 +80,36 @@ namespace Xamarin.Forms.Labs.Sample
             stack.Children.Add(batteryFrame); 
             #endregion
 
+            #region RAM information
+            var ramLabel = new Label() { Text = "Total Memory:" };
+
+            var ramText = new Label();
+
+            stack.Children.Add(new Frame() 
+            {
+                Content = new StackLayout() 
+                {
+                    Children = { ramLabel, ramText }
+                }
+            });
+
+            double mem;
+            var format = "";
+
+            if (device.TotalMemory < 1073741824) 
+            {
+                mem = device.TotalMemory / 1024 / 1024d;
+                format = "{0:#,0.00} MB";
+            } 
+            else 
+            {
+                mem = device.TotalMemory / 1024 / 1024 / 1024d;
+                format = "{0:#,0.00} GB";
+            }
+
+            ramText.Text = String.Format(format, mem);
+            #endregion
+
             #region Device Info
 
 
