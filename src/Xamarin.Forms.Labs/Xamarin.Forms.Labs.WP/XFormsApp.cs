@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using WApplication = System.Windows.Application;
 using Windows.Storage;
 using Microsoft.Phone.Shell;
 using Xamarin.Forms.Labs.Mvvm;
@@ -16,11 +12,11 @@ namespace Xamarin.Forms.Labs.WP8
     /// The Xamarin Forms Labs Windows Phone Application.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
-    public class XFormsAppWP : XFormsApp<Application>
+    public class XFormsAppWP : XFormsApp<WApplication>
     {
         public XFormsAppWP() { }
 
-        public XFormsAppWP(Application application) : base(application) { }
+        public XFormsAppWP(WApplication application) : base(application) { }
 
         public void RaiseBackPress()
         {
@@ -36,7 +32,7 @@ namespace Xamarin.Forms.Labs.WP8
         /// Initializes the specified context.
         /// </summary>
         /// <param name="app">The native application.</param>
-        protected override void OnInit(Application app)
+        protected override void OnInit(WApplication app)
         {
             this.AppContext.Startup += (o, e) => this.OnStartup();
             this.AppContext.Exit += (o, e) => this.OnClosing();

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Services.SoundService;
+using WApplication = System.Windows.Application;
 
 [assembly: Dependency(typeof(Xamarin.Forms.Labs.WP8.Services.SoundService))]
 namespace Xamarin.Forms.Labs.WP8.Services
@@ -68,8 +66,8 @@ namespace Xamarin.Forms.Labs.WP8.Services
         {
             get
             {
-                if (Application.Current.Resources.Contains("GlobalMedia"))
-                    return Application.Current.Resources["GlobalMedia"] as MediaElement;
+                if (WApplication.Current.Resources.Contains("GlobalMedia"))
+                    return WApplication.Current.Resources["GlobalMedia"] as MediaElement;
                 else
                     throw new ArgumentNullException("GlobalMedia is missing");
             }
@@ -90,7 +88,7 @@ namespace Xamarin.Forms.Labs.WP8.Services
             _currentFile.Filename = filename;
             Device.BeginInvokeOnMainThread(() =>
             {
-                if (Application.GetResourceStream(new Uri(_currentFile.Filename, UriKind.Relative)) == null)
+                if (WApplication.GetResourceStream(new Uri(_currentFile.Filename, UriKind.Relative)) == null)
                     MessageBox.Show("File doesn't exist!");
 
                 //TODO: need to clean this events

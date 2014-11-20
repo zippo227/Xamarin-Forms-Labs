@@ -1,6 +1,7 @@
 
 using Android.App;
 using Android.Content;
+using AApplication = Android.App.Application;
 
 namespace Xamarin.Forms.Labs
 {
@@ -16,7 +17,7 @@ namespace Xamarin.Forms.Labs
         /// <returns>An intent result, null if not successful</returns>
         public static Intent RegisterReceiver(this IntentFilter intentFilter)
         {
-            return Application.Context.RegisterReceiver(null, intentFilter);
+            return AApplication.Context.RegisterReceiver(null, intentFilter);
         }
     }
 }

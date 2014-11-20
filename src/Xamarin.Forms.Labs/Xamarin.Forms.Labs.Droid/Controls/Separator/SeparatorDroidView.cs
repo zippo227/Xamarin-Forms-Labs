@@ -1,18 +1,13 @@
-﻿using System;
-using Android.Views;
-using Android.Content;
+﻿using Android.Content;
 using Android.Util;
 using Android.Graphics;
 using Xamarin.Forms.Labs.Controls;
-using Android.App;
+using AApplication = Android.App.Application;
 
 namespace Xamarin.Forms.Labs
 {
 	public class SeparatorDroidView :Android.Views.View
 	{
-
-
-
 		public SeparatorDroidView (Context context) :
 		base (context)
 		{
@@ -166,11 +161,9 @@ namespace Xamarin.Forms.Labs
 			canvas.DrawPath(p, paint);
 		}
 
-
-
 		private void Initialize()
 		{
-			dm = Application.Context.Resources.DisplayMetrics.Density;
+			dm = AApplication.Context.Resources.DisplayMetrics.Density;
 		}
 	}
 }

@@ -3,9 +3,9 @@ using Xamarin.Forms.Labs.Services.SoundService;
 using Android.Media;
 using Android.Content.Res;
 using System.Threading.Tasks;
-using Android.App;
 using System.IO;
 using Xamarin.Forms;
+using AAplication = Android.App.Application;
 
 
 [assembly: Dependency (typeof(Xamarin.Forms.Labs.Droid.Services.SoundService))]
@@ -16,10 +16,7 @@ namespace Xamarin.Forms.Labs.Droid.Services
 		bool _isPlayerPrepared = false;
 		bool _isScrubbing = false;
 
-		public SoundService ()
-		{
-		}
-
+		
 		#region ISoundService implementation
 
 		public event EventHandler SoundFileFinished;
@@ -39,7 +36,7 @@ namespace Xamarin.Forms.Labs.Droid.Services
 		{
 			_currentFile = new SoundFile ();
 			_currentFile.Filename = filename;
-			await StartPlayerAsyncFromAssetsFolder (Application.Context.Assets.OpenFd (filename));
+			await StartPlayerAsyncFromAssetsFolder (AAplication.Context.Assets.OpenFd (filename));
 			_currentFile.Duration =  TimeSpan.FromSeconds( player.Duration);
 			return _currentFile;
 		}

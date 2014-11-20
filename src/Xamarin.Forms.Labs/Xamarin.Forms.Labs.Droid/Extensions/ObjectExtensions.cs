@@ -1,5 +1,5 @@
 ﻿using Android.Content;
-using Android.App;
+using AApplication = Android.App.Application;
 
 namespace Xamarin.Forms.Labs
 {
@@ -24,7 +24,7 @@ namespace Xamarin.Forms.Labs
             else
             {
                 intent.SetFlags (ActivityFlags.NewTask);
-                Application.Context.StartActivity (intent);
+                AApplication.Context.StartActivity (intent);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Xamarin.Forms.Labs
             else
             {
                 intent.SetFlags(ActivityFlags.NewTask);
-                Application.Context.StartActivityForResult(intent);
+                AApplication.Context.StartActivityForResult(intent);
             }
         }
     }

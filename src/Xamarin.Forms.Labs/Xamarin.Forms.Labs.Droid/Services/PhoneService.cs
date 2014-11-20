@@ -1,6 +1,6 @@
 ﻿using Android.Telephony;
 using Android.Content;
-using Android.App;
+using AApplication = Android.App.Application;
 using Android.Net;
 using Xamarin.Forms;
 
@@ -22,7 +22,7 @@ namespace Xamarin.Forms.Labs.Services
         {
             get
             {
-                return Application.Context.GetSystemService(Context.TelephonyService) as TelephonyManager;
+                return AApplication.Context.GetSystemService(Context.TelephonyService) as TelephonyManager;
             }
         }
 
@@ -36,7 +36,7 @@ namespace Xamarin.Forms.Labs.Services
         {
             get
             {
-                return Application.Context.GetSystemService(Context.ConnectivityService) as ConnectivityManager;
+                return AApplication.Context.GetSystemService(Context.ConnectivityService) as ConnectivityManager;
             }
         }
 

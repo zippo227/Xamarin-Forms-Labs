@@ -12,10 +12,10 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 {
 	public class ExtendedViewCellRenderer : ViewCellRenderer
 	{
-		public override UITableViewCell GetCell(Cell item, UITableView tv)
+		public override UITableViewCell GetCell (Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var extendedCell = (ExtendedViewCell)item;
-			var cell = base.GetCell (item, tv);
+			var cell = base.GetCell (item, reusableCell, tv);
 			if (cell != null) {
 				cell.BackgroundColor = extendedCell.BackgroundColor.ToUIColor ();
 				cell.SeparatorInset = new UIEdgeInsets ((float)extendedCell.SeparatorPadding.Top, (float)extendedCell.SeparatorPadding.Left,

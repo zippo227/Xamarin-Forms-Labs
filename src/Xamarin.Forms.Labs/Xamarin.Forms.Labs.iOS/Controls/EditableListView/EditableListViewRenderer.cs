@@ -97,7 +97,7 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 					view.BindingContext = item;
 					ViewCell viewCell = new ViewCell();
 					viewCell.View = view;
-					UITableViewCell cell = new ViewCellRenderer().GetCell(viewCell, tableView);
+					UITableViewCell cell = new ViewCellRenderer().GetCell(viewCell,null,tableView);
 					return cell;
 				}
 			}

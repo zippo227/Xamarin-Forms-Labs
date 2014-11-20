@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Microsoft.Phone.Info;
+﻿using Microsoft.Phone.Info;
 using Xamarin.Forms.Labs.Services;
-using Xamarin.Forms.Labs.WP8.Services;
+using WApplication = System.Windows.Application;
+
 
 namespace Xamarin.Forms.Labs
 {
@@ -33,9 +28,9 @@ namespace Xamarin.Forms.Labs
             }
             else
             {
-                var scaleFactor = Application.Current.Host.Content.ScaleFactor;
-                this.Height = (int)(Application.Current.Host.Content.ActualHeight * scaleFactor);
-                this.Width = (int)(Application.Current.Host.Content.ActualWidth * scaleFactor);
+                var scaleFactor = WApplication.Current.Host.Content.ScaleFactor;
+                this.Height = (int)(WApplication.Current.Host.Content.ActualHeight * scaleFactor);
+                this.Width = (int)(WApplication.Current.Host.Content.ActualWidth * scaleFactor);
             }
 
             object rawDpiX, rawDpiY;
@@ -90,7 +85,7 @@ namespace Xamarin.Forms.Labs
         /// </summary>
         public double WidthRequestInInches(double inches)
         {
-            return inches * this.Xdpi * 100 / Application.Current.Host.Content.ScaleFactor;
+            return inches * this.Xdpi * 100 / WApplication.Current.Host.Content.ScaleFactor;
         }
 
         /// <summary>
@@ -98,7 +93,7 @@ namespace Xamarin.Forms.Labs
         /// </summary>
         public double HeightRequestInInches(double inches)
         {
-            return inches * this.Ydpi * 100 / Application.Current.Host.Content.ScaleFactor;
+            return inches * this.Ydpi * 100 / WApplication.Current.Host.Content.ScaleFactor;
         }
 
         #endregion

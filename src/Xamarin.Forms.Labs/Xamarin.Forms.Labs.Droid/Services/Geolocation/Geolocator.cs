@@ -18,7 +18,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Android.App;
 using Android.Content;
 using Android.Locations;
 using Android.OS;
@@ -26,6 +25,7 @@ using Java.Lang;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Droid.Services.Geolocation;
 using Xamarin.Forms.Labs.Services.Geolocation;
+using AAplication = Android.App.Application;
 
 [assembly: Dependency(typeof (Geolocator))]
 
@@ -43,7 +43,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Geolocation
 
 		public Geolocator()
 		{
-			manager = (LocationManager) Application.Context.GetSystemService(Context.LocationService);
+			manager = (LocationManager) AAplication.Context.GetSystemService (Context.LocationService);
 			providers = manager.GetProviders(false).Where(s => s != LocationManager.PassiveProvider).ToArray();
 		}
 

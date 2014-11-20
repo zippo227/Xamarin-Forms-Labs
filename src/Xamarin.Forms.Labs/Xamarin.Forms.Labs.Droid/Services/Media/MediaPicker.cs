@@ -9,7 +9,7 @@ using Android.Provider;
 using Xamarin.Forms;
 using Xamarin.Forms.Labs.Droid.Services.Media;
 using Xamarin.Forms.Labs.Services.Media;
-
+using AApplication = Android.App.Application;
 [assembly: Dependency(typeof(MediaPicker))]
 
 namespace Xamarin.Forms.Labs.Droid.Services.Media
@@ -24,7 +24,7 @@ namespace Xamarin.Forms.Labs.Droid.Services.Media
 
         private static Context Context
         {
-            get { return Forms.Context ?? Application.Context; }
+            get { return Forms.Context ?? AApplication.Context; }
         }
 
         /// <summary>

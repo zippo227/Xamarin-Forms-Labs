@@ -10,16 +10,17 @@ namespace Xamarin.Forms.Labs.iOS.Controls
 {
     public class ExtendedEntryCellRenderer : EntryCellRenderer
     {
-        public override UITableViewCell GetCell(Cell item, UITableView tv)
-        {
-            ExtendedEntryCell entryCell = ((ExtendedEntryCell)item);
-            var cell = base.GetCell (item, tv);
-            if (cell != null) {
-                UITextField textField = (UITextField)cell.ContentView.Subviews [0]; 
-                textField.SecureTextEntry = entryCell.IsPassword;
-            }
-            return cell;
-        }
+	    public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
+	    {
+			ExtendedEntryCell entryCell = ((ExtendedEntryCell) item);
+			var cell =  base.GetCell (item, reusableCell, tv);
+			if (cell != null) {
+				UITextField textField = (UITextField) cell.ContentView.Subviews[0];
+				textField.SecureTextEntry = entryCell.IsPassword;
+			}
+			return cell;
+	    }
+
     } 
 }
 

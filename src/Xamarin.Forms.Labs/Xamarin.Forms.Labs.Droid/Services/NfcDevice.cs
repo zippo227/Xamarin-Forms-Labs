@@ -35,13 +35,13 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Labs.Droid.Services;
 using Xamarin.Forms.Labs.Mvvm;
 using Xamarin.Forms.Labs.Services;
+              
 
-[assembly: Dependency(typeof(NfcDevice))]
+[assembly: Xamarin.Forms.Dependency(typeof(NfcDevice))]
 
 namespace Xamarin.Forms.Labs.Droid.Services
 {
@@ -79,7 +79,7 @@ namespace Xamarin.Forms.Labs.Droid.Services
         {
             get
             {
-                return (NfcManager)Application.Context.GetSystemService(Context.NfcService);
+                return (NfcManager) Android.App.Application.Context.GetSystemService(Context.NfcService);
             }
         }
 

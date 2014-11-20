@@ -1,15 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android.App;
 using Android.Content;
 using Android.Hardware;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Xamarin.Forms.Labs.Helpers;
+using AApplication = Android.App.Application;
 
 namespace Xamarin.Forms.Labs
 {
@@ -23,7 +16,7 @@ namespace Xamarin.Forms.Labs
         {
             get
             {
-                var sensorManager = Application.Context.GetSystemService(Context.SensorService) as SensorManager;
+                var sensorManager = AApplication.Context.GetSystemService(Context.SensorService) as SensorManager;
                 return sensorManager != null && sensorManager.GetDefaultSensor(SensorType.Gyroscope) != null;
             }
         }
@@ -66,7 +59,7 @@ namespace Xamarin.Forms.Labs
 
         partial void Start()
         {
-            this.sensorManager = Application.Context.GetSystemService(Context.SensorService) as SensorManager;
+            this.sensorManager = AApplication.Context.GetSystemService(Context.SensorService) as SensorManager;
 
             this.gyroscope = sensorManager.GetDefaultSensor(SensorType.Gyroscope);
 

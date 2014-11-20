@@ -1,6 +1,7 @@
 
-using Android.App;
+
 using Android.Content;
+using AApplication = Android.App.Application;
 
 // Analysis disable CheckNamespace
 namespace Xamarin.Forms.Labs
@@ -18,7 +19,7 @@ namespace Xamarin.Forms.Labs
         /// <param name="intentFilter">Intent filter.</param>
         public static Intent RegisterReceiver(this BroadcastReceiver receiver, IntentFilter intentFilter)
         {
-            return Application.Context.RegisterReceiver(receiver, intentFilter);
+            return AApplication.Context.RegisterReceiver(receiver, intentFilter);
         }
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace Xamarin.Forms.Labs
         /// <param name="receiver">Receiver to unregister.</param>
         public static void UnregisterReceiver(this BroadcastReceiver receiver)
         {
-            Application.Context.UnregisterReceiver(receiver);
+            AApplication.Context.UnregisterReceiver(receiver);
         }
     }
 }

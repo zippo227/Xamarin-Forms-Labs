@@ -127,9 +127,9 @@ namespace Xamarin.Forms.Labs.WP8
             {
                 if (view.PlaceholderTextColor != Color.Default && _thisPhoneTextBox != null)
                 {
-                    var hintStyle = new Style(typeof(ContentControl));
+                    var hintStyle = new System.Windows.Style(typeof(ContentControl));
                     hintStyle.Setters.Add(
-                        new Setter(
+                        new System.Windows.Setter(
                             System.Windows.Controls.Control.ForegroundProperty,
                             view.PlaceholderTextColor.ToBrush())
                         );

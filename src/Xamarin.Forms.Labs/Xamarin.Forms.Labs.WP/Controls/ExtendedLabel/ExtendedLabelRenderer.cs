@@ -5,6 +5,7 @@ using System.Windows.Media;
 using Xamarin.Forms.Labs.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
+using WApplication = System.Windows.Application;
 
 [assembly: ExportRenderer(typeof (ExtendedLabel), typeof (ExtendedLabelRenderer))]
 
@@ -110,7 +111,7 @@ namespace Xamarin.Forms.Labs.Controls
         private bool IsLocalFontFileExists(string filename)
         {
             return
-                Application.GetResourceStream(new Uri(string.Format(@"Assets/Fonts/{0}", filename), UriKind.Relative)) !=null;            
+                WApplication.GetResourceStream(new Uri(string.Format(@"Assets/Fonts/{0}", filename), UriKind.Relative)) !=null;            
         }
     }
 }
