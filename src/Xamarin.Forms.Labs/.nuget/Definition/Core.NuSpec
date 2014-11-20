@@ -19,6 +19,25 @@ This package contains the cross-platform framework with controls and services fo
 Xamarin Forms Labs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
     </summary>
     <language>en-US</language>
+    <releaseNotes>
+      Changes:
+
+      Upgrade to Xamarin Forms 1.3.0-pre1
+
+      Bug fixes:
+
+      iOS:
+      Image picker issues
+      SMS sending
+      HybridWebView
+
+      Android:
+      Popup
+      HybridWebView Load Finished
+
+      WP:
+      Internet Connection
+    </releaseNotes>
     <dependencies>
       <group>
         <dependency id="Xamarin.Forms" version="1.3.0.6275-pre1" />
