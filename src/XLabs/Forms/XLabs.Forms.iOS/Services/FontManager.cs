@@ -1,3 +1,6 @@
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
+
 namespace XLabs.Forms.Services
 {
 	using System.Collections.Generic;
@@ -10,7 +13,7 @@ namespace XLabs.Forms.Services
 	/// <summary>
 	/// Class FontManager.
 	/// </summary>
-	public class FontManager : IFontManager
+	public partial class FontManager : IFontManager
 	{
 		/// <summary>
 		/// The _display

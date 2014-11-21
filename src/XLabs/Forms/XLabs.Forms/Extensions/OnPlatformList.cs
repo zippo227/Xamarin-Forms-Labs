@@ -1,11 +1,10 @@
-﻿namespace XLabs.Forms.Extensions
+﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
+using Xamarin.Forms;
+
+namespace XLabs.Forms
 {
-	using System.Collections.ObjectModel;
-	using System.Collections.Specialized;
-	using System.Linq;
-
-	using Xamarin.Forms;
-
 	//From the Xamarin forums 
 	//http://forums.xamarin.com/discussion/comment/68739#Comment_68739
 
@@ -34,17 +33,17 @@
 		void OnInitialize(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			bool foundCollection = false;
-			if (Platform.Device.OS == TargetPlatform.iOS && sender == iOS)
+			if (Device.OS == TargetPlatform.iOS && sender == iOS)
 			{
 				Setup(iOS);
 				foundCollection = true;
 			}
-			else if (Platform.Device.OS == TargetPlatform.Android && sender == Android)
+			else if (Device.OS == TargetPlatform.Android && sender == Android)
 			{
 				Setup(Android);
 				foundCollection = true;
 			}
-			else if (Platform.Device.OS == TargetPlatform.WinPhone && sender == WinPhone)
+			else if (Device.OS == TargetPlatform.WinPhone && sender == WinPhone)
 			{
 				Setup(WinPhone);
 				foundCollection = true;

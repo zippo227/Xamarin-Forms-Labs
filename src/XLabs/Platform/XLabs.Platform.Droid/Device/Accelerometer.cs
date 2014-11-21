@@ -174,9 +174,9 @@ namespace XLabs.Platform.Device
 			}
 
 			this.LatestReading = new Vector3(
-				e.Values[0] / Xamarin.Forms.Labs.Accelerometer.Gravitation,
-				e.Values[1] / Xamarin.Forms.Labs.Accelerometer.Gravitation,
-				e.Values[2] / Xamarin.Forms.Labs.Accelerometer.Gravitation);
+				e.Values[0] / Gravitation,
+				e.Values[1] / Gravitation,
+				e.Values[2] / Gravitation);
 
 			this.readingAvailable.Invoke(this, this.LatestReading);
 		}

@@ -42,7 +42,7 @@
 				Ydpi = (double)rawDpiY;
 			}
 
-			FontManager = new FontManager(this);
+			//FontManager = new FontManager(this);
 		}
 
 		/// <summary>

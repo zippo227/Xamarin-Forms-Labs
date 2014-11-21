@@ -183,23 +183,23 @@
 		{
 			_tcsSetMedia = new TaskCompletionSource<SoundFile>();
 
-			CurrentFile = new SoundFile();
-			CurrentFile.Filename = filename;
-			Device.BeginInvokeOnMainThread(
-				() =>
-					{
-						if (Application.GetResourceStream(new Uri(CurrentFile.Filename, UriKind.Relative)) == null)
-						{
-							MessageBox.Show("File doesn't exist!");
-						}
+			CurrentFile = new SoundFile {Filename = filename};
 
-						//TODO: need to clean this events
-						GlobalMediaElement.MediaEnded += GlobalMediaElementMediaEnded;
-						GlobalMediaElement.MediaOpened += GlobalMediaElementMediaOpened;
+			return Task.Run(() =>
+			{
+				if (Application.GetResourceStream(new Uri(CurrentFile.Filename, UriKind.Relative)) == null)
+				{
+					MessageBox.Show("File doesn't exist!");
+				}
 
-						GlobalMediaElement.Source = new Uri(CurrentFile.Filename, UriKind.Relative);
-					});
-			return _tcsSetMedia.Task;
+				//TODO: need to clean this events
+				GlobalMediaElement.MediaEnded += GlobalMediaElementMediaEnded;
+				GlobalMediaElement.MediaOpened += GlobalMediaElementMediaOpened;
+
+				GlobalMediaElement.Source = new Uri(CurrentFile.Filename, UriKind.Relative);
+
+				return _tcsSetMedia.Task;
+			});
 		}
 
 		/// <summary>

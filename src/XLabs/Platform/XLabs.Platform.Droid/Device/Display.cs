@@ -19,7 +19,7 @@
 			Xdpi = dm.Xdpi;
 			Ydpi = dm.Ydpi;
 
-			FontManager = new FontManager(this);
+			//FontManager = new FontManager(this);
 		}
 
 		/// <summary>

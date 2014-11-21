@@ -8,16 +8,14 @@
 	using XLabs.Platform.Extensions;
 
 	/// <summary>
-	///     Android Phone service implements <see cref="IPhoneService" />.
+	/// Android Phone service implements <see cref="IPhoneService" />.
 	/// </summary>
 	public class PhoneService : IPhoneService
 	{
 		/// <summary>
-		///     Gets the telephony manager for Android.
+		/// Gets the telephony manager for Android.
 		/// </summary>
-		/// <value>
-		///     The manager.
-		/// </value>
+		/// <value>The manager.</value>
 		public static TelephonyManager Manager
 		{
 			get
@@ -27,11 +25,9 @@
 		}
 
 		/// <summary>
-		///     Gets the connectivity manager.
+		/// Gets the connectivity manager.
 		/// </summary>
-		/// <value>
-		///     The connectivity manager.
-		/// </value>
+		/// <value>The connectivity manager.</value>
 		public static ConnectivityManager ConnectivityManager
 		{
 			get
@@ -43,11 +39,9 @@
 		#region IPhone implementation
 
 		/// <summary>
-		///     Gets the cellular provider.
+		/// Gets the cellular provider.
 		/// </summary>
-		/// <value>
-		///     The cellular provider.
-		/// </value>
+		/// <value>The cellular provider.</value>
 		public string CellularProvider
 		{
 			get
@@ -57,12 +51,10 @@
 		}
 
 		/// <summary>
-		///     Gets the ISO Country Code.
+		/// Gets the ISO Country Code.
 		/// </summary>
-		/// <value>
-		///     The ISO Country Code.
-		/// </value>
-		public string Icc
+		/// <value>The ISO Country Code.</value>
+		public string ICC
 		{
 			get
 			{
@@ -71,12 +63,10 @@
 		}
 
 		/// <summary>
-		///     Gets the Mobile Country Code.
+		/// Gets the Mobile Country Code.
 		/// </summary>
-		/// <value>
-		///     The Mobile Country Code.
-		/// </value>
-		public string Mcc
+		/// <value>The Mobile Country Code.</value>
+		public string MCC
 		{
 			get
 			{
@@ -85,12 +75,10 @@
 		}
 
 		/// <summary>
-		///     Gets the Mobile Network Code.
+		/// Gets the Mobile Network Code.
 		/// </summary>
-		/// <value>
-		///     The Mobile Network Code.
-		/// </value>
-		public string Mnc
+		/// <value>The Mobile Network Code.</value>
+		public string MNC
 		{
 			get
 			{
@@ -99,17 +87,13 @@
 		}
 
 		/// <summary>
-		///     Gets a value indicating whether this instance has cellular data enabled.
+		/// Gets a value indicating whether this instance has cellular data enabled.
 		/// </summary>
-		/// <value>
-		///     Null if value cannot be determined, otherwise the status of cellular data.
-		/// </value>
-		/// <remarks>
-		///     This feature will require the following Android permissions:
-		///     - android.permission.INTERNET
-		///     - android.permission.ACCESS_NETWORK_STATE
-		///     Please set them in the AndroidManifest.xml file.
-		/// </remarks>
+		/// <value>Null if value cannot be determined, otherwise the status of cellular data.</value>
+		/// <remarks>This feature will require the following Android permissions:
+		/// - android.permission.INTERNET
+		/// - android.permission.ACCESS_NETWORK_STATE
+		/// Please set them in the AndroidManifest.xml file.</remarks>
 		public bool? IsCellularDataEnabled
 		{
 			get
@@ -123,11 +107,9 @@
 		}
 
 		/// <summary>
-		///     Gets a value indicating whether this instance has cellular data roaming enabled.
+		/// Gets a value indicating whether this instance has cellular data roaming enabled.
 		/// </summary>
-		/// <value>
-		///     Null if value cannot be determined, otherwise the status of cellular data roaming.
-		/// </value>
+		/// <value>Null if value cannot be determined, otherwise the status of cellular data roaming.</value>
 		public bool? IsCellularDataRoamingEnabled
 		{
 			get
@@ -137,17 +119,13 @@
 		}
 
 		/// <summary>
-		///     Gets a value indicating whether network is available.
+		/// Gets a value indicating whether network is available.
 		/// </summary>
-		/// <value>
-		///     The network availability.
-		/// </value>
-		/// <remarks>
-		///     This feature will require the following Android permissions:
-		///     - android.permission.INTERNET
-		///     - android.permission.ACCESS_NETWORK_STATE
-		///     Please set them in the AndroidManifest.xml file.
-		/// </remarks>
+		/// <value>The network availability.</value>
+		/// <remarks>This feature will require the following Android permissions:
+		/// - android.permission.INTERNET
+		/// - android.permission.ACCESS_NETWORK_STATE
+		/// Please set them in the AndroidManifest.xml file.</remarks>
 		public bool? IsNetworkAvailable
 		{
 			get
@@ -157,7 +135,11 @@
 			}
 		}
 
-		public bool CanSendSms
+		/// <summary>
+		/// Gets whether the service can send SMS
+		/// </summary>
+		/// <value><c>true</c> if this instance can send SMS; otherwise, <c>false</c>.</value>
+		public bool CanSendSMS
 		{
 			get
 			{
@@ -166,7 +148,7 @@
 		}
 
 		/// <summary>
-		///     Opens native dialog to dial the specified number.
+		/// Opens native dialog to dial the specified number.
 		/// </summary>
 		/// <param name="number">Number to dial.</param>
 		public void DialNumber(string number)
@@ -175,11 +157,11 @@
 		}
 
 		/// <summary>
-		///     Sends the SMS.
+		/// Sends the SMS.
 		/// </summary>
 		/// <param name="to">To.</param>
 		/// <param name="body">The body.</param>
-		public void SendSms(string to, string body)
+		public void SendSMS(string to, string body)
 		{
 			SmsManager.Default.SendTextMessage(to, null, body, null, null);
 		}

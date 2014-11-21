@@ -1,4 +1,7 @@
-﻿namespace XLabs.Platform.Services
+﻿using Android.App;
+using Android.Content;
+
+namespace XLabs.Platform.Services
 {
 	using System.Collections.Generic;
 	using System.Linq;
@@ -16,6 +19,12 @@
 		private TextToSpeech _speaker;
 
 		private string _toSpeak;
+
+		private static Context Context
+		{
+			get { return Application.Context; }
+		}
+
 
 		#region IOnInitListener implementation
 
@@ -44,11 +53,10 @@
 		/// </param>
 		public void Speak(string text)
 		{
-			var ctx = Xamarin.Forms.Context; // useful for many Android SDK features
 			_toSpeak = text;
 			if (_speaker == null)
 			{
-				_speaker = new TextToSpeech(ctx, this);
+				_speaker = new TextToSpeech(Context, this);
 			}
 			else
 			{

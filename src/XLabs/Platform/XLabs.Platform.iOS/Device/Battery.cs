@@ -1,8 +1,8 @@
+using MonoTouch.Foundation;
+using MonoTouch.UIKit;
+
 namespace XLabs.Platform.Device
 {
-	using MonoTouch.Foundation;
-	using MonoTouch.UIKit;
-
 	/// <summary>
 	///     Battery portion for Apple devices.
 	/// </summary>
@@ -17,20 +17,17 @@ namespace XLabs.Platform.Device
 			get
 			{
 				UIDevice.CurrentDevice.BatteryMonitoringEnabled = true;
-				return (int)(UIDevice.CurrentDevice.BatteryLevel * 100);
+				return (int) (UIDevice.CurrentDevice.BatteryLevel*100);
 			}
 		}
 
 		/// <summary>
-		///     Gets a value indicating whether this <see cref="SimplyMobile.Device.Battery" /> is charging.
+		///     Gets a value indicating whether this <see cref="Battery" /> is charging.
 		/// </summary>
 		/// <value><c>true</c> if charging; otherwise, <c>false</c>.</value>
 		public bool Charging
 		{
-			get
-			{
-				return UIDevice.CurrentDevice.BatteryState != UIDeviceBatteryState.Unplugged;
-			}
+			get { return UIDevice.CurrentDevice.BatteryState != UIDeviceBatteryState.Unplugged; }
 		}
 
 		/// <summary>
@@ -42,12 +39,12 @@ namespace XLabs.Platform.Device
 			NSNotificationCenter.DefaultCenter.AddObserver(
 				UIDevice.BatteryLevelDidChangeNotification,
 				(NSNotification n) =>
+				{
+					if (onLevelChange != null)
 					{
-						if (Xamarin.Forms.Labs.Battery.onLevelChange != null)
-						{
-							Xamarin.Forms.Labs.Battery.onLevelChange(Xamarin.Forms.Labs.Battery.onLevelChange, new EventArgs<int>(Level));
-						}
-					});
+						onLevelChange(onLevelChange, new EventArgs<int>(Level));
+					}
+				});
 		}
 
 		/// <summary>
@@ -58,7 +55,7 @@ namespace XLabs.Platform.Device
 			NSNotificationCenter.DefaultCenter.RemoveObserver(UIDevice.BatteryLevelDidChangeNotification);
 
 			// if charger monitor does not have subscribers then lets disable battery monitoring
-			UIDevice.CurrentDevice.BatteryMonitoringEnabled = (Xamarin.Forms.Labs.Battery.onChargerStatusChanged != null);
+			UIDevice.CurrentDevice.BatteryMonitoringEnabled = (onChargerStatusChanged != null);
 		}
 
 		/// <summary>
@@ -69,7 +66,7 @@ namespace XLabs.Platform.Device
 			NSNotificationCenter.DefaultCenter.RemoveObserver(UIDevice.BatteryStateDidChangeNotification);
 
 			// if level monitor does not have subscribers then lets disable battery monitoring
-			UIDevice.CurrentDevice.BatteryMonitoringEnabled = (Xamarin.Forms.Labs.Battery.onLevelChange != null);
+			UIDevice.CurrentDevice.BatteryMonitoringEnabled = (onLevelChange != null);
 		}
 
 		/// <summary>
@@ -81,14 +78,14 @@ namespace XLabs.Platform.Device
 			NSNotificationCenter.DefaultCenter.AddObserver(
 				UIDevice.BatteryStateDidChangeNotification,
 				(NSNotification n) =>
+				{
+					if (onChargerStatusChanged != null)
 					{
-						if (Xamarin.Forms.Labs.Battery.onChargerStatusChanged != null)
-						{
-							Xamarin.Forms.Labs.Battery.onChargerStatusChanged(
-								Xamarin.Forms.Labs.Battery.onChargerStatusChanged,
-								new EventArgs<bool>(Charging));
-						}
-					});
+						onChargerStatusChanged(
+							onChargerStatusChanged,
+							new EventArgs<bool>(Charging));
+					}
+				});
 		}
 	}
 }

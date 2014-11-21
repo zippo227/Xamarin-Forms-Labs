@@ -37,13 +37,96 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\GestureInterest.cs" />
+    <Compile Include="Behaviors\GestureResult.cs" />
+    <Compile Include="Behaviors\Gestures.cs" />
+    <Compile Include="Behaviors\GridLayout.cs" />
+    <Compile Include="Behaviors\IGesture.cs" />
+    <Compile Include="Controls\AccessoryViewCell.cs" />
+    <Compile Include="Controls\AutoComplete.cs" />
+    <Compile Include="Controls\BindablePicker.cs" />
+    <Compile Include="Controls\ButtonGroup.cs" />
+    <Compile Include="Controls\CalendarView.cs" />
+    <Compile Include="Controls\CameraView.cs" />
+    <Compile Include="Controls\CarouselView.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\CheckboxCell.cs" />
+    <Compile Include="Controls\CircleImage.cs" />
+    <Compile Include="Controls\DynamicListView.cs" />
+    <Compile Include="Controls\EditableListView.cs" />
+    <Compile Include="Controls\ExtendedContentView.cs" />
+    <Compile Include="Controls\ExtendedDatePicker.cs" />
+    <Compile Include="Controls\ExtendedEditor.cs" />
+    <Compile Include="Controls\ExtendedEntry.cs" />
+    <Compile Include="Controls\ExtendedEntryCell.cs" />
+    <Compile Include="Controls\ExtendedLabel.cs" />
+    <Compile Include="Controls\ExtendedScrollView.cs" />
+    <Compile Include="Controls\ExtendedSlider.cs" />
+    <Compile Include="Controls\ExtendedSwitch.cs" />
+    <Compile Include="Controls\ExtendedTabbedPage.cs" />
+    <Compile Include="Controls\ExtendedTableView.cs" />
+    <Compile Include="Controls\ExtendedTextCell.cs" />
+    <Compile Include="Controls\ExtendedTimePicker.cs" />
+    <Compile Include="Controls\ExtendedViewCell.cs" />
+    <Compile Include="Controls\GesturesContentView.cs" />
+    <Compile Include="Controls\GridView.cs" />
+    <Compile Include="Controls\HybridWebView.cs" />
+    <Compile Include="Controls\HyperLinkLabel.cs" />
+    <Compile Include="Controls\IconButton.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Controls\ImageButtonSourceConverter.cs" />
+    <Compile Include="Controls\ImageGallery.cs" />
+    <Compile Include="Controls\PopupLayout.cs" />
+    <Compile Include="Controls\RepeaterView.cs" />
+    <Compile Include="Controls\SegmentControl\SegmentControl.cs" />
+    <Compile Include="Controls\SegmentControl\SegmentedControlView.cs" />
+    <Compile Include="Controls\SelectCell.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarView.cs" />
+    <Compile Include="Controls\Separator.cs" />
+    <Compile Include="Controls\TemplateContentView.cs" />
+    <Compile Include="Controls\TemplateSelector.cs" />
+    <Compile Include="Controls\WebImage.cs" />
+    <Compile Include="Controls\WrapLayout.cs" />
+    <Compile Include="Converter\CollectionEmptyToBool.cs" />
+    <Compile Include="Converter\HeightToMillimeters.cs" />
+    <Compile Include="Converter\InverseBooleanConverter.cs" />
+    <Compile Include="Converter\ObjectRefToBooleanConverter.cs" />
     <Compile Include="Exceptions\InvalidBindableException.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
     <Compile Include="Extensions\CollectionTypeExtension.cs" />
     <Compile Include="Extensions\OnPlatformList.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
+    <Compile Include="Mvvm\BaseView.cs" />
+    <Compile Include="Mvvm\INavigationAware.cs" />
+    <Compile Include="Mvvm\NavigationAwareViewModel.cs" />
+    <Compile Include="Mvvm\NavigationView.cs" />
+    <Compile Include="Mvvm\RelayCommand.cs" />
+    <Compile Include="Mvvm\ViewFactory.cs" />
+    <Compile Include="Mvvm\ViewModel.cs" />
+    <Compile Include="Mvvm\ViewModelNavigation.cs" />
+    <Compile Include="Pages\ExtendedMasterDetailPage.cs" />
+    <Compile Include="Pages\ModalPage.cs" />
     <Compile Include="Services\IFontManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\Action.cs" />
+    <Compile Include="Validation\Actions.cs" />
+    <Compile Include="Validation\PredicatePriority.cs" />
+    <Compile Include="Validation\PropertySetter.cs" />
+    <Compile Include="Validation\PropertySetters.cs" />
+    <Compile Include="Validation\Rule.cs" />
+    <Compile Include="Validation\RuleResult.cs" />
+    <Compile Include="Validation\Rules.cs" />
+    <Compile Include="Validation\RuleSet.cs" />
+    <Compile Include="Validation\UserValidator.cs" />
+    <Compile Include="Validation\ValidateAlphaNumeric.cs" />
+    <Compile Include="Validation\ValidateAlphaOnly.cs" />
+    <Compile Include="Validation\ValidateDateTime.cs" />
+    <Compile Include="Validation\ValidateEmailAddress.cs" />
+    <Compile Include="Validation\ValidateNumericOnly.cs" />
+    <Compile Include="Validation\ValidationSets.cs" />
+    <Compile Include="Validation\Validator.cs" />
+    <Compile Include="Validation\ValidatorPredicate.cs" />
+    <Compile Include="Validation\Validators.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\IOC\XLabs.Ioc\XLabs.Ioc.csproj">
@@ -53,6 +136,10 @@
     <ProjectReference Include="..\..\Platform\XLabs.Platform\XLabs.Platform.csproj">
       <Project>{2A4D9DD4-326C-4824-AA3C-A9ED45CC898C}</Project>
       <Name>XLabs.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Serialization\XLabs.Serialization\XLabs.Serialization.csproj">
+      <Project>{8E7F7522-F018-466A-AA8A-147EE9341BA0}</Project>
+      <Name>XLabs.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XLabs.Core\XLabs.Core.csproj">
       <Project>{15d9c404-f7e2-49f0-acc9-63c4c008c860}</Project>
@@ -69,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Validation\Validation.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

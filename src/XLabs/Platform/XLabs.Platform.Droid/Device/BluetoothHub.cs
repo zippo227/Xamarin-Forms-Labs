@@ -1,4 +1,6 @@
-﻿namespace XLabs.Platform.Device
+﻿using XLabs.Platform.Extensions;
+
+namespace XLabs.Platform.Device
 {
 	using System.Collections.Generic;
 	using System.Linq;
@@ -33,10 +35,6 @@
 		public BluetoothHub(BluetoothAdapter adapter)
 		{
 			_adapter = adapter;
-
-			OpenSettings = new Command(
-				o => o.StartActivityForResult(new Intent(BluetoothAdapter.ActionRequestEnable)),
-				o => true);
 		}
 
 		/// <summary>
@@ -66,7 +64,10 @@
 		/// Gets the open settings.
 		/// </summary>
 		/// <value>The open settings.</value>
-		public ICommand OpenSettings { get; private set; }
+		public Task OpenSettings()
+		{
+			return Task.Run(() => this.StartActivityForResult(new Intent(BluetoothAdapter.ActionRequestEnable)));
+		}
 
 		#endregion
 	}

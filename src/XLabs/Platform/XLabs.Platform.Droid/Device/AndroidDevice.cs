@@ -1,4 +1,6 @@
-﻿namespace XLabs.Platform.Device
+﻿using Android.App;
+
+namespace XLabs.Platform.Device
 {
 	using System;
 	using System.IO.IsolatedStorage;
@@ -216,6 +218,11 @@
 		/// </value>
 		public string Manufacturer { get; private set; }
 
+		private static Context Context
+		{
+			get { return Application.Context; }
+		}
+
 		/// <summary>
 		///     Starts the default app associated with the URI for the specified URI.
 		/// </summary>
@@ -228,7 +235,7 @@
 					{
 						try
 						{
-							Xamarin.Forms.Context.StartActivity(
+							Context.StartActivity(
 								new Intent("android.intent.action.VIEW", Android.Net.Uri.Parse(uri.ToString())));
 							return true;
 						}

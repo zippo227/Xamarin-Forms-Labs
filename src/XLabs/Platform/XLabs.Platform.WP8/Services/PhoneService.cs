@@ -69,7 +69,7 @@
 		///     Gets the ISO Country Code
 		/// </summary>
 		/// <value>The icc.</value>
-		public string Icc
+		public string ICC
 		{
 			get
 			{
@@ -81,7 +81,7 @@
 		///     Gets the Mobile Country Code
 		/// </summary>
 		/// <value>The MCC.</value>
-		public string Mcc
+		public string MCC
 		{
 			get
 			{
@@ -93,7 +93,7 @@
 		///     Gets the Mobile Network Code
 		/// </summary>
 		/// <value>The MNC.</value>
-		public string Mnc
+		public string MNC
 		{
 			get
 			{
@@ -105,7 +105,7 @@
 		///     Gets a value indicating whether this instance can send SMS.
 		/// </summary>
 		/// <value><c>true</c> if this instance can send SMS; otherwise, <c>false</c>.</value>
-		public bool CanSendSms
+		public bool CanSendSMS
 		{
 			get
 			{
@@ -127,7 +127,7 @@
 		/// </summary>
 		/// <param name="to">To.</param>
 		/// <param name="body">The body.</param>
-		public void SendSms(string to, string body)
+		public void SendSMS(string to, string body)
 		{
 			new SmsComposeTask { To = to, Body = body }.Show();
 		}

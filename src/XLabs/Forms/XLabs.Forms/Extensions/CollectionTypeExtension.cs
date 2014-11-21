@@ -1,12 +1,11 @@
-﻿namespace XLabs.Forms.Extensions
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace XLabs.Forms
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
-
-	using Xamarin.Forms;
-	using Xamarin.Forms.Xaml;
-
 	/// <summary>
 	/// Markup extension making it simpler to declare generic list types
 	/// </summary>

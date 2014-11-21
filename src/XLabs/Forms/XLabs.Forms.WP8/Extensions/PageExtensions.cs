@@ -1,4 +1,7 @@
-﻿namespace XLabs.Forms.Extensions
+﻿using Xamarin.Forms.Labs.WP8;
+using XLabs.Platform.Mvvm;
+
+namespace XLabs.Forms.Extensions
 {
 	using Microsoft.Phone.Controls;
 

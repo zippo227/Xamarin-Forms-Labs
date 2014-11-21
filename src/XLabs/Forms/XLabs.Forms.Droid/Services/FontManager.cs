@@ -1,4 +1,7 @@
-﻿namespace XLabs.Forms.Services
+﻿using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
+
+namespace XLabs.Forms.Services
 {
 	using System;
 	using System.Collections.Generic;

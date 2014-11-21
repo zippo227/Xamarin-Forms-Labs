@@ -22,9 +22,9 @@
 		Task<IReadOnlyList<IBluetoothDevice>> GetPairedDevices();
 
 		/// <summary>
-		/// Gets the open settings.
+		/// Opens the settings.
 		/// </summary>
-		/// <value>The open settings.</value>
-		ICommand OpenSettings { get; }
+		/// <returns>Task.</returns>
+		Task OpenSettings();
 	}
 }

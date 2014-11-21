@@ -1,4 +1,6 @@
-﻿namespace XLabs.Forms.Extensions
+﻿using Xamarin.Forms;
+
+namespace XLabs.Forms.Extensions
 {
 	using System;
 	using System.Collections.Generic;

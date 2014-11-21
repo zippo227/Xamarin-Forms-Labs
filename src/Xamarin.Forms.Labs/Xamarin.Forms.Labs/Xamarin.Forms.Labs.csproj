@@ -41,7 +41,6 @@
     <Compile Include="Behaviors\IGesture.cs" />
     <Compile Include="Converter\CollectionEmptyToBool.cs" />
     <Compile Include="Converter\HeightToMillimeters.cs" />
-    <Compile Include="Extensions\CollectionTypeExtension.cs" />
     <Compile Include="Validation\PredicatePriority.cs" />
     <Compile Include="Validation\PropertySetter.cs" />
     <Compile Include="Validation\PropertySetters.cs" />
@@ -85,27 +84,6 @@
     <Compile Include="Controls\WrapLayout.cs" />
     <Compile Include="Converter\ObjectRefToBooleanConverter.cs" />
     <Compile Include="Data\ObservableObject.cs" />
-    <Compile Include="Device\DisplayExtensions.cs" />
-    <Compile Include="Device\IAccelerometer.cs" />
-    <Compile Include="Device\IBattery.cs" />
-    <Compile Include="Device\IBluetoothDevice.cs" />
-    <Compile Include="Device\IBluetoothHub.cs" />
-    <Compile Include="Device\IDevice.cs" />
-    <Compile Include="Device\IDisplay.cs" />
-    <Compile Include="Device\IGyroscope.cs" />
-    <Compile Include="Device\ISensor.cs" />
-    <Compile Include="Device\Orientation.cs" />
-    <Compile Include="Device\Sensor.cs" />
-    <Compile Include="Enums\ImageOrientation.cs" />
-    <Compile Include="Exceptions\InvalidBindableException.cs" />
-    <Compile Include="Exceptions\InvalidNestingException.cs" />
-    <Compile Include="Exceptions\InvalidVisualObjectException.cs" />
-    <Compile Include="Exceptions\NoDataTemplateMatchException.cs" />
-    <Compile Include="Exceptions\PropertyNotFoundException.cs" />
-    <Compile Include="Extensions\BindableObjectExtensions.cs" />
-    <Compile Include="Extensions\OnPlatformList.cs" />
-    <Compile Include="Extensions\PositionExtensions.cs" />
-    <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Mvvm\INavigationAware.cs" />
     <Compile Include="Mvvm\IXFormsApp.cs" />
     <Compile Include="Mvvm\NavigationAwareViewModel.cs" />
@@ -116,36 +94,15 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Services\Email\IEmailService.cs" />
-    <Compile Include="Services\IFontManager.cs" />
-    <Compile Include="Services\INetwork.cs" />
-    <Compile Include="Services\INfcDevice.cs" />
-    <Compile Include="Services\IO\IFileManager.cs" />
-    <Compile Include="Services\Media\IAudioStream.cs" />
-    <Compile Include="Services\Media\MediaExtensions.cs" />
-    <Compile Include="Services\Media\MediaFile.cs" />
-    <Compile Include="Services\Media\MediaFileNoteFoundException.cs" />
-    <Compile Include="Services\Media\MediaStorageOptions.cs" />
-    <Compile Include="Services\Geolocation\PositionExtensions.cs" />
-    <Compile Include="Services\IPhoneService.cs" />
-    <Compile Include="Services\ITextToSpeechService.cs" />
     <Compile Include="Controls\CalendarView.cs" />
     <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
     <Compile Include="Controls\ExtendedTextCell.cs" />
-    <Compile Include="Services\Media\IMediaPicker.cs" />
-    <Compile Include="Services\Media\WaveRecorder.cs" />
-    <Compile Include="Services\NetworkStatus.cs" />
     <Compile Include="Mvvm\BaseView.cs" />
     <Compile Include="Mvvm\ViewFactory.cs" />
     <Compile Include="Mvvm\ViewModelNavigation.cs" />
-    <Compile Include="Services\Geolocation\Position.cs" />
-    <Compile Include="Services\Geolocation\IGeolocator.cs" />
     <Compile Include="Controls\SensorBar\SensorBarView.cs" />
     <Compile Include="Controls\ExtendedViewCell.cs" />
-    <Compile Include="Services\SoundService\ISoundService.cs" />
-    <Compile Include="Services\SoundService\SoundFile.cs" />
-    <Compile Include="Services\SoundService\SoundFinishedEventArgs.cs" />
     <Compile Include="Controls\GridView.cs" />
     <Compile Include="Controls\ExtendedScrollView.cs" />
     <Compile Include="Controls\SegmentControl\SegmentControl.cs" />
@@ -157,7 +114,6 @@
     <Compile Include="Controls\Separator.cs" />
     <Compile Include="Controls\ExtendedTableView.cs" />
     <Compile Include="Controls\BindablePicker.cs" />
-    <Compile Include="Extensions\NumericExtensions.cs" />
     <Compile Include="Controls\ExtendedTimePicker.cs" />
     <Compile Include="Controls\ExtendedDatePicker.cs" />
     <Compile Include="Converter\InverseBooleanConverter.cs" />
@@ -165,7 +121,6 @@
     <Compile Include="Controls\SelectCell.cs" />
     <Compile Include="Controls\AccessoryViewCell.cs" />
     <Compile Include="Controls\CheckboxCell.cs" />
-    <Compile Include="Enums\TextCellDetailLocation.cs" />
     <Compile Include="Pages\ExtendedMasterDetailPage.cs" />
     <Compile Include="Validation\ValidatorPredicate.cs" />
     <Compile Include="Validation\Validators.cs" />
@@ -179,9 +134,7 @@
     <None Include="Validation\Validation.cd" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <ItemGroup>
-    <Folder Include="Services\Contacts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="ExifLib">
       <HintPath>..\packages\ExifLib.PCL.1.0.0\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
@@ -194,6 +147,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\XLabs\Platform\XLabs.Platform\XLabs.Platform.csproj">
+      <Project>{2A4D9DD4-326C-4824-AA3C-A9ED45CC898C}</Project>
+      <Name>XLabs.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\XLabs\Serialization\XLabs.Serialization\XLabs.Serialization.csproj">
       <Project>{8E7F7522-F018-466A-AA8A-147EE9341BA0}</Project>
       <Name>XLabs.Serialization</Name>

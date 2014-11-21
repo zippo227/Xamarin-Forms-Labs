@@ -20,10 +20,6 @@
 		/// </summary>
 		public BluetoothHub()
 		{
-			OpenSettings =
-				new Command(
-					o => new ConnectionSettingsTask { ConnectionSettingsType = ConnectionSettingsType.Bluetooth }.Show(),
-					o => true);
 		}
 
 		/// <summary>
@@ -42,7 +38,10 @@
 		/// Gets the open settings.
 		/// </summary>
 		/// <value>The open settings.</value>
-		public ICommand OpenSettings { get; private set; }
+		public Task OpenSettings()
+		{
+			return Task.Run(() => new ConnectionSettingsTask {ConnectionSettingsType = ConnectionSettingsType.Bluetooth}.Show());
+		}
 
 		/// <summary>
 		/// Gets the paired devices.

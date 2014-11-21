@@ -80,12 +80,12 @@ namespace XLabs.Platform.Device
 			get { return GetLevel (); }
 			private set {
 				level = value;
-				Xamarin.Forms.Labs.Battery.onLevelChange.Invoke (this, level.Value);
+				onLevelChange.Invoke (this, level.Value);
 			}
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether this <see cref="SimplyMobile.Device.Battery" /> is charging.
+		/// Gets a value indicating whether this <see cref="Device.Battery" /> is charging.
 		/// </summary>
 		/// <value><c>true</c> if charging; otherwise, <c>false</c>.</value>
 		public bool Charging {
@@ -94,7 +94,7 @@ namespace XLabs.Platform.Device
 			}
 			private set {
 				chargerConnected = value;
-				Xamarin.Forms.Labs.Battery.onChargerStatusChanged.Invoke (this, chargerConnected.Value);
+				onChargerStatusChanged.Invoke (this, chargerConnected.Value);
 			}
 		}
 

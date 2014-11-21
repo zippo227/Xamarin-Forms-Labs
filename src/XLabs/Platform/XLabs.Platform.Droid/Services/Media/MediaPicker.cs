@@ -20,7 +20,7 @@ namespace XLabs.Platform.Services.Media
 
 		private static Context Context
 		{
-			get { return Xamarin.Forms.Context ?? Application.Context; }
+			get { return Application.Context; }
 		}
 
 		/// <summary>

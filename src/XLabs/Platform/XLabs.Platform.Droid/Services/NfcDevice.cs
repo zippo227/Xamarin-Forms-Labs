@@ -34,6 +34,14 @@ namespace XLabs.Platform.Services
 		///     The _published
 		/// </summary>
 		private readonly Dictionary<Guid, NdefRecord> _published = new Dictionary<Guid, NdefRecord>();
+		/// <summary>
+		/// Gets the context.
+		/// </summary>
+		/// <value>The context.</value>
+		private static Context Context
+		{
+			get { return Application.Context; }
+		}
 
 		/// <summary>
 		///     Initializes a new instance of the <see cref="NfcDevice" /> class.
@@ -53,10 +61,11 @@ namespace XLabs.Platform.Services
 
 			if (_device != null)
 			{
-				var app = Resolver.Resolve<IXFormsApp>();
-				var tapp = app as IXFormsApp<XFormsApplicationDroid>;
+				//var app = Resolver.Resolve<IXFormsApp>();
+				//var tapp = app as IXFormsApp<XFormsApplicationDroid>;
 
-				_device.SetNdefPushMessageCallback(this, tapp.AppContext);
+				//_device.SetNdefPushMessageCallback(this, Context.ApplicationInfo.);
+				throw new NotImplementedException("Need to get main Application Activity here");
 			}
 			else
 			{
