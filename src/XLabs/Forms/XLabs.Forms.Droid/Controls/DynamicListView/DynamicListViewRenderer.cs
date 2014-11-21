@@ -1,40 +1,67 @@
-﻿using Android.Widget;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using ListView = Android.Widget.ListView;
-
-namespace XLabs.Forms.Controls.DynamicListView
+﻿namespace XLabs.Forms.Controls
 {
-    public class DynamicListViewRenderer<T> : ViewRenderer<DynamicListView<T>,ListView>
+	using Android.Widget;
+
+	using Xamarin.Forms;
+	using Xamarin.Forms.Platform.Android;
+
+	using ListView = Android.Widget.ListView;
+
+	/// <summary>
+	/// Class DynamicListViewRenderer.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class DynamicListViewRenderer<T> : ViewRenderer<DynamicListView<T>,ListView>
     {
-        private ListView tableView;
+		/// <summary>
+		/// The _table view
+		/// </summary>
+        private ListView _tableView;
 
-        private DataSource source;
+		/// <summary>
+		/// The _source
+		/// </summary>
+        private DataSource _source;
 
+		/// <summary>
+		/// Gets the source.
+		/// </summary>
+		/// <value>The source.</value>
         private DataSource Source
         {
             get
             {
-                return source ?? (source = new DataSource(this));
+                return _source ?? (_source = new DataSource(this));
             }
         }
 
+		/// <summary>
+		/// Called when [element changed].
+		/// </summary>
+		/// <param name="e">The e.</param>
         protected override void OnElementChanged(ElementChangedEventArgs<DynamicListView<T>> e)
         {
             base.OnElementChanged(e);
 
             if (e.OldElement == null)
             {
-                this.tableView = new ListView(this.Context);
-                this.SetNativeControl(this.tableView);
+                this._tableView = new ListView(this.Context);
+                this.SetNativeControl(this._tableView);
             }
 
             this.Unbind(e.OldElement);
             this.Bind(e.NewElement);
 
-            this.tableView.Adapter = this.Source;
+            this._tableView.Adapter = this.Source;
         }
 
+		/// <summary>
+		/// Gets the view.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="convertView">The convert view.</param>
+		/// <param name="parent">The parent.</param>
+		/// <returns>Android.Views.View.</returns>
         protected virtual Android.Views.View GetView(T item, Android.Views.View convertView, Android.Views.ViewGroup parent)
         {
             var v = convertView as TextView ?? new TextView(parent.Context);
@@ -42,6 +69,10 @@ namespace XLabs.Forms.Controls.DynamicListView
             return v;
         }
 
+		/// <summary>
+		/// Unbinds the specified old element.
+		/// </summary>
+		/// <param name="oldElement">The old element.</param>
         private void Unbind(DynamicListView<T> oldElement)
         {
             if (oldElement != null)
@@ -52,6 +83,10 @@ namespace XLabs.Forms.Controls.DynamicListView
             }
         }
 
+		/// <summary>
+		/// Binds the specified new element.
+		/// </summary>
+		/// <param name="newElement">The new element.</param>
         private void Bind(DynamicListView<T> newElement)
         {
             if (newElement != null)
@@ -62,6 +97,11 @@ namespace XLabs.Forms.Controls.DynamicListView
             }
         }
 
+		/// <summary>
+		/// Elements the property changing.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="PropertyChangingEventArgs"/> instance containing the event data.</param>
         private void ElementPropertyChanging(object sender, PropertyChangingEventArgs e)
         {
             if (e.PropertyName == "Data")
@@ -70,11 +110,21 @@ namespace XLabs.Forms.Controls.DynamicListView
             }
         }
 
+		/// <summary>
+		/// Datas the collection changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
         private void DataCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             this.Source.NotifyDataSetChanged();
         }
 
+		/// <summary>
+		/// Elements the property changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
         private void ElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Data")
@@ -83,36 +133,71 @@ namespace XLabs.Forms.Controls.DynamicListView
             }
         }
 
+		/// <summary>
+		/// Class DataSource.
+		/// </summary>
         private class DataSource : BaseAdapter
         {
-            DynamicListViewRenderer<T> parent;
+			/// <summary>
+			/// The _parent
+			/// </summary>
+            DynamicListViewRenderer<T> _parent;
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="DataSource"/> class.
+			/// </summary>
+			/// <param name="parent">The parent.</param>
             public DataSource(DynamicListViewRenderer<T> parent)
             {
-                this.parent = parent;
+                this._parent = parent;
             }
 
             #region implemented abstract members of BaseAdapter
+			/// <summary>
+			/// To be added.
+			/// </summary>
+			/// <param name="position">To be added.</param>
+			/// <returns>To be added.</returns>
+			/// <remarks>To be added.</remarks>
             public override Java.Lang.Object GetItem(int position)
             {
                 return position;
             }
 
+			/// <summary>
+			/// To be added.
+			/// </summary>
+			/// <param name="position">To be added.</param>
+			/// <returns>To be added.</returns>
+			/// <remarks>To be added.</remarks>
             public override long GetItemId(int position)
             {
                 return position;
             }
 
+			/// <summary>
+			/// To be added.
+			/// </summary>
+			/// <param name="position">To be added.</param>
+			/// <param name="convertView">To be added.</param>
+			/// <param name="parent">To be added.</param>
+			/// <returns>To be added.</returns>
+			/// <remarks>To be added.</remarks>
             public override Android.Views.View GetView(int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
             {
-                return this.parent.GetView(this.parent.Element.Data [position], convertView, parent);
+                return this._parent.GetView(this._parent.Element.Data [position], convertView, parent);
             }
 
+			/// <summary>
+			/// To be added.
+			/// </summary>
+			/// <value>To be added.</value>
+			/// <remarks>To be added.</remarks>
             public override int Count
             {
                 get
                 {
-                    return this.parent.Element.Data.Count;
+                    return this._parent.Element.Data.Count;
                 }
             }
             #endregion

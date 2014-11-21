@@ -1,14 +1,25 @@
-﻿using System;
-using System.ComponentModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using XLabs.Forms.Controls.ExtendedScrollView;
+﻿using Xamarin.Forms;
+
+using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer(typeof(ExtendedScrollView), typeof(ExtendedScrollViewRenderer))]
-namespace XLabs.Forms.Controls.ExtendedScrollView
+namespace XLabs.Forms.Controls
 {
+	using System;
+	using System.ComponentModel;
+
+	using Xamarin.Forms;
+	using Xamarin.Forms.Platform.Android;
+
+	/// <summary>
+	/// Class ExtendedScrollViewRenderer.
+	/// </summary>
 	public class ExtendedScrollViewRenderer:ScrollViewRenderer
 	{
+		/// <summary>
+		/// Handles the <see cref="E:ElementChanged" /> event.
+		/// </summary>
+		/// <param name="e">The <see cref="VisualElementChangedEventArgs"/> instance containing the event data.</param>
 		protected override void OnElementChanged(VisualElementChangedEventArgs e)
 		{
 			base.OnElementChanged(e);
@@ -28,8 +39,16 @@ namespace XLabs.Forms.Controls.ExtendedScrollView
 			e.NewElement.PropertyChanged += OnElementPropertyChanged;
 		}
 
-		double EPSILON = 0.1;
+		/// <summary>
+		/// The epsilon
+		/// </summary>
+		double _epsilon = 0.1;
 
+		/// <summary>
+		/// Handles the <see cref="E:ElementPropertyChanged" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
 		protected void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == ExtendedScrollView.PositionProperty.PropertyName)
@@ -37,8 +56,8 @@ namespace XLabs.Forms.Controls.ExtendedScrollView
 				var scrollView = (ExtendedScrollView)Element;
 				var position = scrollView.Position;
 
-				if (Math.Abs(ScrollY - position.Y) < EPSILON
-					&& Math.Abs(ScrollX - position.X) < EPSILON)
+				if (Math.Abs((int)(ScrollY - position.Y)) < _epsilon
+					&& Math.Abs((int)(ScrollX - position.X)) < _epsilon)
 					return;
 
 				ScrollTo((int)position.X,(int)position.Y);

@@ -1,14 +1,25 @@
-using Android.Text.Util;
 using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using XLabs.Forms.Controls.HyperLinkLabel;
+
+using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer(typeof(HyperLinkLabel), typeof(HyperLinkLabelRenderer))]
 
-namespace XLabs.Forms.Controls.HyperLinkLabel
+namespace XLabs.Forms.Controls
 {
-    public class HyperLinkLabelRenderer : LabelRenderer
+	using Android.Text.Util;
+
+	using Xamarin.Forms;
+	using Xamarin.Forms.Platform.Android;
+
+	/// <summary>
+	/// Class HyperLinkLabelRenderer.
+	/// </summary>
+	public class HyperLinkLabelRenderer : LabelRenderer
     {
+		/// <summary>
+		/// Called when [element changed].
+		/// </summary>
+		/// <param name="e">The e.</param>
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             base.OnElementChanged(e);

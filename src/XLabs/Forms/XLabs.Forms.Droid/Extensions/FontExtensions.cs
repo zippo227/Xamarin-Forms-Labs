@@ -33,7 +33,7 @@ namespace XLabs.Forms.Extensions
 	/// </summary>
 	public static class TypefaceCache
 	{
-		private static ITypefaceCache _sharedCache;
+		private static ITypefaceCache sharedCache;
 
 		/// <summary>
 		/// Returns the shared typeface cache.
@@ -41,18 +41,18 @@ namespace XLabs.Forms.Extensions
 		/// <value>The shared cache.</value>
 		public static ITypefaceCache SharedCache {
 			get {
-				if(_sharedCache == null)
+				if(sharedCache == null)
 				{
-					_sharedCache = new DefaultTypefaceCache();
+					sharedCache = new DefaultTypefaceCache();
 				}
-				return _sharedCache;
+				return sharedCache;
 			}
 			set {
-				if(_sharedCache != null && _sharedCache.GetType() == typeof(DefaultTypefaceCache))
+				if(sharedCache != null && sharedCache.GetType() == typeof(DefaultTypefaceCache))
 				{
-					((DefaultTypefaceCache)_sharedCache).PurgeCache();
+					((DefaultTypefaceCache)sharedCache).PurgeCache();
 				}
-				_sharedCache = value;
+				sharedCache = value;
 			}
 		}
 

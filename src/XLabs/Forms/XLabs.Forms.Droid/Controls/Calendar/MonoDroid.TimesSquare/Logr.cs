@@ -1,21 +1,33 @@
-using Android.Util;
-
-namespace XLabs.Forms.Controls.Calendar.MonoDroid.TimesSquare
+namespace XLabs.Forms.Controls.MonoDroid.TimesSquare
 {
-    public class Logr
-    {
-        public static void D(string message)
-        {
-#if DEBUG
-            Log.Debug("Xamarin.Forms.Labs.Droid.Controls.Calendar", message);
-#endif
-        }
+	using Android.Util;
 
-        public static void D(string message, params object[] args)
-        {
+	/// <summary>
+	/// Class Logr.
+	/// </summary>
+	public class Logr
+	{
+		/// <summary>
+		/// ds the specified message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public static void D(string message)
+		{
 #if DEBUG
-            D(string.Format(message, args));
+			Log.Debug("Xamarin.Forms.Labs.Droid.Controls.Calendar", message);
 #endif
-        }
-    }
+		}
+
+		/// <summary>
+		/// ds the specified message.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		/// <param name="args">The arguments.</param>
+		public static void D(string message, params object[] args)
+		{
+#if DEBUG
+			D(string.Format(message, args));
+#endif
+		}
+	}
 }

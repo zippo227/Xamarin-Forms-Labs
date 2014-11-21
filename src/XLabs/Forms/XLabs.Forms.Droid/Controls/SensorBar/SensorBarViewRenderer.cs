@@ -1,45 +1,66 @@
-﻿using System.ComponentModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
+﻿using Xamarin.Forms;
+
+using XLabs.Forms.Controls;
 using XLabs.Forms.Controls.SensorBar;
 
 [assembly: ExportRenderer(typeof(SensorBarView), typeof(SensorBarViewRenderer))]
-namespace XLabs.Forms.Controls.SensorBar
+namespace XLabs.Forms.Controls
 {
-    public class SensorBarViewRenderer : ViewRenderer<SensorBarView, SensorBarDroidView>
-    {
-        protected override void OnElementChanged(ElementChangedEventArgs<SensorBarView> e)
-        {
-            base.OnElementChanged (e);
+	using System.ComponentModel;
 
-            if (e.NewElement == null)
-            {
-                return;
-            }
+	using Xamarin.Forms.Platform.Android;
 
-            if (this.Control == null)
-            {
-                this.SetNativeControl(new SensorBarDroidView(this.Context));
-            }
+	using XLabs.Forms.Controls.SensorBar;
 
-            this.SetProperties();
-        }
+	/// <summary>
+	/// Class SensorBarViewRenderer.
+	/// </summary>
+	public class SensorBarViewRenderer : ViewRenderer<SensorBarView, SensorBarDroidView>
+	{
+		/// <summary>
+		/// Called when [element changed].
+		/// </summary>
+		/// <param name="e">The e.</param>
+		protected override void OnElementChanged(ElementChangedEventArgs<SensorBarView> e)
+		{
+			base.OnElementChanged (e);
 
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
-            this.SetProperties();
-        }
+			if (e.NewElement == null)
+			{
+				return;
+			}
 
-        private void SetProperties()
-        {
-            this.Control.CurrentValue = this.Element.CurrentValue;
-            this.Control.Limit = this.Element.Limit;
-            this.Control.NegativeColor = this.Element.NegativeColor.ToAndroid();
-            this.Control.PositiveColor = this.Element.PositiveColor.ToAndroid();
+			if (this.Control == null)
+			{
+				this.SetNativeControl(new SensorBarDroidView(this.Context));
+			}
 
-            this.Control.Invalidate();
-        }
-    }
+			this.SetProperties();
+		}
+
+		/// <summary>
+		/// Handles the <see cref="E:ElementPropertyChanged" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged(sender, e);
+			this.SetProperties();
+		}
+
+		/// <summary>
+		/// Sets the properties.
+		/// </summary>
+		private void SetProperties()
+		{
+			this.Control.CurrentValue = this.Element.CurrentValue;
+			this.Control.Limit = this.Element.Limit;
+			this.Control.NegativeColor = this.Element.NegativeColor.ToAndroid();
+			this.Control.PositiveColor = this.Element.PositiveColor.ToAndroid();
+
+			this.Control.Invalidate();
+		}
+	}
 }
 

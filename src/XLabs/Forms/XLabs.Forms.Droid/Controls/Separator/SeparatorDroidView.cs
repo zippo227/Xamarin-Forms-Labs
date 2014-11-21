@@ -1,174 +1,191 @@
-﻿using Android.App;
-using Android.Content;
-using Android.Graphics;
-using Android.Util;
-
-namespace XLabs.Forms.Controls.Separator
+﻿namespace XLabs.Forms.Controls
 {
-	public class SeparatorDroidView :Android.Views.View
+	using Android.App;
+	using Android.Content;
+	using Android.Graphics;
+	using Android.Util;
+	using Android.Views;
+
+	/// <summary>
+	///     Class SeparatorDroidView.
+	/// </summary>
+	public class SeparatorDroidView : View
 	{
+		/// <summary>
+		///     The _orientation
+		/// </summary>
+		private SeparatorOrientation _orientation;
 
+		//Density measure
+		/// <summary>
+		///     The dm
+		/// </summary>
+		private float _dm;
 
-
-		public SeparatorDroidView (Context context) :
-		base (context)
+		/// <summary>
+		///     Initializes a new instance of the <see cref="SeparatorDroidView" /> class.
+		/// </summary>
+		/// <param name="context">The context.</param>
+		public SeparatorDroidView(Context context)
+			: base(context)
 		{
-			Initialize ();
+			Initialize();
 		}
 
-		public SeparatorDroidView (Context context, IAttributeSet attrs) :
-		base (context, attrs)
+		/// <summary>
+		///     Initializes a new instance of the <see cref="SeparatorDroidView" /> class.
+		/// </summary>
+		/// <param name="context">The context.</param>
+		/// <param name="attrs">The attrs.</param>
+		public SeparatorDroidView(Context context, IAttributeSet attrs)
+			: base(context, attrs)
 		{
-			Initialize ();
+			Initialize();
 		}
 
-		public SeparatorDroidView (Context context, IAttributeSet attrs, int defStyle) :
-		base (context, attrs, defStyle)
+		/// <summary>
+		///     Initializes a new instance of the <see cref="SeparatorDroidView" /> class.
+		/// </summary>
+		/// <param name="context">The context.</param>
+		/// <param name="attrs">The attrs.</param>
+		/// <param name="defStyle">The definition style.</param>
+		public SeparatorDroidView(Context context, IAttributeSet attrs, int defStyle)
+			: base(context, attrs, defStyle)
 		{
-			Initialize ();
+			Initialize();
 		}
 
-		private double _thickness;
+		/// <summary>
+		///     Gets or sets the thickness.
+		/// </summary>
+		/// <value>The thickness.</value>
+		public double Thickness { set; get; }
 
-		public double Thickness{
-			set{
-				_thickness = value;
-				//this.Invalidate();
-			}
-			get{
-				return _thickness;
-			}
-		}
+		/// <summary>
+		///     Gets or sets the spacing before.
+		/// </summary>
+		/// <value>The spacing before.</value>
+		public double SpacingBefore { set; get; }
 
-		private double _spacingBefore;
+		/// <summary>
+		///     Gets or sets the spacing after.
+		/// </summary>
+		/// <value>The spacing after.</value>
+		public double SpacingAfter { set; get; }
 
-		public double SpacingBefore{
-			set{
-				_spacingBefore = value;
-				//this.Invalidate();
-			}
-			get{
-				return _spacingBefore;
-			}
-		}
+		/// <summary>
+		///     Gets or sets the color of the stroke.
+		/// </summary>
+		/// <value>The color of the stroke.</value>
+		public Color StrokeColor { set; get; }
 
-		private double _spacingAfter;
+		/// <summary>
+		///     Gets or sets the type of the stroke.
+		/// </summary>
+		/// <value>The type of the stroke.</value>
+		public StrokeType StrokeType { set; get; }
 
-		public double SpacingAfter{
-			set{
-				_spacingAfter = value;
-				//this.Invalidate();
-			}
-			get{
-				return _spacingAfter;
-			}
-		}
-
-		private Android.Graphics.Color _strokeColor;
-
-		public Android.Graphics.Color StrokeColor{
-			set{
-				_strokeColor = value;
-				//this.Invalidate();
-			}
-			get{
-				return _strokeColor;
-			}
-		}
-
-
-		private StrokeType _strokeType;
-
-		public StrokeType StrokeType{
-			set{
-				_strokeType = value;
-				//this.Invalidate();
-			}
-			get{
-				return _strokeType;
-			}
-		}
-
-		private Xamarin.Forms.Labs.Controls.SeparatorOrientation _orientation;
-
-		public SeparatorOrientation Orientation{
-			set{
+		/// <summary>
+		///     Gets or sets the orientation.
+		/// </summary>
+		/// <value>The orientation.</value>
+		public SeparatorOrientation Orientation
+		{
+			set
+			{
 				_orientation = value;
-				this.Invalidate();
+				Invalidate();
 			}
-			get{
+			get
+			{
 				return _orientation;
 			}
 		}
-		//Density measure
-		float dm;
 
+		/// <summary>
+		///     Implement this to do your drawing.
+		/// </summary>
+		/// <param name="canvas">the canvas on which the background will be drawn</param>
+		/// <since version="Added in API level 1" />
+		/// <remarks>
+		///     <para tool="javadoc-to-mdoc">Implement this to do your drawing.</para>
+		///     <para tool="javadoc-to-mdoc">
+		///         <format type="text/html">
+		///             <a href="http://developer.android.com/reference/android/view/View.html#onDraw(android.graphics.Canvas)"
+		///                 target="_blank">
+		///                 [Android Documentation]
+		///             </a>
+		///         </format>
+		///     </para>
+		/// </remarks>
 		protected override void OnDraw(Canvas canvas)
 		{
-			base.OnDraw (canvas);
+			base.OnDraw(canvas);
 
-			var r = new Rect (0,0,canvas.Width,canvas.Height);
-			float dAdjustedThicnkess = (float)this.Thickness * dm;
-		
+			var r = new Rect(0, 0, canvas.Width, canvas.Height);
+			var dAdjustedThicnkess = (float)Thickness * _dm;
 
-			var paint = new Paint()
-			{
-				Color = this.StrokeColor,
-				StrokeWidth = dAdjustedThicnkess,
-				AntiAlias = true
-			
-			};
+			var paint = new Paint { Color = StrokeColor, StrokeWidth = dAdjustedThicnkess, AntiAlias = true };
 			paint.SetStyle(Paint.Style.Stroke);
-			switch(StrokeType) {
-			case this.StrokeType.Dashed:
-				paint.SetPathEffect(new DashPathEffect(new float[]{ 6*dm, 2*dm}, 0));
-				break;
-			case this.StrokeType.Dotted:
-				paint.SetPathEffect(new DashPathEffect(new float[]{ dAdjustedThicnkess, dAdjustedThicnkess}, 0));
-				break;
-			default:
+			switch (StrokeType)
+			{
+				case StrokeType.Dashed:
+					paint.SetPathEffect(new DashPathEffect(new[] { 6 * _dm, 2 * _dm }, 0));
+					break;
+				case StrokeType.Dotted:
+					paint.SetPathEffect(new DashPathEffect(new[] { dAdjustedThicnkess, dAdjustedThicnkess }, 0));
+					break;
+				default:
 
-				break;
+					break;
 			}
 
-			var desiredTotalSpacing = (SpacingAfter + SpacingBefore)*dm;
+			var desiredTotalSpacing = (SpacingAfter + SpacingBefore) * _dm;
 			float leftForSpacing = 0;
 			float actualSpacingBefore = 0;
 			float actualSpacingAfter = 0;
-			if(Orientation == SeparatorOrientation.Horizontal){
+
+			if (Orientation == SeparatorOrientation.Horizontal)
+			{
 				leftForSpacing = r.Height() - dAdjustedThicnkess;
-			}else{
+			}
+			else
+			{
 				leftForSpacing = r.Width() - dAdjustedThicnkess;
 			}
-			if(desiredTotalSpacing > 0) {
-				float spacingCompressionRatio = (float)(leftForSpacing / desiredTotalSpacing) ;
-				actualSpacingBefore = (float)SpacingBefore*dm * spacingCompressionRatio;
-				actualSpacingAfter = (float)SpacingAfter*dm * spacingCompressionRatio;
-			}else{
+			if (desiredTotalSpacing > 0)
+			{
+				var spacingCompressionRatio = (float)(leftForSpacing / desiredTotalSpacing);
+				actualSpacingBefore = (float)SpacingBefore * _dm * spacingCompressionRatio;
+				actualSpacingAfter = (float)SpacingAfter * _dm * spacingCompressionRatio;
+			}
+			else
+			{
 				actualSpacingBefore = 0;
 				actualSpacingAfter = 0;
 			}
-			float thicknessOffset = (dAdjustedThicnkess)/2.0f;
+			var thicknessOffset = (dAdjustedThicnkess) / 2.0f;
 
-
-
-			Path p = new Path();
-			if(Orientation == SeparatorOrientation.Horizontal){
+			var p = new Path();
+			if (Orientation == SeparatorOrientation.Horizontal)
+			{
 				p.MoveTo(0, actualSpacingBefore + thicknessOffset);
 				p.LineTo(r.Width(), actualSpacingBefore + thicknessOffset);
-			}else{
-				p.MoveTo(actualSpacingBefore+thicknessOffset, 0);
-				p.LineTo(actualSpacingBefore+thicknessOffset, r.Height());
+			}
+			else
+			{
+				p.MoveTo(actualSpacingBefore + thicknessOffset, 0);
+				p.LineTo(actualSpacingBefore + thicknessOffset, r.Height());
 			}
 			canvas.DrawPath(p, paint);
 		}
 
-
-
+		/// <summary>
+		///     Initializes this instance.
+		/// </summary>
 		private void Initialize()
 		{
-			dm = Application.Context.Resources.DisplayMetrics.Density;
+			_dm = Application.Context.Resources.DisplayMetrics.Density;
 		}
 	}
 }
-

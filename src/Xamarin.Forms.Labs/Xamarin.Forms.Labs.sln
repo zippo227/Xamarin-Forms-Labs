@@ -160,6 +160,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0157C2
 		..\XLabs\Platform\XLabs.Platform\Device\Gyroscope.designer.cs = ..\XLabs\Platform\XLabs.Platform\Device\Gyroscope.designer.cs
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{86D4B330-E607-40EF-BF61-80CC2294D42A}"
+	ProjectSection(SolutionItems) = preProject
+		..\XLabs\Forms\XLabs.Forms\Controls\HybridWebViewRenderer.designer.cs = ..\XLabs\Forms\XLabs.Forms\Controls\HybridWebViewRenderer.designer.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -2243,6 +2248,7 @@ Global
 		{0809F6EE-7FB2-4995-8D01-0E6C7E1E79B4} = {54DE01F6-195D-4FC1-A42B-2856A27F172F}
 		{16DF04BA-34B2-47A0-A9FC-DDDD53A5CDA7} = {54DE01F6-195D-4FC1-A42B-2856A27F172F}
 		{0157C239-4260-44A9-9691-BBAB5FFDFF17} = {11A1AB15-EC3A-4FCF-B401-7794B8A7623C}
+		{86D4B330-E607-40EF-BF61-80CC2294D42A} = {54DE01F6-195D-4FC1-A42B-2856A27F172F}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ..\..\samples\Xamarin.Forms.Labs.Sample.iOS\Xamarin.Forms.Labs.Sample.iOS.csproj

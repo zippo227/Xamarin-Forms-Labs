@@ -1,22 +1,27 @@
-using System;
-using System.ComponentModel;
-using Android.Content;
-using Android.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
+
 using XLabs.Forms.Controls;
-using XLabs.Forms.Controls.Calendar;
-using XLabs.Forms.Controls.Calendar.MonoDroid.TimesSquare;
-using XLabs.Forms.Extensions;
-using XLabs.Forms.Resources;
-using Color = Android.Graphics.Color;
-using RelativeLayout = Android.Widget.RelativeLayout;
-using View = Android.Views.View;
 
 [assembly: ExportRenderer(typeof (CalendarView), typeof (CalendarViewRenderer))]
 
-namespace XLabs.Forms.Controls.Calendar
+namespace XLabs.Forms.Controls
 {
+	using System;
+	using System.ComponentModel;
+
+	using Android.Content;
+	using Android.Views;
+
+	using Xamarin.Forms;
+	using Xamarin.Forms.Platform.Android;
+
+	using XLabs.Forms.Controls.MonoDroid.TimesSquare;
+	using XLabs.Forms.Extensions;
+
+	using Color = Android.Graphics.Color;
+	using RelativeLayout = Android.Widget.RelativeLayout;
+	using View = Android.Views.View;
+
 	/// <summary>
 	///     Class CalendarViewRenderer.
 	/// </summary>
