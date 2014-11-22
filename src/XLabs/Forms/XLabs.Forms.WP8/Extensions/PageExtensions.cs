@@ -1,5 +1,4 @@
-﻿using Xamarin.Forms.Labs.WP8;
-using XLabs.Platform.Mvvm;
+﻿using XLabs.Platform.Mvvm;
 
 namespace XLabs.Forms.Extensions
 {
