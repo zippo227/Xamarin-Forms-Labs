@@ -127,7 +127,7 @@ namespace XLabs.Forms.Controls
 		{
 			base.OnElementPropertyChanged(sender, e);
 
-			if (e.PropertyName == Labs.Controls.ImageButton.SourceProperty.PropertyName)
+			if (e.PropertyName == ImageButton.SourceProperty.PropertyName)
 			{
 				var targetButton = Control;
 				await SetImageSourceAsync(targetButton, this.ImageButton);

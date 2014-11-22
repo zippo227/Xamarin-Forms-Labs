@@ -8,6 +8,8 @@ namespace XLabs.Forms.Extensions
 	using Android.Content;
 	using Android.Graphics;
 
+	using Xamarin.Forms.Platform.Android;
+
 	/// <summary>
 	/// Interface of TypefaceCaches
 	/// </summary>

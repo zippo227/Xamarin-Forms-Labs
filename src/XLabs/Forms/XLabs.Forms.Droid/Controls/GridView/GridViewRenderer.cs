@@ -10,6 +10,7 @@ namespace XLabs.Forms.Controls
 	using System;
 	using System.Collections;
 	using System.Collections.Specialized;
+	using System.Linq;
 	using System.Net;
 
 	using Android.Content;

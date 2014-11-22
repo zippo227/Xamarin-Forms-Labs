@@ -12,6 +12,8 @@ namespace XLabs.Forms.Controls
 	using Xamarin.Forms;
 	using Xamarin.Forms.Platform.Android;
 
+	using XLabs.Forms.Extensions;
+
 	/// <summary>
 	/// Class ExtendedEntryRenderer.
 	/// </summary>

@@ -34,10 +34,14 @@
 			_manager = GetManager();
 			_manager.AuthorizationChanged += OnAuthorizationChanged;
 			_manager.Failed += OnFailed;
+
+#if (IOS_8)
+		
 			if (_manager.RespondsToSelector(new Selector("requestWhenInUseAuthorization")))
 			{
 				_manager.RequestWhenInUseAuthorization();
 			}
+#endif			
 			if (UIDevice.CurrentDevice.CheckSystemVersion(6, 0))
 			{
 				_manager.LocationsUpdated += OnLocationsUpdated;
@@ -94,7 +98,11 @@
 		{
 			get
 			{
+#if (IOS_8)
 				return CLLocationManager.Status >= CLAuthorizationStatus.AuthorizedAlways;
+#else
+				return CLLocationManager.Status >= CLAuthorizationStatus.Authorized;
+#endif
 			}
 		}
 

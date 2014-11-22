@@ -19,8 +19,8 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion("1.2.0.0")]
 [assembly: AssemblyFileVersionAttribute("1.2.0.0")]
-[assembly: InternalsVisibleTo("Xamarin.Forms.Labs.Droid")]
-[assembly: InternalsVisibleTo("Xamarin.Forms.Labs.iOS")]
+[assembly: InternalsVisibleTo("XLabs.Forms.Droid")]
+[assembly: InternalsVisibleTo("XLabs.Forms.iOS")]
 
 // The following attributes are used to specify the signing key for the assembly,
 // if desired. See the Mono documentation for more information about signing.

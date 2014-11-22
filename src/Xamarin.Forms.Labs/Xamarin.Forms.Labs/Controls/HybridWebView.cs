@@ -7,9 +7,9 @@ using XLabs.Ioc;
 using XLabs.Serialization;
 
 [assembly:
-    InternalsVisibleTo("Xamarin.Forms.Labs.Droid"),
-    InternalsVisibleTo("Xamarin.Forms.Labs.iOS"),
-    InternalsVisibleTo("Xamarin.Forms.Labs.WP8")]
+    InternalsVisibleTo("XLabs.Forms.Droid"),
+    InternalsVisibleTo("XLabs.Forms.iOS"),
+    InternalsVisibleTo("XLabs.Forms.WP8")]
 
 namespace Xamarin.Forms.Labs.Controls
 {

@@ -1,224 +1,318 @@
-﻿using System;
-using MonoTouch.UIKit;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using MonoTouch.Foundation;
-using System.Threading.Tasks;
-
-namespace Xamarin.Forms.Labs.iOS.Controls.ImageGallery
+﻿namespace Xamarin.Forms.Labs.iOS.Controls.ImageGallery
 {
-    public class ImageGalleryView : UIView
-    {
-        public bool FadeImages {
-            get;
-            set;
-        }
-        private ObservableCollection<string> _images; 
-        public ObservableCollection<string> Images {
-            get{ 
-                return _images;
-            }
-            set{ 
-                _images = value;
-            }
-        }
+	using System;
+	using System.Collections.ObjectModel;
+	using System.Collections.Specialized;
+	using System.Drawing;
+	using System.Threading.Tasks;
 
-        UIPageControl pageControl;
-        UIScrollView scroller;
+	using MonoTouch.Foundation;
+	using MonoTouch.UIKit;
 
-        public ImageGalleryView (ObservableCollection<string> images ) : this(default(RectangleF),images)
-        {
-        }
-        public ImageGalleryView (RectangleF frame, ObservableCollection<string> images = null) : base (frame)
-        {
-            this.AutoresizingMask = UIViewAutoresizing.All;
-            this.ContentMode = UIViewContentMode.ScaleToFill;
-            FadeImages = true;
-            this.BackgroundColor = UIColor.White;
-            if (frame == default(RectangleF))
-                this.Frame = UIScreen.MainScreen.Bounds;
-            else
-                this.Frame = frame;
+	/// <summary>
+	/// Class ImageGalleryView.
+	/// </summary>
+	public class ImageGalleryView : UIView
+	{
+		/// <summary>
+		/// The _page control
+		/// </summary>
+		private readonly UIPageControl _pageControl;
 
-            if (images == null)
-                Images = new ObservableCollection<string> ();
-            else
-                Images = images;
+		/// <summary>
+		/// The _scroller
+		/// </summary>
+		private readonly UIScrollView _scroller;
 
-            pageControl = new UIPageControl ();
-            pageControl.AutoresizingMask = UIViewAutoresizing.All;
-            pageControl.ContentMode = UIViewContentMode.ScaleToFill;
-            pageControl.ValueChanged += (object sender, EventArgs e) => UpdateScrollPositionBasedOnPageControl();
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ImageGalleryView"/> class.
+		/// </summary>
+		/// <param name="images">The images.</param>
+		public ImageGalleryView(ObservableCollection<string> images)
+			: this(default(RectangleF), images)
+		{
+		}
 
-            scroller = new UIScrollView ();
-            scroller.AutoresizingMask = UIViewAutoresizing.All;
-            scroller.ShowsHorizontalScrollIndicator = scroller.ShowsVerticalScrollIndicator = false;
-            scroller.ContentMode = UIViewContentMode.ScaleToFill;
-            scroller.PagingEnabled = true;
-            scroller.Bounces = false;
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ImageGalleryView"/> class.
+		/// </summary>
+		/// <param name="frame">The frame.</param>
+		/// <param name="images">The images.</param>
+		public ImageGalleryView(RectangleF frame, ObservableCollection<string> images = null)
+			: base(frame)
+		{
+			AutoresizingMask = UIViewAutoresizing.All;
+			ContentMode = UIViewContentMode.ScaleToFill;
+			
+			FadeImages = true;
+			
+			BackgroundColor = UIColor.White;
+			
+			Frame = frame == default(RectangleF) ? UIScreen.MainScreen.Bounds : frame;
 
+			Images = images ?? new ObservableCollection<string>();
 
-            this.Add (scroller);
-            this.Add (pageControl);
+			_pageControl = new UIPageControl
+				               {
+					               AutoresizingMask = UIViewAutoresizing.All,
+					               ContentMode = UIViewContentMode.ScaleToFill
+				               };
 
+			_pageControl.ValueChanged += (object sender, EventArgs e) => UpdateScrollPositionBasedOnPageControl();
 
-        }
+			_scroller = new UIScrollView
+				            {
+					            AutoresizingMask = UIViewAutoresizing.All,
+					            ContentMode = UIViewContentMode.ScaleToFill,
+					            PagingEnabled = true,
+					            Bounces = false,
+					            ShowsHorizontalScrollIndicator = false,
+					            ShowsVerticalScrollIndicator = false
+				            };
 
-        protected override void Dispose (bool disposing)
-        {
-            base.Dispose (disposing);
-            scroller.Scrolled -= ScrollChanged;
-            Images.CollectionChanged -= HandleCollectionChanged;
-            Images.Clear ();
-        }
-        public  override void Draw (System.Drawing.RectangleF rect)
-        {
-            Images.CollectionChanged+= HandleCollectionChanged;
-            scroller.Scrolled += ScrollChanged;
+			Add(_scroller);
+			Add(_pageControl);
+		}
 
-            //TODO: need to remove observer if using the lambda?
-            NSNotificationCenter.DefaultCenter.AddObserver (UIApplication.DidChangeStatusBarOrientationNotification, not => {
+		/// <summary>
+		/// Gets or sets a value indicating whether [fade images].
+		/// </summary>
+		/// <value><c>true</c> if [fade images]; otherwise, <c>false</c>.</value>
+		public bool FadeImages { get; set; }
 
-                var orientation = UIDevice.CurrentDevice.Orientation;
-                if ((UIDeviceOrientation.LandscapeLeft == orientation || UIDeviceOrientation.LandscapeRight == orientation))
-                {
-                    scroller.ContentSize = new System.Drawing.SizeF (Frame.Height * Images.Count-1, Frame.Width);
+		/// <summary>
+		/// Gets or sets the images.
+		/// </summary>
+		/// <value>The images.</value>
+		public ObservableCollection<string> Images { get; set; }
 
-                }
-                else{
-                    scroller.ContentSize = new System.Drawing.SizeF (rect.Width * Images.Count-1, rect.Height);
+		/// <summary>
+		/// Releases unmanaged and - optionally - managed resources.
+		/// </summary>
+		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+		protected override void Dispose(bool disposing)
+		{
+			base.Dispose(disposing);
+			_scroller.Scrolled -= ScrollChanged;
+			Images.CollectionChanged -= HandleCollectionChanged;
+			Images.Clear();
+		}
 
-                }
-                UpdateScrollPositionBasedOnPageControl();
-            });
-            pageControl.Frame = new System.Drawing.RectangleF (rect.Left,rect.Height-40, rect.Width,40);
-            scroller.Frame = new System.Drawing.RectangleF (rect.Left,rect.Top, rect.Width, rect.Height);
-            var curr = 0;
-            foreach (var im in  Images) {
-                try {
-                    AddImage (rect,curr,im);
-                    curr++;
-                } catch (Exception ex) {
+		/// <summary>
+		/// Draws the specified rect.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		public override void Draw(RectangleF rect)
+		{
+			Images.CollectionChanged += HandleCollectionChanged;
+			_scroller.Scrolled += ScrollChanged;
 
-                }
+			//TODO: need to remove observer if using the lambda?
+			NSNotificationCenter.DefaultCenter.AddObserver(
+				UIApplication.DidChangeStatusBarOrientationNotification,
+				not =>
+					{
+						var orientation = UIDevice.CurrentDevice.Orientation;
+						if ((UIDeviceOrientation.LandscapeLeft == orientation || UIDeviceOrientation.LandscapeRight == orientation))
+						{
+							_scroller.ContentSize = new SizeF(Frame.Height * Images.Count - 1, Frame.Width);
+						}
+						else
+						{
+							_scroller.ContentSize = new SizeF(rect.Width * Images.Count - 1, rect.Height);
+						}
+						UpdateScrollPositionBasedOnPageControl();
+					});
+			_pageControl.Frame = new RectangleF(rect.Left, rect.Height - 40, rect.Width, 40);
+			_scroller.Frame = new RectangleF(rect.Left, rect.Top, rect.Width, rect.Height);
+			
+			var curr = 0;
+			foreach (var im in  Images)
+			{
+				try
+				{
+					AddImage(rect, curr, im);
+					curr++;
+				}
+				catch (Exception)
+				{
+					// ignored
+				}
+			}
+			_scroller.ContentSize = new SizeF(_scroller.Frame.Width * curr - 1, _scroller.Frame.Height);
+			_pageControl.Pages = curr;
 
-            }
-            scroller.ContentSize = new System.Drawing.SizeF (scroller.Frame.Width * curr-1, scroller.Frame.Height);
-            pageControl.Pages = curr;
+			base.Draw(rect);
+		}
 
-            base.Draw (rect);
-        }
+		/// <summary>
+		/// Adds the image.
+		/// </summary>
+		/// <param name="rect">The rect.</param>
+		/// <param name="position">The position.</param>
+		/// <param name="im">The im.</param>
+		private void AddImage(RectangleF rect, int position, string im)
+		{
+			var img = new UIImage();
+			var isRemote = Helpers.IsValidUrl(im);
+			
+			if (isRemote)
+			{
+				//dont await , fire and forget
+				LoadImageAsync(position, im);
+			}
+			else
+			{
+				img = UIImage.FromFile(im);
+			}
+			
+			var imgView = new UIImageView(img)
+				              {
+					              AutoresizingMask = UIViewAutoresizing.All,
+					              ContentMode = UIViewContentMode.ScaleToFill
+				              };
+			
+			if (FadeImages)
+			{
+				imgView.Alpha = 0;
+			}
+			
+			//if first image is local, fade it in
+			if (position == 0 && !isRemote)
+			{
+				FadeImageViewIn(imgView);
+			}
+			
+			imgView.Frame = new RectangleF(rect.Width * position, rect.Top, rect.Width, rect.Height);
+			_scroller.AddSubview(imgView);
+		}
 
-        private void AddImage (RectangleF rect, int position, string im)
-        {
-            var img = new UIImage ();
-            var isRemote = Helpers.IsValidUrl (im);
-            if (isRemote)
-                //dont await , fire and forget
-                LoadImageAsync (position, im);
-            else
-                img = UIImage.FromFile (im);
-            var imgView = new UIImageView (img);
-            imgView.AutoresizingMask = UIViewAutoresizing.All;
-            imgView.ContentMode = UIViewContentMode.ScaleToFill;
-            if (FadeImages)
-                imgView.Alpha = 0;
-            //if first image is local, fade it in
-            if (position == 0 && !isRemote)
-                FadeImageViewIn (imgView);
-            imgView.Frame = new System.Drawing.RectangleF (rect.Width * position, rect.Top, rect.Width, rect.Height);
-            scroller.AddSubview (imgView);
+		/// <summary>
+		/// Loads the image asynchronous.
+		/// </summary>
+		/// <param name="position">The position.</param>
+		/// <param name="url">The URL.</param>
+		/// <returns>Task.</returns>
+		private Task LoadImageAsync(int position, string url)
+		{
+			return Task.Run(
+				() =>
+					{
+						var img = Helpers.LoadFromUrl(url);
 
-        }
+						InvokeOnMainThread(
+							() =>
+								{
+									var imgView = _scroller.Subviews[position] as UIImageView;
+									if (_pageControl.CurrentPage == position && FadeImages)
+									{
+										FadeImageViewIn(imgView, img);
+									}
+									else
+									{
+										imgView.Image = img;
+									}
+								});
+					});
+		}
 
+		/// <summary>
+		/// Scrolls the changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		private void ScrollChanged(object sender, EventArgs e)
+		{
+			var pageWidth = double.Parse(_scroller.Bounds.Width.ToString());
+			var oof = double.Parse(_scroller.ContentOffset.X.ToString());
+			var pageNumber = int.Parse((Math.Floor((oof - pageWidth / 2) / pageWidth) + 1).ToString());
+			var imgView = _scroller.Subviews[pageNumber] as UIImageView;
+			FadeImageViewIn(imgView);
+			_pageControl.CurrentPage = pageNumber;
+		}
 
-        private Task LoadImageAsync(int position, string url)
-        {
-            return Task.Run (() => {
-                var img = Helpers.LoadFromUrl(url);
+		/// <summary>
+		/// Handles the collection changed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+		private void HandleCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.Action == NotifyCollectionChangedAction.Add)
+			{
+				foreach (var newImage in e.NewItems)
+				{
+					try
+					{
+						BeginInvokeOnMainThread(
+							() =>
+								{
+									AddImage(Frame, _pageControl.Pages, newImage as string);
+									_scroller.ContentSize = new SizeF(Frame.Width * (_pageControl.Pages + 1), _scroller.Frame.Height);
+									_pageControl.Pages = _pageControl.Pages + 1;
+								});
+					}
+					catch (Exception ex)
+					{
+					}
+				}
+			}
+		}
 
-                InvokeOnMainThread( () => {
+		/// <summary>
+		/// Sets the image.
+		/// </summary>
+		/// <param name="imgView">The img view.</param>
+		/// <param name="img">The img.</param>
+		private void SetImage(UIImageView imgView, UIImage img)
+		{
+			if (img != null)
+			{
+				imgView.Image = img;
+			}
+			imgView.Alpha = 1;
+		}
 
-                    var imgView = scroller.Subviews[position] as UIImageView;
-                    if(pageControl.CurrentPage == position && FadeImages)
-                        FadeImageViewIn(imgView,img);
-                    else
-                        imgView.Image = img;
-                });
-            });
+		/// <summary>
+		/// Updates the scroll position based on page control.
+		/// </summary>
+		private void UpdateScrollPositionBasedOnPageControl()
+		{
+			var off = _pageControl.CurrentPage * _scroller.Frame.Width;
+			_scroller.SetContentOffset(new PointF(off, 0), true);
+		}
 
-        }
-        void ScrollChanged (object sender, EventArgs e)
-        {
-            var pageWidth = double.Parse(scroller.Bounds.Width.ToString());
-            var oof = double.Parse(scroller.ContentOffset.X.ToString());
-            int pageNumber = int.Parse(( Math.Floor((oof - pageWidth / 2) / pageWidth) + 1).ToString());
-            var imgView = scroller.Subviews[pageNumber] as UIImageView;
-            FadeImageViewIn (imgView);
-            pageControl.CurrentPage = pageNumber;
-        }
+		/// <summary>
+		/// Fades the image view in.
+		/// </summary>
+		/// <param name="imgView">The img view.</param>
+		/// <param name="img">The img.</param>
+		private void FadeImageViewIn(UIImageView imgView, UIImage img = null)
+		{
+			if (FadeImages)
+			{
+				Animate(0.3, 0, UIViewAnimationOptions.TransitionCrossDissolve, () => { SetImage(imgView, img); }, () => { });
+			}
+			else
+			{
+				SetImage(imgView, img);
+			}
+		}
+	}
 
-        void HandleCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
+	public class Helpers
+	{
+		public static bool IsValidUrl(string urlString)
+		{
+			Uri uri;
+			return Uri.TryCreate(urlString, UriKind.Absolute, out uri)
+			       && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps || uri.Scheme == Uri.UriSchemeFtp
+			           || uri.Scheme == Uri.UriSchemeMailto);
+		}
 
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add) {
-                foreach (var newImage in e.NewItems) {
-                    try {
-                        this.BeginInvokeOnMainThread (() => {
-                            AddImage (Frame, pageControl.Pages, newImage as string);
-                            scroller.ContentSize = new System.Drawing.SizeF (Frame.Width * (pageControl.Pages + 1), scroller.Frame.Height);
-                            pageControl.Pages = pageControl.Pages + 1;
-                        });
-                    } catch (Exception ex) {
-
-                    }
-                }
-            }
-        }
-
-        private void SetImage (UIImageView imgView, UIImage img)
-        {
-            if (img != null) {
-                imgView.Image = img;
-            }
-            imgView.Alpha = 1;
-        }
-        private void UpdateScrollPositionBasedOnPageControl()
-        {
-            var off = this.pageControl.CurrentPage  * this.scroller.Frame.Width;
-            scroller.SetContentOffset(new PointF(off, 0), true);
-        }
-        private void FadeImageViewIn (UIImageView imgView, UIImage img = null)
-        {
-
-            if (FadeImages)
-                UIView.Animate (0.3, 0, UIViewAnimationOptions.TransitionCrossDissolve, () => {
-                    SetImage (imgView, img);
-                }, () => {
-                });
-            else {
-                SetImage (imgView, img);
-            }
-        }
-    }
-
-    public class Helpers
-    {
-        public static bool IsValidUrl(string urlString)
-        {
-            Uri uri;
-            return Uri.TryCreate(urlString, UriKind.Absolute, out uri)
-                && (uri.Scheme == Uri.UriSchemeHttp
-                    || uri.Scheme == Uri.UriSchemeHttps
-                    || uri.Scheme == Uri.UriSchemeFtp
-                    || uri.Scheme == Uri.UriSchemeMailto);
-        }
-        public static UIImage LoadFromUrl (string uri)
-        {
-            using (var url = new NSUrl (uri))
-            using (var data = NSData.FromUrl (url))
-                return UIImage.LoadFromData (data);
-        }
-    }
+		public static UIImage LoadFromUrl(string uri)
+		{
+			using (var url = new NSUrl(uri)) using (var data = NSData.FromUrl(url)) return UIImage.LoadFromData(data);
+		}
+	}
 }
-

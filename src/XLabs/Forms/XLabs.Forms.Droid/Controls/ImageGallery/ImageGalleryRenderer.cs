@@ -6,6 +6,7 @@ using XLabs.Forms.Controls;
 namespace XLabs.Forms.Controls
 {
 	using System.Collections.Specialized;
+	using System.Linq;
 	using System.Net;
 
 	using Android.Graphics;

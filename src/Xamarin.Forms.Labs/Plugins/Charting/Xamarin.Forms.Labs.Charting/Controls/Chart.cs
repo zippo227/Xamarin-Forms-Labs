@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms.Labs.Charting.Events;
 using System.Reflection;
 
-[assembly: InternalsVisibleTo("Xamarin.Forms.Labs.Charting.Droid"), InternalsVisibleTo("Xamarin.Forms.Labs.Charting.WP"), InternalsVisibleTo("Xamarin.Forms.Labs.Charting.iOS")]
+[assembly: InternalsVisibleTo("XLabs.Forms.Charting.Droid"), InternalsVisibleTo("XLabs.Forms.Charting.WP"), InternalsVisibleTo("XLabs.Forms.Charting.iOS")]
 namespace Xamarin.Forms.Labs.Charting.Controls
 {
     /// <summary>
