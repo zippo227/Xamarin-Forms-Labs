@@ -81,11 +81,10 @@ namespace Xamarin.Forms.Labs.Controls
 
             set
             {
-                this.SetValue(CheckedProperty, value);
-                var eventHandler = this.CheckedChanged;
-                if (eventHandler != null)
+                if (this.Checked != value)
                 {
-                    eventHandler.Invoke(this, value);
+                    this.SetValue(CheckedProperty, value);
+                    this.CheckedChanged.Invoke(this, value);
                 }
             }
         }
