@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>7d5f4ef3-b69d-40aa-a7f1-4a6057430293</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Xamarin.Forms.Labs.iOS</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Calendar\CalendarMonthView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Calendar\CalendarViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CameraView\CameraViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CheckBox\CheckBoxRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CheckBox\CheckBoxView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DynamicListView\DynamicListViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\EditableListView\EditableListViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedEntryCell\ExtendedEntryCellRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedTabbedPage\ExtendedTabbedPageRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExtendedViewCell\ExtendedViewCellRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\GridView\GridCollectionView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\GridView\GridDataSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\GridView\GridViewCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\GridView\GridViewDelegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\GridView\GridViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HybridWebView\HybridWebViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
+      <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\IconButton\IconButtonRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ImageButton\ImageButtonRenderer.shared.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ImageGallery\ImageGalleryRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ImageGallery\ImageGalleryView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SegmentedControlView\SegmentedControlViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SensorBar\SensorBarViewRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SensorBar\UISensorBar.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Separator\SeparatorRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Separator\UISeparator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\WebImage\WebImageRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Accelerometer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Accelerometer.designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\AppleDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Battery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Battery.designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\BluetoothDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\BluetoothHub.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Display.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Gyroscope.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Gyroscope.designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Pad.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Phone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Pod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\Simulator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\LabelExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\NSDataStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\UIImageExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\UIViewExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Email\EmailService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FontManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FontManager.designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Geolocation\GeolocationSingleUpdateDelegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Geolocation\Geolocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IO\FileManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Media\MediaPicker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Media\MediaPickerController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Media\MediaPickerDelegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Media\MediaPickerPopoverDelegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Media\Microphone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Network.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\PhoneService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Reachability.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\SoundService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\TextToSpeechService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)app.config" />
+  </ItemGroup>
+</Project>

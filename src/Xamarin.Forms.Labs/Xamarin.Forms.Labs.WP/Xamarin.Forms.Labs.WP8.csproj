@@ -86,7 +86,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Xamarin.Forms.Labs.Droid\Controls\ImageButton\ImageButtonRenderer.shared.cs">
+    <Compile Include="..\Xamarin.Forms.Labs.iOS.Shared\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
+      <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
+      <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Labs.iOS.Shared\Controls\ImageButton\ImageButtonRenderer.shared.cs">
       <Link>Controls\ImageButton\ImageButtonRenderer.shared.cs</Link>
     </Compile>
     <Compile Include="..\Xamarin.Forms.Labs\Device\Accelerometer.designer.cs">
@@ -113,12 +117,7 @@
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
     <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
-    <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
-      <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\SensorBar\SensorBarControl.xaml.cs">
       <DependentUpon>SensorBarControl.xaml</DependentUpon>
