@@ -73,6 +73,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Xamarin.Forms.Labs.iOS.Shared\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
+      <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
+      <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\Xamarin.Forms.Labs.iOS.Shared\Controls\ImageButton\ImageButtonRenderer.shared.cs">
+      <Link>Controls\ImageButton\ImageButtonRenderer.shared.cs</Link>
+    </Compile>
     <Compile Include="..\Xamarin.Forms.Labs\Device\Accelerometer.designer.cs">
       <Link>Device\Accelerometer.designer.cs</Link>
       <DependentUpon>Accelerometer.cs</DependentUpon>
@@ -101,7 +108,6 @@
     <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthView.cs" />
     <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
-    <Compile Include="Controls\ImageButton\ImageButtonRenderer.shared.cs" />
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\AndroidDevice.cs" />
@@ -135,9 +141,6 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
-    <Compile Include="..\Xamarin.Forms.Labs.WP\Controls\HybridWebView\HybridWebViewRenderer.designer.cs">
-      <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
-    </Compile>
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="Controls\SensorBar\SensorBarDroidView.cs" />
     <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
