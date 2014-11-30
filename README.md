@@ -91,7 +91,7 @@ Xaml :
 
 Reference the assembly namespace 
 
-     xmlns:controls="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=Xamarin.Forms.Labs"
+     xmlns:controls="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=XLabs.Forms"
 
 Render your control:
 
