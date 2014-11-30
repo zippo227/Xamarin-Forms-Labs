@@ -1,4 +1,4 @@
-﻿namespace XLabs.Platform
+﻿namespace XLabs.Platform.Enums
 {
 	/// <summary>
 	/// Enum Orientation

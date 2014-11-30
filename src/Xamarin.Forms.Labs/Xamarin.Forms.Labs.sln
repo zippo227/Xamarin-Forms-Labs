@@ -163,6 +163,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{86D4B330-E607-40EF-BF61-80CC2294D42A}"
 	ProjectSection(SolutionItems) = preProject
 		..\XLabs\Forms\XLabs.Forms\Controls\HybridWebViewRenderer.designer.cs = ..\XLabs\Forms\XLabs.Forms\Controls\HybridWebViewRenderer.designer.cs
+		..\XLabs\Forms\XLabs.Forms\Controls\ImageButtonRenderer.shared.cs = ..\XLabs\Forms\XLabs.Forms\Controls\ImageButtonRenderer.shared.cs
 	EndProjectSection
 EndProject
 Global

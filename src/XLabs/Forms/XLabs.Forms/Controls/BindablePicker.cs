@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Xamarin.Forms;
-using XLabs.Platform.Extensions;
 
 namespace XLabs.Forms.Controls
 {
+	using XLabs.Platform;
+
 	/// <summary>
 	/// Class BindablePicker.
 	/// </summary>

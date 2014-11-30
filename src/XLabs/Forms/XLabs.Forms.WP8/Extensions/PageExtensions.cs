@@ -18,7 +18,7 @@ namespace XLabs.Forms.Extensions
 		/// <param name="orientation">The orientation.</param>
 		public static void SetOrientation(this PhoneApplicationPage page, PageOrientation? orientation = null)
 		{
-			var app = Resolver.Resolve<IXFormsApp>() as XFormsAppWP;
+			var app = Resolver.Resolve<IXFormsApp>() as XFormsAppWp;
 
 			if (app != null)
 			{

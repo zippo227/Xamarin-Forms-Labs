@@ -17,7 +17,7 @@ namespace XLabs.Forms.Controls
 	using Xamarin.Forms.Platform.Android;
 
 	using XLabs.Forms.Extensions;
-	using XLabs.Platform;
+	using XLabs.Platform.Enums;
 
 	/// <summary>
 	/// Draws a button on the Android platform with the image shown in the right 

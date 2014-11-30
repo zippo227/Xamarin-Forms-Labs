@@ -69,14 +69,14 @@ namespace XLabs.Forms.Controls
 		[Obsolete("This is now obsolete. Please rather use FontName and FriendlyFontName to cover all platforms.")]
 		public static readonly BindableProperty FontNameIosProperty =
 			BindableProperty.Create<ExtendedLabel, string>(
-				p => p.FontNameIos, string.Empty);
+				p => p.FontNameIOS, string.Empty);
 
 		/// <summary>
 		/// Gets or sets the font name ios.
 		/// </summary>
 		/// <value>The font name ios.</value>
 		[Obsolete]
-		public string FontNameIos
+		public string FontNameIOS
 		{
 			get
 			{

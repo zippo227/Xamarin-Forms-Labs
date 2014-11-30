@@ -9,7 +9,6 @@ using Xamarin.Forms.Platform.WinPhone;
 namespace XLabs.Forms.Controls
 {
 	using Xamarin.Forms;
-	using Xamarin.Forms.Platform.Android;
 
 	/// <summary>
 	/// Draws a button on the Android platform with the image shown in the right 

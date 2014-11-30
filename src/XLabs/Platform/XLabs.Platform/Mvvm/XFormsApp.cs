@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 namespace XLabs.Platform.Mvvm
 {
+	using XLabs.Platform.Enums;
+
 	/// <summary>
 	/// Class XFormsApp.
 	/// </summary>

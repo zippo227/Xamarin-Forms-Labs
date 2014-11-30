@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>XLabs.Forms</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>XLabsFormsiOS</AssemblyName>
+    <AssemblyName>XLabs.Forms.iOS</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\Xamarin.Forms.Labs\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>8b63e09e</NuGetPackageImportStamp>
@@ -35,12 +35,65 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\XLabs.Forms\Controls\ImageButtonRenderer.shared.cs">
+      <Link>Controls\ImageButton\ImageButtonRenderer.shared.cs</Link>
+    </Compile>
+    <Compile Include="..\XLabs.Forms\Controls\HybridWebViewRenderer.designer.cs">
+      <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
+    </Compile>
     <Compile Include="..\XLabs.Forms\services\FontManager.designer.cs">
       <Link>Services\FontManager.designer.cs</Link>
       <DependentUpon>FontManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AccessoryViewCell\AccessoryViewCellRenderer.cs" />
+    <Compile Include="Controls\BindablePick\BindablePickerRenderer.cs" />
+    <Compile Include="Controls\BindablePick\NoCaretField.cs" />
+    <Compile Include="Controls\Calendar\CalendarArrowView.cs" />
+    <Compile Include="Controls\Calendar\CalendarDayView.cs" />
+    <Compile Include="Controls\Calendar\CalendarMonthView.cs" />
+    <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
+    <Compile Include="Controls\Calendar\MonthGridView.cs" />
+    <Compile Include="Controls\Calendar\StyleDescriptor.cs" />
+    <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
+    <Compile Include="Controls\CheckBoxViewCell\CheckBoxCellRenderer.cs" />
+    <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
+    <Compile Include="Controls\CheckBox\CheckBoxView.cs" />
+    <Compile Include="Controls\CircleImage\CircleImageRenderer.cs" />
+    <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
+    <Compile Include="Controls\EditableListView\EditableListViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedDatePick\ExtendedDatePickerRenderer.cs" />
+    <Compile Include="Controls\ExtendedEditor\ExtendedEditorRenderer.cs" />
+    <Compile Include="Controls\ExtendedEntryCell\ExtendedEntryCellRenderer.cs" />
+    <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
+    <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
+    <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
+    <Compile Include="Controls\ExtendedTabbedPage\ExtendedTabbedPageRenderer.cs" />
+    <Compile Include="Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
+    <Compile Include="Controls\ExtendedTimePick\ExtendedTimePickerRenderer.cs" />
+    <Compile Include="Controls\ExtendedViewCell\ExtendedViewCellRenderer.cs" />
+    <Compile Include="Controls\GesturesContentView\GesturesContentViewRenderer.cs" />
+    <Compile Include="Controls\GridView\GridCollectionView.cs" />
+    <Compile Include="Controls\GridView\GridDataSource.cs" />
+    <Compile Include="Controls\GridView\GridViewCell.cs" />
+    <Compile Include="Controls\GridView\GridViewDelegate.cs" />
+    <Compile Include="Controls\GridView\GridViewRenderer.cs" />
+    <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
+    <Compile Include="Controls\HyperLinkLabel\HyperLinkLabelRenderer.cs" />
+    <Compile Include="Controls\IconButton\IconButtonRenderer.cs" />
+    <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
+    <Compile Include="Controls\ImageGallery\ImageGalleryView.cs" />
+    <Compile Include="Controls\SegmentedControlView\SegmentedControlViewRenderer.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
+    <Compile Include="Controls\SensorBar\UISensorBar.cs" />
+    <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
+    <Compile Include="Controls\Separator\UISeparator.cs" />
+    <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
     <Compile Include="Extensions\LabelExtensions.cs" />
     <Compile Include="Extensions\UIImageExtensions.cs" />
+    <Compile Include="Pages\ExtendedMasterDetailPageRenderer.cs" />
     <Compile Include="Services\FontManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -80,6 +133,45 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Calendar\datecell.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Calendar\datecellmarked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Calendar\datecellselected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Calendar\leftarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Calendar\rightarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Calendar\shadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Calendar\today.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Calendar\todayselected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Calendar\topbar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Checkbox\checked_checkbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Checkbox\checked_checkbox%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Checkbox\unchecked_checkbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Checkbox\unchecked_checkbox%402x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

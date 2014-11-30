@@ -4,8 +4,6 @@
 
 	using Microsoft.Devices.Sensors;
 
-	using XLabs.Platform.Extensions;
-
 	/// <summary>
 	/// Class Gyroscope.
 	/// </summary>
@@ -55,8 +53,8 @@
 		{
 			if (_gyroscope.IsDataValid)
 			{
-				this.LatestReading = e.SensorReading.RotationRate.AsVector3();
-				this.readingAvailable.Invoke(this, this.LatestReading);
+				LatestReading = e.SensorReading.RotationRate.AsVector3();
+				readingAvailable.Invoke(this, this.LatestReading);
 			}
 		}
 	}

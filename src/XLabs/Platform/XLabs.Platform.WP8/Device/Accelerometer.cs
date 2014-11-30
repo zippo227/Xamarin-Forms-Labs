@@ -4,8 +4,6 @@
 
 	using Microsoft.Devices.Sensors;
 
-	using XLabs.Platform.Extensions;
-
 	/// <summary>
 	/// Class Accelerometer.
 	/// </summary>
@@ -59,8 +57,8 @@
 			object sender,
 			SensorReadingEventArgs<AccelerometerReading> sensorReadingEventArgs)
 		{
-			this.LatestReading = sensorReadingEventArgs.SensorReading.Acceleration.AsVector3();
-			readingAvailable.Invoke(sender, this.LatestReading);
+			LatestReading = sensorReadingEventArgs.SensorReading.Acceleration.AsVector3();
+			readingAvailable.Invoke(sender, LatestReading);
 		}
 	}
 }

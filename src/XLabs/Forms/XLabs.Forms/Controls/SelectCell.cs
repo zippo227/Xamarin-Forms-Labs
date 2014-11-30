@@ -5,6 +5,8 @@ using XLabs.Platform;
 
 namespace XLabs.Forms.Controls
 {
+	using XLabs.Platform.Enums;
+
 	/// <summary>
 	/// Class SelectCell.
 	/// </summary>

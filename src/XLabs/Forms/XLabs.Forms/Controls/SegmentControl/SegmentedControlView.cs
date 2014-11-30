@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Xamarin.Forms;
 
-namespace XLabs.Forms.Controls.SegmentControl
+namespace XLabs.Forms.Controls
 {
 	/// <summary>
 	/// Class SegmentedControlView.

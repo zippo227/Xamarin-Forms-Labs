@@ -1,9 +1,8 @@
 ﻿
-namespace XLabs.Platform
+namespace XLabs.Platform.Enums
 {
 	/// <summary>
 	/// Specifies where the image will occur relative to the text on a
-	/// <see cref="Xamarin.Forms.Labs.Controls.ImageButton" />.
 	/// </summary>
 	public enum ImageOrientation
 	{

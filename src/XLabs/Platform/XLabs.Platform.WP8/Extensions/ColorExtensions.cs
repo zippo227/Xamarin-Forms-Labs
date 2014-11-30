@@ -1,4 +1,4 @@
-﻿namespace XLabs.Platform.Extensions
+﻿namespace XLabs.Platform
 {
 	using System.Windows.Media;
 

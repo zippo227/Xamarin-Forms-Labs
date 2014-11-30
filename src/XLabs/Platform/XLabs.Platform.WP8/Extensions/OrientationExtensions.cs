@@ -1,6 +1,8 @@
-﻿namespace XLabs.Platform.Extensions
+﻿namespace XLabs.Platform
 {
 	using Microsoft.Phone.Controls;
+
+	using XLabs.Platform.Enums;
 
 	/// <summary>
 	/// Class OrientationExtensions.

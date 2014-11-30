@@ -1,4 +1,4 @@
-﻿namespace XLabs.Platform.Extensions
+﻿namespace XLabs.Platform
 {
 	/// <summary>
 	/// Class VectorExtensions.

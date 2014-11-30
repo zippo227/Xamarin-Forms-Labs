@@ -1,4 +1,4 @@
-﻿namespace XLabs.Platform.Extensions
+﻿namespace XLabs.Platform
 {
 	using System.IO;
 	using System.Threading.Tasks;

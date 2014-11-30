@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Xamarin.Forms;
-using XLabs.Platform;
 
 namespace XLabs.Forms.Controls
 {
+	using XLabs.Platform.Enums;
+
 	/// <summary>
 	/// Creates a button with text and an image.
 	/// The image can be on the left, above, on the right or below the text.

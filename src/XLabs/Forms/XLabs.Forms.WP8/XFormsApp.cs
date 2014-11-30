@@ -9,7 +9,7 @@
 	using Microsoft.Phone.Controls;
 	using Microsoft.Phone.Shell;
 
-	using XLabs.Platform.Extensions;
+	using XLabs.Platform;
 	using XLabs.Platform.Mvvm;
 
 	/// <summary>
@@ -17,20 +17,20 @@
 	/// </summary>
 	[SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly",
 		Justification = "Reviewed. Suppression is OK here.")]
-	public class XFormsAppWP : XFormsApp<Application>
+	public class XFormsAppWp : XFormsApp<Application>
 	{
 		/// <summary>
-		///     Initializes a new instance of the <see cref="XFormsAppWP" /> class.
+		///     Initializes a new instance of the <see cref="XFormsAppWp" /> class.
 		/// </summary>
-		public XFormsAppWP()
+		public XFormsAppWp()
 		{
 		}
 
 		/// <summary>
-		///     Initializes a new instance of the <see cref="XFormsAppWP" /> class.
+		///     Initializes a new instance of the <see cref="XFormsAppWp" /> class.
 		/// </summary>
 		/// <param name="application">The application.</param>
-		public XFormsAppWP(Application application)
+		public XFormsAppWp(Application application)
 			: base(application)
 		{
 		}

@@ -1,8 +1,9 @@
 ﻿using Xamarin.Forms;
-using XLabs.Platform;
 
 namespace XLabs.Forms.Controls
 {
+	using XLabs.Platform.Enums;
+
 	/// <summary>
 	/// Creates a button with text and a FontAwesome icon
 	/// The icon can be on the left, above, on the right or below the text.
