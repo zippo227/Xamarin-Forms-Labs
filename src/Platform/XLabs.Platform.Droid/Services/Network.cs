@@ -36,6 +36,10 @@ namespace XLabs.Platform.Services
 				{
 					status = NetworkStatus.ReachableViaCarrierDataNetwork;
 				}
+                else
+                {
+                    status = NetworkStatus.ReachableViaUnknownNetwork;
+                }
 			}
 
 			return status;

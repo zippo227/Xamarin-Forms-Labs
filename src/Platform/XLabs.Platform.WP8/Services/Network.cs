@@ -44,6 +44,8 @@
 				{
 					return NetworkStatus.ReachableViaCarrierDataNetwork;
 				}
+
+                return NetworkStatus.ReachableViaUnknownNetwork;
 			}
 
 			return NetworkStatus.NotReachable;

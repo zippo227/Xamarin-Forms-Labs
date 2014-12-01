@@ -21,6 +21,22 @@ namespace XLabs.Forms.Controls
         private PointF offsetLocation;
         private PointF homePosition;
 
+        protected override void OnElementChanged(ElementChangedEventArgs<DragContentView> e)
+        {
+            base.OnElementChanged(e);
+
+            if (this.Control == null)
+            {
+                this.SetNativeControl(new UIView());
+            }
+
+            if (e.NewElement == null)
+            {
+                this.touchedView = null;
+                this.touchedElement = null;
+            }
+        }
+
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
             base.TouchesBegan(touches, evt);
