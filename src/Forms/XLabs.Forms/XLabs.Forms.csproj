@@ -52,6 +52,7 @@
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\CheckboxCell.cs" />
     <Compile Include="Controls\CircleImage.cs" />
+    <Compile Include="Controls\CollectionChangedHandle.cs" />
     <Compile Include="Controls\DynamicListView.cs" />
     <Compile Include="Controls\EditableListView.cs" />
     <Compile Include="Controls\ExtendedContentView.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Controls\GridView.cs" />
     <Compile Include="Controls\HybridWebView.cs" />
     <Compile Include="Controls\HyperLinkLabel.cs" />
+    <Compile Include="Controls\ICarouselView.cs" />
     <Compile Include="Controls\IconButton.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
