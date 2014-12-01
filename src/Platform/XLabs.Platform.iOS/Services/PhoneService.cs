@@ -138,7 +138,7 @@
 			if (CanSendSMS)
 			{
 				var smsController = new MFMessageComposeViewController { Body = body, Recipients = new[] { to } };
-
+                smsController.Finished += (sender, e) => smsController.DismissViewController(true, null);
 				UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(smsController, true, null);
 			}
 		}
