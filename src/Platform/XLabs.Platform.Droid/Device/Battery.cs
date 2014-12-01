@@ -3,8 +3,6 @@ namespace XLabs.Platform.Device
 	using Android.Content;
 	using Android.OS;
 
-	using XLabs.Platform.Extensions;
-
 	/// <summary>
 	/// Battery information class.
 	/// </summary>

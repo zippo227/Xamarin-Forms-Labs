@@ -1,6 +1,4 @@
-﻿using XLabs.Platform.Extensions;
-
-namespace XLabs.Platform.Device
+﻿namespace XLabs.Platform.Device
 {
 	using System.Collections.Generic;
 	using System.Linq;

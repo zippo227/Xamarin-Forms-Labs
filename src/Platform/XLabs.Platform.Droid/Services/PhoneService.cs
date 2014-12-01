@@ -5,8 +5,6 @@
 	using Android.Net;
 	using Android.Telephony;
 
-	using XLabs.Platform.Extensions;
-
 	/// <summary>
 	/// Android Phone service implements <see cref="IPhoneService" />.
 	/// </summary>

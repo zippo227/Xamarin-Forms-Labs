@@ -2,8 +2,6 @@ namespace XLabs.Platform.Device
 {
 	using Android.Content;
 
-	using XLabs.Platform.Extensions;
-
 	/// <summary>
 	/// Broadcast monitor.
 	/// </summary>

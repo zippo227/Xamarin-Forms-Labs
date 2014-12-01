@@ -301,7 +301,10 @@ namespace XLabs.Forms.Controls
         {
             var cv = bo as CarouselView<T>;
             if (cv == null)
+            {
                 throw new InvalidBindableException(bo, typeof(CarouselView<T>));
+            }
+
             cv.SelectorChanged(newval);
         }
 	}

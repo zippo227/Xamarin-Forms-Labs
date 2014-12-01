@@ -1,40 +1,61 @@
-namespace XLabs.Forms.Extensions
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+
+
+namespace XLabs.Forms
 {
-	using System.IO;
-	using System.Threading.Tasks;
+    using System.Collections.ObjectModel;
+    using System.Reflection;
+    using Xamarin.Forms;
+    using NativeView = global::Android.Views.View;
 
-	using Android.Graphics;
+    public static class ViewExtensions
+    {
+        public static View FindFormsViewFromAccessibilityId(this View view, NativeView nativeView)
+        {
+            View formsView = null;
 
-	/// <summary>
-	/// Class ViewExtensions.
-	/// </summary>
-	public static class ViewExtensions
-	{
-		/// <summary>
-		/// To the bitmap.
-		/// </summary>
-		/// <param name="view">The view.</param>
-		/// <returns>Android.Graphics.Bitmap.</returns>
-		public static Android.Graphics.Bitmap ToBitmap(this Android.Views.View view)
-		{
-			var bitmap = Bitmap.CreateBitmap(view.Width, view.Height, Bitmap.Config.Argb8888);
-			using (var c = new Canvas(bitmap))
-			{
-				view.Draw(c);
-			}
+            var id = nativeView.ContentDescription;
 
-			return bitmap;
-		}
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                formsView = null;
+            }
+            else if (view.StyleId == id)
+            {
+                formsView = view;
+            }
+            else
+            {
+                var d = view.GetInternalChildren();
 
-		/// <summary>
-		/// Streams to PNG.
-		/// </summary>
-		/// <param name="view">The view.</param>
-		/// <param name="stream">The stream.</param>
-		/// <returns>Task.</returns>
-		public static async Task StreamToPng(this Android.Views.View view, Stream stream)
-		{
-			await view.ToBitmap().CompressAsync(Bitmap.CompressFormat.Png, 100, stream);
-		}
-	}
+                formsView = d == null ? null : d.OfType<View>().FirstOrDefault(a => a.StyleId == id);
+            }
+
+            return formsView;
+        }
+
+        public static ObservableCollection<Element> GetInternalChildren(this View view)
+        {
+            var internalPropertyInfo = view.GetType().GetProperty("InternalChildren", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            return (internalPropertyInfo == null) ? null : internalPropertyInfo.GetValue(view) as ObservableCollection<Element>;
+        }
+
+        public static NativeView GetNativeContent(this View view)
+        {
+            PropertyInfo controlProperty= view.GetType().GetProperty("Control", BindingFlags.Public | BindingFlags.Instance);
+
+            return (controlProperty == null) ? null : controlProperty.GetValue(view) as NativeView;
+        }
+    }
 }

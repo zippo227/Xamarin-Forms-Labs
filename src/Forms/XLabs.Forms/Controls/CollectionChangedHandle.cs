@@ -32,8 +32,9 @@ namespace XLabs.Forms.Controls
         /// <param name="projector">A function that returns {TSyncType} for a {T}</param>
         /// <param name="postadd">A functino called right after insertion into the synced collection</param>
         /// <param name="cleanup">A function that performs any needed cleanup when {TSyncType} is removed from the <see cref="target"/></param>
-        public CollectionChangedHandle(IList<TSyncType>target, IEnumerable<T>source, Func<T,TSyncType>projector, Action<TSyncType,T,int>postadd =null, Action<TSyncType>cleanup=null)
+        public CollectionChangedHandle(IList<TSyncType> target, IEnumerable<T> source, Func<T,TSyncType> projector, Action<TSyncType,T,int> postadd = null, Action<TSyncType> cleanup = null)
         {
+            if (source == null) return;
             this._itemsSourceCollectionChangedImplementation = source as INotifyCollectionChanged;
             _sourceCollection = source;
             _target = target;
@@ -45,25 +46,6 @@ namespace XLabs.Forms.Controls
             this._itemsSourceCollectionChangedImplementation.CollectionChanged += this.CollectionChanged;
         }
 
-        /// <summary>Initials the population.</summary>
-        /// Element created at 15/11/2014,2:53 PM by Charles
-        private void InitialPopulation()
-        {
-            SafeClearTarget();
-            foreach (var t in this._sourceCollection.Where(x=>x!=null)) {
-                _target.Add(this._projector(t));
-            }
-        }
-
-        private void SafeClearTarget()
-        {
-            while (_target.Count > 0)
-            {
-                var syncitem = _target[0];
-                _target.RemoveAt(0);
-                if (_cleanup != null) _cleanup(syncitem);
-            }
-        }
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
@@ -107,6 +89,27 @@ namespace XLabs.Forms.Controls
                 }
             }
             
+        }
+
+        /// <summary>Initials the population.</summary>
+        /// Element created at 15/11/2014,2:53 PM by Charles
+        private void InitialPopulation()
+        {
+            SafeClearTarget();
+            foreach (var t in this._sourceCollection.Where(x => x != null))
+            {
+                _target.Add(this._projector(t));
+            }
+        }
+
+        private void SafeClearTarget()
+        {
+            while (_target.Count > 0)
+            {
+                var syncitem = _target[0];
+                _target.RemoveAt(0);
+                if (_cleanup != null) _cleanup(syncitem);
+            }
         }
     }
 }

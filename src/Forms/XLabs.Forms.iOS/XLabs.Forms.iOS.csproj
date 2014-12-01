@@ -59,6 +59,7 @@
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\CheckBox\CheckBoxView.cs" />
     <Compile Include="Controls\CircleImage\CircleImageRenderer.cs" />
+    <Compile Include="Controls\DragContentView\DragContentViewRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
     <Compile Include="Controls\EditableListView\EditableListViewRenderer.cs" />
     <Compile Include="Controls\ExtendedDatePick\ExtendedDatePickerRenderer.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
     <Compile Include="Extensions\LabelExtensions.cs" />
     <Compile Include="Extensions\UIImageExtensions.cs" />
+    <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Pages\ExtendedMasterDetailPageRenderer.cs" />
     <Compile Include="Services\FontManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

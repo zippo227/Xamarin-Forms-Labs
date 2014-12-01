@@ -1,5 +1,5 @@
 // Analysis disable CheckNamespace
-namespace XLabs.Platform.Extensions
+namespace XLabs.Platform
 {
 	using Android.App;
 	using Android.Content;

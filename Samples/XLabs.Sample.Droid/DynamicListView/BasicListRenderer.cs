@@ -1,5 +1,5 @@
 ﻿using Xamarin.Forms;
-
+using XLabs.Forms.Controls;
 using XLabs.Sample.Droid.DynamicListView;
 
 [assembly: ExportRenderer(typeof(DynamicListView<object>), typeof(BasicListRenderer))]

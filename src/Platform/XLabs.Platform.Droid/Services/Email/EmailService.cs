@@ -6,8 +6,6 @@ namespace XLabs.Platform.Services.Email
 
 	using Android.Content;
 
-	using XLabs.Platform.Extensions;
-
 	/// <summary>
 	/// Class EmailService.
 	/// </summary>

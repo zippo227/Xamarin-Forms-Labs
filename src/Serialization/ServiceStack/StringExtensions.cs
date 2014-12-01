@@ -476,19 +476,6 @@ namespace ServiceStack.Text
 			return JsonSerializer.DeserializeFromString<T>(json);
 		}
 
-#if !XBOX && !SILVERLIGHT && !MONOTOUCH
-		public static string ToXml<T>(this T obj)
-		{
-			return XmlSerializer.SerializeToString(obj);
-		}
-#endif
-
-#if !XBOX && !SILVERLIGHT && !MONOTOUCH
-		public static T FromXml<T>(this string json)
-		{
-			return XmlSerializer.DeserializeFromString<T>(json);
-		}
-#endif
 		public static string FormatWith(this string text, params object[] args)
 		{
 			return String.Format(text, args);
