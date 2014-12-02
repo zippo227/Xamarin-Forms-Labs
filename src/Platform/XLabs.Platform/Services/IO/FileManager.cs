@@ -6,11 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace Xamarin.Forms.Labs.Services.IO
+namespace XLabs.Platform.Services.IO
 {
-	using XLabs.Platform.Services.IO;
-
 	public class FileManager : IFileManager
     {
         private readonly IsolatedStorageFile isolatedStorageFile;

@@ -61,7 +61,7 @@
 		/// Gets the bluetooth hub service.
 		/// </summary>
 		/// <value>The bluetooth hub service if available, otherwise null.</value>
-		// IBluetoothHub BluetoothHub { get; }
+        IBluetoothHub BluetoothHub { get; }
 
 		/// <summary>
 		/// Gets the default microphone for the device
@@ -95,6 +95,11 @@
 		/// Gets the manufacturer.
 		/// </summary>
 		string Manufacturer { get; }
+
+        /// <summary>
+        /// Gets the total memory in bytes.
+        /// </summary>
+        long TotalMemory { get; }
 
 		/// <summary>
 		/// Starts the default app associated with the URI for the specified URI.

@@ -243,7 +243,7 @@
 	/// <summary>
 	/// Class TestPerson.
 	/// </summary>
-	public class TestPerson : ObservableObject, IAutoCompleteSearchObject
+	public class TestPerson : ObservableObject//, IAutoCompleteSearchObject
 	{
 		/// <summary>
 		/// The _first name

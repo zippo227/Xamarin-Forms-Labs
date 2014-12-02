@@ -78,8 +78,11 @@ namespace XLabs.Forms.Controls
 
 			set
 			{
-				this.SetValue(CheckedProperty, value);
-				this.CheckedChanged.Invoke(this, value);
+                if (this.Checked != value)
+                {
+                    this.SetValue(CheckedProperty, value);
+                    this.CheckedChanged.Invoke(this, value);
+                }
 			}
 		}
 

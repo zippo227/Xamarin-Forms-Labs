@@ -8,8 +8,6 @@
 
 	using Microsoft.Phone.Info;
 
-	using Xamarin.Forms.Labs.Services.IO;
-
 	using XLabs.Platform.Services;
 	using XLabs.Platform.Services.IO;
 	using XLabs.Platform.Services.Media;
@@ -27,43 +25,43 @@
 		/// <summary>
 		/// The _file manager
 		/// </summary>
-		private IFileManager _fileManager;
+		private IFileManager fileManager;
 
 		/// <summary>
 		/// The Id for the device.
 		/// </summary>
-		private string _id;
+		private string id;
 
 		/// <summary>
 		/// The _media picker
 		/// </summary>
-		private IMediaPicker _mediaPicker;
+		private IMediaPicker mediaPicker;
 
 		/// <summary>
 		/// The _network
 		/// </summary>
-		private INetwork _network;
+		private INetwork network;
 
 		/// <summary>
 		/// Prevents a default instance of the <see cref="WindowsPhoneDevice" /> class from being created.
 		/// </summary>
 		private WindowsPhoneDevice()
 		{
-			Display = new Display();
-			PhoneService = new PhoneService();
-			Battery = new Battery();
-			BluetoothHub = new BluetoothHub();
+			this.Display = new Display();
+            this.PhoneService = new PhoneService();
+            this.Battery = new Battery();
+            this.BluetoothHub = new BluetoothHub();
 
 			if (DeviceCapabilities.IsEnabled(DeviceCapabilities.Capability.IdCapSensors))
 			{
 				if (Microsoft.Devices.Sensors.Accelerometer.IsSupported)
 				{
-					Accelerometer = new Accelerometer();
+                    this.Accelerometer = new Accelerometer();
 				}
 
 				if (Microsoft.Devices.Sensors.Gyroscope.IsSupported)
 				{
-					Gyroscope = new Gyroscope();
+                    this.Gyroscope = new Gyroscope();
 				}
 			}
 
@@ -71,7 +69,7 @@
 			{
 				if (XnaMicrophone.IsAvailable)
 				{
-					Microphone = new XnaMicrophone();
+                    this.Microphone = new XnaMicrophone();
 				}
 			}
 
@@ -105,12 +103,12 @@
 		{
 			get
 			{
-				if (string.IsNullOrEmpty(_id))
+				if (string.IsNullOrEmpty(id))
 				{
 					object o;
 					if (DeviceExtendedProperties.TryGetValue("DeviceUniqueId", out o))
 					{
-						_id = Convert.ToBase64String((byte[])o);
+						id = Convert.ToBase64String((byte[])o);
 					}
 					else
 					{
@@ -119,7 +117,7 @@
 					}
 				}
 
-				return _id;
+				return id;
 			}
 		}
 
@@ -162,7 +160,7 @@
 		{
 			get
 			{
-				return _mediaPicker ?? (_mediaPicker = new MediaPicker());
+                return this.mediaPicker ?? (this.mediaPicker = new MediaPicker());
 			}
 		}
 
@@ -175,7 +173,7 @@
 		{
 			get
 			{
-				return _network ?? (_network = new Network());
+                return this.network ?? (this.network = new Network());
 			}
 		}
 
@@ -199,7 +197,7 @@
 		{
 			get
 			{
-				return _fileManager ?? (_fileManager = new FileManager(IsolatedStorageFile.GetUserStoreForApplication()));
+                return this.fileManager ?? (this.fileManager = new FileManager(IsolatedStorageFile.GetUserStoreForApplication()));
 			}
 		}
 
@@ -250,6 +248,15 @@
 				return DeviceStatus.DeviceManufacturer;
 			}
 		}
+
+        /// <summary>
+        /// Gets the total memory in bytes.
+        /// </summary>
+        /// <value>The total memory in bytes.</value>
+        public long TotalMemory
+        {
+            get { return DeviceStatus.DeviceTotalMemory; }
+        }
 
 		/// <summary>
 		/// Starts the default app associated with the URI for the specified URI.

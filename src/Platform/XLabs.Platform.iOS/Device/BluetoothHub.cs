@@ -21,8 +21,6 @@
 		public BluetoothHub()
 		{
 			this.manager = new CBCentralManager(this, DispatchQueue.MainQueue);
-
-			this.OpenSettings = new Command(o => { }, o => false);
 		}
 
 		#region IBluetoothHub implementation
@@ -70,14 +68,12 @@
 
 		private void ManagerOnRetrievedConnectedPeripherals(object sender, CBPeripheralsEventArgs cbPeripheralsEventArgs)
 		{
-			
 			System.Diagnostics.Debug.WriteLine(cbPeripheralsEventArgs);
 		}
 
-		public System.Windows.Input.ICommand OpenSettings
+		public Task OpenSettings()
 		{
-			get;
-			private set;
+            throw new NotSupportedException("iOS does not support opening Bluetooth settings.");
 		}
 
 		#endregion

@@ -54,8 +54,8 @@
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\AppleDevice.cs" />
     <Compile Include="Device\Battery.cs" />
-    <None Include="Device\BluetoothDevice.cs" />
-    <None Include="Device\BluetoothHub.cs" />
+    <Compile Include="Device\BluetoothDevice.cs" />
+    <Compile Include="Device\BluetoothHub.cs" />
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\Gyroscope.cs" />
     <Compile Include="Device\Pad.cs" />

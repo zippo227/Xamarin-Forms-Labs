@@ -10,8 +10,6 @@
 	using MonoTouch.Foundation;
 	using MonoTouch.UIKit;
 
-	using Xamarin.Forms.Labs.Services.IO;
-
 	using XLabs.Platform.Services;
 	using XLabs.Platform.Services.IO;
 	using XLabs.Platform.Services.Media;
@@ -22,29 +20,41 @@
 	public abstract class AppleDevice : IDevice
 	{
 		/// <summary>
-		/// The i_ phon e_ expression
+		/// The iPhone expression.
 		/// </summary>
 		private const string IPHONE_EXPRESSION = "iPhone([1-7]),([1-4])";
 
 		/// <summary>
-		/// The i_ po d_ expression
+		/// The iPod expression.
 		/// </summary>
 		private const string IPOD_EXPRESSION = "iPod([1-5]),([1])";
 
 		/// <summary>
-		/// The i_ pa d_ expression
+		/// The iPad expression.
 		/// </summary>
 		private const string IPAD_EXPRESSION = "iPad([1-4]),([1-6])";
 
+        /// <summary>
+        /// Generic CPU/IO.
+        /// </summary>
+        private const int CTL_HW = 6;
+
+        /// <summary>
+        /// Total memory.
+        /// </summary>
+        private const int HW_PHYSMEM = 5;
+
 		/// <summary>
-		/// The device
+		/// The device.
 		/// </summary>
 		private static IDevice device;
 
+        private static readonly long totalMemory = GetTotalMemory();
+
 		/// <summary>
-		/// The _file manager
+		/// The file manager
 		/// </summary>
-		private IFileManager _fileManager;
+		private IFileManager fileManager;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AppleDevice" /> class.
@@ -54,7 +64,7 @@
 			Battery = new Battery();
 			Accelerometer = new Accelerometer();
 			FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
-			//this.BluetoothHub = new BluetoothHub();
+			this.BluetoothHub = new BluetoothHub();
 
 			if (Device.Gyroscope.IsSupported)
 			{
@@ -119,6 +129,16 @@
 			IntPtr oldLen,
 			IntPtr newp,
 			uint newlen);
+
+        [DllImport(MonoTouch.Constants.SystemLibrary)]
+        static internal extern int sysctl(
+            [MarshalAs(UnmanagedType.LPArray)] int[] name, 
+            uint namelen, 
+            out uint oldp, 
+            ref int oldlenp, 
+            IntPtr newp, 
+            uint newlen);
+
 
 		/// <summary>
 		/// Gets the system property.
@@ -205,7 +225,7 @@
 		{
 			get
 			{
-				return _fileManager ?? (_fileManager = new FileManager(IsolatedStorageFile.GetUserStoreForApplication()));
+                return this.fileManager ?? (this.fileManager = new FileManager(IsolatedStorageFile.GetUserStoreForApplication()));
 			}
 		}
 
@@ -239,16 +259,41 @@
 			}
 		}
 
-		/// <summary>
-		/// Starts the default app associated with the URI for the specified URI.
-		/// </summary>
-		/// <param name="uri">The URI.</param>
-		/// <returns>The launch operation.</returns>
-		public Task<bool> LaunchUriAsync(Uri uri)
-		{
-			return Task.Run(() => UIApplication.SharedApplication.OpenUrl(new NSUrl(uri.ToString())));
-		}
+        public IBluetoothHub BluetoothHub { get; private set; }
+
+        /// <summary>
+        /// Starts the default app associated with the URI for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns>The launch operation.</returns>
+        public Task<bool> LaunchUriAsync(Uri uri)
+        {
+            return Task.Run(() => UIApplication.SharedApplication.OpenUrl(new NSUrl(uri.ToString())));
+        }
+
+        /// <summary>
+        /// Gets the total memory in bytes.
+        /// </summary>
+        /// <value>The total memory in bytes.</value>
+        public long TotalMemory 
+        {
+            get 
+            { 
+                return totalMemory; 
+            }
+        }
 
 		#endregion
+
+        private static uint GetTotalMemory()
+        {
+            var oldlenp = sizeof(int);
+            var mib = new int[2] { CTL_HW, HW_PHYSMEM };
+
+            uint mem;
+            sysctl(mib, 2, out mem, ref oldlenp, IntPtr.Zero, 0);
+
+            return mem;
+        }
 	}
 }
