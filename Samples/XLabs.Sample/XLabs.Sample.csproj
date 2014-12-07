@@ -81,6 +81,7 @@
       <DependentUpon>SegmentedControlViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Controls\SegmentPage.cs" />
+    <Compile Include="Pages\Controls\WebHybridTestPage.cs" />
     <Compile Include="Pages\Services\EmailPage.cs" />
     <Compile Include="Pages\Services\WaveRecorderPage.xaml.cs">
       <DependentUpon>WaveRecorderPage.xaml</DependentUpon>

@@ -205,6 +205,7 @@
 				{"ExtendedSlider", typeof(ExtendedSliderPage)},
 				{"GridView", typeof(GridViewPage)},
 				{"HybridWebView", typeof(CanvasWebHybrid)},
+                {"WebHybridTestPage", typeof(WebHybridTestPage)},
 				{"ImageButton", typeof(ButtonPage)},
 				{"ImageGallery", typeof(ImageGalleryPage)},
 				{"Popup", typeof(PopupPage)},

@@ -270,7 +270,7 @@
 		/// <returns></returns>
 		private async Task<string> GetPathForFileAsync(string file)
 		{
-			StorageFile storageFile =
+			var storageFile =
 				await ApplicationData.Current.LocalFolder.CreateFileAsync(file, CreationCollisionOption.OpenIfExists);
 
 			return storageFile.Path;
