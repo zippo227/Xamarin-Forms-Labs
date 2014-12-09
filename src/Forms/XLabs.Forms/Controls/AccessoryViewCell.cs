@@ -12,13 +12,6 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		/// <value>The accessory view.</value>
 		public View AccessoryView { get; set; }
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="AccessoryViewCell"/> class.
-		/// </summary>
-		public AccessoryViewCell () 
-		{
-		}
 	}
 }
 

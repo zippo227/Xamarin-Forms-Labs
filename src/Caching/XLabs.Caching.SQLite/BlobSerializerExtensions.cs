@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using SQLite.Net;
 using XLabs.Serialization;
 
@@ -16,8 +12,8 @@ namespace XLabs.Caching.SQLite
             var gm = typeof(IByteSerializer).GetTypeInfo().GetDeclaredMethod("Deserialize");
 
             return new BlobSerializerDelegate(
-                obj => serializer.SerializeToBytes(obj),
-                (data, type) => gm.MakeGenericMethod(type).Invoke(serializer, new[] { data }),
+                serializer.SerializeToBytes,
+                (data, type) => gm.MakeGenericMethod(type).Invoke(serializer, new object[] { data }),
                 serializer.CanDeserialize);
         }
 

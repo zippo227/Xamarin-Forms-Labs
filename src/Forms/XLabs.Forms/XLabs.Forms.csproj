@@ -37,11 +37,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\GestureCollection.cs" />
     <Compile Include="Behaviors\GestureInterest.cs" />
     <Compile Include="Behaviors\GestureResult.cs" />
     <Compile Include="Behaviors\Gestures.cs" />
     <Compile Include="Behaviors\GridLayout.cs" />
     <Compile Include="Behaviors\IGesture.cs" />
+    <Compile Include="Behaviors\RelayGesture.cs" />
+    <Compile Include="Behaviors\RelayGestureAsync.cs" />
     <Compile Include="Controls\AccessoryViewCell.cs" />
     <Compile Include="Controls\AutoComplete.cs" />
     <Compile Include="Controls\BindablePicker.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Controls\GridView.cs" />
     <Compile Include="Controls\HybridWebView.cs" />
     <Compile Include="Controls\HyperLinkLabel.cs" />
+    <Compile Include="Controls\IAutoCompleteSearchObject.cs" />
     <Compile Include="Controls\ICarouselView.cs" />
     <Compile Include="Controls\IconButton.cs" />
     <Compile Include="Controls\ImageButton.cs" />
@@ -145,7 +149,7 @@
       <Name>XLabs.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XLabs.Core\XLabs.Core.csproj">
-      <Project>{15d9c404-f7e2-49f0-acc9-63c4c008c860}</Project>
+      <Project>{15D9C404-F7E2-49F0-ACC9-63C4C008C860}</Project>
       <Name>XLabs.Core</Name>
     </ProjectReference>
   </ItemGroup>

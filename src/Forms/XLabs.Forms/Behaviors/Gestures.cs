@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
@@ -33,8 +32,8 @@ namespace XLabs.Forms.Behaviors
 		public Gestures()
 		{
 			Interests= new GestureCollection();
-			
 		}
+
 		/// <summary>
 		/// The set of interests for this view
 		/// </summary>
@@ -43,6 +42,7 @@ namespace XLabs.Forms.Behaviors
 			get { return (GestureCollection)GetValue(InterestsProperty); }
 			set { SetValue(InterestsProperty,value);}
 		}
+
 		private static void InterestsChanged(BindableObject bo, GestureCollection oldvalue, GestureCollection newvalue)
 		{
 			var view = bo as View;
@@ -60,7 +60,6 @@ namespace XLabs.Forms.Behaviors
 				gcv.RegisterInterests(view,newvalue);            
 		}
 
-		
 		private static void ViewPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			//Unfortunately the Parent property doesn't signal a change
@@ -68,6 +67,7 @@ namespace XLabs.Forms.Behaviors
 			if (e.PropertyName == "Renderer")
 			{
 				var view = sender as View;
+                if (view == null) return;
 				var gcv = FindContentViewParent(view);
 				var pending = PendingInterestParameters.Where(x => x.View == view).ToList();
 				foreach (var pendingparam in pending)
@@ -77,19 +77,20 @@ namespace XLabs.Forms.Behaviors
 				}
 				view.PropertyChanged -= ViewPropertyChanged;
 			}
-
 		}
-		
-		/// <summary>
-		/// Utility function to find the first containing <see cref="GesturesContentView"/>
-		/// </summary>
-		/// <param name="bo">The Bindable object to start from</param>
-		/// <param name="throwException">True to throw an excpetion if the parent is not found</param>
-		/// <returns></returns>
-		private static GesturesContentView FindContentViewParent(View view,bool throwException=true)
+
+	    /// <summary>
+	    /// Utility function to find the first containing <see cref="GesturesContentView"/>
+	    /// </summary>
+	    /// <param name="view">View to find the parent from.</param>
+	    /// <param name="throwException">True to throw an excpetion if the parent is not found</param>
+	    /// <returns></returns>
+	    private static GesturesContentView FindContentViewParent(View view, bool throwException=true)
 		{
 			var history = new List<string>();
-			if (view is GesturesContentView) return view as GesturesContentView;
+		    var viewParent = view as GesturesContentView;
+		    if (viewParent != null) return viewParent;
+
 			history.Add(view.GetType().Name);
 			var parent = view.Parent;
 			while (parent != null && !(parent is GesturesContentView))
@@ -97,25 +98,21 @@ namespace XLabs.Forms.Behaviors
 				history.Add(parent.GetType().Name);
 				parent = parent.Parent;
 			}
-			if (parent == null && throwException)
-				throw new InvalidNestingException(typeof(Gestures),typeof(GesturesContentView),history);
-			return parent as GesturesContentView;
+
+		    if (parent == null && throwException)
+		    {
+		        throw new InvalidNestingException(typeof (Gestures), typeof (GesturesContentView), history);
+		    }
+
+		    return (GesturesContentView) parent;
 		}
 		
-		private static readonly List<PendingInterestParams>  PendingInterestParameters=new List<PendingInterestParams>();
+		private static readonly List<PendingInterestParams>  PendingInterestParameters = new List<PendingInterestParams>();
 
 		private class PendingInterestParams
 		{
 			public View View { get; set; }
 			public GestureCollection Interests { get; set; }
 		}
-
-
 	}
-
-
-	/// <summary>
-	/// Container class for Gesture Interests
-	/// </summary>
-	public class GestureCollection : ObservableCollection<GestureInterest> { }
 }
