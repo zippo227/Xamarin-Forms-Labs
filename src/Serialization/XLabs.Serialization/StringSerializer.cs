@@ -23,7 +23,7 @@ namespace XLabs.Serialization
 
         #region IByteSerializer Members
 
-        byte[] IByteSerializer.SerializeToBytes<T>(T obj)
+        public byte[] SerializeToBytes<T>(T obj)
         {
             return (this as IStringSerializer).GetSerializedBytes(obj);
         }

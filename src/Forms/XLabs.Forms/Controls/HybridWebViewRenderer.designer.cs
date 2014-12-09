@@ -97,6 +97,7 @@ namespace XLabs.Forms.Controls
 			this.Element.JavaScriptLoadRequested += OnInjectRequest;
 			this.Element.LoadFromContentRequested += LoadFromContent;
 			this.Element.LoadContentRequested += LoadContent;
+            this.Element.Navigating += this.OnNavigating;
 		}
 
 		private void LoadSource()
@@ -124,6 +125,7 @@ namespace XLabs.Forms.Controls
 				oldElement.JavaScriptLoadRequested -= OnInjectRequest;
 				oldElement.LoadFromContentRequested -= LoadFromContent;
 				oldElement.LoadContentRequested -= LoadContent;
+                oldElement.Navigating -= this.OnNavigating;
 			}
 		}
 
@@ -131,6 +133,11 @@ namespace XLabs.Forms.Controls
 		{
 			this.Inject(script);
 		}
+
+	    private void OnNavigating(object sender, EventArgs<Uri> e)
+	    {
+            //this.InjectNativeFunctionScript();
+	    }
 
 		partial void Inject(string script);
 

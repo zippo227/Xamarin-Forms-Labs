@@ -62,6 +62,16 @@ namespace XLabs.Forms.Controls
 			return new SizeRequest(Size.Zero, Size.Zero);
 		}
 
+	    private void OnPageFinished()
+	    {
+	        this.InjectNativeFunctionScript();
+
+	        if (this.Element != null)
+	        {
+	            this.Element.OnLoadFinished(this, EventArgs.Empty);
+	        }
+	    }
+
 		/// <summary>
 		/// Injects the specified script.
 		/// </summary>
@@ -82,7 +92,7 @@ namespace XLabs.Forms.Controls
 			if (uri != null)
 			{
 				this.Control.LoadUrl(uri.AbsoluteUri);
-				this.InjectNativeFunctionScript();
+				//this.InjectNativeFunctionScript();
 			}
 		}
 
@@ -105,7 +115,7 @@ namespace XLabs.Forms.Controls
 		{
 			this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
 			// we can't really set the URI and fire up native function injection so the workaround is to do it here
-			this.InjectNativeFunctionScript();
+			//this.InjectNativeFunctionScript();
 		}
 
 		/// <summary>
@@ -115,7 +125,7 @@ namespace XLabs.Forms.Controls
 		partial void LoadFromString(string html)
 		{
 			this.Control.LoadData(html, "text/html", "UTF-8");
-			this.InjectNativeFunctionScript();
+			//this.InjectNativeFunctionScript();
 		}
 
 		/// <summary>
@@ -126,7 +136,7 @@ namespace XLabs.Forms.Controls
 			/// <summary>
 			/// The web hybrid
 			/// </summary>
-			private readonly WeakReference<HybridWebViewRenderer> _webHybrid;
+			private readonly HybridWebViewRenderer webHybrid;
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Client"/> class.
@@ -134,7 +144,7 @@ namespace XLabs.Forms.Controls
 			/// <param name="webHybrid">The web hybrid.</param>
 			public Client(HybridWebViewRenderer webHybrid)
 			{
-				this._webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
+				this.webHybrid = webHybrid;
 			}
 
 			/// <summary>
@@ -156,10 +166,9 @@ namespace XLabs.Forms.Controls
 			{
 				base.OnPageFinished(view, url);
 
-				HybridWebViewRenderer hybrid;
-				if (!this._webHybrid.TryGetTarget(out hybrid))
+                if (this.webHybrid != null)
 				{
-					hybrid.Element.OnLoadFinished(this, EventArgs.Empty);
+                    this.webHybrid.OnPageFinished();
 				}
 			}
 
@@ -185,15 +194,14 @@ namespace XLabs.Forms.Controls
 			/// </para></remarks>
 			public override bool ShouldOverrideUrlLoading(Android.Webkit.WebView view, string url)
 			{
-				HybridWebViewRenderer hybrid;
-
-				if (!this._webHybrid.TryGetTarget(out hybrid))
+				if (this.webHybrid == null)
 				{
 					return base.ShouldOverrideUrlLoading(view, url);
 				}
-				if (!hybrid.CheckRequest(url))
+
+                if (!this.webHybrid.CheckRequest(url))
 				{
-					hybrid.Element.OnNavigating(new Uri(url));
+					this.webHybrid.Element.OnNavigating(new Uri(url));
 					return base.ShouldOverrideUrlLoading(view, url);
 				}
 
@@ -209,7 +217,7 @@ namespace XLabs.Forms.Controls
 			/// <summary>
 			/// The web hybrid
 			/// </summary>
-			private readonly WeakReference<HybridWebViewRenderer> _webHybrid;
+			private readonly HybridWebViewRenderer webHybrid;
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Xamarin"/> class.
@@ -217,7 +225,7 @@ namespace XLabs.Forms.Controls
 			/// <param name="webHybrid">The web hybrid.</param>
 			public Xamarin(HybridWebViewRenderer webHybrid)
 			{
-				this._webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
+				this.webHybrid = webHybrid;
 			}
 
 			/// <summary>
@@ -229,12 +237,7 @@ namespace XLabs.Forms.Controls
 			[Java.Interop.Export("call")]
 			public void Call(string function, string data)
 			{
-				HybridWebViewRenderer hybrid;
-
-				if (this._webHybrid.TryGetTarget(out hybrid))
-				{
-					hybrid.TryInvoke(function, data);
-				}
+                this.webHybrid.TryInvoke(function, data);
 			}
 		}
 
@@ -246,7 +249,7 @@ namespace XLabs.Forms.Controls
 			/// <summary>
 			/// The web hybrid
 			/// </summary>
-			private readonly HybridWebViewRenderer _webHybrid;
+			private readonly HybridWebViewRenderer webHybrid;
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="ChromeClient"/> class.
@@ -254,7 +257,7 @@ namespace XLabs.Forms.Controls
 			/// <param name="webHybrid">The web hybrid.</param>
 			internal ChromeClient(HybridWebViewRenderer webHybrid)
 			{
-				this._webHybrid = webHybrid;
+				this.webHybrid = webHybrid;
 			}
 
 //            public override void OnProgressChanged(Android.Webkit.WebView view, int newProgress)

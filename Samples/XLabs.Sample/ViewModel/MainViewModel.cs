@@ -7,11 +7,10 @@
 
 	using Xamarin.Forms;
 
-	using XLabs.Data;
-	using XLabs.Forms.Controls;
-	using XLabs.Ioc;
-	using XLabs.Platform.Device;
-	using XLabs.Platform.Services;
+	using Data;
+	using Ioc;
+	using Platform.Device;
+	using Platform.Services;
 
 	/// <summary>
 	/// The main view model.
@@ -33,21 +32,22 @@
 		/// </summary>
 		public MainViewModel ()
 		{
-			SpeakCommand = new Command (() => DependencyService.Get<ITextToSpeechService> ().Speak (TextToSpeak));
+			SpeakCommand = new Command (() => DependencyService.Get<ITextToSpeechService>().Speak(TextToSpeak));
 
-			Items = new ObservableCollection<object> ();
-			Images = new ObservableCollection<string> ();
-			for (var i = 0; i < 10; i++) {
+			Items = new ObservableCollection<object>();
+			Images = new ObservableCollection<string>();
+			for (var i = 0; i < 10; i++) 
+            {
 				Images.Add ("ad16.jpg");
 				Items.Add (new TestPerson(string.Format ("FirstName {0}", i), string.Format ("LastName {0}", i),i));
 			}
 
-			_device = Resolver.Resolve<IDevice> ();
+			_device = Resolver.Resolve<IDevice>();
 		}
 
 		public Task AddImages()
 		{
-			return Task.Run (async () => 
+			return Task.Run(async () => 
 			{
 				await Task.Delay(1000);
 				for (var i = 0; i < 5; i++) 
@@ -56,6 +56,7 @@
 				}
 			});
 		}
+
 		/// <summary>
 		/// The start timer.
 		/// </summary>
@@ -73,9 +74,11 @@
 		/// <value>
 		/// The device manufacturer.
 		/// </value>
-		public string DeviceManufacturer {
-			get {
-				return string.Format ("Device was manufactured by {0}", _device.Manufacturer);
+		public string DeviceManufacturer 
+        {
+			get 
+            {
+				return string.Format("Device was manufactured by {0}", _device.Manufacturer);
 			}
 		}
 
