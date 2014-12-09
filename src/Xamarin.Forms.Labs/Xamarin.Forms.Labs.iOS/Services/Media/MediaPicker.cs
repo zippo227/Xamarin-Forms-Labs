@@ -179,13 +179,13 @@ namespace Xamarin.Forms.Labs.iOS.Services.Media
 			picker.SourceType = sourceType;
 
 			if (sourceType == UIImagePickerControllerSourceType.Camera) {
-				picker.CameraDevice = GetUICameraDevice ((options as CameraMediaStorageOptions) .DefaultCamera);
-
-				if (mediaType == TypeImage)
+				if (mediaType == TypeImage) {
+					picker.CameraDevice = GetUICameraDevice ((options as CameraMediaStorageOptions) .DefaultCamera);
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo;
+				}
 				else if (mediaType == TypeMovie) {
 					VideoMediaStorageOptions voptions = (VideoMediaStorageOptions)options;
-
+					picker.CameraDevice = GetUICameraDevice (voptions.DefaultCamera);
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video;
 					picker.VideoQuality = GetQuailty (voptions.Quality);
 					picker.VideoMaximumDuration = voptions.DesiredLength.TotalSeconds;
