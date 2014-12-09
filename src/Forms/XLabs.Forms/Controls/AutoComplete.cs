@@ -11,10 +11,10 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public class AutoCompleteView : ContentView
     {
-        private Entry entText;
-        private Button btnSearch;
-        private ListView lstSugestions;
-        private StackLayout stkBase;
+        private readonly Entry entText;
+        private readonly Button btnSearch;
+        private readonly ListView lstSugestions;
+        private readonly StackLayout stkBase;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoCompleteView"/> class.
@@ -77,14 +77,58 @@ namespace XLabs.Forms.Controls
             //lstSugestions.ItemTemplate = this.SugestionItemDataTemplate;
         }
 
+        #region Bindable Properties
         /// <summary>
-        /// Shows the hide listbox.
+        /// The sugestions property.
         /// </summary>
-        /// <param name="show">if set to <c>true</c> [show].</param>
-        private void ShowHideListbox(bool show)
-        {
-            lstSugestions.IsVisible = show;
-        }
+        public static readonly BindableProperty SugestionsProperty = BindableProperty.Create<AutoCompleteView, ObservableCollection<object>>(p => p.Sugestions, null);
+
+        /// <summary>
+        /// The text property
+        /// </summary>
+        public static readonly BindableProperty TextProperty =
+            BindableProperty.Create<AutoCompleteView, string>(p => p.Text, string.Empty, BindingMode.TwoWay, null, TextChanged, null, null);
+
+        /// <summary>
+        /// The placeholder property
+        /// </summary>
+        public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create<AutoCompleteView, string>(p => p.Placeholder, string.Empty, BindingMode.TwoWay, null, PlaceHolderChanged);
+
+        /// <summary>
+        /// The show search property
+        /// </summary>
+        public static readonly BindableProperty ShowSearchProperty = BindableProperty.Create<AutoCompleteView, bool>(p => p.ShowSearchButton, true, BindingMode.TwoWay, null, ShowSearchChanged);
+
+        /// <summary>
+        /// The search command property
+        /// </summary>
+        public static readonly BindableProperty SearchCommandProperty = BindableProperty.Create<AutoCompleteView, ICommand>(p => p.SearchCommand, null);
+
+        /// <summary>
+        /// The selected command property.
+        /// </summary>
+        public static readonly BindableProperty SelectedCommandProperty = BindableProperty.Create<AutoCompleteView, ICommand>(p => p.SelectedCommand, null);
+
+        /// <summary>
+        /// The sugestion item data template property.
+        /// </summary>
+        public static readonly BindableProperty SugestionItemDataTemplateProperty = BindableProperty.Create<AutoCompleteView, DataTemplate>(p => p.SugestionItemDataTemplate, null, BindingMode.TwoWay, null, SugestionItemDataTemplateChanged, null, null);
+
+        /// <summary>
+        /// The search background color property
+        /// </summary>
+        public static readonly BindableProperty SearchBackgroundColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.SearchBackgroundColor, Color.Red, BindingMode.TwoWay, null, SearchBackgroundColorChanged, null, null);
+
+        /// <summary>
+        /// The sugestion background color property.
+        /// </summary>
+        public static readonly BindableProperty SugestionBackgroundColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.SugestionBackgroundColor, Color.Red, BindingMode.TwoWay, null, SugestionBackgroundColorChanged, null, null);
+
+        /// <summary>
+        /// The execute on sugestion click property
+        /// </summary>
+        public static readonly BindableProperty ExecuteOnSugestionClickProperty = BindableProperty.Create<AutoCompleteView, bool>(p => p.ExecuteOnSugestionClick, false);
+        #endregion
 
         /// <summary>
         /// Gets the text entry.
@@ -120,14 +164,6 @@ namespace XLabs.Forms.Controls
             private set;
         }
 
-
-        #region Bindable Properties
-
-        /// <summary>
-        /// The sugestions property.
-        /// </summary>
-        public static readonly BindableProperty SugestionsProperty = BindableProperty.Create<AutoCompleteView, ObservableCollection<object>>(p => p.Sugestions, null);
-
         /// <summary>
         /// Gets or sets the sugestions.
         /// </summary>
@@ -137,12 +173,6 @@ namespace XLabs.Forms.Controls
             get { return (ObservableCollection<object>)GetValue(SugestionsProperty); }
             set { SetValue(SugestionsProperty, value); }
         }
-
-        /// <summary>
-        /// The text property
-        /// </summary>
-        public static readonly BindableProperty TextProperty =
-            BindableProperty.Create<AutoCompleteView, string>(p => p.Text, string.Empty, BindingMode.TwoWay, null, TextChanged, null, null);
 
         /// <summary>
         /// Gets or sets the text.
@@ -155,43 +185,83 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        /// Texts the changed.
+        /// Gets or sets the placeholder.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="oldPlaceHolderValue">The old place holder value.</param>
-        /// <param name="newPlaceHolderValue">The new place holder value.</param>
-        private static void TextChanged(BindableObject obj, string oldPlaceHolderValue, string newPlaceHolderValue)
+        /// <value>The placeholder.</value>
+        public string Placeholder
         {
-            var control = obj as AutoCompleteView;
+            get { return (string)GetValue(PlaceholderProperty); }
+            set { SetValue(PlaceholderProperty, value); }
+        }
 
-            if (control != null)
-            {
-                control.btnSearch.IsEnabled = !string.IsNullOrEmpty(newPlaceHolderValue);
-                string cleanedNewPlaceHolderValue = Regex.Replace((newPlaceHolderValue ?? string.Empty).ToLowerInvariant(), @"\s+", string.Empty);
-                if (!string.IsNullOrEmpty(cleanedNewPlaceHolderValue) && control.Sugestions != null)
-                {
-                    var filteredsugestions = control.Sugestions.Where(x => Regex.Replace(GetSearchString(x).ToLowerInvariant(), @"\s+", string.Empty).Contains(cleanedNewPlaceHolderValue)).OrderByDescending(x => Regex.Replace(GetSearchString(x).ToLowerInvariant(), @"\s+", string.Empty).StartsWith(cleanedNewPlaceHolderValue)).ToArray();
+        /// <summary>
+        /// Gets or sets a value indicating whether [show search button].
+        /// </summary>
+        /// <value><c>true</c> if [show search button]; otherwise, <c>false</c>.</value>
+        public bool ShowSearchButton
+        {
+            get { return (bool)GetValue(ShowSearchProperty); }
+            set { SetValue(ShowSearchProperty, value); }
+        }
 
-                    control.AvailableSugestions.Clear();
+        /// <summary>
+        /// Gets or sets the search command.
+        /// </summary>
+        /// <value>The search command.</value>
+        public ICommand SearchCommand
+        {
+            get { return (ICommand)GetValue(SearchCommandProperty); }
+            set { SetValue(SearchCommandProperty, value); }
+        }
 
-                    foreach (var item in filteredsugestions)
-                    {
-                        control.AvailableSugestions.Add(item);
-                    }
-                    if (control.AvailableSugestions.Count > 0)
-                    {
-                        control.ShowHideListbox(true);
-                    }
-                }
-                else
-                {
-                    if (control.AvailableSugestions.Count > 0)
-                    {
-                        control.AvailableSugestions.Clear();
-                        control.ShowHideListbox(false);
-                    }
-                }
-            }
+        /// <summary>
+        /// Gets or sets the selected command.
+        /// </summary>
+        /// <value>The selected command.</value>
+        public ICommand SelectedCommand
+        {
+            get { return (ICommand)GetValue(SelectedCommandProperty); }
+            set { SetValue(SelectedCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the sugestion item data template.
+        /// </summary>
+        /// <value>The sugestion item data template.</value>
+        public DataTemplate SugestionItemDataTemplate
+        {
+            get { return (DataTemplate)GetValue(SugestionItemDataTemplateProperty); }
+            set { SetValue(SugestionItemDataTemplateProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the color of the sugestion background.
+        /// </summary>
+        /// <value>The color of the sugestion background.</value>
+        public Color SugestionBackgroundColor
+        {
+            get { return (Color)GetValue(SugestionBackgroundColorProperty); }
+            set { SetValue(SugestionBackgroundColorProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the color of the search background.
+        /// </summary>
+        /// <value>The color of the search background.</value>
+        public Color SearchBackgroundColor
+        {
+            get { return (Color)GetValue(SearchBackgroundColorProperty); }
+            set { SetValue(SearchBackgroundColorProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [execute on sugestion click].
+        /// </summary>
+        /// <value><c>true</c> if [execute on sugestion click]; otherwise, <c>false</c>.</value>
+        public bool ExecuteOnSugestionClick
+        {
+            get { return (bool)GetValue(ExecuteOnSugestionClickProperty); }
+            set { SetValue(ExecuteOnSugestionClickProperty, value); }
         }
 
         /// <summary>
@@ -201,27 +271,45 @@ namespace XLabs.Forms.Controls
         /// <returns>System.String.</returns>
         public static string GetSearchString(object x)
         {
-            AutoCompleteSearchObject itm;
-            if ((itm = x as AutoCompleteSearchObject) != null)
-            {
-                return itm.StringToSearchBy();
-            }
-            return x.ToString();
+            IAutoCompleteSearchObject itm;
+            return (itm = x as IAutoCompleteSearchObject) != null ? itm.StringToSearchBy() : x.ToString();
         }
 
         /// <summary>
-        /// The placeholder property
+        /// Texts the changed.
         /// </summary>
-        public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create<AutoCompleteView, string>(p => p.Placeholder, string.Empty, BindingMode.TwoWay, null, PlaceHolderChanged);
-
-        /// <summary>
-        /// Gets or sets the placeholder.
-        /// </summary>
-        /// <value>The placeholder.</value>
-        public string Placeholder
+        /// <param name="obj">The object.</param>
+        /// <param name="oldPlaceHolderValue">The old place holder value.</param>
+        /// <param name="newPlaceHolderValue">The new place holder value.</param>
+        private static void TextChanged(BindableObject obj, string oldPlaceHolderValue, string newPlaceHolderValue)
         {
-            get { return (string)GetValue(PlaceholderProperty); }
-            set { SetValue(PlaceholderProperty, value); }
+            var control = obj as AutoCompleteView;
+
+            if (control == null) return;
+
+            control.btnSearch.IsEnabled = !string.IsNullOrEmpty(newPlaceHolderValue);
+            var cleanedNewPlaceHolderValue = Regex.Replace((newPlaceHolderValue ?? string.Empty).ToLowerInvariant(), @"\s+", string.Empty);
+            if (!string.IsNullOrEmpty(cleanedNewPlaceHolderValue) && control.Sugestions != null)
+            {
+                var filteredsugestions = control.Sugestions.Where(x => Regex.Replace(GetSearchString(x).ToLowerInvariant(), @"\s+", string.Empty).Contains(cleanedNewPlaceHolderValue)).OrderByDescending(x => Regex.Replace(GetSearchString(x).ToLowerInvariant(), @"\s+", string.Empty).StartsWith(cleanedNewPlaceHolderValue)).ToArray();
+
+                control.AvailableSugestions.Clear();
+
+                foreach (var item in filteredsugestions)
+                {
+                    control.AvailableSugestions.Add(item);
+                }
+
+                if (control.AvailableSugestions.Count > 0)
+                {
+                    control.ShowHideListbox(true);
+                }
+            }
+            else if (control.AvailableSugestions.Count > 0)
+            {
+                control.AvailableSugestions.Clear();
+                control.ShowHideListbox(false);
+            }
         }
 
         /// <summary>
@@ -240,21 +328,6 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        /// The show search property
-        /// </summary>
-        public static readonly BindableProperty ShowSearchProperty = BindableProperty.Create<AutoCompleteView, bool>(p => p.ShowSearchButton, true, BindingMode.TwoWay, null, ShowSearchChanged);
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [show search button].
-        /// </summary>
-        /// <value><c>true</c> if [show search button]; otherwise, <c>false</c>.</value>
-        public bool ShowSearchButton
-        {
-            get { return (bool)GetValue(ShowSearchProperty); }
-            set { SetValue(ShowSearchProperty, value); }
-        }
-
-        /// <summary>
         /// Shows the search changed.
         /// </summary>
         /// <param name="obj">The object.</param>
@@ -267,51 +340,6 @@ namespace XLabs.Forms.Controls
             {
                 autoCompleteView.btnSearch.IsVisible = newShowSearchValue;
             }
-        }
-
-        /// <summary>
-        /// The search command property
-        /// </summary>
-        public static readonly BindableProperty SearchCommandProperty = BindableProperty.Create<AutoCompleteView, ICommand>(p => p.SearchCommand, null);
-
-        /// <summary>
-        /// Gets or sets the search command.
-        /// </summary>
-        /// <value>The search command.</value>
-        public ICommand SearchCommand
-        {
-            get { return (ICommand)GetValue(SearchCommandProperty); }
-            set { SetValue(SearchCommandProperty, value); }
-        }
-
-        /// <summary>
-        /// The selected command property.
-        /// </summary>
-        public static readonly BindableProperty SelectedCommandProperty = BindableProperty.Create<AutoCompleteView, ICommand>(p => p.SelectedCommand, null);
-
-        /// <summary>
-        /// Gets or sets the selected command.
-        /// </summary>
-        /// <value>The selected command.</value>
-        public ICommand SelectedCommand
-        {
-            get { return (ICommand)GetValue(SelectedCommandProperty); }
-            set { SetValue(SelectedCommandProperty, value); }
-        }
-
-        /// <summary>
-        /// The sugestion item data template property.
-        /// </summary>
-        public static readonly BindableProperty SugestionItemDataTemplateProperty = BindableProperty.Create<AutoCompleteView, DataTemplate>(p => p.SugestionItemDataTemplate, null, BindingMode.TwoWay, null, SugestionItemDataTemplateChanged, null, null);
-
-        /// <summary>
-        /// Gets or sets the sugestion item data template.
-        /// </summary>
-        /// <value>The sugestion item data template.</value>
-        public DataTemplate SugestionItemDataTemplate
-        {
-            get { return (DataTemplate)GetValue(SugestionItemDataTemplateProperty); }
-            set { SetValue(SugestionItemDataTemplateProperty, value); }
         }
 
         /// <summary>
@@ -330,21 +358,6 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        /// The search background color property
-        /// </summary>
-        public static readonly BindableProperty SearchBackgroundColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.SearchBackgroundColor, Color.Red, BindingMode.TwoWay, null, SearchBackgroundColorChanged, null, null);
-
-        /// <summary>
-        /// Gets or sets the color of the search background.
-        /// </summary>
-        /// <value>The color of the search background.</value>
-        public Color SearchBackgroundColor
-        {
-            get { return (Color)GetValue(SearchBackgroundColorProperty); }
-            set { SetValue(SearchBackgroundColorProperty, value); }
-        }
-
-        /// <summary>
         /// Searches the background color changed.
         /// </summary>
         /// <param name="obj">The object.</param>
@@ -357,21 +370,6 @@ namespace XLabs.Forms.Controls
             {
                 autoCompleteView.stkBase.BackgroundColor = newValue;
             }
-        }
-
-        /// <summary>
-        /// The sugestion background color property.
-        /// </summary>
-        public static readonly BindableProperty SugestionBackgroundColorProperty = BindableProperty.Create<AutoCompleteView, Color>(p => p.SugestionBackgroundColor, Color.Red, BindingMode.TwoWay, null, SugestionBackgroundColorChanged, null, null);
-
-        /// <summary>
-        /// Gets or sets the color of the sugestion background.
-        /// </summary>
-        /// <value>The color of the sugestion background.</value>
-        public Color SugestionBackgroundColor
-        {
-            get { return (Color)GetValue(SugestionBackgroundColorProperty); }
-            set { SetValue(SugestionBackgroundColorProperty, value); }
         }
 
         /// <summary>
@@ -390,31 +388,12 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        /// The execute on sugestion click property
+        /// Shows the hide listbox.
         /// </summary>
-        public static readonly BindableProperty ExecuteOnSugestionClickProperty = BindableProperty.Create<AutoCompleteView, bool>(p => p.ExecuteOnSugestionClick, false);
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [execute on sugestion click].
-        /// </summary>
-        /// <value><c>true</c> if [execute on sugestion click]; otherwise, <c>false</c>.</value>
-        public bool ExecuteOnSugestionClick
+        /// <param name="show">if set to <c>true</c> [show].</param>
+        private void ShowHideListbox(bool show)
         {
-            get { return (bool)GetValue(ExecuteOnSugestionClickProperty); }
-            set { SetValue(ExecuteOnSugestionClickProperty, value); }
+            lstSugestions.IsVisible = show;
         }
-        #endregion
-    }
-
-    /// <summary>
-    /// Define the interface AutoCompleteSearchObject.
-    /// </summary>
-    public interface AutoCompleteSearchObject
-    {
-        /// <summary>
-        /// Strings to search by.
-        /// </summary>
-        /// <returns>System.String.</returns>
-        string StringToSearchBy();
     }
 }

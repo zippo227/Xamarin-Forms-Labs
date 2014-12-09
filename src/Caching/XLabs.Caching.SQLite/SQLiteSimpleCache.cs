@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using SQLite.Net;
 using SQLite.Net.Async;
@@ -11,6 +9,11 @@ using XLabs.Serialization;
 
 namespace XLabs.Caching.SQLite
 {
+    /// <summary>
+    /// Implements <see cref="ISimpleCache"/> and <see cref="IAsyncSimpleCache"/> caching interfaces
+    /// using SQLite.Async.Pcl library.
+    /// </summary>
+    // ReSharper disable once InconsistentNaming
     public class SQLiteSimpleCache : SQLiteConnectionWithLock, ISimpleCache, IAsyncSimpleCache
     {
         private readonly IByteSerializer serializer;
@@ -44,7 +47,7 @@ namespace XLabs.Caching.SQLite
         /// <param name="keys">The keys to remove.</param>
         public void RemoveAll(IEnumerable<string> keys)
         {
-            keys.Select(a => this.Remove(a));
+            keys.Select(this.Remove);
         }
 
         /// <summary>
@@ -95,9 +98,7 @@ namespace XLabs.Caching.SQLite
         /// <returns>True if the item exists, otherwise false.</returns>
         public bool Replace<T>(string key, T value)
         {
-            return this.Remove(key) ?
-                this.Add(key, value) :
-                false;
+            return this.Remove(key) && this.Add(key, value);
         }
 
         /// <summary>
@@ -263,6 +264,7 @@ namespace XLabs.Caching.SQLite
         {
             var dict = new Dictionary<string, T>();
 
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var item in keys.Select(a => new { Key = a, Item = this.GetAsync<T>(a) }).Where(a => a.Item != null))
             {
                 dict.Add(item.Key, await item.Item);
