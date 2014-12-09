@@ -159,10 +159,10 @@ namespace XLabs.Web
 
             foreach (var pair in values)
             {
-                builder.Append(string.Format("{0}={1}&amp;", pair.Key, pair.Value));
+                builder.Append(string.Format("{0}={1}&", pair.Key, pair.Value));
             }
 
-            var response = await this.Client.GetAsync(builder.ToString());
+            var response = await this.Client.GetAsync(builder.ToString().TrimEnd('&'));
             return await GetResponse<T>(response, this.Serializer);
         }
 
