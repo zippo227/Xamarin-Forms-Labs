@@ -267,16 +267,16 @@
 
 			if (sourceType == UIImagePickerControllerSourceType.Camera)
 			{
-				picker.CameraDevice = GetUiCameraDevice((options as CameraMediaStorageOptions).DefaultCamera);
-
 				if (mediaType == TypeImage)
 				{
+					picker.CameraDevice = GetUiCameraDevice((options as CameraMediaStorageOptions).DefaultCamera);
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo;
 				}
 				else if (mediaType == TypeMovie)
 				{
 					var voptions = (VideoMediaStorageOptions)options;
 
+					picker.CameraDevice = GetUICameraDevice (voptions.DefaultCamera);
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video;
 					picker.VideoQuality = GetQuailty(voptions.Quality);
 					picker.VideoMaximumDuration = voptions.DesiredLength.TotalSeconds;
