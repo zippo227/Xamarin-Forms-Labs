@@ -15,20 +15,24 @@ namespace XLabs.Forms.Controls
 	/// </summary>
 	public class ExtendedEntryCellRenderer : EntryCellRenderer
 	{
-		/// <summary>
-		/// Gets the cell.
-		/// </summary>
-		/// <param name="item">The item.</param>
-		/// <param name="tv">The tv.</param>
-		/// <returns>UITableViewCell.</returns>
-		public override UITableViewCell GetCell(Cell item, UITableView tv)
+	    /// <summary>
+	    /// Gets the cell.
+	    /// </summary>
+	    /// <param name="item">The item.</param>
+	    /// <param name="reusableCell">The reusable TableView cell.</param>
+        /// <param name="tv">The TableView.</param>
+	    /// <returns>UITableViewCell.</returns>
+	    public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
-			ExtendedEntryCell entryCell = ((ExtendedEntryCell)item);
-			var cell = base.GetCell (item, tv);
-			if (cell != null) {
-				UITextField textField = (UITextField)cell.ContentView.Subviews [0]; 
+			var entryCell = (ExtendedEntryCell)item;
+			var cell = base.GetCell (item, reusableCell, tv);
+			
+            if (cell != null)
+            {
+				var textField = (UITextField)cell.ContentView.Subviews [0]; 
 				textField.SecureTextEntry = entryCell.IsPassword;
 			}
+
 			return cell;
 		}
 	} 

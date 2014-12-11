@@ -24,13 +24,13 @@
 				switch (font.NamedSize)
 				{
 					case NamedSize.Micro:
-						return (double)Application.Current.Resources[(object)"PhoneFontSizeSmall"] - 3.0;
+						return (double)System.Windows.Application.Current.Resources[(object)"PhoneFontSizeSmall"] - 3.0;
 					case NamedSize.Small:
-						return (double)Application.Current.Resources[(object)"PhoneFontSizeSmall"];
+                        return (double)System.Windows.Application.Current.Resources[(object)"PhoneFontSizeSmall"];
 					case NamedSize.Medium:
-						return (double)Application.Current.Resources[(object)"PhoneFontSizeNormal"];
+                        return (double)System.Windows.Application.Current.Resources[(object)"PhoneFontSizeNormal"];
 					case NamedSize.Large:
-						return (double)Application.Current.Resources[(object)"PhoneFontSizeLarge"];
+                        return (double)System.Windows.Application.Current.Resources[(object)"PhoneFontSizeLarge"];
 					default:
 						throw new ArgumentOutOfRangeException();
 				}
@@ -47,7 +47,7 @@
 		public static FontFamily GetFontFamily(this Font font)
 		{
 			return string.IsNullOrEmpty(font.FontFamily)
-				       ? (FontFamily)Application.Current.Resources[(object)"PhoneFontFamilyNormal"]
+                       ? (FontFamily)System.Windows.Application.Current.Resources[(object)"PhoneFontFamilyNormal"]
 				       : new FontFamily(font.FontFamily);
 		}
 	}

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using MonoTouch.UIKit;
+using Xamarin.Forms;
 
 using XLabs.Forms.Controls;
 
@@ -20,27 +21,24 @@ namespace XLabs.Forms.Controls
 		{
 		}
 
-		/// <summary>
-		/// Gets the cell.
-		/// </summary>
-		/// <param name="item">The item.</param>
-		/// <param name="tv">The tv.</param>
-		/// <returns>UITableViewCell.</returns>
-		public override MonoTouch.UIKit.UITableViewCell GetCell (Cell item, MonoTouch.UIKit.UITableView tv)
+	    /// <summary>
+	    /// Gets the cell.
+	    /// </summary>
+	    /// <param name="item">The item.</param>
+	    /// <param name="reusableCell">The reusable cell.</param>
+	    /// <param name="tv">The table view.</param>
+	    /// <returns>UITableViewCell.</returns>
+	    public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
-			CheckboxCell viewCell = item as CheckboxCell;
-			var nativeCell = base.GetCell (item, tv);
+			var viewCell = item as CheckboxCell;
+            var nativeCell = base.GetCell(item, reusableCell, tv);
+            nativeCell.SelectionStyle = UITableViewCellSelectionStyle.None;
 
-			if (viewCell.Checked)
-				nativeCell.Accessory = MonoTouch.UIKit.UITableViewCellAccessory.Checkmark;
-			else 
-				nativeCell.Accessory = MonoTouch.UIKit.UITableViewCellAccessory.None;
+	        if (viewCell == null) return nativeCell;
 
-			nativeCell.SelectionStyle = MonoTouch.UIKit.UITableViewCellSelectionStyle.None;
+			nativeCell.Accessory = viewCell.Checked ? UITableViewCellAccessory.Checkmark : UITableViewCellAccessory.None;
 
-			viewCell.CheckedChanged += (s,e) => {
-				tv.ReloadData();
-			};
+			viewCell.CheckedChanged += (s, e) => tv.ReloadData();
 
 			return nativeCell;
 		}

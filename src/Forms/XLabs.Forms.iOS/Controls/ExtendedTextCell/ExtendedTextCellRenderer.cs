@@ -30,13 +30,14 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		private static readonly Color DefaultTextColor = Color.Black;
 
-		/// <summary>
-		/// Gets the cell.
-		/// </summary>
-		/// <param name="item">The item.</param>
-		/// <param name="tv">The tv.</param>
-		/// <returns>UITableViewCell.</returns>
-		public override UITableViewCell GetCell(Cell item, UITableView tv)
+        /// <summary>
+        /// Gets the cell.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="reusableCell">The reusable TableView cell.</param>
+        /// <param name="tv">The TableView.</param>
+        /// <returns>UITableViewCell.</returns>
+        public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var extendedCell = (ExtendedTextCell)item;
 

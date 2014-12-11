@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using MonoTouch.UIKit;
+using Xamarin.Forms;
 
 using XLabs.Forms.Controls;
 
@@ -23,22 +24,26 @@ namespace XLabs.Forms.Controls
 		{
 		}
 
-		/// <summary>
-		/// Gets the cell.
-		/// </summary>
-		/// <param name="item">The item.</param>
-		/// <param name="tv">The tv.</param>
-		/// <returns>MonoTouch.UIKit.UITableViewCell.</returns>
-		public override MonoTouch.UIKit.UITableViewCell GetCell (Cell item, MonoTouch.UIKit.UITableView tv)
+	    /// <summary>
+	    /// Gets the cell.
+	    /// </summary>
+	    /// <param name="item">The item.</param>
+	    /// <param name="reusableCell">The reusable table view cell.</param>
+	    /// <param name="tv">The table view.</param>
+	    /// <returns>MonoTouch.UIKit.UITableViewCell.</returns>
+	    public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, MonoTouch.UIKit.UITableView tv)
 		{
-			AccessoryViewCell viewCell = item as AccessoryViewCell;
-			var nativeCell = base.GetCell (item, tv);
+			var viewCell = item as AccessoryViewCell;
+            var nativeCell = base.GetCell(item, reusableCell, tv);
 
-			var frame = new RectangleF (0, 0, (float)viewCell.AccessoryView.WidthRequest, (float)viewCell.AccessoryView.HeightRequest);
-			var nativeView = RendererFactory.GetRenderer (viewCell.AccessoryView).NativeView;
-			nativeView.Frame = frame;
-			nativeView.Bounds = frame;
-			nativeCell.AccessoryView = nativeView;
+            if (viewCell != null)
+	        {
+                var frame = new RectangleF (0, 0, (float)viewCell.AccessoryView.WidthRequest, (float)viewCell.AccessoryView.HeightRequest);
+			    var nativeView = RendererFactory.GetRenderer (viewCell.AccessoryView).NativeView;
+			    nativeView.Frame = frame;
+			    nativeView.Bounds = frame;
+			    nativeCell.AccessoryView = nativeView;
+	        }
 
 			return nativeCell;
 		}

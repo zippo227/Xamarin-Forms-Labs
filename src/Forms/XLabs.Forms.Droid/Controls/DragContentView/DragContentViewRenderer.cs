@@ -1,33 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
+using Android.Graphics;
+using Android.Views;
 using Xamarin.Forms;
-using XLabs.Forms;
+using Xamarin.Forms.Platform.Android;
 using XLabs.Forms.Controls;
+using XLabs.Platform;
+using Application = Android.App.Application;
+using View = Android.Views.View;
 
 [assembly: ExportRenderer(typeof(DragContentView), typeof(DragContentViewRenderer))]
 
 namespace XLabs.Forms.Controls
 {
-    using NativeView = global::Android.Views.View;
-    using MotionEvent = global::Android.Views.MotionEvent;
-    using MotionEventActions = global::Android.Views.MotionEventActions;
-    using GestureDetector = global::Android.Views.GestureDetector;
-    using ViewGroup = global::Android.Views.ViewGroup;
-    using NativePoint = global::Android.Graphics.Point;
-    using Android.Graphics;
-    using XLabs.Platform;
-    using Xamarin.Forms.Platform.Android;
-
-    public class DragContentViewRenderer : ViewRenderer<DragContentView, NativeView>
+    public class DragContentViewRenderer : ViewRenderer<DragContentView, View>
     {
-        private View touchedElement;
-        private NativeView touchedView;
+        private Xamarin.Forms.View touchedElement;
+        private View touchedView;
 
         private PointF homePosition;
         private PointF offsetLocation;

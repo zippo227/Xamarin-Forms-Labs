@@ -94,12 +94,14 @@ namespace XLabs.Forms.Controls
 					filename = string.Format("{0}.ttf", filename);
 				}
 
-				if (IsLocalFontFileExists(filename)) //only substitute custom font if exists
-					control.FontFamily =
-						new FontFamily(string.Format(@"\Assets\Fonts\{0}#{1}", filename,
-							string.IsNullOrEmpty(view.FriendlyFontName)
-								? filename.Substring(0, filename.Length - 4)
-								: view.FriendlyFontName));
+			    if (LocalFontFileExists(filename)) //only substitute custom font if exists
+			    {
+			        control.FontFamily =
+			            new FontFamily(string.Format(@"\Assets\Fonts\{0}#{1}", filename,
+			                string.IsNullOrEmpty(view.FriendlyFontName)
+			                    ? filename.Substring(0, filename.Length - 4)
+			                    : view.FriendlyFontName));
+			    }
 			}
 
 			if (view.IsUnderline)
@@ -111,10 +113,10 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		/// <param name="filename">the filename including extension, but not path</param>
 		/// <returns></returns>
-		private bool IsLocalFontFileExists(string filename)
+		private static bool LocalFontFileExists(string filename)
 		{
 			return
-				Application.GetResourceStream(new Uri(string.Format(@"Assets/Fonts/{0}", filename), UriKind.Relative)) !=null;            
+                System.Windows.Application.GetResourceStream(new Uri(string.Format(@"Assets/Fonts/{0}", filename), UriKind.Relative)) != null;            
 		}
 	}
 }

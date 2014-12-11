@@ -53,8 +53,7 @@ namespace XLabs.Forms.Controls
 			Unbind(e.OldElement);
 			Bind(e.NewElement);
 
-			if (e.NewElement.CellHeight > 0)
-				RowHeight = e.NewElement.CellHeight;
+			if (e.NewElement.CellHeight > 0) RowHeight = e.NewElement.CellHeight;
 
 			_editableListViewSource = new EditableListViewSource(this);
 			_tableView.Source = _editableListViewSource;
@@ -145,18 +144,14 @@ namespace XLabs.Forms.Controls
 					addCell.TextLabel.Text = "Add ...";
 					return addCell;
 				}
-				else
-				{
-					var item = _containerRenderer.Element.Source[indexPath.Row];
 
-					View view = Activator.CreateInstance(_containerRenderer.Element.ViewType) as View;
+			    var item = _containerRenderer.Element.Source[indexPath.Row];
 
-					view.BindingContext = item;
-					ViewCell viewCell = new ViewCell();
-					viewCell.View = view;
-					UITableViewCell cell = new ViewCellRenderer().GetCell(viewCell, tableView);
-					return cell;
-				}
+			    var view = Activator.CreateInstance(_containerRenderer.Element.ViewType) as View;
+
+			    view.BindingContext = item;
+			    var viewCell = new ViewCell {View = view};
+			    return new ViewCellRenderer().GetCell(viewCell, null, tableView);
 			}
 
 			/// <summary>
@@ -176,7 +171,6 @@ namespace XLabs.Forms.Controls
 				{
 					_containerRenderer.Element.ExecuteAddRow();
 				}
-
 			}
 
 			/// <summary>
@@ -187,13 +181,12 @@ namespace XLabs.Forms.Controls
 			/// <returns>UITableViewCellEditingStyle.</returns>
 			public override UITableViewCellEditingStyle EditingStyleForRow(UITableView tableView, NSIndexPath indexPath)
 			{
-				if (indexPath.Row == _containerRenderer.Element.Source.Count)
-					return UITableViewCellEditingStyle.Insert;
-				else
-					return UITableViewCellEditingStyle.Delete;
+			    return indexPath.Row == _containerRenderer.Element.Source.Count ? 
+                    UITableViewCellEditingStyle.Insert : 
+                    UITableViewCellEditingStyle.Delete;
 			}
 
-			/// <summary>
+		    /// <summary>
 			/// Rowses the in section.
 			/// </summary>
 			/// <param name="tableView">The table view.</param>
@@ -224,13 +217,12 @@ namespace XLabs.Forms.Controls
 			/// <returns>NSIndexPath.</returns>
 			public override NSIndexPath CustomizeMoveTarget(UITableView tableView, NSIndexPath sourceIndexPath, NSIndexPath proposedIndexPath)
 			{
-				if (proposedIndexPath.Row == _containerRenderer.Element.Source.Count)
-					return sourceIndexPath;
-				else
-					return proposedIndexPath;
+			    return proposedIndexPath.Row == _containerRenderer.Element.Source.Count ? 
+                    sourceIndexPath : 
+                    proposedIndexPath;
 			}
 
-			/// <summary>
+		    /// <summary>
 			/// Moves the row.
 			/// </summary>
 			/// <param name="tableView">The table view.</param>

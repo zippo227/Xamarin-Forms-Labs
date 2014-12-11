@@ -42,10 +42,10 @@
 
 			var availableCameraMedia = UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.Camera)
 			                           ?? new string[0];
-			var avaialbleLibraryMedia =
+            var availableLibraryMedia =
 				UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.PhotoLibrary) ?? new string[0];
 
-			foreach (var type in availableCameraMedia.Concat(avaialbleLibraryMedia))
+            foreach (var type in availableCameraMedia.Concat(availableLibraryMedia))
 			{
 				if (type == TypeMovie)
 				{
@@ -224,9 +224,11 @@
 			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad
 			    && sourceType == UIImagePickerControllerSourceType.PhotoLibrary)
 			{
-				ndelegate.Popover = new UIPopoverController(picker);
-				ndelegate.Popover.Delegate = new MediaPickerPopoverDelegate(ndelegate, picker);
-				ndelegate.DisplayPopover();
+			    ndelegate.Popover = new UIPopoverController(picker)
+			    {
+			        Delegate = new MediaPickerPopoverDelegate(ndelegate, picker)
+			    };
+			    ndelegate.DisplayPopover();
 			}
 			else
 			{
@@ -261,22 +263,20 @@
 			string mediaType,
 			MediaStorageOptions options = null)
 		{
-			var picker = new MediaPickerController(mpDelegate);
-			picker.MediaTypes = new[] { mediaType };
-			picker.SourceType = sourceType;
+		    var picker = new MediaPickerController(mpDelegate) { MediaTypes = new[] { mediaType }, SourceType = sourceType};
 
-			if (sourceType == UIImagePickerControllerSourceType.Camera)
+		    if (sourceType == UIImagePickerControllerSourceType.Camera)
 			{
-				if (mediaType == TypeImage)
+                if (mediaType == TypeImage && options is CameraMediaStorageOptions)
 				{
-					picker.CameraDevice = GetUiCameraDevice((options as CameraMediaStorageOptions).DefaultCamera);
+					picker.CameraDevice = GetCameraDevice(((CameraMediaStorageOptions)options).DefaultCamera);
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo;
 				}
-				else if (mediaType == TypeMovie)
+				else if (mediaType == TypeMovie && options is VideoMediaStorageOptions)
 				{
 					var voptions = (VideoMediaStorageOptions)options;
 
-					picker.CameraDevice = GetUICameraDevice (voptions.DefaultCamera);
+					picker.CameraDevice = GetCameraDevice (voptions.DefaultCamera);
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video;
 					picker.VideoQuality = GetQuailty(voptions.Quality);
 					picker.VideoMaximumDuration = voptions.DesiredLength.TotalSeconds;
@@ -292,7 +292,7 @@
 		/// <param name="device">The device.</param>
 		/// <returns>UIImagePickerControllerCameraDevice.</returns>
 		/// <exception cref="NotSupportedException"></exception>
-		private static UIImagePickerControllerCameraDevice GetUiCameraDevice(CameraDevice device)
+        private static UIImagePickerControllerCameraDevice GetCameraDevice(CameraDevice device)
 		{
 			switch (device)
 			{
@@ -329,7 +329,7 @@
 		/// <param name="options">The options.</param>
 		/// <exception cref="ArgumentNullException">options</exception>
 		/// <exception cref="ArgumentException">options.Directory must be a relative path;options</exception>
-		private void VerifyOptions(MediaStorageOptions options)
+		private static void VerifyOptions(MediaStorageOptions options)
 		{
 			if (options == null)
 			{
@@ -346,7 +346,7 @@
 		/// </summary>
 		/// <param name="options">The options.</param>
 		/// <exception cref="ArgumentException">options.Camera is not a member of CameraDevice</exception>
-		private void VerifyCameraOptions(CameraMediaStorageOptions options)
+		private static void VerifyCameraOptions(CameraMediaStorageOptions options)
 		{
 			VerifyOptions(options);
 			if (!Enum.IsDefined(typeof(CameraDevice), options.DefaultCamera))
