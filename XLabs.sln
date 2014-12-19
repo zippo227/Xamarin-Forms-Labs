@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{FE751317-362B-40F8-89F8-0E1EE4E0BF88}"
 	ProjectSection(SolutionItems) = preProject
@@ -2043,6 +2043,7 @@ Global
 		{208E60B3-2771-4D94-9523-1C612592D891}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{208E60B3-2771-4D94-9523-1C612592D891}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{208E60B3-2771-4D94-9523-1C612592D891}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{208E60B3-2771-4D94-9523-1C612592D891}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{208E60B3-2771-4D94-9523-1C612592D891}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{208E60B3-2771-4D94-9523-1C612592D891}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{208E60B3-2771-4D94-9523-1C612592D891}.Debug|x86.ActiveCfg = Debug|Any CPU
