@@ -89,7 +89,7 @@
     </Compile>
     <Compile Include="..\XLabs.Forms\services\FontManager.designer.cs">
       <Link>Services\FontManager.designer.cs</Link>
-      <DependentUpon>FontManager.cs</DependentUpon>
+      <DependentUpon>..\Services\FontManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
     <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
