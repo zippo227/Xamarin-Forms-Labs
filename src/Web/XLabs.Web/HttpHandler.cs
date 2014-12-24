@@ -16,20 +16,7 @@ namespace XLabs.Web
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {
-            foreach (var header in request.Headers)
-            {
-                System.Diagnostics.Debug.WriteLine(header.Key);
-                System.Diagnostics.Debug.WriteLine(header.Value.FirstOrDefault());
-            }
-
             var response = await base.SendAsync(request, cancellationToken);
-
-            foreach (var header in response.Headers)
-            {
-                System.Diagnostics.Debug.WriteLine(header.Key);
-                foreach (var value in header.Value)
-                    System.Diagnostics.Debug.WriteLine(value);
-            }
 
             if (response.IsSuccessStatusCode && response.Headers.Contains(CookieHeader))
             {

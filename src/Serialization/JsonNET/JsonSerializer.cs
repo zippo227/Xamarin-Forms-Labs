@@ -79,5 +79,10 @@ namespace XLabs.Serialization.JsonNET
         {
             return JsonConvert.DeserializeObject<T>(data);
         }
+
+        public override object Deserialize(string data, Type type)
+        {
+            return JsonConvert.DeserializeObject(data, type);
+        }
     }
 }

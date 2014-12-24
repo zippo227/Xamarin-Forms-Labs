@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace XLabs.Serialization
 {
@@ -22,5 +23,13 @@ namespace XLabs.Serialization
         /// <param name="stream">Stream to deserialize from.</param>
         /// <returns>Object of type T.</returns>
         T Deserialize<T>(Stream stream);
+
+        /// <summary>
+        /// Deserializes stream into an object.
+        /// </summary>
+        /// <param name="stream">Stream to deserialize from.</param>
+        /// <param name="type">Type of object to deserialize.</param>
+        /// <returns>Deserialized object.</returns>
+        object Deserialize(Stream stream, Type type);
     }
 }
