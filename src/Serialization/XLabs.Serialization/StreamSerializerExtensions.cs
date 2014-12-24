@@ -18,6 +18,18 @@ namespace XLabs.Serialization
             }
         }
 
+        public static object DeserializeFromString(this IStreamSerializer serializer, string value, Type type, Encoding encoding = null)
+        {
+            //var encoder = encoding ?? Encoding.UTF8;
+
+            //var bytes = encoder.GetBytes(value);
+            var bytes = Convert.FromBase64String(value);
+            using (var stream = new MemoryStream(bytes))
+            {
+                return serializer.Deserialize(stream, type);
+            }
+        }
+
         public static string SerializeToString<T>(this IStreamSerializer serializer, T obj, Encoding encoding = null)
         {
             using (var stream = new MemoryStream())
@@ -43,6 +55,14 @@ namespace XLabs.Serialization
             using (var stream = new MemoryStream(data))
             {
                 return serializer.Deserialize<T>(stream);
+            }
+        }
+
+        public static object DeserializeFromBytes(this IStreamSerializer serializer, byte[] data, Type type)
+        {
+            using (var stream = new MemoryStream(data))
+            {
+                return serializer.Deserialize(stream, type);
             }
         }
 

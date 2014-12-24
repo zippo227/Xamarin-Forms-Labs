@@ -23,7 +23,7 @@ namespace XLabs.Serialization.ServiceStack
     /// 
     /// </remarks>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1629:DocumentationTextMustEndWithAPeriod", Justification = "Reviewed. Suppression is OK here."), SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1644:DocumentationHeadersMustNotContainBlankLines", Justification = "Reviewed. Suppression is OK here."), SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
-    public class JsonSerializer : IJsonSerializer
+    public class JsonSerializer : StringSerializer, IJsonSerializer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonSerializer"/> class.
@@ -61,56 +61,33 @@ namespace XLabs.Serialization.ServiceStack
 
         #region ISerializer Members
 
-        public SerializationFormat Format
+        public override SerializationFormat Format
         {
             get { return SerializationFormat.Json; }
         }
 
-        public void Flush()
+        public override void Flush()
         {
-            global::ServiceStack.Text.JsConfig.Reset();
-        }
-
-        #endregion
-
-        #region IByteSerializer Members
-
-        public byte[] SerializeToBytes<T>(T obj)
-        {
-            return (this as IStringSerializer).GetSerializedBytes(obj);
-        }
-
-        public T Deserialize<T>(byte[] data)
-        {
-            return (this as IStringSerializer).DeserializeFromBytes<T>(data);
-        }
-
-        #endregion
-
-        #region IStreamSerializer Members
-
-        public void Serialize<T>(T obj, System.IO.Stream stream)
-        {
-            Serializer.SerializeToStream(obj, stream);
-        }
-
-        public T Deserialize<T>(System.IO.Stream stream)
-        {
-            return Serializer.DeserializeFromStream<T>(stream);
+            JsConfig.Reset();
         }
 
         #endregion
 
         #region IStringSerializer Members
 
-        string IStringSerializer.Serialize<T>(T obj)
+        public override string Serialize<T>(T obj)
         {
             return Serializer.SerializeToString(obj);
         }
 
-        public T Deserialize<T>(string data)
+        public override T Deserialize<T>(string data)
         {
             return Serializer.DeserializeFromString<T>(data);
+        }
+
+        public override object Deserialize(string data, System.Type type)
+        {
+            return Serializer.DeserializeFromString(data, type);
         }
 
         #endregion

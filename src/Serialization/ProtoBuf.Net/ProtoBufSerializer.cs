@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using ProtoBuf;
 
 namespace XLabs.Serialization.ProtoBuf
@@ -9,6 +11,8 @@ namespace XLabs.Serialization.ProtoBuf
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
     public class ProtoBufSerializer : StreamSerializer, IProtoBufSerializer
     {
+        private static MethodInfo deserializeMethodInfo;
+
         /// <summary>
         /// Gets the serialization format.
         /// </summary>
@@ -46,6 +50,18 @@ namespace XLabs.Serialization.ProtoBuf
         public override T Deserialize<T>(System.IO.Stream stream)
         {
             return Serializer.Deserialize<T>(stream);
+        }
+
+        /// <summary>
+        /// Deserializes stream into an object.
+        /// </summary>
+        /// <param name="stream">Stream to deserialize from.</param>
+        /// <param name="type">Type of object to deserialize.</param>
+        /// <returns>Deserialized object.</returns>
+        public override object Deserialize(System.IO.Stream stream, Type type)
+        {
+            var gm = deserializeMethodInfo ?? (deserializeMethodInfo = typeof(ProtoBufSerializer).GetTypeInfo().GetDeclaredMethod("Deserialize"));
+            return gm.MakeGenericMethod(type).Invoke(this, new object[] {stream});
         }
     }
 }

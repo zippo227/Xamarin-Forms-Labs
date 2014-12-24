@@ -151,114 +151,98 @@ namespace ServiceStack.Text
             writer.Flush();
         }
 
-        public static T DeserializeFromStream<T>(Stream stream)
-        {
-            using (var reader = new StreamReader(stream, UTF8EncodingWithoutBom))
-            {
-                return DeserializeFromString<T>(reader.ReadToEnd());
-            }
-        }
+//#if !WINDOWS_PHONE && !SILVERLIGHT
+//        public static T DeserializeResponse<T>(WebRequest webRequest)
+//        {
+//#if NETFX_CORE
+//            var async = webRequest.GetResponseAsync();
+//            async.Wait();
 
-        public static object DeserializeFromStream(Type type, Stream stream)
-        {
-            using (var reader = new StreamReader(stream, UTF8EncodingWithoutBom))
-            {
-                return DeserializeFromString(reader.ReadToEnd(), type);
-            }
-        }
+//            var webRes = async.Result;
+//            using (var stream = webRes.GetResponseStream())
+//            {
+//                return DeserializeFromStream<T>(stream);
+//            }
+//#else
+//            using (var webRes = webRequest.GetResponse())
+//            {
+//                using (var stream = webRes.GetResponseStream())
+//                {
+//                    return DeserializeFromStream<T>(stream);
+//                }
+//            }
+//#endif
+//        }
 
-#if !WINDOWS_PHONE && !SILVERLIGHT
-        public static T DeserializeResponse<T>(WebRequest webRequest)
-        {
-#if NETFX_CORE
-            var async = webRequest.GetResponseAsync();
-            async.Wait();
+//        public static object DeserializeResponse<T>(Type type, WebRequest webRequest)
+//        {
+//#if NETFX_CORE
+//            var async = webRequest.GetResponseAsync();
+//            async.Wait();
 
-            var webRes = async.Result;
-            using (var stream = webRes.GetResponseStream())
-            {
-                return DeserializeFromStream<T>(stream);
-            }
-#else
-            using (var webRes = webRequest.GetResponse())
-            {
-                using (var stream = webRes.GetResponseStream())
-                {
-                    return DeserializeFromStream<T>(stream);
-                }
-            }
-#endif
-        }
+//            var webRes = async.Result;
+//            using (var stream = webRes.GetResponseStream())
+//            {
+//                return DeserializeFromStream(type, stream);
+//            }
+//#else
+//            using (var webRes = webRequest.GetResponse())
+//            {
+//                using (var stream = webRes.GetResponseStream())
+//                {
+//                    return DeserializeFromStream(type, stream);
+//                }
+//            }
+//#endif
+//        }
 
-        public static object DeserializeResponse<T>(Type type, WebRequest webRequest)
-        {
-#if NETFX_CORE
-            var async = webRequest.GetResponseAsync();
-            async.Wait();
+//        public static T DeserializeRequest<T>(WebRequest webRequest)
+//        {
+//#if NETFX_CORE
+//            var async = webRequest.GetResponseAsync();
+//            async.Wait();
 
-            var webRes = async.Result;
-            using (var stream = webRes.GetResponseStream())
-            {
-                return DeserializeFromStream(type, stream);
-            }
-#else
-            using (var webRes = webRequest.GetResponse())
-            {
-                using (var stream = webRes.GetResponseStream())
-                {
-                    return DeserializeFromStream(type, stream);
-                }
-            }
-#endif
-        }
+//            var webRes = async.Result;
+//            return DeserializeResponse<T>(webRes);
+//#else
+//            using (var webRes = webRequest.GetResponse())
+//            {
+//                return DeserializeResponse<T>(webRes);
+//            }
+//#endif
+//        }
 
-        public static T DeserializeRequest<T>(WebRequest webRequest)
-        {
-#if NETFX_CORE
-            var async = webRequest.GetResponseAsync();
-            async.Wait();
+//        public static object DeserializeRequest(Type type, WebRequest webRequest)
+//        {
+//#if NETFX_CORE
+//            var async = webRequest.GetResponseAsync();
+//            async.Wait();
 
-            var webRes = async.Result;
-            return DeserializeResponse<T>(webRes);
-#else
-            using (var webRes = webRequest.GetResponse())
-            {
-                return DeserializeResponse<T>(webRes);
-            }
-#endif
-        }
+//            var webRes = async.Result;
+//            return DeserializeResponse(type, webRes);
+//#else
+//            using (var webRes = webRequest.GetResponse())
+//            {
+//                return DeserializeResponse(type, webRes);
+//            }
+//#endif
+//        }
+//#endif
+//        public static T DeserializeResponse<T>(WebResponse webResponse)
+//        {
+//            using (var stream = webResponse.GetResponseStream())
+//            {
+//                return DeserializeFromStream<T>(stream);
+//            }
+//        }
 
-        public static object DeserializeRequest(Type type, WebRequest webRequest)
-        {
-#if NETFX_CORE
-            var async = webRequest.GetResponseAsync();
-            async.Wait();
-
-            var webRes = async.Result;
-            return DeserializeResponse(type, webRes);
-#else
-            using (var webRes = webRequest.GetResponse())
-            {
-                return DeserializeResponse(type, webRes);
-            }
-#endif
-        }
-#endif
-        public static T DeserializeResponse<T>(WebResponse webResponse)
-        {
-            using (var stream = webResponse.GetResponseStream())
-            {
-                return DeserializeFromStream<T>(stream);
-            }
-        }
-
-        public static object DeserializeResponse(Type type, WebResponse webResponse)
-        {
-            using (var stream = webResponse.GetResponseStream())
-            {
-                return DeserializeFromStream(type, stream);
-            }
-        }
+//        public static object DeserializeResponse(Type type, WebResponse webResponse)
+//        {
+//            using (var stream = webResponse.GetResponseStream())
+//            {
+//                return DeserializeFromStream(type, stream);
+//            }
+//        }
 
     }
 }

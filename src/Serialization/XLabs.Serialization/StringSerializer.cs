@@ -32,6 +32,11 @@ namespace XLabs.Serialization
         {
             return (this as IStringSerializer).DeserializeFromBytes<T>(data);
         }
+
+        public object Deserialize(byte[] data, System.Type type)
+        {
+            return (this as IStringSerializer).DeserializeFromBytes(data, type);
+        }
         #endregion
 
         #region IStreamSerializer Members
@@ -44,12 +49,33 @@ namespace XLabs.Serialization
         {
             return this.DeserializeFromStream<T>(stream);
         }
+
+        public object Deserialize(System.IO.Stream stream, System.Type type)
+        {
+            return this.DeserializeFromStream(stream, type);
+        }
         #endregion
 
         #region IStringSerializer Members
         public abstract string Serialize<T>(T obj);
 
         public abstract T Deserialize<T>(string data);
+
+        public abstract object Deserialize(string data, System.Type type);
+        #endregion
+
+        #region IStreamSerializer Members
+
+
+
+
+        #endregion
+
+        #region IStringSerializer Members
+
+
+
+
         #endregion
     }
 }

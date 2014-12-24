@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 
 namespace XLabs.Serialization
@@ -38,6 +39,19 @@ namespace XLabs.Serialization
         }
 
         /// <summary>
+        /// Deserializes from stream.
+        /// </summary>
+        /// <returns>The deserialized object.</returns>
+        /// <param name="serializer">The string serializer.</param>
+        /// <param name="stream">Stream to deserialize from.</param>
+        /// <param name="type">The type of object to deserialize.</param>
+        public static object DeserializeFromStream(this IStringSerializer serializer, Stream stream, Type type)
+        {
+            var text = new StreamReader(stream).ReadToEnd();
+            return serializer.Deserialize(text, type);
+        }
+
+        /// <summary>
         /// Serializes to writer.
         /// </summary>
         /// <param name="obj">Object to serialize.</param>
@@ -62,6 +76,13 @@ namespace XLabs.Serialization
             var encoder = encoding ?? Encoding.UTF8;
             var str = encoder.GetString(data, 0, data.Length);
             return serializer.Deserialize<T>(str);
+        }
+
+        public static object DeserializeFromBytes(this IStringSerializer serializer, byte[] data, Type type, Encoding encoding = null)
+        {
+            var encoder = encoding ?? Encoding.UTF8;
+            var str = encoder.GetString(data, 0, data.Length);
+            return serializer.Deserialize(str, type);
         }
 
         public static byte[] GetSerializedBytes(this IStringSerializer serializer, object obj, Encoding encoding = null)

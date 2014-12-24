@@ -48,6 +48,11 @@ namespace XLabs.Web
             this.Client = client ?? new HttpClient();
         }
 
+        ~RestCoreClient()
+        {
+            
+        }
+
         /// <summary>
         /// Gets or sets timeout in milliseconds
         /// </summary>
@@ -63,10 +68,6 @@ namespace XLabs.Web
                 this.Client.Timeout = value;
             }
         }
-
-        #if DEBUG
-        public EventHandler<HttpResponseMessage> OnHttpResponse;
-        #endif
 
         /// <summary>
         /// Gets the string content type.
@@ -107,7 +108,7 @@ namespace XLabs.Web
         /// <typeparam name="T">The type of object to be returned.</typeparam>
         public async Task<T> PostAsync<T>(string address, object dto)
         {
-            var content = (this.Serializer as IStringSerializer).Serialize(dto);
+            var content = this.Serializer.Serialize(dto);
 
             var response = await this.Client.PostAsync(
                 address,
@@ -124,7 +125,7 @@ namespace XLabs.Web
         /// <typeparam name="T">The type of object to be returned.</typeparam>
         public async Task<T> PutAsync<T>(string address, object dto)
         {
-            var content = (this.Serializer as IStringSerializer).Serialize(dto);
+            var content = this.Serializer.Serialize(dto);
 
             var response = await this.Client.PutAsync(
                 address,
@@ -182,14 +183,14 @@ namespace XLabs.Web
         {
             var content = this.Serializer.Serialize(dto);
             var response = await this.Client.PostAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
-            this.CheckResponse(response);
+            await CheckResponse(response);
         }
 
         public async Task PutAsync(string address, object dto)
         {
             var content = this.Serializer.Serialize(dto);
             var response = await this.Client.PutAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
-            this.CheckResponse(response);
+            await CheckResponse(response);
         }
 
         /// <summary>
@@ -200,60 +201,8 @@ namespace XLabs.Web
         public async Task DeleteAsync(string address)
         {
             var response = await this.Client.DeleteAsync(address);
-            this.CheckResponse(response);
+            await CheckResponse(response);
         }
-
-        /// <summary>
-        /// Gets the response from Http response message
-        /// </summary>
-        /// <typeparam name="T">The 1st type parameter.</typeparam>
-        /// <param name="response">Http response message</param>
-        /// <param name="serializer">Serializer to use.</param>
-        /// <returns>The async task.</returns>
-        private async Task<T> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
-        {
-            #if DEBUG
-            var handler = this.OnHttpResponse;
-
-            if (handler != null)
-            {
-                handler(this, response);
-            }
-            #endif
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new WebResponseException(response.ReasonPhrase);
-            }
-                
-            var stream = await response.Content.ReadAsStreamAsync();
-
-            return serializer.Deserialize<T>(stream);
-            // get response strings
-            //var content = await response.Content.ReadAsStringAsync();
-            //// serialize the response to object
-            //return serializer.Deserialize<T>(content);
-        }
-
-        private HttpResponseMessage CheckResponse(HttpResponseMessage response)
-        {
-#if DEBUG
-            var handler = this.OnHttpResponse;
-
-            if (handler != null)
-            {
-                handler(this, response);
-            }
-#endif
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new WebResponseException(response.StatusCode, response.ReasonPhrase);
-            }
-
-            return response;
-        }
-
 
         public async Task<T> PostAsync<T>(string address)
         {
@@ -276,13 +225,59 @@ namespace XLabs.Web
         public async Task PostAsync(string address)
         {
             var response = await this.Client.PostAsync(address, new StringContent("", Encoding.UTF8, this.StringContentType));
-            this.CheckResponse(response);
+            await CheckResponse(response);
         }
 
         public async Task PutAsync(string address)
         {
             var response = await this.Client.PutAsync(address, new StringContent("", Encoding.UTF8, this.StringContentType));
-            this.CheckResponse(response);
+            await CheckResponse(response);
+        }
+
+        /// <summary>
+        /// Gets the response from Http response message
+        /// </summary>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
+        /// <param name="response">Http response message</param>
+        /// <param name="serializer">Serializer to use.</param>
+        /// <returns>The async task.</returns>
+        private async Task<T> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
+        {
+            await CheckResponse(response);
+                
+            var stream = await response.Content.ReadAsStreamAsync();
+
+            var ret = serializer.Deserialize<T>(stream);
+
+            stream.Dispose();
+             //get response strings
+            //var content = await response.Content.ReadAsStringAsync();
+            //// serialize the response to object
+            //var ret = serializer.Deserialize<T>(content);
+            response.Dispose();
+            return ret;
+        }
+
+        private async Task CheckResponse(HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                return;
+            }
+
+            var responseMessage = await response.Content.ReadAsStringAsync();
+            WebResponseException exception;
+            try
+            {
+                exception = new WebResponseException(response.StatusCode, response.ReasonPhrase, this.Serializer.Deserialize<Exception>(responseMessage));
+            }
+            catch
+            {
+                exception = new WebResponseException(response.StatusCode, response.ReasonPhrase, new Exception(responseMessage));
+            }
+
+            response.Dispose();
+            throw exception;
         }
     }
 }

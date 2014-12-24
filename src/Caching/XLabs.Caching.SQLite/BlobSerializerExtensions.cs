@@ -9,11 +9,9 @@ namespace XLabs.Caching.SQLite
     {
         public static IBlobSerializer AsBlobSerializer(this IByteSerializer serializer)
         {
-            var gm = typeof(IByteSerializer).GetTypeInfo().GetDeclaredMethod("Deserialize");
-
             return new BlobSerializerDelegate(
                 serializer.SerializeToBytes,
-                (data, type) => gm.MakeGenericMethod(type).Invoke(serializer, new object[] { data }),
+                (data, type) => serializer.Deserialize(data, type),
                 serializer.CanDeserialize);
         }
 

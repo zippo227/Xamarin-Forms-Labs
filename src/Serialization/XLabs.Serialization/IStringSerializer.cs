@@ -1,4 +1,6 @@
-﻿namespace XLabs.Serialization
+﻿using System;
+
+namespace XLabs.Serialization
 {
     /// <summary>
     /// Serialization interface for strings.
@@ -20,5 +22,13 @@
         /// <param name="data">Serialized object.</param>
         /// <returns>Object of type T.</returns>
         T Deserialize<T>(string data);
+
+        /// <summary>
+        /// Deserializes string into an object.
+        /// </summary>
+        /// <param name="data">Serialized object.</param>
+        /// <param name="type">Type of object to deserialize.</param>
+        /// <returns>Object of type T.</returns>
+        object Deserialize(string data, Type type);
     }
 }
