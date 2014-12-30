@@ -70,6 +70,6 @@
 		<file src="..\..\build\**\XLabs.Forms.xml" target="lib\wp8" />
 		
 		<!-- Source Files for Symbol Server -->
-		<file src="..\..\*.cs" target="src" />
+		<file src="..\..\src\Forms\**\*.cs" target="src" />
 	</files>
 </package>
