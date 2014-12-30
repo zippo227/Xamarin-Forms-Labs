@@ -79,8 +79,8 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\ReleaseBuild\</OutputPath>
-    <DocumentationFile>..\..\..\..\ReleaseBuild\XLabs.Web.WP8.XML</DocumentationFile>
+    <OutputPath>..\..\..\build\</OutputPath>
+    <DocumentationFile>..\..\..\build\XLabs.Web.WP8.XML</DocumentationFile>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>

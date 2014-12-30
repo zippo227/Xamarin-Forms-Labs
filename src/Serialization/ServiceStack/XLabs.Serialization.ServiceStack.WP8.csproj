@@ -37,13 +37,13 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\ReleaseBuild\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\ReleaseBuild\XLabs.Services.Serialization.ServiceStack.WP8.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\build\XLabs.Services.Serialization.ServiceStack.WP8.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -84,9 +84,9 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
-    <OutputPath>..\..\..\..\ReleaseBuild\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
-    <DocumentationFile>..\..\..\..\ReleaseBuild\XLabs.Serialization.ServiceStack.WP8.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\build\XLabs.Serialization.ServiceStack.WP8.XML</DocumentationFile>
     <Optimize>true</Optimize>
     <NoStdLib>true</NoStdLib>
     <DebugType>pdbonly</DebugType>

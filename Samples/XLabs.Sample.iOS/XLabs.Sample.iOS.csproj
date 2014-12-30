@@ -73,7 +73,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\ReleaseBuild\</OutputPath>
+    <OutputPath>bin\iPhone\Release\</OutputPath>
     <DefineConstants>__MOBILE__;__IOS__;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -84,7 +84,7 @@
     <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
     <MtouchI18n>
     </MtouchI18n>
-    <DocumentationFile>..\..\ReleaseBuild\XLabs.Sample.iOS.xml</DocumentationFile>
+    <DocumentationFile>bin\iPhone\Release\XLabs.Sample.iOS.xml</DocumentationFile>
     <MtouchUseSGen>True</MtouchUseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">

@@ -31,7 +31,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\ReleaseBuild\</OutputPath>
     <DocumentationFile>..\..\..\build\XLabs.Web.XML</DocumentationFile>
     <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
