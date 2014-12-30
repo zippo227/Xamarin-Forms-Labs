@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Definition", "Definition", 
 	ProjectSection(SolutionItems) = preProject
 		.nuget\Definition\Build.ps1 = .nuget\Definition\Build.ps1
 		.nuget\Definition\Clean.ps1 = .nuget\Definition\Clean.ps1
-		.nuget\Definition\XLabs.Caching.NuSpec = .nuget\Definition\XLabs.Caching.NuSpec
+		.nuget\Definition\XLabs.Caching.SQLite.NuSpec = .nuget\Definition\XLabs.Caching.SQLite.NuSpec
 		.nuget\Definition\XLabs.Charting.NuSpec = .nuget\Definition\XLabs.Charting.NuSpec
 		.nuget\Definition\XLabs.Cryptography.NuSpec = .nuget\Definition\XLabs.Cryptography.NuSpec
 		.nuget\Definition\XLabs.Forms.NuSpec = .nuget\Definition\XLabs.Forms.NuSpec
@@ -134,7 +134,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Charting", "Charting", "{A2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptography", "{9F367697-B9AF-4B7A-802A-23B802DAA354}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLabs.Forms.Cryptography", "src\Forms\Cryptography\XLabs.Forms.Cryptography\XLabs.Forms.Cryptography.csproj", "{57FF8D32-1575-4DC5-BD37-2D92A9A67031}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLabs.Cryptography", "src\Cryptography\XLabs.Cryptography\XLabs.Cryptography.csproj", "{57FF8D32-1575-4DC5-BD37-2D92A9A67031}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLabs.Forms.Charting", "src\Forms\Charting\XLabs.Forms.Charting\XLabs.Forms.Charting.csproj", "{4263404D-89B9-411B-9929-70FA85EAEC33}"
 EndProject
@@ -2115,7 +2115,7 @@ Global
 		{0809F6EE-7FB2-4995-8D01-0E6C7E1E79B4} = {54DE01F6-195D-4FC1-A42B-2856A27F172F}
 		{16DF04BA-34B2-47A0-A9FC-DDDD53A5CDA7} = {54DE01F6-195D-4FC1-A42B-2856A27F172F}
 		{A2DF81C8-0E69-4394-B4C8-EC9735A36BB8} = {54DE01F6-195D-4FC1-A42B-2856A27F172F}
-		{9F367697-B9AF-4B7A-802A-23B802DAA354} = {54DE01F6-195D-4FC1-A42B-2856A27F172F}
+		{9F367697-B9AF-4B7A-802A-23B802DAA354} = {76E28DA4-5199-4165-A568-9BE3AF54B7B6}
 		{57FF8D32-1575-4DC5-BD37-2D92A9A67031} = {9F367697-B9AF-4B7A-802A-23B802DAA354}
 		{4263404D-89B9-411B-9929-70FA85EAEC33} = {A2DF81C8-0E69-4394-B4C8-EC9735A36BB8}
 		{C5696998-E9C1-4A24-B50C-FFCFA836B890} = {A2DF81C8-0E69-4394-B4C8-EC9735A36BB8}

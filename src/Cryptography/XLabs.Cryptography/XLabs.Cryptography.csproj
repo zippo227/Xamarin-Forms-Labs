@@ -8,8 +8,8 @@
     <ProjectGuid>{57FF8D32-1575-4DC5-BD37-2D92A9A67031}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XLabs.Forms.Cryptography</RootNamespace>
-    <AssemblyName>XLabs.Forms.Cryptography</AssemblyName>
+    <RootNamespace>XLabs.Cryptography</RootNamespace>
+    <AssemblyName>XLabs.Cryptography</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\build\XLabs.Forms.Cryptography.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\..\build\XLabs.Cryptography.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,7 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\build\XLabs.Forms.Cryptography.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\..\build\XLabs.Cryptography.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="MD5.cs" />
