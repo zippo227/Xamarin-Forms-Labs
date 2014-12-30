@@ -129,7 +129,9 @@ try
 	Write-Host "==================================" -ForegroundColor White
 
 	Write-Host "Creating Packages folder" -ForegroundColor Yellow
-	mkdir Packages
+	if (-Not (Test-Path .\Packages)) {
+		mkdir Packages
+	}
 
 	## NB - Cleanup destination package folder
 	## ---------------------------------------
