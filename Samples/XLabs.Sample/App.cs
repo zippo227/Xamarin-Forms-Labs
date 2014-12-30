@@ -83,12 +83,12 @@
 			var services = GetServicesPage(mainPage);
 			var charts = GetChartingPage(mainPage);
 
-			var mvvm = ViewFactory.CreatePage<MvvmSampleViewModel>();
+			var mvvm = ViewFactory.CreatePage<MvvmSampleViewModel, Page>();
 
 			mainTab.Children.Add(controls);
 			mainTab.Children.Add(services);
 			mainTab.Children.Add(charts);
-			mainTab.Children.Add(mvvm);
+			mainTab.Children.Add(mvvm as Page);
 
 			return mainPage;
 		}
@@ -137,10 +137,10 @@
 						await mainPage.Navigation.PushAsync(new PhoneServicePage());
 						break;
 					case "geolocator":
-						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<GeolocatorViewModel>());
+						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<GeolocatorViewModel, Page>() as Page);
 						break;
 					case "camera":
-						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<CameraViewModel>());
+						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<CameraViewModel, Page>() as Page);
 						break;
 					case "accelerometer":
 						await mainPage.Navigation.PushAsync(new AcceleratorSensorPage());
@@ -149,10 +149,10 @@
 						await mainPage.Navigation.PushAsync(new AbsoluteLayoutWithDisplayInfoPage(Resolver.Resolve<IDisplay>()));
 						break;
 					case "cache":
-						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<CacheServiceViewModel>());
+						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<CacheServiceViewModel, Page>() as Page);
 						break;
 					case "sound":
-						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<SoundServiceViewModel>());
+						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<SoundServiceViewModel, Page>() as Page);
 						break;
 					//case "bluetooth":
 					//    await mainPage.Navigation.PushAsync(new BluetoothPage());
@@ -164,7 +164,7 @@
 						await mainPage.Navigation.PushAsync(new NfcDevicePage());
 						break;
 					case "waverecorder":
-						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<WaveRecorderViewModel>());
+						await mainPage.Navigation.PushAsync(ViewFactory.CreatePage<WaveRecorderViewModel, Page>() as Page);
 						break;
 					case "email":
 						await mainPage.Navigation.PushAsync(new EmailPage());

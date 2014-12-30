@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{FE751317-362B-40F8-89F8-0E1EE4E0BF88}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,19 +22,20 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Definition", "Definition", "{00CA1022-3B1F-471C-9269-6611CAD6C9B8}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\Definition\Build.ps1 = .nuget\Definition\Build.ps1
-		.nuget\Definition\Charting.NuSpec = .nuget\Definition\Charting.NuSpec
 		.nuget\Definition\Clean.ps1 = .nuget\Definition\Clean.ps1
-		.nuget\Definition\Core.NuSpec = .nuget\Definition\Core.NuSpec
-		.nuget\Definition\Services Caching.NuSpec = .nuget\Definition\Services Caching.NuSpec
-		.nuget\Definition\Services Cryptography.NuSpec = .nuget\Definition\Services Cryptography.NuSpec
-		.nuget\Definition\Services IoC Autofac.NuSpec = .nuget\Definition\Services IoC Autofac.NuSpec
-		.nuget\Definition\Services IoC Ninject.NuSpec = .nuget\Definition\Services IoC Ninject.NuSpec
-		.nuget\Definition\Services IoC SimpleInjector.NuSpec = .nuget\Definition\Services IoC SimpleInjector.NuSpec
-		.nuget\Definition\Services IoC TinyIOC.NuSpec = .nuget\Definition\Services IoC TinyIOC.NuSpec
-		.nuget\Definition\Services IoC Unity.NuSpec = .nuget\Definition\Services IoC Unity.NuSpec
-		.nuget\Definition\Services Serialization JSON.NuSpec = .nuget\Definition\Services Serialization JSON.NuSpec
-		.nuget\Definition\Services Serialization ProtoBuf.NuSpec = .nuget\Definition\Services Serialization ProtoBuf.NuSpec
-		.nuget\Definition\Services Serialization ServiceStack.NuSpec = .nuget\Definition\Services Serialization ServiceStack.NuSpec
+		.nuget\Definition\XLabs.Caching.NuSpec = .nuget\Definition\XLabs.Caching.NuSpec
+		.nuget\Definition\XLabs.Charting.NuSpec = .nuget\Definition\XLabs.Charting.NuSpec
+		.nuget\Definition\XLabs.Cryptography.NuSpec = .nuget\Definition\XLabs.Cryptography.NuSpec
+		.nuget\Definition\XLabs.Forms.NuSpec = .nuget\Definition\XLabs.Forms.NuSpec
+		.nuget\Definition\XLabs.IoC.Autofac.NuSpec = .nuget\Definition\XLabs.IoC.Autofac.NuSpec
+		.nuget\Definition\XLabs.IoC.Ninject.NuSpec = .nuget\Definition\XLabs.IoC.Ninject.NuSpec
+		.nuget\Definition\XLabs.IoC.SimpleInjector.NuSpec = .nuget\Definition\XLabs.IoC.SimpleInjector.NuSpec
+		.nuget\Definition\XLabs.IoC.TinyIOC.NuSpec = .nuget\Definition\XLabs.IoC.TinyIOC.NuSpec
+		.nuget\Definition\XLabs.IoC.Unity.NuSpec = .nuget\Definition\XLabs.IoC.Unity.NuSpec
+		.nuget\Definition\XLabs.Platform.NuSpec = .nuget\Definition\XLabs.Platform.NuSpec
+		.nuget\Definition\XLabs.Serialization.JSON.NuSpec = .nuget\Definition\XLabs.Serialization.JSON.NuSpec
+		.nuget\Definition\XLabs.Serialization.ProtoBuf.NuSpec = .nuget\Definition\XLabs.Serialization.ProtoBuf.NuSpec
+		.nuget\Definition\XLabs.Serialization.ServiceStack.NuSpec = .nuget\Definition\XLabs.Serialization.ServiceStack.NuSpec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{BE825D31-2EA2-4CB9-B838-F3CFA84E3CC9}"

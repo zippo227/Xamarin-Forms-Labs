@@ -18,20 +18,21 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DocumentationFile>..\..\..\build\XLabs.Ioc.Unity.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\ReleaseBuild\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>..\..\..\..\ReleaseBuild\XLabs.Ioc.Unity.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\build\XLabs.Ioc.Unity.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\XLabs.Ioc\XLabs.Ioc.csproj">

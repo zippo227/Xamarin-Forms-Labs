@@ -193,6 +193,7 @@
 
 			var viewController = window.RootViewController;
 
+#if __IOS_10__
 			if (viewController == null || (viewController.PresentedViewController != null && viewController.PresentedViewController.GetType() == typeof(UIAlertController)))
 			{
 				window =
@@ -206,7 +207,7 @@
 
 				viewController = window.RootViewController;
 			}
-
+#endif 
 			while (viewController.PresentedViewController != null)
 			{
 				viewController = viewController.PresentedViewController;

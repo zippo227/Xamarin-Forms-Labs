@@ -40,8 +40,8 @@ namespace XLabs.Forms.Mvvm
 		/// <summary>
 		/// The page cache.
 		/// </summary>
-		private static readonly Dictionary<string, Tuple<ViewModel, Page>> PageCache =
-			new Dictionary<string, Tuple<ViewModel, Page>>();
+		private static readonly Dictionary<string, Tuple<ViewModel, object>> PageCache =
+			new Dictionary<string, Tuple<ViewModel, object>>();
 
 		/// <summary>
 		/// Gets or sets a value indicating whether [enable cache].
@@ -56,7 +56,7 @@ namespace XLabs.Forms.Mvvm
 		/// <typeparam name="TViewModel">The type of the t view model.</typeparam>
 		/// <param name="func">Function which returns an instance of the t view model.</param>
 		public static void Register<TView, TViewModel>(Func<IResolver, TViewModel> func = null)
-			where TView : Page
+			where TView : class
 			where TViewModel : ViewModel
 		{
 			TypeDictionary[typeof(TViewModel)] = typeof(TView);
@@ -78,16 +78,11 @@ namespace XLabs.Forms.Mvvm
 		/// Creates the page.
 		/// </summary>
 		/// <typeparam name="TViewModel">The type of the view model.</typeparam>
-		/// <param name="initialiser">
-		/// The create action.
-		/// </param>
-		/// <returns>
-		/// Page for the ViewModel.
-		/// </returns>
-		/// <exception cref="System.InvalidOperationException">
-		/// Unknown View for ViewModel.
-		/// </exception>
-		public static Page CreatePage<TViewModel>(Action<TViewModel, Page> initialiser = null)
+		/// <typeparam name="TPage">The type of the t page.</typeparam>
+		/// <param name="initialiser">The create action.</param>
+		/// <returns>Page for the ViewModel.</returns>
+		/// <exception cref="System.InvalidOperationException">Unknown View for ViewModel.</exception>
+		public static object CreatePage<TViewModel, TPage>(Action<TViewModel, TPage> initialiser = null)
 			where TViewModel : ViewModel
 		{
 			Type viewType;
@@ -102,7 +97,7 @@ namespace XLabs.Forms.Mvvm
 				throw new InvalidOperationException("Unknown View for ViewModel");
 			}
 
-			Page page;
+			object page;
 			TViewModel viewModel;
 			var pageCacheKey = string.Format("{0}:{1}", viewModelType.Name, viewType.Name);
 
@@ -110,31 +105,38 @@ namespace XLabs.Forms.Mvvm
 			{
 				var cache = PageCache[pageCacheKey];
 				viewModel = cache.Item1 as TViewModel;
-				page = cache.Item2;
+				page = (TPage) cache.Item2;
 			}
 			else
 			{
-				page = (Page)Activator.CreateInstance(viewType);
+				page = (TPage)Activator.CreateInstance(viewType);
 
 				viewModel = Resolver.Resolve<TViewModel>() ?? Activator.CreateInstance<TViewModel>();
 
-				viewModel.Navigation = new ViewModelNavigation(page.Navigation);
-
 				if (EnableCache)
 				{
-					PageCache[pageCacheKey] = new Tuple<ViewModel, Page>(viewModel, page);
+					PageCache[pageCacheKey] = new Tuple<ViewModel, object>(viewModel, page);
 				}
+			}
+
+			if (page is Page)
+			{
+				viewModel.Navigation = new ViewModelNavigation(((Page)page).Navigation);
 			}
 
 			if (initialiser != null)
 			{
-				initialiser(viewModel, page);
+				initialiser(viewModel, (TPage) page);
 			}
-
-			// forcing break reference on viewmodel in order to allow initializer to do its work
-			page.BindingContext = null;
-			page.BindingContext = viewModel;
-
+			
+			var pageBindable = page as BindableObject;
+			if (pageBindable != null)
+			{
+				// forcing break reference on viewmodel in order to allow initializer to do its work
+				pageBindable.BindingContext = null;
+				pageBindable.BindingContext = viewModel;
+			}
+			
 			return page;
 		}
 	}

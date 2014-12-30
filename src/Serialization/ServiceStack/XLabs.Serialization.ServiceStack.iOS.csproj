@@ -16,21 +16,22 @@
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>DEBUG;MONOTOUCH;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
+    <DocumentationFile>..\..\..\build\XLabs.Serialization.ServiceStack.iOS.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>True</Optimize>
-    <OutputPath>..\..\..\..\ReleaseBuild\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <DefineConstants>MONOTOUCH</DefineConstants>
-    <DocumentationFile>..\..\..\..\ReleaseBuild\XLabs.Serialization.ServiceStack.iOS.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\build\XLabs.Serialization.ServiceStack.iOS.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

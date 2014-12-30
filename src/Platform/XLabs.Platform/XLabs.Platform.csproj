@@ -22,18 +22,20 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\..\build\XLabs.Platform.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\..\build\XLabs.Platform.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
@@ -58,6 +60,7 @@
     <Compile Include="Services\GeoLocation\IGeolocator.cs" />
     <Compile Include="Services\GeoLocation\Position.cs" />
     <Compile Include="Services\GeoLocation\PositionExtensions.cs" />
+    <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\INetwork.cs" />
     <Compile Include="Services\INfcDevice.cs" />
     <Compile Include="Services\IO\IFileManager.cs" />

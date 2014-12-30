@@ -23,19 +23,20 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\..\build\XLabs.Ioc.SimpleInjector.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\ReleaseBuild\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\ReleaseBuild\XLabs.Ioc.SimpleInjector.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\build\XLabs.Ioc.SimpleInjector.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
@@ -52,15 +53,15 @@
     <Compile Include="SimpleInjectorResolver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Settings.StyleCop" />
     <None Include="packages.config" />
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="SimpleInjector.Diagnostics">
-      <HintPath>..\..\..\packages\SimpleInjector.2.6.1\lib\portable-net4+sl4+wp8+win8+wpa81\SimpleInjector.Diagnostics.dll</HintPath>
-    </Reference>
     <Reference Include="SimpleInjector">
-      <HintPath>..\..\..\packages\SimpleInjector.2.6.1\lib\portable-net4+sl4+wp8+win8+wpa81\SimpleInjector.dll</HintPath>
+      <HintPath>..\..\..\packages\SimpleInjector.2.7.0-beta1\lib\portable-net4+sl4+wp8+win8+wpa81\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Diagnostics">
+      <HintPath>..\..\..\packages\SimpleInjector.2.7.0-beta1\lib\portable-net4+sl4+wp8+win8+wpa81\SimpleInjector.Diagnostics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

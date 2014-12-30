@@ -20,7 +20,7 @@ namespace XLabs.Forms.Mvvm
 		/// <param name="implementor">The implementor.</param>
 		public ViewModelNavigation(INavigation implementor)
 		{
-			_implementor = implementor;
+			this._implementor = implementor;
 		}
 
 		// This method can be considered unclean in the pure MVVM sense, 
@@ -32,7 +32,7 @@ namespace XLabs.Forms.Mvvm
 		/// <returns>Task.</returns>
 		public Task PushAsync(Page page)
 		{
-			return _implementor.PushAsync(page);
+			return this._implementor.PushAsync(page);
 		}
 
 		/// <summary>
@@ -44,7 +44,7 @@ namespace XLabs.Forms.Mvvm
 		public Task PushAsync<TViewModel>(Action<TViewModel, Page> activateAction = null)
 			where TViewModel : ViewModel
 		{
-			return PushAsync(ViewFactory.CreatePage<TViewModel>(activateAction));
+			return this.PushAsync(ViewFactory.CreatePage<TViewModel, Page>(activateAction) as Page);
 		}
 
 		/// <summary>
@@ -53,7 +53,7 @@ namespace XLabs.Forms.Mvvm
 		/// <returns>Task.</returns>
 		public Task PopAsync()
 		{
-			return _implementor.PopAsync();
+			return this._implementor.PopAsync();
 		}
 
 		/// <summary>
@@ -62,7 +62,7 @@ namespace XLabs.Forms.Mvvm
 		/// <returns>Task.</returns>
 		public Task PopToRootAsync()
 		{
-			return _implementor.PopToRootAsync();
+			return this._implementor.PopToRootAsync();
 		}
 
 		// This method can be considered unclean in the pure MVVM sense, 
@@ -74,7 +74,7 @@ namespace XLabs.Forms.Mvvm
 		/// <returns>Task.</returns>
 		public Task PushModalAsync(Page page)
 		{
-			return _implementor.PushModalAsync(page);
+			return this._implementor.PushModalAsync(page);
 		}
 
 
@@ -87,7 +87,7 @@ namespace XLabs.Forms.Mvvm
 		public Task PushModalAsync<TViewModel>(Action<TViewModel, Page> activateAction = null)
 			where TViewModel : ViewModel
 		{
-			return PushModalAsync(ViewFactory.CreatePage<TViewModel>(activateAction));
+			return this.PushModalAsync(ViewFactory.CreatePage<TViewModel, Page>(activateAction) as Page);
 		}
 
 		/// <summary>
@@ -96,7 +96,7 @@ namespace XLabs.Forms.Mvvm
 		/// <returns>Task.</returns>
 		public Task PopModalAsync()
 		{
-			return _implementor.PopModalAsync();
+			return this._implementor.PopModalAsync();
 		}
 	}
 }
