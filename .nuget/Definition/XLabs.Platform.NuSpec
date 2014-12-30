@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>XLabs.Platform</id>
-		<title>XLabs Platform</title>
+		<title>XLabs - Platform</title>
 		<tags>Xamarin.Forms XLabs Platform</tags>
 		<version>1.3.0-beta1</version>
 		<authors>XLabs Team</authors>
