@@ -209,6 +209,7 @@
 				{"ImageButton", typeof(ButtonPage)},
 				{"ImageGallery", typeof(ImageGalleryPage)},
 				{"Popup", typeof(PopupPage)},
+				{"RadioButton",typeof(RadioButtonPage)},
 				{"RepeaterView", typeof(RepeaterViewPage)},
 				{"Segment", typeof(SegmentPage)},
 				{"Separator", typeof(SeparatorPage)},
