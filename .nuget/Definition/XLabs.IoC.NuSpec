@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
 	<metadata>
-		<id>XLabs.IoC.Unity</id>
-		<title>XLabs - IoC - Unity</title>
-		<tags>Xamarin XLabs IoC Unity</tags>
+		<id>XLabs.IoC</id>
+		<title>XLabs - IoC</title>
+		<tags>Xamarin XLabs IoC</tags>
 		<version>1.3.0-beta1</version>
 		<authors>XLabs Team</authors>
 		<licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
@@ -13,7 +13,7 @@
 		<description>
 			XLabs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
 
-			This package contains helpers to work with IoC and Unity
+			This package contains core interfaces for IoC
 		</description>
 		<summary>
 			XLabs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
@@ -23,17 +23,15 @@
 		</releaseNotes>
 		<language>en-US</language>
 		<dependencies>
-			<dependency id="Unity" version="3.5.1405-prerelease" />
-			<dependency id="XLabs.IoC" version="1.3.0-pre2" />
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="..\..\build\**\XLabs.IoC.Unity.dll" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		<file src="..\..\build\**\XLabs.IoC.Unity.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		<file src="..\..\build\**\XLabs.IoC.Unity.pdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		<file src="..\..\build\**\XLabs.IoC.Unity.xml" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.IoC.dll" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.IoC.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.IoC.pdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.IoC.xml" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 
 		<!-- Source Files for Symbol Server -->
-		<file src="..\..\src\IoC\XLabs.IoC.Unity\**\*.cs" target="src" />
+		<file src="..\..\src\IoC\XLabs.IoC\**\*.cs" target="src" />
 	</files>
 </package>
