@@ -24,18 +24,14 @@
 		<language>en-US</language>
 		<dependencies>
 			<dependency id="Portable.Ninject" version="3.2.0" />
+			<dependency id="XLabs.IoC" version="1.3.0-pre2" />
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="..\..\build\**\XLabs.IoC.dll" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		<file src="..\..\build\**\XLabs.IoC.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		<file src="..\..\build\**\XLabs.IoC.pdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		<file src="..\..\build\**\XLabs.IoC.xml" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-
-		<file src="..\..\build\**\XLabs.IoC.Ninject.dll" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		<file src="..\..\build\**\XLabs.IoC.Ninject.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		<file src="..\..\build\**\XLabs.IoC.Ninject.pdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		<file src="..\..\build\**\XLabs.IoC.Ninject.xml" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.IoC.Ninject.dll" target="lib\portable-net45+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch" />
+		<file src="..\..\build\**\XLabs.IoC.Ninject.dll.mdb" target="lib\portable-net45+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch" />
+		<file src="..\..\build\**\XLabs.IoC.Ninject.pdb" target="lib\portable-net45+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch" />
+		<file src="..\..\build\**\XLabs.IoC.Ninject.xml" target="lib\portable-net45+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch" />
 
 		<!-- Source Files for Symbol Server -->
 		<file src="..\..\src\IoC\XLabs.IoC.Ninject\**\*.cs" target="src" />
