@@ -12,8 +12,6 @@ using Android.Widget;
 using Xamarin.Forms;
 
 using Xamarin.Forms.Platform.Android;
-using Xamarin.Forms.Labs.Controls;
-using Xamarin.Forms.Labs;
 using XLabs.Forms.Controls;
 
 
