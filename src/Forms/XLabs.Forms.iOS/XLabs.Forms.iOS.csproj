@@ -90,6 +90,8 @@
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
     <Compile Include="Controls\ImageGallery\ImageGalleryView.cs" />
+    <Compile Include="Controls\RadioButton\RadioButtonRenderer.cs" />
+    <Compile Include="Controls\RadioButton\RadioButtonView.cs" />
     <Compile Include="Controls\SegmentedControlView\SegmentedControlViewRenderer.cs" />
     <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
     <Compile Include="Controls\SensorBar\UISensorBar.cs" />

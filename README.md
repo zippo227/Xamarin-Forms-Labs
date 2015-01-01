@@ -25,6 +25,7 @@ The v.1.2 is the stable branch.
  - [HybridWebView (alpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/HybridWebView)
  - GridView (IOS beta)
  - ImageButton (beta)
+ - RadioButton(beta)
  - RepeaterView (beta)
  - [SegmentedControlView (IOS beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/SegmentedControl)
  - Web Image (beta) 

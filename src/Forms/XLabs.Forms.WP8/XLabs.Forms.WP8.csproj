@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Controls\HyperLinkLabel\HyperLinkLabelRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="Controls\RadioButton\RadioButtonRenderer.cs" />
     <Compile Include="Controls\SensorBar\SensorBarControl.xaml.cs">
       <DependentUpon>SensorBarControl.xaml</DependentUpon>
     </Compile>
