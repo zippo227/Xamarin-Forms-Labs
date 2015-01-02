@@ -4,9 +4,8 @@ using MonoTouch.UIKit;
 using Xamarin.Forms;
 
 using Xamarin.Forms.Platform.iOS;
-using Xamarin.Forms.Labs.Controls;
-using Xamarin.Forms.Labs.iOS.Controls;
 using XLabs.Forms.Controls;
+using XLabs.Platform.Extensions;
 
 
 [assembly: ExportRenderer(typeof(CustomRadioButton), typeof(RadioButtonRenderer))]
