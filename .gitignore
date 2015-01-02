@@ -71,6 +71,9 @@ ipch/
 *.vsp
 *.vspx
 
+# Visual Studio cache dir
+*.sln.ide/
+
 # TFS 2012 Local Workspace
 $tf/
 
