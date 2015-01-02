@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 namespace XLabs.Forms.Mvvm
 {
 	using XLabs.Data;
+	using XLabs.Platform.Services;
 
 	/// <summary>
 	/// View model base class.
@@ -25,7 +26,7 @@ namespace XLabs.Forms.Mvvm
 		/// Gets or sets the navigation.
 		/// </summary>
 		/// <value>The navigation.</value>
-		public ViewModelNavigation Navigation { get; set; }
+		public INavigationService Navigation { get; set; }
 
 		private bool _isBusy;
 

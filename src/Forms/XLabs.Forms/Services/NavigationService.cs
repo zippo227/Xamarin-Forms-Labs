@@ -88,6 +88,27 @@ namespace XLabs.Forms.Services
 		}
 
 		/// <summary>
+		/// Navigates to.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="parameter">The parameter.</param>
+		/// <param name="animated">if set to <c>true</c> [animated].</param>
+		/// <exception cref="System.ArgumentException">Page Type must be based on Xamarin.Forms.Page</exception>
+		public void NavigateTo<T>(object parameter = null, bool animated = true) where T : class
+		{
+			var p = Activator.CreateInstance(typeof(T));
+
+			if (p == null || !p.GetType().GetTypeInfo().IsAssignableFrom(typeof(Xamarin.Forms.Page).GetTypeInfo()))
+			{
+				throw new ArgumentException("Page Type must be based on Xamarin.Forms.Page");
+			}
+
+			var nav = Xamarin.Forms.DependencyService.Get<Xamarin.Forms.INavigation>();
+
+			nav.PushAsync((Xamarin.Forms.Page)p, animated).Start();
+		}
+
+		/// <summary>
 		/// Goes back.
 		/// </summary>
 		public void GoBack()
@@ -103,7 +124,9 @@ namespace XLabs.Forms.Services
 		/// <exception cref="System.NotImplementedException"></exception>
 		public void GoForward()
 		{
+#if DEBUG
 			throw new NotImplementedException();
+#endif
 		}
 	}
 }

@@ -2,6 +2,9 @@
 {
 	using System;
 
+	/// <summary>
+	/// Interface INavigationService
+	/// </summary>
 	public interface INavigationService
 	{
 		/// <summary>
@@ -26,6 +29,15 @@
 		/// <param name="parameter">The parameter.</param>
 		/// <param name="animated">if set to <c>true</c> [animated].</param>
 		void NavigateTo(Type pageType, object parameter = null, bool animated = true);
+
+
+		/// <summary>
+		/// Navigates to.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="parameter">The parameter.</param>
+		/// <param name="animated">if set to <c>true</c> [animated].</param>
+		void NavigateTo<T>(object parameter = null, bool animated = true) where T : class;
 
 		/// <summary>
 		/// Goes back.

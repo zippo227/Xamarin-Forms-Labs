@@ -5,6 +5,8 @@ using XLabs.Ioc;
 
 namespace XLabs.Forms.Mvvm
 {
+	using XLabs.Platform.Services;
+
 	/// <summary>
 	/// Class ViewTypeAttribute.
 	/// </summary>
@@ -119,10 +121,7 @@ namespace XLabs.Forms.Mvvm
 				}
 			}
 
-			if (page is Page)
-			{
-				viewModel.Navigation = new ViewModelNavigation(((Page)page).Navigation);
-			}
+			viewModel.Navigation = Resolver.Resolve<INavigationService>();
 
 			if (initialiser != null)
 			{
