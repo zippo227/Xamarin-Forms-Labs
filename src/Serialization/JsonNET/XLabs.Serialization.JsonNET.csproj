@@ -39,6 +39,7 @@
     <DocumentationFile>..\..\..\build\XLabs.Serialization.JsonNET.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ContractResolverDelegate.cs" />
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
