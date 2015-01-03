@@ -58,6 +58,7 @@
     <Compile Include="Controls\CheckboxCell.cs" />
     <Compile Include="Controls\CircleImage.cs" />
     <Compile Include="Controls\CollectionChangedHandle.cs" />
+    <Compile Include="Controls\ContentPresenter.cs" />
     <Compile Include="Controls\DragContentView.cs" />
     <Compile Include="Controls\DynamicListView.cs" />
     <Compile Include="Controls\EditableListView.cs" />
