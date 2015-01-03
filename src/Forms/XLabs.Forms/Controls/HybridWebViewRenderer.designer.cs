@@ -17,7 +17,6 @@ namespace XLabs.Forms.Controls
 		private const string FuncFormat = "^(file|http|https)://(local|LOCAL)/Func(=|%3D)(?<CallbackIdx>[\\d]+)(&|%26)(?<FuncName>[\\w]+)/";
 		private static readonly Regex Expression = new Regex(Format);
 		private static readonly Regex FuncExpression = new Regex(FuncFormat);
-
 #if __ANDROID__
 		private void InjectNativeFunctionScript()
 		{
@@ -83,21 +82,24 @@ namespace XLabs.Forms.Controls
 
 		private void Bind()
 		{
-			this.Element.PropertyChanged += this.Model_PropertyChanged;
-			if (this.Element.Uri != null)
+			if (Element != null)
 			{
-				this.Load (this.Element.Uri);
-			}
-			else
-			{
-				LoadSource();
-			}
+				this.Element.PropertyChanged += this.Model_PropertyChanged;
+				if (this.Element.Uri != null)
+				{
+					this.Load (this.Element.Uri);
+				}
+				else
+				{
+					LoadSource();
+				}
 
-			this.Element.PropertyChanged += this.Model_PropertyChanged;
-			this.Element.JavaScriptLoadRequested += OnInjectRequest;
-			this.Element.LoadFromContentRequested += LoadFromContent;
-			this.Element.LoadContentRequested += LoadContent;
-            this.Element.Navigating += this.OnNavigating;
+				this.Element.PropertyChanged += this.Model_PropertyChanged;
+				this.Element.JavaScriptLoadRequested += OnInjectRequest;
+				this.Element.LoadFromContentRequested += LoadFromContent;
+				this.Element.LoadContentRequested += LoadContent;
+	            this.Element.Navigating += this.OnNavigating;
+	        }
 		}
 
 		private void LoadSource()
