@@ -5,6 +5,7 @@ using Xamarin.Forms;
 
 using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
+using XLabs.Platform.Extensions;
 
 
 [assembly: ExportRenderer(typeof(CustomRadioButton), typeof(RadioButtonRenderer))]
