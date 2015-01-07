@@ -84,7 +84,7 @@ namespace XLabs.Forms.Mvvm
 		/// <param name="initialiser">The initialiser.</param>
 		/// <returns>System.Object.</returns>
 		/// <exception cref="System.InvalidOperationException">Unknown View for ViewModel</exception>
-		public static object CreatePage(Type viewModelType, Action<object, object> initialiser)
+		public static object CreatePage(Type viewModelType, Action<object, object> initialiser = null)
 		{
 			Type viewType;
 
