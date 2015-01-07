@@ -25,8 +25,13 @@
 	/// <summary>
 	/// Class App.
 	/// </summary>
-	public class App
+	public class App : Application
 	{
+		public App ()
+		{
+			Init ();
+			MainPage = GetMainPage ();
+		}
 		/// <summary>
 		/// Initializes the application.
 		/// </summary>

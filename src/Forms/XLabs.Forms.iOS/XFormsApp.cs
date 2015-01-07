@@ -2,8 +2,8 @@ namespace XLabs.Forms
 {
     using System;
 
-    using MonoTouch.Foundation;
-    using MonoTouch.UIKit;
+    using Foundation;
+    using UIKit;
     using Xamarin.Forms.Platform.iOS;
 
     using XLabs.Platform.Mvvm;
