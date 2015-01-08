@@ -87,15 +87,15 @@
   <ItemGroup>
     <Compile Include="..\XLabs.Platform\device\Accelerometer.designer.cs">
       <Link>Device\Accelerometer.designer.cs</Link>
-      <DependentUpon>..\Device\Accelerometer.cs</DependentUpon>
+      <DependentUpon>Accelerometer.cs</DependentUpon>
     </Compile>
     <Compile Include="..\XLabs.Platform\device\Battery.designer.cs">
       <Link>Device\Battery.designer.cs</Link>
-      <DependentUpon>..\Device\Battery.cs</DependentUpon>
+      <DependentUpon>Battery.cs</DependentUpon>
     </Compile>
     <Compile Include="..\XLabs.Platform\device\Gyroscope.designer.cs">
       <Link>Device\Gyroscope.designer.cs</Link>
-      <DependentUpon>..\Device\Gyroscope.cs</DependentUpon>
+      <DependentUpon>Gyroscope.cs</DependentUpon>
     </Compile>
     <Compile Include="..\XLabs.Platform\services\io\FileManager.cs">
       <Link>Services\IO\FileManager.cs</Link>

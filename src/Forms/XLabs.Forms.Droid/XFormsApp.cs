@@ -9,7 +9,7 @@ namespace XLabs.Forms
     /// <summary>
     /// Class XFormsApplicationDroid.
     /// </summary>
-    public class XFormsApplicationDroid : FormsApplicationActivity
+	public class XFormsApplicationDroid : FormsApplicationActivity
     {
         /// <summary>
         /// Gets or sets the destroy.
@@ -305,9 +305,6 @@ namespace XLabs.Forms
     /// </summary>
     public class XFormsAppDroid : XFormsApp<XFormsApplicationDroid>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="XFormsAppDroid"/> class.
-        /// </summary>
         public XFormsAppDroid() { }
 
         public XFormsAppDroid(XFormsApplicationDroid app) : base(app) { }
