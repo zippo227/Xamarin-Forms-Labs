@@ -109,9 +109,9 @@ namespace XLabs.Forms.Mvvm
 			}
 			else
 			{
-				page = Activator.CreateInstance(viewType);
-
 				viewModel = (Resolver.Resolve(viewModelType) ?? Activator.CreateInstance(viewModelType)) as IViewModel;
+
+				page = Activator.CreateInstance(viewType);
 
 				if (EnableCache)
 				{
