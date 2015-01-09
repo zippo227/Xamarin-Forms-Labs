@@ -52,16 +52,14 @@ namespace XLabs.Forms.Mvvm
 		}
 		
 		/// <summary>
-		/// Called when BaseView appears.
+		/// Called when the view appears.
 		/// </summary>
-		/// <param name="baseView">The BaseView calling the method.</param>
-		public virtual void OnViewAppearing(BaseView baseView) { }
+		public virtual void OnViewAppearing() { }
 		
 		/// <summary>
-		/// Called when BaseView disappears.
+		/// Called when the view disappears.
 		/// </summary>
-		/// <param name="baseView">The BaseView calling the method.</param>
-		public virtual void OnViewDisappearing(BaseView baseView) { }
+		public virtual void OnViewDisappearing() { }
 		
 		#region Protected methods
 		/// <summary>
