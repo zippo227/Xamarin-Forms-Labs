@@ -50,7 +50,19 @@ namespace XLabs.Forms.Mvvm
 				SetProperty<bool>(ref _isBusy, value);
 			}
 		}
-
+		
+		/// <summary>
+		/// Called when BaseView appears.
+		/// </summary>
+		/// <param name="baseView">The BaseView calling the method.</param>
+		public virtual void OnViewAppearing(BaseView baseView) { }
+		
+		/// <summary>
+		/// Called when BaseView disappears.
+		/// </summary>
+		/// <param name="baseView">The BaseView calling the method.</param>
+		public virtual void OnViewDisappearing(BaseView baseView) { }
+		
 		#region Protected methods
 		/// <summary>
 		/// Changes the property if the value is different and invokes PropertyChangedEventHandler.
