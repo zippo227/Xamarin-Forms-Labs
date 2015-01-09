@@ -25,7 +25,7 @@
 			get
 			{
 				return _navigateToViewModel ?? (_navigateToViewModel = new Command(
-																		   async () => await Navigation.PushAsync<NewPageViewModel>(),
+																		   async () => Navigation.NavigateTo<NewPageViewModel>(),
 																		   () => true));
 			}
 		}

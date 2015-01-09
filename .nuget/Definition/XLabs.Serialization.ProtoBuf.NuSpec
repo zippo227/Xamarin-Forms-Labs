@@ -27,10 +27,10 @@
 		</dependencies>
 	</metadata>
 	<files>	
-		<file src="..\..\build\**\XLabs.Serialization.ProtoBuf.dll*" target="lib\portable-net45+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch" />
-		<file src="..\..\build\**\XLabs.Serialization.ProtoBuf.mdb*" target="lib\portable-net45+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch" />
-		<file src="..\..\build\**\XLabs.Serialization.ProtoBuf.pdb*" target="lib\portable-net45+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch" />
-		<file src="..\..\build\**\XLabs.Serialization.ProtoBuf.xml*" target="lib\portable-net45+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch" />
+		<file src="..\..\build\**\XLabs.Serialization.ProtoBuf.dll*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Serialization.ProtoBuf.mdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Serialization.ProtoBuf.pdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Serialization.ProtoBuf.xml*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 		
 		<!-- Source Files for Symbol Server -->
 		<file src="..\..\src\Serialization\ProtoBuf.NET\**\*.cs" target="src" />

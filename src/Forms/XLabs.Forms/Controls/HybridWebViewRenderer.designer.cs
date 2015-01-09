@@ -17,7 +17,6 @@ namespace XLabs.Forms.Controls
 		private const string FuncFormat = "^(file|http|https)://(local|LOCAL)/Func(=|%3D)(?<CallbackIdx>[\\d]+)(&|%26)(?<FuncName>[\\w]+)/";
 		private static readonly Regex Expression = new Regex(Format);
 		private static readonly Regex FuncExpression = new Regex(FuncFormat);
-
 #if __ANDROID__
 		private void InjectNativeFunctionScript()
 		{
@@ -68,9 +67,10 @@ namespace XLabs.Forms.Controls
 			this.Inject(builder.ToString());
 		}
 #endif
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
 
-		private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-		{
 			if (e.PropertyName == "Uri")
 			{
 				this.Load(this.Element.Uri);
@@ -83,21 +83,22 @@ namespace XLabs.Forms.Controls
 
 		private void Bind()
 		{
-			this.Element.PropertyChanged += this.Model_PropertyChanged;
-			if (this.Element.Uri != null)
+			if (Element != null)
 			{
-				this.Load (this.Element.Uri);
-			}
-			else
-			{
-				LoadSource();
-			}
+				if (this.Element.Uri != null)
+				{
+					this.Load (this.Element.Uri);
+				}
+				else
+				{
+					LoadSource();
+				}
 
-			this.Element.PropertyChanged += this.Model_PropertyChanged;
-			this.Element.JavaScriptLoadRequested += OnInjectRequest;
-			this.Element.LoadFromContentRequested += LoadFromContent;
-			this.Element.LoadContentRequested += LoadContent;
-            this.Element.Navigating += this.OnNavigating;
+				this.Element.JavaScriptLoadRequested += OnInjectRequest;
+				this.Element.LoadFromContentRequested += LoadFromContent;
+				this.Element.LoadContentRequested += LoadContent;
+	            this.Element.Navigating += this.OnNavigating;
+	        }
 		}
 
 		private void LoadSource()
@@ -121,7 +122,6 @@ namespace XLabs.Forms.Controls
 		{
 			if (oldElement != null)
 			{
-				oldElement.PropertyChanged -= this.Model_PropertyChanged;
 				oldElement.JavaScriptLoadRequested -= OnInjectRequest;
 				oldElement.LoadFromContentRequested -= LoadFromContent;
 				oldElement.LoadContentRequested -= LoadContent;
