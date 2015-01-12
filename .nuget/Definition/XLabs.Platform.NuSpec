@@ -30,6 +30,7 @@
 			<group targetFramework="wp80">
 				<dependency id="WPControls" version="1.5.2" /> 
 				<dependency id="ExifLib.PCL" version="1.0.0" />
+				<dependency id="XLabs.Core" version="2.0.0-pre1" />
 			</group>
 		</dependencies>
 		<frameworkAssemblies>

@@ -18,12 +18,12 @@
 		<summary>
 			XLabs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
 		</summary>
+		<releaseNotes>
+
+		</releaseNotes>
 		<language>en-US</language>
 		<dependencies>
 		</dependencies>
-		<frameworkAssemblies>
-			<frameworkAssembly assemblyName="Mono.Android.Export" targetFramework="MonoAndroid" />
-		</frameworkAssemblies>
 	</metadata>
 	<files>
 		<file src="..\..\build\**\XLabs.Core.dll" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
