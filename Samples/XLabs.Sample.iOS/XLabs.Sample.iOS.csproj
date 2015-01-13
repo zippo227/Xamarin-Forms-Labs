@@ -144,12 +144,46 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Default-568h%402x.png" />
-    <BundleResource Include="Resources\fonts\Roboto-Light.ttf">
+    <BundleResource Include="Images\Default-568h%402x.png" />
+    <BundleResource Include="Images\fonts\Roboto-Light.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
-    <BundleResource Include="Resources\BusyEarnin.mp3" />
-    <BundleResource Include="Resources\ad16.jpg" />
+    <BundleResource Include="Images\BusyEarnin.mp3" />
+    <BundleResource Include="Images\ad16.jpg" />
+    <BundleResource Include="Images\fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Images\fonts\Open 24 Display St.ttf" />
+    <BundleResource Include="Images\icon_facebook.png" />
+    <BundleResource Include="Images\icon_google.png" />
+    <BundleResource Include="Images\icon_microsoft.png" />
+    <BundleResource Include="Images\icon_twitter.png" />
+    <BundleResource Include="Images\panic.jpg" />
+    <BundleResource Include="Images\imgNotAvailable.png" />
+    <BundleResource Include="Images\settings20.png" />
+    <BundleResource Include="Images\settings20_32.png" />
+    <BundleResource Include="Images\pie27_32.png" />
+    <BundleResource Include="Images\pie30_32.png" />
+    <BundleResource Include="Images\services1_32.png" />
+    <BundleResource Include="Images\ToolbarGradient1.png" />
+    <BundleResource Include="Images\ToolbarGradient2.png" />
+    <BundleResource Include="Images\blackbackground.png" />
+    <BundleResource Include="Images\bubbles.jpg" />
+    <BundleResource Include="Images\Icon.png" />
+    <BundleResource Include="Images\Icon%402x.png" />
+    <BundleResource Include="Images\Icon-60%402x.png" />
+    <BundleResource Include="Images\Icon-72.png" />
+    <BundleResource Include="Images\Icon-72%402x.png" />
+    <BundleResource Include="Images\Icon-76.png" />
+    <BundleResource Include="Images\Icon-76%402x.png" />
+    <BundleResource Include="Images\Icon-Small.png" />
+    <BundleResource Include="Images\Icon-Small%402x.png" />
+    <BundleResource Include="Images\Icon-Small-50.png" />
+    <BundleResource Include="Images\Icon-Small-50%402x.png" />
+    <BundleResource Include="Images\Icon-Small-40.png" />
+    <BundleResource Include="Images\Icon-Small-40%402x.png" />
+    <BundleResource Include="Images\Default.png" />
+    <BundleResource Include="Images\Default%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -159,10 +193,6 @@
     <None Include="Entitlements.plist" />
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
-    <BundleResource Include="Resources\fonts\fontawesome-webfont.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </BundleResource>
-    <BundleResource Include="Resources\fonts\Open 24 Display St.ttf" />
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
     <InterfaceDefinition Include="SensorStoryboardController_iPhone.storyboard" />
@@ -231,48 +261,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <ItemGroup>
-    <BundleResource Include="Resources\icon_facebook.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\icon_google.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\icon_microsoft.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\icon_twitter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\panic.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\imgNotAvailable.png" />
-    <BundleResource Include="Resources\settings20.png" />
-    <BundleResource Include="Resources\settings20_32.png" />
-    <BundleResource Include="Resources\pie27_32.png" />
-    <BundleResource Include="Resources\pie30_32.png" />
-    <BundleResource Include="Resources\services1_32.png" />
-    <BundleResource Include="Resources\ToolbarGradient1.png" />
-    <BundleResource Include="Resources\ToolbarGradient2.png" />
-    <BundleResource Include="Resources\blackbackground.png" />
-    <BundleResource Include="Resources\bubbles.jpg" />
-    <BundleResource Include="Resources\Icon.png" />
-    <BundleResource Include="Resources\Icon%402x.png" />
-    <BundleResource Include="Resources\Icon-60%402x.png" />
-    <BundleResource Include="Resources\Icon-72.png" />
-    <BundleResource Include="Resources\Icon-72%402x.png" />
-    <BundleResource Include="Resources\Icon-76.png" />
-    <BundleResource Include="Resources\Icon-76%402x.png" />
-    <BundleResource Include="Resources\Icon-Small.png" />
-    <BundleResource Include="Resources\Icon-Small%402x.png" />
-    <BundleResource Include="Resources\Icon-Small-50.png" />
-    <BundleResource Include="Resources\Icon-Small-50%402x.png" />
-    <BundleResource Include="Resources\Icon-Small-40.png" />
-    <BundleResource Include="Resources\Icon-Small-40%402x.png" />
-    <BundleResource Include="Resources\Default.png" />
-    <BundleResource Include="Resources\Default%402x.png" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="..\XLabs.Sample.WP\HTML\canvasjs.min.js">
       <Link>HTML\canvasjs.min.js</Link>
