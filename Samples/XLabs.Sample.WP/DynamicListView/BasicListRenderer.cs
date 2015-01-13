@@ -55,7 +55,7 @@ namespace XLabs.Sample.WP.DynamicListView
 		}
 	}
 
-	public class BasicListContentControl : ContentControl
+	public class BasicListContentControl : System.Windows.Controls.ContentControl
 	{
 		public DataTemplate DateTimeTemplate { get; set; }
 
