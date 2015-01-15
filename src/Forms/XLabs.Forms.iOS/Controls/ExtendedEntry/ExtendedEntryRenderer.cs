@@ -39,12 +39,15 @@ namespace XLabs.Forms.Controls
 
 			var view = (ExtendedEntry)Element;
 
-			SetFont(view);
-			SetTextAlignment(view);
-			SetBorder(view);
-			SetPlaceholderTextColor(view);
+			if (view != null)
+			{
+				SetFont (view);
+				SetTextAlignment (view);
+				SetBorder (view);
+				SetPlaceholderTextColor (view);
 
-			ResizeHeight();
+				ResizeHeight ();
+			}
 
 			if (e.OldElement == null)
 			{
