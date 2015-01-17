@@ -184,4 +184,16 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\RadioButton\checked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\RadioButton\checked%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\RadioButton\unchecked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\RadioButton\unchecked%402x.png" />
+  </ItemGroup>
 </Project>
