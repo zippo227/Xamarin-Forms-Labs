@@ -75,9 +75,7 @@
 ##      o	XLabs.Services.Serialization.ServiceStackV3.WP8.dll (WinPRT - Windows Phone 8)
 ##  •	Dependencies
 ##      o	“XLabs - Core” NuGet
-##      o	“ServiceStack.Text” NuGet
-##      o	“ServiceStack.Text.MonoTouch” NuGet
-##      o	“ServiceStack.Text.WP8” NuGet
+##      o	“XLabs - Serialization” NuGet
 ##
 ##  “XLabs - Caching” NuGet
 ##  •	Contents:
