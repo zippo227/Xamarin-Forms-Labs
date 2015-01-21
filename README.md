@@ -30,7 +30,7 @@ The v.1.2 is the stable branch.
  - [SegmentedControlView (IOS beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/SegmentedControl)
  - Web Image (beta) 
  - IconButton (IOS beta)
- - [CircleImage (IOS/Android anpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/CircleImage)
+ - [CircleImage (IOS/Android alpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/CircleImage)
  - HyperLinkLabel
 
 **Available services (Beta)**
