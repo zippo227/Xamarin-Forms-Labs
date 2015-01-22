@@ -4,7 +4,7 @@
     <id>XLabs.Platform</id>
     <title>XLabs - Platform</title>
     <tags>Xamarin.Forms XLabs Platform</tags>
-    <version>2.0.0-pre7</version>
+    <version>2.0.0-pre91</version>
     <authors>XLabs Team</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -25,12 +25,12 @@
     <dependencies>
       <group>
         <dependency id="ExifLib.PCL" version="1.0.0" />
-        <dependency id="XLabs.Core" version="2.0.0-pre7" />
+        <dependency id="XLabs.Core" version="2.0.0-pre91" />
       </group>
       <group targetFramework="wp80">
         <dependency id="WPControls" version="1.5.2" /> 
         <dependency id="ExifLib.PCL" version="1.0.0" />
-        <dependency id="XLabs.Core" version="2.0.0-pre7" />
+        <dependency id="XLabs.Core" version="2.0.0-pre91" />
       </group>
     </dependencies>
     <frameworkAssemblies>
@@ -38,21 +38,24 @@
     </frameworkAssemblies>
     <references>
       <group targetFramework="MonoAndroid">
+        <reference file="XLabs.Platform.dll"/>
         <reference file="XLabs.Platform.Droid.dll"/>
       </group>
       <group targetFramework="Xamarin.iOS10">
+        <reference file="XLabs.Platform.dll"/>
         <reference file="XLabs.Platform.iOS.dll"/>
       </group>
       <group targetFramework="wp8">
+        <reference file="XLabs.Platform.dll"/>
         <reference file="XLabs.Platform.WP8.dll"/>
       </group>
     </references>
   </metadata>
   <files>
-    <file src="..\..\build\**\XLabs.Platform.dll" target="lib\portable-net45+netcore45+wp8" />
-    <file src="..\..\build\**\XLabs.Platform.dll.mdb" target="lib\portable-net45+netcore45+wp8" />
-    <file src="..\..\build\**\XLabs.Platform.pdb" target="lib\portable-net45+netcore45+wp8" />
-    <file src="..\..\build\**\XLabs.Platform.xml" target="lib\portable-net45+netcore45+wp8" />
+    <file src="..\..\build\**\XLabs.Platform.dll" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\build\**\XLabs.Platform.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\build\**\XLabs.Platform.pdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="..\..\build\**\XLabs.Platform.xml" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 
     <file src="..\..\build\**\XLabs.Platform.Droid.dll" target="lib\MonoAndroid" />
     <file src="..\..\build\**\XLabs.Platform.Droid.dll.mdb" target="lib\MonoAndroid" />
