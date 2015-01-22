@@ -56,7 +56,8 @@
 		///     Initializes the specified context.
 		/// </summary>
 		/// <param name="app">The native application.</param>
-		protected override void OnInit(Application app)
+		/// <param name="initServices">Should initialize services.</param>
+		protected override void OnInit(Application app,bool initServices = true)
 		{
 			AppContext.Startup += (o, e) => OnStartup();
 			AppContext.Exit += (o, e) => OnClosing();
@@ -67,6 +68,9 @@
 			{
 				svc.Activated += (o, e) => OnResumed();
 				svc.Deactivated += (o, e) => OnSuspended();
+			}
+			if (initServices) {
+				//TODO : REGISTER SERVICES
 			}
 
 			base.OnInit(app);

@@ -1,3 +1,11 @@
+using Xamarin.Forms;
+using XLabs.Platform.Services;
+using XLabs.Platform.Services.Geolocation;
+using XLabs.Platform.Services.Media;
+using XLabs.Platform.Services.Email;
+using XLabs.Platform.Device;
+using XLabs.Platform.Services.IO;
+
 namespace XLabs.Forms
 {
     using System;
@@ -152,7 +160,8 @@ namespace XLabs.Forms
         /// Called when [initialize].
         /// </summary>
         /// <param name="app">The application.</param>
-        protected override void OnInit(XFormsApplicationDelegate app)
+		/// <param name="initServices">Should initialize services.</param>
+		protected override void OnInit(XFormsApplicationDelegate app, bool initServices = true)
         {
             AppContext.FinishedLaunchingEvent += (o, e) => { OnStartup(); };
             AppContext.WillTerminateEvent += (o, e) => { OnClosing(); };
@@ -160,7 +169,18 @@ namespace XLabs.Forms
             AppContext.WillEnterForegroundEvent += (o, e) => { OnResumed(); };
             AppDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 
-            base.OnInit(app);
+			if (initServices) {
+				DependencyService.Register<TextToSpeechService> ();
+				DependencyService.Register<Geolocator> ();
+				DependencyService.Register<MediaPicker> ();
+				DependencyService.Register<SoundService> ();
+				DependencyService.Register<SoundService> ();
+				DependencyService.Register<EmailService> ();
+				DependencyService.Register<FileManager> ();
+				DependencyService.Register<AppleDevice> ();
+			}
+            
+			base.OnInit(app);
         }
     }
 }
