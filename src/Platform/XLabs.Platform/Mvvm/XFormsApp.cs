@@ -138,11 +138,12 @@ namespace XLabs.Platform.Mvvm
 		/// Initializes the specified context.
 		/// </summary>
 		/// <param name="context">The context.</param>
-		public void Init(TApp context)
+		/// <param name="initServices">Should initialize services.</param>
+		public void Init(TApp context,bool initServices = true)
 		{
 			AppContext = context;
 
-			OnInit(context);
+			OnInit(context,initServices);
 
 			IsInitialized = true;
 		}
@@ -155,7 +156,8 @@ namespace XLabs.Platform.Mvvm
 		/// Initializes the specified context.
 		/// </summary>
 		/// <param name="context">The context.</param>
-		protected virtual void OnInit(TApp context)
+		/// <param name="initServices">Should initialize services.</param>
+		protected virtual void OnInit(TApp context, bool initServices = true)
 		{
 			RaiseOnInitialize();
 		}

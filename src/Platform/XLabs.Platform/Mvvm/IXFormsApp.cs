@@ -109,7 +109,8 @@ namespace XLabs.Platform.Mvvm
 		/// Initializes the specified context.
 		/// </summary>
 		/// <param name="context">The context.</param>
-		void Init(TApp context);
+		/// <param name="initServices">Should initialize services.</param>
+		void Init(TApp context,bool initServices = true);
 
 		#endregion Methods
 	}
