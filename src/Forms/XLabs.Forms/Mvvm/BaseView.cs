@@ -50,5 +50,29 @@ namespace XLabs.Forms.Mvvm
 			SetBinding(NavigationProperty, new Binding("Navigation", converter: new NavigationConverter()));
 			SetBinding(IsBusyProperty, new Binding("IsBusy"));
 		}
+		/// <summary>
+		/// Passes the event of the view appearing through to the view model.
+		/// </summary>
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			if (BindingContext != null & BindingContext is ViewModel)
+			{
+				var vm = (ViewModel)BindingContext;
+				vm.OnViewAppearing();
+			}
+        	}
+		/// <summary>
+		/// Passes the event of the view disappearing through to the view model.
+		/// </summary>
+		protected override void OnDisappearing()
+		{
+			base.OnDisappearing();
+			if (BindingContext != null & BindingContext is ViewModel)
+			{
+				var vm = (ViewModel)BindingContext;
+				vm.OnViewAppearing();
+			}
+        	}
 	}
 }
