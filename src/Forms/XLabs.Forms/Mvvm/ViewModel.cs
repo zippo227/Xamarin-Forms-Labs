@@ -27,15 +27,19 @@ namespace XLabs.Forms.Mvvm
 		/// Gets or sets the navigation.
 		/// </summary>
 		/// <value>The navigation.</value>
-		public INavigationService Navigation
+		public INavigationService NavigationService
 		{
-			get { return _navigation ?? Resolver.Resolve<INavigationService>(); }
-			set { _navigation = value; }
+			get { return _navigationService ?? Resolver.Resolve<INavigationService>(); }
+			set { _navigationService = value; }
 		}
 
 		private bool _isBusy;
-		private INavigationService _navigation;
+		private INavigationService _navigationService;
 
+		public ViewModelNavigation Navigation {
+			get;
+			set;
+		}
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is busy.
 		/// </summary>
