@@ -63,7 +63,7 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The checked changed event.
 		/// </summary>
-		public EventHandler<EventArgs<bool>> CheckedChanged;
+		public event EventHandler<EventArgs<bool>> CheckedChanged;
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the control is checked.
