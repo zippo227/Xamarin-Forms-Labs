@@ -14,7 +14,10 @@ namespace XLabs.Platform.Services
 		/// <param name="text">
 		/// The text to speak.
 		/// </param>
-		void Speak(string text);
+		/// <param name="language">
+		/// The language.
+		/// </param>
+		void Speak(string text, string language = "en-US");
 
 		/// <summary>
 		/// Get installed languages.

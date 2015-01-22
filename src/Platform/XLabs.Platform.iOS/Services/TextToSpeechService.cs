@@ -10,18 +10,24 @@ namespace XLabs.Platform.Services
 	/// </summary>
 	public class TextToSpeechService : ITextToSpeechService
 	{
+		const string DEFAULT_LOCALE = "en-US";
 		/// <summary>
 		/// The speak.
 		/// </summary>
 		/// <param name="text">The text.</param>
-		public void Speak(string text)
+		/// <param name="language">The language.</param>
+		public void Speak (string text, string language = DEFAULT_LOCALE)
 		{
 			var speechSynthesizer = new AVSpeechSynthesizer();
+
+			var voice = AVSpeechSynthesisVoice.FromLanguage (language);
+			if (voice == null)
+				voice = AVSpeechSynthesisVoice.FromLanguage (DEFAULT_LOCALE);
 
 			var speechUtterance = new AVSpeechUtterance(text)
 				                      {
 					                      Rate = AVSpeechUtterance.MaximumSpeechRate / 4,
-					                      Voice = AVSpeechSynthesisVoice.FromLanguage("en-US"),
+										  Voice = AVSpeechSynthesisVoice.FromLanguage (language),
 					                      Volume = 0.5f,
 					                      PitchMultiplier = 1.0f
 				                      };
