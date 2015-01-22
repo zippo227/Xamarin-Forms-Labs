@@ -3,7 +3,7 @@
 	using System.Threading.Tasks;
 
 	using XLabs.Platform.Device;
-	using XLabs.Platform.Services.GeoLocation;
+	using XLabs.Platform.Services.Geolocation;
 
 	/// <summary>
 	///     Class DeviceExtensions.

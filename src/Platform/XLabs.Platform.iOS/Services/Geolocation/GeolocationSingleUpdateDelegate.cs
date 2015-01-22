@@ -7,8 +7,6 @@ namespace XLabs.Platform.Services.Geolocation
 	using CoreLocation;
 	using Foundation;
 
-	using XLabs.Platform.Services.GeoLocation;
-
 	/// <summary>
 	/// Class GeolocationSingleUpdateDelegate.
 	/// </summary>

@@ -6,8 +6,6 @@
 
 	using Windows.Devices.Geolocation;
 
-	using XLabs.Platform.Services.GeoLocation;
-
 	/// <summary>
 	/// The geolocator implements <see cref="Windows.Devices.Geolocation.IGeolocator" /> interface for Windows Phone 8.
 	/// </summary>

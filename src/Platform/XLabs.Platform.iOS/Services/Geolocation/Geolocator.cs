@@ -9,8 +9,6 @@ namespace XLabs.Platform.Services.Geolocation
 	using ObjCRuntime;
 	using UIKit;
 
-	using XLabs.Platform.Services.GeoLocation;
-
 	/// <summary>
 	/// Class Geolocator.
 	/// </summary>
