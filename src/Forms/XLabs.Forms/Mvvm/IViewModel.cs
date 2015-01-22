@@ -5,11 +5,16 @@ namespace XLabs.Forms.Mvvm
 	public interface IViewModel
 	{
 		/// <summary>
-		/// Gets or sets the navigation.
+		/// Gets or sets the navigation service.
 		/// </summary>
 		/// <value>The navigation.</value>
-		INavigationService Navigation { get; set; }
+		INavigationService NavigationService { get; set; }
 
+		/// <summary>
+		/// Gets or sets the navigation.
+		/// </summary>
+		/// <value>The Forms navigation.</value>
+		ViewModelNavigation Navigation { get; set; }
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is busy.
 		/// </summary>
