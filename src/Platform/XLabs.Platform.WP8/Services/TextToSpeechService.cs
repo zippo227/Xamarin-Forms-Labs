@@ -28,9 +28,15 @@
 		/// The speak.
 		/// </summary>
 		/// <param name="text">The text.</param>
-		public async void Speak(string text)
+		/// <param name="language">The language.</param>
+		public async void Speak(string text, string language = "en-US")
 		{
-			await _synth.SpeakTextAsync(text);
+			var voice = InstalledVoices.All.FirstOrDefault (c => c.Language == language);
+			if (voice != null)
+				voice = InstalledVoices.Default;
+
+			_synth.SetVoice (voice);
+				await _synth.SpeakTextAsync (text);
 		}
 
 		/// <summary>

@@ -51,12 +51,15 @@ namespace XLabs.Platform.Services
 		/// <param name="text">
 		///     The text.
 		/// </param>
-		public void Speak(string text)
+		public void Speak(string text, string language = "en_US")
 		{
 			_toSpeak = text;
 			if (_speaker == null)
 			{
 				_speaker = new TextToSpeech(Context, this);
+
+				var locale = new Locale (language);
+				_speaker.SetLanguage (locale);
 			}
 			else
 			{
