@@ -2,8 +2,6 @@
 {
 	using Windows.Devices.Geolocation;
 
-	using XLabs.Platform.Services.GeoLocation;
-
 	/// <summary>
 	/// The coordinate extensions for Windows Phone.
 	/// </summary>

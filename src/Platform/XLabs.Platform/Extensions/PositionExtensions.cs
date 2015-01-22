@@ -3,7 +3,7 @@
 	using System;
 	using System.Globalization;
 
-	using XLabs.Platform.Services.GeoLocation;
+    using XLabs.Platform.Services.Geolocation;
 
 	/// <summary>
 	/// Class PositionExtensions.

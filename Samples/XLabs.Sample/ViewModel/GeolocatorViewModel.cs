@@ -13,7 +13,7 @@
 	using XLabs.Platform.Device;
 	using XLabs.Platform.Services;
 	using XLabs.Platform.Services.Email;
-	using XLabs.Platform.Services.GeoLocation;
+	using XLabs.Platform.Services.Geolocation;
 	using XLabs.Sample.Pages.Services;
 
 	/// <summary>

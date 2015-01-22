@@ -12,8 +12,6 @@
 
 	using Java.Lang;
 
-	using XLabs.Platform.Services.GeoLocation;
-
 	/// <summary>
 	///     Class Geolocator.
 	/// </summary>
