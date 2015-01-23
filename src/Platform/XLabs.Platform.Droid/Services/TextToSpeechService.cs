@@ -16,6 +16,7 @@ namespace XLabs.Platform.Services
 	/// </summary>
 	public class TextToSpeechService : Object, ITextToSpeechService, TextToSpeech.IOnInitListener
 	{
+		const string DEFAULT_LOCALE = "en_US";
 		private TextToSpeech _speaker;
 
 		private string _toSpeak;
@@ -51,14 +52,15 @@ namespace XLabs.Platform.Services
 		/// <param name="text">
 		///     The text.
 		/// </param>
-		public void Speak(string text, string language = "en_US")
+		public void Speak (string text, string language = DEFAULT_LOCALE)
 		{
 			_toSpeak = text;
 			if (_speaker == null)
 			{
 				_speaker = new TextToSpeech(Context, this);
 
-				var locale = new Locale (language);
+				var lang = GetInstalledLanguages ().FirstOrDefault (c => language) ?? DEFAULT_LOCALE;
+				var locale = new Locale (lang);
 				_speaker.SetLanguage (locale);
 			}
 			else

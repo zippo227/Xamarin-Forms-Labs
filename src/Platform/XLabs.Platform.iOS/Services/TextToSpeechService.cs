@@ -20,10 +20,8 @@ namespace XLabs.Platform.Services
 		{
 			var speechSynthesizer = new AVSpeechSynthesizer();
 
-			var voice = AVSpeechSynthesisVoice.FromLanguage (language);
-			if (voice == null)
-				voice = AVSpeechSynthesisVoice.FromLanguage (DEFAULT_LOCALE);
-
+			var voice = AVSpeechSynthesisVoice.FromLanguage (language) ?? AVSpeechSynthesisVoice.FromLanguage (DEFAULT_LOCALE);
+		
 			var speechUtterance = new AVSpeechUtterance(text)
 				                      {
 					                      Rate = AVSpeechUtterance.MaximumSpeechRate / 4,
