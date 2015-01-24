@@ -11,6 +11,7 @@
 	/// </summary>
 	public class TextToSpeechService : ITextToSpeechService
 	{
+		const string DEFAULT_LOCALE = "en-US";
 		/// <summary>
 		/// The _synth
 		/// </summary>
@@ -29,14 +30,11 @@
 		/// </summary>
 		/// <param name="text">The text.</param>
 		/// <param name="language">The language.</param>
-		public async void Speak(string text, string language = "en-US")
+		public async void Speak (string text, string language = DEFAULT_LOCALE)
 		{
-			var voice = InstalledVoices.All.FirstOrDefault (c => c.Language == language);
-			if (voice != null)
-				voice = InstalledVoices.Default;
-
+			var voice = InstalledVoices.All.FirstOrDefault (c => c.Language == language) ?? InstalledVoices.Default;
 			_synth.SetVoice (voice);
-				await _synth.SpeakTextAsync (text);
+			await _synth.SpeakTextAsync (text);
 		}
 
 		/// <summary>
