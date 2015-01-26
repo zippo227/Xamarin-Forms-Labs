@@ -14,7 +14,7 @@
         					HorizontalOptions="StartAndExpand"
 							 VerticalOptions="Center" />
 
-			<ListView ItemsSource="{Binding Items}">
+			<ListView ItemsSource="{Binding Images}">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<controls:ExtendedViewCell SeparatorPadding="0,0,0,0" BackgroundColor="Red"
@@ -34,10 +34,10 @@
 				</ListView.ItemTemplate>
 			</ListView>
 
-			<ListView ItemsSource="{Binding Items}">
+			<ListView ItemsSource="{Binding Images}">
 				<ListView.ItemTemplate>
 					<DataTemplate>
-						<controls:ExtendedEntryCell Text="{Binding FirstName}" IsPassword="True" />
+						<controls:ExtendedEntryCell Text="{Binding}" IsPassword="True" />
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
