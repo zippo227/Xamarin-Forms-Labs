@@ -34,8 +34,6 @@ namespace XLabs.Forms.Controls
 {
 	using System;
 	using CoreGraphics;
-
-	using CoreGraphics;
 	using Foundation;
 	using UIKit;
 
@@ -44,77 +42,88 @@ namespace XLabs.Forms.Controls
 	/// </summary>
 	public class CalendarDayView : UIView
 	{
+        /// <summary>
+        /// The paragraph style
+        /// </summary>
+        private static NSMutableParagraphStyle paragraphStyle;
+
 		/// <summary>
 		/// The _text
 		/// </summary>
-		string _text;
-		/// <summary>
-		/// The paragraph style
-		/// </summary>
-		private static NSMutableParagraphStyle paragraphStyle;
+        private string _text;
+
 		/// <summary>
 		/// The _old backgorund color
 		/// </summary>
 		private UIColor _oldBackgorundColor;
-		/// <summary>
-		/// Gets or sets the date.
-		/// </summary>
-		/// <value>The date.</value>
-		public DateTime Date { get; set; }
+
 		/// <summary>
 		/// The _active
 		/// </summary>
-		bool _active, _today, _selected, _marked, _available, _highlighted;
+        private bool _active, _today, _selected, _marked, _available, _highlighted;
+
+        /// <summary>
+        /// The _MV
+        /// </summary>
+        private readonly CalendarMonthView _mv;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarDayView"/> class.
+        /// </summary>
+        /// <param name="mv">The mv.</param>
+        public CalendarDayView(CalendarMonthView mv)
+        {
+            _mv = mv;
+            BackgroundColor = mv.StyleDescriptor.DateBackgroundColor;
+        }
+
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="CalendarDayView"/> is available.
 		/// </summary>
 		/// <value><c>true</c> if available; otherwise, <c>false</c>.</value>
 		public bool Available { get { return _available; } set { _available = value; SetNeedsDisplay(); } }
+
 		/// <summary>
 		/// Gets or sets the text.
 		/// </summary>
 		/// <value>The text.</value>
 		public string Text { get { return _text; } set { _text = value; SetNeedsDisplay(); } }
+
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="CalendarDayView"/> is active.
 		/// </summary>
 		/// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
 		public bool Active { get { return _active; } set { _active = value; SetNeedsDisplay(); } }
+
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="CalendarDayView"/> is today.
 		/// </summary>
 		/// <value><c>true</c> if today; otherwise, <c>false</c>.</value>
 		public bool Today { get { return _today; } set { _today = value; SetNeedsDisplay(); } }
+
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="CalendarDayView"/> is selected.
 		/// </summary>
 		/// <value><c>true</c> if selected; otherwise, <c>false</c>.</value>
 		public bool Selected { get { return _selected; } set { _selected = value; SetNeedsDisplay(); } }
+
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="CalendarDayView"/> is marked.
 		/// </summary>
 		/// <value><c>true</c> if marked; otherwise, <c>false</c>.</value>
 		public bool Marked { get { return _marked; } set { _marked = value; SetNeedsDisplay(); } }
+
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="CalendarDayView"/> is highlighted.
 		/// </summary>
 		/// <value><c>true</c> if highlighted; otherwise, <c>false</c>.</value>
 		public bool Highlighted { get { return _highlighted; } set { _highlighted = value; SetNeedsDisplay(); } }
 
-		/// <summary>
-		/// The _MV
-		/// </summary>
-		CalendarMonthView _mv;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CalendarDayView"/> class.
-		/// </summary>
-		/// <param name="mv">The mv.</param>
-		public CalendarDayView(CalendarMonthView mv)
-		{
-			_mv = mv;
-			BackgroundColor = mv.StyleDescriptor.DateBackgroundColor;
-		}
+        /// <summary>
+        /// Gets or sets the date.
+        /// </summary>
+        /// <value>The date.</value>
+        public DateTime Date { get; set; }
 
 		/// <summary>
 		/// Draws the specified rect.
@@ -122,11 +131,10 @@ namespace XLabs.Forms.Controls
 		/// <param name="rect">The rect.</param>
 		public override void Draw(CGRect rect)
 		{
-			DateTime dt = DateTime.Now;
-			UIImage img = null;
+		    UIImage img = null;
 			var color = _mv.StyleDescriptor.InactiveDateForegroundColor;
 			BackgroundColor = _mv.StyleDescriptor.InactiveDateBackgroundColor;
-			CalendarView.BackgroundStyle backgroundStyle = CalendarView.BackgroundStyle.Fill;
+			var backgroundStyle = CalendarView.BackgroundStyle.Fill;
 
 
 			if (!Active || !Available)
@@ -184,15 +192,11 @@ namespace XLabs.Forms.Controls
 				}
 				else
 				{
-					if (Highlighted)
-					{
-						context.SetFillColor(_mv.StyleDescriptor.HighlightedDateBackgroundColor.CGColor);
-					}
-					else
-					{
-						context.SetFillColor(_mv.StyleDescriptor.DateBackgroundColor.CGColor);
-					}
-					context.FillRect(new CGRect(0, 0, _mv.BoxWidth, _mv.BoxHeight));
+				    context.SetFillColor(Highlighted
+				        ? _mv.StyleDescriptor.HighlightedDateBackgroundColor.CGColor
+				        : _mv.StyleDescriptor.DateBackgroundColor.CGColor);
+
+				    context.FillRect(new CGRect(0, 0, _mv.BoxWidth, _mv.BoxHeight));
 
 					var smallerSide = Math.Min(_mv.BoxWidth, _mv.BoxHeight);
 					var center = new CGPoint(_mv.BoxWidth / 2, _mv.BoxHeight / 2);
@@ -264,7 +268,7 @@ namespace XLabs.Forms.Controls
 				ParagraphStyle = paragraphStyle
 			};
 			var size = dateString.GetSizeUsingAttributes(attrs);
-			CGRect targetRect = new CGRect(
+			var targetRect = new CGRect(
 				rect.X + (float)Math.Floor((rect.Width - size.Width) / 2f),
 				rect.Y + (float)Math.Floor((rect.Height - size.Height) / 2f),
 										size.Width,

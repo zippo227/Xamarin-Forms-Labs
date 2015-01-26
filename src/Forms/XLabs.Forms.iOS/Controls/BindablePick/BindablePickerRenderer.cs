@@ -7,8 +7,6 @@ using XLabs.Forms.Controls;
 namespace XLabs.Forms.Controls
 {
 	using System;
-	using System.Collections.ObjectModel;
-	using System.Collections.Specialized;
 	using System.ComponentModel;
 	using CoreGraphics;
 	using System.Linq;
@@ -42,18 +40,18 @@ namespace XLabs.Forms.Controls
 			/// <value>The selected item.</value>
 			public string SelectedItem
 			{
-				get;
-				internal set;
+				get; private set;
 			}
+
 			/// <summary>
 			/// Gets or sets the index of the selected.
 			/// </summary>
 			/// <value>The index of the selected.</value>
 			public int SelectedIndex
 			{
-				get;
-				internal set;
+				get; private set;
 			}
+
 			/// <summary>
 			/// Initializes a new instance of the <see cref="PickerSource"/> class.
 			/// </summary>
@@ -70,13 +68,10 @@ namespace XLabs.Forms.Controls
 			/// <returns>System.Int32.</returns>
 			public override nint GetRowsInComponent(UIPickerView picker, nint component)
 			{
-				if (_model.Items == null)
-				{
-					return 0;
-				}
-				return _model.Items.Count;
+			    return _model.Items == null ? 0 : _model.Items.Count;
 			}
-			/// <summary>
+
+		    /// <summary>
 			/// Gets the component count.
 			/// </summary>
 			/// <param name="picker">The picker.</param>
@@ -85,6 +80,7 @@ namespace XLabs.Forms.Controls
 			{
 				return 1;
 			}
+
 			/// <summary>
 			/// Gets the title.
 			/// </summary>
@@ -96,6 +92,7 @@ namespace XLabs.Forms.Controls
 			{
 				return _model.Items[(int)row];
 			}
+
 			/// <summary>
 			/// Selecteds the specified picker.
 			/// </summary>
@@ -106,7 +103,7 @@ namespace XLabs.Forms.Controls
 			{
 				SelectedItem = _model.Items[(int)row];
 				SelectedIndex = (int)row;
-				EventHandler valueChanged = ValueChanged;
+				var valueChanged = ValueChanged;
 				if (valueChanged != null)
 				{
 					valueChanged.Invoke(this, EventArgs.Empty);
@@ -118,51 +115,83 @@ namespace XLabs.Forms.Controls
 		/// The _picker
 		/// </summary>
 		private UIPickerView _picker;
+
 		/// <summary>
 		/// The _pop over
 		/// </summary>
 		private UIPopoverController _popOver;
+
 		/// <summary>
 		/// Called when [element changed].
 		/// </summary>
 		/// <param name="e">The e.</param>
 		protected override void OnElementChanged(ElementChangedEventArgs<BindablePicker> e)
 		{
-			((ObservableCollection<string>)e.NewElement.Items).CollectionChanged += new NotifyCollectionChangedEventHandler (RowsCollectionChanged);
-			NoCaretField entry = new NoCaretField {
+			e.NewElement.Items.CollectionChanged += RowsCollectionChanged;
+			var entry = new NoCaretField 
+            {
 				BorderStyle = e.NewElement.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None
 			};
-			entry.Started += new EventHandler (OnStarted);
-			entry.Ended += new EventHandler (OnEnded);
-			_picker = new UIPickerView {
+
+			entry.Started += OnStarted;
+			entry.Ended += OnEnded;
+
+			_picker = new UIPickerView 
+            {
 				DataSource = new PickerSource (e.NewElement)
 			};
-			nfloat width = UIScreen.MainScreen.Bounds.Width;
-			UIToolbar uIToolbar = new UIToolbar (new CGRect (0, 0, width, 44)) {
+
+			var width = UIScreen.MainScreen.Bounds.Width;
+			var uIToolbar = new UIToolbar (new CGRect (0, 0, width, 44)) 
+            {
 				BarStyle = UIBarStyle.Default,
 				Translucent = true
 			};
-			UIBarButtonItem uIBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace);
-			UIBarButtonItem uIBarButtonItem2 = new UIBarButtonItem (UIBarButtonSystemItem.Done, delegate (object o, EventArgs a) {
-				entry.ResignFirstResponder ();
-			});
-			uIToolbar.SetItems (new UIBarButtonItem[] {
-				uIBarButtonItem,
-				uIBarButtonItem2
-			}, false);
 
-			if (Device.Idiom == TargetIdiom.Phone) {
+			var uIBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace);
+			var uIBarButtonItem2 = new UIBarButtonItem (
+                UIBarButtonSystemItem.Done, 
+                delegate { entry.ResignFirstResponder (); });
+
+			uIToolbar.SetItems (new[] { uIBarButtonItem, uIBarButtonItem2 }, false);
+
+			if (Device.Idiom == TargetIdiom.Phone) 
+            {
 				entry.InputView = _picker;
 				entry.InputAccessoryView = uIToolbar;
-			} else {
+			} 
+            else 
+            {
 				entry.InputView = new UIView (CGRect.Empty);
 				entry.InputAccessoryView = new UIView (CGRect.Empty);
 			}
 
-			((PickerSource)_picker.DataSource).ValueChanged += new EventHandler (HandleValueChanged);
-			SetNativeControl (entry);
-			UpdatePicker ();
+			((PickerSource)_picker.DataSource).ValueChanged += HandleValueChanged;
+			SetNativeControl(entry);
+			UpdatePicker();
 		}
+
+        /// <summary>
+        /// Handles the <see cref="E:ElementPropertyChanged" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+            if (e.PropertyName == Picker.TitleProperty.PropertyName)
+            {
+                UpdatePicker();
+            }
+            else if (e.PropertyName == Picker.SelectedIndexProperty.PropertyName)
+            {
+                UpdatePicker();
+            }
+            else if (e.PropertyName == BindablePicker.HasBorderProperty.PropertyName)
+            {
+                SetBorder(Element);
+            }
+        }
 
 		/// <summary>
 		/// Handles the <see cref="E:Ended" /> event.
@@ -172,7 +201,8 @@ namespace XLabs.Forms.Controls
 		private void OnEnded(object sender, EventArgs eventArgs)
 		{
 			//base.Element.IsFocused = false;
-			if (Device.Idiom != TargetIdiom.Phone) {
+			if (Device.Idiom != TargetIdiom.Phone) 
+            {
 
 			}
 		}
@@ -185,18 +215,18 @@ namespace XLabs.Forms.Controls
 		private void OnStarted(object sender, EventArgs eventArgs)
 		{
 			//base.Element.IsFocused = true;
-			if (Device.Idiom != TargetIdiom.Phone) {
-				var vc = new UIViewController ();
-				vc.Add (_picker);
-				vc.View.Frame = new CGRect (0, 0, 320, 200);
-				vc.PreferredContentSize = new CGSize (320, 200);
-				_popOver = new UIPopoverController (vc);
-				_popOver.PresentFromRect(new CGRect(Control.Frame.Width/2,Control.Frame.Height-3,0,0), Control, UIPopoverArrowDirection.Any, true);
-				_popOver.DidDismiss += (object s, EventArgs e) => {
-					_popOver = null;
-					Control.ResignFirstResponder();
-				};
-			}
+		    if (Device.Idiom == TargetIdiom.Phone) return;
+
+		    var vc = new UIViewController {_picker};
+		    vc.View.Frame = new CGRect (0, 0, 320, 200);
+		    vc.PreferredContentSize = new CGSize (320, 200);
+		    _popOver = new UIPopoverController (vc);
+		    _popOver.PresentFromRect(new CGRect(Control.Frame.Width/2,Control.Frame.Height-3,0,0), Control, UIPopoverArrowDirection.Any, true);
+		    _popOver.DidDismiss += (s, e) => 
+            {
+		        _popOver = null;
+		        Control.ResignFirstResponder();
+		    };
 		}
 
 		/// <summary>
@@ -220,41 +250,19 @@ namespace XLabs.Forms.Controls
 			Control.Text = ((PickerSource)sender).SelectedItem;
 		}
 
-		/// <summary>
-		/// Updates the picker.
-		/// </summary>
-		private void UpdatePicker()
-		{
-			Control.Placeholder = Element.Title;
-			Control.Text = (Element.SelectedIndex <= -1 || Element.Items == null) ? "" : Element.Items[Element.SelectedIndex];
-			_picker.ReloadAllComponents();
-			if (Element.SelectedIndex > -1 && Element.Items != null && Enumerable.Any<string>(Element.Items))
-			{
-				_picker.Select(Element.SelectedIndex, 0, true);
-			}
-		}
-
-		/// <summary>
-		/// Handles the <see cref="E:ElementPropertyChanged" /> event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged(sender, e);
-			if (e.PropertyName == Picker.TitleProperty.PropertyName)
-			{
-				UpdatePicker();
-			}
-			if (e.PropertyName == Picker.SelectedIndexProperty.PropertyName)
-			{
-				UpdatePicker();
-			}
-			if (e.PropertyName == BindablePicker.HasBorderProperty.PropertyName) 
-			{
-				SetBorder (Element as BindablePicker);
-			}
-		}
+        /// <summary>
+        /// Updates the picker.
+        /// </summary>
+        private void UpdatePicker()
+        {
+            Control.Placeholder = Element.Title;
+            Control.Text = (Element.SelectedIndex <= -1 || Element.Items == null) ? string.Empty : Element.Items[Element.SelectedIndex];
+            _picker.ReloadAllComponents();
+            if (Element.SelectedIndex > -1 && Element.Items != null && Enumerable.Any(Element.Items))
+            {
+                _picker.Select(Element.SelectedIndex, 0, true);
+            }
+        }
 
 		/// <summary>
 		/// Sets the border.
@@ -262,8 +270,10 @@ namespace XLabs.Forms.Controls
 		/// <param name="view">The view.</param>
 		private void SetBorder(BindablePicker view)
 		{
-			if (view != null)
-				Control.BorderStyle = view.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
+		    if (view != null)
+		    {
+		        Control.BorderStyle = view.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
+		    }
 		}
 	}
 }
