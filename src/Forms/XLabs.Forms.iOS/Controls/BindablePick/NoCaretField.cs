@@ -15,6 +15,7 @@ namespace XLabs.Forms.Controls
 		public NoCaretField() : base(default(CGRect))
 		{
 		}
+
 		/// <summary>
 		/// Gets the caret rect for position.
 		/// </summary>

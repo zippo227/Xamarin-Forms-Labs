@@ -98,6 +98,60 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		private readonly bool _showNavArrows;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarMonthView"/> class.
+        /// </summary>
+        /// <param name="selectedDate">The selected date.</param>
+        /// <param name="showHeader">if set to <c>true</c> [show header].</param>
+        /// <param name="showNavArrows">if set to <c>true</c> [show nav arrows].</param>
+        /// <param name="width">The width.</param>
+        public CalendarMonthView(DateTime selectedDate, bool showHeader, bool showNavArrows, float width = 320)
+        {
+            _showHeader = showHeader;
+            _showNavArrows = showNavArrows;
+
+            if (_showNavArrows)
+            {
+                _showHeader = true;
+            }
+
+            StyleDescriptor = new StyleDescriptor();
+            HighlightDaysOfWeeks(new DayOfWeek[] { });
+
+            if (_showHeader && _headerHeight == 0)
+            {
+                _headerHeight = showNavArrows ? 40 : 20;
+            }
+
+            Frame = _showHeader ? new CGRect(0, 0, width, 198 + _headerHeight) : new CGRect(0, 0, width, 198);
+
+            BoxWidth = Convert.ToInt32(Math.Ceiling(width / 7));
+
+            BackgroundColor = UIColor.White;
+
+            ClipsToBounds = true;
+            CurrentDate = DateTime.Now.Date;
+            CurrentMonthYear = new DateTime(CurrentDate.Year, CurrentDate.Month, 1);
+
+            CurrentSelectedDate = selectedDate;
+
+            var swipeLeft = new UISwipeGestureRecognizer(MonthViewSwipedLeft)
+            {
+                Direction = UISwipeGestureRecognizerDirection.Left
+            };
+            AddGestureRecognizer(swipeLeft);
+
+            var swipeRight = new UISwipeGestureRecognizer(MonthViewSwipedRight)
+            {
+                Direction =
+                    UISwipeGestureRecognizerDirection.Right
+            };
+            AddGestureRecognizer(swipeRight);
+
+            var swipeUp = new UISwipeGestureRecognizer(MonthViewSwipedUp) { Direction = UISwipeGestureRecognizerDirection.Up };
+            AddGestureRecognizer(swipeUp);
+        }
+
 		/// <summary>
 		/// The box height
 		/// </summary>
@@ -148,61 +202,6 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		public Action SwipedUp;
 
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CalendarMonthView"/> class.
-		/// </summary>
-		/// <param name="selectedDate">The selected date.</param>
-		/// <param name="showHeader">if set to <c>true</c> [show header].</param>
-		/// <param name="showNavArrows">if set to <c>true</c> [show nav arrows].</param>
-		/// <param name="width">The width.</param>
-		public CalendarMonthView(DateTime selectedDate, bool showHeader, bool showNavArrows, float width = 320)
-		{
-			_showHeader = showHeader;
-			_showNavArrows = showNavArrows;
-
-			if (_showNavArrows)
-			{
-				_showHeader = true;
-			}
-
-			StyleDescriptor = new StyleDescriptor();
-			HighlightDaysOfWeeks(new DayOfWeek[] { });
-
-			if (_showHeader && _headerHeight == 0)
-			{
-				_headerHeight = showNavArrows ? 40 : 20;
-			}
-
-			Frame = _showHeader ? new CGRect(0, 0, width, 198 + _headerHeight) : new CGRect(0, 0, width, 198);
-
-			BoxWidth = Convert.ToInt32(Math.Ceiling(width / 7));
-
-			BackgroundColor = UIColor.White;
-
-			ClipsToBounds = true;
-			CurrentDate = DateTime.Now.Date;
-			CurrentMonthYear = new DateTime(CurrentDate.Year, CurrentDate.Month, 1);
-
-			CurrentSelectedDate = selectedDate;
-
-			var swipeLeft = new UISwipeGestureRecognizer(MonthViewSwipedLeft)
-				                {
-					                Direction = UISwipeGestureRecognizerDirection.Left
-				                };
-			AddGestureRecognizer(swipeLeft);
-
-			var swipeRight = new UISwipeGestureRecognizer(MonthViewSwipedRight)
-				                 {
-					                 Direction =
-						                 UISwipeGestureRecognizerDirection.Right
-				                 };
-			AddGestureRecognizer(swipeRight);
-
-			var swipeUp = new UISwipeGestureRecognizer(MonthViewSwipedUp) { Direction = UISwipeGestureRecognizerDirection.Up };
-			AddGestureRecognizer(swipeUp);
-		}
-
 		/// <summary>
 		/// Gets the highlighted days of week.
 		/// </summary>
@@ -220,6 +219,27 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		/// <value>The style descriptor.</value>
 		public StyleDescriptor StyleDescriptor { get; private set; }
+
+        /// <summary>
+        /// Draws the specified rect.
+        /// </summary>
+        /// <param name="rect">The rect.</param>
+        public override void Draw(CGRect rect)
+        {
+            using (var context = UIGraphics.GetCurrentContext())
+            {
+                context.SetFillColor(StyleDescriptor.TitleBackgroundColor.CGColor);
+                //Console.WriteLine("Title background color is {0}",_styleDescriptor.TitleBackgroundColor.ToString());
+                context.FillRect(new CGRect(0, 0, 320, 18 + _headerHeight));
+            }
+
+            DrawDayLabels(rect);
+
+            if (_showHeader)
+            {
+                DrawMonthLabel(rect);
+            }
+        }
 
 		/// <summary>
 		/// Sets the date.
@@ -251,7 +271,7 @@ namespace XLabs.Forms.Controls
 				//If we have created the layout already
 				if (_scrollView != null)
 				{
-					RebuildGrid(right, animated);
+					RebuildGrid(true, animated);
 				}
 			}
 		}
@@ -318,39 +338,9 @@ namespace XLabs.Forms.Controls
 				//If we have created the layout already
 				if (_scrollView != null)
 				{
-					RebuildGrid(right, animated);
+					RebuildGrid(true, animated);
 				}
 			}
-		}
-
-		/// <summary>
-		/// ps the month view swiped up.
-		/// </summary>
-		/// <param name="ges">The ges.</param>
-		private void MonthViewSwipedUp(UISwipeGestureRecognizer ges)
-		{
-			if (SwipedUp != null)
-			{
-				SwipedUp();
-			}
-		}
-
-		/// <summary>
-		/// ps the month view swiped right.
-		/// </summary>
-		/// <param name="ges">The ges.</param>
-		private void MonthViewSwipedRight(UISwipeGestureRecognizer ges)
-		{
-			MoveCalendarMonths(false, true);
-		}
-
-		/// <summary>
-		/// ps the month view swiped left.
-		/// </summary>
-		/// <param name="ges">The ges.</param>
-		private void MonthViewSwipedLeft(UISwipeGestureRecognizer ges)
-		{
-			MoveCalendarMonths(true, true);
 		}
 
 		/// <summary>
@@ -414,60 +404,6 @@ namespace XLabs.Forms.Controls
 		}
 
 		/// <summary>
-		/// Loads the nav arrows.
-		/// </summary>
-		private void LoadNavArrows()
-		{
-			_leftArrow = new CalendarArrowView(new CGRect(10, 9, 18, 22)) { Color = StyleDescriptor.TitleForegroundColor };
-			_leftArrow.TouchUpInside += HandlePreviousMonthTouch;
-			_leftArrow.Direction = CalendarArrowView.ArrowDirection.Left;
-			AddSubview(_leftArrow);
-			_rightArrow = new CalendarArrowView(new CGRect(320 - 22 - 10, 9, 18, 22))
-				              {
-					              Color =
-						              StyleDescriptor.TitleForegroundColor
-				              };
-			_rightArrow.TouchUpInside += HandleNextMonthTouch;
-			_rightArrow.Direction = CalendarArrowView.ArrowDirection.Right;
-			AddSubview(_rightArrow);
-		}
-
-		/*private void LoadButtons()
-		{
-			_leftButton = UIButton.FromType(UIButtonType.Custom);
-			_leftButton.TouchUpInside += HandlePreviousMonthTouch;
-			_leftButton.SetImage(UIImage.FromBundle("Images/Calendar/leftarrow.png"), UIControlState.Normal);
-			AddSubview(_leftButton);
-			_leftButton.Frame = new RectangleF(10, 0, 44, 42);
-			
-			_rightButton = UIButton.FromType(UIButtonType.Custom);
-			_rightButton.TouchUpInside += HandleNextMonthTouch;
-			_rightButton.SetImage(UIImage.FromBundle("Images/Calendar/rightarrow.png"), UIControlState.Normal);
-			AddSubview(_rightButton);
-			_rightButton.Frame = new RectangleF(320 - 56, 0, 44, 42);
-		}*/
-
-		/// <summary>
-		/// Handles the previous month touch.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-		private void HandlePreviousMonthTouch(object sender, EventArgs e)
-		{
-			MoveCalendarMonths(false, true);
-		}
-
-		/// <summary>
-		/// Handles the next month touch.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-		private void HandleNextMonthTouch(object sender, EventArgs e)
-		{
-			MoveCalendarMonths(true, true);
-		}
-
-		/// <summary>
 		/// Moves the calendar months.
 		/// </summary>
 		/// <param name="right">if set to <c>true</c> [right].</param>
@@ -485,17 +421,7 @@ namespace XLabs.Forms.Controls
 					_monthGridView.Center = new CGPoint(oldX, _monthGridView.Center.Y);
 					Animate(
 						0.25,
-						() =>
-							{
-								if (right)
-								{
-									_monthGridView.Center = new CGPoint(_monthGridView.Center.X - 40, _monthGridView.Center.Y);
-								}
-								else
-								{
-									_monthGridView.Center = new CGPoint(_monthGridView.Center.X + 40, _monthGridView.Center.Y);
-								}
-							},
+						() => _monthGridView.Center = new CGPoint(_monthGridView.Center.X - (right ? 40 : -40), _monthGridView.Center.Y),
 						() => { Animate(0.25, () => { _monthGridView.Center = new CGPoint(oldX, _monthGridView.Center.Y); }); });
 				}
 				return;
@@ -509,6 +435,117 @@ namespace XLabs.Forms.Controls
 				RebuildGrid(right, animated);
 			}
 		}
+
+        /// <summary>
+        /// Rebuilds the grid.
+        /// </summary>
+        /// <param name="right">if set to <c>true</c> [right].</param>
+        /// <param name="animated">if set to <c>true</c> [animated].</param>
+        public void RebuildGrid(bool right, bool animated)
+        {
+            UserInteractionEnabled = false;
+
+            var gridToMove = CreateNewGrid(CurrentMonthYear);
+            var pointsToMove = (right ? Frame.Width : -Frame.Width);
+
+            /*if (left && gridToMove.weekdayOfFirst==0)
+                pointsToMove += 44;
+            if (!left && _monthGridView.weekdayOfFirst==0)
+                pointsToMove -= 44;*/
+
+            gridToMove.Frame = new CGRect(new CGPoint(pointsToMove, 0), gridToMove.Frame.Size);
+
+            _scrollView.AddSubview(gridToMove);
+
+            if (animated)
+            {
+                BeginAnimations("changeMonth");
+                SetAnimationDuration(0.4);
+                SetAnimationDelay(0.1);
+                SetAnimationCurve(UIViewAnimationCurve.EaseInOut);
+            }
+
+            _monthGridView.Center = new CGPoint(_monthGridView.Center.X - pointsToMove, _monthGridView.Center.Y);
+            gridToMove.Center = new CGPoint(gridToMove.Center.X - pointsToMove, gridToMove.Center.Y);
+
+            _monthGridView.Alpha = 0;
+
+            /*_scrollView.Frame = new RectangleF(
+                _scrollView.Frame.Location,
+                new SizeF(_scrollView.Frame.Width, this.Frame.Height-16));
+			
+            _scrollView.ContentSize = _scrollView.Frame.Size;*/
+
+            SetNeedsDisplay();
+
+            if (animated)
+            {
+                CommitAnimations();
+            }
+
+            _monthGridView = gridToMove;
+
+            UserInteractionEnabled = true;
+
+            if (MonthChanged != null)
+            {
+                MonthChanged(CurrentMonthYear);
+            }
+        }
+
+        /// <summary>
+        /// Loads the nav arrows.
+        /// </summary>
+        private void LoadNavArrows()
+        {
+            _leftArrow = new CalendarArrowView(new CGRect(10, 9, 18, 22)) { Color = StyleDescriptor.TitleForegroundColor };
+            _leftArrow.TouchUpInside += HandlePreviousMonthTouch;
+            _leftArrow.Direction = CalendarArrowView.ArrowDirection.Left;
+            AddSubview(_leftArrow);
+            _rightArrow = new CalendarArrowView(new CGRect(320 - 22 - 10, 9, 18, 22))
+            {
+                Color =
+                    StyleDescriptor.TitleForegroundColor
+            };
+            _rightArrow.TouchUpInside += HandleNextMonthTouch;
+            _rightArrow.Direction = CalendarArrowView.ArrowDirection.Right;
+            AddSubview(_rightArrow);
+        }
+
+        /*private void LoadButtons()
+        {
+            _leftButton = UIButton.FromType(UIButtonType.Custom);
+            _leftButton.TouchUpInside += HandlePreviousMonthTouch;
+            _leftButton.SetImage(UIImage.FromBundle("Images/Calendar/leftarrow.png"), UIControlState.Normal);
+            AddSubview(_leftButton);
+            _leftButton.Frame = new RectangleF(10, 0, 44, 42);
+			
+            _rightButton = UIButton.FromType(UIButtonType.Custom);
+            _rightButton.TouchUpInside += HandleNextMonthTouch;
+            _rightButton.SetImage(UIImage.FromBundle("Images/Calendar/rightarrow.png"), UIControlState.Normal);
+            AddSubview(_rightButton);
+            _rightButton.Frame = new RectangleF(320 - 56, 0, 44, 42);
+        }*/
+
+        /// <summary>
+        /// Handles the previous month touch.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void HandlePreviousMonthTouch(object sender, EventArgs e)
+        {
+            MoveCalendarMonths(false, true);
+        }
+
+        /// <summary>
+        /// Handles the next month touch.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void HandleNextMonthTouch(object sender, EventArgs e)
+        {
+            MoveCalendarMonths(true, true);
+        }
 
 		/// <summary>
 		/// Sets the navigation arrows.
@@ -527,119 +564,72 @@ namespace XLabs.Forms.Controls
 				isMax = CurrentMonthYear.Month == _maxDateTime.Value.Month && CurrentMonthYear.Year == _maxDateTime.Value.Year;
 			}
 
-			if (_showNavArrows)
-			{
-				if (animated)
-				{
-					Animate(
-						0.250,
-						() =>
-							{
-								if (isMin && _leftArrow.Enabled)
-								{
-									_leftArrow.Enabled = false;
-									_leftArrow.Alpha = 0;
-								}
-								else
-								{
-									_leftArrow.Enabled = true;
-									_leftArrow.Alpha = 1;
-								}
-								if (isMax && _rightArrow.Enabled)
-								{
-									_rightArrow.Enabled = false;
-									_rightArrow.Alpha = 0;
-								}
-								else
-								{
-									_rightArrow.Enabled = true;
-									_rightArrow.Alpha = 1;
-								}
-							});
-				}
-				else
-				{
-					if (isMin && _leftArrow.Enabled)
-					{
-						_leftArrow.Enabled = false;
-						_leftArrow.Alpha = 0;
-					}
-					else
-					{
-						_leftArrow.Enabled = true;
-						_leftArrow.Alpha = 1;
-					}
+		    if (!_showNavArrows) return;
 
-					if (isMax && _rightArrow.Enabled)
-					{
-						_rightArrow.Enabled = false;
-						_rightArrow.Alpha = 0;
-					}
-					else
-					{
-						_rightArrow.Enabled = true;
-						_rightArrow.Alpha = 1;
-					}
-				}
-			}
+		    Action action = () =>
+		    {
+                if (isMin && _leftArrow.Enabled)
+                {
+                    _leftArrow.Enabled = false;
+                    _leftArrow.Alpha = 0;
+                }
+                else
+                {
+                    _leftArrow.Enabled = true;
+                    _leftArrow.Alpha = 1;
+                }
+
+                if (isMax && _rightArrow.Enabled)
+                {
+                    _rightArrow.Enabled = false;
+                    _rightArrow.Alpha = 0;
+                }
+                else
+                {
+                    _rightArrow.Enabled = true;
+                    _rightArrow.Alpha = 1;
+                }
+		    };
+
+		    if (animated)
+		    {
+		        Animate(0.250, action);
+		    }
+		    else
+		    {
+		        action();
+		    }
 		}
 
-		/// <summary>
-		/// Rebuilds the grid.
-		/// </summary>
-		/// <param name="right">if set to <c>true</c> [right].</param>
-		/// <param name="animated">if set to <c>true</c> [animated].</param>
-		public void RebuildGrid(bool right, bool animated)
-		{
-			UserInteractionEnabled = false;
+        /// <summary>
+        /// ps the month view swiped up.
+        /// </summary>
+        /// <param name="ges">The ges.</param>
+        private void MonthViewSwipedUp(UISwipeGestureRecognizer ges)
+        {
+            if (SwipedUp != null)
+            {
+                SwipedUp();
+            }
+        }
 
-			var gridToMove = CreateNewGrid(CurrentMonthYear);
-			var pointsToMove = (right ? Frame.Width : -Frame.Width);
+        /// <summary>
+        /// ps the month view swiped right.
+        /// </summary>
+        /// <param name="ges">The ges.</param>
+        private void MonthViewSwipedRight(UISwipeGestureRecognizer ges)
+        {
+            MoveCalendarMonths(false, true);
+        }
 
-			/*if (left && gridToMove.weekdayOfFirst==0)
-				pointsToMove += 44;
-			if (!left && _monthGridView.weekdayOfFirst==0)
-				pointsToMove -= 44;*/
-
-			gridToMove.Frame = new CGRect(new CGPoint(pointsToMove, 0), gridToMove.Frame.Size);
-
-			_scrollView.AddSubview(gridToMove);
-
-			if (animated)
-			{
-				BeginAnimations("changeMonth");
-				SetAnimationDuration(0.4);
-				SetAnimationDelay(0.1);
-				SetAnimationCurve(UIViewAnimationCurve.EaseInOut);
-			}
-
-			_monthGridView.Center = new CGPoint(_monthGridView.Center.X - pointsToMove, _monthGridView.Center.Y);
-			gridToMove.Center = new CGPoint(gridToMove.Center.X - pointsToMove, gridToMove.Center.Y);
-
-			_monthGridView.Alpha = 0;
-
-			/*_scrollView.Frame = new RectangleF(
-				_scrollView.Frame.Location,
-				new SizeF(_scrollView.Frame.Width, this.Frame.Height-16));
-			
-			_scrollView.ContentSize = _scrollView.Frame.Size;*/
-
-			SetNeedsDisplay();
-
-			if (animated)
-			{
-				CommitAnimations();
-			}
-
-			_monthGridView = gridToMove;
-
-			UserInteractionEnabled = true;
-
-			if (MonthChanged != null)
-			{
-				MonthChanged(CurrentMonthYear);
-			}
-		}
+        /// <summary>
+        /// ps the month view swiped left.
+        /// </summary>
+        /// <param name="ges">The ges.</param>
+        private void MonthViewSwipedLeft(UISwipeGestureRecognizer ges)
+        {
+            MoveCalendarMonths(true, true);
+        }
 
 		/// <summary>
 		/// Creates the new grid.
@@ -673,27 +663,6 @@ namespace XLabs.Forms.Controls
 		}
 
 		/// <summary>
-		/// Draws the specified rect.
-		/// </summary>
-		/// <param name="rect">The rect.</param>
-		public override void Draw(CGRect rect)
-		{
-			using (var context = UIGraphics.GetCurrentContext())
-			{
-				context.SetFillColor(StyleDescriptor.TitleBackgroundColor.CGColor);
-				//Console.WriteLine("Title background color is {0}",_styleDescriptor.TitleBackgroundColor.ToString());
-				context.FillRect(new CGRect(0, 0, 320, 18 + _headerHeight));
-			}
-
-			DrawDayLabels(rect);
-
-			if (_showHeader)
-			{
-				DrawMonthLabel(rect);
-			}
-		}
-
-		/// <summary>
 		/// Draws the month label.
 		/// </summary>
 		/// <param name="rect">The rect.</param>
@@ -709,28 +678,6 @@ namespace XLabs.Forms.Controls
 				StyleDescriptor.TitleForegroundColor,
 				r,
 				StyleDescriptor.MonthTitleFont);
-		}
-
-		/// <summary>
-		/// Draws the centered string.
-		/// </summary>
-		/// <param name="text">The text.</param>
-		/// <param name="color">The color.</param>
-		/// <param name="rect">The rect.</param>
-		/// <param name="font">The font.</param>
-		private void DrawCenteredString(NSString text, UIColor color, CGRect rect, UIFont font)
-		{
-			var paragraphStyle = (NSMutableParagraphStyle)NSParagraphStyle.Default.MutableCopy();
-			paragraphStyle.LineBreakMode = UILineBreakMode.TailTruncation;
-			paragraphStyle.Alignment = UITextAlignment.Center;
-			var attrs = new UIStringAttributes { Font = font, ForegroundColor = color, ParagraphStyle = paragraphStyle };
-			var size = text.GetSizeUsingAttributes(attrs);
-			var targetRect = new CGRect(
-				rect.X + (float)Math.Floor((rect.Width - size.Width) / 2f),
-				rect.Y + (float)Math.Floor((rect.Height - size.Height) / 2f),
-				size.Width,
-				size.Height);
-			text.DrawString(targetRect, attrs);
 		}
 
 		/// <summary>
@@ -759,6 +706,7 @@ namespace XLabs.Forms.Controls
 				{
 					context.SetFillColor(StyleDescriptor.DayOfWeekLabelBackgroundColor.CGColor);
 				}
+
 				context.FillRect(dateRectangle);
 				if (StyleDescriptor.ShouldHighlightDaysOfWeekLabel && HighlightedDaysOfWeek[(int)today.DayOfWeek])
 				{
@@ -786,5 +734,27 @@ namespace XLabs.Forms.Controls
 			//			}
 			context.RestoreState();
 		}
+
+        /// <summary>
+        /// Draws the centered string.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="color">The color.</param>
+        /// <param name="rect">The rect.</param>
+        /// <param name="font">The font.</param>
+        private static void DrawCenteredString(NSString text, UIColor color, CGRect rect, UIFont font)
+        {
+            var paragraphStyle = (NSMutableParagraphStyle)NSParagraphStyle.Default.MutableCopy();
+            paragraphStyle.LineBreakMode = UILineBreakMode.TailTruncation;
+            paragraphStyle.Alignment = UITextAlignment.Center;
+            var attrs = new UIStringAttributes { Font = font, ForegroundColor = color, ParagraphStyle = paragraphStyle };
+            var size = text.GetSizeUsingAttributes(attrs);
+            var targetRect = new CGRect(
+                rect.X + (float)Math.Floor((rect.Width - size.Width) / 2f),
+                rect.Y + (float)Math.Floor((rect.Height - size.Height) / 2f),
+                size.Width,
+                size.Height);
+            text.DrawString(targetRect, attrs);
+        }
 	}
 }
