@@ -10,9 +10,8 @@
        WinPhone="10, 10, 0, 0" />
   </ContentPage.Padding>
 
-
   <Grid>
-    <controls:BindableRadioGroup Grid.Row="1" x:Name="ansPicker" SelectedIndex="{Binding ItemSelected}"
+    <controls:BindableRadioGroup Grid.Row="1" x:Name="ansPicker" SelectedIndex="{Binding ItemSelected}" TextColor="White" FontName="AmericanTypewriter"
                             VerticalOptions="Start" />
   </Grid>
 

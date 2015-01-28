@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 using XLabs.Forms.Controls;
 
 namespace XLabs.Sample.Pages.Controls
@@ -13,9 +14,9 @@ namespace XLabs.Sample.Pages.Controls
         {
             InitializeComponent();
 
+            BackgroundColor = Color.Black;
 
-
-            ansPicker.ItemsSource = new string[]
+            ansPicker.ItemsSource = new[]
             {
                 "Red",
                 "Blue",
@@ -31,7 +32,10 @@ namespace XLabs.Sample.Pages.Controls
         {
             var radio = sender as CustomRadioButton;
 
-            if (radio == null || radio.Id == -1) return;
+            if (radio == null || radio.Id == -1)
+            {
+                return;
+            }
 
             DisplayAlert("Info", radio.Text, "OK");
         }
