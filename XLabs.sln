@@ -39,6 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Definition", "Definition", 
 		.nuget\Definition\XLabs.Serialization.NuSpec = .nuget\Definition\XLabs.Serialization.NuSpec
 		.nuget\Definition\XLabs.Serialization.ProtoBuf.NuSpec = .nuget\Definition\XLabs.Serialization.ProtoBuf.NuSpec
 		.nuget\Definition\XLabs.Serialization.ServiceStack.NuSpec = .nuget\Definition\XLabs.Serialization.ServiceStack.NuSpec
+		.nuget\Definition\XLabs.Web.NuSpec = .nuget\Definition\XLabs.Web.NuSpec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{BE825D31-2EA2-4CB9-B838-F3CFA84E3CC9}"
