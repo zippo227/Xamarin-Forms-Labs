@@ -58,6 +58,11 @@ namespace XLabs.Platform.Device
 		/// </summary>
 		private IFileManager fileManager;
 
+	    /// <summary>
+	    /// Reference to the Bluetooth hub singleton.
+	    /// </summary>
+        private IBluetoothHub bluetoothHub;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AppleDevice" /> class.
 		/// </summary>
@@ -66,7 +71,6 @@ namespace XLabs.Platform.Device
 			Battery = new Battery();
 			Accelerometer = new Accelerometer();
 			FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
-			this.BluetoothHub = new BluetoothHub();
 
 			if (Device.Gyroscope.IsSupported)
 			{
@@ -214,9 +218,8 @@ namespace XLabs.Platform.Device
 		public IGyroscope Gyroscope { get; private set; }
 
 		/// <summary>
-		/// Gets the bluetooth hub service.
+		/// Gets the audio stream from the device's microphone.
 		/// </summary>
-		/// <value>The bluetooth hub service if available, otherwise null.</value>
 		public IAudioStream Microphone { get; private set; }
 
 		/// <summary>
@@ -261,7 +264,17 @@ namespace XLabs.Platform.Device
 			}
 		}
 
-        public IBluetoothHub BluetoothHub { get; private set; }
+		/// <summary>
+		/// Gets the bluetooth hub service.
+		/// </summary>
+		/// <value>The bluetooth hub service if available, otherwise null.</value>
+		public IBluetoothHub BluetoothHub
+		{
+			get
+			{
+				return this.bluetoothHub ?? (this.bluetoothHub = new BluetoothHub());
+			}
+		}
 
         /// <summary>
         /// Starts the default app associated with the URI for the specified URI.
