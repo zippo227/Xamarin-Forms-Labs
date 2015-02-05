@@ -57,6 +57,7 @@ namespace XLabs.Forms.Controls
 			SetTextAlignment(view);
 			SetBorder(view);
 			SetPlaceholderTextColor(view);
+            SetMaxLength(view);
 
 		}
 
@@ -168,7 +169,7 @@ namespace XLabs.Forms.Controls
 			{
 				if (view.PlaceholderTextColor != Color.Default && _thisPhoneTextBox != null)
 				{
-					var hintStyle = new System.Windows.Style(typeof(ContentControl));
+					var hintStyle = new System.Windows.Style(typeof(System.Windows.Controls.ContentControl));
 					hintStyle.Setters.Add(
 						new System.Windows.Setter(
 							System.Windows.Controls.Control.ForegroundProperty,
@@ -178,5 +179,14 @@ namespace XLabs.Forms.Controls
 				}
 			}        
 		}
+
+        /// <summary>
+        /// Sets the MaxLength Characteres.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        private void SetMaxLength(ExtendedEntry view)
+        {
+            _thisPhoneTextBox.MaxLength = view.MaxLength;
+        }
 	}
 }

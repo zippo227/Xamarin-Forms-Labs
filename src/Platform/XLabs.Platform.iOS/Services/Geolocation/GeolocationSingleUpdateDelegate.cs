@@ -1,13 +1,11 @@
-﻿namespace XLabs.Platform.Services.Geolocation
+namespace XLabs.Platform.Services.Geolocation
 {
 	using System;
 	using System.Threading;
 	using System.Threading.Tasks;
 
-	using MonoTouch.CoreLocation;
-	using MonoTouch.Foundation;
-
-	using XLabs.Platform.Services.GeoLocation;
+	using CoreLocation;
+	using Foundation;
 
 	/// <summary>
 	/// Class GeolocationSingleUpdateDelegate.
@@ -139,7 +137,7 @@
 		/// <param name="error">The error.</param>
 		public override void Failed(CLLocationManager manager, NSError error)
 		{
-			switch ((CLError)error.Code)
+			switch ((CLError)(int)error.Code)
 			{
 				case CLError.Network:
 					StopListening();
@@ -182,7 +180,7 @@
 			_position.Latitude = newLocation.Coordinate.Latitude;
 			_position.Longitude = newLocation.Coordinate.Longitude;
 			_position.Speed = newLocation.Speed;
-			_position.Timestamp = new DateTimeOffset(newLocation.Timestamp);
+			_position.Timestamp = new DateTimeOffset((DateTime)newLocation.Timestamp);
 
 			_haveLocation = true;
 

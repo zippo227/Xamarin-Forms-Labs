@@ -126,7 +126,7 @@
 		/// <summary>
 		/// Class DataSource.
 		/// </summary>
-		public class DataSource : ContentControl
+		public class DataSource : System.Windows.Controls.ContentControl
 		{
 			/// <summary>
 			/// The _parent

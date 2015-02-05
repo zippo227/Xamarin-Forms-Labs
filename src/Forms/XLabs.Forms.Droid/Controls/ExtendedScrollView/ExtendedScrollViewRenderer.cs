@@ -7,7 +7,7 @@ namespace XLabs.Forms.Controls
 {
 	using System;
 	using System.ComponentModel;
-
+	using Android.Views;
 	using Xamarin.Forms;
 	using Xamarin.Forms.Platform.Android;
 
@@ -16,6 +16,19 @@ namespace XLabs.Forms.Controls
 	/// </summary>
 	public class ExtendedScrollViewRenderer:ScrollViewRenderer
 	{
+		/// <summary>
+		/// Fixes ScrollViewRenderer which does not handle InputTransparent properly in XF 1.3.1. 
+		/// This can be removed once https://bugzilla.xamarin.com/show_bug.cgi?id=26214 is fixed.
+		/// </summary>
+		/// <param name="ev">The motion event</param>
+		public override bool OnInterceptTouchEvent(MotionEvent ev)
+		{
+			if (this.Element.InputTransparent)
+				return false;
+
+			return base.OnInterceptTouchEvent(ev);
+		}
+
 		/// <summary>
 		/// Handles the <see cref="E:ElementChanged" /> event.
 		/// </summary>

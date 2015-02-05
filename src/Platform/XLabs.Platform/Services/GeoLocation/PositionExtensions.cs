@@ -1,4 +1,4 @@
-﻿namespace XLabs.Platform.Services.GeoLocation
+﻿namespace XLabs.Platform.Services.Geolocation
 {
 	using System;
 

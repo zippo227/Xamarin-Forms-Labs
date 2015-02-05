@@ -41,6 +41,8 @@
 
 		}
 
+		public SoundServiceViewModel () : this (null) { }
+
 		/// <summary>
 		/// Gets the play command.
 		/// </summary>

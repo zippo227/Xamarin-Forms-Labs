@@ -1,4 +1,6 @@
-﻿namespace XLabs.Platform.Device
+using ObjCRuntime;
+
+namespace XLabs.Platform.Device
 {
 	using System;
 	using System.IO.IsolatedStorage;
@@ -7,8 +9,8 @@
 	using System.Threading.Tasks;
 
 	using MonoTouch;
-	using MonoTouch.Foundation;
-	using MonoTouch.UIKit;
+	using Foundation;
+	using UIKit;
 
 	using XLabs.Platform.Services;
 	using XLabs.Platform.Services.IO;
@@ -56,6 +58,11 @@
 		/// </summary>
 		private IFileManager fileManager;
 
+	    /// <summary>
+	    /// Reference to the Bluetooth hub singleton.
+	    /// </summary>
+        private IBluetoothHub bluetoothHub;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AppleDevice" /> class.
 		/// </summary>
@@ -64,7 +71,6 @@
 			Battery = new Battery();
 			Accelerometer = new Accelerometer();
 			FirmwareVersion = UIDevice.CurrentDevice.SystemVersion;
-			this.BluetoothHub = new BluetoothHub();
 
 			if (Device.Gyroscope.IsSupported)
 			{
@@ -130,7 +136,7 @@
 			IntPtr newp,
 			uint newlen);
 
-        [DllImport(MonoTouch.Constants.SystemLibrary)]
+        [DllImport(Constants.SystemLibrary)]
         static internal extern int sysctl(
             [MarshalAs(UnmanagedType.LPArray)] int[] name, 
             uint namelen, 
@@ -212,9 +218,8 @@
 		public IGyroscope Gyroscope { get; private set; }
 
 		/// <summary>
-		/// Gets the bluetooth hub service.
+		/// Gets the audio stream from the device's microphone.
 		/// </summary>
-		/// <value>The bluetooth hub service if available, otherwise null.</value>
 		public IAudioStream Microphone { get; private set; }
 
 		/// <summary>
@@ -259,7 +264,17 @@
 			}
 		}
 
-        public IBluetoothHub BluetoothHub { get; private set; }
+		/// <summary>
+		/// Gets the bluetooth hub service.
+		/// </summary>
+		/// <value>The bluetooth hub service if available, otherwise null.</value>
+		public IBluetoothHub BluetoothHub
+		{
+			get
+			{
+				return this.bluetoothHub ?? (this.bluetoothHub = new BluetoothHub());
+			}
+		}
 
         /// <summary>
         /// Starts the default app associated with the URI for the specified URI.

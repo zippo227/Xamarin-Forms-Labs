@@ -119,8 +119,8 @@ namespace XLabs.Forms.Mvvm
 				}
 			}
 
-			viewModel.Navigation = Resolver.Resolve<INavigationService>();
-
+			viewModel.NavigationService = Resolver.Resolve<INavigationService>();
+		
 			if (initialiser != null)
 			{
 				initialiser(viewModel, page);
@@ -133,6 +133,11 @@ namespace XLabs.Forms.Mvvm
 				pageBindable.BindingContext = null;
 				pageBindable.BindingContext = viewModel;
 			}
+			var formsPage = page as Page;
+			if (formsPage != null) {
+				viewModel.Navigation = new ViewModelNavigation(formsPage.Navigation);
+			}
+
 
 			return page;
 		}

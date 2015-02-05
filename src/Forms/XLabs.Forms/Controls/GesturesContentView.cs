@@ -7,10 +7,10 @@ using XLabs.Forms.Behaviors;
 namespace XLabs.Forms.Controls
 {
 	/// <summary>
-	/// Uses attached properties to 
+	/// Uses attached properties to
 	/// </summary>
 	public class GesturesContentView : ContentView
-	{                                     
+	{
 
 		/// <summary>
 		/// Property Definition for the <see cref="Accuracy"/> Property
@@ -82,7 +82,7 @@ namespace XLabs.Forms.Controls
 			if (vi == null)
 			{
 				vi = new ViewInterest { View = view };
-				_viewInterests.Add(vi);                
+				_viewInterests.Add(vi);
 			}
 			 vi.Interests=new List<GestureInterest>(interestedin.ToList());
 			BindInterests(vi);
@@ -92,13 +92,15 @@ namespace XLabs.Forms.Controls
 		{
 			_viewInterests.RemoveAll(x => x.View == view);
 		}
+
 		private void BindInterests(ViewInterest vi)
 		{
-			var bc = FindBindingContext(vi.View);
-			foreach (var interest in vi.Interests)
-			{
-				interest.BindingContext = bc;
-			}
+				var bc = FindBindingContext(vi.View);
+				foreach (var interest in vi.Interests)
+				{
+						if (interest.BindingContext == null)
+								interest.BindingContext = bc;
+				}
 		}
 
 		private object FindBindingContext(View view)
@@ -147,7 +149,7 @@ namespace XLabs.Forms.Controls
 				//Swap in the new direction so the user knows what the final match was
 				gesture.Direction = horizontaldirection | verticaldirection;
 
-				interest =interestedview.Interests.Where(x =>x.GestureType == gesture.GestureType && 
+				interest =interestedview.Interests.Where(x =>x.GestureType == gesture.GestureType &&
 																			  (x.Direction & Directionality.HorizontalMask)== horizontaldirection &&
 																			  (x.Direction & Directionality.VerticalMask) == verticaldirection).ToList();
 			}
@@ -165,7 +167,7 @@ namespace XLabs.Forms.Controls
 
 		/// <summary>
 		/// For now only consider the origin point.
-		/// Once the kinks are worked out switch to a 
+		/// Once the kinks are worked out switch to a
 		/// closest approach based on nearest point intersection
 		/// ordering by area on the presumption that the smallest
 		/// view will be the innermost
@@ -187,7 +189,7 @@ namespace XLabs.Forms.Controls
 				if (candidates.Any())
 				{
 					originview = candidates.Count() == 1? candidates.First(): candidates.OrderBy(v => DistanceToClosestEdge(v.View.Bounds, point)).First();
-				}                
+				}
 			}
 			//check the originview for noninterested children that contain the point
 			//var child=originview.View.
@@ -226,7 +228,7 @@ namespace XLabs.Forms.Controls
 		private void SatisfyInterest(GestureInterest gi,GestureResult args)
 		{
 			var commandparam = gi.GestureParameter??args.StartView.BindingContext??BindingContext;
-			if(gi.GestureCommand.CanExecuteGesture(args,gi.GestureParameter))
+			if (gi.GestureCommand != null && gi.GestureCommand.CanExecuteGesture(args, gi.GestureParameter))
 				gi.GestureCommand.ExecuteGesture(args,commandparam);
 			var handler = GestureRecognized;
 			if (handler != null)
@@ -247,7 +249,7 @@ namespace XLabs.Forms.Controls
 	}
 
 	/// <summary>
-	/// How should the user be notified that a 
+	/// How should the user be notified that a
 	/// gesture has been recognized
 	/// </summary>
 	public enum GestureNotification
@@ -328,6 +330,22 @@ namespace XLabs.Forms.Controls
 		/// It is very possible for a single swipe action to trigger two Swipe events:
 		/// ie:  SwipeUp and SwipeLeft
 		/// </summary>
-		Swipe
+		Swipe,
+		/// <summary>
+		/// 2 finger pinch.  Origin2 will contain the location of the second finger.
+		/// </summary>
+		Pinch,
+		/// <summary>
+		/// 1 finger move
+		/// </summary>
+		Move,
+		/// <summary>
+		/// All up events send this geture.  It can be ignored except for when you want to detect the end of a Pinch or Move.
+		/// </summary>
+		Up,
+		/// <summary>
+		/// All down events send this geture.  It can be ignored except for when you want to detect when the user start touching the screen.
+		/// </summary>
+		Down,
 	}
 }

@@ -24,18 +24,26 @@ namespace XLabs.Forms.Mvvm
 	public abstract class ViewModel : ObservableObject, IViewModel
 	{
 		/// <summary>
-		/// Gets or sets the navigation.
+		/// Gets or sets the navigation service.
 		/// </summary>
-		/// <value>The navigation.</value>
-		public INavigationService Navigation
+		/// <value>The navigation service.</value>
+		public INavigationService NavigationService
 		{
-			get { return _navigation ?? Resolver.Resolve<INavigationService>(); }
-			set { _navigation = value; }
+			get { return _navigationService ?? Resolver.Resolve<INavigationService>(); }
+			set { _navigationService = value; }
 		}
 
 		private bool _isBusy;
-		private INavigationService _navigation;
+		private INavigationService _navigationService;
 
+		/// <summary>
+		/// Gets or sets the forms navigation.
+		/// </summary>
+		/// <value>The forms navigation.</value>
+		public ViewModelNavigation Navigation {
+			get;
+			set;
+		}
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is busy.
 		/// </summary>

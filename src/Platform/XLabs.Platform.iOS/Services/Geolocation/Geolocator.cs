@@ -1,15 +1,13 @@
-﻿namespace XLabs.Platform.Services.Geolocation
+namespace XLabs.Platform.Services.Geolocation
 {
 	using System;
 	using System.Threading;
 	using System.Threading.Tasks;
 
-	using MonoTouch.CoreLocation;
-	using MonoTouch.Foundation;
-	using MonoTouch.ObjCRuntime;
-	using MonoTouch.UIKit;
-
-	using XLabs.Platform.Services.GeoLocation;
+	using CoreLocation;
+	using Foundation;
+	using ObjCRuntime;
+	using UIKit;
 
 	/// <summary>
 	/// Class Geolocator.
@@ -379,7 +377,7 @@
 				p.Speed = location.Speed;
 			}
 
-			p.Timestamp = new DateTimeOffset(location.Timestamp);
+			p.Timestamp = new DateTimeOffset((DateTime)location.Timestamp);
 
 			_position = p;
 
@@ -395,7 +393,7 @@
 		/// <param name="e">The <see cref="NSErrorEventArgs"/> instance containing the event data.</param>
 		private void OnFailed(object sender, NSErrorEventArgs e)
 		{
-			if ((CLError)e.Error.Code == CLError.Network)
+			if ((int)e.Error.Code == (int)CLError.Network)
 			{
 				OnPositionError(new PositionErrorEventArgs(GeolocationError.PositionUnavailable));
 			}

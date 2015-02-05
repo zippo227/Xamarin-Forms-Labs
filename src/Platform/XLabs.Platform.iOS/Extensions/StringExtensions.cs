@@ -1,9 +1,11 @@
-﻿namespace XLabs.Platform.Extensions
-{
-	using System.Drawing;
+using System;
 
-	using MonoTouch.Foundation;
-	using MonoTouch.UIKit;
+namespace XLabs.Platform.Extensions
+{
+	using CoreGraphics;
+
+	using Foundation;
+	using UIKit;
 
 	/// <summary>
 	/// Class StringExtensions.
@@ -11,23 +13,33 @@
 	public static class StringExtensions
 	{
 		/// <summary>
-		/// Strings the height.
+		/// Gets the height of a string.
 		/// </summary>
 		/// <param name="text">The text.</param>
 		/// <param name="font">The font.</param>
 		/// <param name="width">The width.</param>
-		/// <returns>System.Single.</returns>
-		public static float StringHeight(this string text, UIFont font, float width)
+        /// <returns>nfloat.</returns>
+		public static nfloat StringHeight(this string text, UIFont font, nfloat width)
 		{
-			var nativeString = new NSString(text);
-
-			var rect = nativeString.GetBoundingRect(
-				new SizeF(width, float.MaxValue),
-				NSStringDrawingOptions.UsesLineFragmentOrigin,
-				new UIStringAttributes { Font = font },
-				null);
-
-			return rect.Height;
+            return text.StringRect(font, width).Height;
 		}
+
+        /// <summary>
+        /// Gets the rectangle of a string.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="font">The font.</param>
+        /// <param name="width">The width.</param>
+        /// <returns>CGRect.</returns>
+	    public static CGRect StringRect(this string text, UIFont font, nfloat width)
+	    {
+            var nativeString = new NSString(text);
+
+            return nativeString.GetBoundingRect(
+                new CGSize(width, float.MaxValue),
+                NSStringDrawingOptions.UsesLineFragmentOrigin,
+                new UIStringAttributes { Font = font },
+                null);
+	    }
 	}
 }

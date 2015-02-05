@@ -13,7 +13,7 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		public static readonly BindableProperty CheckedProperty =
 			BindableProperty.Create<CheckBox, bool>(
-				p => p.Checked, false);
+				p => p.Checked, false, BindingMode.TwoWay, propertyChanged: OnCheckedPropertyChanged);
 
 		/// <summary>
 		/// The checked text property.
@@ -63,7 +63,7 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The checked changed event.
 		/// </summary>
-		public EventHandler<EventArgs<bool>> CheckedChanged;
+		public event EventHandler<EventArgs<bool>> CheckedChanged;
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the control is checked.
@@ -195,5 +195,17 @@ namespace XLabs.Forms.Controls
 						: (string.IsNullOrEmpty(this.UncheckedText) ? this.DefaultText : this.UncheckedText);
 			}
 		}
+		
+		/// <summary>
+	        /// Called when [checked property changed].
+	        /// </summary>
+	        /// <param name="bindable">The bindable.</param>
+	        /// <param name="oldvalue">if set to <c>true</c> [oldvalue].</param>
+	        /// <param name="newvalue">if set to <c>true</c> [newvalue].</param>
+	        private static void OnCheckedPropertyChanged(BindableObject bindable, bool oldvalue, bool newvalue)
+	        {
+	            var checkBox = (CheckBox)bindable;
+	            checkBox.Checked = newvalue;
+	        }
 	}
 }

@@ -7,10 +7,10 @@ namespace XLabs.Forms.Controls
 {
 	using System;
 	using System.ComponentModel;
-	using System.Drawing;
+	using CoreGraphics;
 
-	using MonoTouch.Foundation;
-	using MonoTouch.UIKit;
+	using Foundation;
+	using UIKit;
 
 	using Xamarin.Forms;
 	using Xamarin.Forms.Platform.iOS;
@@ -39,12 +39,16 @@ namespace XLabs.Forms.Controls
 
 			var view = (ExtendedEntry)Element;
 
-			SetFont(view);
-			SetTextAlignment(view);
-			SetBorder(view);
-			SetPlaceholderTextColor(view);
+			if (view != null)
+			{
+				SetFont (view);
+				SetTextAlignment (view);
+				SetBorder (view);
+				SetPlaceholderTextColor (view);
+                SetMaxLength (view);
 
-			ResizeHeight();
+				ResizeHeight ();
+			}
 
 			if (e.OldElement == null)
 			{
@@ -134,6 +138,19 @@ namespace XLabs.Forms.Controls
 			Control.BorderStyle = view.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
 		}
 
+        /// <summary>
+        /// Sets the maxLength.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        private void SetMaxLength(ExtendedEntry view)
+        {
+            Control.ShouldChangeCharacters = (textField, range, replacementString) =>
+            {
+                var newLength = textField.Text.Length + replacementString.Length - range.Length;
+                return newLength <= view.MaxLength;
+            };
+        }
+
 		/// <summary>
 		/// Resizes the height.
 		/// </summary>
@@ -144,7 +161,7 @@ namespace XLabs.Forms.Controls
 			var height = Math.Max(Bounds.Height,
 				new UITextField {Font = Control.Font}.IntrinsicContentSize.Height);
 
-			Control.Frame = new RectangleF(0.0f, 0.0f, (float) Element.Width, height);
+			Control.Frame = new CGRect(0.0f, 0.0f, (nfloat) Element.Width,  (nfloat) height);
 
 			Element.HeightRequest = height;
 		}

@@ -11,15 +11,15 @@ namespace XLabs.Forms.Controls
     /// A view that renders its content based on a data template. Typical usage is to either set an explicit 
     /// <see cref="BindableObject.BindingContext"/> on this element or use an inhereted one, then set a display.
     /// </summary>
-    public class ContentPresenter : ContentView
+    public class ContentControl : ContentView
     {
-        public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create("ItemTemplate", typeof(DataTemplate), typeof(ContentPresenter), null, propertyChanged: OnItemTemplateChanged);
+        public static readonly BindableProperty ContentTemplateProperty = BindableProperty.Create<ContentControl, DataTemplate>(x => x.ContentTemplate, null, propertyChanged: OnContentTemplateChanged);
 
-        private static void OnItemTemplateChanged(BindableObject bindable, object oldvalue, object newvalue)
+        private static void OnContentTemplateChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            var cp = (ContentPresenter)bindable;
+            var cp = (ContentControl)bindable;
 
-            var template = cp.ItemTemplate;
+            var template = cp.ContentTemplate;
             if (template != null)
             {
                 var content = (View)template.CreateContent();
@@ -34,15 +34,15 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// A <see cref="DataTemplate"/> used to render the view. This property is bindable.
         /// </summary>
-        public DataTemplate ItemTemplate
+        public DataTemplate ContentTemplate
         {
             get
             {
-                return (DataTemplate)GetValue(ItemTemplateProperty);
+                return (DataTemplate)GetValue(ContentTemplateProperty);
             }
             set
             {
-                SetValue(ItemTemplateProperty, value);
+                SetValue(ContentTemplateProperty, value);
             }
         }
 

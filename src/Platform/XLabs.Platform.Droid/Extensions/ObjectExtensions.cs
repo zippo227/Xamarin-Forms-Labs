@@ -1,9 +1,9 @@
 ﻿namespace XLabs.Platform
 {
-	using Android.App;
-	using Android.Content;
+    using Android.App;
+    using Android.Content;
 
-	/// <summary>
+    /// <summary>
     /// Object extensions.
     /// </summary>
     public static class ObjectExtensions
@@ -25,25 +25,6 @@
             {
                 intent.SetFlags (ActivityFlags.NewTask);
                 Application.Context.StartActivity (intent);
-            }
-        }
-
-		/// <summary>
-		/// Starts the activity for result.
-		/// </summary>
-		/// <param name="o">The o.</param>
-		/// <param name="intent">The intent.</param>
-        public static void StartActivityForResult(this object o, Intent intent)
-        {
-            var context = o as Context;
-            if (context != null)
-            {
-                context.StartActivityForResult(intent);
-            }
-            else
-            {
-                intent.SetFlags(ActivityFlags.NewTask);
-                Application.Context.StartActivityForResult(intent);
             }
         }
     }

@@ -7,8 +7,6 @@
 	using Android.Locations;
 	using Android.OS;
 
-	using XLabs.Platform.Services.GeoLocation;
-
 	using Object = Java.Lang.Object;
 
 	/// <summary>

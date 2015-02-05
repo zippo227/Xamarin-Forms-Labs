@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Media;
 using Xamarin.Forms;
-
 using Xamarin.Forms.Platform.WinPhone;
-using XLabs;
 using XLabs.Forms.Controls;
 using NativeCheckBox = System.Windows.Controls.RadioButton;
 
-[assembly: ExportRenderer(typeof(CustomRadioButton), typeof(RadioButtonRenderer))]
+[assembly: ExportRenderer(typeof (CustomRadioButton), typeof (RadioButtonRenderer))]
 
 namespace XLabs.Forms.Controls
- {
-    
-    public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, System.Windows.Controls.RadioButton>
+{
+    public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, NativeCheckBox>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<CustomRadioButton> e)
         {
@@ -29,21 +21,23 @@ namespace XLabs.Forms.Controls
                 e.OldElement.CheckedChanged -= CheckedChanged;
             }
 
-            if (this.Control == null)
+            if (Control == null)
             {
                 var checkBox = new NativeCheckBox();
-                checkBox.Checked += (s, args) => this.Element.Checked = true;
-                checkBox.Unchecked += (s, args) => this.Element.Checked = false;
 
-                this.SetNativeControl(checkBox);
+                checkBox.Checked += (s, args) => Element.Checked = true;
+                checkBox.Unchecked += (s, args) => Element.Checked = false;
+
+                SetNativeControl(checkBox);
             }
 
-            this.Control.Content = e.NewElement.Text;
-            this.Control.IsChecked = e.NewElement.Checked;
-           
+            Control.Content = e.NewElement.Text;
+            Control.IsChecked = e.NewElement.Checked;
 
-            this.Element.CheckedChanged += CheckedChanged;
-            this.Element.PropertyChanged += ElementOnPropertyChanged;
+            UpdateFont();
+
+            Element.CheckedChanged += CheckedChanged;
+            Element.PropertyChanged += ElementOnPropertyChanged;
         }
 
         private void ElementOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -51,16 +45,21 @@ namespace XLabs.Forms.Controls
             switch (propertyChangedEventArgs.PropertyName)
             {
                 case "Checked":
-                    this.Control.IsChecked = this.Element.Checked;
+                    Control.IsChecked = Element.Checked;
                     break;
                 case "TextColor":
-                    //this.Control.Foreground = this.Element.TextColor ToBrush();
+                    Control.Foreground = Element.TextColor.ToBrush();
+                    break;
+                case "FontName":
+                case "FontSize":
+                    UpdateFont();
                     break;
                 case "Text":
-                    this.Control.Content = Element.Text;
+                    Control.Content = Element.Text;
                     break;
                 default:
-                    System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", propertyChangedEventArgs.PropertyName);
+                    Debug.WriteLine("Property change for {0} has not been implemented.",
+                        propertyChangedEventArgs.PropertyName);
                     break;
             }
         }
@@ -69,11 +68,22 @@ namespace XLabs.Forms.Controls
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                this.Control.Content = this.Element.Text;
-                this.Control.IsChecked = eventArgs.Value;
+                Control.Content = Element.Text;
+                Control.IsChecked = eventArgs.Value;
             });
         }
 
-       
+        /// <summary>
+        /// Updates the font.
+        /// </summary>
+        private void UpdateFont()
+        {
+            if (!string.IsNullOrEmpty(Element.FontName))
+            {
+                Control.FontFamily = new FontFamily(Element.FontName);
+            }
+
+            Control.FontSize = (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f;
+        }
     }
 }
