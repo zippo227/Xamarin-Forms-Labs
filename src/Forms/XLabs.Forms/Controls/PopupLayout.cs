@@ -70,25 +70,37 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        /// Shows the popup.
+        /// Shows the popup centered to the parent view.
         /// </summary>
         /// <param name="popupView">The popup view.</param>
         public void ShowPopup(View popupView)
+        {
+            this.ShowPopup(
+                popupView,
+                Constraint.RelativeToParent(p => (this.Width - this.popup.WidthRequest) / 2),
+                Constraint.RelativeToParent(p => (this.Height- this.popup.HeightRequest) / 2)
+                );
+        }
+
+        /// <summary>
+        /// Shows the popup with constraints.
+        /// </summary>
+        /// <param name="popupView">The popup view.</param>
+        /// <param name="xConstraint">X constraint.</param>
+        /// <param name="yConstraint">Y constraint.</param>
+        /// <param name="widthConstraint">Optional width constraint.</param>
+        /// <param name="heightConstraint">Optional height constraint.</param>
+        public void ShowPopup(View popupView, Constraint xConstraint, Constraint yConstraint, Constraint widthConstraint = null, Constraint heightConstraint = null)
         {
             DismissPopup();
             this.popup = popupView;
 
             this.content.InputTransparent = true;
-            this.Children.Add(
-                this.popup,
-                Constraint.RelativeToParent(p => (this.Width/2) - (this.popup.WidthRequest/2)),
-                Constraint.RelativeToParent(p => (this.Height/2) - (this.popup.HeightRequest/2)),
-                Constraint.RelativeToParent(p => this.popup.WidthRequest),
-                Constraint.RelativeToParent(p => this.popup.HeightRequest)
-                );
+            this.Children.Add(this.popup, xConstraint, yConstraint, widthConstraint, heightConstraint);
 
             UpdateChildrenLayout();
         }
+        
 
         /// <summary>
         /// Shows the popup.
@@ -104,9 +116,6 @@ namespace XLabs.Forms.Controls
             this.popup = popupView;
 
             Constraint constraintX = null, constraintY = null;
-
-            var constraintW = Constraint.RelativeToParent(p => this.popup.WidthRequest);
-            var constraintH = Constraint.RelativeToParent(p => this.popup.HeightRequest);
 
             switch (location)
             {
@@ -129,9 +138,7 @@ namespace XLabs.Forms.Controls
                 //    break;
             }
 
-            this.content.InputTransparent = true;
-            this.Children.Add(this.popup, constraintX, constraintY, constraintW, constraintH);
-            UpdateChildrenLayout();
+            this.ShowPopup(popupView, constraintX, constraintY);
         }
 
         /// <summary>
