@@ -3,6 +3,7 @@
     using System.IO;
 
     using Foundation;
+    using Platform.Services;
     using UIKit;
 
     using Xamarin.Forms;
@@ -95,6 +96,7 @@
                 .Register<IJsonSerializer, XLabs.Serialization.ServiceStack.JsonSerializer>()
                 //.Register<IJsonSerializer, Services.Serialization.SystemJsonSerializer>()
                 .Register<IXFormsApp>(app)
+                .Register<ISecureStorage, SecureStorage>()
                 .Register<IDependencyContainer>(t => resolverContainer)
                 .Register<ISimpleCache>(
                     t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(),
