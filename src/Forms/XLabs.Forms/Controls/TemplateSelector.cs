@@ -10,7 +10,7 @@ namespace XLabs.Forms.Controls
 {
 	using XLabs.Exceptions;
 
-    [ContentProperty("Templates")]
+	[ContentProperty("Templates")]
 	public class TemplateSelector : BindableObject
         {
             /// <summary>
@@ -199,7 +199,7 @@ namespace XLabs.Forms.Controls
         /// so I had to wrap the DataTemplate instead of inheriting it.
         /// </summary>
         /// <typeparam name="T">The object type that this DataTemplateWrapper matches</typeparam>
-        [ContentProperty("WrappedTemplate")]
+	[ContentProperty("WrappedTemplate")]
         public class DataTemplateWrapper<T> : BindableObject, IDataTemplateWrapper
         {
             public static readonly BindableProperty WrappedTemplateProperty = BindableProperty.Create<DataTemplateWrapper<T>, DataTemplate>(x => x.WrappedTemplate, null);
