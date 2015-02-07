@@ -89,6 +89,9 @@
     <Compile Include="Pages\Controls\SegmentPage.cs" />
     <Compile Include="Pages\Controls\WebHybridTestPage.cs" />
     <Compile Include="Pages\Services\EmailPage.cs" />
+    <Compile Include="Pages\Services\SecureStoragePage.xaml.cs">
+      <DependentUpon>SecureStoragePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Services\WaveRecorderPage.xaml.cs">
       <DependentUpon>WaveRecorderPage.xaml</DependentUpon>
     </Compile>
@@ -403,7 +406,12 @@
   </Target>
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Import Project="..\..\packages\Xamarin.Forms.1.3.2.6299-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.1.3.2.6299-pre1\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Services\SecureStoragePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\Controls\DragPage.xaml">
       <SubType>Designer</SubType>

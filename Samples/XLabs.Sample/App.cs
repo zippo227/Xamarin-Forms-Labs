@@ -125,6 +125,7 @@ namespace XLabs.Sample
                 "FontManager",
                 "NFC",
                 "Email",
+                "SecureStorage",
                 //"WaveRecorder",
                 //"Bluetooth",
             };
@@ -179,6 +180,9 @@ namespace XLabs.Sample
                         break;
                     case "email":
                         await mainPage.Navigation.PushAsync(new EmailPage());
+                        break;
+                    case "securestorage":
+                        await mainPage.Navigation.PushAsync(new SecureStoragePage());
                         break;
                 }
             };
