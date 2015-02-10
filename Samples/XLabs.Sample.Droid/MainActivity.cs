@@ -33,7 +33,7 @@ namespace XLabs.Sample.Droid
     using Android.App;
     using Android.Content.PM;
     using Android.OS;
-
+    using Platform.Services;
     using XLabs.Caching;
     using XLabs.Caching.SQLite;
     using XLabs.Forms;
@@ -103,6 +103,7 @@ namespace XLabs.Sample.Droid
                 .Register<IJsonSerializer, XLabs.Serialization.ServiceStack.JsonSerializer>()
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)
+                .Register<ISecureStorage>(t => new KeyVaultStorage(t.Resolve<IDevice>().Id.ToCharArray()))
                 .Register<ISimpleCache>(
                     t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid(),
                         new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
