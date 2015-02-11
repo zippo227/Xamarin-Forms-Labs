@@ -17,20 +17,18 @@
     using Services;
     using Services.IO;
     using Services.Media;
-    using TimeZone = System.TimeZone;
 
     /// <summary>
     /// Android device implements <see cref="IDevice"/>.
     /// </summary>
     public class AndroidDevice : IDevice
     {
+        private static readonly long DeviceTotalMemory = GetTotalMemory();
         private static IDevice currentDevice;
 
         private IBluetoothHub btHub;
-
         private IFileManager fileManager;
-
-        private static readonly long totalMemory = GetTotalMemory();
+        private INetwork network;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
@@ -69,8 +67,6 @@
             this.Battery = new Battery();
 
             this.MediaPicker = new MediaPicker();
-
-            this.Network = new Network();
         }
 
         /// <summary>
@@ -128,7 +124,7 @@
         /// Gets the network service.
         /// </summary>
         /// <value>The network service.</value>
-        public INetwork Network { get; private set; }
+        public INetwork Network { get { return this.network ?? (this.network = new Network()); } }
 
         /// <summary>
         /// Gets the accelerometer for the device if available.
@@ -284,7 +280,7 @@
         {
             get 
             {
-                return totalMemory;
+                return DeviceTotalMemory;
             }
         }
 
