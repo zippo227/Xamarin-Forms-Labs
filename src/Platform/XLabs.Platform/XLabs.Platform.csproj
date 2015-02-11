@@ -42,6 +42,7 @@
     <Folder Include="Services\Contacts\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Device\DeviceExtensions.cs" />
     <Compile Include="Device\DisplayExtensions.cs" />
     <Compile Include="Device\IAccelerometer.cs" />
     <Compile Include="Device\IBattery.cs" />

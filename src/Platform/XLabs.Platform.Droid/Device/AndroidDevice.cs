@@ -7,6 +7,7 @@
     using Android.Bluetooth;
     using Android.Content;
     using Android.OS;
+    using Android.Runtime;
     using Android.Telephony;
     using Android.Util;
     using Android.Views;
@@ -232,18 +233,18 @@
         {
             get
             {
-                var wm = (IWindowManager) Application.Context.GetSystemService(Context.WindowService);
+                var wm = Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
 
                 switch (wm.DefaultDisplay.Rotation)
                 {
                     case SurfaceOrientation.Rotation0:
-                        return Orientation.Landscape & Orientation.LandscapeLeft;
-                    case SurfaceOrientation.Rotation90:
                         return Orientation.Portrait & Orientation.PortraitUp;
+                    case SurfaceOrientation.Rotation90:
+                        return Orientation.Landscape & Orientation.LandscapeLeft;
                     case SurfaceOrientation.Rotation180:
-                        return Orientation.Landscape & Orientation.LandscapeRight;
-                    case SurfaceOrientation.Rotation270:
                         return Orientation.Portrait & Orientation.PortraitDown;
+                    case SurfaceOrientation.Rotation270:
+                        return Orientation.Landscape & Orientation.LandscapeRight;
                     default:
                         return Orientation.None;
                 }
