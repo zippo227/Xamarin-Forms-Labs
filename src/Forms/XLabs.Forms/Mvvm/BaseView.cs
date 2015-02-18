@@ -71,7 +71,7 @@ namespace XLabs.Forms.Mvvm
 			if (BindingContext != null && BindingContext is ViewModel)
 			{
 				var vm = (ViewModel)BindingContext;
-				vm.OnViewAppearing();
+				vm.OnViewDisappearing();
 			}
         	}
 	}
