@@ -31,7 +31,6 @@ namespace XLabs.Forms.Controls
 			if (e.NewElement != null) {
 				var view = (ExtendedLabel)e.NewElement;
 				UpdateUi (view, Control);
-				SetPlaceholder (view);
 			}
 			
 		}
@@ -53,26 +52,7 @@ namespace XLabs.Forms.Controls
 				) {
 					UpdateUi (view,Control);
 			}
-
-			if (e.PropertyName == Label.TextProperty.PropertyName)
-			{
-				SetPlaceholder(view);
-			}
-
-			if (e.PropertyName == Label.FormattedTextProperty.PropertyName)
-			{
-				SetPlaceholder(view);
-			}
-
-			if (e.PropertyName == ExtendedLabel.PlaceholderProperty.PropertyName)
-			{
-				SetPlaceholder(view);
-			}
-
-			if (e.PropertyName == ExtendedLabel.FormattedPlaceholderProperty.PropertyName)
-			{
-				SetPlaceholder(view);
-			}
+			
 		}
 
 		/// <summary>
@@ -86,7 +66,8 @@ namespace XLabs.Forms.Controls
 		/// </param>
 		private void UpdateUi(ExtendedLabel view, UILabel control)
 		{
-	
+			if (view == null || control == null)
+				return;
 			//Do not create attributed string if it is not necesarry
 			if (!view.IsUnderline && !view.IsStrikeThrough && !view.IsDropShadow)
 			{
@@ -116,37 +97,15 @@ namespace XLabs.Forms.Controls
 				control.TextColor = view.TextColor.ToUIColor();
 			}
 
+		
 			control.AttributedText = new NSMutableAttributedString(control.Text,
 																   control.Font,
 																   underlineStyle: underline,
 																   strikethroughStyle: strikethrough,
-																   shadow: dropShadow); ;
+																   shadow: dropShadow);
+		
 		}
 
-		private void SetPlaceholder(ExtendedLabel view)
-		{
-			if (!string.IsNullOrWhiteSpace(view.Text))
-			{
-				var formattedString = view.FormattedText ?? view.Text;
-
-				Control.AttributedText = formattedString.ToAttributed(view.Font, view.TextColor);
-
-				LayoutSubviews();
-
-				return;
-			}
-
-			if (string.IsNullOrWhiteSpace(view.Placeholder) && view.FormattedPlaceholder == null)
-			{
-				return;
-			}
-
-			var formattedPlaceholder = view.FormattedPlaceholder ?? view.Placeholder;
-
-			Control.AttributedText = formattedPlaceholder.ToAttributed(view.Font, view.TextColor);
-
-			LayoutSubviews();
-		}
 	}
 }
 
