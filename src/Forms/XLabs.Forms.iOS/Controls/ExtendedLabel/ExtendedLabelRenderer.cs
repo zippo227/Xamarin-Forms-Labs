@@ -28,11 +28,12 @@ namespace XLabs.Forms.Controls
 		protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
 		{
 			base.OnElementChanged(e);
-
-			var view = (ExtendedLabel)Element;
-
-			UpdateUi(view, Control);
-			SetPlaceholder(view);
+			if (e.NewElement != null) {
+				var view = (ExtendedLabel)e.NewElement;
+				UpdateUi (view, Control);
+				SetPlaceholder (view);
+			}
+			
 		}
 
 		/// <summary>
@@ -45,6 +46,13 @@ namespace XLabs.Forms.Controls
 			base.OnElementPropertyChanged(sender, e);
 
 			var view = (ExtendedLabel)Element;
+
+			if (e.PropertyName == ExtendedLabel.IsUnderlineProperty.PropertyName ||
+				e.PropertyName == ExtendedLabel.IsDropShadowProperty.PropertyName ||
+				e.PropertyName == ExtendedLabel.IsStrikeThroughProperty.PropertyName
+				) {
+					UpdateUi (view,Control);
+			}
 
 			if (e.PropertyName == Label.TextProperty.PropertyName)
 			{
@@ -78,39 +86,7 @@ namespace XLabs.Forms.Controls
 		/// </param>
 		private void UpdateUi(ExtendedLabel view, UILabel control)
 		{
-			// Prefer font set through Font property.
-			if (view.Font == Font.Default)
-			{
-				if (view.FontSize > 0)
-				{
-					control.Font = UIFont.FromName(control.Font.Name, (float)view.FontSize);
-				}
-
-				if (!string.IsNullOrEmpty(view.FontName))
-				{
-					var fontName = Path.GetFileNameWithoutExtension(view.FontName);
-
-					var font = UIFont.FromName(fontName, control.Font.PointSize);
-
-					if (font != null)
-					{
-						control.Font = font;
-					}
-				}
-
-				#region ======= This is for backward compatability with obsolete attrbute 'FontNameIOS' ========
-				if (!string.IsNullOrEmpty(view.FontNameIOS))
-				{
-					var font = UIFont.FromName(view.FontNameIOS, (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
-
-					if (font != null)
-					{
-						control.Font = font;
-					}
-				}
-				#endregion ====== End of obsolete section ==========================================================
-			}
-
+	
 			//Do not create attributed string if it is not necesarry
 			if (!view.IsUnderline && !view.IsStrikeThrough && !view.IsDropShadow)
 			{
