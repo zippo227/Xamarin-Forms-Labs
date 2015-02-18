@@ -58,7 +58,7 @@ namespace XLabs.Forms.Controls
 				e.PropertyName == ExtendedLabel.IsDropShadowProperty.PropertyName ||
 				e.PropertyName == ExtendedLabel.IsStrikeThroughProperty.PropertyName
 				) {
-				var view = (ExtendedLabel) e.NewElement;
+				var view = (ExtendedLabel) Element;
 				var control = Control;
 				UpdateUi (view,control);
 			}
