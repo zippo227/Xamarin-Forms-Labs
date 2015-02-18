@@ -66,7 +66,9 @@ namespace XLabs.Forms.Controls
 		/// </param>
 		private void UpdateUi(ExtendedLabel view, TextBlock control)
 		{
-			
+			if (view == null || control == null)
+				return;
+
 			////need to do this ahead of font change due to unexpected behaviour if done later.
 			if (view.IsStrikeThrough)
 			{             

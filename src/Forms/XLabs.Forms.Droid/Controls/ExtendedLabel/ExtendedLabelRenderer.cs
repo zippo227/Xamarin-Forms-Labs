@@ -71,6 +71,9 @@ namespace XLabs.Forms.Controls
 		/// <param name="control">The control.</param>
 		void UpdateUi(ExtendedLabel view, TextView control)
 		{
+			if (view == null || control == null)
+				return;
+
 			if(view.IsUnderline)
 			{
 				control.PaintFlags = control.PaintFlags | PaintFlags.UnderlineText;
