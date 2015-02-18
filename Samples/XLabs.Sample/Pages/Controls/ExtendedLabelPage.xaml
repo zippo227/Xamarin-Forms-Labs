@@ -13,6 +13,7 @@
 			<controls:ExtendedLabel
                 Text="Plain unspecified Extended Label" HorizontalOptions="StartAndExpand" />
 			<controls:ExtendedLabel
+                FontSize="30"
                 Text="Text with strikethrough"
                 IsStrikeThrough="True"
                 HorizontalOptions="StartAndExpand" />
