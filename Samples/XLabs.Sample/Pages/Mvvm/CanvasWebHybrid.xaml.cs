@@ -14,6 +14,7 @@ namespace XLabs.Sample.Pages.Mvvm
 			InitializeComponent ();
 
 		    this.NativeList.HeightRequest = Device.OnPlatform(250, 320, 150);
+		    this.hybridWebView.HeightRequest = Device.OnPlatform(300, 300, 400);
 
 			this.hybridWebView.RegisterCallback("dataCallback", t =>
 				System.Diagnostics.Debug.WriteLine(t)
