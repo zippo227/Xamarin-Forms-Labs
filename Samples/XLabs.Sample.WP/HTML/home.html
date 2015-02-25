@@ -1,9 +1,9 @@
 
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Testing CanvasJS with Xamarin C# bridge</title>
-	</head>
+    <head>
+        <title>Testing CanvasJS with Xamarin C# bridge</title>
+    </head>
 <body>
     <div id="os"></div>
 </body>
@@ -11,22 +11,23 @@
     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
     <script type="text/javascript" src="canvasjs.min.js"></script>
 
-<script type="text/javascript">
-    var os, h;
+    <script type="text/javascript">
+        var os, h;
 
-    if (navigator.platform == "Win32") {
-        os = "WP8";
-        h = "600px";
-    } else if (navigator.platform == "ios") {
+        if (navigator.platform == "Win32") {
+            os = "WP8";
+            h = "600px";
+        } else if (navigator.appVersion.indexOf("Linux") != -1) {
+            os = "Android";
+            h = "300px";
+        } else {
+            os = navigator.platform;
+            h = "300px";
+        }
 
-    } else {
-        os = "Android";
-        h = "300px";
-    }
-
-    document.getElementById("os").innerHTML = "Testing CanvasJS in " + os + " with C# bridge";
-    document.getElementById("chartContainer").style.height = h;
-</script>
+        document.getElementById("os").innerHTML = "Testing CanvasJS in " + os + " with C# bridge";
+        document.getElementById("chartContainer").style.height = h;
+    </script>
     <script language="javascript">
         var chart;
         var points;

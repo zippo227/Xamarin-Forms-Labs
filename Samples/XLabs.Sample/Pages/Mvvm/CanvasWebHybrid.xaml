@@ -19,7 +19,7 @@
           <DataTemplate>
             <ViewCell>
               <ViewCell.View>
-                <StackLayout HeightRequest="100">
+                <StackLayout HeightRequest="120">
                   <Label Text="{Binding Label}" />
                   <Slider Value="{Binding Y, Mode=TwoWay}" />
                   <!--							<Slider Maximum="{Binding Max}"></Slider>-->
