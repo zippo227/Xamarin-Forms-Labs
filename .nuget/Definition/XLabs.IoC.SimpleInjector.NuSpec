@@ -23,7 +23,7 @@
 		</releaseNotes>
 		<language>en-US</language>
 		<dependencies>
-			<dependency id="SimpleInjector" version="2.7.1" />
+			<dependency id="SimpleInjector" version="2.7.2" />
 			<dependency id="XLabs.IoC" version="2.0.5530" />
 		</dependencies>
 	</metadata>
