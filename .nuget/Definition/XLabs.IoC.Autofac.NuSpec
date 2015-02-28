@@ -23,7 +23,7 @@
 		</releaseNotes>
 		<language>en-US</language>
 		<dependencies>
-			<dependency id="Autofac" version="3.5.0" />
+			<dependency id="Autofac" version="3.5.2" />
 			<dependency id="XLabs.IoC" version="2.0.5530" />
 		</dependencies>
 	</metadata>
