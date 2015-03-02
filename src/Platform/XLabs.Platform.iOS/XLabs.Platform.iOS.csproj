@@ -79,11 +79,11 @@
     <Compile Include="Services\Media\MediaPickerDelegate.cs" />
     <Compile Include="Services\Media\MediaPickerPopoverDelegate.cs" />
     <Compile Include="Services\Media\Microphone.cs" />
+    <Compile Include="Services\Media\SoundService.cs" />
     <Compile Include="Services\Network.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\Reachability.cs" />
     <Compile Include="Services\SecureStorage.cs" />
-    <Compile Include="Services\SoundService.cs" />
     <Compile Include="Services\TextToSpeechService.cs" />
     <None Include="packages.config" />
   </ItemGroup>
