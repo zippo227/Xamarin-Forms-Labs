@@ -91,8 +91,8 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		void ApplyStyle()
 		{
-			SetImage(UIImage.FromBundle("Images/CheckBox/checked_checkbox.png"), UIControlState.Selected);
-			SetImage(UIImage.FromBundle("Images/CheckBox/unchecked_checkbox.png"), UIControlState.Normal);
+			SetImage(UIImage.FromBundle("Images/Checkbox/checked_checkbox.png"), UIControlState.Selected);
+			SetImage(UIImage.FromBundle("Images/Checkbox/unchecked_checkbox.png"), UIControlState.Normal);
 		}
 	}
 }
