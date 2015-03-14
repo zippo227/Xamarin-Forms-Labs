@@ -30,7 +30,12 @@
 		<file src="..\..\build\**\XLabs.Caching.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 		<file src="..\..\build\**\XLabs.Caching.pdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 		<file src="..\..\build\**\XLabs.Caching.xml" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		
+
+		<file src="..\..\build\**\XLabs.Caching.dll" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Caching.dll.mdb" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Caching.pdb" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Caching.xml" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+
 		<!-- Source Files for Symbol Server -->
 		<file src="..\..\src\Caching\XLabs.Caching\**\*.cs" target="src" />
 	</files>

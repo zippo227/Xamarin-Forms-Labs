@@ -22,17 +22,22 @@
 
 		</releaseNotes>
 		<language>en-US</language>
-	<dependencies>
+		<dependencies>
+
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="..\..\build\**\XLabs.Cryptography.dll*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Cryptography.dll.mdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Cryptography.pdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Cryptography.xml*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+
+		<file src="..\..\build\**\XLabs.Cryptography.dll*" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Cryptography.dll.mdb*" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Cryptography.pdb*" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Cryptography.xml*" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
 		
-	</dependencies>
-  </metadata>
-  <files>
-	<file src="..\..\build\**\XLabs.Cryptography.dll*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-	<file src="..\..\build\**\XLabs.Cryptography.dll.mdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-	<file src="..\..\build\**\XLabs.Cryptography.pdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-	<file src="..\..\build\**\XLabs.Cryptography.xml*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-	  
-	<!-- Source Files for Symbol Server -->
-	<file src="..\..\src\Cryptography\XLabs.Cryptography\**\*.cs" target="src" />
-  </files>
+		<!-- Source Files for Symbol Server -->
+		<file src="..\..\src\Cryptography\XLabs.Cryptography\**\*.cs" target="src" />
+	</files>
 </package>

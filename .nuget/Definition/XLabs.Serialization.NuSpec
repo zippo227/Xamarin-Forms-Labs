@@ -30,7 +30,12 @@
 		<file src="..\..\build\**\XLabs.Serialization.dll.mdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 		<file src="..\..\build\**\XLabs.Serialization.pdb*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 		<file src="..\..\build\**\XLabs.Serialization.xml*" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-		
+
+		<file src="..\..\build\**\XLabs.Serialization.dll*" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Serialization.dll.mdb*" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Serialization.pdb*" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.Serialization.xml*" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+
 		<!-- Source Files for Symbol Server -->
 		<file src="..\..\src\Serialization\XLabs.Serialization\**\*.cs" target="src" />
 	</files>

@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Definition", "Definition", 
 		.nuget\Definition\XLabs.Caching.NuSpec = .nuget\Definition\XLabs.Caching.NuSpec
 		.nuget\Definition\XLabs.Caching.SQLite.NuSpec = .nuget\Definition\XLabs.Caching.SQLite.NuSpec
 		.nuget\Definition\XLabs.Charting.NuSpec = .nuget\Definition\XLabs.Charting.NuSpec
+		.nuget\Definition\XLabs.Core.NuSpec = .nuget\Definition\XLabs.Core.NuSpec
 		.nuget\Definition\XLabs.Cryptography.NuSpec = .nuget\Definition\XLabs.Cryptography.NuSpec
 		.nuget\Definition\XLabs.Forms.NuSpec = .nuget\Definition\XLabs.Forms.NuSpec
 		.nuget\Definition\XLabs.IoC.Autofac.NuSpec = .nuget\Definition\XLabs.IoC.Autofac.NuSpec

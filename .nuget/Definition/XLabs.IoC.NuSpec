@@ -31,6 +31,11 @@
 		<file src="..\..\build\**\XLabs.IoC.pdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 		<file src="..\..\build\**\XLabs.IoC.xml" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 
+		<file src="..\..\build\**\XLabs.IoC.dll" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.IoC.dll.mdb" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.IoC.pdb" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+		<file src="..\..\build\**\XLabs.IoC.xml" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1" />
+
 		<!-- Source Files for Symbol Server -->
 		<file src="..\..\src\IoC\XLabs.IoC\**\*.cs" target="src" />
 	</files>
