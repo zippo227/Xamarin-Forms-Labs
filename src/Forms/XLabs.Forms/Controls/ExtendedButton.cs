@@ -8,35 +8,35 @@
     public class ExtendedButton : Button
     {
         /// <summary>
-        /// Bindable property for button text alignment.
+        /// Bindable property for button content vertical alignment.
         /// </summary>
-        public static readonly BindableProperty VerticalAlignmentProperty =
+        public static readonly BindableProperty VerticalContentAlignmentProperty =
             BindableProperty.Create<ExtendedButton, TextAlignment>(
-                p => p.VerticalAlignment, TextAlignment.Center);
+                p => p.VerticalContentAlignment, TextAlignment.Center);
 
         /// <summary>
-        /// Bindable property for button text alignment.
+        /// Bindable property for button content horizontal alignment.
         /// </summary>
-        public static readonly BindableProperty HorizontalAlignmentProperty =
+        public static readonly BindableProperty HorizontalContentAlignmentProperty =
             BindableProperty.Create<ExtendedButton, TextAlignment>(
-                p => p.HorizontalAlignment, TextAlignment.Center);
+                p => p.HorizontalContentAlignment, TextAlignment.Center);
 
         /// <summary>
-        /// Gets or sets the text alignment.
+        /// Gets or sets the content vertical alignment.
         /// </summary>
-        public TextAlignment VerticalAlignment
+        public TextAlignment VerticalContentAlignment
         {
-            get { return this.GetValue<TextAlignment>(VerticalAlignmentProperty); }
-            set { this.SetValue(VerticalAlignmentProperty, value); }
+            get { return this.GetValue<TextAlignment>(VerticalContentAlignmentProperty); }
+            set { this.SetValue(VerticalContentAlignmentProperty, value); }
         }
 
         /// <summary>
-        /// Gets or sets the text alignment.
+        /// Gets or sets the content horizontal alignment.
         /// </summary>
-        public TextAlignment HorizontalAlignment
+        public TextAlignment HorizontalContentAlignment
         {
-            get { return this.GetValue<TextAlignment>(HorizontalAlignmentProperty); }
-            set { this.SetValue(HorizontalAlignmentProperty, value); }
+            get { return this.GetValue<TextAlignment>(HorizontalContentAlignmentProperty); }
+            set { this.SetValue(HorizontalContentAlignmentProperty, value); }
         }
     }
 }

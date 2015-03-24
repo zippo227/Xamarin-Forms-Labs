@@ -22,19 +22,19 @@ namespace XLabs.Forms.Controls
                 return;
             }
 
-            this.Control.VerticalAlignment = this.Element.VerticalAlignment.ToContentVerticalAlignment();
-            this.Control.HorizontalAlignment = this.Element.HorizontalAlignment.ToContentHorizontalAlignment();
+            this.Control.VerticalAlignment = this.Element.VerticalContentAlignment.ToContentVerticalAlignment();
+            this.Control.HorizontalAlignment = this.Element.HorizontalContentAlignment.ToContentHorizontalAlignment();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case "VerticalAlignment":
-                    this.Control.VerticalAlignment = this.Element.VerticalAlignment.ToContentVerticalAlignment();
+                case "VerticalContentAlignment":
+                    this.Control.VerticalAlignment = this.Element.VerticalContentAlignment.ToContentVerticalAlignment();
                     break;
-                case "HorizontalAlignment":
-                    this.Control.HorizontalAlignment = this.Element.HorizontalAlignment.ToContentHorizontalAlignment();
+                case "HorizontalContentAlignment":
+                    this.Control.HorizontalAlignment = this.Element.HorizontalContentAlignment.ToContentHorizontalAlignment();
                     break;
                 default:
                     base.OnElementPropertyChanged(sender, e);

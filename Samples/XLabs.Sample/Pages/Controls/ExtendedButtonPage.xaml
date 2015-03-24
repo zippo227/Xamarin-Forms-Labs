@@ -3,17 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              x:Class="XLabs.Sample.Pages.Controls.ExtendedButtonPage">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <OnPlatform x:Key="ButtonHeight" x:TypeArguments="x:Double" iOS="75" Android="80" WinPhone="125"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
   <ScrollView>
     <StackLayout>
-      <controls:ExtendedButton Text="Top Left" VerticalAlignment="Start" HorizontalAlignment="Start" HeightRequest="125"></controls:ExtendedButton>
-      <controls:ExtendedButton Text="Top Center" VerticalAlignment="Start" HorizontalAlignment="Center" HeightRequest="125"></controls:ExtendedButton>
-      <controls:ExtendedButton Text="Top Right" VerticalAlignment="Start" HorizontalAlignment="End" HeightRequest="125"></controls:ExtendedButton>
-      <controls:ExtendedButton Text="Center Left" VerticalAlignment="Center" HorizontalAlignment="Start" HeightRequest="125"></controls:ExtendedButton>
-      <controls:ExtendedButton Text="Center" VerticalAlignment="Center" HorizontalAlignment="Center" HeightRequest="125"></controls:ExtendedButton>
-      <controls:ExtendedButton Text="Center Right" VerticalAlignment="Center" HorizontalAlignment="End" HeightRequest="125"></controls:ExtendedButton>
-      <controls:ExtendedButton Text="Bottom Left" VerticalAlignment="End" HorizontalAlignment="Start" HeightRequest="125"></controls:ExtendedButton>
-      <controls:ExtendedButton Text="Bottom Center" VerticalAlignment="End" HorizontalAlignment="Center" HeightRequest="125"></controls:ExtendedButton>
-      <controls:ExtendedButton Text="Bottom Right" VerticalAlignment="End" HorizontalAlignment="End" HeightRequest="125"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Top Left" BorderWidth="2" VerticalContentAlignment="Start" HorizontalContentAlignment="Start" HeightRequest="{StaticResource ButtonHeight}"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Top Center" BorderWidth="2" VerticalContentAlignment="Start" HorizontalContentAlignment="Center" HeightRequest="{StaticResource ButtonHeight}"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Top Right" BorderWidth="2" VerticalContentAlignment="Start" HorizontalContentAlignment="End" HeightRequest="{StaticResource ButtonHeight}"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Center Left" BorderWidth="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Start" HeightRequest="{StaticResource ButtonHeight}"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Center" BorderWidth="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HeightRequest="{StaticResource ButtonHeight}"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Center Right" BorderWidth="2" VerticalContentAlignment="Center" HorizontalContentAlignment="End" HeightRequest="{StaticResource ButtonHeight}"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Bottom Left" BorderWidth="2" VerticalContentAlignment="End" HorizontalContentAlignment="Start" HeightRequest="{StaticResource ButtonHeight}"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Bottom Center" BorderWidth="2" VerticalContentAlignment="End" HorizontalContentAlignment="Center" HeightRequest="{StaticResource ButtonHeight}"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Bottom Right" BorderWidth="2" VerticalContentAlignment="End" HorizontalContentAlignment="End" HeightRequest="{StaticResource ButtonHeight}"></controls:ExtendedButton>
     </StackLayout>
   </ScrollView>
 </ContentPage>

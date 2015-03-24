@@ -21,8 +21,8 @@ namespace XLabs.Forms.Controls
         {
             switch (e.PropertyName)
             {
-                case "VerticalAlignment":
-                case "HorizontalAlignment":
+                case "VerticalContentAlignment":
+                case "HorizontalContentAlignment":
                     SetAlignment();
                     break;
                 default:
@@ -40,8 +40,8 @@ namespace XLabs.Forms.Controls
                 return;
             }
 
-            this.Control.Gravity = element.VerticalAlignment.ToDroidVerticalGravity() |
-                element.HorizontalAlignment.ToDroidHorizontalGravity();
+            this.Control.Gravity = element.VerticalContentAlignment.ToDroidVerticalGravity() |
+                element.HorizontalContentAlignment.ToDroidHorizontalGravity();
         }
     }
 }
