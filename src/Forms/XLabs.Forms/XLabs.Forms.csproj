@@ -62,6 +62,7 @@
     <Compile Include="Controls\DragContentView.cs" />
     <Compile Include="Controls\DynamicListView.cs" />
     <Compile Include="Controls\EditableListView.cs" />
+    <Compile Include="Controls\ExtendedButton.cs" />
     <Compile Include="Controls\ExtendedContentView.cs" />
     <Compile Include="Controls\ExtendedDatePicker.cs" />
     <Compile Include="Controls\ExtendedEditor.cs" />

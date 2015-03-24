@@ -214,6 +214,7 @@ namespace XLabs.Sample
                 {"CircleImage", typeof(CircleImagePage)},
                 {"DynamicListView", typeof(DynamicListView)},
                 {"DragPage", typeof(DragPage)},
+                {"ExtendedButton", typeof(ExtendedButtonPage)},
                 {"ExtendedCell", typeof(ExtendedCellPage)},
                 {"ExtendedEntry", typeof(ExtendedEntryPage)},
                 {"ExtendedLabel", typeof(ExtendedLabelPage)},

@@ -102,6 +102,7 @@
     <Compile Include="Controls\CircleImage\CircleImageRenderer.cs" />
     <Compile Include="Controls\DragContentView\DragContentViewRenderer.cs" />
     <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedButton\ExtendedButtonRenderer.cs" />
     <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
     <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
@@ -119,6 +120,7 @@
     </Compile>
     <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
     <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
+    <Compile Include="Extensions\AlignmentExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\FontExtensions.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />

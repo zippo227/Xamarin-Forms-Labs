@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             x:Class="XLabs.Sample.Pages.Controls.ExtendedButtonPage">
+  <ScrollView>
+    <StackLayout>
+      <controls:ExtendedButton Text="Top Left" VerticalAlignment="Start" HorizontalAlignment="Start" HeightRequest="125"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Top Center" VerticalAlignment="Start" HorizontalAlignment="Center" HeightRequest="125"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Top Right" VerticalAlignment="Start" HorizontalAlignment="End" HeightRequest="125"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Center Left" VerticalAlignment="Center" HorizontalAlignment="Start" HeightRequest="125"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Center" VerticalAlignment="Center" HorizontalAlignment="Center" HeightRequest="125"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Center Right" VerticalAlignment="Center" HorizontalAlignment="End" HeightRequest="125"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Bottom Left" VerticalAlignment="End" HorizontalAlignment="Start" HeightRequest="125"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Bottom Center" VerticalAlignment="End" HorizontalAlignment="Center" HeightRequest="125"></controls:ExtendedButton>
+      <controls:ExtendedButton Text="Bottom Right" VerticalAlignment="End" HorizontalAlignment="End" HeightRequest="125"></controls:ExtendedButton>
+    </StackLayout>
+  </ScrollView>
+</ContentPage>
