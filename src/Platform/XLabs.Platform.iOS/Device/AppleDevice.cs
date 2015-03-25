@@ -34,7 +34,7 @@ namespace XLabs.Platform.Device
 		/// <summary>
 		/// The iPad expression.
 		/// </summary>
-		private const string IPAD_EXPRESSION = "iPad([1-4]),([1-6])";
+		private const string IPAD_EXPRESSION = "iPad([1-4]),([1-7])";
 
         /// <summary>
         /// Generic CPU/IO.

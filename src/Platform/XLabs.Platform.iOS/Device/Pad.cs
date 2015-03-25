@@ -131,8 +131,20 @@ namespace XLabs.Platform.Device
 			/// The i pad mini2 g cellular
 			/// </summary>
 			[Description("iPad Mini 2G Cellular")]
-			IPadMini2GCellular
-		}
+			IPadMini2GCellular,        
+
+			/// <summary>
+			/// The i pad mini3
+			/// </summary>
+			[Description("iPad Mini 3")]
+			IPadMini3,
+
+			/// <summary>
+			/// The i pad mini3 Wifi
+			/// </summary>
+			[Description("iPad Mini 3 Wifi")]
+			IPadMini3Wifi
+        }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pad" /> class.
