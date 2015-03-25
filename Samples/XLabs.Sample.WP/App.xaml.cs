@@ -254,6 +254,7 @@
             resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 .Register<IJsonSerializer, Serialization.ServiceStack.JsonSerializer>()
+                .Register<ITextToSpeechService, TextToSpeechService>()
                 .Register<IDependencyContainer>(t => resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISecureStorage, SecureStorage>()

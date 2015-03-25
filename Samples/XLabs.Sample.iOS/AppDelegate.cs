@@ -95,6 +95,7 @@
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 .Register<IJsonSerializer, XLabs.Serialization.ServiceStack.JsonSerializer>()
                 //.Register<IJsonSerializer, Services.Serialization.SystemJsonSerializer>()
+                .Register<ITextToSpeechService, TextToSpeechService>()
                 .Register<IXFormsApp>(app)
                 .Register<ISecureStorage, SecureStorage>()
                 .Register<IDependencyContainer>(t => resolverContainer)
