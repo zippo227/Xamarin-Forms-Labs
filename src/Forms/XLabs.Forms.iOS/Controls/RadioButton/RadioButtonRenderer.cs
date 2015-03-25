@@ -21,8 +21,6 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            BackgroundColor = Element.BackgroundColor.ToUIColor();
-
             if (Control == null)
             {
                 var checkBox = new RadioButtonView(Bounds);
@@ -32,14 +30,17 @@ namespace XLabs.Forms.Controls
                 SetNativeControl(checkBox);
             }
 
+            if (this.Element == null) return;
+
+            BackgroundColor = this.Element.BackgroundColor.ToUIColor();
             UpdateFont();
 
             Control.LineBreakMode = UILineBreakMode.CharacterWrap;
             Control.VerticalAlignment = UIControlContentVerticalAlignment.Center;
-            Control.Text = e.NewElement.Text;
-            Control.Checked = e.NewElement.Checked;
-            Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Normal);
-            Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Selected);
+            Control.Text = this.Element.Text;
+            Control.Checked = this.Element.Checked;
+            Control.SetTitleColor(this.Element.TextColor.ToUIColor(), UIControlState.Normal);
+            Control.SetTitleColor(this.Element.TextColor.ToUIColor(), UIControlState.Selected);
         }
 
         private void ResizeText()
@@ -119,7 +120,7 @@ namespace XLabs.Forms.Controls
                     UpdateFont();
                     break;
                 default:
-                    Debug.WriteLine("Property change for {0} has not been implemented.", e.PropertyName);
+//                    Debug.WriteLine("Property change for {0} has not been implemented.", e.PropertyName);
                     return;
             }
         }
