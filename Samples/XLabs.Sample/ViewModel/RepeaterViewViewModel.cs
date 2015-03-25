@@ -43,11 +43,11 @@
 		/// <summary>
 		/// The things name property name
 		/// </summary>
-		public const string ThingsNamePropertyName = "Things.Name";
+		public const string ThingsNamePropertyName = "Name";
 		/// <summary>
 		/// The things description property name
 		/// </summary>
-		public const string ThingsDescriptionPropertyName = "Things.Description";
+		public const string ThingsDescriptionPropertyName = "Description";
 		/// <summary>
 		/// Gets or sets the things.
 		/// </summary>
