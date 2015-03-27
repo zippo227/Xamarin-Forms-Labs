@@ -44,6 +44,14 @@ namespace XLabs.Forms.Controls
 		/// <returns>UICollectionViewCell.</returns>
 		public override UICollectionViewCell CellForItem(NSIndexPath indexPath)
 		{
+		    if (indexPath == null)
+		    {
+                //calling base.CellForItem(indexPath) when indexPath is null causes an exception.
+                //indexPath could be null in the following scenario:
+                // - GridView is configured to show 2 cells per row and there are 3 items in ItemsSource collection
+                // - you're trying to drag 4th cell (empty) like you're trying to scroll
+		        return null;
+		    }
 			return base.CellForItem(indexPath);
 		}
 
