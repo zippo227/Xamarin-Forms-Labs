@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
-	using XLabs.Ioc;
-    using XLabs.Serialization;
+    using Ioc;
+    using Serialization;
     using Xamarin.Forms;
 
     /// <summary>

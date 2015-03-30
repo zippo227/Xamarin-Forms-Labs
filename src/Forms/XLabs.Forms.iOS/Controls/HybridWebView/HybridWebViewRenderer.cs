@@ -1,6 +1,8 @@
 using Xamarin.Forms;
 
-[assembly: ExportRenderer(typeof(XLabs.Forms.Controls.HybridWebView), typeof(XLabs.Forms.Controls.HybridWebViewRenderer))]
+using XLabs.Forms.Controls;
+
+[assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 
 namespace XLabs.Forms.Controls
 {
