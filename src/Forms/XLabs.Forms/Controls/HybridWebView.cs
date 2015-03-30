@@ -1,28 +1,34 @@
-﻿namespace XLabs.Forms.Controls
+﻿namespace DittyForMessenger
 {
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using Ioc;
-    using Serialization;
+	using XLabs.Ioc;
+    using XLabs.Serialization;
     using Xamarin.Forms;
 
     /// <summary>
     /// The hybrid web view.
     /// </summary>
-    public class HybridWebView : View
+    public class DittyHybridWebView : View
     {
         /// <summary>
         /// The uri property.
         /// </summary>
-        public static readonly BindableProperty UriProperty = BindableProperty.Create<HybridWebView, Uri>(p => p.Uri,
+        public static readonly BindableProperty UriProperty = BindableProperty.Create<DittyHybridWebView, Uri>(p => p.Uri,
             default(Uri));
 
         /// <summary>
         /// The source property.
         /// </summary>
         public static readonly BindableProperty SourceProperty =
-            BindableProperty.Create<HybridWebView, WebViewSource>(p => p.Source, default(WebViewSource));
+            BindableProperty.Create<DittyHybridWebView, WebViewSource>(p => p.Source, default(WebViewSource));
+
+		/// <summary>
+		/// Boolean to indicate cleanup has been called.
+		/// </summary>
+		public static readonly BindableProperty CleanupProperty = 
+			BindableProperty.Create<DittyHybridWebView, bool> (p => p.CleanupCalled, false);
 
         /// <summary>
         /// The java script load requested
@@ -47,7 +53,7 @@
         /// <summary>
         /// The navigating
         /// </summary>
-        public EventHandler<EventArgs<Uri>> Navigating;
+        public EventHandler<XLabs.EventArgs<Uri>> Navigating;
         /// <summary>
         /// The right swipe
         /// </summary>
@@ -74,20 +80,20 @@
         private readonly Dictionary<string, Func<string, object[]>> registeredFunctions;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HybridWebView" /> class.
+        /// Initializes a new instance of the <see cref="DittyHybridWebView" /> class.
         /// </summary>
         /// <exception cref="Exception">Exception when there is no <see cref="IJsonSerializer"/> implementation registered.</exception>
-        /// <remarks>HybridWebView will use <see cref="IJsonSerializer" /> configured
+        /// <remarks>DittyHybridWebView will use <see cref="IJsonSerializer" /> configured
         /// with <see cref="Resolver"/> or <see cref="DependencyService"/>. System JSON serializer was removed due to Xamarin
         /// requirement of having a business license or higher.</remarks>
-        public HybridWebView()
+        public DittyHybridWebView()
         {
             if (!Resolver.IsSet || (this.jsonSerializer = Resolver.Resolve<IJsonSerializer>() ?? DependencyService.Get<IJsonSerializer>()) == null)
             {
 #if BUSINESS_LICENSE
                 _jsonSerializer = new SystemJsonSerializer();
 #else
-                throw new Exception("HybridWebView requires IJsonSerializer implementation to be registered.");
+                throw new Exception("DittyHybridWebView requires IJsonSerializer implementation to be registered.");
 #endif
             }
 
@@ -96,10 +102,10 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HybridWebView" /> class.
+        /// Initializes a new instance of the <see cref="DittyHybridWebView" /> class.
         /// </summary>
         /// <param name="jsonSerializer">The JSON serializer.</param>
-        public HybridWebView(IJsonSerializer jsonSerializer)
+        public DittyHybridWebView(IJsonSerializer jsonSerializer)
         {
             this.jsonSerializer = jsonSerializer;
             this.registeredActions = new Dictionary<string, Action<string>>();
@@ -125,6 +131,11 @@
             get { return (WebViewSource)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
+
+		public bool CleanupCalled {
+			get { return (bool)GetValue (CleanupProperty); }
+			set { SetValue (CleanupProperty, value); }
+		}
 
         /// <summary>
         /// Registers a native callback.
@@ -307,8 +318,43 @@
             var handler = this.Navigating;
             if (handler != null)
             {
-                handler(this, new EventArgs<Uri>(uri));
+                handler(this, new XLabs.EventArgs<Uri>(uri));
             }
         }
+
+		/// <summary>
+		/// Remove all Callbacks from this view
+		/// </summary>
+		public void RemoveAllCallbacks() {
+			registeredActions.Clear ();
+		}
+
+		/// <summary>
+		/// Remove all Functions from this view
+		/// </summary>
+		public void RemoveAllFunctions() {
+			registeredFunctions.Clear ();
+		}
+
+		/// <summary>
+		///  Called to immediately free the native web view and 
+		/// disconnect all callbacks
+		/// Note that this web view object will no longer be usable 
+		/// after this call!
+		/// </summary>
+		public void Cleanup() {
+			// This removes the delegates that point to the renderer
+			JavaScriptLoadRequested = null;
+			LoadFromContentRequested = null;
+			LoadContentRequested = null;
+			Navigating = null;
+
+			// Remove all callbacks
+			registeredActions.Clear ();
+			registeredFunctions.Clear ();
+
+			// Cleanup the native stuff
+			CleanupCalled = true;
+		}
     }
 }

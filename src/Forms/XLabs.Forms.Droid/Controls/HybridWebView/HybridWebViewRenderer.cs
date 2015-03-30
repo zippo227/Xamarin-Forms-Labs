@@ -1,10 +1,9 @@
-﻿using XLabs.Forms.Controls;
+﻿[assembly: Xamarin.Forms.ExportRenderer(typeof(DittyForMessenger.DittyHybridWebView), typeof(DittyForMessenger.DittyHybridWebViewRenderer))]
 
-[assembly: Xamarin.Forms.ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
-
-namespace XLabs.Forms.Controls
+namespace DittyForMessenger
 {
     using System;
+	using System.ComponentModel;
 
     using Android.Views;
     using Android.Webkit;
@@ -13,15 +12,20 @@ namespace XLabs.Forms.Controls
     using Xamarin.Forms.Platform.Android;
 
     /// <summary>
-    /// Class HybridWebViewRenderer.
+    /// Class DittyHybridWebViewRenderer.
     /// </summary>
-    public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
+	public partial class DittyHybridWebViewRenderer : ViewRenderer<DittyHybridWebView, DittyHybridWebViewRenderer.NativeWebView>
     {
+		public DittyHybridWebViewRenderer()
+		{
+		}
+
+
         /// <summary>
         /// Called when [element changed].
         /// </summary>
         /// <param name="e">The e.</param>
-        protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<DittyHybridWebView> e)
         {
             base.OnElementChanged (e);
 
@@ -43,6 +47,14 @@ namespace XLabs.Forms.Controls
 
             this.Bind();
         }
+
+		partial void HandleCleanup() {
+			if (Control != null) {
+				Control.SetWebViewClient (null);
+				Control.SetWebChromeClient (null);
+				Control.RemoveJavascriptInterface ("Xamarin");
+			}
+		}
 
         /// <summary>
         /// Gets the desired size of the view.
@@ -78,7 +90,9 @@ namespace XLabs.Forms.Controls
         /// <param name="script">The script.</param>
         partial void Inject(string script)
         {
-            this.Control.LoadUrl(string.Format("javascript: {0}", script));
+			if (Control != null) {
+	            this.Control.LoadUrl(string.Format("javascript: {0}", script));
+			}
         }
 
 
@@ -89,7 +103,7 @@ namespace XLabs.Forms.Controls
         /// <param name="uri">The URI.</param>
         partial void Load(Uri uri)
         {
-            if (uri != null)
+			if (uri != null && Control != null)
             {
                 this.Control.LoadUrl(uri.AbsoluteUri);
                 //this.InjectNativeFunctionScript();
@@ -113,9 +127,11 @@ namespace XLabs.Forms.Controls
         /// <param name="contentFullName">Full name of the content.</param>
         partial void LoadContent(object sender, string contentFullName)
         {
-            this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
-            // we can't really set the URI and fire up native function injection so the workaround is to do it here
-            //this.InjectNativeFunctionScript();
+			if (Control != null) {
+	            this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
+    	        // we can't really set the URI and fire up native function injection so the workaround is to do it here
+        	    //this.InjectNativeFunctionScript();
+			}
         }
 
         /// <summary>
@@ -124,8 +140,10 @@ namespace XLabs.Forms.Controls
         /// <param name="html">The HTML.</param>
         partial void LoadFromString(string html)
         {
-            this.Control.LoadData(html, "text/html", "UTF-8");
-            //this.InjectNativeFunctionScript();
+			if (Control != null) {
+	            this.Control.LoadData(html, "text/html", "UTF-8");
+				//this.InjectNativeFunctionScript();
+			}
         }
 
         /// <summary>
@@ -136,13 +154,13 @@ namespace XLabs.Forms.Controls
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly HybridWebViewRenderer webHybrid;
+            private readonly DittyHybridWebViewRenderer webHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Client"/> class.
             /// </summary>
             /// <param name="webHybrid">The web hybrid.</param>
-            public Client(HybridWebViewRenderer webHybrid)
+            public Client(DittyHybridWebViewRenderer webHybrid)
             {
                 this.webHybrid = webHybrid;
             }
@@ -217,13 +235,13 @@ namespace XLabs.Forms.Controls
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly HybridWebViewRenderer webHybrid;
+            private readonly DittyHybridWebViewRenderer webHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Xamarin"/> class.
             /// </summary>
             /// <param name="webHybrid">The web hybrid.</param>
-            public Xamarin(HybridWebViewRenderer webHybrid)
+            public Xamarin(DittyHybridWebViewRenderer webHybrid)
             {
                 this.webHybrid = webHybrid;
             }
@@ -249,13 +267,13 @@ namespace XLabs.Forms.Controls
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly HybridWebViewRenderer webHybrid;
+            private readonly DittyHybridWebViewRenderer webHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ChromeClient"/> class.
             /// </summary>
             /// <param name="webHybrid">The web hybrid.</param>
-            internal ChromeClient(HybridWebViewRenderer webHybrid)
+            internal ChromeClient(DittyHybridWebViewRenderer webHybrid)
             {
                 this.webHybrid = webHybrid;
             }
@@ -324,11 +342,17 @@ namespace XLabs.Forms.Controls
             /// Initializes a new instance of the <see cref="NativeWebView"/> class.
             /// </summary>
             /// <param name="renderer">The renderer.</param>
-            public NativeWebView(HybridWebViewRenderer renderer) : base(renderer.Context)
+            public NativeWebView(DittyHybridWebViewRenderer renderer) : base(renderer.Context)
             {
                 this._listener = new MyGestureListener(renderer);
                 this._detector = new GestureDetector(this.Context, this._listener);
             }
+
+			// This is an Android specific constructor that sometimes needs to be called by the underlying
+			// Xamarin ACW environment...
+			public NativeWebView(IntPtr ptr, Android.Runtime.JniHandleOwnership handle) : base(ptr, handle)
+			{
+			}
 
             /// <summary>
             /// Implement this method to handle touch screen motion events.
@@ -369,15 +393,15 @@ namespace XLabs.Forms.Controls
                 /// <summary>
                 /// The web hybrid
                 /// </summary>
-                private readonly WeakReference<HybridWebViewRenderer> _webHybrid;
+                private readonly WeakReference<DittyHybridWebViewRenderer> _webHybrid;
 
                 /// <summary>
                 /// Initializes a new instance of the <see cref="MyGestureListener"/> class.
                 /// </summary>
                 /// <param name="renderer">The renderer.</param>
-                public MyGestureListener(HybridWebViewRenderer renderer)
+                public MyGestureListener(DittyHybridWebViewRenderer renderer)
                 {
-                    this._webHybrid = new WeakReference<HybridWebViewRenderer>(renderer);
+                    this._webHybrid = new WeakReference<DittyHybridWebViewRenderer>(renderer);
                 }
 
 //                public override void OnLongPress(MotionEvent e)
@@ -420,7 +444,7 @@ namespace XLabs.Forms.Controls
                 /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
                 public override bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
                 {
-                    HybridWebViewRenderer hybrid;
+                    DittyHybridWebViewRenderer hybrid;
 
                     if (this._webHybrid.TryGetTarget(out hybrid) && Math.Abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
                     {

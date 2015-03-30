@@ -1,10 +1,8 @@
 using Xamarin.Forms;
 
-using XLabs.Forms.Controls;
+[assembly: ExportRenderer(typeof(DittyForMessenger.DittyHybridWebView), typeof(DittyForMessenger.DittyHybridWebViewRenderer))]
 
-[assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
-
-namespace XLabs.Forms.Controls
+namespace DittyForMessenger
 {
 	using System;
 
@@ -19,11 +17,16 @@ namespace XLabs.Forms.Controls
 	/// <summary>
 	/// The hybrid web view renderer.
 	/// </summary>
-	public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, UIWebView>
+	public partial class DittyHybridWebViewRenderer : ViewRenderer<DittyHybridWebView, UIWebView>
 	{
 		//private UIWebView webView;
 		private UISwipeGestureRecognizer _leftSwipeGestureRecognizer;
 		private UISwipeGestureRecognizer _rightSwipeGestureRecognizer;
+
+		public DittyHybridWebViewRenderer()
+		{
+
+		}
 
 		/// <summary>
 		/// The on element changed callback.
@@ -31,7 +34,7 @@ namespace XLabs.Forms.Controls
 		/// <param name="e">
 		/// The event arguments.
 		/// </param>
-		protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
+		protected override void OnElementChanged(ElementChangedEventArgs<DittyHybridWebView> e)
 		{
 			base.OnElementChanged(e);
 
@@ -68,6 +71,15 @@ namespace XLabs.Forms.Controls
 
 			this.Unbind(e.OldElement);
 			this.Bind();
+		}
+
+		partial void HandleCleanup() {
+			if (Control != null) {
+				Control.LoadFinished -= this.LoadFinished;
+				Control.ShouldStartLoad -= this.HandleStartLoad;
+				Control.RemoveGestureRecognizer(_leftSwipeGestureRecognizer);
+				Control.RemoveGestureRecognizer(_rightSwipeGestureRecognizer);
+			}
 		}
 
 		/// <summary>
