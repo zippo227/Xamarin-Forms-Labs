@@ -1,6 +1,6 @@
-﻿[assembly: Xamarin.Forms.ExportRenderer(typeof(DittyForMessenger.DittyHybridWebView), typeof(DittyForMessenger.DittyHybridWebViewRenderer))]
+﻿[assembly: Xamarin.Forms.ExportRenderer(typeof(XLabs.Forms.Controls.HybridWebView), typeof(XLabs.Forms.Controls.HybridWebViewRenderer))]
 
-namespace DittyForMessenger
+namespace XLabs.Forms.Controls
 {
     using System;
 	using System.ComponentModel;
@@ -12,11 +12,11 @@ namespace DittyForMessenger
     using Xamarin.Forms.Platform.Android;
 
     /// <summary>
-    /// Class DittyHybridWebViewRenderer.
+    /// Class HybridWebViewRenderer.
     /// </summary>
-	public partial class DittyHybridWebViewRenderer : ViewRenderer<DittyHybridWebView, DittyHybridWebViewRenderer.NativeWebView>
+	public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
     {
-		public DittyHybridWebViewRenderer()
+		public HybridWebViewRenderer()
 		{
 		}
 
@@ -25,7 +25,7 @@ namespace DittyForMessenger
         /// Called when [element changed].
         /// </summary>
         /// <param name="e">The e.</param>
-        protected override void OnElementChanged(ElementChangedEventArgs<DittyHybridWebView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
         {
             base.OnElementChanged (e);
 
@@ -154,13 +154,13 @@ namespace DittyForMessenger
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly DittyHybridWebViewRenderer webHybrid;
+            private readonly HybridWebViewRenderer webHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Client"/> class.
             /// </summary>
             /// <param name="webHybrid">The web hybrid.</param>
-            public Client(DittyHybridWebViewRenderer webHybrid)
+            public Client(HybridWebViewRenderer webHybrid)
             {
                 this.webHybrid = webHybrid;
             }
@@ -235,13 +235,13 @@ namespace DittyForMessenger
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly DittyHybridWebViewRenderer webHybrid;
+            private readonly HybridWebViewRenderer webHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Xamarin"/> class.
             /// </summary>
             /// <param name="webHybrid">The web hybrid.</param>
-            public Xamarin(DittyHybridWebViewRenderer webHybrid)
+            public Xamarin(HybridWebViewRenderer webHybrid)
             {
                 this.webHybrid = webHybrid;
             }
@@ -267,13 +267,13 @@ namespace DittyForMessenger
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly DittyHybridWebViewRenderer webHybrid;
+            private readonly HybridWebViewRenderer webHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ChromeClient"/> class.
             /// </summary>
             /// <param name="webHybrid">The web hybrid.</param>
-            internal ChromeClient(DittyHybridWebViewRenderer webHybrid)
+            internal ChromeClient(HybridWebViewRenderer webHybrid)
             {
                 this.webHybrid = webHybrid;
             }
@@ -342,7 +342,7 @@ namespace DittyForMessenger
             /// Initializes a new instance of the <see cref="NativeWebView"/> class.
             /// </summary>
             /// <param name="renderer">The renderer.</param>
-            public NativeWebView(DittyHybridWebViewRenderer renderer) : base(renderer.Context)
+            public NativeWebView(HybridWebViewRenderer renderer) : base(renderer.Context)
             {
                 this._listener = new MyGestureListener(renderer);
                 this._detector = new GestureDetector(this.Context, this._listener);
@@ -393,15 +393,15 @@ namespace DittyForMessenger
                 /// <summary>
                 /// The web hybrid
                 /// </summary>
-                private readonly WeakReference<DittyHybridWebViewRenderer> _webHybrid;
+                private readonly WeakReference<HybridWebViewRenderer> _webHybrid;
 
                 /// <summary>
                 /// Initializes a new instance of the <see cref="MyGestureListener"/> class.
                 /// </summary>
                 /// <param name="renderer">The renderer.</param>
-                public MyGestureListener(DittyHybridWebViewRenderer renderer)
+                public MyGestureListener(HybridWebViewRenderer renderer)
                 {
-                    this._webHybrid = new WeakReference<DittyHybridWebViewRenderer>(renderer);
+                    this._webHybrid = new WeakReference<HybridWebViewRenderer>(renderer);
                 }
 
 //                public override void OnLongPress(MotionEvent e)
@@ -444,7 +444,7 @@ namespace DittyForMessenger
                 /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
                 public override bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
                 {
-                    DittyHybridWebViewRenderer hybrid;
+                    HybridWebViewRenderer hybrid;
 
                     if (this._webHybrid.TryGetTarget(out hybrid) && Math.Abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
                     {

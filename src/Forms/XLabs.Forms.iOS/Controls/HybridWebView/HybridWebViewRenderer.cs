@@ -1,8 +1,8 @@
 using Xamarin.Forms;
 
-[assembly: ExportRenderer(typeof(DittyForMessenger.DittyHybridWebView), typeof(DittyForMessenger.DittyHybridWebViewRenderer))]
+[assembly: ExportRenderer(typeof(XLabs.Forms.Controls.HybridWebView), typeof(XLabs.Forms.Controls.HybridWebViewRenderer))]
 
-namespace DittyForMessenger
+namespace XLabs.Forms.Controls
 {
 	using System;
 
@@ -17,13 +17,13 @@ namespace DittyForMessenger
 	/// <summary>
 	/// The hybrid web view renderer.
 	/// </summary>
-	public partial class DittyHybridWebViewRenderer : ViewRenderer<DittyHybridWebView, UIWebView>
+	public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, UIWebView>
 	{
 		//private UIWebView webView;
 		private UISwipeGestureRecognizer _leftSwipeGestureRecognizer;
 		private UISwipeGestureRecognizer _rightSwipeGestureRecognizer;
 
-		public DittyHybridWebViewRenderer()
+		public HybridWebViewRenderer()
 		{
 
 		}
@@ -34,7 +34,7 @@ namespace DittyForMessenger
 		/// <param name="e">
 		/// The event arguments.
 		/// </param>
-		protected override void OnElementChanged(ElementChangedEventArgs<DittyHybridWebView> e)
+		protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
 		{
 			base.OnElementChanged(e);
 

@@ -6,11 +6,11 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace DittyForMessenger
+namespace XLabs.Forms.Controls
 {
     using Xamarin.Forms;
 
-    public partial class DittyHybridWebViewRenderer
+    public partial class HybridWebViewRenderer
     {
 
         private const string Format = "^(file|http|https)://(local|LOCAL)/Action(=|%3D)(?<Action>[\\w]+)/";
@@ -74,7 +74,7 @@ namespace DittyForMessenger
 			// an old renderer gets a property updated.  In this case the Element will be null.
 			// In that case, try to clear the property event handler and exit.
 			if (Element == null) {
-				DittyHybridWebView wv = sender as DittyHybridWebView;
+				HybridWebView wv = sender as HybridWebView;
 				if (wv != null) {
 					wv.PropertyChanged -= this.OnElementPropertyChanged;
 				}
@@ -90,7 +90,7 @@ namespace DittyForMessenger
             else if (e.PropertyName == "Source")
             {
                 LoadSource();
-			} else if (e.PropertyName == DittyHybridWebView.CleanupProperty.PropertyName) {
+			} else if (e.PropertyName == HybridWebView.CleanupProperty.PropertyName) {
 				HandleCleanup ();
 	        }
 		}
@@ -135,7 +135,7 @@ namespace DittyForMessenger
             }
         }
 
-        private void Unbind(DittyHybridWebView oldElement)
+        private void Unbind(HybridWebView oldElement)
         {
             if (oldElement != null)
             {

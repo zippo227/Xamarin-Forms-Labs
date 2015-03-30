@@ -1,4 +1,4 @@
-﻿namespace DittyForMessenger
+﻿namespace XLabs.Forms.Controls
 {
     using System;
     using System.Collections.Generic;
@@ -10,25 +10,25 @@
     /// <summary>
     /// The hybrid web view.
     /// </summary>
-    public class DittyHybridWebView : View
+    public class HybridWebView : View
     {
         /// <summary>
         /// The uri property.
         /// </summary>
-        public static readonly BindableProperty UriProperty = BindableProperty.Create<DittyHybridWebView, Uri>(p => p.Uri,
+        public static readonly BindableProperty UriProperty = BindableProperty.Create<HybridWebView, Uri>(p => p.Uri,
             default(Uri));
 
         /// <summary>
         /// The source property.
         /// </summary>
         public static readonly BindableProperty SourceProperty =
-            BindableProperty.Create<DittyHybridWebView, WebViewSource>(p => p.Source, default(WebViewSource));
+            BindableProperty.Create<HybridWebView, WebViewSource>(p => p.Source, default(WebViewSource));
 
 		/// <summary>
 		/// Boolean to indicate cleanup has been called.
 		/// </summary>
 		public static readonly BindableProperty CleanupProperty = 
-			BindableProperty.Create<DittyHybridWebView, bool> (p => p.CleanupCalled, false);
+			BindableProperty.Create<HybridWebView, bool> (p => p.CleanupCalled, false);
 
         /// <summary>
         /// The java script load requested
@@ -80,20 +80,20 @@
         private readonly Dictionary<string, Func<string, object[]>> registeredFunctions;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DittyHybridWebView" /> class.
+        /// Initializes a new instance of the <see cref="HybridWebView" /> class.
         /// </summary>
         /// <exception cref="Exception">Exception when there is no <see cref="IJsonSerializer"/> implementation registered.</exception>
-        /// <remarks>DittyHybridWebView will use <see cref="IJsonSerializer" /> configured
+        /// <remarks>HybridWebView will use <see cref="IJsonSerializer" /> configured
         /// with <see cref="Resolver"/> or <see cref="DependencyService"/>. System JSON serializer was removed due to Xamarin
         /// requirement of having a business license or higher.</remarks>
-        public DittyHybridWebView()
+        public HybridWebView()
         {
             if (!Resolver.IsSet || (this.jsonSerializer = Resolver.Resolve<IJsonSerializer>() ?? DependencyService.Get<IJsonSerializer>()) == null)
             {
 #if BUSINESS_LICENSE
                 _jsonSerializer = new SystemJsonSerializer();
 #else
-                throw new Exception("DittyHybridWebView requires IJsonSerializer implementation to be registered.");
+                throw new Exception("HybridWebView requires IJsonSerializer implementation to be registered.");
 #endif
             }
 
@@ -102,10 +102,10 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DittyHybridWebView" /> class.
+        /// Initializes a new instance of the <see cref="HybridWebView" /> class.
         /// </summary>
         /// <param name="jsonSerializer">The JSON serializer.</param>
-        public DittyHybridWebView(IJsonSerializer jsonSerializer)
+        public HybridWebView(IJsonSerializer jsonSerializer)
         {
             this.jsonSerializer = jsonSerializer;
             this.registeredActions = new Dictionary<string, Action<string>>();
