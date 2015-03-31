@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-
 using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
@@ -11,13 +10,10 @@ namespace XLabs.Forms.Controls
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-
+    using Enums;
     using Xamarin.Forms;
     using Xamarin.Forms.Platform.WinPhone;
-
-    using Enums;
-
-    using Button = Button;
+    using Button = Xamarin.Forms.Button;
     using Image = System.Windows.Controls.Image;
     using Orientation = System.Windows.Controls.Orientation;
     using TextAlignment = System.Windows.TextAlignment;
@@ -42,29 +38,73 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            var sourceButton = Element as ImageButton;
-            var targetButton = Control;
+            await AssignContent();
+        }
+
+        /// <summary>
+        ///     Called when the underlying model's properties are changed.
+        /// </summary>
+        /// <param name="sender">Model sending the change event.</param>
+        /// <param name="e">Event arguments.</param>
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (e.PropertyName != ImageButton.SourceProperty.PropertyName &&
+                e.PropertyName != ImageButton.DisabledSourceProperty.PropertyName &&
+                e.PropertyName != VisualElement.IsEnabledProperty.PropertyName)
+            {
+                return;
+            }
+
+            var sourceButton = this.Element as ImageButton;
+            if (sourceButton == null)
+            {
+                return;
+            }
+
+            Device.BeginInvokeOnMainThread(async () => await AssignContent());
+        }
+
+        private Task<Image> GetCurrentImage()
+        {
+            var sourceButton = this.Element as ImageButton;
+            if (sourceButton == null) return null;
+
+            return GetImageAsync(
+                (!sourceButton.IsEnabled && sourceButton.DisabledSource != null) ? sourceButton.DisabledSource : sourceButton.Source,
+                GetHeight(sourceButton.ImageHeightRequest),
+                GetWidth(sourceButton.ImageWidthRequest),
+                null);
+        }
+
+        private async Task AssignContent()
+        {
+            var sourceButton = this.Element as ImageButton;
+            var targetButton = this.Control;
             if (sourceButton != null && targetButton != null && sourceButton.Source != null)
             {
                 var stackPanel = new StackPanel
-                                     {
-                                         Orientation =
-                                             (sourceButton.Orientation == ImageOrientation.ImageOnTop
-                                              || sourceButton.Orientation == ImageOrientation.ImageOnBottom)
-                                                 ? Orientation.Vertical
-                                                 : Orientation.Horizontal
-                                     };
+                {
+                    //Background = sourceButton.BackgroundColor.ToBrush(),
+                    Orientation =
+                        (sourceButton.Orientation == ImageOrientation.ImageOnTop
+                         || sourceButton.Orientation == ImageOrientation.ImageOnBottom)
+                            ? Orientation.Vertical
+                            : Orientation.Horizontal,
 
-                _currentImage = await GetCurrentImage();
-                SetImageMargin(_currentImage, sourceButton.Orientation);
+                };
+
+                this._currentImage = await GetCurrentImage();
+                SetImageMargin(this._currentImage, sourceButton.Orientation);
 
                 var label = new TextBlock
-                                {
-                                    TextAlignment = GetTextAlignment(sourceButton.Orientation),
-                                    FontSize = 16,
-                                    VerticalAlignment = VerticalAlignment.Center,
-                                    Text = sourceButton.Text
-                                };
+                {
+                    TextAlignment = GetTextAlignment(sourceButton.Orientation),
+                    FontSize = 16,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Text = sourceButton.Text
+                };
 
                 if (sourceButton.Orientation == ImageOrientation.ImageToLeft)
                 {
@@ -78,54 +118,19 @@ namespace XLabs.Forms.Controls
                 if (sourceButton.Orientation == ImageOrientation.ImageOnTop
                     || sourceButton.Orientation == ImageOrientation.ImageToLeft)
                 {
-                    _currentImage.HorizontalAlignment = HorizontalAlignment.Left;
-                    stackPanel.Children.Add(_currentImage);
+                    this._currentImage.HorizontalAlignment = HorizontalAlignment.Left;
+                    stackPanel.Children.Add(this._currentImage);
                     stackPanel.Children.Add(label);
                 }
                 else
                 {
                     stackPanel.Children.Add(label);
-                    stackPanel.Children.Add(_currentImage);
+                    stackPanel.Children.Add(this._currentImage);
                 }
 
                 targetButton.Content = stackPanel;
             }
         }
-
-        /// <summary>
-        ///     Called when the underlying model's properties are changed.
-        /// </summary>
-        /// <param name="sender">Model sending the change event.</param>
-        /// <param name="e">Event arguments.</param>
-        protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
-
-            if (e.PropertyName != ImageButton.SourceProperty.PropertyName &&
-                e.PropertyName != ImageButton.DisabledSourceProperty.PropertyName)
-            {
-                return;
-            }
-
-            var sourceButton = this.Element as ImageButton;
-            if (sourceButton != null)
-            {
-                this._currentImage = await GetCurrentImage();
-                SetImageMargin(this._currentImage, sourceButton.Orientation);
-            }
-        }
-
-        private Task<Image> GetCurrentImage()
-        {
-            var sourceButton = this.Element as ImageButton;
-            if (sourceButton == null) return null;
-
-            return GetImageAsync(
-                (!sourceButton.IsEnabled && sourceButton.DisabledSource != null) ? sourceButton.DisabledSource : sourceButton.Source,
-                GetHeight(sourceButton.ImageHeightRequest),
-                GetWidth(sourceButton.ImageWidthRequest));
-        }
-
         /// <summary>
         ///     Returns the alignment of the label on the button depending on the orientation.
         /// </summary>
@@ -157,9 +162,9 @@ namespace XLabs.Forms.Controls
         /// <param name="height">The height for the image (divides by 2 for the Windows Phone platform).</param>
         /// <param name="width">The width for the image (divides by 2 for the Windows Phone platform).</param>
         /// <returns>A properly sized image.</returns>
-        private static async Task<Image> GetImageAsync(ImageSource source, int height, int width)
+        private static async Task<Image> GetImageAsync(ImageSource source, int height, int width, Image currentImage)
         {
-            var image = new Image();
+            var image = currentImage ?? new Image();
             var handler = GetHandler(source);
             var imageSource = await handler.LoadImageAsync(source);
 

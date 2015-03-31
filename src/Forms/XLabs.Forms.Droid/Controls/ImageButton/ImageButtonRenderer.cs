@@ -129,7 +129,7 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == ImageButton.SourceProperty.PropertyName || e.PropertyName == VisualElement.IsEnabledProperty.PropertyName)
+            if (e.PropertyName == ImageButton.SourceProperty.PropertyName || e.PropertyName == ImageButton.DisabledSourceProperty.PropertyName || e.PropertyName == VisualElement.IsEnabledProperty.PropertyName)
             {
                 await SetImageSourceAsync(this.Control, this.ImageButton);
             }
