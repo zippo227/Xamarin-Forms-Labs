@@ -188,3 +188,5 @@ src/Xamarin.Forms.Labs/Xamarin.Forms.Labs.userprefs
 *.jf
 
 ReleaseBuild/*
+
+src/Forms/XLabs.Forms.Droid/Resources/Resource.Designer.cs
