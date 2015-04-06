@@ -4,6 +4,8 @@
 
     using Foundation;
     using Platform.Services;
+    using Platform.Services.Email;
+    using Platform.Services.Media;
     using UIKit;
 
     using Xamarin.Forms;
@@ -96,6 +98,8 @@
                 .Register<IJsonSerializer, XLabs.Serialization.ServiceStack.JsonSerializer>()
                 //.Register<IJsonSerializer, Services.Serialization.SystemJsonSerializer>()
                 .Register<ITextToSpeechService, TextToSpeechService>()
+                .Register<IEmailService, EmailService>()
+                .Register<IMediaPicker, MediaPicker>()
                 .Register<IXFormsApp>(app)
                 .Register<ISecureStorage, SecureStorage>()
                 .Register<IDependencyContainer>(t => resolverContainer)
