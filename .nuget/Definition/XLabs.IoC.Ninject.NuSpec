@@ -26,7 +26,10 @@
 			<dependency id="Portable.Ninject" version="3.3.1" />
 			<dependency id="XLabs.IoC" version="2.0.5575" />
 		</dependencies>
-	</metadata>
+		<group targetFramework="net40">
+			<dependency id="Ninject" version="3.0.1.10" />
+			<dependency id="XLabs.IoC" version="2.0.5575" />
+		</group>	</metadata>
 	<files>
 		<file src="..\..\build\**\XLabs.IoC.Ninject.dll" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 		<file src="..\..\build\**\XLabs.IoC.Ninject.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
