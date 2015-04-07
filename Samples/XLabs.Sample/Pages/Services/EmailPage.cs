@@ -52,9 +52,9 @@
 		/// </summary>
 		public EmailPage()
 		{
-			Padding = new Thickness(0, Xamarin.Forms.Device.OnPlatform(20, 0, 0), 0, 0);
+			Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
 
-			_emailService = DependencyService.Get<IEmailService>();
+			_emailService = Resolver.Resolve<IEmailService>();
 
 			SetupCamera();
 
@@ -150,7 +150,7 @@
 			_device = Resolver.Resolve<IDevice>();
 
 			////RM: hack for working on windows phone? 
-			_mediaPicker = DependencyService.Get<IMediaPicker>() ?? _device.MediaPicker;
+			_mediaPicker = Resolver.Resolve<IMediaPicker>() ?? _device.MediaPicker;
 		}
 
 		/// <summary>

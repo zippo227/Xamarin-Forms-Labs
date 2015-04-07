@@ -37,6 +37,8 @@ namespace XLabs.Sample.Droid
     using Platform.Device;
     using Platform.Mvvm;
     using Platform.Services;
+    using Platform.Services.Email;
+    using Platform.Services.Media;
     using Serialization;
     using Serialization.ServiceStack;
     using SQLite.Net;
@@ -101,6 +103,8 @@ namespace XLabs.Sample.Droid
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 //.Register<IJsonSerializer, Services.Serialization.JsonNET.JsonSerializer>()
                 .Register<IJsonSerializer, JsonSerializer>()
+                .Register<IEmailService, EmailService>()
+                .Register<IMediaPicker, MediaPicker>()
                 .Register<ITextToSpeechService, TextToSpeechService>()
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)
