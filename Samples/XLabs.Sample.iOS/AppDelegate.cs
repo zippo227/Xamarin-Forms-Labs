@@ -1,7 +1,7 @@
 ﻿namespace XLabs.Sample.iOS
 {
     using System.IO;
-
+    using Forms.Services;
     using Foundation;
     using Platform.Services;
     using Platform.Services.Email;
@@ -95,6 +95,7 @@
 
             resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
+                .Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))
                 .Register<IJsonSerializer, XLabs.Serialization.ServiceStack.JsonSerializer>()
                 //.Register<IJsonSerializer, Services.Serialization.SystemJsonSerializer>()
                 .Register<ITextToSpeechService, TextToSpeechService>()

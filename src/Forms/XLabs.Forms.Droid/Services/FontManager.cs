@@ -6,7 +6,7 @@ namespace XLabs.Forms.Services
 	using System;
 	using System.Collections.Generic;
 
-	using XLabs.Platform.Device;
+	using Platform.Device;
 
 	/// <summary>
 	/// Class FontManager.
@@ -16,7 +16,7 @@ namespace XLabs.Forms.Services
 		/// <summary>
 		/// The _display
 		/// </summary>
-		private readonly IDisplay _display;
+		private readonly IDisplay display;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FontManager"/> class.
@@ -24,7 +24,7 @@ namespace XLabs.Forms.Services
 		/// <param name="display">The display.</param>
 		public FontManager(IDisplay display)
 		{
-			this._display = display;
+			this.display = display;
 		}
 
 		#region IFontManager Members
@@ -47,7 +47,7 @@ namespace XLabs.Forms.Services
 		public double GetHeight(Font font)
 		{
 			var scaled = font.ToScaledPixel();
-			return scaled *  Display.Metrics.Density / _display.Ydpi;
+			return scaled *  Display.Metrics.Density / this.display.Ydpi;
 		}
 
 		#endregion

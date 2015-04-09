@@ -33,6 +33,7 @@ namespace XLabs.Sample.Droid
     using Caching;
     using Caching.SQLite;
     using Forms;
+    using Forms.Services;
     using Ioc;
     using Platform.Device;
     using Platform.Mvvm;
@@ -101,6 +102,7 @@ namespace XLabs.Sample.Droid
 
             resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
+                .Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))
                 //.Register<IJsonSerializer, Services.Serialization.JsonNET.JsonSerializer>()
                 .Register<IJsonSerializer, JsonSerializer>()
                 .Register<IEmailService, EmailService>()

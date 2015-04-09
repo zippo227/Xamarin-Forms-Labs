@@ -170,7 +170,7 @@ namespace XLabs.Sample
                     //    await mainPage.Navigation.PushAsync(new BluetoothPage());
                     //    break;
                     case "fontmanager":
-                        await mainPage.Navigation.PushAsync(new FontManagerPage(Resolver.Resolve<IDisplay>()));
+                        await mainPage.Navigation.PushAsync(new FontManagerPage(Resolver.Resolve<IDisplay>(), Resolver.Resolve<IFontManager>()));
                         break;
                     case "nfc":
                         await mainPage.Navigation.PushAsync(new NfcDevicePage());

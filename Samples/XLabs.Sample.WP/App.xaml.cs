@@ -9,7 +9,7 @@
     using System.Windows.Navigation;
 
     using Windows.Storage;
-
+    using Forms.Services;
     using Microsoft.Phone.Controls;
     using Microsoft.Phone.Shell;
     using Platform.Services;
@@ -255,6 +255,7 @@
 
             resolverContainer.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
+                .Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))
                 .Register<IEmailService, EmailService>()
                 .Register<IMediaPicker, MediaPicker>()
                 .Register<IJsonSerializer, Serialization.ServiceStack.JsonSerializer>()
