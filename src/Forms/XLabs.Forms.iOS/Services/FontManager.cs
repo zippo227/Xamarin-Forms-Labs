@@ -50,9 +50,10 @@ namespace XLabs.Forms.Services
 		/// <returns>Height of the font in inches.</returns>
 		public double GetHeight(Font font)
 		{
-			var height = (double)string.Empty.StringHeight(font.ToUIFont(), float.MaxValue);
-
-			return height * this.display.ScreenHeightInches() /this.display.Height;
+            return font.ToUIFont().Ascender 
+                * UIScreen.MainScreen.Scale 
+                * this.display.ScreenHeightInches() 
+                / this.display.Height;
 		}
 
 		#endregion

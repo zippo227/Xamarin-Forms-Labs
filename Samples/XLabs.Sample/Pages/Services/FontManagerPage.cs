@@ -11,6 +11,8 @@
     /// </summary>
     public class FontManagerPage : ContentPage
     {
+        private const double fontSize = 0.25;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FontManagerPage"/> class.
         /// </summary>
@@ -41,31 +43,32 @@
 
             var f = Font.SystemFontOfSize(24);
 
-            var inchFont = fontManager.FindClosest(f.FontFamily, 0.25);
+            var inchFont = fontManager.FindClosest(f.FontFamily, fontSize);
 
             stack.Children.Add(new Label()
             {
-                Text = "The below text should be 1/4 inch height from its highest point to lowest.",
+                Text = "The below text should be " + fontSize + "in height from its highest point to lowest.",
                 XAlign = TextAlignment.Center
             });
 
 
             stack.Children.Add(new Label()
             {
-                Text = "ftlgjp",
+                Text = "FfTtLlGgJjPp",
                 TextColor = Color.Lime,
                 FontSize = inchFont.FontSize,
-                FontFamily = inchFont.FontFamily,
-                XAlign = TextAlignment.Center
+//                BackgroundColor = Color.Gray,
+//                FontFamily = inchFont.FontFamily,
+                XAlign = TextAlignment.Center,
+                YAlign = TextAlignment.Start
             });
 
 
             stack.Children.Add(new Label()
             {
-                Text = "1/4 inch height = SystemFontOfSize(" + inchFont.FontSize + ")",
+                Text = fontSize + "in height = SystemFontOfSize(" + inchFont.FontSize + ")",
                 XAlign = TextAlignment.Center,
-                YAlign = TextAlignment.End,
-                HeightRequest = display.HeightRequestInInches(.25)
+                YAlign = TextAlignment.End
             });
 
             this.Content = stack;

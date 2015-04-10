@@ -9,11 +9,13 @@ namespace XLabs.Forms.Services
 {
 	public partial class FontManager
 	{
+        private const short InitialSize = 24;
+
 		public Font FindClosest(string name, double desiredHeight)
 		{
-			var height = this.GetHeight(Font.OfSize(name, 24));
+            var height = this.GetHeight(Font.OfSize(name, InitialSize));
 
-			var multiply = (int)((desiredHeight / height) * 24);
+            var multiply = (int)((desiredHeight / height) * InitialSize);
 
 
 			var f1 = Font.OfSize(name, multiply);
