@@ -152,7 +152,10 @@ namespace XLabs.Forms.Controls
                 this.popup = null;
             }
 
-            this.content.InputTransparent = false;
+            if (this.content != null)
+            {
+                this.content.InputTransparent = false;
+            }
         }
     }
 }
