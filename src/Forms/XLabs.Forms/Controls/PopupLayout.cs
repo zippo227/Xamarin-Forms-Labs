@@ -159,9 +159,13 @@ namespace XLabs.Forms.Controls
                 this.layout.Children.Remove(this.popup);
                 this.popup = null;
             }
-
+                
             this.layout.InputTransparent = false;
-            this.content.InputTransparent = false;
+
+            if (this.content != null)
+            {
+                this.content.InputTransparent = false;
+            }
         }
     }
 }
