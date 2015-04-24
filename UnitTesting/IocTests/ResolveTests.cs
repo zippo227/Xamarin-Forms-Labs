@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 #if WINDOWS_PHONE
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
@@ -13,7 +8,9 @@ using NUnit.Framework;
 
 namespace IocTests
 {
-    using Xamarin.Forms.Labs.Services;
+    using System;
+    using System.Linq;
+    using XLabs.Ioc;
 
     [TestFixture()]
     public abstract class ResolveTests
@@ -57,7 +54,7 @@ namespace IocTests
         {
             var empty = this.GetEmptyResolver().ResolveAll<IDependencyContainer>();
             Assert.IsNotNull(empty);
-            Assert.IsTrue(empty.Count() == 0);
+            Assert.IsTrue(!empty.Any());
         }
 
         [Test]
@@ -65,7 +62,7 @@ namespace IocTests
         {
             var empty = this.GetEmptyResolver().ResolveAll(typeof(IDependencyContainer));
             Assert.IsNotNull(empty);
-            Assert.IsTrue(empty.Count() == 0);
+            Assert.IsTrue(!empty.Any());
         }
 
         [Test]
@@ -110,7 +107,7 @@ namespace IocTests
 
             Assert.IsNotNull(genericInt);
 
-            Assert.IsTrue(genericInt is IFoo<int>);
+            //Assert.IsTrue(genericInt is IFoo<int>);
 
         }
 

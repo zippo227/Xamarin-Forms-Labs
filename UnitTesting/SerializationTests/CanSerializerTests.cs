@@ -1,10 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms.Labs.Services.Serialization;
-using System.Linq;
-using System.Runtime.Serialization;
-
 #if WINDOWS_PHONE
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using TestFixture = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.TestClassAttribute;
@@ -14,10 +7,16 @@ using NUnit.Framework;
 
 #endif
 
-using TextSerializationTests;
-
 namespace SerializationTests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using TextSerializationTests;
+    using XLabs.Serialization;
+
     [TestFixture()]
     public abstract class CanSerializerTests
     {
@@ -41,7 +40,7 @@ namespace SerializationTests
 
                 
                 var str = tuple.ToString();
-                System.Diagnostics.Debug.WriteLine(str);
+                Debug.WriteLine(str);
 
                 Assert.IsTrue(this.Serializer.CanSerializeString<Tuple<int, string>>(tuple));
             }
@@ -196,7 +195,7 @@ namespace SerializationTests
         {
             public PrimitiveList()
             {
-                List = new List<Primitives>();
+                this.List = new List<Primitives>();
             }
 
             [DataMember(Order=1)]
