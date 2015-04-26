@@ -4,7 +4,7 @@
 		<id>XLabs.Forms</id>
 		<title>XLabs - Forms</title>
 		<tags>Xamarin.Forms XLabs</tags>
-		<version>2.0.5575</version>
+		<version>2.0.5593</version>
 		<authors>XLabs Team</authors>
 		<licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
 		<projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
@@ -21,19 +21,19 @@
 		<language>en-US</language>
 		<dependencies>
 			<group>
-				<dependency id="Xamarin.Forms" version="1.4.1.6349" />
-				<dependency id="XLabs.IoC" version="2.0.5575" />
-				<dependency id="XLabs.Platform" version="2.0.5575" />
-				<dependency id="XLabs.Core" version="2.0.5575" />
-				<dependency id="XLabs.Serialization" version="2.0.5575" />
+				<dependency id="Xamarin.Forms" version="1.4.2.6355" />
+				<dependency id="XLabs.IoC" version="2.0.5593" />
+				<dependency id="XLabs.Platform" version="2.0.5593" />
+				<dependency id="XLabs.Core" version="2.0.5593" />
+				<dependency id="XLabs.Serialization" version="2.0.5593" />
 			</group>
-			<group target="wp8">
-				<dependency id="Xamarin.Forms" version="1.4.1.6349" />
+			<group targetFramework="wp8">
+				<dependency id="Xamarin.Forms" version="1.4.2.6355" />
 				<dependency id="WPControls" version="1.5.2" />
-				<dependency id="XLabs.IoC" version="2.0.5575" />
-				<dependency id="XLabs.Platform" version="2.0.5575" />
-				<dependency id="XLabs.Core" version="2.0.5575" />
-				<dependency id="XLabs.Serialization" version="2.0.5575" />
+				<dependency id="XLabs.IoC" version="2.0.5593" />
+				<dependency id="XLabs.Platform" version="2.0.5593" />
+				<dependency id="XLabs.Core" version="2.0.5593" />
+				<dependency id="XLabs.Serialization" version="2.0.5593" />
 			</group>
 		</dependencies>
 		<frameworkAssemblies>
