@@ -9,6 +9,7 @@
     <Import_RootNamespace>SerializationTests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CanSerializerSystemTextJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanSerializerTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanSerializerTestsJsonNet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CanSerializerTestsServiceStack.cs" />
