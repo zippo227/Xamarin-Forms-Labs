@@ -37,6 +37,13 @@ namespace XLabs.Forms.Controls
 
                 webView.Settings.JavaScriptEnabled = true;
 
+				//Turn off hardware rendering
+				webView.SetLayerType(LayerType.Software, null);
+
+				//Set the background color to transparent to fix an issue where the
+				//the picture would fail to draw
+				webView.SetBackgroundColor(Color.Transparent.ToAndroid());
+
                 webView.SetWebViewClient(new Client(this));
                 webView.SetWebChromeClient(new ChromeClient(this));
 
@@ -279,16 +286,6 @@ namespace XLabs.Forms.Controls
             {
                 this.webHybrid = webHybrid;
             }
-
-//            public override void OnProgressChanged(Android.Webkit.WebView view, int newProgress)
-//            {
-//                base.OnProgressChanged(view, newProgress);
-//
-//                if (newProgress >= 100)
-//                {
-//                    this.webHybrid.Element.OnLoadFinished(this, EventArgs.Empty);
-//                }
-//            }
 
             /// <summary>
             /// Tell the client to display a javascript alert dialog.
