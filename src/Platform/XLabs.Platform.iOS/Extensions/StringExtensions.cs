@@ -24,6 +24,11 @@ namespace XLabs.Platform.Extensions
             return text.StringRect(font, width).Height;
 		}
 
+        public static NSString ToNativeString(this string text)
+        {
+            return new NSString(text);
+        }
+
         /// <summary>
         /// Gets the rectangle of a string.
         /// </summary>
@@ -33,13 +38,16 @@ namespace XLabs.Platform.Extensions
         /// <returns>CGRect.</returns>
 	    public static CGRect StringRect(this string text, UIFont font, nfloat width)
 	    {
-            var nativeString = new NSString(text);
-
-            return nativeString.GetBoundingRect(
-                new CGSize(width, float.MaxValue),
-                NSStringDrawingOptions.UsesLineFragmentOrigin,
+            return text.ToNativeString().GetBoundingRect(
+                new CGSize(width, nfloat.MaxValue),
+                NSStringDrawingOptions.OneShot,//.UsesFontLeading | NSStringDrawingOptions.UsesLineFragmentOrigin,
                 new UIStringAttributes { Font = font },
                 null);
 	    }
+
+        public static CGSize StringSize(this string text, UIFont font)
+        {
+            return text.ToNativeString().GetSizeUsingAttributes(new UIStringAttributes { Font = font });
+        }
 	}
 }
