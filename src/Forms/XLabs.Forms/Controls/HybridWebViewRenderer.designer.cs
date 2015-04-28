@@ -108,7 +108,7 @@ namespace XLabs.Forms.Controls
                     LoadSource();
                 }
 
-				// There should only be one rendere and thus only on event handler registered.
+				// There should only be one renderer and thus only one event handler registered.
 				// Otherwise, when Xamarin creates a new renderer, the old one stays attached
 				// and crashes when called!
                 this.Element.JavaScriptLoadRequested = OnInjectRequest;
