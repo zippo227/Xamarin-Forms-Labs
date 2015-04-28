@@ -55,6 +55,7 @@
     <Compile Include="Exceptions\NoDataTemplateMatchException.cs" />
     <Compile Include="Exceptions\PropertyNotFoundException.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\NumericExtensions.cs" />
     <Compile Include="Helpers\EventArgs{T}.cs" />
     <Compile Include="Helpers\EventExtensions.cs" />

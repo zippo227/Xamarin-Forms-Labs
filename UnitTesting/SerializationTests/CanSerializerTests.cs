@@ -11,9 +11,11 @@ namespace SerializationTests
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.Linq;
     using System.Runtime.Serialization;
+    using DataObjects;
     using TextSerializationTests;
     using XLabs.Serialization;
 
@@ -188,6 +190,17 @@ namespace SerializationTests
             var animals = new List<IAnimal> { new Cat() { Name = "Just some cat" }, new Dog() { Name = "GSP" } };
 
             Assert.IsTrue(this.Serializer.CanSerializeEnumerable(animals));
+        }
+
+        [Test]
+        public void CanSerializeReadOnlyCollection()
+        {
+            var list = new ReadOnlyList<int>
+            {
+                Collection = new ReadOnlyCollection<int>(new[] {0, 1, 2})
+            };
+
+            Assert.IsTrue(this.Serializer.CanSerializeString(list));
         }
 
         [DataContract]
