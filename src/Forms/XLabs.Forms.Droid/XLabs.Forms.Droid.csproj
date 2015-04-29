@@ -50,7 +50,6 @@
     <Reference Include="System.Collections" />
     <Reference Include="System.Core" />
     <Reference Include="System.ObjectModel" />
-    <Reference Include="System.Runtime" />
     <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
