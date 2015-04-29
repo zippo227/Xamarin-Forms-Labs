@@ -73,7 +73,17 @@
 
             this.Children.Add(new ContentPage() { Title = "Sizes", Content = stack });
 
-            var listView = new ListView { ItemsSource = fontManager.AvailableFonts };
+            var listView = new ListView
+            {
+                ItemsSource = fontManager.AvailableFonts,
+                ItemTemplate = new DataTemplate(() =>
+                {
+                    var label = new Label();
+                    label.SetBinding(Label.TextProperty, ".");
+                    label.SetBinding(Label.FontFamilyProperty, ".");
+                    return new ViewCell { View = label};
+                })
+            };
 
             this.Children.Add(new ContentPage { Title = "Fonts", Content = listView });
         }
