@@ -9,9 +9,9 @@
     /// <summary>
     /// Class FontManagerPage.
     /// </summary>
-    public class FontManagerPage : ContentPage
+    public class FontManagerPage : TabbedPage
     {
-        private const double fontSize = 0.25;
+        private const double FontSize = 0.25;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FontManagerPage"/> class.
@@ -43,11 +43,11 @@
 
             var f = Font.SystemFontOfSize(24);
 
-            var inchFont = fontManager.FindClosest(f.FontFamily, fontSize);
+            var inchFont = fontManager.FindClosest(f.FontFamily, FontSize);
 
             stack.Children.Add(new Label()
             {
-                Text = "The below text should be " + fontSize + "in height from its highest point to lowest.",
+                Text = "The below text should be " + FontSize + "in height from its highest point to lowest.",
                 XAlign = TextAlignment.Center
             });
 
@@ -66,12 +66,16 @@
 
             stack.Children.Add(new Label()
             {
-                Text = fontSize + "in height = SystemFontOfSize(" + inchFont.FontSize + ")",
+                Text = FontSize + "in height = SystemFontOfSize(" + inchFont.FontSize + ")",
                 XAlign = TextAlignment.Center,
                 YAlign = TextAlignment.End
             });
 
-            this.Content = stack;
+            this.Children.Add(new ContentPage() { Title = "Sizes", Content = stack });
+
+            var listView = new ListView { ItemsSource = fontManager.AvailableFonts };
+
+            this.Children.Add(new ContentPage { Title = "Fonts", Content = listView });
         }
     }
 }

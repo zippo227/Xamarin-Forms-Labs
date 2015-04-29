@@ -57,6 +57,7 @@
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\NumericExtensions.cs" />
+    <Compile Include="Helpers\BigEndianReader.cs" />
     <Compile Include="Helpers\EventArgs{T}.cs" />
     <Compile Include="Helpers\EventExtensions.cs" />
     <Compile Include="Helpers\Icons.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Reporting\DebugReport.cs" />
     <Compile Include="Reporting\IReport.cs" />
     <Compile Include="Reporting\Report.cs" />
+    <Compile Include="Utilities\TtfFileInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
