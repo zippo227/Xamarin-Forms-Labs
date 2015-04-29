@@ -67,8 +67,20 @@ namespace XLabs.Forms.Controls
             this.Inject(builder.ToString());
         }
 #endif
+
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+			// Xamarin will changed the renderer attached to a view so it is possible that
+			// an old renderer gets a property updated.  In this case the Element will be null.
+			// In that case, try to clear the property event handler and exit.
+			if (Element == null) {
+				HybridWebView wv = sender as HybridWebView;
+				if (wv != null) {
+					wv.PropertyChanged -= this.OnElementPropertyChanged;
+				}
+				return;
+			}
+
             base.OnElementPropertyChanged(sender, e);
 
             if (e.PropertyName == "Uri")
@@ -78,8 +90,10 @@ namespace XLabs.Forms.Controls
             else if (e.PropertyName == "Source")
             {
                 LoadSource();
-            }
-        }
+			} else if (e.PropertyName == HybridWebView.CleanupProperty.PropertyName) {
+				HandleCleanup ();
+	        }
+		}
 
         private void Bind()
         {
@@ -94,9 +108,12 @@ namespace XLabs.Forms.Controls
                     LoadSource();
                 }
 
-                this.Element.JavaScriptLoadRequested += OnInjectRequest;
-                this.Element.LoadFromContentRequested += LoadFromContent;
-                this.Element.LoadContentRequested += LoadContent;
+				// There should only be one renderer and thus only one event handler registered.
+				// Otherwise, when Xamarin creates a new renderer, the old one stays attached
+				// and crashes when called!
+                this.Element.JavaScriptLoadRequested = OnInjectRequest;
+                this.Element.LoadFromContentRequested = LoadFromContent;
+                this.Element.LoadContentRequested = LoadContent;
                 this.Element.Navigating += this.OnNavigating;
             }
         }
@@ -126,6 +143,7 @@ namespace XLabs.Forms.Controls
                 oldElement.LoadFromContentRequested -= LoadFromContent;
                 oldElement.LoadContentRequested -= LoadContent;
                 oldElement.Navigating -= this.OnNavigating;
+				oldElement.PropertyChanged -= this.OnElementPropertyChanged;
             }
         }
 
@@ -134,7 +152,7 @@ namespace XLabs.Forms.Controls
             this.Inject(script);
         }
 
-        private void OnNavigating(object sender, EventArgs<Uri> e)
+        private void OnNavigating(object sender, XLabs.EventArgs<Uri> e)
         {
             //this.InjectNativeFunctionScript();
         }
@@ -148,6 +166,8 @@ namespace XLabs.Forms.Controls
         partial void LoadContent(object sender, string contentFullName);
 
         partial void LoadFromString(string html);
+
+		partial void HandleCleanup();
 
         private bool CheckRequest(string request)
         {
@@ -199,7 +219,7 @@ namespace XLabs.Forms.Controls
         {
             Action<string> action;
 
-            if (this.Element.TryGetAction(function, out action))
+			if (this.Element != null && this.Element.TryGetAction(function, out action))
             {
                 action.Invoke(data);
             }
