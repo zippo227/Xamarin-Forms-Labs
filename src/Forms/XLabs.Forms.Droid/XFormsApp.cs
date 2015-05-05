@@ -16,7 +16,7 @@ namespace XLabs.Forms
     /// <summary>
     /// Class XFormsApplicationDroid.
     /// </summary>
-	public class XFormsApplicationDroid : FormsApplicationActivity
+    public class XFormsApplicationDroid : FormsApplicationActivity
     {
         /// <summary>
         /// Gets or sets the destroy.
@@ -276,35 +276,6 @@ namespace XLabs.Forms
 
             base.OnStop();
         }
-
-        public override async void OnBackPressed()
-        {
-            bool cancel = false;
-
-            var app = Resolver.Resolve<IXFormsApp>();
-
-            if (app != null)
-            {
-                var cancelDelegate = app.BackPressDelegate;
-                if (cancelDelegate != null)
-                {
-                    if ((cancel = await cancelDelegate()) == false)
-                    {
-                        var backPressHandler = app.BackPress;
-
-                        if (backPressHandler != null)
-                        {
-                            backPressHandler(this, EventArgs.Empty);
-                        }
-                    }
-                }
-            }
-            
-            if (!cancel)
-            {
-                base.OnBackPressed();
-            }
-        }
     }
 
     /// <summary>
@@ -325,8 +296,8 @@ namespace XLabs.Forms
         /// Called when [initialize].
         /// </summary>
         /// <param name="app">The application.</param>
-		/// <param name="initServices">Should initialize services.</param>
-		protected override void OnInit(XFormsApplicationDroid app, bool initServices = true)
+        /// <param name="initServices">Should initialize services.</param>
+        protected override void OnInit(XFormsApplicationDroid app, bool initServices = true)
         {
             this.AppContext.Start += (o, e) => this.OnStartup();
             this.AppContext.Stop += (o, e) => this.OnClosing();
@@ -334,18 +305,18 @@ namespace XLabs.Forms
             this.AppContext.Resume += (o, e) => this.OnResumed();
             this.AppDataDirectory = Environment.ExternalStorageDirectory.AbsolutePath;
 
-			if (initServices) {
-				DependencyService.Register<TextToSpeechService> ();
-				DependencyService.Register<Geolocator> ();
-				DependencyService.Register<MediaPicker> ();
-				DependencyService.Register<SoundService> ();
-				DependencyService.Register<SoundService> ();
-				DependencyService.Register<EmailService> ();
-				DependencyService.Register<FileManager> ();
-				DependencyService.Register<AndroidDevice> ();
-			}
+            if (initServices) {
+                DependencyService.Register<TextToSpeechService> ();
+                DependencyService.Register<Geolocator> ();
+                DependencyService.Register<MediaPicker> ();
+                DependencyService.Register<SoundService> ();
+                DependencyService.Register<SoundService> ();
+                DependencyService.Register<EmailService> ();
+                DependencyService.Register<FileManager> ();
+                DependencyService.Register<AndroidDevice> ();
+            }
 
-			base.OnInit(app);
+            base.OnInit(app);
         }
     }
 }

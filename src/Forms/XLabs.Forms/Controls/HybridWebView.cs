@@ -24,6 +24,12 @@
         public static readonly BindableProperty SourceProperty =
             BindableProperty.Create<HybridWebView, WebViewSource>(p => p.Source, default(WebViewSource));
 
+		/// <summary>
+		/// Boolean to indicate cleanup has been called.
+		/// </summary>
+		public static readonly BindableProperty CleanupProperty = 
+			BindableProperty.Create<HybridWebView, bool> (p => p.CleanupCalled, false);
+
         /// <summary>
         /// The java script load requested
         /// </summary>
@@ -47,7 +53,7 @@
         /// <summary>
         /// The navigating
         /// </summary>
-        public EventHandler<EventArgs<Uri>> Navigating;
+        public EventHandler<XLabs.EventArgs<Uri>> Navigating;
         /// <summary>
         /// The right swipe
         /// </summary>
@@ -125,6 +131,11 @@
             get { return (WebViewSource)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
+
+		public bool CleanupCalled {
+			get { return (bool)GetValue (CleanupProperty); }
+			set { SetValue (CleanupProperty, value); }
+		}
 
         /// <summary>
         /// Registers a native callback.
@@ -307,8 +318,43 @@
             var handler = this.Navigating;
             if (handler != null)
             {
-                handler(this, new EventArgs<Uri>(uri));
+                handler(this, new XLabs.EventArgs<Uri>(uri));
             }
         }
+
+		/// <summary>
+		/// Remove all Callbacks from this view
+		/// </summary>
+		public void RemoveAllCallbacks() {
+			registeredActions.Clear ();
+		}
+
+		/// <summary>
+		/// Remove all Functions from this view
+		/// </summary>
+		public void RemoveAllFunctions() {
+			registeredFunctions.Clear ();
+		}
+
+		/// <summary>
+		///  Called to immediately free the native web view and 
+		/// disconnect all callbacks
+		/// Note that this web view object will no longer be usable 
+		/// after this call!
+		/// </summary>
+		public void Cleanup() {
+			// This removes the delegates that point to the renderer
+			JavaScriptLoadRequested = null;
+			LoadFromContentRequested = null;
+			LoadContentRequested = null;
+			Navigating = null;
+
+			// Remove all callbacks
+			registeredActions.Clear ();
+			registeredFunctions.Clear ();
+
+			// Cleanup the native stuff
+			CleanupCalled = true;
+		}
     }
 }

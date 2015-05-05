@@ -218,9 +218,10 @@
         {
             get
             {
-                var calendar = new GregorianCalendar();
-                var timezone = calendar.TimeZone;
-                return TimeUnit.Hours.Convert(timezone.RawOffset, TimeUnit.Milliseconds) / 3600;
+                using (var calendar = new GregorianCalendar())
+                {
+                    return TimeUnit.Hours.Convert(calendar.TimeZone.RawOffset, TimeUnit.Milliseconds) / 3600;
+                }
             }
         }
 
@@ -258,19 +259,19 @@
         /// <returns>The launch operation.</returns>
         public Task<bool> LaunchUriAsync(Uri uri)
         {
-            return Task.Run(() =>
-                {
-                    try
-                    {
-                        this.StartActivity(new Intent("android.intent.action.VIEW", Android.Net.Uri.Parse(uri.ToString())));
-                        return true;
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error("Device.LaunchUriAsync", ex.Message);
-                        return false;
-                    }
-                });
+            var launchTaskSource = new TaskCompletionSource<bool>();
+            try
+            {
+                this.StartActivity(new Intent("android.intent.action.VIEW", Android.Net.Uri.Parse(uri.ToString())));
+                launchTaskSource.SetResult(true);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Device.LaunchUriAsync", ex.Message);
+                launchTaskSource.SetException(ex);
+            }
+
+            return launchTaskSource.Task;
         }
 
         /// <summary>
@@ -285,12 +286,12 @@
             }
         }
 
-        private static long GetTotalMemory() 
+        private static long GetTotalMemory()
         {
             using (var reader = new RandomAccessFile("/proc/meminfo", "r")) 
             {
                 var line = reader.ReadLine(); // first line --> MemTotal: xxxxxx kB
-                var split = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var split = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 return Convert.ToInt64(split[1]) * 1024;
             }
         }

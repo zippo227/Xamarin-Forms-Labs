@@ -25,6 +25,11 @@ namespace XLabs.Forms.Controls
 		private UISwipeGestureRecognizer _leftSwipeGestureRecognizer;
 		private UISwipeGestureRecognizer _rightSwipeGestureRecognizer;
 
+		public HybridWebViewRenderer()
+		{
+
+		}
+
 		/// <summary>
 		/// The on element changed callback.
 		/// </summary>
@@ -68,6 +73,15 @@ namespace XLabs.Forms.Controls
 
 			this.Unbind(e.OldElement);
 			this.Bind();
+		}
+
+		partial void HandleCleanup() {
+			if (Control != null) {
+				Control.LoadFinished -= this.LoadFinished;
+				Control.ShouldStartLoad -= this.HandleStartLoad;
+				Control.RemoveGestureRecognizer(_leftSwipeGestureRecognizer);
+				Control.RemoveGestureRecognizer(_rightSwipeGestureRecognizer);
+			}
 		}
 
 		/// <summary>

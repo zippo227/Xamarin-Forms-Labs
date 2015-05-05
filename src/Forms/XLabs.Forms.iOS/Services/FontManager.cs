@@ -7,8 +7,8 @@ namespace XLabs.Forms.Services
 
 	using UIKit;
 
-	using XLabs.Platform.Device;
-	using XLabs.Platform.Extensions;
+	using Platform.Device;
+	using Platform.Extensions;
 
 	/// <summary>
 	/// Class FontManager.
@@ -18,7 +18,7 @@ namespace XLabs.Forms.Services
 		/// <summary>
 		/// The _display
 		/// </summary>
-		private readonly IDisplay _display;
+		private readonly IDisplay display;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FontManager"/> class.
@@ -26,7 +26,7 @@ namespace XLabs.Forms.Services
 		/// <param name="display">The display.</param>
 		public FontManager(IDisplay display)
 		{
-			_display = display;
+			this.display = display;
 		}
 
 		#region IFontManager Members
@@ -50,9 +50,10 @@ namespace XLabs.Forms.Services
 		/// <returns>Height of the font in inches.</returns>
 		public double GetHeight(Font font)
 		{
-			var height = (double)string.Empty.StringHeight(font.ToUIFont(), float.MaxValue);
-
-			return height * _display.ScreenHeightInches() / _display.Height;
+            return font.ToUIFont().Ascender 
+                * UIScreen.MainScreen.Scale 
+                * this.display.ScreenHeightInches() 
+                / this.display.Height;
 		}
 
 		#endregion

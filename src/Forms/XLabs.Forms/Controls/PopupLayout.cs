@@ -5,7 +5,7 @@ namespace XLabs.Forms.Controls
     /// <summary>
     ///     Class PopupLayout.
     /// </summary>
-    public class PopupLayout : RelativeLayout
+    public class PopupLayout : ContentView
     {
         /// <summary>
         /// Popup location options when relative to another view
@@ -41,22 +41,29 @@ namespace XLabs.Forms.Controls
         /// </summary>
         private View popup;
 
+        private readonly RelativeLayout layout;
+
+        public PopupLayout()
+        {
+            base.Content = this.layout = new RelativeLayout();
+        }
+
         /// <summary>
         /// Gets or sets the content.
         /// </summary>
         /// <value>The content.</value>
-        public View Content
+        public new View Content
         {
             get { return this.content; }
             set
             {
                 if (this.content != null)
                 {
-                    this.Children.Remove(this.content);
+                    this.layout.Children.Remove(this.content);
                 }
 
                 this.content = value;
-                this.Children.Add(this.content, () => this.Bounds);
+                this.layout.Children.Add(this.content, () => this.Bounds);
             }
         }
 
@@ -95,10 +102,11 @@ namespace XLabs.Forms.Controls
             DismissPopup();
             this.popup = popupView;
 
+            this.layout.InputTransparent = true;
             this.content.InputTransparent = true;
-            this.Children.Add(this.popup, xConstraint, yConstraint, widthConstraint, heightConstraint);
+            this.layout.Children.Add(this.popup, xConstraint, yConstraint, widthConstraint, heightConstraint);
 
-            UpdateChildrenLayout();
+            this.layout.ForceLayout();
         }
         
 
@@ -148,11 +156,16 @@ namespace XLabs.Forms.Controls
         {
             if (this.popup != null)
             {
-                this.Children.Remove(this.popup);
+                this.layout.Children.Remove(this.popup);
                 this.popup = null;
             }
+                
+            this.layout.InputTransparent = false;
 
-            this.content.InputTransparent = false;
+            if (this.content != null)
+            {
+                this.content.InputTransparent = false;
+            }
         }
     }
 }

@@ -28,6 +28,8 @@ namespace XLabs.Forms.Controls
 		{
 			base.OnElementChanged(e);
 
+			if (Element == null) return;
+
 			BackgroundColor = Element.BackgroundColor.ToUIColor();
 
 			if (Control == null)
@@ -95,16 +97,16 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		private void UpdateFont()
 		{
-			if (string.IsNullOrEmpty(Element.FontName))
-			{
-				return;
-			}
-
-			var font = UIFont.FromName(Element.FontName, (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f);
-
-			if (font != null)
-			{
-				Control.Font = font;
+			if (!string.IsNullOrEmpty (Element.FontName)) {
+				var font = UIFont.FromName (Element.FontName, (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f);
+				if (font != null) {
+					Control.Font = font;
+				}
+			} else if (Element.FontSize > 0) {
+				var font = UIFont.FromName (Control.Font.Name, (float)Element.FontSize);
+				if (font != null) {
+					Control.Font = font;
+				}
 			}
 		}
 
