@@ -39,9 +39,6 @@
     <DocumentationFile>..\..\..\build\XLabs.Serialization.ProtoBuf.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>Xlabs.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>

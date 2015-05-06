@@ -10,9 +10,9 @@
 	public partial class Accelerometer
 	{
 		/// <summary>
-		/// The _accelerometer
+		/// The accelerometer
 		/// </summary>
-		private Microsoft.Devices.Sensors.Accelerometer _accelerometer;
+		private Microsoft.Devices.Sensors.Accelerometer accelerometer;
 
 		/// <summary>
 		/// Gets or sets the interval.
@@ -25,14 +25,14 @@
 		/// </summary>
 		partial void Start()
 		{
-			_accelerometer = new Microsoft.Devices.Sensors.Accelerometer
+			this.accelerometer = new Microsoft.Devices.Sensors.Accelerometer
 				                 {
 					                 TimeBetweenUpdates =
 						                 TimeSpan.FromMilliseconds((long)Interval)
 				                 };
 
-			_accelerometer.CurrentValueChanged += AccelerometerOnCurrentValueChanged;
-			_accelerometer.Start();
+			this.accelerometer.CurrentValueChanged += AccelerometerOnCurrentValueChanged;
+			this.accelerometer.Start();
 		}
 
 		/// <summary>
@@ -40,11 +40,11 @@
 		/// </summary>
 		partial void Stop()
 		{
-			if (_accelerometer != null)
+			if (this.accelerometer != null)
 			{
-				_accelerometer.CurrentValueChanged -= AccelerometerOnCurrentValueChanged;
-				_accelerometer.Stop();
-				_accelerometer = null;
+				this.accelerometer.CurrentValueChanged -= AccelerometerOnCurrentValueChanged;
+				this.accelerometer.Stop();
+				this.accelerometer = null;
 			}
 		}
 

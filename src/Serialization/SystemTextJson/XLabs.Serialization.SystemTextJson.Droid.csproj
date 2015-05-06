@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BA9DECC3-D9BA-4752-A655-4C3B555185D3}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
@@ -42,12 +40,11 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Text.Json.Droid, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\System.Text.Json.Mobile.2.0.0.6\lib\MonoAndroid\System.Text.Json.Droid.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Text.Json.Droid, Version=2.0.0.6, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\packages\System.Text.Json.Mobile.2.0.0.6\lib\MonoAndroid\System.Text.Json.Droid.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonSerializer.cs" />
@@ -55,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XLabs.Serialization\XLabs.Serialization.csproj">
-      <Project>{8e7f7522-f018-466a-aa8a-147ee9341ba0}</Project>
+      <Project>{8E7F7522-F018-466A-AA8A-147EE9341BA0}</Project>
       <Name>XLabs.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
