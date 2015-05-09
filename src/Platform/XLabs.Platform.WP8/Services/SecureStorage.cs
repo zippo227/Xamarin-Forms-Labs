@@ -13,6 +13,25 @@
     {
         private static IsolatedStorageFile File { get { return IsolatedStorageFile.GetUserStoreForApplication(); } }
 
+        private readonly byte[] optionalEntropy;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SecureStorage"/>.
+        /// </summary>
+        /// <param name="optionalEntropy">Optional password for additional entropy to make encyption more complex.</param>
+        public SecureStorage(byte[] optionalEntropy)
+        {
+            this.optionalEntropy = optionalEntropy;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SecureStorage"/>.
+        /// </summary>
+        public SecureStorage() : this(null)
+        {
+            
+        }
+
         #region ISecureStorage Members
 
         public void Store(string key, byte[] dataBytes)
@@ -24,7 +43,7 @@
                 mutex.WaitOne();
                 using (var stream = new IsolatedStorageFileStream(key, FileMode.Create, FileAccess.Write, File))
                 {
-                    var data = ProtectedData.Protect(dataBytes, null);
+                    var data = ProtectedData.Protect(dataBytes, this.optionalEntropy);
                     stream.Write(data, 0, data.Length);
                 }
             }
@@ -50,7 +69,7 @@
                 {
                     var data = new byte[stream.Length];
                     stream.Read(data, 0, data.Length);
-                    return ProtectedData.Unprotect(data, null);
+                    return ProtectedData.Unprotect(data, this.optionalEntropy);
                 }
             }
             finally
