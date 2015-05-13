@@ -91,7 +91,7 @@ param(
     [Parameter(Mandatory = $False)]
     [string] $preRelease = $null,
     [Parameter(Mandatory = $False)]
-    [bool] $versionUpdate = $false
+    [bool] $versionUpdate = $true
 )
 
 
