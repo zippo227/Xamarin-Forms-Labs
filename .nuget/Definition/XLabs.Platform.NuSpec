@@ -44,6 +44,10 @@
 				<reference file="XLabs.Platform.dll"/>
 				<reference file="XLabs.Platform.WP8.dll"/>
 			</group>
+			<group targetFramework="wpa81">
+				<reference file="XLabs.Platform.dll"/>
+				<reference file="XLabs.Platform.WP8.dll"/>
+			</group>
 		</references>
 	</metadata>
 	<files>

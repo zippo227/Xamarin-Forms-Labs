@@ -27,8 +27,16 @@
 				<dependency id="Portable.Ninject" version="3.3.1" />
 				<dependency id="XLabs.IoC" version="2.0.5603" />
 			</group>
-			<group targetFramework="net40">
-				<dependency id="Ninject" version="3.0.1.10" />
+			<group targetFramework="net4">
+				<dependency id="Ninject" version="3.2.2.0" />
+				<dependency id="XLabs.IoC" version="2.0.5603" />
+			</group>
+			<group targetFramework="net45">
+				<dependency id="Ninject" version="3.2.2.0" />
+				<dependency id="XLabs.IoC" version="2.0.5603" />
+			</group>
+			<group targetFramework="netcore45">
+				<dependency id="Ninject" version="3.2.2.0" />
 				<dependency id="XLabs.IoC" version="2.0.5603" />
 			</group>
 		</dependencies>
