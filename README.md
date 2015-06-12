@@ -1,13 +1,13 @@
 Xamarin Forms Labs
 =====================
 
-**Xamarin Forms Labs** is a open source project that aims to provide a powerful and cross platform set of controls tailored to work with [Xamarin Forms](http://xamarin.com/forms).
+**XLabs** is a open source project that aims to provide a powerful and cross platform set of services and controls tailored to work with Xamarin and [Xamarin Forms](http://xamarin.com/forms).
 
 Call for action for all Xamarin Developers, embrace this project and share your controls and services with the community, add your own control to the toolkit.
 
 **Important for developers**
-The master branch is the current development branch and the next release for 2.0.
-The v.1.2 is the stable branch.
+The master branch is the current development branch.
+The v.2.0 is the stable branch.
 
 **Available controls**
 
@@ -22,7 +22,7 @@ The v.1.2 is the stable branch.
  - ExtendedTabbedPage  
  - [ExtendedTextCell (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedTextCell)
  - [ExtendedViewCell (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedViewCell)
- - [HybridWebView (alpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/HybridWebView)
+ - [HybridWebView (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/HybridWebView)
  - GridView (IOS beta)
  - ImageButton (beta)
  - RadioButton(beta)
@@ -33,7 +33,7 @@ The v.1.2 is the stable branch.
  - [CircleImage (IOS/Android alpha)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/CircleImage)
  - HyperLinkLabel
 
-**Available services (Beta)**
+**Available services**
 
  - Accelerometer
  - Cache
@@ -44,6 +44,7 @@ The v.1.2 is the stable branch.
  - Phone Service (cellular network info, make phonecalls)
  - SoundService
  - Text To Speech 
+ - Secure Storage
 
 
 **Available Mvvm helpers (Beta)**
@@ -53,7 +54,7 @@ The v.1.2 is the stable branch.
  - IOC
  - IXFormsApp (application events)
 
-**Available Plugins (Beta)**
+**Available Plugins**
     
  - Serialization (ServiceStackV3, ProtoBuf, JSON.Net)
  - Caching (SQLLiteSimpleCache)
@@ -86,13 +87,13 @@ Using the controls
 -----------
 
 
-Add Xamarin.Forms.Labs.Controls reference to your projects , main pcl, ios, android, and wp.
+Add XLabs.Forms reference to your projects , main pcl, ios, android, and wp.
 
 Xaml :
 
 Reference the assembly namespace 
 
-     xmlns:controls="clr-namespace:Xamarin.Forms.Labs.Controls;assembly=XLabs.Forms"
+     xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
 
 Render your control:
 
@@ -114,9 +115,10 @@ Or from your codebehind:
 
 Using the Services
 -----------
+
 **TextToSpeechService** 
 
-	DependencyService.Get<ITextToSpeechService>().Speak(TextToSpeak);
+	Resolver.Resolve<ITextToSpeechService>().Speak(TextToSpeak);
 	
 **Device** 
 
@@ -165,12 +167,6 @@ ________________
 **Helper**
 ======
 
-> Current version v1.2.0
-
-[v1.2.0 - Xamarin Forms Labs Framework Helper for online use](http://htmlpreview.github.io/?https://raw.githubusercontent.com/XLabs/Xamarin-Forms-Labs/master/Helper/v1.2.0/Web/Index.html)
-
-[v1.2.0 - Xamarin.Forms.Labs.chm file for offline use](https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/Helper/v1.2.0/Xamarin.Forms.Labs.chm)
-
 > Based in last developments (master)
 
 [Master- Xamarin Forms Labs Framework Helper for online use](http://htmlpreview.github.io/?https://raw.githubusercontent.com/XLabs/Xamarin-Forms-Labs/master/Helper/master/Web/Index.html)
@@ -191,29 +187,12 @@ __________________
 
 **Main Packages:**
 
-- [Xamarin.Forms.Labs](https://www.nuget.org/packages/Xamarin.Forms.Labs/)
+- [XLabs.Platform](http://www.nuget.org/packages/XLabs.Platform/)
+- [XLabs.Forms] (http://www.nuget.org/packages/XLabs.Forms/)
 
 **Plugins:**
 
-* Caching 
-
- - [Xamarin.Forms.Labs.Caching.SQLiteNet](https://www.nuget.org/packages/Xamarin.Forms.Labs.Caching.SQLiteNet/)
-
-* DI 
-
- - [Xamarin.Forms.Labs.Services.SimpleContainer](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.SimpleContainer/)
- - [Xamarin.Forms.Labs.Services.Ninject](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Ninject/)
- - [Xamarin.Forms.Labs.Services.Autofac](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Autofac/)
- - [Xamarin.Forms.Labs.Services.TinyIOC](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.TinyIOC/)
- 
-* Serialization
-
- - [Xamarin.Forms.Labs.Services.Serialization.ProtoBuf](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.ProtoBuf/)
- - [Xamarin.Forms.Labs.Serialization.JsonNET](https://www.nuget.org/packages/Xamarin.Forms.Labs.Services.Serialization.JsonNET/)
-
-* Cryptography
-
- - [Xamarin.Forms.Labs.Cryptography](https://www.nuget.org/packages/Xamarin.Forms.Labs.Cryptography/)
+* To be updated...
  
 __________________
 
@@ -225,7 +204,7 @@ __________________
  - [Kevin E. Ford](http://windingroadway.blogspot.com/) [@Bowman74](https://twitter.com/Bowman74)
  - [Eric Grover](http://www.ericgrover.com) [@bluechiperic](https://twitter.com/bluechiperic) 
  - Ben Ishiyama-Levy [@mrbrl](http://www.monovo.io) 
- - Sami M. Kallio
+ - [Sami M. Kallio](https://www.linkedin.com/profile/view?id=4900454)
  - Bart Kardol
  - Petr Klíma
  - [Thomas Lebrun](http://blog.thomaslebrun.net/) [@thomas_lebrun](https://twitter.com/thomas_lebrun) 
@@ -249,7 +228,7 @@ __________________
 **Contribute**
 ------------------
 
-Everbody is welcome to contribute with any kind of controls or features at this time. Since there's no oficial releases feel free to submit your playground controls even if they aren't perfect. 
+Everbody is welcome to contribute with any kind of controls or features at this time.
 
 Twitter hashtag : [#xflabs](https://twitter.com/search?q=xflabs)
 		
