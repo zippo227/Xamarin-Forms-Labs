@@ -98,9 +98,6 @@
     </PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\XLabs.Platform\services\io\FileManager.cs">
-      <Link>Services\IO\FileManager.cs</Link>
-    </Compile>
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\Battery.cs" />
     <Compile Include="Device\BluetoothDevice.cs" />
@@ -148,6 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\IO\" />
   </ItemGroup>
   <Import Project="..\XLabs.Platform.Shared\XLabs.Platform.Shared.projitems" Label="Shared" Condition="Exists('..\XLabs.Platform.Shared\XLabs.Platform.Shared.projitems')" />
   <Import Project="..\XLabs.Platform.Shared.WP8\XLabs.Platform.Shared.WP8.projitems" Label="Shared" Condition="Exists('..\XLabs.Platform.Shared.WP8\XLabs.Platform.Shared.WP8.projitems')" />

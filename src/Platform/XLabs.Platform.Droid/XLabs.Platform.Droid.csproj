@@ -51,9 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\XLabs.Platform\services\io\FileManager.cs">
-      <Link>Services\IO\FileManager.cs</Link>
-    </Compile>
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\AndroidDevice.cs" />
     <Compile Include="Device\Battery.cs" />
@@ -107,6 +104,9 @@
       <Project>{2A4D9DD4-326C-4824-AA3C-A9ED45CC898C}</Project>
       <Name>XLabs.Platform</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\IO\" />
   </ItemGroup>
   <Import Project="..\XLabs.Platform.Shared\XLabs.Platform.Shared.projitems" Label="Shared" Condition="Exists('..\XLabs.Platform.Shared\XLabs.Platform.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

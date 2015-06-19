@@ -12,5 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Accelerometer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Battery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gyroscope.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IO\FileManager.cs" />
   </ItemGroup>
 </Project>
