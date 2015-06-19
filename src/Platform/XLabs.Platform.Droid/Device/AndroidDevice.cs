@@ -32,9 +32,9 @@
         private INetwork network;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
+        /// Creates a default instance of <see cref="AndroidDevice"/>. 
         /// </summary>
-        private AndroidDevice()
+        public AndroidDevice()
         {
             var manager = Services.PhoneService.Manager;
 
@@ -84,7 +84,7 @@
         /// <value>
         /// The id for the device.
         /// </value>
-        public string Id
+        public virtual string Id
         {
             // TODO: Verify what is the best combination of Unique Id for Android
             get

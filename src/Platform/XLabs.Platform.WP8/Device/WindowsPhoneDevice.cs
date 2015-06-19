@@ -24,7 +24,7 @@
         private static WindowsPhoneDevice currentDevice;
 
         /// <summary>
-        /// The _file manager
+        /// The file manager.
         /// </summary>
         private IFileManager fileManager;
 
@@ -34,19 +34,19 @@
         private string id;
 
         /// <summary>
-        /// The _media picker
+        /// The media picker.
         /// </summary>
         private IMediaPicker mediaPicker;
 
         /// <summary>
-        /// The _network
+        /// The network.
         /// </summary>
         private INetwork network;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="WindowsPhoneDevice" /> class from being created.
+        /// Creates an instance of <see cref="WindowsPhoneDevice" />.
         /// </summary>
-        private WindowsPhoneDevice()
+        public WindowsPhoneDevice()
         {
             this.Display = new Display();
             this.PhoneService = new PhoneService();
@@ -100,7 +100,7 @@
         /// <value>The id for the device.</value>
         /// <exception cref="UnauthorizedAccessException">Application has no access to device identity. To enable access consider enabling ID_CAP_IDENTITY_DEVICE on app manifest.</exception>
         /// <remarks>Requires the application to check ID_CAP_IDENTITY_DEVICE on application permissions.</remarks>
-        public string Id
+        public virtual string Id
         {
             get
             {

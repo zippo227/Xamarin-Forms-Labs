@@ -50,7 +50,7 @@ namespace XLabs.Platform.Device
 		/// </summary>
 		/// <param name="majorVersion">Major version.</param>
 		/// <param name="minorVersion">Minor version.</param>
-		internal Pod(int majorVersion, int minorVersion)
+		public Pod(int majorVersion, int minorVersion)
 		{
 			Version = (PodVersion)majorVersion;
 			PhoneService = null;

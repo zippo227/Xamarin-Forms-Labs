@@ -111,7 +111,7 @@ namespace XLabs.Platform.Device
 		/// </summary>
 		/// <param name="majorVersion">Major version.</param>
 		/// <param name="minorVersion">Minor version.</param>
-		internal Phone(int majorVersion, int minorVersion)
+		public Phone(int majorVersion, int minorVersion)
 		{
 			PhoneService = new PhoneService();
 
