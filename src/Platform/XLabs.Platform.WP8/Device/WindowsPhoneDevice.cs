@@ -21,7 +21,7 @@
         /// <summary>
         /// The current device.
         /// </summary>
-        private static WindowsPhoneDevice currentDevice;
+        private static IDevice currentDevice;
 
         /// <summary>
         /// The file manager.
@@ -89,6 +89,10 @@
             get
             {
                 return currentDevice ?? (currentDevice = new WindowsPhoneDevice());
+            }
+            set
+            {
+                currentDevice = value;
             }
         }
 

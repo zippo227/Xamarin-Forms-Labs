@@ -76,7 +76,11 @@
         /// <value>
         /// The current device.
         /// </value>
-        public static IDevice CurrentDevice { get { return currentDevice ?? (currentDevice = new AndroidDevice()); } }
+        public static IDevice CurrentDevice
+        {
+            get { return currentDevice ?? (currentDevice = new AndroidDevice()); }
+            set { currentDevice = value; }
+        }
 
         /// <summary>
         /// Gets Unique Id for the device.

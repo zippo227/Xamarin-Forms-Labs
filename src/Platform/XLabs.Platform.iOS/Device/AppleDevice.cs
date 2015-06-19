@@ -111,6 +111,11 @@ namespace XLabs.Platform.Device
 
                 return device = new Simulator();
             }
+
+            set
+            {
+                device = value;
+            }
         }
 
         /// <summary>
