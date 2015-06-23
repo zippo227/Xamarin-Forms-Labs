@@ -28,8 +28,14 @@ namespace XLabs.Forms.Controls
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             base.OnElementChanged(e);
-            SetPlaceholder();
+
+            var view = e.NewElement as ExtendedLabel;
+
             //UpdateUi(view, this.Control);
+            if (view != null)
+            {
+                SetPlaceholder (view);
+            }
         }
 
         /// <summary>
@@ -41,7 +47,10 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == Label.TextProperty.PropertyName ||
+            var view = Element as ExtendedLabel;
+
+            if (view != null &&
+                e.PropertyName == Label.TextProperty.PropertyName ||
                 e.PropertyName == Label.FormattedTextProperty.PropertyName || 
                 e.PropertyName == ExtendedLabel.PlaceholderProperty.PropertyName ||
                 e.PropertyName == ExtendedLabel.FormattedPlaceholderProperty.PropertyName ||
