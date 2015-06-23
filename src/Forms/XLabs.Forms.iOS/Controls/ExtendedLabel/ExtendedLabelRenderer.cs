@@ -28,11 +28,8 @@ namespace XLabs.Forms.Controls
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             base.OnElementChanged(e);
-
-            var view = (ExtendedLabel) this.Element;
-
+            SetPlaceholder();
             //UpdateUi(view, this.Control);
-            SetPlaceholder(view);
         }
 
         /// <summary>
@@ -44,8 +41,6 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementPropertyChanged(sender, e);
 
-            var view = (ExtendedLabel) this.Element;
-
             if (e.PropertyName == Label.TextProperty.PropertyName ||
                 e.PropertyName == Label.FormattedTextProperty.PropertyName || 
                 e.PropertyName == ExtendedLabel.PlaceholderProperty.PropertyName ||
@@ -54,7 +49,7 @@ namespace XLabs.Forms.Controls
                 e.PropertyName == ExtendedLabel.IsStrikeThroughProperty.PropertyName ||
                 e.PropertyName == ExtendedLabel.IsUnderlineProperty.PropertyName)
             {
-                SetPlaceholder(view);
+                SetPlaceholder();
             }
         }
 
@@ -63,9 +58,6 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="view">
         /// The view.
-        /// </param>
-        /// <param name="control">
-        /// The control.
         /// </param>
         private void UpdateUi(ExtendedLabel view)
         {
@@ -138,8 +130,15 @@ namespace XLabs.Forms.Controls
                                                                    shadow: dropShadow); ;
         }
 
-        private void SetPlaceholder(ExtendedLabel view)
+        private void SetPlaceholder()
         {
+            var view = this.Element as ExtendedLabel;
+
+            if (view == null)
+            {
+                return;
+            }
+
             if (view.FormattedText != null)
             {
                 this.Control.AttributedText = view.FormattedText.ToAttributed(view.Font, view.TextColor);
