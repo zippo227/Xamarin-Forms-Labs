@@ -58,7 +58,7 @@ namespace XLabs.Forms.Controls
                 e.PropertyName == ExtendedLabel.IsStrikeThroughProperty.PropertyName ||
                 e.PropertyName == ExtendedLabel.IsUnderlineProperty.PropertyName)
             {
-                SetPlaceholder();
+                SetPlaceholder(view);
             }
         }
 
@@ -139,10 +139,8 @@ namespace XLabs.Forms.Controls
                                                                    shadow: dropShadow); ;
         }
 
-        private void SetPlaceholder()
+        private void SetPlaceholder(ExtendedLabel view)
         {
-            var view = this.Element as ExtendedLabel;
-
             if (view == null)
             {
                 return;
