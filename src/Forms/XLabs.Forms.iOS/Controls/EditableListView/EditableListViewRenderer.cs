@@ -44,22 +44,25 @@ namespace XLabs.Forms.Controls
 		{
 			base.OnElementChanged(e);
 
-			if (e.OldElement == null)
-			{
-				_tableView = new UITableView(new CGRect(0,0,1,1), UITableViewStyle.Plain);
-				SetNativeControl(_tableView);
-			}
+            Unbind (e.OldElement);
+            if (e.NewElement != null)
+            {
+                if (Control == null)
+                {
+                    _tableView = new UITableView (new CGRect (0, 0, 1, 1), UITableViewStyle.Plain);
+                    _editableListViewSource = new EditableListViewSource (this);
+                    _tableView.Source = _editableListViewSource;
 
-			Unbind(e.OldElement);
-			Bind(e.NewElement);
+                    _tableView.SetEditing (true, true);
+                    _tableView.TableFooterView = new UIView ();
+                    SetNativeControl (_tableView);
+                    if (e.NewElement.CellHeight > 0)
+                        RowHeight = e.NewElement.CellHeight;
 
-			if (e.NewElement.CellHeight > 0) RowHeight = e.NewElement.CellHeight;
+                }
 
-			_editableListViewSource = new EditableListViewSource(this);
-			_tableView.Source = _editableListViewSource;
-
-			_tableView.SetEditing(true, true);
-			_tableView.TableFooterView = new UIView();
+                Bind (e.NewElement);
+            }
 		}
 
 		/// <summary>
@@ -71,7 +74,7 @@ namespace XLabs.Forms.Controls
 			if (oldElement != null)
 			{
 				oldElement.PropertyChanged -= ElementPropertyChanged;
-				oldElement.Source.CollectionChanged += DataCollectionChanged;
+				oldElement.Source.CollectionChanged -= DataCollectionChanged;
 			}
 		}
 
@@ -107,14 +110,27 @@ namespace XLabs.Forms.Controls
 		{
 			if (e.PropertyName == "Source")
 			{
-				Element.Source.CollectionChanged += DataCollectionChanged;
+                if(Element.Source != null)
+				    Element.Source.CollectionChanged += DataCollectionChanged;
 			}
 		}
+        bool disposed;
+        protected override void Dispose (bool disposing)
+        {
+            if (disposing && !disposed)
+            {
+                Unbind (Element);
+                _editableListViewSource.Dispose ();
+                _editableListViewSource = null;
+                disposed = true;
+            }
+            base.Dispose (disposing);
+        }
 
-		/// <summary>
-		/// Class EditableListViewSource.
-		/// </summary>
-		private class EditableListViewSource : UITableViewSource 
+        /// <summary>
+        /// Class EditableListViewSource.
+        /// </summary>
+        private class EditableListViewSource : UITableViewSource 
 		{
 			/// <summary>
 			/// The _container renderer
@@ -254,6 +270,5 @@ namespace XLabs.Forms.Controls
 
 			}
 		}
-
-	}
+    }
 }
