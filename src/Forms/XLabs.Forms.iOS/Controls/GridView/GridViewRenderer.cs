@@ -220,6 +220,17 @@ namespace XLabs.Forms.Controls
             {
                 return _dataSource ?? (_dataSource = new GridDataSource (GetCell, RowsInSection,ItemSelected));
             }
-        }           
+        }
+
+        protected override void Dispose (bool disposing)
+        {
+            base.Dispose (disposing);
+            if (disposing && _dataSource != null)
+            {
+                Unbind (Element);
+                _dataSource.Dispose ();
+                _dataSource = null;
+            }
+        }
     }
 }
