@@ -28,30 +28,31 @@ namespace XLabs.Forms.Controls
 		{
 			base.OnElementChanged(e);
 
-			if (Element == null) return;
+        	if (Element == null) return;
 
 			BackgroundColor = Element.BackgroundColor.ToUIColor();
+            if (e.NewElement != null)
+            {
+                if (Control == null)
+                {
+                    var checkBox = new CheckBoxView (Bounds);
+                    checkBox.TouchUpInside += (s, args) => Element.Checked = Control.Checked;
 
-			if (Control == null)
-			{
-				var checkBox = new CheckBoxView(Bounds);
-				checkBox.TouchUpInside += (s, args) => Element.Checked = Control.Checked;
+                    SetNativeControl (checkBox);
+                }
+                Control.LineBreakMode = UILineBreakMode.CharacterWrap;
+                Control.VerticalAlignment = UIControlContentVerticalAlignment.Top;
+                Control.CheckedTitle = string.IsNullOrEmpty (e.NewElement.CheckedText) ? e.NewElement.DefaultText : e.NewElement.CheckedText;
+                Control.UncheckedTitle = string.IsNullOrEmpty (e.NewElement.UncheckedText) ? e.NewElement.DefaultText : e.NewElement.UncheckedText;
+                Control.Checked = e.NewElement.Checked;
+                Control.SetTitleColor (e.NewElement.TextColor.ToUIColor (), UIControlState.Normal);
+                Control.SetTitleColor (e.NewElement.TextColor.ToUIColor (), UIControlState.Selected);
+            }
 
-				SetNativeControl(checkBox);
-			}
-
-			Control.Frame = Frame;
+            Control.Frame = Frame;
 			Control.Bounds = Bounds;
 
 			UpdateFont();
-			
-			Control.LineBreakMode = UILineBreakMode.CharacterWrap;
-			Control.VerticalAlignment = UIControlContentVerticalAlignment.Top;
-			Control.CheckedTitle = string.IsNullOrEmpty(e.NewElement.CheckedText) ? e.NewElement.DefaultText : e.NewElement.CheckedText;
-			Control.UncheckedTitle = string.IsNullOrEmpty(e.NewElement.UncheckedText) ? e.NewElement.DefaultText : e.NewElement.UncheckedText;
-			Control.Checked = e.NewElement.Checked;
-			Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Normal);
-			Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Selected);
 		}
 
 		/// <summary>
@@ -59,6 +60,9 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		private void ResizeText()
 		{
+            if (Element == null)
+                return;
+
 			var text = Element.Checked ? string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText :
 				string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
 
@@ -147,5 +151,5 @@ namespace XLabs.Forms.Controls
 					return;
 			}
 		}
-	}
+    }
 }

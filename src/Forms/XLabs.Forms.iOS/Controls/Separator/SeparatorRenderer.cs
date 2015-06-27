@@ -24,17 +24,15 @@ namespace XLabs.Forms.Controls
 		{
 			base.OnElementChanged(e);
 
-			if (e.NewElement == null)
+			if (e.NewElement != null)
 			{
-				return;
-			}
-
-			if (Control == null)
-			{
-				BackgroundColor = Color.Transparent.ToUIColor();
-				SetNativeControl(new UISeparator(Bounds));
-			}
-
+                if (Control == null)
+                {
+                    BackgroundColor = Color.Transparent.ToUIColor ();
+                    SetNativeControl (new UISeparator (Bounds));
+                }
+            }
+            
 			SetProperties ();
 		}
 
@@ -54,6 +52,9 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		private void SetProperties()
 		{
+            if (Control == null || Element == null)
+                return;
+
 			var separator = Control;
 			separator.Thickness = Element.Thickness;
 			separator.StrokeColor = Element.Color.ToUIColor();
