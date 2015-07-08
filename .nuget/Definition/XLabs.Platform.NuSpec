@@ -48,9 +48,18 @@
         <reference file="XLabs.Platform.dll"/>
         <reference file="XLabs.Platform.WP8.dll"/>
       </group>
+      <!--group targetFramework="netcore45"> 
+        <reference file="XLabs.Platform.dll" /> 
+      </group-->
     </references>
   </metadata>
   <files>
+  
+    <file src="..\..\build\**\XLabs.Platform.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Platform.dll.mdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Platform.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Platform.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
+  
     <file src="..\..\build\**\XLabs.Platform.dll" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
     <file src="..\..\build\**\XLabs.Platform.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
     <file src="..\..\build\**\XLabs.Platform.pdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
