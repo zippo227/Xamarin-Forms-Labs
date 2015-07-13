@@ -51,6 +51,21 @@ namespace XLabs.Platform.Services
             CheckError(SecKeyChain.Remove(GetKeyRecord(key)));
         }
 
+        /// <summary>
+        /// Checks if the storage contains a key.
+        /// </summary>
+        /// <param name="key">The key to search.</param>
+        /// <returns>True if the storage has the key, otherwise false.</returns>
+        public bool Contains(string key)
+        {
+            var existingRecord = GetKeyRecord(key);
+
+            SecStatusCode resultCode;
+            SecKeyChain.QueryAsRecord(existingRecord, out resultCode);
+
+            return resultCode == SecStatusCode.Success;
+        }
+
         #endregion
 
         #region private static methods
