@@ -157,7 +157,7 @@ namespace XLabs.Forms.Controls
 				case Aspect.AspectFill:
 					height = sourceHeight;
 					width = sourceWidth;
-					height = this.MakeSquare(height, ref width);
+					height = MakeSquare(height, ref width);
 					left = (int)((sourceWidth - width) / 2);
 					top = (int)((sourceHeight - height) / 2);
 					break;
@@ -168,7 +168,7 @@ namespace XLabs.Forms.Controls
 				case Aspect.AspectFit:
 					height = sourceHeight;
 					width = sourceWidth;
-					height = this.MakeSquare(height, ref width);
+					height = MakeSquare(height, ref width);
 					left = (int)((sourceWidth - width) / 2);
 					top = (int)((sourceHeight - height) / 2);
 					break;
@@ -187,7 +187,7 @@ namespace XLabs.Forms.Controls
 		/// <param name="height">The height.</param>
 		/// <param name="width">The width.</param>
 		/// <returns>System.Int32.</returns>
-		private int MakeSquare(int height, ref int width)
+		private static int MakeSquare(int height, ref int width)
 		{
 			if (height < width)
 			{
@@ -208,15 +208,12 @@ namespace XLabs.Forms.Controls
 		/// <returns>Rect.</returns>
 		private Rect GetTargetRect(int sourceHeight, int sourceWidth)
 		{
-			int height = 0;
-			int width = 0;
-
-			height = this.Element.HeightRequest > 0
-					   ? (int)System.Math.Round(this.Element.HeightRequest, 0)
-					   : sourceHeight; 
-			width = this.Element.WidthRequest > 0
-					   ? (int)System.Math.Round(this.Element.WidthRequest, 0)
-					   : sourceWidth; 
+		    var height = this.Element.HeightRequest > 0
+			    ? (int)Math.Round(this.Element.HeightRequest, 0)
+			    : sourceHeight; 
+			var width = this.Element.WidthRequest > 0
+			    ? (int)Math.Round(this.Element.WidthRequest, 0)
+			    : sourceWidth; 
 
 			// Make Square
 			height = MakeSquare(height, ref width);
