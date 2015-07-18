@@ -288,7 +288,6 @@ namespace XLabs.Sample
             var listItems = new SortedDictionary<string, Type>
             {
                  {"US Presidents Circle Image", typeof(UsPresidentList)},
-                 {"US Presidents Square Image", typeof(UsPresidentListSquare)},
             };
 
             var controls = new ContentPage

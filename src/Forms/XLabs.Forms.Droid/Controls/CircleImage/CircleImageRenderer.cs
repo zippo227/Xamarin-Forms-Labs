@@ -27,11 +27,9 @@ namespace XLabs.Forms.Controls
 		{
 			base.OnElementChanged(e);
 
-			if (e.OldElement == null)
+            if (e.OldElement == null && (int)Android.OS.Build.VERSION.SdkInt < 18)
 			{
-
-				if ((int)Android.OS.Build.VERSION.SdkInt < 18)
-					SetLayerType(LayerType.Software, null);
+			    SetLayerType(LayerType.Software, null);
 			}
 		}
 
@@ -40,23 +38,18 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-		protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
 			if (e.PropertyName == Image.IsLoadingProperty.PropertyName && !this.Element.IsLoading
-				&& this.Control.Drawable != null)
+                && this.Control.Drawable != null && this.Element.Aspect != Aspect.AspectFit)
 			{
-				//Should only be true right after an image is loaded
-				if (this.Element.Aspect != Aspect.AspectFit)
+				using (var sourceBitmap = Bitmap.CreateBitmap(this.Control.Drawable.IntrinsicWidth, this.Control.Drawable.IntrinsicHeight, Bitmap.Config.Argb8888))
+                using (var canvas = new Canvas(sourceBitmap))   
 				{
-					using (var sourceBitmap = Bitmap.CreateBitmap(this.Control.Drawable.IntrinsicWidth, this.Control.Drawable.IntrinsicHeight, Bitmap.Config.Argb8888))
-					{
-						Canvas canvas = new Canvas(sourceBitmap);
-						this.Control.Drawable.SetBounds(0, 0, canvas.Width, canvas.Height);
-						this.Control.Drawable.Draw(canvas);
-						this.ReshapeImage(sourceBitmap);
-					}
-					
+                    this.Control.Drawable.SetBounds(0, 0, canvas.Width, canvas.Height);
+                    this.Control.Drawable.Draw(canvas);
+					this.ReshapeImage(sourceBitmap);
 				}
 			}
 		}
@@ -80,26 +73,19 @@ namespace XLabs.Forms.Controls
 		/// </para></remarks>
 		protected override bool DrawChild(Canvas canvas, global::Android.Views.View child, long drawingTime)
 		{
-			if (this.Element.Aspect == Aspect.AspectFit)
-			{
-				var radius = Math.Min(Width, Height)/2;
-				var strokeWidth = 10;
-				radius -= strokeWidth/2;
+            if (this.Element.Aspect != Aspect.AspectFit)
+            {
+                return base.DrawChild(canvas, child, drawingTime);
+            }
 
-				Path path = new Path();
-				path.AddCircle(Width/2, Height/2, radius, Path.Direction.Ccw);
-				canvas.Save();
-				canvas.ClipPath(path);
+            using (var path = new Path())
+            {
+                path.AddCircle(Width / 2, Height / 2, (Math.Min(Width, Height) - 10) / 2, Path.Direction.Ccw);
+                canvas.Save();
+                canvas.ClipPath(path);
+            }
 
-				var result = base.DrawChild(canvas, child, drawingTime);
-
-				path.Dispose();
-
-				return result;
-
-			}
-
-			return base.DrawChild(canvas, child, drawingTime);
+            return base.DrawChild(canvas, child, drawingTime);
 		}
 
 		/// <summary>
@@ -108,33 +94,31 @@ namespace XLabs.Forms.Controls
 		/// <param name="sourceBitmap">The source bitmap.</param>
 		private void ReshapeImage(Bitmap sourceBitmap)
 		{
-			if (sourceBitmap != null)
+            if (sourceBitmap == null) return;
+
+            using (var sourceRect = GetScaledRect(sourceBitmap.Height, sourceBitmap.Width))
+            using (var rect = this.GetTargetRect(sourceBitmap.Height, sourceBitmap.Width))
+			using (var output = Bitmap.CreateBitmap(rect.Width(), rect.Height(), Bitmap.Config.Argb8888))
+            using (var canvas = new Canvas(output))
+            using (var paint = new Paint())
+            using (var rectF = new RectF(rect))
 			{
-				var sourceRect = GetScaledRect(sourceBitmap.Height, sourceBitmap.Width);
-				var rect = this.GetTargetRect(sourceBitmap.Height, sourceBitmap.Width);
-				using (var output = Bitmap.CreateBitmap(rect.Width(), rect.Height(), Bitmap.Config.Argb8888))
-				{
-					var canvas = new Canvas(output);
+				var roundRx = rect.Width() / 2;
+				var roundRy = rect.Height() / 2;
 
-					var paint = new Paint();
-					var rectF = new RectF(rect);
-					var roundRx = rect.Width() / 2;
-					var roundRy = rect.Height() / 2;
+				paint.AntiAlias = true;
+				canvas.DrawARGB(0, 0, 0, 0);
+				paint.Color = Android.Graphics.Color.ParseColor("#ff424242");
+				canvas.DrawRoundRect(rectF, roundRx, roundRy, paint);
 
-					paint.AntiAlias = true;
-					canvas.DrawARGB(0, 0, 0, 0);
-					paint.Color = Android.Graphics.Color.ParseColor("#ff424242");
-					canvas.DrawRoundRect(rectF, roundRx, roundRy, paint);
+				paint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.SrcIn));
+				canvas.DrawBitmap(sourceBitmap, sourceRect, rect, paint);
 
-					paint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.SrcIn));
-					canvas.DrawBitmap(sourceBitmap, sourceRect, rect, paint);
+				//this.DrawBorder(canvas, rect.Width(), rect.Height());
 
-					//this.DrawBorder(canvas, rect.Width(), rect.Height());
-
-					this.Control.SetImageBitmap(output);
-					// Forces the internal method of InvalidateMeasure to be called.
-					this.Element.WidthRequest = this.Element.WidthRequest;
-				}
+				this.Control.SetImageBitmap(output);
+				// Forces the internal method of InvalidateMeasure to be called.
+				this.Element.WidthRequest = this.Element.WidthRequest;
 			}
 		}
 
@@ -176,9 +160,7 @@ namespace XLabs.Forms.Controls
 					throw new NotImplementedException();
 			}
 
-			var rect = new Rect(left, top, width + left, height + top);
-
-			return rect;
+            return new Rect(left, top, width + left, height + top);
 		}
 
 		/// <summary>
