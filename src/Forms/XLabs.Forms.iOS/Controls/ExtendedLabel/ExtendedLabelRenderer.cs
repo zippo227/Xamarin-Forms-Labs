@@ -109,7 +109,7 @@ namespace XLabs.Forms.Controls
             {
                 dropShadow = new NSShadow
                 {
-					ShadowColor = view.DropShadowColor.ToUIColor(),
+                    ShadowColor = view.DropShadowColor.ToUIColor(),
                     ShadowBlurRadius = 1.4f,
                     ShadowOffset = new CoreGraphics.CGSize(new CoreGraphics.CGPoint(0.3f, 0.8f))
                 };

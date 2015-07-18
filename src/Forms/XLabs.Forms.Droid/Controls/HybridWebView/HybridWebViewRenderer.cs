@@ -5,7 +5,7 @@
 namespace XLabs.Forms.Controls
 {
     using System;
-	using System.ComponentModel;
+    using System.ComponentModel;
 
     using Android.Views;
     using Android.Webkit;
@@ -16,11 +16,11 @@ namespace XLabs.Forms.Controls
     /// <summary>
     /// Class HybridWebViewRenderer.
     /// </summary>
-	public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
+    public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
     {
-		public HybridWebViewRenderer()
-		{
-		}
+        public HybridWebViewRenderer()
+        {
+        }
 
 
         /// <summary>
@@ -37,12 +37,12 @@ namespace XLabs.Forms.Controls
 
                 webView.Settings.JavaScriptEnabled = true;
 
-				//Turn off hardware rendering
-				webView.SetLayerType(LayerType.Software, null);
+                //Turn off hardware rendering
+                webView.SetLayerType(LayerType.Software, null);
 
-				//Set the background color to transparent to fix an issue where the
-				//the picture would fail to draw
-				webView.SetBackgroundColor(Color.Transparent.ToAndroid());
+                //Set the background color to transparent to fix an issue where the
+                //the picture would fail to draw
+                webView.SetBackgroundColor(Color.Transparent.ToAndroid());
 
                 webView.SetWebViewClient(new Client(this));
                 webView.SetWebChromeClient(new ChromeClient(this));
@@ -57,13 +57,13 @@ namespace XLabs.Forms.Controls
             this.Bind();
         }
 
-		partial void HandleCleanup() {
-			if (Control != null) {
-				Control.SetWebViewClient (null);
-				Control.SetWebChromeClient (null);
-				Control.RemoveJavascriptInterface ("Xamarin");
-			}
-		}
+        partial void HandleCleanup() {
+            if (Control != null) {
+                Control.SetWebViewClient (null);
+                Control.SetWebChromeClient (null);
+                Control.RemoveJavascriptInterface ("Xamarin");
+            }
+        }
 
         /// <summary>
         /// Gets the desired size of the view.
@@ -99,9 +99,9 @@ namespace XLabs.Forms.Controls
         /// <param name="script">The script.</param>
         partial void Inject(string script)
         {
-			if (Control != null) {
-	            this.Control.LoadUrl(string.Format("javascript: {0}", script));
-			}
+            if (Control != null) {
+                this.Control.LoadUrl(string.Format("javascript: {0}", script));
+            }
         }
 
 
@@ -112,7 +112,7 @@ namespace XLabs.Forms.Controls
         /// <param name="uri">The URI.</param>
         partial void Load(Uri uri)
         {
-			if (uri != null && Control != null)
+            if (uri != null && Control != null)
             {
                 this.Control.LoadUrl(uri.AbsoluteUri);
                 //this.InjectNativeFunctionScript();
@@ -136,11 +136,11 @@ namespace XLabs.Forms.Controls
         /// <param name="contentFullName">Full name of the content.</param>
         partial void LoadContent(object sender, string contentFullName)
         {
-			if (Control != null) {
-	            this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
-    	        // we can't really set the URI and fire up native function injection so the workaround is to do it here
-        	    //this.InjectNativeFunctionScript();
-			}
+            if (Control != null) {
+                this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
+                // we can't really set the URI and fire up native function injection so the workaround is to do it here
+                //this.InjectNativeFunctionScript();
+            }
         }
 
         /// <summary>
@@ -149,10 +149,10 @@ namespace XLabs.Forms.Controls
         /// <param name="html">The HTML.</param>
         partial void LoadFromString(string html)
         {
-			if (Control != null) {
-	            this.Control.LoadData(html, "text/html", "UTF-8");
-				//this.InjectNativeFunctionScript();
-			}
+            if (Control != null) {
+                this.Control.LoadData(html, "text/html", "UTF-8");
+                //this.InjectNativeFunctionScript();
+            }
         }
 
         /// <summary>
@@ -347,11 +347,11 @@ namespace XLabs.Forms.Controls
                 this._detector = new GestureDetector(this.Context, this._listener);
             }
 
-			// This is an Android specific constructor that sometimes needs to be called by the underlying
-			// Xamarin ACW environment...
-			public NativeWebView(IntPtr ptr, Android.Runtime.JniHandleOwnership handle) : base(ptr, handle)
-			{
-			}
+            // This is an Android specific constructor that sometimes needs to be called by the underlying
+            // Xamarin ACW environment...
+            public NativeWebView(IntPtr ptr, Android.Runtime.JniHandleOwnership handle) : base(ptr, handle)
+            {
+            }
 
             /// <summary>
             /// Implement this method to handle touch screen motion events.
