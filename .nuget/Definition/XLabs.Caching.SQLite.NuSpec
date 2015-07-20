@@ -24,31 +24,7 @@
     <language>en-US</language>
     <dependencies>
       <group>
-        <dependency id="SQLite.Net.Async-PCL" version="2.5.1" />
-        <dependency id="XLabs.Caching" version="2.0.5603" />
-        <dependency id="XLabs.Serialization" version="2.0.5603" />
-      </group>
-      <group targetFramework="Xamarin.iOS10">
-        <dependency id="SQLite.Net.Async-PCL" version="2.5.1" />
-        <dependency id="SQLite.Net.Platform.XamarinIOS" version="2.5.1" />
-        <dependency id="XLabs.Caching" version="2.0.5603" />
-        <dependency id="XLabs.Serialization" version="2.0.5603" />
-      </group>
-      <group targetFramework="MonoAndroid">
-        <dependency id="SQLite.Net.Async-PCL" version="2.5.1" />
-        <dependency id="SQLite.Net.Platform.XamarinAndroid" version="2.5.1" />
-        <dependency id="XLabs.Caching" version="2.0.5603" />
-        <dependency id="XLabs.Serialization" version="2.0.5603" />
-      </group>
-      <group targetFramework="wp8">
-        <dependency id="SQLite.Net.Async-PCL" version="2.5.1" />
-        <dependency id="SQLite.Net.Platform.WindowsPhone8" version="2.5.1" />
-        <dependency id="XLabs.Caching" version="2.0.5603" />
-        <dependency id="XLabs.Serialization" version="2.0.5603" />
-      </group>
-      <group targetFramework="wpa81">
-        <dependency id="SQLite.Net.Async-PCL" version="2.5.1" />
-        <dependency id="SQLite.Net.Platform.WindowsPhone8" version="2.5.1" />
+        <dependency id="SQLite.Net.Async-PCL" version="3.0.5" />
         <dependency id="XLabs.Caching" version="2.0.5603" />
         <dependency id="XLabs.Serialization" version="2.0.5603" />
       </group>
