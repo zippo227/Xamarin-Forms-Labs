@@ -116,7 +116,11 @@ namespace XLabs.Forms.Controls
 
                 //this.DrawBorder(canvas, rect.Width(), rect.Height());
 
-                this.Control.SetImageBitmap(output);
+                using (var drawable = this.Control.Drawable) // don't remove, this is making sure memory isn't leaked
+                {
+                    this.Control.SetImageBitmap(output); 
+                }
+
                 // Forces the internal method of InvalidateMeasure to be called.
                 this.Element.WidthRequest = this.Element.WidthRequest;
             }
