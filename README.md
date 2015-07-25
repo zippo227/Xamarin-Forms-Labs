@@ -46,6 +46,7 @@ The v.2.0 is the stable branch.
  - SoundService
  - Text To Speech 
  - Secure Storage
+ - Settings
 
 
 **Available Mvvm helpers (Beta)**
