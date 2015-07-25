@@ -24,6 +24,7 @@ The v.2.0 is the stable branch.
  - [ExtendedViewCell (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/ExtendedViewCell)
  - [HybridWebView (beta)](https://github.com/XForms/Xamarin-Forms-Labs/wiki/HybridWebView)
  - GridView (IOS beta)
+ - GradientContentView (iOS/Android beta)
  - ImageButton (beta)
  - RadioButton(beta)
  - RepeaterView (beta)

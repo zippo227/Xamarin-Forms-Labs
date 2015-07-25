@@ -80,6 +80,7 @@
     <Compile Include="Controls\ExtendedTimePick\ExtendedTimePickerRenderer.cs" />
     <Compile Include="Controls\ExtendedViewCell\ExtendedViewCellRenderer.cs" />
     <Compile Include="Controls\GesturesContentView\GesturesContentViewRenderer.cs" />
+    <Compile Include="Controls\GradientContentView\GradientContentViewRenderer.cs" />
     <Compile Include="Controls\GridView\GridCollectionView.cs" />
     <Compile Include="Controls\GridView\GridDataSource.cs" />
     <Compile Include="Controls\GridView\GridViewCell.cs" />
