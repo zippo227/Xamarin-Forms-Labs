@@ -5,46 +5,46 @@ using XLabs.Forms.Controls;
 [assembly: ExportRenderer(typeof(ExtendedEntry), typeof(ExtendedEntryRenderer))]
 namespace XLabs.Forms.Controls
 {
-	using System;
-	using System.ComponentModel;
-	using CoreGraphics;
+    using System;
+    using System.ComponentModel;
+    using CoreGraphics;
 
-	using Foundation;
-	using UIKit;
+    using Foundation;
+    using UIKit;
 
-	using Xamarin.Forms;
-	using Xamarin.Forms.Platform.iOS;
+    using Xamarin.Forms;
+    using Xamarin.Forms.Platform.iOS;
 
-	/// <summary>
-	/// A renderer for the ExtendedEntry control.
-	/// </summary>
-	public class ExtendedEntryRenderer : EntryRenderer
-	{
-		/// <summary>
-		/// The _left swipe gesture recognizer
-		/// </summary>
-		private UISwipeGestureRecognizer _leftSwipeGestureRecognizer;
-		/// <summary>
-		/// The _right swipe gesture recognizer
-		/// </summary>
-		private UISwipeGestureRecognizer _rightSwipeGestureRecognizer;
+    /// <summary>
+    /// A renderer for the ExtendedEntry control.
+    /// </summary>
+    public class ExtendedEntryRenderer : EntryRenderer
+    {
+        /// <summary>
+        /// The _left swipe gesture recognizer
+        /// </summary>
+        private UISwipeGestureRecognizer _leftSwipeGestureRecognizer;
+        /// <summary>
+        /// The _right swipe gesture recognizer
+        /// </summary>
+        private UISwipeGestureRecognizer _rightSwipeGestureRecognizer;
 
-		/// <summary>
-		/// The on element changed callback.
-		/// </summary>
-		/// <param name="e">The event arguments.</param>
-		protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
-		{
-			base.OnElementChanged(e);
+        /// <summary>
+        /// The on element changed callback.
+        /// </summary>
+        /// <param name="e">The event arguments.</param>
+        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
+        {
+            base.OnElementChanged(e);
 
-			var view = e.NewElement as ExtendedEntry;
+            var view = e.NewElement as ExtendedEntry;
 
-			if (view != null)
-			{
-				SetFont (view);
-				SetTextAlignment (view);
-				SetBorder (view);
-				SetPlaceholderTextColor (view);
+            if (view != null)
+            {
+                SetFont (view);
+                SetTextAlignment (view);
+                SetBorder (view);
+                SetPlaceholderTextColor (view);
                 SetMaxLength (view);
 
                 ResizeHeight ();
