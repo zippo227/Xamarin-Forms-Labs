@@ -61,7 +61,12 @@ namespace XLabs.Platform.Services.Email
 				}
 			}
 
-			UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(mailer, true, null);
+            UIViewController vc = UIApplication.SharedApplication.KeyWindow.RootViewController;
+            while(vc.PresentedViewController != null) 
+            {
+                vc = vc.PresentedViewController;
+            }
+            vc.PresentViewController(mailer, true, null);
 		}
 
 		/// <summary>

@@ -26,7 +26,7 @@ namespace XLabs.Forms.Controls
 		/// <param name="onItemSelected">The on item selected.</param>
 		public GridViewDelegate (OnItemSelected onItemSelected)
 		{
-			_onItemSelected = onItemSelected;
+		    this._onItemSelected = onItemSelected;
 		}
 
 		/// <summary>
@@ -36,7 +36,7 @@ namespace XLabs.Forms.Controls
 		/// <param name="indexPath">The index path.</param>
 		public override void ItemSelected (UICollectionView collectionView, NSIndexPath indexPath)
 		{
-			_onItemSelected (collectionView, indexPath);
+		    this._onItemSelected (collectionView, indexPath);
 		}
 
 		/// <summary>
@@ -46,9 +46,8 @@ namespace XLabs.Forms.Controls
 		/// <param name="indexPath">The index path.</param>
 		public override void ItemHighlighted(UICollectionView collectionView, NSIndexPath indexPath)
 		{
-			_onItemSelected.Invoke(collectionView, indexPath);
+		    this._onItemSelected.Invoke(collectionView, indexPath);
 		}
-
 	}
 }
 

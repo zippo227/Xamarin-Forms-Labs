@@ -47,96 +47,96 @@ namespace XLabs.Forms.Controls
 				SetPlaceholderTextColor (view);
                 SetMaxLength (view);
 
-				ResizeHeight ();
-			}
+                ResizeHeight ();
+            }
 
-			if (e.OldElement == null)
-			{
-				_leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => view.OnLeftSwipe(this, EventArgs.Empty))
-					{
-						Direction = UISwipeGestureRecognizerDirection.Left
-					};
+            if (e.OldElement == null)
+            {
+                _leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => view.OnLeftSwipe(this, EventArgs.Empty))
+                    {
+                        Direction = UISwipeGestureRecognizerDirection.Left
+                    };
 
-				_rightSwipeGestureRecognizer = new UISwipeGestureRecognizer(()=> view.OnRightSwipe(this, EventArgs.Empty))
-					{
-						Direction = UISwipeGestureRecognizerDirection.Right
-					};
+                _rightSwipeGestureRecognizer = new UISwipeGestureRecognizer(()=> view.OnRightSwipe(this, EventArgs.Empty))
+                    {
+                        Direction = UISwipeGestureRecognizerDirection.Right
+                    };
 
-				Control.AddGestureRecognizer(_leftSwipeGestureRecognizer);
-				Control.AddGestureRecognizer(_rightSwipeGestureRecognizer);
-			}
+                Control.AddGestureRecognizer(_leftSwipeGestureRecognizer);
+                Control.AddGestureRecognizer(_rightSwipeGestureRecognizer);
+            }
 
-			if (e.NewElement == null)
-			{
-				Control.RemoveGestureRecognizer(_leftSwipeGestureRecognizer);
-				Control.RemoveGestureRecognizer(_rightSwipeGestureRecognizer);
-			}
-		}
+            if (e.NewElement == null)
+            {
+                Control.RemoveGestureRecognizer(_leftSwipeGestureRecognizer);
+                Control.RemoveGestureRecognizer(_rightSwipeGestureRecognizer);
+            }
+        }
 
-		/// <summary>
-		/// The on element property changed callback
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged(sender, e);
+        /// <summary>
+        /// The on element property changed callback
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
 
-			var view = (ExtendedEntry)Element;
+            var view = (ExtendedEntry)Element;
 
-			if (e.PropertyName == ExtendedEntry.FontProperty.PropertyName)
-				SetFont(view);
-			if (e.PropertyName == ExtendedEntry.XAlignProperty.PropertyName)
-				SetTextAlignment(view);
-			if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
-				SetBorder(view);
-			if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
-				SetPlaceholderTextColor(view);
+            if (e.PropertyName == ExtendedEntry.FontProperty.PropertyName)
+                SetFont(view);
+            if (e.PropertyName == ExtendedEntry.XAlignProperty.PropertyName)
+                SetTextAlignment(view);
+            if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
+                SetBorder(view);
+            if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
+                SetPlaceholderTextColor(view);
 
-			ResizeHeight();
-		}
+            ResizeHeight();
+        }
 
-		/// <summary>
-		/// Sets the text alignment.
-		/// </summary>
-		/// <param name="view">The view.</param>
-		private void SetTextAlignment(ExtendedEntry view)
-		{
-			switch (view.XAlign)
-			{
-				case TextAlignment.Center:
-					Control.TextAlignment = UITextAlignment.Center;
-					break;
-				case TextAlignment.End:
-					Control.TextAlignment = UITextAlignment.Right;
-					break;
-				case TextAlignment.Start:
-					Control.TextAlignment = UITextAlignment.Left;
-					break;
-			}
-		}
+        /// <summary>
+        /// Sets the text alignment.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        private void SetTextAlignment(ExtendedEntry view)
+        {
+            switch (view.XAlign)
+            {
+                case TextAlignment.Center:
+                    Control.TextAlignment = UITextAlignment.Center;
+                    break;
+                case TextAlignment.End:
+                    Control.TextAlignment = UITextAlignment.Right;
+                    break;
+                case TextAlignment.Start:
+                    Control.TextAlignment = UITextAlignment.Left;
+                    break;
+            }
+        }
 
-		/// <summary>
-		/// Sets the font.
-		/// </summary>
-		/// <param name="view">The view.</param>
-		private void SetFont(ExtendedEntry view)
-		{
-			UIFont uiFont;
-			if (view.Font != Font.Default && (uiFont = view.Font.ToUIFont()) != null)
-				Control.Font = uiFont;
-			else if (view.Font == Font.Default)
-				Control.Font = UIFont.SystemFontOfSize(17f);
-		}
+        /// <summary>
+        /// Sets the font.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        private void SetFont(ExtendedEntry view)
+        {
+            UIFont uiFont;
+            if (view.Font != Font.Default && (uiFont = view.Font.ToUIFont()) != null)
+                Control.Font = uiFont;
+            else if (view.Font == Font.Default)
+                Control.Font = UIFont.SystemFontOfSize(17f);
+        }
 
-		/// <summary>
-		/// Sets the border.
-		/// </summary>
-		/// <param name="view">The view.</param>
-		private void SetBorder(ExtendedEntry view)
-		{
-			Control.BorderStyle = view.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
-		}
+        /// <summary>
+        /// Sets the border.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        private void SetBorder(ExtendedEntry view)
+        {
+            Control.BorderStyle = view.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
+        }
 
         /// <summary>
         /// Sets the maxLength.
@@ -151,35 +151,35 @@ namespace XLabs.Forms.Controls
             };
         }
 
-		/// <summary>
-		/// Resizes the height.
-		/// </summary>
-		private void ResizeHeight()
-		{
-			if (Element.HeightRequest >= 0) return;
+        /// <summary>
+        /// Resizes the height.
+        /// </summary>
+        private void ResizeHeight()
+        {
+            if (Element.HeightRequest >= 0) return;
 
-			var height = Math.Max(Bounds.Height,
-				new UITextField {Font = Control.Font}.IntrinsicContentSize.Height);
+            var height = Math.Max(Bounds.Height,
+                new UITextField {Font = Control.Font}.IntrinsicContentSize.Height);
 
-			Control.Frame = new CGRect(0.0f, 0.0f, (nfloat) Element.Width,  (nfloat) height);
+            Control.Frame = new CGRect(0.0f, 0.0f, (nfloat) Element.Width,  (nfloat) height);
 
-			Element.HeightRequest = height;
-		}
+            Element.HeightRequest = height;
+        }
 
-		/// <summary>
-		/// Sets the color of the placeholder text.
-		/// </summary>
-		/// <param name="view">The view.</param>
-		void SetPlaceholderTextColor(ExtendedEntry view)
-		{
-			/*
+        /// <summary>
+        /// Sets the color of the placeholder text.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        void SetPlaceholderTextColor(ExtendedEntry view)
+        {
+            /*
 UIColor *color = [UIColor lightTextColor];
 YOURTEXTFIELD.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"PlaceHolder Text" attributes:@{NSForegroundColorAttributeName: color}];
-			*/
-			if(string.IsNullOrEmpty(view.Placeholder) == false && view.PlaceholderTextColor != Color.Default) {
-				NSAttributedString placeholderString = new NSAttributedString(view.Placeholder, new UIStringAttributes(){ ForegroundColor = view.PlaceholderTextColor.ToUIColor() });
-				Control.AttributedPlaceholder = placeholderString;
-			}
-		}
-	}
+            */
+            if(string.IsNullOrEmpty(view.Placeholder) == false && view.PlaceholderTextColor != Color.Default) {
+                NSAttributedString placeholderString = new NSAttributedString(view.Placeholder, new UIStringAttributes(){ ForegroundColor = view.PlaceholderTextColor.ToUIColor() });
+                Control.AttributedPlaceholder = placeholderString;
+            }
+        }
+    }
 }
