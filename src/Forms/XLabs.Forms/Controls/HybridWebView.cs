@@ -5,6 +5,7 @@ namespace XLabs.Forms.Controls
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading.Tasks;
     using Ioc;
     using Serialization;
     using Xamarin.Forms;
@@ -26,11 +27,11 @@ namespace XLabs.Forms.Controls
         public static readonly BindableProperty SourceProperty =
             BindableProperty.Create<HybridWebView, WebViewSource>(p => p.Source, default(WebViewSource));
 
-		/// <summary>
-		/// Boolean to indicate cleanup has been called.
-		/// </summary>
-		public static readonly BindableProperty CleanupProperty = 
-			BindableProperty.Create<HybridWebView, bool> (p => p.CleanupCalled, false);
+        /// <summary>
+        /// Boolean to indicate cleanup has been called.
+        /// </summary>
+        public static readonly BindableProperty CleanupProperty = 
+            BindableProperty.Create<HybridWebView, bool> (p => p.CleanupCalled, false);
 
         /// <summary>
         /// The java script load requested
@@ -134,10 +135,13 @@ namespace XLabs.Forms.Controls
             set { SetValue(SourceProperty, value); }
         }
 
-		public bool CleanupCalled {
-			get { return (bool)GetValue (CleanupProperty); }
-			set { SetValue (CleanupProperty, value); }
-		}
+        /// <summary>
+        /// Gets or sets the cleanup called flag.
+        /// </summary>
+        public bool CleanupCalled {
+            get { return (bool)GetValue (CleanupProperty); }
+            set { SetValue (CleanupProperty, value); }
+        }
 
         /// <summary>
         /// Registers a native callback.
@@ -320,59 +324,74 @@ namespace XLabs.Forms.Controls
             var handler = this.Navigating;
             if (handler != null)
             {
-                handler(this, new XLabs.EventArgs<Uri>(uri));
+                handler(this, new EventArgs<Uri>(uri));
             }
         }
 
         internal void MessageReceived(string message)
         {
             var m = this.jsonSerializer.Deserialize<Message>(message);
-            Action<string> action = null;
+            Action<string> action;
 
             if (this.TryGetAction(m.Action, out action))
             {
                 action.Invoke(m.Data);
+                return;
+            }
+
+            Func<string, object[]> func;
+
+            if (this.TryGetFunc(m.Action, out func))
+            {
+                Task.Run(() =>
+                {
+                    var result = func.Invoke(m.Data);
+                    this.CallJsFunction(string.Format("NativeFuncs[{0}]", m.Callback), result);
+                });
             }
         }
 
-		/// <summary>
-		/// Remove all Callbacks from this view
-		/// </summary>
-		public void RemoveAllCallbacks() 
+        /// <summary>
+        /// Remove all Callbacks from this view
+        /// </summary>
+        public void RemoveAllCallbacks() 
         {
-			registeredActions.Clear ();
-		}
+            this.registeredActions.Clear ();
+        }
 
-		/// <summary>
-		/// Remove all Functions from this view
-		/// </summary>
-		public void RemoveAllFunctions() 
+        /// <summary>
+        /// Remove all Functions from this view
+        /// </summary>
+        public void RemoveAllFunctions() 
         {
-			registeredFunctions.Clear ();
-		}
+            this.registeredFunctions.Clear ();
+        }
 
-		/// <summary>
-		///  Called to immediately free the native web view and 
-		/// disconnect all callbacks
-		/// Note that this web view object will no longer be usable 
-		/// after this call!
-		/// </summary>
-		public void Cleanup() 
+        /// <summary>
+        ///  Called to immediately free the native web view and 
+        /// disconnect all callbacks
+        /// Note that this web view object will no longer be usable 
+        /// after this call!
+        /// </summary>
+        public void Cleanup() 
         {
-			// This removes the delegates that point to the renderer
-			JavaScriptLoadRequested = null;
-			LoadFromContentRequested = null;
-			LoadContentRequested = null;
-			Navigating = null;
+            // This removes the delegates that point to the renderer
+            this.JavaScriptLoadRequested = null;
+            this.LoadFromContentRequested = null;
+            this.LoadContentRequested = null;
+            this.Navigating = null;
 
-			// Remove all callbacks
-			registeredActions.Clear ();
-			registeredFunctions.Clear ();
+            // Remove all callbacks
+            this.registeredActions.Clear ();
+            this.registeredFunctions.Clear ();
 
-			// Cleanup the native stuff
-			CleanupCalled = true;
-		}
+            // Cleanup the native stuff
+            CleanupCalled = true;
+        }
 
+        /// <summary>
+        /// Message class for transporting JSON objects.
+        /// </summary>
         [DataContract]
         private class Message
         {
@@ -380,6 +399,8 @@ namespace XLabs.Forms.Controls
             public string Action { get; set; }
             [DataMember(Name="d")]
             public string Data { get; set; }
+            [DataMember(Name="c")]
+            public string Callback { get; set; }
         }
     }
 }

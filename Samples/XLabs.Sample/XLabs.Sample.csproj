@@ -96,6 +96,7 @@
     <Compile Include="Pages\Controls\SegmentPage.cs" />
     <Compile Include="Pages\Controls\UsPresidentList.cs" />
     <Compile Include="Pages\Controls\WebHybridTestPage.cs" />
+    <Compile Include="Pages\Samples\WebHybridSamplePage.cs" />
     <Compile Include="Pages\Services\EmailPage.cs" />
     <Compile Include="Pages\Services\SecureStoragePage.xaml.cs">
       <DependentUpon>SecureStoragePage.xaml</DependentUpon>
@@ -442,6 +443,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\WebHybridTest.html" />
   </ItemGroup>
   <Import Project="..\..\packages\Xamarin.Forms.1.4.3.6376\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.1.4.3.6376\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
 </Project>
