@@ -1,4 +1,6 @@
-﻿namespace XLabs.Forms.Controls
+﻿using System.Runtime.Serialization;
+
+namespace XLabs.Forms.Controls
 {
     using System;
     using System.Collections.Generic;
@@ -67,7 +69,7 @@
         /// <summary>
         /// The JSON serializer.
         /// </summary>
-        private readonly IStringSerializer jsonSerializer;
+        private readonly IJsonSerializer jsonSerializer;
 
         /// <summary>
         /// The registered actions.
@@ -322,17 +324,30 @@
             }
         }
 
+        internal void MessageReceived(string message)
+        {
+            var m = this.jsonSerializer.Deserialize<Message>(message);
+            Action<string> action = null;
+
+            if (this.TryGetAction(m.Action, out action))
+            {
+                action.Invoke(m.Data);
+            }
+        }
+
 		/// <summary>
 		/// Remove all Callbacks from this view
 		/// </summary>
-		public void RemoveAllCallbacks() {
+		public void RemoveAllCallbacks() 
+        {
 			registeredActions.Clear ();
 		}
 
 		/// <summary>
 		/// Remove all Functions from this view
 		/// </summary>
-		public void RemoveAllFunctions() {
+		public void RemoveAllFunctions() 
+        {
 			registeredFunctions.Clear ();
 		}
 
@@ -342,7 +357,8 @@
 		/// Note that this web view object will no longer be usable 
 		/// after this call!
 		/// </summary>
-		public void Cleanup() {
+		public void Cleanup() 
+        {
 			// This removes the delegates that point to the renderer
 			JavaScriptLoadRequested = null;
 			LoadFromContentRequested = null;
@@ -356,5 +372,14 @@
 			// Cleanup the native stuff
 			CleanupCalled = true;
 		}
+
+        [DataContract]
+        private class Message
+        {
+            [DataMember(Name="a")]
+            public string Action { get; set; }
+            [DataMember(Name="d")]
+            public string Data { get; set; }
+        }
     }
 }

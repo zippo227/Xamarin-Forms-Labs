@@ -12,7 +12,6 @@ namespace XLabs.Forms.Controls
 
     public partial class HybridWebViewRenderer
     {
-
         private const string Format = "^(file|http|https)://(local|LOCAL)/Action(=|%3D)(?<Action>[\\w]+)/";
         private const string FuncFormat = "^(file|http|https)://(local|LOCAL)/Func(=|%3D)(?<CallbackIdx>[\\d]+)(&|%26)(?<FuncName>[\\w]+)/";
         private static readonly Regex Expression = new Regex(Format);
@@ -26,7 +25,7 @@ namespace XLabs.Forms.Controls
             builder.Append("}");
             this.Inject(builder.ToString());
         }
-#else
+#elif !__IOS__
         private void InjectNativeFunctionScript()
         {
             var builder = new StringBuilder();
@@ -36,7 +35,7 @@ namespace XLabs.Forms.Controls
 #else
             builder.Append("window.location = \"//LOCAL/Action=\" + ");
 #endif
-            builder.Append("action + \"/\"");
+        builder.Append("action + \"/\"");
             builder.Append(" + ((typeof data == \"object\") ? JSON.stringify(data) : data)");
 #if WINDOWS_PHONE
             builder.Append(")");
@@ -73,11 +72,14 @@ namespace XLabs.Forms.Controls
             // Xamarin will changed the renderer attached to a view so it is possible that
             // an old renderer gets a property updated.  In this case the Element will be null.
             // In that case, try to clear the property event handler and exit.
-            if (Element == null) {
+            if (Element == null) 
+            {
                 HybridWebView wv = sender as HybridWebView;
-                if (wv != null) {
+                if (wv != null) 
+                {
                     wv.PropertyChanged -= this.OnElementPropertyChanged;
                 }
+
                 return;
             }
 
@@ -90,7 +92,9 @@ namespace XLabs.Forms.Controls
             else if (e.PropertyName == "Source")
             {
                 LoadSource();
-            } else if (e.PropertyName == HybridWebView.CleanupProperty.PropertyName) {
+            } 
+            else if (e.PropertyName == HybridWebView.CleanupProperty.PropertyName) 
+            {
                 HandleCleanup ();
             }
         }
