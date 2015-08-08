@@ -139,6 +139,10 @@ namespace XLabs.Sample
 
             lstServices.ItemSelected += async (sender, e) =>
             {
+                if (e.SelectedItem == null) return;
+
+                lstServices.SelectedItem = null;
+
                 switch (e.SelectedItem.ToString().ToLower())
                 {
                     case "texttospeech":
