@@ -10,7 +10,7 @@ namespace XLabs.Sample
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
-
+    using Pages.Samples;
     using Xamarin.Forms;
 
     using XLabs.Forms.Controls;
@@ -292,6 +292,7 @@ namespace XLabs.Sample
             var listItems = new SortedDictionary<string, Type>
             {
                  {"US Presidents Circle Image", typeof(UsPresidentList)},
+                 {"Web hybrid func callback", typeof(WebHybridSamplePage)}
             };
 
             var controls = new ContentPage
