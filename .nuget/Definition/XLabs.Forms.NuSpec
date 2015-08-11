@@ -54,10 +54,10 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="..\..\build\**\XLabs.Platform.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
-    <file src="..\..\build\**\XLabs.Platform.dll.mdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
-    <file src="..\..\build\**\XLabs.Platform.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
-    <file src="..\..\build\**\XLabs.Platform.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Forms.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Forms.dll.mdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Forms.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Forms.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
         
     <file src="..\..\build\**\XLabs.Forms.iOS.dll" target="lib\Xamarin.iOS10" />
     <file src="..\..\build\**\XLabs.Forms.iOS.dll.mdb" target="lib\Xamarin.iOS10" />
