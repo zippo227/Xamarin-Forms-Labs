@@ -335,7 +335,7 @@ namespace XLabs.Forms.Controls
 
             if (this.TryGetAction(m.Action, out action))
             {
-                action.Invoke(m.Data);
+                action.Invoke(m.Data.ToString());
                 return;
             }
 
@@ -345,7 +345,7 @@ namespace XLabs.Forms.Controls
             {
                 Task.Run(() =>
                 {
-                    var result = func.Invoke(m.Data);
+                    var result = func.Invoke(m.Data.ToString());
                     this.CallJsFunction(string.Format("NativeFuncs[{0}]", m.Callback), result);
                 });
             }
@@ -398,7 +398,7 @@ namespace XLabs.Forms.Controls
             [DataMember(Name="a")]
             public string Action { get; set; }
             [DataMember(Name="d")]
-            public string Data { get; set; }
+            public object Data { get; set; }
             [DataMember(Name="c")]
             public string Callback { get; set; }
         }

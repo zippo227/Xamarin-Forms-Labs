@@ -6,6 +6,8 @@
     using System.Reflection;
     using System.Runtime.InteropServices.WindowsRuntime;
     using Forms.Controls;
+    using Ioc;
+    using Serialization;
     using Xamarin.Forms;
 
     public class WebHybridSamplePage : ContentPage
@@ -20,8 +22,6 @@
             stack.Children.Add(hwv);
             this.Content = stack;
 
-            hwv.Uri = new Uri("http://test.padrose.co.uk/hvw/test1.html");
-
             hwv.RegisterCallback("dataCallback", t =>
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -29,7 +29,17 @@
                 })
             );
 
-            hwv.RegisterNativeFunction("funcCallback", s => new object[] {"Func return data for " + s});
+            //hwv.RegisterNativeFunction("funcCallback", s => new object[] {"Func return data for " + s});
+
+            hwv.RegisterCallback("sendObject", s =>
+            {
+                var serializer = Resolver.Resolve<IJsonSerializer>();
+
+                var o = serializer.Deserialize<SendObject>(s);
+
+                System.Diagnostics.Debug.WriteLine(o.X);
+                System.Diagnostics.Debug.WriteLine(o.Y);
+            });
         }
 
         #region Overrides of Page
@@ -45,5 +55,11 @@
         }
 
         #endregion
+    }
+
+    public class SendObject
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
     }
 }
