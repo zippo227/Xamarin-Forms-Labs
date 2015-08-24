@@ -86,7 +86,7 @@ namespace XLabs.Sample
             {
                 await LoadPage(this.pages[index++], token);
                 index %= this.pages.Count;
-                await Task.Delay(5000);
+                await Task.Delay(10000);
             }
         }
 

@@ -21,7 +21,7 @@ namespace XLabs.Forms.Controls
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
     {
         public static Func<HybridWebViewRenderer,Client> GetWebViewClientDelegate;
-        public static Func<ChromeClient> GetWebChromeClientDelegate;
+        public static Func<HybridWebViewRenderer, ChromeClient> GetWebChromeClientDelegate;
 
         /// <summary>
         /// Gets the desired size of the view.
@@ -68,6 +68,8 @@ namespace XLabs.Forms.Controls
                 webView.AddJavascriptInterface(new Xamarin(this), "Xamarin");
 
                 this.SetNativeControl(webView);
+
+                webView.LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
             }
 
             this.Unbind(e.OldElement);
@@ -94,7 +96,7 @@ namespace XLabs.Forms.Controls
         {
             var d = GetWebChromeClientDelegate;
 
-            return d != null ? d() : new ChromeClient();
+            return d != null ? d(this) : new ChromeClient();
         }
 
         partial void HandleCleanup() 

@@ -331,6 +331,9 @@ namespace XLabs.Forms.Controls
         internal void MessageReceived(string message)
         {
             var m = this.jsonSerializer.Deserialize<Message>(message);
+            
+            if (m == null || m.Action == null) return;
+
             Action<string> action;
 
             if (this.TryGetAction(m.Action, out action))
