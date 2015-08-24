@@ -292,7 +292,8 @@ namespace XLabs.Sample
             var listItems = new SortedDictionary<string, Type>
             {
                  {"US Presidents Circle Image", typeof(UsPresidentList)},
-                 {"Web hybrid func callback", typeof(WebHybridSamplePage)}
+                 {"Web hybrid func callback", typeof(WebHybridSamplePage)},
+                {"Web hybrid page loading", typeof(WebPageLoadSample)},
             };
 
             var controls = new ContentPage

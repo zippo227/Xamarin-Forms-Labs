@@ -61,6 +61,14 @@ namespace XLabs.Sample.Droid
         {
             base.OnCreate(bundle);
 
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Kitkat) 
+            {
+                Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true); 
+            }
+
+            XLabs.Forms.Controls.HybridWebViewRenderer.GetWebViewClientDelegate = r => new CustomClient(r);
+            XLabs.Forms.Controls.HybridWebViewRenderer.GetWebChromeClientDelegate = () => new CustomChromeClient();
+
             if (!Resolver.IsSet)
             {
                 this.SetIoc();

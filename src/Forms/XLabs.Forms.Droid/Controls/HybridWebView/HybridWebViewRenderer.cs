@@ -20,6 +20,9 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
     {
+        public static Func<HybridWebViewRenderer,Client> GetWebViewClientDelegate;
+        public static Func<ChromeClient> GetWebChromeClientDelegate;
+
         /// <summary>
         /// Gets the desired size of the view.
         /// </summary>
@@ -78,7 +81,9 @@ namespace XLabs.Forms.Controls
         /// <returns><see cref="Client"/></returns>
         protected virtual Client GetWebViewClient()
         {
-            return new Client(this);
+            var d = GetWebViewClientDelegate;
+
+            return d != null ? d(this) : new Client(this);
         }
 
         /// <summary>
@@ -87,7 +92,9 @@ namespace XLabs.Forms.Controls
         /// <returns><see cref="ChromeClient"/></returns>
         protected virtual ChromeClient GetWebChromeClient()
         {
-            return new ChromeClient();
+            var d = GetWebChromeClientDelegate;
+
+            return d != null ? d() : new ChromeClient();
         }
 
         partial void HandleCleanup() 
@@ -121,8 +128,6 @@ namespace XLabs.Forms.Controls
             }
         }
 
-
-
         /// <summary>
         /// Loads the specified URI.
         /// </summary>
@@ -132,7 +137,6 @@ namespace XLabs.Forms.Controls
             if (uri != null && Control != null)
             {
                 this.Control.LoadUrl(uri.AbsoluteUri);
-                //this.InjectNativeFunctionScript();
             }
         }
 
@@ -153,10 +157,9 @@ namespace XLabs.Forms.Controls
         /// <param name="contentFullName">Full name of the content.</param>
         partial void LoadContent(object sender, string contentFullName)
         {
-            if (Control != null) {
+            if (Control != null) 
+            {
                 this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
-                // we can't really set the URI and fire up native function injection so the workaround is to do it here
-                //this.InjectNativeFunctionScript();
             }
         }
 
@@ -166,9 +169,9 @@ namespace XLabs.Forms.Controls
         /// <param name="html">The HTML.</param>
         partial void LoadFromString(string html)
         {
-            if (Control != null) {
+            if (Control != null) 
+            {
                 this.Control.LoadData(html, "text/html", "UTF-8");
-                //this.InjectNativeFunctionScript();
             }
         }
 
@@ -180,7 +183,7 @@ namespace XLabs.Forms.Controls
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly HybridWebViewRenderer webHybrid;
+            private readonly WeakReference<HybridWebViewRenderer> webHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Client"/> class.
@@ -188,7 +191,7 @@ namespace XLabs.Forms.Controls
             /// <param name="webHybrid">The web hybrid.</param>
             public Client(HybridWebViewRenderer webHybrid)
             {
-                this.webHybrid = webHybrid;
+                this.webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
             }
 
             /// <summary>
@@ -210,9 +213,10 @@ namespace XLabs.Forms.Controls
             {
                 base.OnPageFinished(view, url);
 
-                if (this.webHybrid != null)
+                HybridWebViewRenderer hybrid;
+                if (this.webHybrid != null && this.webHybrid.TryGetTarget(out hybrid))
                 {
-                    this.webHybrid.OnPageFinished();
+                    hybrid.OnPageFinished();
                 }
             }
         }
@@ -225,7 +229,7 @@ namespace XLabs.Forms.Controls
             /// <summary>
             /// The web hybrid.
             /// </summary>
-            private readonly HybridWebViewRenderer webHybrid;
+            private readonly WeakReference<HybridWebViewRenderer> webHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Xamarin"/> class.
@@ -233,7 +237,7 @@ namespace XLabs.Forms.Controls
             /// <param name="webHybrid">The web hybrid.</param>
             public Xamarin(HybridWebViewRenderer webHybrid)
             {
-                this.webHybrid = webHybrid;
+                this.webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
             }
 
             /// <summary>
@@ -244,7 +248,11 @@ namespace XLabs.Forms.Controls
             [Export("call")]
             public void Call(string message)
             {
-                this.webHybrid.Element.MessageReceived(message);
+                HybridWebViewRenderer hybrid;
+                if (this.webHybrid != null && this.webHybrid.TryGetTarget(out hybrid))
+                {
+                    hybrid.Element.MessageReceived(message);
+                }
             }
         }
 

@@ -190,6 +190,7 @@
     <Compile Include="Pages\Controls\SeparatorPage.cs" />
     <Compile Include="ViewModel\AutoCompleteViewModel.cs" />
     <Compile Include="Model\TestModel.cs" />
+    <Compile Include="Pages\Samples\WebPageLoadSample.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -396,17 +397,14 @@
     <Reference Include="System.Net.Http.Primitives">
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.4.6392\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.4.6392\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.Xaml, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Xamarin.Forms.Xaml, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.4.6392\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
-      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
