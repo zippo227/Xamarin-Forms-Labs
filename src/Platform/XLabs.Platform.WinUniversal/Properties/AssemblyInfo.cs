@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("XLabs.Forms")]
+[assembly: AssemblyTitle("XLabs.Platform.WinUniversal")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("XLabs.Forms")]
-[assembly: AssemblyCopyright("Copyright © XLabs 2014")]
+[assembly: AssemblyProduct("XLabs.Platform.WinUniversal")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
@@ -26,9 +26,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.*")]
-
-[assembly: InternalsVisibleTo("XLabs.Forms.Droid")]
-[assembly: InternalsVisibleTo("XLabs.Forms.iOS")]
-[assembly: InternalsVisibleTo("XLabs.Forms.WP8")]
-[assembly: InternalsVisibleTo("XLabs.Forms.WinUniversal")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

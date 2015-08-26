@@ -76,12 +76,10 @@ namespace XLabs.Sample.Droid
             else
             {
                 var app = Resolver.Resolve<IXFormsApp>() as IXFormsApp<XFormsApplicationDroid>;
-                app.AppContext = this;
+                if (app != null) app.AppContext = this;
             }
 
             Forms.Init(this, bundle);
-
-            App.Init();
 
             Forms.ViewInitialized += (sender, e) =>
             {
@@ -91,7 +89,7 @@ namespace XLabs.Sample.Droid
                 }
             };
 
-            this.SetPage(App.GetMainPage());
+            this.LoadApplication(new App());
         }
 
         /// <summary>

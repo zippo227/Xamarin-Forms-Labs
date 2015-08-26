@@ -88,6 +88,10 @@
       <Project>{4263404d-89b9-411b-9929-70fa85eaec33}</Project>
       <Name>XLabs.Forms.Charting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Forms\XLabs.Forms.WinUniversal\XLabs.Forms.WinUniversal.csproj">
+      <Project>{17091da0-89c6-4c48-af54-eb4f339d9458}</Project>
+      <Name>XLabs.Forms.WinUniversal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\Forms\XLabs.Forms\XLabs.Forms.csproj">
       <Project>{dc0bdd11-9352-44e4-bceb-8ae56794bb41}</Project>
       <Name>XLabs.Forms</Name>

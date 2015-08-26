@@ -13,7 +13,7 @@ namespace XLabs.Forms.Controls
     public partial class HybridWebViewRenderer
     {
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE || NETFX_CORE
         private const string NativeFuncCall = "window.external.notify";
         private const string NativeFunction = "function Native(action, data){window.external.notify(JSON.stringify({ a: action, d: data }));}";
 #elif __IOS__

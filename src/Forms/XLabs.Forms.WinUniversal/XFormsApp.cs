@@ -5,10 +5,7 @@
     using System.Windows;
 
     using Windows.Storage;
-
-    using Microsoft.Phone.Controls;
-    using Microsoft.Phone.Shell;
-
+    using Windows.UI.Xaml;
     using XLabs.Platform;
     using XLabs.Platform.Mvvm;
 
@@ -17,12 +14,12 @@
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly",
         Justification = "Reviewed. Suppression is OK here.")]
-    public class XFormsAppWP : XFormsApp<Application>
+    public class XFormsAppWin : XFormsApp<Application>
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="XFormsAppWP" /> class.
         /// </summary>
-        public XFormsAppWP()
+        public XFormsAppWin()
         {
         }
 
@@ -30,7 +27,7 @@
         ///     Initializes a new instance of the <see cref="XFormsAppWP" /> class.
         /// </summary>
         /// <param name="application">The application.</param>
-        public XFormsAppWP(Application application)
+        public XFormsAppWin(Application application)
             : base(application)
         {
         }
@@ -43,14 +40,24 @@
             OnBackPress();
         }
 
+        public void RaiseStartup()
+        {
+            OnStartup();
+        }
+
+        public void RaiseClosing()
+        {
+            OnClosing();
+        }
+
         /// <summary>
         ///     Sets the orientation.
         /// </summary>
         /// <param name="orientation">The orientation.</param>
-        public void SetOrientation(PageOrientation orientation)
-        {
-            Orientation = orientation.ToOrientation();
-        }
+        //public void SetOrientation(PageOrientation orientation)
+        //{
+        //    Orientation = orientation.ToOrientation();
+        //}
 
         /// <summary>
         ///     Initializes the specified context.
@@ -59,17 +66,17 @@
         /// <param name="initServices">Should initialize services.</param>
         protected override void OnInit(Application app,bool initServices = true)
         {
-            app.Startup += (o, e) => OnStartup();
-            app.Exit += (o, e) => OnClosing();
-            app.UnhandledException += (o, e) => OnError(e.ExceptionObject);
+            
+            //AppContext.Startup += (o, e) => OnStartup();
+            //AppContext.Exit += (o, e) => OnClosing();
+            app.UnhandledException += (o, e) => OnError(e.Exception);
             AppDataDirectory = ApplicationData.Current.LocalFolder.Path;
 
-            foreach (var svc in app.ApplicationLifetimeObjects.OfType<PhoneApplicationService>())
+            app.Resuming += (o, e) => OnResumed();
+            app.Suspending += (o, e) => OnSuspended();
+
+            if (initServices) 
             {
-                svc.Activated += (o, e) => OnResumed();
-                svc.Deactivated += (o, e) => OnSuspended();
-            }
-            if (initServices) {
                 //TODO : REGISTER SERVICES
             }
 
