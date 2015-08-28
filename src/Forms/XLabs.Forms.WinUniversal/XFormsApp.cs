@@ -1,16 +1,12 @@
 ﻿namespace XLabs.Forms
 {
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Windows;
-
     using Windows.Storage;
     using Windows.UI.Xaml;
-    using XLabs.Platform;
-    using XLabs.Platform.Mvvm;
+    using Platform.Mvvm;
 
     /// <summary>
-    ///     The Xamarin Forms Labs Windows Phone Application.
+    ///     The XLabs Windows Universal Application.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly",
         Justification = "Reviewed. Suppression is OK here.")]

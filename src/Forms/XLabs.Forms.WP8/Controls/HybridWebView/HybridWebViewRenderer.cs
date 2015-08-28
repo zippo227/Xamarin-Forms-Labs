@@ -6,7 +6,6 @@ using XLabs.Forms.Controls;
 namespace XLabs.Forms.Controls
 {
     using System;
-    using System.Diagnostics;
     using System.Windows.Navigation;
     using Microsoft.Phone.Controls;
     using Xamarin.Forms.Platform.WinPhone;
@@ -88,14 +87,7 @@ namespace XLabs.Forms.Controls
         /// <param name="script">The script.</param>
         partial void Inject(string script)
         {
-            try
-            {
-                Device.BeginInvokeOnMainThread(() => this.Control.InvokeScript("eval", script));
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
+            Device.BeginInvokeOnMainThread(() => this.Control.InvokeScript("eval", script));
         }
 
         /// <summary>

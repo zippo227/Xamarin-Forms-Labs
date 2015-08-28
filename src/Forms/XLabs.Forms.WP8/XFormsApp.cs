@@ -2,18 +2,23 @@
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using System.Windows;
-
     using Windows.Storage;
 
     using Microsoft.Phone.Controls;
     using Microsoft.Phone.Shell;
-
+    using Platform.Device;
+    using Platform.Services;
+    using Platform.Services.Email;
+    using Platform.Services.Geolocation;
+    using Platform.Services.IO;
+    using Platform.Services.Media;
+    using Xamarin.Forms;
     using XLabs.Platform;
     using XLabs.Platform.Mvvm;
+    using Application = System.Windows.Application;
 
     /// <summary>
-    ///     The Xamarin Forms Labs Windows Phone Application.
+    ///     The XLabs Windows Phone Application.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly",
         Justification = "Reviewed. Suppression is OK here.")]
@@ -69,8 +74,16 @@
                 svc.Activated += (o, e) => OnResumed();
                 svc.Deactivated += (o, e) => OnSuspended();
             }
-            if (initServices) {
-                //TODO : REGISTER SERVICES
+
+            if (initServices) 
+            {
+                DependencyService.Register<TextToSpeechService>();
+                DependencyService.Register<Geolocator>();
+                DependencyService.Register<MediaPicker>();
+                DependencyService.Register<SoundService>();
+                DependencyService.Register<EmailService>();
+                DependencyService.Register<FileManager>();
+                DependencyService.Register<WindowsPhoneDevice>();
             }
 
             base.OnInit(app);

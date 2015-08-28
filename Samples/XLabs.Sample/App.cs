@@ -74,7 +74,7 @@ namespace XLabs.Sample
 
             var mainTab = new ExtendedTabbedPage()
             {
-                Title = "Xamarin Forms Labs",
+                Title = "XLabs",
                 SwipeEnabled = true,
                 TintColor = Color.White,
                 BarTintColor = Color.Blue,
@@ -121,6 +121,7 @@ namespace XLabs.Sample
                 "GeoLocator",
                 "Camera",
                 "Accelerometer",
+                "Gyroscope",
                 "Display",
                 "Cache",
                 "Sound",
@@ -162,6 +163,9 @@ namespace XLabs.Sample
                         break;
                     case "accelerometer":
                         await mainPage.Navigation.PushAsync(new AcceleratorSensorPage());
+                        break;
+                    case "gyroscope":
+                        await mainPage.Navigation.PushAsync(new GyroscopePage());
                         break;
                     case "display":
                         await mainPage.Navigation.PushAsync(new AbsoluteLayoutWithDisplayInfoPage(Resolver.Resolve<IDisplay>()));

@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Xamarin.Forms.Labs.ServiceStackSerializer.Common;
 
 namespace ServiceStack.Text.Common
 {
+    using XLabs.Serialization.ServiceStack.Common;
+
     internal class JsReader<TSerializer>
         where TSerializer : ITypeSerializer
     {
