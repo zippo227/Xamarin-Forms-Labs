@@ -37,6 +37,12 @@ namespace XLabs.Forms.Controls
             base.OnElementChanged(e);
 
             var view = (ExtendedEntry)Element;
+            
+            if (Control != null && e.NewElement != null && e.NewElement.IsPassword)
+            {
+                Control.SetTypeface(Typeface.Default, TypefaceStyle.Normal);
+                Control.TransformationMethod = new PasswordTransformationMethod();
+            }
 
             SetFont(view);
             SetTextAlignment(view);
