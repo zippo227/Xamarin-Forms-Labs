@@ -15,6 +15,32 @@ namespace XLabs.Forms.Controls
         /// </summary>
         public static readonly BindableProperty ViewModelProperty = BindableProperty.Create<TemplateContentView<T>, T>(x => x.ViewModel,default(T),BindingMode.OneWay,null,ViewModelChanged);
 
+        public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<TemplateContentView<T>, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
+
+        private DataTemplateSelector currentItemSelector;
+        public DataTemplateSelector ItemTemplateSelector
+        {
+            get
+            {
+                return (DataTemplateSelector)GetValue(ItemTemplateSelectorProperty);
+            }
+            set
+            {
+                SetValue(ItemTemplateSelectorProperty, value);
+            }
+        }
+
+        private static void OnDataTemplateSelectorChanged(BindableObject bindable, DataTemplateSelector oldvalue, DataTemplateSelector newvalue)
+        {
+            ((TemplateContentView<T>)bindable).OnDataTemplateSelectorChanged(oldvalue, newvalue);
+        }
+
+        protected virtual void OnDataTemplateSelectorChanged(DataTemplateSelector oldValue, DataTemplateSelector newValue)
+        {
+            // cache value locally
+            currentItemSelector = newValue;
+        }
+
         /// <summary>
         /// Used to match a type with a datatemplate
         /// <see cref="TemplateSelector"/>
@@ -62,10 +88,15 @@ namespace XLabs.Forms.Controls
         /// <param name="newvalue"></param>
         private void ViewModelChangedImpl(T newvalue)
         {
-            var newchild = TemplateSelector.ViewFor(newvalue);
+            View newChild = null;
+            // check ItemTemplateSelector first
+            if (currentItemSelector != null)
+                newChild = this.ViewFor(newvalue, currentItemSelector);
+
+            newChild = newChild ?? TemplateSelector.ViewFor(newvalue);
             //Verify that newchild is a contentview
-            Content = newchild;
-            InvalidateLayout();
+            Content = newChild;
+            InvalidateLayout(); // is this invalidate call necessary? modifying the content seems to do this already
         }
     }
 }
