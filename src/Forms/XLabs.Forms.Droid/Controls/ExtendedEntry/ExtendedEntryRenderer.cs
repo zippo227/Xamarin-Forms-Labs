@@ -19,13 +19,8 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public class ExtendedEntryRenderer : EntryRenderer
     {
-        /// <summary>
-        /// The mi n_ distance
-        /// </summary>
         private const int MinDistance = 10;
-        /// <summary>
-        /// The _down x
-        /// </summary>
+
         private float downX, downY, upX, upY;
 
         /// <summary>
@@ -136,19 +131,21 @@ namespace XLabs.Forms.Controls
             {
                 SetTextAlignment(view);
             }
-            //else if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
-            //    SetBorder(view);
+            else if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
+            {
+                //return;   
+            }
             else if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
             {
                 SetPlaceholderTextColor(view);
             }
-            else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
-            {
-                this.Control.SetBackgroundColor(view.BackgroundColor.ToAndroid());
-            }
             else
             {
                 base.OnElementPropertyChanged(sender, e);
+                if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
+                {
+                    this.Control.SetBackgroundColor(view.BackgroundColor.ToAndroid());
+                }
             }
         }
 

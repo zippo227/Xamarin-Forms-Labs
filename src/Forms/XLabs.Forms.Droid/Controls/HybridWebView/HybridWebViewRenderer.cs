@@ -20,7 +20,14 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
     {
+        /// <summary>
+        /// Allows one to override the Webview Client class without a custom renderer.
+        /// </summary>
         public static Func<HybridWebViewRenderer,Client> GetWebViewClientDelegate;
+
+        /// <summary>
+        /// Allows one to override the Chrome Client class without a custom renderer.
+        /// </summary>
         public static Func<HybridWebViewRenderer, ChromeClient> GetWebChromeClientDelegate;
 
         /// <summary>
@@ -54,6 +61,7 @@ namespace XLabs.Forms.Controls
                 var webView = new NativeWebView(this);
 
                 webView.Settings.JavaScriptEnabled = true;
+                webView.Settings.DomStorageEnabled = true;
 
                 //Turn off hardware rendering
                 webView.SetLayerType(LayerType.Software, null);
@@ -75,6 +83,21 @@ namespace XLabs.Forms.Controls
             this.Unbind(e.OldElement);
 
             this.Bind();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.Element != null)
+            {
+                if (this.Control != null)
+                {
+                    this.Control.StopLoading();
+                }
+
+                Unbind(this.Element);
+            }
+
+            base.Dispose(disposing);
         }
 
         /// <summary>
@@ -110,12 +133,10 @@ namespace XLabs.Forms.Controls
 
         private void OnPageFinished()
         {
-            if (this.Element != null)
-            {
-                this.Inject(NativeFunction);
-                this.Inject(GetFuncScript());
-                this.Element.OnLoadFinished(this, EventArgs.Empty);
-            }
+            if (this.Element == null) return;
+            this.Inject(NativeFunction);
+            this.Inject(GetFuncScript());
+            this.Element.OnLoadFinished(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -185,7 +206,7 @@ namespace XLabs.Forms.Controls
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly WeakReference<HybridWebViewRenderer> webHybrid;
+            protected readonly WeakReference<HybridWebViewRenderer> WebHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Client"/> class.
@@ -193,7 +214,7 @@ namespace XLabs.Forms.Controls
             /// <param name="webHybrid">The web hybrid.</param>
             public Client(HybridWebViewRenderer webHybrid)
             {
-                this.webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
+                this.WebHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
             }
 
             /// <summary>
@@ -216,7 +237,7 @@ namespace XLabs.Forms.Controls
                 base.OnPageFinished(view, url);
 
                 HybridWebViewRenderer hybrid;
-                if (this.webHybrid != null && this.webHybrid.TryGetTarget(out hybrid))
+                if (this.WebHybrid != null && this.WebHybrid.TryGetTarget(out hybrid))
                 {
                     hybrid.OnPageFinished();
                 }

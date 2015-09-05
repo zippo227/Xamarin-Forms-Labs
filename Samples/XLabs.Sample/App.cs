@@ -328,6 +328,11 @@ namespace XLabs.Sample
 
             listView.ItemSelected += async (sender, e) =>
             {
+                if (e.SelectedItem == null)
+                {
+                    return;
+                }
+
                 Type result = null;
 
                 if (e.SelectedItem is KeyValuePair<string, Type>)
@@ -340,24 +345,9 @@ namespace XLabs.Sample
                     result = (Type)item.Value;
                 }
 
-
-                // This is actually some type of bug with Xamarin.
-                // On iOS the SortedDiectionary entries are DictionaryEntries
-                // on WP, they are KeyValuePairs.
-                // Using the wrong type causes a casting exception.
-                //switch (Device.OS)
-                //{
-                    
-                //    case TargetPlatform.iOS:
-
-                //        break;
-                //    case TargetPlatform.Android:
-                //    case TargetPlatform.WinPhone:
-                //        result = 
-                //        break;
-                //}
-
                 await ShowPage(mainPage, result);
+
+                ((ListView) sender).SelectedItem = null;
             };
 
             return listView;
