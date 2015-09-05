@@ -65,6 +65,31 @@ namespace XLabs.Platform.Services.IO
         {
             this.isolatedStorageFile.DeleteDirectory(path);
         }
+
+#if !WINDOWS_PHONE
+        public static void CopyDirectory(DirectoryInfo source, DirectoryInfo destination)
+        {
+            if (!source.Exists)
+            {
+                throw new ArgumentException("Source directory does not exist");
+            }
+
+            if (!destination.Exists)
+            {
+                destination.Create();
+            }
+
+            foreach (var dir in source.GetDirectories())
+            {
+                CopyDirectory(dir, new DirectoryInfo(Path.Combine(destination.FullName, dir.Name)));
+            }
+
+            foreach (var file in source.GetFiles())
+            {
+                file.CopyTo(Path.Combine(destination.FullName, file.Name));
+            }
+        }
+#endif
     }
 }
 #endif

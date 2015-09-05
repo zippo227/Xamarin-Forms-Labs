@@ -1,5 +1,8 @@
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
+using System.IO;
+using System.IO.IsolatedStorage;
+using XLabs.Platform.Services.IO;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 
@@ -39,6 +42,18 @@ namespace XLabs.Forms.Controls
             return new SizeRequest(Size.Zero, Size.Zero);
         }
 
+        public static void CopyBundleDirectory(string path)
+        {
+            var source = Path.Combine(NSBundle.MainBundle.BundlePath, path);
+            var dest = Path.Combine(GetTempDirectory(), path);
+
+            FileManager.CopyDirectory(new DirectoryInfo(source), new DirectoryInfo(dest));
+        }
+
+        private static string GetTempDirectory()
+        {
+            return System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal).Replace("Documents", "tmp");
+        }
         #region Navigation delegates
 
         /// <summary>
@@ -167,7 +182,9 @@ namespace XLabs.Forms.Controls
 
         partial void LoadFromContent(object sender, string contentFullName)
         {
-            Element.Uri = new Uri(NSBundle.MainBundle.BundlePath + "/" + contentFullName);
+            Element.Uri = new Uri(GetTempDirectory() + "/" + contentFullName);
+            //Element.Uri = new Uri(NSBundle.MainBundle.BundlePath + "/" + contentFullName);
+            //Control.LoadHtmlString(new NSString(contentFullName), new NSUrl(NSBundle.MainBundle.BundlePath, true));
         }
 
         partial void LoadContent(object sender, string contentFullName)
