@@ -31,12 +31,12 @@ namespace XLabs.Forms.Controls
             if (ItemTemplate != null && newValue != null)
                 throw new ArgumentException("Cannot set both ItemTemplate and ItemTemplateSelector", "ItemTemplateSelector");
 
-            currentItemSelector = newValue;
+            this.currentItemSelector = newValue;
         }
 
         protected override Cell CreateDefault(object item)
         {
-            var cell = this.CellFor(item, currentItemSelector);
+            var cell = this.CellFor(item, this.currentItemSelector);
 
             return cell ?? base.CreateDefault(item);
         }
