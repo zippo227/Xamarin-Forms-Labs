@@ -67,6 +67,12 @@ namespace XLabs.Platform.Services.IO
         }
 
 #if !WINDOWS_PHONE
+        /// <summary>
+        /// Copies a directory to another. 
+        /// </summary>
+        /// <param name="source">Source directory.</param>
+        /// <param name="destination">Destination directory. Created when necessary.</param>
+        /// <exception cref="ArgumentException">Exception is thrown if source directory doesn't exist.</exception>
         public static void CopyDirectory(DirectoryInfo source, DirectoryInfo destination)
         {
             if (!source.Exists)
@@ -86,7 +92,7 @@ namespace XLabs.Platform.Services.IO
 
             foreach (var file in source.GetFiles())
             {
-                file.CopyTo(Path.Combine(destination.FullName, file.Name));
+                file.CopyTo(Path.Combine(destination.FullName, file.Name), true);
             }
         }
 #endif

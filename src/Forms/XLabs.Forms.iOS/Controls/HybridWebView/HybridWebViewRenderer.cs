@@ -1,8 +1,5 @@
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
-using System.IO;
-using System.IO.IsolatedStorage;
-using XLabs.Platform.Services.IO;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 
@@ -10,7 +7,9 @@ namespace XLabs.Forms.Controls
 {
     using System;
     using System.Diagnostics;
+    using System.IO;
     using Foundation;
+    using Platform.Services.IO;
     using UIKit;
     using WebKit;
     using Xamarin.Forms;
@@ -42,6 +41,10 @@ namespace XLabs.Forms.Controls
             return new SizeRequest(Size.Zero, Size.Zero);
         }
 
+        /// <summary>
+        /// Copies bundle directory to temp directory.
+        /// </summary>
+        /// <param name="path">Directory to copy.</param>
         public static void CopyBundleDirectory(string path)
         {
             var source = Path.Combine(NSBundle.MainBundle.BundlePath, path);
@@ -52,7 +55,7 @@ namespace XLabs.Forms.Controls
 
         private static string GetTempDirectory()
         {
-            return System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal).Replace("Documents", "tmp");
+            return Environment.GetFolderPath(Environment.SpecialFolder.Personal).Replace("Documents", "tmp");
         }
         #region Navigation delegates
 
@@ -189,7 +192,7 @@ namespace XLabs.Forms.Controls
 
         partial void LoadContent(object sender, string contentFullName)
         {
-            Control.LoadHtmlString(new NSString(contentFullName), new NSUrl(NSBundle.MainBundle.BundlePath, true));
+            Control.LoadHtmlString(new NSString(contentFullName), new NSUrl(GetTempDirectory(), true));
         }
 
         partial void LoadFromString(string html)
