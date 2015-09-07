@@ -10,7 +10,7 @@ namespace XLabs.Platform.Services.Media
     /// <summary>
     /// Class SoundService.
     /// </summary>
-    public class SoundService : ISoundService
+	public class SoundService : ISoundService , IDisposable
     {
         /// <summary>
         /// The _is player prepared
@@ -65,6 +65,20 @@ namespace XLabs.Platform.Services.Media
             }
         }
 
+		#region IDisposable implementation
+		bool disposed;
+		public void Dispose ()
+		{
+			if (disposed && this.player != null) {
+				disposed = true;
+				this.player.Dispose ();
+				this.player = null;
+				this.CurrentFile = null;
+			}
+		}
+
+		#endregion
+
         #region ISoundService implementation
 
         /// <summary>
@@ -83,7 +97,7 @@ namespace XLabs.Platform.Services.Media
             return Task.Run<SoundFile>(
                 async () =>
                     {
-                        if (this.player == null || string.Compare(filename, CurrentFile.Filename) > 0)
+                        if (this.player == null || string.Compare (filename, CurrentFile.Filename, StringComparison.Ordinal) > 0)
                         {
                             await SetMediaAsync(filename);
                         }
