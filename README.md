@@ -23,6 +23,7 @@ The v.2.0 is the stable branch.
  - [ExtendedTextCell (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/ExtendedTextCell)
  - [ExtendedViewCell (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/ExtendedViewCell)
  - [HybridWebView (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/HybridWebView)
+ - GradientContentView (iOS/Android beta)
  - [GridView (IOS beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/GridView)
  - [ImageButton (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/ImageButton)
  - RadioButton (beta)

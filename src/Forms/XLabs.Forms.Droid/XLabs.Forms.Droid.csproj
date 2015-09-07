@@ -106,6 +106,7 @@
     <Compile Include="Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
     <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
     <Compile Include="Controls\GesturesContentView\GesturesContentViewRenderer.cs" />
+    <Compile Include="Controls\GradientContentView\GradientContentViewRenderer.cs" />
     <Compile Include="Controls\GridView\GridViewRenderer.cs" />
     <Compile Include="..\XLabs.Forms\Controls\HybridWebViewRenderer.designer.cs">
       <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
