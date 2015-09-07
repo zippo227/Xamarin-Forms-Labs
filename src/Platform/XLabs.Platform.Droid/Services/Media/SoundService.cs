@@ -51,7 +51,7 @@ namespace XLabs.Platform.Services.Media
                     throw new FileNotFoundException("Make sure you set your file in the Assets folder");
                 }
 
-                await this.player.SetDataSourceAsync(fp.FileDescriptor);
+				await this.player.SetDataSourceAsync(fp.FileDescriptor, fp.StartOffset, fp.Length);
                 this.player.Prepared += (s, e) =>
                     {
                         this.player.SetVolume(0, 0);
