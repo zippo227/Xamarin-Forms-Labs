@@ -38,8 +38,10 @@ namespace XLabs.Forms.Controls
             set { SetValue(OrientationProperty, value); }
         }
 
-        // Using a BindableProperty as the backing store for StartColor.  This enables animation, styling, binding, etc...
-        public static readonly BindableProperty OrientationProperty =
+		/// <summary>
+		/// The orientation property
+		/// </summary>
+		public static readonly BindableProperty OrientationProperty =
             BindableProperty.Create<GradientContentView, GradientOrientation>(x => x.Orientation, GradientOrientation.Vertical, BindingMode.OneWay);
 
         /// <summary>
@@ -52,8 +54,10 @@ namespace XLabs.Forms.Controls
             set { SetValue(StartColorProperty, value); }
         }
 
-        // Using a BindableProperty as the backing store for StartColor.  This enables animation, styling, binding, etc...
-        public static readonly BindableProperty StartColorProperty =
+		/// <summary>
+		/// Using a BindableProperty as the backing store for StartColor.  This enables animation, styling, binding, etc...
+		/// </summary>
+		public static readonly BindableProperty StartColorProperty =
             BindableProperty.Create<GradientContentView, Color>(x => x.StartColor, Color.White, BindingMode.OneWay);
 
         /// <summary>
@@ -66,8 +70,10 @@ namespace XLabs.Forms.Controls
             set { SetValue(EndColorProperty, value); }
         }
 
-        // Using a BindableProperty as the backing store for StartColor.  This enables animation, styling, binding, etc...
-        public static readonly BindableProperty EndColorProperty =
+		/// <summary>
+		/// Using a BindableProperty as the backing store for EndColor.  This enables animation, styling, binding, etc...
+		/// </summary>
+		public static readonly BindableProperty EndColorProperty =
             BindableProperty.Create<GradientContentView, Color>(x => x.EndColor, Color.Black, BindingMode.OneWay);
     }
 }
