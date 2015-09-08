@@ -3,7 +3,10 @@ using System.Threading.Tasks;
 
 namespace XLabs
 {
-    public static class TaskUtils
+	/// <summary>
+	/// Class TaskUtils.
+	/// </summary>
+	public static class TaskUtils
     {
         /// <summary>
         /// Tasks from result.

@@ -2,14 +2,18 @@
 {
     using System.Diagnostics;
 
-    /// <summary>
-    /// Writes reports using Debug.WriteLine
-    /// </summary>
-    public class DebugReport : IReport
+	/// <summary>
+	/// Writes reports using Debug.WriteLine
+	/// </summary>
+	public class DebugReport : IReport
     {
-        #region IReport Members
+		#region IReport Members
 
-        public void Exception(System.Exception exception)
+		/// <summary>
+		/// Report an exception.
+		/// </summary>
+		/// <param name="exception">Exception that happened.</param>
+		public void Exception(System.Exception exception)
         {
             Debug.WriteLine(exception);
         }
