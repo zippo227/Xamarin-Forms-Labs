@@ -80,11 +80,13 @@
 		/// <value>The ydpi.</value>
 		public double Ydpi { get; private set; }
 
-		/// <summary>
-		/// Gets the font manager.
-		/// </summary>
-		/// <value>The font manager.</value>
-		//public IFontManager FontManager { get; private set; }
+#pragma warning disable CS1587 // XML comment is not placed on a valid language element
+							  /// <summary>
+							  /// Gets the font manager.
+							  /// </summary>
+							  /// <value>The font manager.</value>
+		//public IFontManager FontManager { get; private set; }		
+#pragma warning restore CS1587 // XML comment is not placed on a valid language element
 
 		/// <summary>
 		/// Convert width in inches to runtime pixels
