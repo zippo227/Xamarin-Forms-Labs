@@ -115,6 +115,7 @@ namespace XLabs.Forms.Controls
                 }
                 else
                 {
+                    SelectedIndex = selectedItem.Id;
                     if (CheckedChanged != null)
                     {
                         CheckedChanged.Invoke(sender, item.Id);
