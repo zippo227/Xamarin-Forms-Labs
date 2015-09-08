@@ -35,6 +35,7 @@ namespace XLabs.Forms.Controls
             Control.IsChecked = e.NewElement.Checked;
 
             UpdateFont();
+            Control.Foreground = Element.TextColor.ToBrush();
 
             Element.CheckedChanged += CheckedChanged;
             Element.PropertyChanged += ElementOnPropertyChanged;
