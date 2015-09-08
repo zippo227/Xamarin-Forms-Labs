@@ -123,10 +123,12 @@ namespace XLabs.Forms.Controls
             }
         }
 
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 		/// <summary>
 		/// Gets or sets the identifier.
 		/// </summary>
 		/// <value>The identifier.</value>
 		public int Id { get; set; }
-    }
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+	}
 }

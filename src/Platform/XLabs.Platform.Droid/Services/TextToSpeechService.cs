@@ -40,8 +40,11 @@ namespace XLabs.Platform.Services
             if (status.Equals(OperationResult.Success))
             {
                 var p = new Dictionary<string, string>();
-                _speaker.Speak(_toSpeak, QueueMode.Flush, p);
-            }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+				_speaker.Speak(_toSpeak, QueueMode.Flush, p);
+#pragma warning restore CS0618 // Type or member is obsolete
+			}
         }
 
 		#endregion
@@ -65,8 +68,11 @@ namespace XLabs.Platform.Services
             else
             {
                 var p = new Dictionary<string, string>();
-                _speaker.Speak(_toSpeak, QueueMode.Flush, p);
-            }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+				_speaker.Speak(_toSpeak, QueueMode.Flush, p);
+#pragma warning restore CS0618 // Type or member is obsolete
+			}
         }
 
         /// <summary>

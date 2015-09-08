@@ -80,16 +80,18 @@ namespace XLabs.Forms.Controls
             set { SetValue(ViewModelProperty,value);}
         }
 
-        /// <summary>
-        /// Call down to the actual controls Implmentation
-        /// <see cref="ViewModelChangedImpl"/>
-        /// </summary>
-        /// <param name="bindable">The TemplateContentView<typeparam name="T"></typeparam></param>
-        /// <param name="oldValue">Ignored</param>
-        /// <param name="newValue">Passed down to <see cref="ViewModelChangedImpl"/></param>
-        /// <exception cref="InvalidBindableException"></exception>Thrown if bindable is not in fact a TemplateContentView<typeparam name="T"></typeparam>
-        private static void ViewModelChanged(BindableObject bindable, T oldValue, T newValue)
-        {
+#pragma warning disable CS1711 // XML comment has a typeparam tag, but there is no type parameter by that name
+		/// <summary>
+		/// Call down to the actual controls Implmentation
+		/// <see cref="ViewModelChangedImpl"/>
+		/// </summary>
+		/// <param name="bindable">The TemplateContentView<typeparam name="T"></typeparam></param>
+		/// <param name="oldValue">Ignored</param>
+		/// <param name="newValue">Passed down to <see cref="ViewModelChangedImpl"/></param>
+		/// <exception cref="InvalidBindableException"></exception>Thrown if bindable is not in fact a TemplateContentView<typeparam name="T"></typeparam>
+		private static void ViewModelChanged(BindableObject bindable, T oldValue, T newValue)
+#pragma warning restore CS1711 // XML comment has a typeparam tag, but there is no type parameter by that name
+		{
             var layout = bindable as TemplateContentView<T>;
             if(layout==null)
                 throw new InvalidBindableException(bindable,typeof(TemplateContentView<T>));
