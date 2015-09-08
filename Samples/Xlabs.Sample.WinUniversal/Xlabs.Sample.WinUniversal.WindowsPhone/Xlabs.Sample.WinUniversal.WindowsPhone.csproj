@@ -108,6 +108,10 @@
       <Project>{2a4d9dd4-326c-4824-aa3c-a9ed45cc898c}</Project>
       <Name>XLabs.Platform</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Serialization\JsonNET\XLabs.Serialization.JsonNET.csproj">
+      <Project>{fce4e482-0df8-43ac-b574-8aaf74770d1c}</Project>
+      <Name>XLabs.Serialization.JsonNET</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\Serialization\XLabs.Serialization\XLabs.Serialization.csproj">
       <Project>{8e7f7522-f018-466a-aa8a-147ee9341ba0}</Project>
       <Name>XLabs.Serialization</Name>
@@ -143,6 +147,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Xamarin.Forms.1.4.4.6392\lib\wpa81\Xamarin.Forms.Core.dll</HintPath>
       <Private>True</Private>
