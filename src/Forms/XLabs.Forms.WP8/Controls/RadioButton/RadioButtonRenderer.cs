@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
@@ -31,7 +33,7 @@ namespace XLabs.Forms.Controls
                 SetNativeControl(checkBox);
             }
 
-            Control.Content = e.NewElement.Text;
+            UpdateText();
             Control.IsChecked = e.NewElement.Checked;
 
             UpdateFont();
@@ -56,7 +58,7 @@ namespace XLabs.Forms.Controls
                     UpdateFont();
                     break;
                 case "Text":
-                    Control.Content = Element.Text;
+                    UpdateText();
                     break;
                 default:
                     Debug.WriteLine("Property change for {0} has not been implemented.",
@@ -69,9 +71,17 @@ namespace XLabs.Forms.Controls
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                Control.Content = Element.Text;
+                UpdateText();
                 Control.IsChecked = eventArgs.Value;
             });
+        }
+
+        private void UpdateText() {
+            Control.Content = new TextBlock()
+            {
+                Text = Element.Text,
+                TextWrapping = TextWrapping.Wrap
+            };
         }
 
         /// <summary>
