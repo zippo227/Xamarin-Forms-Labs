@@ -26,9 +26,6 @@ namespace XLabs.Platform.Device
         /// </summary>
         double Ydpi { get; }
 
-        /// <summary>
-        /// Gets the font manager
-        /// </summary>
         //IFontManager FontManager { get; }
 
         /// <summary>

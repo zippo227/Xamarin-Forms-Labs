@@ -16,7 +16,10 @@ namespace XLabs.Forms
     {
         private ObservableCollection<T> _realData;
 
-        public OnPlatformList()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="OnPlatformList{T}"/> class.
+		/// </summary>
+		public OnPlatformList()
         {
             iOS = new ObservableCollection<T>();
             Android = new ObservableCollection<T>();
