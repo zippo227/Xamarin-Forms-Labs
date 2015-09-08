@@ -44,15 +44,14 @@ namespace XLabs.Platform.Services
             }
         }
 
-        #endregion
+		#endregion
 
-        /// <summary>
-        ///     The speak.
-        /// </summary>
-        /// <param name="text">
-        ///     The text.
-        /// </param>
-        public void Speak (string text, string language = DefaultLocale)
+		/// <summary>
+		/// The speak.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="language">The language.</param>
+		public void Speak (string text, string language = DefaultLocale)
         {
             _toSpeak = text;
             if (_speaker == null)

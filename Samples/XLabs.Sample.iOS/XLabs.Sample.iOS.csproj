@@ -85,7 +85,8 @@
     <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
     <MtouchI18n>
     </MtouchI18n>
-    <DocumentationFile>bin\iPhone\Release\XLabs.Sample.iOS.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <MtouchUseSGen>True</MtouchUseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
