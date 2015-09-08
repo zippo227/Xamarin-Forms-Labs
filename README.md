@@ -77,7 +77,7 @@ We are working in a great [wiki][1] on how to use the controls and services.
 
 https://github.com/XLabs/Xamarin-Forms-Labs/wiki
 
-
+[Good forum post helping you setup and use XLabs](http://forums.xamarin.com/discussion/35991/how-to-install-setup-and-use-xlabs#latest)
 
 Using the MVVM Helpers
 -----------
