@@ -241,6 +241,8 @@ namespace XLabs.Sample
                 {"Segment", typeof(SegmentPage)},
                 {"Separator", typeof(SeparatorPage)},
                 {"WebImage", typeof(WebImagePage)},
+				{"IconLabel", typeof(IconLabelPage)},
+                {"IconButton", typeof(IconButtonPage)},
             };
 
             // This is actually a lot of work just to enable something
