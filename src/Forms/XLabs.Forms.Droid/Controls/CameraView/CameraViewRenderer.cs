@@ -167,6 +167,14 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
+		/// <summary>
+		/// Called when [layout].
+		/// </summary>
+		/// <param name="changed">if set to <c>true</c> [changed].</param>
+		/// <param name="l">The l.</param>
+		/// <param name="t">The t.</param>
+		/// <param name="r">The r.</param>
+		/// <param name="b">The b.</param>
 		protected override void OnLayout(bool changed, int l, int t, int r, int b)
 		{
 			if (changed && ChildCount > 0)

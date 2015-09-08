@@ -5,10 +5,14 @@ using Xamarin.Forms;
 
 namespace XLabs.Forms
 {
-    //From the Xamarin forums 
-    //http://forums.xamarin.com/discussion/comment/68739#Comment_68739
+	//From the Xamarin forums 
+	//http://forums.xamarin.com/discussion/comment/68739#Comment_68739
 
-    public class OnPlatformList<T> : ObservableCollection<T>
+	/// <summary>
+	/// Class OnPlatformList.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class OnPlatformList<T> : ObservableCollection<T>
     {
         private ObservableCollection<T> _realData;
 
@@ -27,10 +31,22 @@ namespace XLabs.Forms
             WinPhone.CollectionChanged += OnInitialize;
         }
 
-        // ReSharper disable once InconsistentNaming
-        public ObservableCollection<T> iOS { get; private set; }
-        public ObservableCollection<T> Android { get; private set; }
-        public ObservableCollection<T> WinPhone { get; private set; }
+		// ReSharper disable once InconsistentNaming
+		/// <summary>
+		/// Gets the i os.
+		/// </summary>
+		/// <value>The i os.</value>
+		public ObservableCollection<T> iOS { get; private set; }
+		/// <summary>
+		/// Gets the android.
+		/// </summary>
+		/// <value>The android.</value>
+		public ObservableCollection<T> Android { get; private set; }
+		/// <summary>
+		/// Gets the win phone.
+		/// </summary>
+		/// <value>The win phone.</value>
+		public ObservableCollection<T> WinPhone { get; private set; }
 
         void OnInitialize(object sender, NotifyCollectionChangedEventArgs e)
         {

@@ -51,10 +51,17 @@
                 x => x.TemplateSelector,
                 default(TemplateSelector));
 
-        public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<RepeaterView<T>, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
+		/// <summary>
+		/// The item template selector property
+		/// </summary>
+		public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<RepeaterView<T>, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
 
         private DataTemplateSelector currentItemSelector;
-        public DataTemplateSelector ItemTemplateSelector
+		/// <summary>
+		/// Gets or sets the item template selector.
+		/// </summary>
+		/// <value>The item template selector.</value>
+		public DataTemplateSelector ItemTemplateSelector
         {
             get
             {
@@ -71,7 +78,13 @@
             ((RepeaterView<T>)bindable).OnDataTemplateSelectorChanged(oldvalue, newvalue);
         }
 
-        protected virtual void OnDataTemplateSelectorChanged(DataTemplateSelector oldValue, DataTemplateSelector newValue)
+		/// <summary>
+		/// Called when [data template selector changed].
+		/// </summary>
+		/// <param name="oldValue">The old value.</param>
+		/// <param name="newValue">The new value.</param>
+		/// <exception cref="System.ArgumentException">Cannot set both ItemTemplate and ItemTemplateSelector;ItemTemplateSelector</exception>
+		protected virtual void OnDataTemplateSelectorChanged(DataTemplateSelector oldValue, DataTemplateSelector newValue)
         {
             // check to see we don't have an ItemTemplate set
             if (ItemTemplate != null && newValue != null)
@@ -185,7 +198,7 @@
         ///
         /// </summary>
         /// <param name="item"></param>
-        /// <returns>A View that has been initialized with <see cref="item"/> as it's BindingContext</returns>
+        /// <returns>A <see cref="View"/> item as it's BindingContext</returns>
         /// <exception cref="InvalidVisualObjectException"></exception>Thrown when the matched datatemplate inflates to an object not derived from either
         /// <see cref="Xamarin.Forms.View"/> or <see cref="Xamarin.Forms.ViewCell"/>
         protected virtual View ViewFor(T item)
