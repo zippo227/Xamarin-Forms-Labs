@@ -69,7 +69,6 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="targetButton">The target button.</param>
         /// <param name="model">The model.</param>
-        /// <param name="imageSource">Optional source for disabled image.</param>
         /// <returns>A <see cref="Task"/> for the awaited operation.</returns>
         private async Task SetImageSourceAsync(Android.Widget.Button targetButton, ImageButton model)
         {

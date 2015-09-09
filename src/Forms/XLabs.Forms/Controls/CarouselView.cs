@@ -110,10 +110,17 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		public static readonly BindableProperty ShowTickProperty =BindableProperty.Create<CarouselView<T>, bool>(x => x.ShowTick, true,BindingMode.OneWay,null,ShowTickchanged);
 
-        public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<CarouselView<T>, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
+		/// <summary>
+		/// The item template selector property
+		/// </summary>
+		public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<CarouselView<T>, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
 
         private DataTemplateSelector currentItemSelector;
-        public DataTemplateSelector ItemTemplateSelector
+		/// <summary>
+		/// Gets or sets the item template selector.
+		/// </summary>
+		/// <value>The item template selector.</value>
+		public DataTemplateSelector ItemTemplateSelector
         {
             get
             {
@@ -125,12 +132,23 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        private static void OnDataTemplateSelectorChanged(BindableObject bindable, DataTemplateSelector oldvalue, DataTemplateSelector newvalue)
+		/// <summary>
+		/// Called when [data template selector changed].
+		/// </summary>
+		/// <param name="bindable">The bindable.</param>
+		/// <param name="oldvalue">The oldvalue.</param>
+		/// <param name="newvalue">The newvalue.</param>
+		private static void OnDataTemplateSelectorChanged(BindableObject bindable, DataTemplateSelector oldvalue, DataTemplateSelector newvalue)
         {
             ((CarouselView<T>)bindable).OnDataTemplateSelectorChanged(oldvalue, newvalue);
         }
 
-        protected virtual void OnDataTemplateSelectorChanged(DataTemplateSelector oldValue, DataTemplateSelector newValue)
+		/// <summary>
+		/// Called when [data template selector changed].
+		/// </summary>
+		/// <param name="oldValue">The old value.</param>
+		/// <param name="newValue">The new value.</param>
+		protected virtual void OnDataTemplateSelectorChanged(DataTemplateSelector oldValue, DataTemplateSelector newValue)
         {
             // Cache locally
             currentItemSelector = newValue;

@@ -1,13 +1,14 @@
 ﻿namespace XLabs.Sample.Pages.Mvvm
 {
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Linq;
-    using ViewModel;
-    using Xamarin.Forms;
+	using System.Collections.Specialized;
+	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.Linq;
+	using ViewModel;
+	using Xamarin.Forms;
+	using Forms.Mvvm;
 
-    public partial class CanvasWebHybrid
+	public partial class CanvasWebHybrid : BaseView
     {
         private bool loaded;
 
