@@ -120,6 +120,10 @@
       <Project>{15d9c404-f7e2-49f0-acc9-63c4c008c860}</Project>
       <Name>XLabs.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XLabs.Sample\XLabs.Sample.csproj">
+      <Project>{dc133a2f-e49e-49e3-b43d-bfb957cb5482}</Project>
+      <Name>XLabs.Sample</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainPage.xaml.cs">
