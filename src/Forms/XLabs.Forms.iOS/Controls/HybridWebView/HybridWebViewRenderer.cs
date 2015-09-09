@@ -64,14 +64,14 @@ namespace XLabs.Forms.Controls
             Element.OnNavigating(webView.Url);
         }
 
-		#endregion
+        #endregion
 
-		/// <summary>
-		/// Layouts the subviews.
-		/// This is a hack to because the base wasn't working 
+        /// <summary>
+        /// Layouts the subviews.
+        /// This is a hack to because the base wasn't working 
         /// when within a stacklayout
-		/// </summary>
-		public override void LayoutSubviews()
+        /// </summary>
+        public override void LayoutSubviews()
         {
             base.LayoutSubviews();
             Control.ScrollView.Frame = Control.Bounds;
