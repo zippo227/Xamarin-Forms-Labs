@@ -6,24 +6,42 @@ using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
 {
-    public class BindableRadioGroup : StackLayout
+	/// <summary>
+	/// Class BindableRadioGroup.
+	/// </summary>
+	public class BindableRadioGroup : StackLayout
     {
-        public ObservableCollection<CustomRadioButton> Items;
+		/// <summary>
+		/// The items
+		/// </summary>
+		public ObservableCollection<CustomRadioButton> Items;
 
-        public BindableRadioGroup()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BindableRadioGroup"/> class.
+		/// </summary>
+		public BindableRadioGroup()
         {
             Items = new ObservableCollection<CustomRadioButton>();
         }
 
-        public static BindableProperty ItemsSourceProperty =
+		/// <summary>
+		/// The items source property
+		/// </summary>
+		public static BindableProperty ItemsSourceProperty =
             BindableProperty.Create<BindableRadioGroup, IEnumerable>(o => o.ItemsSource, default(IEnumerable));
 
-        public static BindableProperty SelectedIndexProperty =
+		/// <summary>
+		/// The selected index property
+		/// </summary>
+		public static BindableProperty SelectedIndexProperty =
             BindableProperty.Create<BindableRadioGroup, int>(o => o.SelectedIndex, default(int), BindingMode.TwoWay,
                 propertyChanged: OnSelectedIndexChanged);
 
 
-        public static readonly BindableProperty TextColorProperty =
+		/// <summary>
+		/// The text color property
+		/// </summary>
+		public static readonly BindableProperty TextColorProperty =
             BindableProperty.Create<CheckBox, Color>(
                 p => p.TextColor, Color.Black);
 
@@ -41,7 +59,11 @@ namespace XLabs.Forms.Controls
             BindableProperty.Create<CheckBox, string>(
                 p => p.FontName, string.Empty);
 
-        public IEnumerable ItemsSource
+		/// <summary>
+		/// Gets or sets the items source.
+		/// </summary>
+		/// <value>The items source.</value>
+		public IEnumerable ItemsSource
         {
             get { return (IEnumerable)GetValue(ItemsSourceProperty); }
             set
@@ -73,13 +95,21 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public int SelectedIndex
+		/// <summary>
+		/// Gets or sets the index of the selected.
+		/// </summary>
+		/// <value>The index of the selected.</value>
+		public int SelectedIndex
         {
             get { return (int)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
         }
 
-        public Color TextColor
+		/// <summary>
+		/// Gets or sets the color of the text.
+		/// </summary>
+		/// <value>The color of the text.</value>
+		public Color TextColor
         {
             get { return (Color)GetValue(TextColorProperty); }
             set { SetValue(TextColorProperty, value); }
@@ -117,7 +147,10 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public event EventHandler<int> CheckedChanged;
+		/// <summary>
+		/// Occurs when [checked changed].
+		/// </summary>
+		public event EventHandler<int> CheckedChanged;
 
         private void OnCheckedChanged(object sender, EventArgs<bool> e)
         {
