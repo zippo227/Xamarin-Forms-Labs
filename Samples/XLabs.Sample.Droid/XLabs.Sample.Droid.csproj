@@ -50,7 +50,8 @@
     <MonoDroidExtraArgs>
     </MonoDroidExtraArgs>
     <DefineConstants>__Android__</DefineConstants>
-    <DocumentationFile>bin\Debug\XLabs.Sample.Droid.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android.Export" />

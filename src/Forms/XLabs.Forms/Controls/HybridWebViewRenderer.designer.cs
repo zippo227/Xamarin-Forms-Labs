@@ -29,7 +29,12 @@ namespace XLabs.Forms.Controls
         //private static readonly Regex Expression = new Regex(Format);
         private static readonly Regex FuncExpression = new Regex(FuncFormat);
 
-        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		/// <summary>
+		/// Handles the <see cref="E:ElementPropertyChanged" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
+		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             // Xamarin will changed the renderer attached to a view so it is possible that
             // an old renderer gets a property updated.  In this case the Element will be null.

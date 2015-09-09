@@ -5,7 +5,10 @@
     using System.Collections.ObjectModel;
     using System.Linq;
 
-    public static class IEnumerableExtensions
+	/// <summary>
+	/// Class IEnumerableExtensions.
+	/// </summary>
+	public static class IEnumerableExtensions
     {
         /// <summary>
         /// Converts <see cref="IEnumerable{T}"/> to a <see cref="IReadOnlyCollection{T}"/>
@@ -18,7 +21,14 @@
             return new ReadOnlyCollection<T>((enumerable as IList<T>) ?? enumerable.ToList());
         }
 
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+		/// <summary>
+		/// Fors the each.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <param name="action">The action.</param>
+		/// <returns>IEnumerable&lt;T&gt;.</returns>
+		public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
             foreach (var item in enumerable)
             {

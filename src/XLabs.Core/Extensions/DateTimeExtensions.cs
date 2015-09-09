@@ -1,36 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace XLabs.Extensions
 {
-    public static class DateTimeExtensions
+	/// <summary>
+	/// Class DateTimeExtensions.
+	/// </summary>
+	public static class DateTimeExtensions
     {
-        public static DateTime UnixTime = new DateTime(1970, 1, 1);
+		/// <summary>
+		/// The unix time
+		/// </summary>
+		public static DateTime UnixTime = new DateTime(1970, 1, 1);
 
-        public static TimeSpan SinceUnixTime(this DateTime time)
+		/// <summary>
+		/// Sinces the unix time.
+		/// </summary>
+		/// <param name="time">The time.</param>
+		/// <returns>TimeSpan.</returns>
+		public static TimeSpan SinceUnixTime(this DateTime time)
         {
             return time - UnixTime;
         }
 
-        public static TimeSpan SinceUnixTime(this DateTimeOffset time)
+		/// <summary>
+		/// Sinces the unix time.
+		/// </summary>
+		/// <param name="time">The time.</param>
+		/// <returns>TimeSpan.</returns>
+		public static TimeSpan SinceUnixTime(this DateTimeOffset time)
         {
             return time - UnixTime;
         }
 
-        public static TimeSpan? SinceUnixTime(this DateTime? time)
+		/// <summary>
+		/// Sinces the unix time.
+		/// </summary>
+		/// <param name="time">The time.</param>
+		/// <returns>System.Nullable&lt;TimeSpan&gt;.</returns>
+		public static TimeSpan? SinceUnixTime(this DateTime? time)
         {
             return time == null ? null : time - UnixTime;
         }
 
-        public static TimeSpan? SinceUnixTime(this DateTimeOffset? time)
+		/// <summary>
+		/// Sinces the unix time.
+		/// </summary>
+		/// <param name="time">The time.</param>
+		/// <returns>System.Nullable&lt;TimeSpan&gt;.</returns>
+		public static TimeSpan? SinceUnixTime(this DateTimeOffset? time)
         {
             return time == null ? null : time - UnixTime;
         }
 
-        public static long? FullMilliseconds(this TimeSpan? timeSpan)
+		/// <summary>
+		/// Fulls the milliseconds.
+		/// </summary>
+		/// <param name="timeSpan">The time span.</param>
+		/// <returns>System.Nullable&lt;System.Int64&gt;.</returns>
+		public static long? FullMilliseconds(this TimeSpan? timeSpan)
         {
             return timeSpan == null ? default(long?) : (long)timeSpan.Value.TotalMilliseconds;
         }
