@@ -168,21 +168,23 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="contentFullName">Full name of the content.</param>
-        partial void LoadFromContent(object sender, string contentFullName)
+        partial void LoadFromContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
-            this.Element.Uri = new Uri("file:///android_asset/" + contentFullName);
+            var baseUri = new Uri(contentArgs.BaseUri ?? "file:///android_asset/");
+            this.Element.Uri = new Uri(baseUri, contentArgs.Content);
         }
 
         /// <summary>
         /// Loads the content.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="contentFullName">Full name of the content.</param>
-        partial void LoadContent(object sender, string contentFullName)
+        /// <param name="content">Full name of the content.</param>
+        partial void LoadContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
             if (Control != null) 
             {
-                this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
+                var baseUri = contentArgs.BaseUri ?? "file:///android_asset/";
+                this.Control.LoadDataWithBaseURL(baseUri, contentArgs.Content, "text/html", "UTF-8", null);
             }
         }
 
