@@ -141,9 +141,9 @@ namespace XLabs.Forms.Controls
 
         partial void Load(Uri uri);
 
-        partial void LoadFromContent(object sender, string contentFullName);
+        partial void LoadFromContent(object sender, HybridWebView.LoadContentEventArgs contentArgs);
 
-        partial void LoadContent(object sender, string contentFullName);
+        partial void LoadContent(object sender, HybridWebView.LoadContentEventArgs contentArgs);
 
         partial void LoadFromString(string html);
 

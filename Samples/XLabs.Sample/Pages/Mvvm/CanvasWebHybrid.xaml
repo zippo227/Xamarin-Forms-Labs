@@ -30,7 +30,7 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      <controls:HybridWebView x:Name="hybridWebView" WidthRequest="200" HeightRequest="300" />
+      <controls:HybridWebView x:Name="hybridWebView" BackgroundColor="White" WidthRequest="200" HeightRequest="300" />
     </StackLayout>
   </toolkit:BaseView.Content>
 </toolkit:BaseView>
