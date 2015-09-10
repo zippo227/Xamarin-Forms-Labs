@@ -26,7 +26,10 @@ namespace XLabs.Platform.Device
         /// </summary>
         double Ydpi { get; }
 
-        //IFontManager FontManager { get; }
+        /// <summary>
+        /// Gets the scale value of the display.
+        /// </summary>
+        double Scale { get; }
 
         /// <summary>
         /// Convert width in inches to runtime pixels
