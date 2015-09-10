@@ -1,14 +1,16 @@
 ﻿namespace XLabs.Sample.Pages.Mvvm
 {
-	using System.Collections.Specialized;
-	using System.ComponentModel;
-	using System.Diagnostics;
-	using System.Linq;
-	using ViewModel;
-	using Xamarin.Forms;
-	using Forms.Mvvm;
+    using System;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Linq;
+    using Ioc;
+    using Platform.Device;
+    using ViewModel;
+    using Xamarin.Forms;
 
-	public partial class CanvasWebHybrid : BaseView
+    public partial class CanvasWebHybrid
     {
         private bool loaded;
 
@@ -16,8 +18,8 @@
         {
             InitializeComponent ();
 
-            this.NativeList.HeightRequest = Device.OnPlatform(250, 320, 150);
-            this.hybridWebView.HeightRequest = Device.OnPlatform(300, 300, 400);
+            //this.NativeList.HeightRequest = Device.OnPlatform(250, 320, 150);
+            //this.hybridWebView.HeightRequest = Device.OnPlatform(300, 300, 400);
 
             this.hybridWebView.RegisterCallback("dataCallback", t =>
                 Debug.WriteLine(t)
@@ -43,8 +45,14 @@
 
             this.hybridWebView.LoadFinished += (s, e) =>
             {
+                var display = Resolver.Resolve<IDisplay>();
+
+                var height = Device.OnPlatform(this.hybridWebView.Height * display.Scale, this.hybridWebView.Height,
+                    this.hybridWebView.Height * display.Scale);
+
                 this.loaded = true;
-                this.hybridWebView.CallJsFunction ("onViewModelData", this.BindingContext);
+                this.hybridWebView.CallJsFunction("setChartHeight", height);
+                this.hybridWebView.CallJsFunction("onViewModelData", this.BindingContext);
             };
 
             this.hybridWebView.LeftSwipe += (s, e) =>
@@ -52,6 +60,9 @@
 
             this.hybridWebView.RightSwipe += (s, e) =>
                 Debug.WriteLine("Right swipe from HybridWebView");
+
+            // this would not work as the control has not been loaded yet
+            // this.hybridWebView.LoadFromContent("HTML/home.html");
         }
 
         void HandleCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)

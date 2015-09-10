@@ -137,6 +137,12 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\XLabs.Sample.WP\HTML\canvasjs.min.js">
+      <Link>HTML\canvasjs.min.js</Link>
+    </Content>
+    <Content Include="..\..\XLabs.Sample.WP\HTML\home.html">
+      <Link>HTML\home.html</Link>
+    </Content>
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
