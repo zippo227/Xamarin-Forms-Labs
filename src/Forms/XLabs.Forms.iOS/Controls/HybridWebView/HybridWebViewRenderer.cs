@@ -97,7 +97,7 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            if (Control == null)
+            if (Control == null && e.NewElement != null)
             {
                 this.userController = new WKUserContentController();
                 var config = new WKWebViewConfiguration()

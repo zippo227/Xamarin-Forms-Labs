@@ -45,7 +45,7 @@
 
         public double Scale
         {
-            get { return (double)Info.ResolutionScale / (double)ResolutionScale.Scale100Percent; }
+            get { return Info.RawPixelsPerViewPixel; }
         }
 
         /// <summary>

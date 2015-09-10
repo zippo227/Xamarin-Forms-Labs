@@ -22,7 +22,7 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            if (this.Control == null)
+            if (this.Control == null && e.NewElement != null)
             {
                 var webView = new WebView();
 
