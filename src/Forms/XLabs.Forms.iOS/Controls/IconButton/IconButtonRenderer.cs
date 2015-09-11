@@ -113,10 +113,7 @@ namespace XLabs.Forms.Controls
                     : new NSRange(prettyString.Length - 1, 1));
 
 
-            //prettyString.SetAttributes(separationBarAttributes.Dictionary,
-            //    iconButton.Orientation == ImageOrientation.ImageToLeft
-            //        ? new NSRange(2, 1)
-            //        : new NSRange(prettyString.Length - 2, 1));
+       
 
             // set the final formatted string as the button's text
             targetButton.SetAttributedTitle(prettyString, UIControlState.Normal);

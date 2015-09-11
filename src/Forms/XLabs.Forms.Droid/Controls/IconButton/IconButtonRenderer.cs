@@ -26,14 +26,12 @@ namespace XLabs.Forms.Controls
         Typeface iconFont;
         Typeface textFont;
         IconButton iconButton;
+        //Final span including font and icon size and color
         SpannableString iconSpan;
         int textStartIndex = -1;
         int textStopIndex = -1;
        
         Android.Widget.Button nativeBtn;
-
-        private static SpannableString span;
-
 
         public IconButtonRenderer()
             : base()
@@ -45,38 +43,46 @@ namespace XLabs.Forms.Controls
         {
 
             base.OnElementChanged(e);
-            if (iconSpan == null)
+            if (e.NewElement != null && this.Control != null)
             {
-                nativeBtn = (Android.Widget.Button)this.Control;
-                iconButton = (IconButton)e.NewElement;
-
-                iconFont = TrySetFont("fontawesome-webfont.ttf");
-                textFont = iconButton.Font.ToTypeface();
-                iconButton.IconSize = iconButton.IconSize == 0 ? (float)iconButton.FontSize : iconButton.IconSize;
-                var computedString = BuildRawTextString();
-
-                iconSpan = BuildSpannableString(computedString);
-                if (iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Center)
+                if (iconSpan == null)
                 {
-                    nativeBtn.Gravity = Android.Views.GravityFlags.Center;
+                    nativeBtn = (Android.Widget.Button)this.Control;
+                    iconButton = (IconButton)e.NewElement;
 
+                    iconFont = TrySetFont("fontawesome-webfont.ttf");
+                    textFont = iconButton.Font.ToTypeface();
+                    iconButton.IconSize = iconButton.IconSize == 0 ? (float)iconButton.FontSize : iconButton.IconSize;
+                    var computedString = BuildRawTextString();
+
+                    iconSpan = BuildSpannableString(computedString);
+                    if (iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Center)
+                    {
+                        nativeBtn.Gravity = Android.Views.GravityFlags.Center;
+
+                    }
+                    else if (iconButton.TextAlignement == Xamarin.Forms.TextAlignment.End)
+                    {
+                        nativeBtn.Gravity = Android.Views.GravityFlags.Right;
+                    }
+                    else if (iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Start)
+                    {
+                        nativeBtn.Gravity = Android.Views.GravityFlags.Left;
+                    }
+                    nativeBtn.TransformationMethod = null;
+                    nativeBtn.SetPadding(0, 0, 0, 0);
+                    nativeBtn.AfterTextChanged += nativeBtn_AfterTextChanged;
                 }
-                else if (iconButton.TextAlignement == Xamarin.Forms.TextAlignment.End)
-                {
-                    nativeBtn.Gravity = Android.Views.GravityFlags.Right;
-                }
-                else if (iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Start)
-                {
-                    nativeBtn.Gravity = Android.Views.GravityFlags.Left;
-                }
-                nativeBtn.TransformationMethod = null;
-                nativeBtn.SetPadding(0, 0, 0, 0);
-                nativeBtn.AfterTextChanged += nativeBtn_AfterTextChanged;
             }
 
 
         }
 
+        /// <summary>
+        /// Since they are several over write of the Test property during layout we have to set this field as long as it is not definitly set
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void nativeBtn_AfterTextChanged(object sender, AfterTextChangedEventArgs e)
         {
 
@@ -90,7 +96,10 @@ namespace XLabs.Forms.Controls
 
       
         
-
+        /// <summary>
+        /// Build the content string by concating icon and text according to control options
+        /// </summary>
+        /// <returns></returns>
         private string BuildRawTextString()
         {
             string computedText = string.Empty;
@@ -135,9 +144,15 @@ namespace XLabs.Forms.Controls
             return computedText;
         }
 
+        /// <summary>
+        /// Build the spannable according to the computed text, meaning set the right font, color and size to the text and icon char index
+        /// </summary>
+        /// <param name="computedString"></param>
+        /// <returns></returns>
         private SpannableString BuildSpannableString(string computedString)
         {
             SpannableString span = new SpannableString(computedString);
+            //if there is an icon
             if (!string.IsNullOrEmpty(iconButton.Icon))
             {
                 //set icon
@@ -153,6 +168,7 @@ namespace XLabs.Forms.Controls
 
 
             }
+            //if there is text
             if (!string.IsNullOrEmpty(iconButton.Text))
             {
                 span.SetSpan(new CustomTypefaceSpan("", textFont, iconButton.TextColor.ToAndroid()),
@@ -173,7 +189,11 @@ namespace XLabs.Forms.Controls
 
        
 
-
+        /// <summary>
+        /// Load the FA font from assets
+        /// </summary>
+        /// <param name="fontName"></param>
+        /// <returns></returns>
         private Typeface TrySetFont(string fontName)
         {
             try
@@ -196,6 +216,12 @@ namespace XLabs.Forms.Controls
                     return Typeface.Default;
                 }
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            nativeBtn.AfterTextChanged -= nativeBtn_AfterTextChanged;
+            base.Dispose(disposing);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace XLabs.Forms.Controls
         /// Gets or sets The TextAlignment of both icon and text relative to container.
         /// </summary> 
         /// <value>
-        /// The Orientation property gets/sets the value of the backing field, OrientationProperty.
+        /// The TextAlignment property gets/sets the value of the backing field, OrientationProperty.
         /// </value> 
         public TextAlignment TextAlignement
         {
@@ -38,7 +38,7 @@ namespace XLabs.Forms.Controls
 
 
         /// <summary>
-        /// Gets or sets The orientation of the image relative to the text.
+        /// Gets or sets The orientation of the icon relative to the text.
         /// </summary> 
         /// <remarks>
         /// On iOS only left and right are supported
@@ -64,6 +64,9 @@ namespace XLabs.Forms.Controls
         /// Gets or sets the icon. A set of FontAwesome icons have been included in <see cref="Icons"/>, and
         /// more can be added from the FontAwesome cheatsheet (http://fortawesome.github.io/Font-Awesome/cheatsheet/)
         /// </summary>
+        /// <remarks>
+        /// The icon string should be this form : "\uf242"
+        /// </remarks>
         /// <value>
         /// The Icon property gets/sets the value of the backing field, IconProperty
         /// </value>

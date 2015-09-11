@@ -27,6 +27,7 @@ namespace XLabs.Forms.Controls
         Typeface iconFont;
         Typeface textFont;
         IconLabel iconLabel;
+        //Final span including font and icon size and color
         SpannableString iconSpan;
         int textStartIndex = -1;
         int textStopIndex = -1;
@@ -43,25 +44,30 @@ namespace XLabs.Forms.Controls
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
  	        base.OnElementChanged(e);
-            if (iconSpan == null)
+            if (this.Control != null && e.NewElement != null)
             {
-                nativeLabel = (Android.Widget.TextView)this.Control;
-                iconLabel = (IconLabel)e.NewElement;
-                //Set default value
-                if (iconLabel.IconSize == 0)
-                    iconLabel.IconSize = iconLabel.FontSize;
-                
-                
+                if (iconSpan == null)
+                {
+                    nativeLabel = (Android.Widget.TextView)this.Control;
+                    iconLabel = (IconLabel)e.NewElement;
+                    //Set default value
+                    if (iconLabel.IconSize == 0)
+                        iconLabel.IconSize = iconLabel.FontSize;
 
-                iconFont = TrySetFont("fontawesome-webfont.ttf");
-                textFont = iconLabel.Font.ToTypeface();
-                SetText();
 
-             
+
+                    iconFont = TrySetFont("fontawesome-webfont.ttf");
+                    textFont = iconLabel.Font.ToTypeface();
+                    SetText();
+
+
+                }
             }
         }
 
-     
+        /// <summary>
+        /// Rebuild the all span in and set it into the label
+        /// </summary>
         private void SetText()
         {
             var computedString = BuildRawTextString();
@@ -105,7 +111,10 @@ namespace XLabs.Forms.Controls
            
              
         }
-
+        /// <summary>
+        /// Build the content string by concating icon and text according to control options
+        /// </summary>
+        /// <returns></returns>
         private string BuildRawTextString()
         {
             string computedText = string.Empty;
@@ -150,6 +159,10 @@ namespace XLabs.Forms.Controls
             return computedText;
         }
 
+        /// <summary>
+        /// Build the spannable according to the computed text, meaning set the right font, color and size to the text and icon char index
+        /// </summary>
+        /// <param name="computedString"></param>
         private SpannableString BuildSpannableString(string computedString)
         {
             SpannableString span = new SpannableString(computedString);
@@ -185,7 +198,11 @@ namespace XLabs.Forms.Controls
             return span;
 
         }
-
+        /// <summary>
+        /// Load the FA font from assets
+        /// </summary>
+        /// <param name="fontName"></param>
+        /// <returns></returns>
         private  Typeface TrySetFont(string fontName)
         {
             try

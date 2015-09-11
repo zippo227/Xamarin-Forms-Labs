@@ -120,10 +120,7 @@ namespace XLabs.Forms.Controls
                     : new NSRange(prettyString.Length - 1, 1));
 
 
-            //prettyString.SetAttributes(separationBarAttributes.Dictionary,
-            //    iconButton.Orientation == ImageOrientation.ImageToLeft
-            //        ? new NSRange(2, 1)
-            //        : new NSRange(prettyString.Length - 2, 1));
+          
 
             // set the final formatted string as the button's text
             targetLabel.AttributedText  = prettyString;
@@ -132,17 +129,17 @@ namespace XLabs.Forms.Controls
             {
                 // center the button's contents
                 targetLabel.TextAlignment = UITextAlignment.Center;
-                //targetLabel.TitleLabel.TextAlignment = UITextAlignment.Center;
+            
             }
             else if (iconLabel.TextAlignement == TextAlignment.End)
             {
                 targetLabel.TextAlignment = UITextAlignment.Right;
-                //targetLabel.TitleLabel.TextAlignment = UITextAlignment.Right;
+               
             }
             else if (iconLabel.TextAlignement == TextAlignment.Start)
             {
                 targetLabel.TextAlignment = UITextAlignment.Left;
-                //targetLabel.TitleLabel.TextAlignment = UITextAlignment.Left;
+              
             }
         }
 

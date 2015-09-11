@@ -15,6 +15,9 @@ using Android.Text.Style;
 
 namespace XLabs.Forms.Controls
 {
+    /// <summary>
+    /// See http://stackoverflow.com/questions/6612316/how-set-spannable-object-font-with-custom-font
+    /// </summary>
     public class CustomTypefaceSpan : TypefaceSpan
     {
         private Typeface newType;
