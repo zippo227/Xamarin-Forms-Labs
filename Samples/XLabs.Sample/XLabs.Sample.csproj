@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>XLabs.Sample</RootNamespace>
     <AssemblyName>XLabs.Sample</AssemblyName>
-    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\src\Xamarin.Forms.Labs\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -78,6 +78,9 @@
     </Compile>
     <Compile Include="Pages\Controls\ExtendedEntryPage.xaml.cs">
       <DependentUpon>ExtendedEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Controls\ExtendedSwitchPage.xaml.cs">
+      <DependentUpon>ExtendedSwitchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Controls\GestureSample.xaml.cs">
       <DependentUpon>GestureSample.xaml</DependentUpon>
@@ -448,6 +451,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\WebHybridTest.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Controls\ExtendedSwitchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
 </Project>

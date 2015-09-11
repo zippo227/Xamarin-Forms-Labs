@@ -120,6 +120,10 @@
       <Project>{15d9c404-f7e2-49f0-acc9-63c4c008c860}</Project>
       <Name>XLabs.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XLabs.Sample\XLabs.Sample.csproj">
+      <Project>{dc133a2f-e49e-49e3-b43d-bfb957cb5482}</Project>
+      <Name>XLabs.Sample</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainPage.xaml.cs">
@@ -133,6 +137,12 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\XLabs.Sample.WP\HTML\canvasjs.min.js">
+      <Link>HTML\canvasjs.min.js</Link>
+    </Content>
+    <Content Include="..\..\XLabs.Sample.WP\HTML\home.html">
+      <Link>HTML\home.html</Link>
+    </Content>
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />

@@ -10,11 +10,18 @@ using XLabs.Forms.Controls;
 
 namespace XLabs.Forms.Controls
 {
-    //  using NativeRadioButton = RadioButton;
+	//  using NativeRadioButton = RadioButton;
 
-    public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, RadioButton>
+	/// <summary>
+	/// Class RadioButtonRenderer.
+	/// </summary>
+	public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, RadioButton>
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<CustomRadioButton> e)
+		/// <summary>
+		/// Called when [element changed].
+		/// </summary>
+		/// <param name="e">The e.</param>
+		protected override void OnElementChanged(ElementChangedEventArgs<CustomRadioButton> e)
         {
             base.OnElementChanged(e);
 
