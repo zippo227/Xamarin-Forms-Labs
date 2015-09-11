@@ -159,7 +159,7 @@ try
 
     ## Move NuGet package to Package Release folder"
     Write-Host "Move package to ..\Packages folder..." -ForegroundColor Yellow
-    if(!Test-Path($pathToNuGetPackageOutput)) {
+    if(!(Test-Path($pathToNuGetPackageOutput))) {
         New-Item -Path $pathToNuGetPackageOutput -ItemType Directory -Force | Out-Null
     } 
     Move-Item "*.nupkg" -Destination $pathToNuGetPackageOutput -Force
