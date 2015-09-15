@@ -13,7 +13,7 @@ namespace XLabs.Forms.Controls
     public delegate void CurrentPageChangingEventHandler();
 
     /// <summary>
-    ///     Delegate CurrentPageChangedEventHandler.
+    /// Delegate CurrentPageChangedEventHandler.
     /// </summary>
     public delegate void CurrentPageChangedEventHandler();
 
@@ -32,34 +32,52 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public class ExtendedTabbedPage : TabbedPage
     {
-        public static readonly BindableProperty TintColorProperty =
+		/// <summary>
+		/// The tint color property
+		/// </summary>
+		public static readonly BindableProperty TintColorProperty =
             BindableProperty.Create<ExtendedTabbedPage, Color>(
                 p => p.TintColor, Color.White);
 
-        public static readonly BindableProperty BarTintColorProperty =
+		/// <summary>
+		/// The bar tint color property
+		/// </summary>
+		public static readonly BindableProperty BarTintColorProperty =
             BindableProperty.Create<ExtendedTabbedPage, Color>(
                 p => p.BarTintColor, Color.White);
 
-        public static readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create<ExtendedTabbedPage, Color>(
-                p => p.BackgroundColor, Color.White);
-
-        public static readonly BindableProperty BadgesProperty =
+		/// <summary>
+		/// The badges property
+		/// </summary>
+		public static readonly BindableProperty BadgesProperty =
            BindableProperty.Create<ExtendedTabbedPage, List<string>>(
                p => p.Badges, null);
 
-        public static readonly BindableProperty TabBarSelectedImageProperty =
+		/// <summary>
+		/// The tab bar selected image property
+		/// </summary>
+		public static readonly BindableProperty TabBarSelectedImageProperty =
             BindableProperty.Create<ExtendedTabbedPage, string>(
                 p => p.TabBarSelectedImage, null);
 
-        public static readonly BindableProperty TabBarBackgroundImageProperty =
+		/// <summary>
+		/// The tab bar background image property
+		/// </summary>
+		public static readonly BindableProperty TabBarBackgroundImageProperty =
             BindableProperty.Create<ExtendedTabbedPage, string>(
                 p => p.TabBarBackgroundImage, null);
 
-        public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<ExtendedTabbedPage, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
+		/// <summary>
+		/// The item template selector property
+		/// </summary>
+		public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<ExtendedTabbedPage, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
 
         private DataTemplateSelector currentItemSelector;
-        public DataTemplateSelector ItemTemplateSelector
+		/// <summary>
+		/// Gets or sets the item template selector.
+		/// </summary>
+		/// <value>The item template selector.</value>
+		public DataTemplateSelector ItemTemplateSelector
         {
             get
             {
@@ -76,7 +94,13 @@ namespace XLabs.Forms.Controls
             ((ExtendedTabbedPage)bindable).OnDataTemplateSelectorChanged(oldvalue, newvalue);
         }
 
-        protected virtual void OnDataTemplateSelectorChanged(DataTemplateSelector oldValue, DataTemplateSelector newValue)
+		/// <summary>
+		/// Called when [data template selector changed].
+		/// </summary>
+		/// <param name="oldValue">The old value.</param>
+		/// <param name="newValue">The new value.</param>
+		/// <exception cref="System.ArgumentException">Cannot set both ItemTemplate and ItemTemplateSelector;ItemTemplateSelector</exception>
+		protected virtual void OnDataTemplateSelectorChanged(DataTemplateSelector oldValue, DataTemplateSelector newValue)
         {
             // check to see we don't have an ItemTemplate set
             if (ItemTemplate != null && newValue != null)
@@ -101,7 +125,11 @@ namespace XLabs.Forms.Controls
             Badges = new List<string>();
         }
 
-        public Color TintColor
+		/// <summary>
+		/// Gets or sets the color of the tint.
+		/// </summary>
+		/// <value>The color of the tint.</value>
+		public Color TintColor
         {
             get
             {
@@ -113,7 +141,11 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public Color BarTintColor
+		/// <summary>
+		/// Gets or sets the color of the bar tint.
+		/// </summary>
+		/// <value>The color of the bar tint.</value>
+		public Color BarTintColor
         {
             get
             {
@@ -125,19 +157,11 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public Color BackgroundColor
-        {
-            get
-            {
-                return (Color)GetValue(BackgroundColorProperty);
-            }
-            set
-            {
-                SetValue(BackgroundColorProperty, value);
-            }
-        }
-
-        public List<string> Badges
+		/// <summary>
+		/// Gets or sets the badges.
+		/// </summary>
+		/// <value>The badges.</value>
+		public List<string> Badges
         {
             get
             {
@@ -149,7 +173,11 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public string TabBarSelectedImage
+		/// <summary>
+		/// Gets or sets the tab bar selected image.
+		/// </summary>
+		/// <value>The tab bar selected image.</value>
+		public string TabBarSelectedImage
         {
             get
             {
@@ -161,7 +189,11 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public string TabBarBackgroundImage
+		/// <summary>
+		/// Gets or sets the tab bar background image.
+		/// </summary>
+		/// <value>The tab bar background image.</value>
+		public string TabBarBackgroundImage
         {
             get
             {
@@ -173,22 +205,28 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public bool SwipeEnabled { get; set; }
+		/// <summary>
+		/// Gets or sets a value indicating whether [swipe enabled].
+		/// </summary>
+		/// <value><c>true</c> if [swipe enabled]; otherwise, <c>false</c>.</value>
+		public bool SwipeEnabled { get; set; }
 
         /// <summary>
         ///     Occurs when [current page changing].
         /// </summary>
         public event CurrentPageChangingEventHandler CurrentPageChanging;
 
-        /// <summary>
-        ///     Occurs when [current page changed].
-        /// </summary>
-        public event CurrentPageChangedEventHandler CurrentPageChanged;
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+		/// <summary>
+		/// Occurs when [current page changed].
+		/// </summary>
+		public event CurrentPageChangedEventHandler CurrentPageChanged;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
 
-        /// <summary>
-        /// Occurs when the TabbedPage is swipped Right
-        /// </summary>
-        public event EventHandler OnSwipeRight;
+		/// <summary>
+		/// Occurs when the TabbedPage is swipped Right
+		/// </summary>
+		public event EventHandler OnSwipeRight;
 
         /// <summary>
         /// Occurs when the TabbedPage is swipped Left
@@ -222,10 +260,10 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        ///     Handles the <see cref="E:PropertyChanging" /> event.
+        /// Handles the <see cref="E:PropertyChanging" /> event.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.ComponentModel.PropertyChangingEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="Xamarin.Forms.PropertyChangingEventArgs" /> instance containing the event data.</param>
         private void OnPropertyChanging(object sender, PropertyChangingEventArgs e)
         {
             if (e.PropertyName == "CurrentPage")
@@ -336,7 +374,12 @@ namespace XLabs.Forms.Controls
             CurrentPage = Children[currentPage];
         }
 
-        protected override Page CreateDefault(object item)
+		/// <summary>
+		/// Creates the default.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <returns>Page.</returns>
+		protected override Page CreateDefault(object item)
         {
             var view = this.ViewFor(item, currentItemSelector);
 

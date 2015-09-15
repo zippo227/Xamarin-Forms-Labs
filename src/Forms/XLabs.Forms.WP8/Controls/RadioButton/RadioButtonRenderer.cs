@@ -12,9 +12,16 @@ using NativeCheckBox = System.Windows.Controls.RadioButton;
 
 namespace XLabs.Forms.Controls
 {
-    public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, NativeCheckBox>
+	/// <summary>
+	/// Class RadioButtonRenderer.
+	/// </summary>
+	public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, NativeCheckBox>
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<CustomRadioButton> e)
+		/// <summary>
+		/// Called when [element changed].
+		/// </summary>
+		/// <param name="e">The e.</param>
+		protected override void OnElementChanged(ElementChangedEventArgs<CustomRadioButton> e)
         {
             base.OnElementChanged(e);
 
@@ -75,7 +82,9 @@ namespace XLabs.Forms.Controls
                 Control.IsChecked = eventArgs.Value;
             });
         }
-
+        /// <summary>
+        /// Updates radio button text content.
+        /// </summary>
         private void UpdateText() {
             Control.Content = new TextBlock()
             {

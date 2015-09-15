@@ -3,18 +3,38 @@ using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
 {
-    public class DataTemplateSelector
+	/// <summary>
+	/// Class DataTemplateSelector.
+	/// </summary>
+	public class DataTemplateSelector
     {
-        public virtual DataTemplate SelectTemplate(object item, BindableObject container)
+		/// <summary>
+		/// Selects the template.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="container">The container.</param>
+		/// <returns>DataTemplate.</returns>
+		public virtual DataTemplate SelectTemplate(object item, BindableObject container)
         {
             return null;
         }
 
     }
 
-    public static class DataTemplateSelectorExtensions
+	/// <summary>
+	/// Class DataTemplateSelectorExtensions.
+	/// </summary>
+	public static class DataTemplateSelectorExtensions
     {
-        public static Cell CellFor(this BindableObject This, object item, DataTemplateSelector selector)
+		/// <summary>
+		/// Cells for.
+		/// </summary>
+		/// <param name="This">The this.</param>
+		/// <param name="item">The item.</param>
+		/// <param name="selector">The selector.</param>
+		/// <returns>Cell.</returns>
+		/// <exception cref="System.InvalidOperationException">DataTemplate must be either a Cell or a View</exception>
+		public static Cell CellFor(this BindableObject This, object item, DataTemplateSelector selector)
         {
             if (selector != null)
             {
@@ -39,7 +59,15 @@ namespace XLabs.Forms.Controls
             return null;
         }
 
-        public static View ViewFor(this BindableObject This, object item, DataTemplateSelector selector)
+		/// <summary>
+		/// Views for.
+		/// </summary>
+		/// <param name="This">The this.</param>
+		/// <param name="item">The item.</param>
+		/// <param name="selector">The selector.</param>
+		/// <returns>View.</returns>
+		/// <exception cref="System.InvalidOperationException">DataTemplate must be a View</exception>
+		public static View ViewFor(this BindableObject This, object item, DataTemplateSelector selector)
         {
             if (selector != null)
             {

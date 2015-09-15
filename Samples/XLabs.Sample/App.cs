@@ -230,6 +230,7 @@ namespace XLabs.Sample
                 {"ExtendedLabel", typeof(ExtendedLabelPage)},
                 {"ExtendedScrollView", typeof(ExtendedScrollViewPage)},
                 {"ExtendedSlider", typeof(ExtendedSliderPage)},
+                {"ExtendedSwitch", typeof(ExtendedSwitchPage)},
                 {"GridView", typeof(GridViewPage)},
                 {"HybridWebView", typeof(CanvasWebHybrid)},
                 {"WebHybridTestPage", typeof(WebHybridTestPage)},
