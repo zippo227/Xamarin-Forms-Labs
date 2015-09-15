@@ -180,7 +180,12 @@ namespace XLabs.Forms.Controls
         private static void OnItemsSourceChanged(BindableObject bindable, IEnumerable oldValue, IEnumerable newValue)
         {
             var radButtons = bindable as BindableRadioGroup;
-            radButtons.Items.Clear();
+
+
+            foreach (var item in radButtons.Items) {
+                item.CheckedChanged -= radButtons.OnCheckedChanged;
+            }
+                
             radButtons.Children.Clear();
 
             var radIndex = 0;
