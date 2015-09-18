@@ -122,5 +122,11 @@ namespace XLabs.Forms.Controls
                 }
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            Control.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }
