@@ -27,7 +27,7 @@ namespace XLabs.Forms.Controls
 
             if (e.OldElement != null)
             {
-                e.OldElement.PropertyChanged += ElementOnPropertyChanged;
+                e.OldElement.PropertyChanged -= ElementOnPropertyChanged;
             }
 
             if (Control == null)
@@ -121,12 +121,6 @@ namespace XLabs.Forms.Controls
                     return Typeface.Default;
                 }
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            Control.Dispose();
-            base.Dispose(disposing);
         }
     }
 }
