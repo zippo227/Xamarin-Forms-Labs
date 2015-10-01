@@ -19,10 +19,10 @@ namespace XLabs.Forms.Controls
 	/// </summary>
 	public class ExtendedTextCellRenderer :  TextCellRenderer
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ExtendedTextCellRenderer"/> class.
-		/// </summary>
-		public ExtendedTextCellRenderer (){}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExtendedTextCellRenderer"/> class.
+        /// </summary>
+        public ExtendedTextCellRenderer (){}
 		/// <summary>
 		/// The _context
 		/// </summary>
@@ -47,20 +47,41 @@ namespace XLabs.Forms.Controls
 		/// <returns>Android.Views.View.</returns>
 		protected override Android.Views.View GetCellCore (Cell item, Android.Views.View convertView, ViewGroup parent, Context context)
 		{
-			_context = context;
+            _context = context;
 
 			var view = (ExtendedTextCell)item;
-			if (convertView == null) {
+
+            if (convertView == null) {
 				convertView = new BaseCellView (context);
 			} 
 			var control = ((LinearLayout)convertView);
 
-			var mainview = (TextView)(control.GetChildAt (1) as LinearLayout).GetChildAt (0);
-			var detailview = (TextView)(control.GetChildAt (1) as LinearLayout).GetChildAt (1);
+		    var cellView = control as BaseCellView;
 
-			UpdateUi (view, mainview);
-			UpdateUi (view, detailview);
-			return  convertView;;
+            //Set text values
+		    cellView.MainText = view.Text;
+		    cellView.DetailText = view.Detail;
+
+            //Set text colors
+            cellView.SetMainTextColor(view.TextColor);
+            cellView.SetDetailTextColor(view.DetailColor);
+            
+
+            //TODO:  Fix the rest of the functionality
+            //As this is just a temp fix so that it does work on Android (simplified).
+            
+            //var mainview = (TextView)(control.GetChildAt (1) as LinearLayout).GetChildAt (0);
+            //var detailview = (TextView)(control.GetChildAt (1) as LinearLayout).GetChildAt (1);
+            //mainview.SetTextColor(DefaultTextColor);
+            //      detailview.SetTextColor(DefaultDetailColor);
+
+            //mainview.Text = view.Text;
+            //detailview.Text = view.Detail;
+
+            //UpdateUi (view, mainview);
+            //UpdateUi (view, detailview);
+
+            return  convertView;;
 		}
 
 		/// <summary>
