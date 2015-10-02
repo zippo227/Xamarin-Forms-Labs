@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using Android.Content.Res;
+using Android.Graphics.Drawables;
+using Xamarin.Forms;
 
 using XLabs.Forms.Controls;
 
@@ -55,53 +57,93 @@ namespace XLabs.Forms.Controls
             {
                 convertView = new BaseCellView(context);
             }
-            var control = ((LinearLayout)convertView);
 
-            var cellView = control as BaseCellView;
+            var cellView = convertView as BaseCellView;
 
-            //Set text values
-            cellView.MainText = view.Text;
-            cellView.DetailText = view.Detail;
+            //Incase convertView is not longer a BaseCellView 
+            if (cellView != null)
+            {
+                //This is a text cell, no image required
+                cellView.SetImageVisible(false);
 
-            //Set text colors
-            cellView.SetMainTextColor(view.TextColor);
-            cellView.SetDetailTextColor(view.DetailColor);
+                //Set text values
+                cellView.MainText = view.Text;
+                cellView.DetailText = view.Detail;
+
+                //Set text colors
+                cellView.SetMainTextColor(view.TextColor);
+                cellView.SetDetailTextColor(view.DetailColor);
+
+                //Set Background color
+                cellView.SetBackgroundColor(view.BackgroundColor.ToAndroid());
+
+                //Set Accessory view
+                //TODO:  For some reason ShowDisclousure (sic, eventually fix spelling) is default true, which might be annoying for android users
+                if (view.ShowDisclousure)
+                {
+                    //TODO: Consider different default icon, perhaps no default at all
+                    var resourceId = Android.Resource.Drawable.IcMenuSend;
+                    if (!string.IsNullOrWhiteSpace(view.DisclousureImage))
+                    {
+                        //Incase someone decides to add the extension to the file name
+                        var fileName = System.IO.Path.GetFileNameWithoutExtension(view.DisclousureImage);
+                        resourceId = _context.Resources.GetIdentifier(fileName, "drawable", context.PackageName);
+                    }
+
+                    var image = new ImageView(_context);
+                    image.SetImageResource(resourceId);
+
+                    cellView.SetAccessoryView(image);
+                }
+
+                var control = ((LinearLayout)convertView);
+                var linearLayout = control.GetChildAt(1) as LinearLayout;
+                if (linearLayout != null)
+                {
+                    var mainTextView = (TextView)linearLayout.GetChildAt(0);
+                    var detailTextView = (TextView)linearLayout.GetChildAt(1);
+
+                    UpdateTextViewFont(view, mainTextView);
+                    UpdateTextViewFont(view, detailTextView);
+
+                    //if (view.ShowSeparator)
+                    //{
+                    //    linearLayout.ShowDividers = ShowDividers.None;
+                    //    linearLayout.DividerPadding = (int)view.SeparatorPadding.VerticalThickness;
 
 
-            //TODO:  Fix the rest of the functionality
-            //As this is just a temp fix so that it does work on Android (simplified).
+                    //    linearLayout.SetDividerDrawable(new ColorDrawable(view.SeparatorColor.ToAndroid()));
+                    //}
+                }
+            }
 
-            //var mainview = (TextView)(control.GetChildAt (1) as LinearLayout).GetChildAt (0);
-            //var detailview = (TextView)(control.GetChildAt (1) as LinearLayout).GetChildAt (1);
-            //mainview.SetTextColor(DefaultTextColor);
-            //      detailview.SetTextColor(DefaultDetailColor);
-
-            //mainview.Text = view.Text;
-            //detailview.Text = view.Detail;
-
-            //UpdateUi (view, mainview);
-            //UpdateUi (view, detailview);
-
-            return convertView; ;
+            return convertView;
         }
 
         /// <summary>
-        /// Updates the UI.
+        /// Updates the Text View.
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="control">The control.</param>
-        void UpdateUi(ExtendedTextCell view, TextView control)
+        void UpdateTextViewFont(ExtendedTextCell view, TextView control)
         {
-            if (!string.IsNullOrEmpty(view.FontName))
+            if (control != null)
             {
-                control.Typeface = TrySetFont(view.FontName);
+                //Should FontNameAndroid override FontName? 
+                if (!string.IsNullOrWhiteSpace(view.FontNameAndroid))
+                {
+                    control.Typeface = TrySetFont(view.FontNameAndroid);
+                }
+                else if (!string.IsNullOrWhiteSpace(view.FontName))
+                {
+                    control.Typeface = TrySetFont(view.FontName);
+                }
+
+                if (view.FontSize > 0)
+                {
+                    control.TextSize = (float)view.FontSize;
+                }
             }
-            if (!string.IsNullOrEmpty(view.FontNameAndroid))
-            {
-                control.Typeface = TrySetFont(view.FontNameAndroid); ;
-            }
-            if (view.FontSize > 0)
-                control.TextSize = (float)view.FontSize;
         }
 
         /// <summary>
@@ -111,26 +153,27 @@ namespace XLabs.Forms.Controls
         /// <returns>Typeface.</returns>
         private Typeface TrySetFont(string fontName)
         {
-            Typeface tf = Typeface.Default;
+            var typeface = Typeface.Default;
+
             try
             {
-                tf = Typeface.CreateFromAsset(_context.Assets, fontName);
-                return tf;
+                typeface = Typeface.CreateFromAsset(_context.Assets, fontName);
             }
             catch (Exception ex)
             {
-                Console.Write("not found in assets {0}", ex);
+                Console.WriteLine("not found in assets {0}", ex);
+
                 try
                 {
-                    tf = Typeface.CreateFromFile(fontName);
-                    return tf;
+                    typeface = Typeface.CreateFromFile(fontName);
                 }
                 catch (Exception ex1)
                 {
-                    Console.Write(ex1);
-                    return Typeface.Default;
+                    Console.WriteLine(ex1);
                 }
             }
+
+            return typeface;
         }
     }
 }
