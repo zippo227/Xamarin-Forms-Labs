@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.Widget;
 using Xamarin.Forms;
@@ -17,6 +18,8 @@ namespace XLabs.Forms.Controls
 	/// </summary>
 	public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, RadioButton>
 	{
+	    private ColorStateList defaultTextColor;
+
 	    /// <summary>
 		/// Called when [element changed].
 		/// </summary>
@@ -28,6 +31,7 @@ namespace XLabs.Forms.Controls
             if (Control == null)
             {
                 var radButton = new RadioButton(Context);
+                defaultTextColor = radButton.TextColors;
 
                 radButton.CheckedChange += radButton_CheckedChange;
 
@@ -37,7 +41,7 @@ namespace XLabs.Forms.Controls
             Control.Text = e.NewElement.Text;
             //Control.TextSize = 14;
             Control.Checked = e.NewElement.Checked;
-            Control.SetTextColor(e.NewElement.TextColor.ToAndroid());
+	        UpdateTextColor();
 
             if (e.NewElement.FontSize > 0)
             {
@@ -68,7 +72,7 @@ namespace XLabs.Forms.Controls
                     Control.Text = Element.Text;
                     break;
                 case "TextColor":
-                    Control.SetTextColor(Element.TextColor.ToAndroid());
+                    UpdateTextColor();
                     break;
                 case "FontName":
                     if (!string.IsNullOrEmpty(Element.FontName))
@@ -116,6 +120,20 @@ namespace XLabs.Forms.Controls
                     return Typeface.Default;
                 }
             }
+        }
+
+        /// <summary>
+        /// Updates the color of the text
+        /// </summary>
+	    private void UpdateTextColor()
+	    {
+	        if (Control == null || Element == null)
+	            return;
+
+	        if (Element.TextColor == Xamarin.Forms.Color.Default)
+                Control.SetTextColor(defaultTextColor);
+            else
+                Control.SetTextColor(Element.TextColor.ToAndroid());
         }
     }
 }
