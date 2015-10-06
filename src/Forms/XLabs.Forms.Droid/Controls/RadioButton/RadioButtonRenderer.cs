@@ -16,19 +16,14 @@ namespace XLabs.Forms.Controls
 	/// Class RadioButtonRenderer.
 	/// </summary>
 	public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, RadioButton>
-    {
-		/// <summary>
+	{
+	    /// <summary>
 		/// Called when [element changed].
 		/// </summary>
 		/// <param name="e">The e.</param>
 		protected override void OnElementChanged(ElementChangedEventArgs<CustomRadioButton> e)
         {
             base.OnElementChanged(e);
-
-            if (e.OldElement != null)
-            {
-                e.OldElement.PropertyChanged -= ElementOnPropertyChanged;
-            }
 
             if (Control == null)
             {
@@ -53,8 +48,6 @@ namespace XLabs.Forms.Controls
             {
                 Control.Typeface = TrySetFont(e.NewElement.FontName);
             }
-
-            Element.PropertyChanged += ElementOnPropertyChanged;
         }
 
         private void radButton_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
@@ -62,8 +55,10 @@ namespace XLabs.Forms.Controls
             Element.Checked = e.IsChecked;
         }
 
-        private void ElementOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            base.OnElementPropertyChanged(sender, e);
+
             switch (e.PropertyName)
             {
                 case "Checked":
