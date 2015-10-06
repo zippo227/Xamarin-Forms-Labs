@@ -228,6 +228,7 @@ namespace XLabs.Sample
                 {"ExtendedCell", typeof(ExtendedCellPage)},
                 {"ExtendedEntry", typeof(ExtendedEntryPage)},
                 {"ExtendedLabel", typeof(ExtendedLabelPage)},
+				{"ExtendedPicker", typeof(ExtendedPickerPage)},
                 {"ExtendedScrollView", typeof(ExtendedScrollViewPage)},
                 {"ExtendedSlider", typeof(ExtendedSliderPage)},
                 {"ExtendedSwitch", typeof(ExtendedSwitchPage)},
