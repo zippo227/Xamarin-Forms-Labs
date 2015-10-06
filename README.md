@@ -12,6 +12,7 @@ The master branch is the current development branch.
 The v.2.0 is the stable branch.
 
 **Find a Bug or Fix a Bug**
+
 [Issue Tracker]
 (https://github.com/XLabs/Xamarin-Forms-Labs/issues)
 
