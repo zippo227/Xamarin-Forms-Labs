@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Controls\IconButton\CustomTypeFaceSpan.cs" />
     <Compile Include="Controls\IconButton\IconButtonRenderer.cs" />
+    <Compile Include="Controls\IconButton\TextViewRenderHelper.cs" />
     <Compile Include="Controls\IconLabel\IconLabelRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />

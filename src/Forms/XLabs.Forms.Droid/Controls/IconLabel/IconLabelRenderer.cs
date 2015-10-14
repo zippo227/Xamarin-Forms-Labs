@@ -18,34 +18,39 @@ using Android.Text;
 using Android.Text.Style;
 using XLabs.Forms.Services;
 using XLabs.Enums;
+using XLabs.Forms.Extensions;
 
 [assembly: ExportRenderer(typeof(IconLabel), typeof(IconLabelRenderer))]
 namespace XLabs.Forms.Controls
 {
+    /// <summary>
+    /// Class IconLabelRenderer.
+    /// </summary>
     public class IconLabelRenderer : LabelRenderer
     {
         Typeface iconFont;
         Typeface textFont;
         IconLabel iconLabel;
-        //Final span including font and icon size and color
+        /// <summary>
+        /// Final span including font and icon size and color
+        /// </summary>
         SpannableString iconSpan;
         int textStartIndex = -1;
         int textStopIndex = -1;
         Android.Widget.TextView nativeLabel;
+        private TextViewRenderHelper helper;
 
-        
-
-
-        public IconLabelRenderer() :base()
-        {
-
-        }
-
+        /// <summary>
+        /// Called when [element changed].
+        /// </summary>
+        /// <param name="e">The e.</param>
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
- 	        base.OnElementChanged(e);
+            base.OnElementChanged(e);
             if (this.Control != null && e.NewElement != null)
             {
+                if (helper == null)
+                    helper = new TextViewRenderHelper(Context);
                 if (iconSpan == null)
                 {
                     nativeLabel = (Android.Widget.TextView)this.Control;
@@ -54,13 +59,29 @@ namespace XLabs.Forms.Controls
                     if (iconLabel.IconSize == 0)
                         iconLabel.IconSize = iconLabel.FontSize;
 
-
-
-                    iconFont = TrySetFont("fontawesome-webfont.ttf");
+                    iconFont = helper.TrySetFont("fontawesome-webfont.ttf");
                     textFont = iconLabel.Font.ToTypeface();
+                }
+                SetText();
+            }
+        }
+
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (iconSpan != null)
+            {
+                if (e.PropertyName == IconLabel.IconColorProperty.PropertyName ||
+                 e.PropertyName == IconLabel.IconProperty.PropertyName ||
+                 e.PropertyName == IconLabel.TextProperty.PropertyName ||
+                 e.PropertyName == IconLabel.TextColorProperty.PropertyName ||
+                 e.PropertyName == IconLabel.IsVisibleProperty.PropertyName ||
+                 e.PropertyName == IconLabel.IconSizeProperty.PropertyName ||
+                 e.PropertyName == IconLabel.FontSizeProperty.PropertyName ||
+                 e.PropertyName == IconLabel.OrientationProperty.PropertyName)
+                {
                     SetText();
-
-
                 }
             }
         }
@@ -88,29 +109,7 @@ namespace XLabs.Forms.Controls
             }
             nativeLabel.SetText(iconSpan, TextView.BufferType.Spannable);
         }
-      
 
-        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
- 	         base.OnElementPropertyChanged(sender, e);
-            
-            if(iconSpan != null )
-            {
-               if (e.PropertyName == IconLabel.IconColorProperty.PropertyName ||
-                e.PropertyName == IconLabel.IconProperty.PropertyName ||
-                e.PropertyName == IconLabel.TextProperty.PropertyName||
-                e.PropertyName == IconLabel.TextColorProperty.PropertyName ||
-                e.PropertyName == IconLabel.IsVisibleProperty.PropertyName ||
-                e.PropertyName == IconLabel.IconSizeProperty.PropertyName ||
-                e.PropertyName == IconLabel.FontSizeProperty.PropertyName ||
-                e.PropertyName == IconLabel.OrientationProperty.PropertyName)
-                {
-                    SetText();
-                }
-            }
-           
-             
-        }
         /// <summary>
         /// Build the content string by concating icon and text according to control options
         /// </summary>
@@ -169,21 +168,21 @@ namespace XLabs.Forms.Controls
             if (!string.IsNullOrEmpty(iconLabel.Icon))
             {
                 //set icon
-                span.SetSpan(new CustomTypefaceSpan("fontawesome", iconFont, iconLabel.IconColor.ToAndroid()),
+                span.SetSpan(new CustomTypefaceSpan("fontawesome", iconFont, helper.GetSpanColor(iconLabel.IconColor, Control.TextColors)),
                     computedString.IndexOf(iconLabel.Icon),
                     computedString.IndexOf(iconLabel.Icon) + iconLabel.Icon.Length,
                     SpanTypes.ExclusiveExclusive);
                 //set icon size
-                span.SetSpan(new AbsoluteSizeSpan((int)iconLabel.IconSize,true),
+                span.SetSpan(new AbsoluteSizeSpan((int)iconLabel.IconSize, true),
                      computedString.IndexOf(iconLabel.Icon),
                      computedString.IndexOf(iconLabel.Icon) + iconLabel.Icon.Length,
                      SpanTypes.ExclusiveExclusive);
-                                
+
 
             }
             if (!string.IsNullOrEmpty(iconLabel.Text))
             {
-                span.SetSpan(new CustomTypefaceSpan("", textFont, iconLabel.TextColor.ToAndroid()),
+                span.SetSpan(new CustomTypefaceSpan("", textFont, helper.GetSpanColor(iconLabel.TextColor, Control.TextColors)),
                      textStartIndex,
                      textStopIndex,
                      SpanTypes.ExclusiveExclusive);
@@ -191,42 +190,9 @@ namespace XLabs.Forms.Controls
                     textStartIndex,
                      textStopIndex,
                     SpanTypes.ExclusiveExclusive);
-
-
             }
 
             return span;
-
         }
-        /// <summary>
-        /// Load the FA font from assets
-        /// </summary>
-        /// <param name="fontName"></param>
-        /// <returns></returns>
-        private  Typeface TrySetFont(string fontName)
-        {
-            try
-            {
-                var tp = Typeface.CreateFromAsset(Context.Assets, "fonts/" + fontName);
-                
-                return tp;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(string.Format("not found in assets. Exception: {0}", ex));
-                try
-                {
-                    return Typeface.CreateFromFile("fonts/" + fontName);
-                }
-                catch (Exception ex1)
-                {
-                    System.Diagnostics.Debug.WriteLine(string.Format("not found by file. Exception: {0}", ex1));
-
-                    return Typeface.Default;
-                }
-            }
-        }
-      
-       
     }
-    }
+}

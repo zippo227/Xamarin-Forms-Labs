@@ -32,25 +32,21 @@ namespace XLabs.Forms.Controls
         int textStopIndex = -1;
        
         Android.Widget.Button nativeBtn;
-
-        public IconButtonRenderer()
-            : base()
-        {
-
-        }
+        private TextViewRenderHelper helper;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
         {
-
             base.OnElementChanged(e);
             if (e.NewElement != null && this.Control != null)
             {
+                if (helper == null)
+                    helper = new TextViewRenderHelper(Context);
                 if (iconSpan == null)
                 {
                     nativeBtn = (Android.Widget.Button)this.Control;
                     iconButton = (IconButton)e.NewElement;
 
-                    iconFont = TrySetFont("fontawesome-webfont.ttf");
+                    iconFont = helper.TrySetFont("fontawesome-webfont.ttf");
                     textFont = iconButton.Font.ToTypeface();
                     iconButton.IconSize = iconButton.IconSize == 0 ? (float)iconButton.FontSize : iconButton.IconSize;
                     var computedString = BuildRawTextString();
@@ -144,14 +140,6 @@ namespace XLabs.Forms.Controls
             return computedText;
         }
 
-        private Android.Graphics.Color GetSpanColor(Xamarin.Forms.Color color)
-        {
-            if (color == Xamarin.Forms.Color.Default)
-                return new Android.Graphics.Color(Control.TextColors.DefaultColor);
-
-            return color.ToAndroid();
-        }
-
         /// <summary>
         /// Build the spannable according to the computed text, meaning set the right font, color and size to the text and icon char index
         /// </summary>
@@ -164,7 +152,7 @@ namespace XLabs.Forms.Controls
             if (!string.IsNullOrEmpty(iconButton.Icon))
             {
                 //set icon
-                span.SetSpan(new CustomTypefaceSpan("fontawesome", iconFont, GetSpanColor(iconButton.IconColor)),
+                span.SetSpan(new CustomTypefaceSpan("fontawesome", iconFont, helper.GetSpanColor(iconButton.IconColor, Control.TextColors)),
                     computedString.IndexOf(iconButton.Icon),
                     computedString.IndexOf(iconButton.Icon) + iconButton.Icon.Length,
                     SpanTypes.ExclusiveExclusive);
@@ -179,7 +167,7 @@ namespace XLabs.Forms.Controls
             //if there is text
             if (!string.IsNullOrEmpty(iconButton.Text))
             {
-                span.SetSpan(new CustomTypefaceSpan("", textFont, GetSpanColor(iconButton.TextColor)),
+                span.SetSpan(new CustomTypefaceSpan("", textFont, helper.GetSpanColor(iconButton.TextColor, Control.TextColors)),
                      textStartIndex,
                      textStopIndex,
                      SpanTypes.ExclusiveExclusive);
@@ -193,37 +181,6 @@ namespace XLabs.Forms.Controls
 
             return span;
 
-        }
-
-       
-
-        /// <summary>
-        /// Load the FA font from assets
-        /// </summary>
-        /// <param name="fontName"></param>
-        /// <returns></returns>
-        private Typeface TrySetFont(string fontName)
-        {
-            try
-            {
-                var tp = Typeface.CreateFromAsset(Context.Assets, "fonts/" + fontName);
-
-                return tp;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(string.Format("not found in assets. Exception: {0}", ex));
-                try
-                {
-                    return Typeface.CreateFromFile("fonts/" + fontName);
-                }
-                catch (Exception ex1)
-                {
-                    System.Diagnostics.Debug.WriteLine(string.Format("not found by file. Exception: {0}", ex1));
-
-                    return Typeface.Default;
-                }
-            }
         }
 
         protected override void Dispose(bool disposing)
