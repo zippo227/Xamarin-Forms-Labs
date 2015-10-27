@@ -35,7 +35,7 @@ namespace XLabs.Platform.Services.Email
 		/// <param name="attachments">The attachments.</param>
 		public void ShowDraft(string subject, string body, bool html, string[] to, string[] cc, string[] bcc, IEnumerable<string> attachments = null)
 		{
-			var intent = new Intent(Intent.ActionSend);
+			var intent = new Intent(Intent.ActionSendMultiple);
 
 			intent.SetType(html ? "text/html" : "text/plain");
 			intent.PutExtra(Intent.ExtraEmail, to);
@@ -70,7 +70,7 @@ namespace XLabs.Platform.Services.Email
 		/// <param name="attachments">The attachments.</param>
 		public void ShowDraft(string subject, string body, bool html, string to, IEnumerable<string> attachments = null)
 		{
-			var intent = new Intent(Intent.ActionSend);
+			var intent = new Intent(Intent.ActionSendMultiple);
 			intent.SetType(html ? "text/html" : "text/plain");
 			intent.PutExtra(Intent.ExtraEmail, new string[]{ to });
 			intent.PutExtra(Intent.ExtraSubject, subject ?? string.Empty);
