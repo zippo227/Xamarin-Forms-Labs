@@ -20,7 +20,7 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, WKWebView>, IWKScriptMessageHandler
     {
-        private const string ScriptMessageHandlerName = "script";
+        private const string ScriptMessageHandlerName = "native";
 
         private UISwipeGestureRecognizer leftSwipeGestureRecognizer;
         private UISwipeGestureRecognizer rightSwipeGestureRecognizer;
@@ -145,14 +145,7 @@ namespace XLabs.Forms.Controls
 
             if (e.NewElement == null)
             {
-                this.userController.RemoveAllUserScripts();
-                this.userController.RemoveScriptMessageHandler(ScriptMessageHandlerName);
-
-                if (this.Control != null)
-                {
-                    this.Control.RemoveGestureRecognizer(this.leftSwipeGestureRecognizer);
-                    this.Control.RemoveGestureRecognizer(this.rightSwipeGestureRecognizer);
-                }
+				HandleCleanup ();
             }
 
             this.Unbind(e.OldElement);
@@ -161,6 +154,9 @@ namespace XLabs.Forms.Controls
 
         partial void HandleCleanup()
         {
+			this.userController.RemoveAllUserScripts();
+			this.userController.RemoveScriptMessageHandler(ScriptMessageHandlerName);
+
             if (Control == null) return;
             Control.RemoveGestureRecognizer(this.leftSwipeGestureRecognizer);
             Control.RemoveGestureRecognizer(this.rightSwipeGestureRecognizer);
