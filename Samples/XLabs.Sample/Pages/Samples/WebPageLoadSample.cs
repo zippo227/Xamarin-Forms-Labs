@@ -84,8 +84,8 @@ namespace XLabs.Sample
         {
             while (!token.IsCancellationRequested)
             {
-                await LoadPage(this.pages[index++], token);
-                index %= this.pages.Count;
+                await LoadPage(this.pages[this.index++], token);
+                this.index %= this.pages.Count;
                 await Task.Delay(10000);
             }
         }
@@ -107,9 +107,15 @@ namespace XLabs.Sample
                     });
                 }
 
-                tcs.SetResult(true);
+                this.hybrid.RegisterCallback("getUri", s =>
+                {
+                    System.Diagnostics.Debug.WriteLine(s);
+                    this.hybrid.LoadFinished -= e;
+                    this.hybrid.RemoveCallback("getUri");
+                    tcs.SetResult(true);
+                });
 
-                this.hybrid.LoadFinished -= e;
+                this.hybrid.InjectJavaScript("Native(\"getUri\", window.location.href)");
             };
 
             this.hybrid.LoadFinished += e;
