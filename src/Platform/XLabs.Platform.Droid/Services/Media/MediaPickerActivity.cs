@@ -272,6 +272,10 @@ namespace XLabs.Platform.Services.Media
 
 				if (!ran)
 				{
+		                        if (CheckSelfPermission(Manifest.Permission.Camera) != Android.Content.PM.Permission.Granted)
+		                        {
+		                            RequestPermissions(new string[] { Manifest.Permission.Camera }, 1);
+		                        }
 					StartActivityForResult(pickIntent, _id);
 				}
 			}
