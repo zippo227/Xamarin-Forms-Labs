@@ -20,8 +20,6 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, WKWebView>, IWKScriptMessageHandler
     {
-        private const string ScriptMessageHandlerName = "native";
-
         private UISwipeGestureRecognizer leftSwipeGestureRecognizer;
         private UISwipeGestureRecognizer rightSwipeGestureRecognizer;
         private WKUserContentController userController;
@@ -52,10 +50,7 @@ namespace XLabs.Forms.Controls
         [Export("webView:didFinishNavigation:")]
         public void DidFinishNavigation(WKWebView webView, WKNavigation navigation)
         {
-            if (this.Element != null)
-            {
-                this.Element.OnLoadFinished(webView, EventArgs.Empty);
-            }
+            this.Element.OnLoadFinished(webView, EventArgs.Empty);
         }
 
         /// <summary>
@@ -66,10 +61,7 @@ namespace XLabs.Forms.Controls
         [Export("webView:didStartProvisionalNavigation:")]
         public void DidStartProvisionalNavigation(WKWebView webView, WKNavigation navigation)
         {
-            if (this.Element != null)
-            {
-                this.Element.OnNavigating(webView.Url);
-            }
+            Element.OnNavigating(webView.Url);
         }
 
         #endregion
@@ -92,10 +84,7 @@ namespace XLabs.Forms.Controls
         /// <param name="message">The message being sent.</param>
         public void DidReceiveScriptMessage(WKUserContentController userContentController, WKScriptMessage message)
         {
-            if (this.Element != null)
-            {
-                this.Element.MessageReceived(message.Body.ToString());
-            }
+            this.Element.MessageReceived(message.Body.ToString());
         }
 
         /// <summary>
@@ -111,7 +100,7 @@ namespace XLabs.Forms.Controls
             if (Control == null && e.NewElement != null)
             {
                 this.userController = new WKUserContentController();
-                var config = new WKWebViewConfiguration
+                var config = new WKWebViewConfiguration()
                 {
                     UserContentController = this.userController
                 };
@@ -120,7 +109,7 @@ namespace XLabs.Forms.Controls
 
                 this.userController.AddUserScript(script);
 
-                this.userController.AddScriptMessageHandler(this, ScriptMessageHandlerName);
+                this.userController.AddScriptMessageHandler(this, "native");
 
                 var webView = new WKWebView(this.Frame, config) { WeakNavigationDelegate = this };
 
@@ -143,9 +132,10 @@ namespace XLabs.Forms.Controls
                 webView.AddGestureRecognizer(this.rightSwipeGestureRecognizer);
             }
 
-            if (e.NewElement == null)
+            if (e.NewElement == null && this.Control != null)
             {
-				HandleCleanup ();
+                this.Control.RemoveGestureRecognizer(this.leftSwipeGestureRecognizer);
+                this.Control.RemoveGestureRecognizer(this.rightSwipeGestureRecognizer);
             }
 
             this.Unbind(e.OldElement);
@@ -154,9 +144,6 @@ namespace XLabs.Forms.Controls
 
         partial void HandleCleanup()
         {
-			this.userController.RemoveAllUserScripts();
-			this.userController.RemoveScriptMessageHandler(ScriptMessageHandlerName);
-
             if (Control == null) return;
             Control.RemoveGestureRecognizer(this.leftSwipeGestureRecognizer);
             Control.RemoveGestureRecognizer(this.rightSwipeGestureRecognizer);

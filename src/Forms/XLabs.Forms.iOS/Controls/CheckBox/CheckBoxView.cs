@@ -14,7 +14,7 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CheckBoxView"/> class.
 		/// </summary>
-		public CheckBoxView()
+        public CheckBoxView()
 		{
 			Initialize();
 		}
@@ -23,8 +23,7 @@ namespace XLabs.Forms.Controls
 		/// Initializes a new instance of the <see cref="CheckBoxView"/> class.
 		/// </summary>
 		/// <param name="bounds">The bounds.</param>
-		public CheckBoxView(CGRect bounds)
-			: base(bounds)
+        public CheckBoxView(CGRect bounds) : base(bounds)
 		{
 			Initialize();
 		}
@@ -72,6 +71,9 @@ namespace XLabs.Forms.Controls
 			ApplyStyle();
 
 			TouchUpInside += (sender, args) => Selected = !Selected;
+            // set default color, because type is not UIButtonType.System 
+            SetTitleColor(UIColor.DarkTextColor, UIControlState.Normal);
+            SetTitleColor(UIColor.DarkTextColor, UIControlState.Selected);
 		}
 
 		/// <summary>

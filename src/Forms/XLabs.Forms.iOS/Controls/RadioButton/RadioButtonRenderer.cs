@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
 using XLabs.Platform.Extensions;
+using XLabs.Forms.Extensions;
 
 [assembly: ExportRenderer(typeof (CustomRadioButton), typeof (RadioButtonRenderer))]
 
@@ -17,6 +18,8 @@ namespace XLabs.Forms.Controls
 	/// </summary>
 	public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, RadioButtonView>
     {
+        private UIColor defaultTextColor;
+
 		/// <summary>
 		/// Called when [element changed].
 		/// </summary>
@@ -28,6 +31,7 @@ namespace XLabs.Forms.Controls
             if (Control == null)
             {
                 var checkBox = new RadioButtonView(Bounds);
+                defaultTextColor = checkBox.TitleColor(UIControlState.Normal);
 
                 checkBox.TouchUpInside += (s, args) => Element.Checked = Control.Checked;
 
@@ -43,8 +47,7 @@ namespace XLabs.Forms.Controls
             Control.VerticalAlignment = UIControlContentVerticalAlignment.Center;
             Control.Text = this.Element.Text;
             Control.Checked = this.Element.Checked;
-            Control.SetTitleColor(this.Element.TextColor.ToUIColor(), UIControlState.Normal);
-            Control.SetTitleColor(this.Element.TextColor.ToUIColor(), UIControlState.Selected);
+            UpdateTextColor();
         }
 
 		/// <summary>
@@ -106,6 +109,15 @@ namespace XLabs.Forms.Controls
             }
         }
 
+        /// <summary>
+        /// Updates the color of the text.
+        /// </summary>
+        private void UpdateTextColor()
+        {
+            Control.SetTitleColor (Element.TextColor.ToUIColorOrDefault(defaultTextColor), UIControlState.Normal);
+            Control.SetTitleColor (Element.TextColor.ToUIColorOrDefault(defaultTextColor), UIControlState.Selected);
+        }
+
 		/// <summary>
 		/// Handles the <see cref="E:ElementPropertyChanged" /> event.
 		/// </summary>
@@ -124,8 +136,7 @@ namespace XLabs.Forms.Controls
                     Control.Text = Element.Text;
                     break;
                 case "TextColor":
-                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Normal);
-                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Selected);
+                    UpdateTextColor();
                     break;
                 case "Element":
                     break;

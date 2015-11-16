@@ -1,6 +1,7 @@
 using Xamarin.Forms;
 
 using XLabs.Forms.Controls;
+using System;
 
 [assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRenderer))]
 
@@ -34,7 +35,7 @@ namespace XLabs.Forms.Controls
             //UpdateUi(view, this.Control);
             if (view != null)
             {
-                SetPlaceholder (view);
+                SetPlaceholder(view);
             }
         }
 
@@ -51,7 +52,7 @@ namespace XLabs.Forms.Controls
 
             if (view != null &&
                 e.PropertyName == Label.TextProperty.PropertyName ||
-                e.PropertyName == Label.FormattedTextProperty.PropertyName || 
+                e.PropertyName == Label.FormattedTextProperty.PropertyName ||
                 e.PropertyName == ExtendedLabel.PlaceholderProperty.PropertyName ||
                 e.PropertyName == ExtendedLabel.FormattedPlaceholderProperty.PropertyName ||
                 e.PropertyName == ExtendedLabel.IsDropShadowProperty.PropertyName ||
@@ -102,6 +103,19 @@ namespace XLabs.Forms.Controls
                 }
                 #endregion ====== End of obsolete section ==========================================================
             }
+            else
+            {
+                try
+                {
+                    var font = UIFont.FromName(view.FontFamily, (float)view.FontSize);
+                    if (font != null)
+                        this.Control.Font = font;
+                }
+                catch (Exception ex)
+                {
+                    var x = ex;
+                }
+            }
 
             //Do not create attributed string if it is not necesarry
             //if (!view.IsUnderline && !view.IsStrikeThrough && !view.IsDropShadow)
@@ -133,10 +147,11 @@ namespace XLabs.Forms.Controls
             }
 
             this.Control.AttributedText = new NSMutableAttributedString(view.Text,
-                                                                   this.Control.Font,
-                                                                   underlineStyle: underline,
-                                                                   strikethroughStyle: strikethrough,
-                                                                   shadow: dropShadow); ;
+                this.Control.Font,
+                underlineStyle: underline,
+                strikethroughStyle: strikethrough,
+                shadow: dropShadow);
+            ;
         }
 
         private void SetPlaceholder(ExtendedLabel view)

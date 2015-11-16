@@ -57,6 +57,9 @@ namespace XLabs.Forms.Controls
             this.AdjustEdgeInsets();
             this.ApplyStyle();
 
+            // set default color, because type is not UIButtonType.System 
+            SetTitleColor(UIColor.DarkTextColor, UIControlState.Normal);
+            SetTitleColor(UIColor.DarkTextColor, UIControlState.Selected);
             this.TouchUpInside += (sender, args) => this.Selected = !this.Selected;
         }
 
