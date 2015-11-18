@@ -21,7 +21,7 @@ namespace XLabs.Platform.Device
         /// <summary>
         /// The iPhone expression.
         /// </summary>
-        protected const string PhoneExpression = "iPhone([1-7]),([1-4])";
+        protected const string PhoneExpression = "iPhone([1-8]),([1-4])";
 
         /// <summary>
         /// The iPod expression.
@@ -293,38 +293,38 @@ namespace XLabs.Platform.Device
             }
         }
 
-		/// <summary>
-		/// Gets the language code.
-		/// </summary>
-		/// <value>The language code.</value>
-		public string LanguageCode
+        /// <summary>
+        /// Gets the language code.
+        /// </summary>
+        /// <value>The language code.</value>
+        public string LanguageCode
         {
             get { return NSLocale.PreferredLanguages[0]; }
         }
 
-		/// <summary>
-		/// Gets the time zone offset.
-		/// </summary>
-		/// <value>The time zone offset.</value>
-		public double TimeZoneOffset
+        /// <summary>
+        /// Gets the time zone offset.
+        /// </summary>
+        /// <value>The time zone offset.</value>
+        public double TimeZoneOffset
         {
             get { return NSTimeZone.LocalTimeZone.GetSecondsFromGMT / 3600.0; }
         }
 
-		/// <summary>
-		/// Gets the time zone.
-		/// </summary>
-		/// <value>The time zone.</value>
-		public string TimeZone
+        /// <summary>
+        /// Gets the time zone.
+        /// </summary>
+        /// <value>The time zone.</value>
+        public string TimeZone
         {
             get { return NSTimeZone.LocalTimeZone.Name; }
         }
 
-		/// <summary>
-		/// Gets the orientation.
-		/// </summary>
-		/// <value>The orientation.</value>
-		public Orientation Orientation
+        /// <summary>
+        /// Gets the orientation.
+        /// </summary>
+        /// <value>The orientation.</value>
+        public Orientation Orientation
         {
             get
             {
