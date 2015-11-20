@@ -346,7 +346,7 @@ namespace XLabs.Forms.Controls
         /// <value>The selected item.</value>
         public object SelectedItem
         {
-            get { return (Color)GetValue(SelectedItemProperty); }
+            get { return (object)GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
         }
 
