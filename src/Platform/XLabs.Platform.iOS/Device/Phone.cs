@@ -110,6 +110,12 @@ namespace XLabs.Platform.Device
             /// </summary>
             [Description("iPhone 6S")]
             IPhone6S,
+
+            /// <summary>
+            /// The iPhone 6S+.
+            /// </summary>
+            [Description("iPhone 6S Plus")]
+            IPhone6SPlus,
         }
 
         /// <summary>
@@ -145,7 +151,7 @@ namespace XLabs.Platform.Device
                     Version = minorVersion == 1 ? PhoneType.IPhone6Plus : PhoneType.IPhone6;
                     break;
                 case 8:
-                    Version = PhoneType.IPhone6S;
+                    Version = minorVersion == 1 ? PhoneType.IPhone6S : PhoneType.IPhone6SPlus;
                     break;
                 default:
                     Version = PhoneType.Unknown;
@@ -159,6 +165,7 @@ namespace XLabs.Platform.Device
                     Display = new Display(1334, 750, 326, 326);
                     break;
                 case PhoneType.IPhone6Plus:
+                case PhoneType.IPhone6SPlus:
                     Display = new Display(2208, 1242, 401 * 1242 / 1080, 401 * 2208 / 1920);
                     break;
                 default:
