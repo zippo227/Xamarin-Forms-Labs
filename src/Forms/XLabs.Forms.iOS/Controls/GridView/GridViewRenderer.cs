@@ -171,10 +171,11 @@ namespace XLabs.Forms.Controls
         {
             if (e.PropertyName == "ItemsSource")
             {
-                var itemsSource = this.Element.ItemsSource as INotifyCollectionChanged;
-                if (itemsSource != null) 
+                var newItemsSource = this.Element.ItemsSource as INotifyCollectionChanged;
+                if (newItemsSource != null) 
                 {
-                    itemsSource.CollectionChanged -= DataCollectionChanged;
+                    newItemsSource.CollectionChanged += DataCollectionChanged;
+                    DataCollectionChanged(null,null);
                 }
             }
         }
@@ -188,10 +189,10 @@ namespace XLabs.Forms.Controls
         {
             if (e.PropertyName == "ItemsSource")
             {
-                var itemsSource = this.Element.ItemsSource as INotifyCollectionChanged;
-                if (itemsSource != null) 
+                var oldItemsSource = this.Element.ItemsSource as INotifyCollectionChanged;
+                if (oldItemsSource != null) 
                 {
-                    itemsSource.CollectionChanged += DataCollectionChanged;
+                    oldItemsSource.CollectionChanged -= DataCollectionChanged;
                 }
             }
         }
