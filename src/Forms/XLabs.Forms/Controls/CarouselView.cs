@@ -251,7 +251,7 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// Switches the view. Based on absolute position.
 		/// </summary>
-		/// <param name="newPosition">New position.</param>
+		/// <param name="newval">New position.</param>
 		private void SwitchView(int newval)
 		{
 			if (newval < 0 || newval > ViewModels.Count() - 1) return;
