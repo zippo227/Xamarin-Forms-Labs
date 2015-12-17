@@ -55,7 +55,7 @@ namespace XLabs.Forms.Controls
 
             if (convertView == null)
             {
-                convertView = new BaseCellView(context);
+                convertView = new BaseCellView(context, view);
             }
 
             var cellView = convertView as BaseCellView;
