@@ -57,22 +57,25 @@ namespace XLabs.Forms.Controls
 
                 var width = this.GetWidth(imageButton.ImageWidthRequest);
                 var height = this.GetHeight(imageButton.ImageHeightRequest);
+
+
+
                 await SetupImages(imageButton, targetButton, width, height);
 
                 switch (imageButton.Orientation)
                 {
-                    case ImageOrientation.ImageToLeft:
-                        AlignToLeft(targetButton);
-                        break;
-                    case ImageOrientation.ImageToRight:
-                        AlignToRight(imageButton.ImageWidthRequest, targetButton);
-                        break;
-                    case ImageOrientation.ImageOnTop:
-                        AlignToTop(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
-                        break;
-                    case ImageOrientation.ImageOnBottom:
-                        AlignToBottom(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
-                        break;
+                case ImageOrientation.ImageToLeft:
+                    AlignToLeft(targetButton);
+                    break;
+                case ImageOrientation.ImageToRight:
+                    AlignToRight(imageButton.ImageWidthRequest, targetButton);
+                    break;
+                case ImageOrientation.ImageOnTop:
+                    AlignToTop(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton, imageButton.WidthRequest);
+                    break;
+                case ImageOrientation.ImageOnBottom:
+                    AlignToBottom(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
+                    break;
                 }
             }
         }
@@ -152,14 +155,17 @@ namespace XLabs.Forms.Controls
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="widthRequest">The requested image width.</param>
         /// <param name="targetButton">The button to align.</param>
-        private static void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton)
+        private static void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton, double buttonWidthRequest)
         {
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Top;
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Center;
+            targetButton.TitleLabel.LineBreakMode = UIKit.UILineBreakMode.WordWrap;
+
             targetButton.SizeToFit();
 
             var titleWidth = targetButton.TitleLabel.IntrinsicContentSize.Width;
+            CGSize titleSize = targetButton.TitleLabel.Frame.Size;
 
             UIEdgeInsets titleInsets;
             UIEdgeInsets imageInsets;
@@ -170,9 +176,9 @@ namespace XLabs.Forms.Controls
                 imageInsets = new UIEdgeInsets(0, Convert.ToInt32(titleWidth / 2), 0, -1 * Convert.ToInt32(titleWidth / 2));
             }
             else
-            {
+            {                       
                 titleInsets = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1 * widthRequest / 2), -1 * heightRequest, Convert.ToInt32(widthRequest / 2));
-                imageInsets = new UIEdgeInsets(0, titleWidth / 2, 0, -1 * titleWidth / 2);
+                imageInsets = new UIEdgeInsets(0, Convert.ToInt32(targetButton.IntrinsicContentSize.Width/2 - widthRequest/2 - titleSize.Width/2 ), 0, Convert.ToInt32(-1 * (targetButton.IntrinsicContentSize.Width/2 - widthRequest/2 +  titleSize.Width/2)));
             }
 
             targetButton.TitleEdgeInsets = titleInsets;
@@ -211,18 +217,18 @@ namespace XLabs.Forms.Controls
             targetButton.ImageEdgeInsets = imageInsets;
         }
 
-		/// <summary>
-		/// Loads an image from a bundle given the supplied image name, resizes it to the
-		/// height and width request and sets it into a <see cref="UIButton" />.
-		/// </summary>
-		/// <param name="source">The <see cref="ImageSource" /> to load the image from.</param>
-		/// <param name="widthRequest">The requested image width.</param>
-		/// <param name="heightRequest">The requested image height.</param>
-		/// <param name="targetButton">A <see cref="UIButton" /> to set the image into.</param>
-		/// <param name="state">The state.</param>
-		/// <param name="tintColor">Color of the tint.</param>
-		/// <returns>A <see cref="Task" /> for the awaited operation.</returns>
-		private async static Task SetImageAsync(ImageSource source, int widthRequest, int heightRequest, UIButton targetButton, UIControlState state = UIControlState.Normal, UIColor tintColor = null)
+        /// <summary>
+        /// Loads an image from a bundle given the supplied image name, resizes it to the
+        /// height and width request and sets it into a <see cref="UIButton" />.
+        /// </summary>
+        /// <param name="source">The <see cref="ImageSource" /> to load the image from.</param>
+        /// <param name="widthRequest">The requested image width.</param>
+        /// <param name="heightRequest">The requested image height.</param>
+        /// <param name="targetButton">A <see cref="UIButton" /> to set the image into.</param>
+        /// <param name="state">The state.</param>
+        /// <param name="tintColor">Color of the tint.</param>
+        /// <returns>A <see cref="Task" /> for the awaited operation.</returns>
+        private async static Task SetImageAsync(ImageSource source, int widthRequest, int heightRequest, UIButton targetButton, UIControlState state = UIControlState.Normal, UIColor tintColor = null)
         {
             var handler = GetHandler(source);
             using (UIImage image = await handler.LoadImageAsync(source))
@@ -243,10 +249,10 @@ namespace XLabs.Forms.Controls
             }
         }
 
-		/// <summary>
-		/// Layouts the subviews.
-		/// </summary>
-		public override void LayoutSubviews()
+        /// <summary>
+        /// Layouts the subviews.
+        /// </summary>
+        public override void LayoutSubviews()
         {
             base.LayoutSubviews();
             if (ImageButton.Orientation == ImageOrientation.ImageToRight)
