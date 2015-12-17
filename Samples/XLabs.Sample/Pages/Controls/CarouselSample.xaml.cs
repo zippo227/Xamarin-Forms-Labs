@@ -74,6 +74,13 @@
         }
 
         public ObservableCollection<PageWidget> Models { get; set; }
+
+		private PageWidget _SelectedModel;
+		public PageWidget SelectedModel 
+		{
+			get { return _SelectedModel; }  
+			set { SetField (ref _SelectedModel, value);  }
+		}
     }
 
     public class PageWidget

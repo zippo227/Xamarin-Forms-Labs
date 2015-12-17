@@ -219,6 +219,7 @@ namespace XLabs.Sample
                 {"AutocompleteView",  typeof(AutoCompletePage)},
                 {"ButtonGroup", typeof(ButtonGroupPage)},
                 {"Calendar", typeof(CalendarPage)},
+				{"CarouselView", typeof(CarouselSample)},
                 {"CameraView", typeof(CameraViewPage)},
                 {"CheckBox", typeof(CheckBoxPage)},
                 {"CircleImage", typeof(CircleImagePage)},

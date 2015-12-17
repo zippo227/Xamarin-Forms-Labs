@@ -98,6 +98,10 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		public static BindableProperty ViewModelsProperty = BindableProperty.Create<CarouselView<T>, ObservableCollection<T>>(x => x.ViewModels, default(ObservableCollection<T>),BindingMode.OneWay,null,ViewModelsChanged);
 		/// <summary>
+		/// Property defnition for the <see cref="SelectedViewModel" /> property
+		/// </summary>
+		public static BindableProperty SelectedViewModelProperty = BindableProperty.Create<CarouselView<T>, T>(x => x.SelectedViewModel, default(T),BindingMode.TwoWay,null,SelectedViewModelChanged);
+		/// <summary>
 		/// Property definition for the <see cref="TemplateSelector" /> property
 		/// </summary>
 		public static readonly BindableProperty TemplateSelectorProperty = BindableProperty.Create<CarouselView<T>, TemplateSelector>(x => x.TemplateSelector, default(TemplateSelector),BindingMode.OneWay,null,TemplateSelectorChanged);
@@ -191,6 +195,15 @@ namespace XLabs.Forms.Controls
 		}
 
 		/// <summary>
+		/// The selected view model.
+		/// </summary>
+		/// <value>The selected view model.</value>
+		public T SelectedViewModel {
+			get { return (T)GetValue (SelectedViewModelProperty); }
+			set { SetValue (SelectedViewModelProperty, value); }
+		}
+
+		/// <summary>
 		/// Used to match a type with a datatemplate
 		/// <see cref="TemplateSelector" />
 		/// </summary>
@@ -232,20 +245,30 @@ namespace XLabs.Forms.Controls
         private void SwitchView(bool increment)
         {
             var newval = this.currentview + (increment ? 1 : -1);
-            
-            if (newval < 0 || newval > ViewModels.Count() - 1) return;
-            var oldview = this.currentview >=0 ?  ViewModels[this.currentview] as ICarouselView : null;
-            var newview = ViewModels[newval] as ICarouselView;
-
-            myGrid.Children.Clear();
-            if(oldview != null) oldview.Hiding();
-            if(newview != null) newview.Showing();
-            this.currentview = newval;
-            this.contentView.ViewModel = ViewModels[this.currentview];
-            if(oldview != null) oldview.Hiden();
-            if(newview != null) newview.Shown();
-            this.myGrid.Children.Add(this.marker, this.currentview, 0);
+			SwitchView (newval);
         }
+
+		/// <summary>
+		/// Switches the view. Based on absolute position.
+		/// </summary>
+		/// <param name="newval">New position.</param>
+		private void SwitchView(int newval)
+		{
+			if (newval < 0 || newval > ViewModels.Count() - 1) return;
+			var oldview = this.currentview >=0 ?  ViewModels[this.currentview] as ICarouselView : null;
+			var newview = ViewModels[newval] as ICarouselView;
+
+			myGrid.Children.Clear();
+			if(oldview != null) oldview.Hiding();
+			if(newview != null) newview.Showing();
+			this.currentview = newval;
+			var newVm = ViewModels [this.currentview];
+			this.contentView.ViewModel = newVm;
+			this.SelectedViewModel = newVm;
+			if(oldview != null) oldview.Hiden();
+			if(newview != null) newview.Shown();
+			this.myGrid.Children.Add(this.marker, this.currentview, 0);
+		}
 
         /// <summary>
         /// Shows the tick changed.
@@ -309,6 +332,24 @@ namespace XLabs.Forms.Controls
                     break;
             }
         }
+
+		/// <summary>
+		///The selected viewmodel changed.
+		/// </summary>
+		/// <param name="bo">The bo.</param>
+		/// <param name="oldval">The oldval.</param>
+		/// <param name="newval">The newval.</param>
+		/// <exception cref="XLabs.Forms.Exceptions.InvalidBindableException"></exception>
+		private static void SelectedViewModelChanged(BindableObject bo, T oldval, T newval)
+		{
+			var cv = bo as CarouselView<T>;
+			if (cv == null)
+				throw new InvalidBindableException(bo, typeof(CarouselView<T>));
+
+			var newPosition = cv.ViewModels.IndexOf (newval);
+			if(newPosition >= 0 && newPosition != cv.currentview)	
+				cv.SwitchView (newPosition);
+		}
 
         /// <summary>
         /// Shows the tickchanged.
