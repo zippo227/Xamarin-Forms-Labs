@@ -165,5 +165,13 @@ namespace XLabs.Forms.Mvvm
 
 			return CreatePage(typeof (TViewModel), i, args);
 		}
+
+		/// <summary>
+		/// Clears the cache.
+		/// </summary>
+		public static void ClearCache ()
+		{
+			PageCache = new Dictionary<string, Tuple<IViewModel, object>>();
+		}
 	}
 }
