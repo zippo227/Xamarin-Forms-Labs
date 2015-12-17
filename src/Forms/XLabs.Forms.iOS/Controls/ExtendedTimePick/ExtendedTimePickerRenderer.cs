@@ -90,6 +90,7 @@ namespace XLabs.Forms.Controls
             UpdateTime();
 
             SetBorder();
+            UpdateTimeConstraints();
         }
 
         /// <summary>
@@ -107,6 +108,8 @@ namespace XLabs.Forms.Controls
             else if (e.PropertyName == ExtendedTimePicker.HasBorderProperty.PropertyName)
             {
                 SetBorder();
+            } else if (e.PropertyName == ExtendedTimePicker.MinimumTimeProperty.PropertyName || e.PropertyName == ExtendedTimePicker.MaximumTimeProperty.PropertyName) {
+                UpdateTimeConstraints();
             }
         }
 
@@ -167,6 +170,17 @@ namespace XLabs.Forms.Controls
             if (this.Element == null) return;
 
             this.Control.BorderStyle = this.Element.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
+        }
+
+        /// <summary>
+        /// Updates the time constraints.
+        /// </summary>
+        private void UpdateTimeConstraints()
+        {
+            if (this.Element == null) return;
+
+            this._picker.MinimumDate = new DateTime(1, 1, 1).Add(this.Element.MinimumTime).ToNSDate();
+            this._picker.MaximumDate = new DateTime(1, 1, 1).Add(this.Element.MaximumTime).ToNSDate();
         }
 
         //
