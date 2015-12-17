@@ -8,6 +8,7 @@ namespace XLabs.Platform.Services.Media
 	using System.Threading;
 	using System.Threading.Tasks;
 
+	using Android;
 	using Android.App;
 	using Android.Content;
 	using Android.Database;
