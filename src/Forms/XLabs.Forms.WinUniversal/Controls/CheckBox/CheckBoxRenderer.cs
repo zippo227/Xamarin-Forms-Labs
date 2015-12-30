@@ -1,9 +1,9 @@
-﻿using Xamarin.Forms;
+﻿using Windows.UI.Xaml.Controls;
+using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinRT;
 using XLabs.Forms.Controls;
-//using System.Windows.Controls;
 
-[assembly: ExportRenderer(typeof(CheckBox), typeof(CheckBoxRenderer))]
+[assembly: ExportRenderer(typeof(XLabs.Forms.Controls.CheckBox), typeof(CheckBoxRenderer))]
 
 namespace XLabs.Forms.Controls
 {

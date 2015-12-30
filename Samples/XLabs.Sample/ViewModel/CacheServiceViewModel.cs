@@ -23,14 +23,14 @@
         /// <summary>
         /// Holds a reference to the CacheService.
         /// </summary>
-        private readonly ISimpleCache _cacheService;
+        private readonly ICacheProvider _cacheService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CacheServiceViewModel"/> class.
         /// </summary>
         public CacheServiceViewModel()
         {
-            _cacheService = Resolver.Resolve<ISimpleCache>();
+            _cacheService = Resolver.Resolve<ICacheProvider>();
             CheckKeyAndDownloadNewContent();
         }
 

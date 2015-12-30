@@ -117,7 +117,7 @@ namespace XLabs.Sample.Droid
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISecureStorage>(t => new KeyVaultStorage(t.Resolve<IDevice>().Id.ToCharArray()))
-                .Register<ISimpleCache>(
+                .Register<ICacheProvider>(
                     t => new SQLiteSimpleCache(new SQLitePlatformAndroid(),
                         new SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
 

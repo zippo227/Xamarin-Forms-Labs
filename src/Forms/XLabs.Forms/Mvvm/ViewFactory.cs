@@ -171,7 +171,10 @@ namespace XLabs.Forms.Mvvm
 		/// </summary>
 		public static void ClearCache ()
 		{
-			PageCache = new Dictionary<string, Tuple<IViewModel, object>>();
+			if (PageCache != null)
+			{
+				PageCache.Clear();
+			}
 		}
 	}
 }

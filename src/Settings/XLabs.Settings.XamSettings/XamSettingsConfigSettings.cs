@@ -1,5 +1,5 @@
 ﻿using System;
-using Refractored.Xam.Settings;
+using Plugin.Settings;
 
 namespace XLabs.Settings.XamSettings
 {

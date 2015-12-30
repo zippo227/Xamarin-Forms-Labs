@@ -178,7 +178,7 @@ namespace Xlabs.Sample.WinUniversal
                 .Register<XFormsAppWin>(app)
                 .Register<IXFormsApp>(app)
                 //.Register<ISecureStorage, SecureStorage>()
-                //.Register<ISimpleCache>(
+                //.Register<ICacheProvider>(
                 //    t => new SQLiteSimpleCache(new SQLite.Net.Platform.WindowsPhone8.SQLitePlatformWP8(),
                 //        new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()))
                 ;

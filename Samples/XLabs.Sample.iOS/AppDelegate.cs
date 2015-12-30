@@ -103,7 +103,7 @@
                 .Register<IXFormsApp>(app)
                 .Register<ISecureStorage, SecureStorage>()
                 .Register<IDependencyContainer>(t => resolverContainer)
-                .Register<ISimpleCache>(
+                .Register<ICacheProvider>(
                     t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(),
                         new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
             
