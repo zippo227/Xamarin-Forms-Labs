@@ -23,7 +23,7 @@
 		</releaseNotes>
 		<language>en-US</language>
 		<dependencies>
-			<dependency id="Xam.Plugins.Settings" version="1.5.1" />
+			<dependency id="Xam.Plugins.Settings" version="2.1.0" />
 			<dependency id="XLabs.Settings" version="2.0.5677" />
 		</dependencies>
 	</metadata>

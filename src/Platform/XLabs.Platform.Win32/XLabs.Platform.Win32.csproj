@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Devices\Accelerometer.cs" />
+    <Compile Include="Devices\Battery.cs" />
+    <Compile Include="Devices\Gyroscope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

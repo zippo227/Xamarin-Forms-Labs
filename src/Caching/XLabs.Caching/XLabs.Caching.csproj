@@ -39,10 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAsyncCacheProvider.cs" />
-    <Compile Include="IAsyncSimpleCache.cs" />
     <Compile Include="ICacheProvider.cs" />
-    <Compile Include="ISimpleCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleCacheProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

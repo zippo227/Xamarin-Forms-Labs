@@ -49,7 +49,7 @@ namespace XLabs.Ioc.SimpleInjectorContainer
         /// <returns>An instance of <see cref="IDependencyContainer"/></returns>
         public IDependencyContainer Register<T>(T instance) where T : class
         {
-            this.container.RegisterSingle<T>(instance);
+            this.container.RegisterSingleton<T>(instance);
             return this;
         }
 
@@ -75,7 +75,7 @@ namespace XLabs.Ioc.SimpleInjectorContainer
 		/// <returns>IDependencyContainer.</returns>
 		public IDependencyContainer RegisterSingle<T, TImpl>() where T : class where TImpl : class, T
         {
-            this.container.RegisterSingle<T, TImpl>();
+            this.container.RegisterSingleton<T, TImpl>();
             return this;
         }
 
