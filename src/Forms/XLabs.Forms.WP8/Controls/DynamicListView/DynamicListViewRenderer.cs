@@ -19,6 +19,8 @@
 		/// </summary>
 		private LongListSelector _tableView;
 
+		private System.Windows.DataTemplate _dateTemplate;
+
 		/// <summary>
 		/// The xaml
 		/// </summary>
@@ -69,8 +71,9 @@
 		{
 			get
 			{
-				return (System.Windows.DataTemplate)XamlReader.Load(XAML);
+				return _dateTemplate ?? (_dateTemplate = (System.Windows.DataTemplate)XamlReader.Load(XAML));
 			}
+			set { _dateTemplate = value; }
 		}
 
 		/// <summary>

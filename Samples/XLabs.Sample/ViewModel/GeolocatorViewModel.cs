@@ -236,7 +236,7 @@
 		{
 			get
 			{
-				return _emailService ?? (_emailService = DependencyService.Get<IEmailService>());
+				return _emailService ?? (_emailService = DependencyService.Get<IEmailService>() ?? Resolver.Resolve<IEmailService>());
 			}
 		}
 
@@ -248,7 +248,7 @@
 		{
 			get
 			{
-				return _phoneService ?? (_phoneService = DependencyService.Get<IPhoneService>());
+				return _phoneService ?? (_phoneService = DependencyService.Get<IPhoneService>() ?? Resolver.Resolve<IPhoneService>());
 			}
 		}
 
@@ -262,7 +262,7 @@
 			{
 				if (_geolocator == null)
 				{
-					_geolocator = DependencyService.Get<IGeolocator>();
+					_geolocator = DependencyService.Get<IGeolocator>() ?? Resolver.Resolve<IGeolocator>();
 					_geolocator.PositionError += OnListeningError;
 					_geolocator.PositionChanged += OnPositionChanged;
 				}

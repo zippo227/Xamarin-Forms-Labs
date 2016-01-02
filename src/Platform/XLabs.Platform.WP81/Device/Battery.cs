@@ -27,7 +27,7 @@
         /// </summary>
         partial void StartChargerMonitoring()
         {
-            throw new NotImplementedException();
+			throw new NotImplementedException();
         }
 
         /// <summary>

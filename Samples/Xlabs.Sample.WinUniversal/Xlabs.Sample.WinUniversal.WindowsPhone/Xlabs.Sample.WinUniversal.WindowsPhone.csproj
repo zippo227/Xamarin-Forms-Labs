@@ -101,9 +101,9 @@
       <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
       <Name>XLabs.Ioc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\Platform\XLabs.Platform.WP81\XLabs.Platform.WP81.csproj">
-      <Project>{a45c177b-a1d9-430b-8b76-0322917debda}</Project>
-      <Name>XLabs.Platform.WP81</Name>
+    <ProjectReference Include="..\..\..\src\Platform\XLabs.Platform.WinUniversal\XLabs.Platform.WinUniversal.csproj">
+      <Project>{b498d705-8e82-4a9b-96f9-637c62a48e6a}</Project>
+      <Name>XLabs.Platform.WinUniversal</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\Platform\XLabs.Platform\XLabs.Platform.csproj">
       <Project>{2a4d9dd4-326c-4824-aa3c-a9ed45cc898c}</Project>

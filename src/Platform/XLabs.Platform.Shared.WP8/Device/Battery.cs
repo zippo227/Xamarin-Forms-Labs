@@ -15,7 +15,11 @@
         {
             get
             {
-                return Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercent;
+#if !NETFX_CORE
+				return Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercent;
+#else
+				return 0;
+#endif
             }
         }
 
@@ -46,7 +50,10 @@
         /// </summary>
         partial void StartLevelMonitoring()
         {
-            Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged += OnRemainingChargePercentChanged;
+#if !NETFX_CORE
+			Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged += OnRemainingChargePercentChanged;
+#else
+#endif
         }
 
         /// <summary>
@@ -54,9 +61,12 @@
         /// </summary>
         partial void StopLevelMonitoring()
         {
-            Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged -= OnRemainingChargePercentChanged;
-        }
+#if !NETFX_CORE
+			Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged -= OnRemainingChargePercentChanged;
+#else
+#endif
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

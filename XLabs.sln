@@ -227,6 +227,7 @@ Global
 		src\Platform\XLabs.Platform.Shared\XLabs.Platform.Shared.projitems*{06be7c1d-fcbf-48bf-9886-d11734bd6150}*SharedItemsImports = 13
 		src\Platform\XLabs.Platform.WinRT\XLabs.Platform.WinRT.Shared\XLabs.Platform.WinRT.Shared.vcxitems*{0dbd157e-694a-4b6c-9615-273c00a6d9b2}*SharedItemsImports = 4
 		Samples\Xlabs.Sample.WinUniversal\Xlabs.Sample.WinUniversal.Shared\Xlabs.Sample.WinUniversal.Shared.projitems*{5d769490-6ddc-40b7-8988-616c17280e18}*SharedItemsImports = 4
+		src\Platform\XLabs.Platform.Shared.WP8\XLabs.Platform.Shared.WP8.projitems*{b498d705-8e82-4a9b-96f9-637c62a48e6a}*SharedItemsImports = 4
 		src\Platform\XLabs.Platform.Shared\XLabs.Platform.Shared.projitems*{b498d705-8e82-4a9b-96f9-637c62a48e6a}*SharedItemsImports = 4
 		src\Platform\XLabs.Platform.WinRT\XLabs.Platform.WinRT.Shared\XLabs.Platform.WinRT.Shared.vcxitems*{3a5bd244-9a8c-4596-ad42-d931c09d9994}*SharedItemsImports = 9
 	EndGlobalSection

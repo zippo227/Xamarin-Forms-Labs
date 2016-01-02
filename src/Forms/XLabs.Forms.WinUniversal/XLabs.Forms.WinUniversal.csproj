@@ -44,6 +44,10 @@
       <Project>{2e200799-1170-49bf-a4aa-2a9228f8a213}</Project>
       <Name>XLabs.Ioc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Platform\XLabs.Platform.WinUniversal\XLabs.Platform.WinUniversal.csproj">
+      <Project>{b498d705-8e82-4a9b-96f9-637c62a48e6a}</Project>
+      <Name>XLabs.Platform.WinUniversal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Platform\XLabs.Platform\XLabs.Platform.csproj">
       <Project>{2a4d9dd4-326c-4824-aa3c-a9ed45cc898c}</Project>
       <Name>XLabs.Platform</Name>
@@ -70,8 +74,12 @@
       <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
       <DependentUpon>HybridWebViewRenderer.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\xlabs.forms\controls\ImageButtonRenderer.shared.cs">
+      <Link>Controls\ImageButton\ImageButtonRenderer.shared.cs</Link>
+    </Compile>
     <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
+    <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Extensions\AlignmentExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\FontExtensions.cs" />

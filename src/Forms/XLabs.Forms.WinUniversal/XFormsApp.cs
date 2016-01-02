@@ -1,4 +1,6 @@
-﻿namespace XLabs.Forms
+﻿using Xamarin.Forms;
+
+namespace XLabs.Forms
 {
     using System.Diagnostics.CodeAnalysis;
     using Windows.Storage;
@@ -25,7 +27,7 @@
         /// <param name="application">The application.</param>
         public XFormsAppWin(Application application)
             : base(application)
-        {
+        {			
         }
 
         /// <summary>
@@ -67,16 +69,25 @@
             //AppContext.Exit += (o, e) => OnClosing();
             app.UnhandledException += (o, e) => OnError(e.Exception);
             AppDataDirectory = ApplicationData.Current.LocalFolder.Path;
-
+			
             app.Resuming += (o, e) => OnResumed();
-            app.Suspending += (o, e) => OnSuspended();
+            app.Suspending += (o, e) => OnSuspended();			
 
             if (initServices) 
             {
-                //TODO : REGISTER SERVICES
-            }
+				if (initServices)
+				{
+					DependencyService.Register<XLabs.Platform.Services.TextToSpeechService>();
+					DependencyService.Register<XLabs.Platform.Services.Geolocation.Geolocator>();
+					//DependencyService.Register<MediaPicker>();
+					DependencyService.Register<XLabs.Platform.Services.Media.SoundService>();
+					//DependencyService.Register<XLabs.Platform.Services.Email.EmailService>();
+					//DependencyService.Register<FileManager>();
+					//DependencyService.Register<WindowsPhoneDevice>();
+				}
+			}
 
-            base.OnInit(app);
+			base.OnInit(app);
         }
     }
 }

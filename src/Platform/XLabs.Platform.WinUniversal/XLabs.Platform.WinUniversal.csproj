@@ -51,12 +51,31 @@
   <ItemGroup>
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\Battery.cs" />
+    <Compile Include="Device\BluetoothDevice.cs" />
+    <Compile Include="Device\BluetoothHub.cs" />
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\Gyroscope.cs" />
+    <Compile Include="Device\WindowsDevice.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\DeviceExtensions.cs" />
     <Compile Include="Extensions\VectorExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Email\EmailService.cs" />
+    <Compile Include="Services\Geolocation\CoordinateExtensions.cs" />
+    <Compile Include="Services\Geolocation\Geolocator.cs" />
+    <Compile Include="Services\Media\MediaPicker.cs" />
+    <Compile Include="Services\Media\SoundService.cs" />
+    <Compile Include="Services\Media\XnaMicrophone.cs" />
+    <Compile Include="Services\Network.cs" />
+    <Compile Include="Services\NfcDevice.cs" />
+    <Compile Include="Services\SecureStorage.cs" />
+    <Compile Include="Services\TextToSpeechService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\IO\" />
   </ItemGroup>
   <Import Project="..\XLabs.Platform.Shared\XLabs.Platform.Shared.projitems" Label="Shared" Condition="Exists('..\XLabs.Platform.Shared\XLabs.Platform.Shared.projitems')" />
+  <Import Project="..\XLabs.Platform.Shared.WP8\XLabs.Platform.Shared.WP8.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

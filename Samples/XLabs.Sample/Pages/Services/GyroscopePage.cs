@@ -18,22 +18,28 @@
         public GyroscopePage()
         {
             var device = Resolver.Resolve<IDevice> ();
+	        if (device != null && device.Gyroscope != null)
+	        {
+		        this.gyroscope = device.Gyroscope;
+	        }
+	        else
+	        {
+		        this.gyroscope = Resolver.Resolve<IGyroscope>() ?? DependencyService.Get<IGyroscope>();
+	        }
 
-            Title ="Accelerator Sensor";
-          
-            if (device.Gyroscope == null)
-            {
-                Content = new Label () 
-                {
-                    TextColor = Color.Red,
-                    Text = "Device does not have gyroscope sensor or it is not enabled."
-                };
+	        if (gyroscope == null)
+	        {
+		        Content = new Label()
+		        {
+			        TextColor = Color.Red,
+			        Text = "Device does not have gyroscope sensor or it is not enabled."
+		        };
 
-                return;
-            }
+		        return;
+	        }
 
-            this.gyroscope = device.Gyroscope;
-
+	        Title = "Accelerator Sensor";
+         
             var grid = new StackLayout ();
 
             this.xsensor = new SensorBarView () 

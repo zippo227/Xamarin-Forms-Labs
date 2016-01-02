@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using XLabs.Platform.Services.Geolocation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
@@ -163,21 +164,21 @@ namespace Xlabs.Sample.WinUniversal
 
             app.Init(this);
 
-            //var documents = app.AppDataDirectory;
-            //var pathToDatabase = Path.Combine(documents, "xforms.db");
+            var documents = app.AppDataDirectory;
+            var pathToDatabase = Path.Combine(documents, "xforms.db");
 
             resolverContainer
-                //.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
+                .Register<IDevice>(t => WindowsDevice.CurrentDevice)
                 .Register<IDisplay>(t => new Display())
                 //.Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))
                 //.Register<IEmailService, EmailService>()
                 //.Register<IMediaPicker, MediaPicker>()
                 .Register<IJsonSerializer, JsonSerializer>()
-                //.Register<ITextToSpeechService, TextToSpeechService>()
+                .Register<ITextToSpeechService, TextToSpeechService>()
                 .Register<IDependencyContainer>(t => resolverContainer)
                 .Register<XFormsAppWin>(app)
                 .Register<IXFormsApp>(app)
-                //.Register<ISecureStorage, SecureStorage>()
+                .Register<ISecureStorage, SecureStorage>()
                 //.Register<ICacheProvider>(
                 //    t => new SQLiteSimpleCache(new SQLite.Net.Platform.WindowsPhone8.SQLitePlatformWP8(),
                 //        new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()))

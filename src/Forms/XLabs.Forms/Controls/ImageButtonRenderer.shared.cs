@@ -1,9 +1,12 @@
+
 #if __ANDROID__
 using Xamarin.Forms.Platform.Android;
 #elif __IOS__
 using Xamarin.Forms.Platform.iOS;
 #elif WINDOWS_PHONE
 using Xamarin.Forms.Platform.WinPhone;
+#elif NETFX_CORE
+using Xamarin.Forms.Platform.WinRT;
 #endif
 
 namespace XLabs.Forms.Controls

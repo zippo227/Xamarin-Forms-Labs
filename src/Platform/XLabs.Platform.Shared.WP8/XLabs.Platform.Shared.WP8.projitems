@@ -10,5 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Device\Battery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\PhoneInfo.cs" />
   </ItemGroup>
 </Project>
