@@ -1,6 +1,7 @@
 using Xamarin.Forms;
 
 using XLabs.Forms.Controls;
+using System.Collections.Generic;
 
 [assembly: ExportRenderer (typeof(GridView), typeof(GridViewRenderer))]
 namespace XLabs.Forms.Controls
@@ -113,7 +114,7 @@ namespace XLabs.Forms.Controls
                         RowSpacing = this.Element.RowSpacing,
                         ColumnSpacing = this.Element.ColumnSpacing
                     };
-                    
+
                     Bind (e.NewElement);
 
                     collectionView.Source = this.DataSource;
@@ -123,7 +124,7 @@ namespace XLabs.Forms.Controls
                 }
             }
 
-        
+
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace XLabs.Forms.Controls
 
             oldElement.PropertyChanging -= this.ElementPropertyChanging;
             oldElement.PropertyChanged -= this.ElementPropertyChanged;
-                
+
             var itemsSource = oldElement.ItemsSource as INotifyCollectionChanged;
             if (itemsSource != null) 
             {
@@ -204,31 +205,33 @@ namespace XLabs.Forms.Controls
         /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
         private void DataCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
         {
-            try 
-            {
-            	if(this.Control == null) return;
+            InvokeOnMainThread (()=> {
+                try 
+                {
+                    if(this.Control == null) return;
 
-		// try to handle add or remove operations gracefully, just reload the whole collection for other changes
-                var indexes = new List<NSIndexPath>();
-                switch (e.Action) {
-                    case NotifyCollectionChangedAction.Add:
-                        for (int i = 0; i < e.NewItems.Count; i++) {
-                            indexes.Add(NSIndexPath.FromRowSection((nint)(e.NewStartingIndex + i),0));
-                        }
-                        this.Control.InsertItems(indexes.ToArray());
-                        break;
-                    case NotifyCollectionChangedAction.Remove:
-                        for (int i = 0; i< e.OldItems.Count; i++) {
-                            indexes.Add(NSIndexPath.FromRowSection((nint)(e.OldStartingIndex + i),0));
-                        }
-                        this.Control.DeleteItems(indexes.ToArray());
-                        break;
-                default:
-                        this.Control.ReloadData();
-                        break;
-                }
-            } 
-            catch { } // todo: determine why we are hiding a possible exception here
+                    // try to handle add or remove operations gracefully, just reload the whole collection for other changes
+                    var indexes = new List<NSIndexPath>();
+                    switch (e.Action) {
+                        case NotifyCollectionChangedAction.Add:
+                            for (int i = 0; i < e.NewItems.Count; i++) {
+                                indexes.Add(NSIndexPath.FromRowSection((nint)(e.NewStartingIndex + i),0));
+                            }
+                            this.Control.InsertItems(indexes.ToArray());
+                            break;
+                        case NotifyCollectionChangedAction.Remove:
+                            for (int i = 0; i< e.OldItems.Count; i++) {
+                                indexes.Add(NSIndexPath.FromRowSection((nint)(e.OldStartingIndex + i),0));
+                            }
+                            this.Control.DeleteItems(indexes.ToArray());
+                            break;
+                        default:
+                            this.Control.ReloadData();
+                            break;
+                    }
+                } 
+                catch { } // todo: determine why we are hiding a possible exception here
+            });
         }
 
         /// <summary>
@@ -243,11 +246,11 @@ namespace XLabs.Forms.Controls
             }
         }
 
-		/// <summary>
-		/// Releases unmanaged and - optionally - managed resources.
-		/// </summary>
-		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-		protected override void Dispose (bool disposing)
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected override void Dispose (bool disposing)
         {
             base.Dispose (disposing);
             if (disposing && _dataSource != null)
