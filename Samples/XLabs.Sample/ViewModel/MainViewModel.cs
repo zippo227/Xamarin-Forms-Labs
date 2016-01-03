@@ -1,4 +1,4 @@
-﻿namespace XLabs.Sample.ViewModel
+namespace XLabs.Sample.ViewModel
 {
     using System;
     using System.Collections.ObjectModel;
@@ -28,6 +28,9 @@
         public MainViewModel ()
         {
             SpeakCommand = new Command (() => Resolver.Resolve<ITextToSpeechService>().Speak(TextToSpeak));
+            AddImagesCommand = new Command(() => AddImages());
+            RemoveImagesCommand = new Command(() => RemoveImages());
+            ChangeImageSourceCommand = new Command(() => ChangeImageSource());
 
             Images = new ObservableCollection<string>();
             for (var i = 0; i < 10; i++)
@@ -37,6 +40,7 @@
 
             _device = Resolver.Resolve<IDevice>();
         }
+
 
         public Task AddImages()
         {
@@ -48,6 +52,23 @@
                     Images.Add ("http://www.stockvault.net/data/2011/05/31/124348/small.jpg");
                 }
             });
+        }
+
+        public Task RemoveImages()
+        {
+            return Task.Run(async () => 
+            {
+                    for (var i = 0; i < 5; i++) 
+                {
+                    if(Images.Count > 0)
+                        Images.RemoveAt(0);
+                }
+            });
+        }
+
+        public void ChangeImageSource()
+        {
+            Images = new ObservableCollection<string>();
         }
 
         /// <summary>
@@ -172,6 +193,24 @@
         /// The speak command.
         /// </value>
         public Command SpeakCommand { get; private set; }
+
+        /// <summary>
+        /// Command to add images to the list
+        /// </summary>
+        /// <value>The add images command.</value>
+        public Command AddImagesCommand { get; private set; }
+
+        /// <summary>
+        /// Command to remove images from the list
+        /// </summary>
+        /// <value>The remove images command.</value>
+        public Command RemoveImagesCommand { get; private set; }
+
+        /// <summary>
+        /// Command to swap the image source to a new object
+        /// </summary>
+        /// <value>The change image source command.</value>
+        public Command ChangeImageSourceCommand { get; private set; }
         
         /// <summary>
         /// Gets the call command.
