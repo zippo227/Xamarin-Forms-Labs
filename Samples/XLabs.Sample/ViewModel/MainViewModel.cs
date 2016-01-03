@@ -51,7 +51,6 @@ namespace XLabs.Sample.ViewModel
                 {
                     Images.Add ("http://www.stockvault.net/data/2011/05/31/124348/small.jpg");
                 }
-                NotifyPropertyChanged(() => Images);
             });
         }
 
