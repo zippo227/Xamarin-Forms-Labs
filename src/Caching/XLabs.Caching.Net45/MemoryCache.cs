@@ -1,17 +1,4 @@
-﻿// ***********************************************************************
-// Assembly         : XLabs.Caching.Net45
-// Author           : Shawn
-// Created          : 12-27-2015
-//
-// Last Modified By : Shawn
-// Last Modified On : 12-28-2015
-// ***********************************************************************
-// <copyright file="MemoryCache.cs" company="">
-//     Copyright ©  2015
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;

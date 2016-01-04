@@ -39,13 +39,13 @@ namespace XLabs.Caching
         /// <returns>True if item was added, otherwise false.</returns>
         Task<bool> AddAsync<T>(string key, T value, TimeSpan expiresIn);
 
-		/// <summary>
-		/// Retrieves the requested item from the cache.
-		/// </summary>
-		/// <typeparam name="T">Type of item.</typeparam>
-		/// <param name="key">The key.</param>
-		/// <returns>Requested cache item.</returns>
-		Task<T> GetAsync<T>(string key);
+        /// <summary>
+        /// Retrieves the requested item from the cache.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">The key.</param>
+        /// <returns>Requested cache item.</returns>
+        Task<T> GetAsync<T>(string key);
 
         /// <summary>
         /// Gets all of the items in the cache related to the specified keys.
@@ -127,10 +127,10 @@ namespace XLabs.Caching
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
         Task<bool> RemoveAllAsync(IEnumerable<string> keys);
 
-		/// <summary>
-		/// Flushes the entire cache (and clears it).
-		/// </summary>
-		/// <returns>Retrurns true on success</returns>
-		Task<bool> FlushAllAsync();
-	}
+        /// <summary>
+        /// Flushes the entire cache (and clears it).
+        /// </summary>
+        /// <returns>Retrurns true on success</returns>
+        Task<bool> FlushAllAsync();
+    }
 }

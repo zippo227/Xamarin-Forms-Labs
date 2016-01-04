@@ -6,8 +6,8 @@
 // Last Modified By : rmarinho
 // Last Modified On : 09-08-2015
 // ***********************************************************************
-// <copyright file="SQLiteSimpleCache.cs" company="">
-//     Copyright ©  2014
+// <copyright file="SQLiteSimpleCache.cs" company="XLabs Team">
+//     Copyright © XLabs Team 2014
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
@@ -70,6 +70,7 @@ namespace XLabs.Caching.SQLite
         /// Removes the cache for all the keys provided.
         /// </summary>
         /// <param name="keys">The keys to remove.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool RemoveAll(IEnumerable<string> keys)
         {
             var enumerable = keys.Select(Remove);
@@ -221,6 +222,7 @@ namespace XLabs.Caching.SQLite
         /// <summary>
         /// Invalidates all data on the cache.
         /// </summary>
+        /// <returns>Retrurns true on success</returns>
         public virtual bool FlushAll()
         {
             DeleteAll<SQliteCacheTable>();
@@ -280,14 +282,14 @@ namespace XLabs.Caching.SQLite
         protected class SQliteCacheTable
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="SQliteCacheTable"/> class.
+            /// Initializes a new instance of the <see cref="SQliteCacheTable" /> class.
             /// </summary>
             public SQliteCacheTable()
             {
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="SQliteCacheTable"/> class.
+            /// Initializes a new instance of the <see cref="SQliteCacheTable" /> class.
             /// </summary>
             /// <param name="key">The key.</param>
             /// <param name="blob">The BLOB.</param>
