@@ -103,10 +103,10 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        ///     Loads from content.
+        /// Loads from content.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="contentFullName">Full name of the content.</param>
+        /// <param name="contentArgs">The <see cref="HybridWebView.LoadContentEventArgs"/> instance containing the event data.</param>
         partial void LoadFromContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
             Element.Uri = new Uri(contentArgs.Content, UriKind.Relative);

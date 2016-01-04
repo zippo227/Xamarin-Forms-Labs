@@ -1,22 +1,17 @@
-﻿using Xamarin.Forms;
+﻿using System.ComponentModel;
+using System.Windows.Media;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.WinPhone;
 
 using XLabs.Forms.Controls;
 //using System.Windows.Controls;
+using NativeCheckBox = System.Windows.Controls.CheckBox;
 
 [assembly: ExportRenderer(typeof(CheckBox), typeof(CheckBoxRenderer))]
 
 namespace XLabs.Forms.Controls
 {
-    using System.ComponentModel;
-    using System.Windows.Media;
-
-    using Xamarin.Forms;
-    using Xamarin.Forms.Platform.WinPhone;
-
-    using XLabs;
-
-    using NativeCheckBox = System.Windows.Controls.CheckBox;
-
     /// <summary>
     /// Class CheckBoxRenderer.
     /// </summary>
@@ -55,6 +50,11 @@ namespace XLabs.Forms.Controls
             e.NewElement.CheckedChanged += CheckedChanged;
         }
 
+        /// <summary>
+        /// Handles the <see cref="E:ElementPropertyChanged" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)

@@ -22,10 +22,10 @@
 		/// </summary>
 		private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-		/// <summary>
-		///     The _heading provider
-		/// </summary>
-		private string _headingProvider;
+		//// <summary>
+		////     The _heading provider
+		//// </summary>
+		//private string _headingProvider;
 
 		/// <summary>
 		///     The _last position

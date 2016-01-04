@@ -1,25 +1,21 @@
-﻿namespace XLabs.Forms.Services
+﻿using System.Collections.Generic;
+using XLabs.Forms.Extensions;
+using XLabs.Platform.Device;
+using Xamarin.Forms;
+using Application = System.Windows.Application;
+using XLabs.Platform.Services;
+
+namespace XLabs.Forms.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Extensions;
-    using Platform.Device;
-    using Platform.WinRT;
-    using Xamarin.Forms;
-    using Application = System.Windows.Application;
 
     /// <summary>
     /// Class FontManager.
     /// </summary>
     public partial class FontManager : IFontManager
     {
-        /// <summary>
-        /// The _display
-        /// </summary>
-        private readonly IDisplay display;
+        private readonly IDisplay _display;
 
-        private readonly FontService fontService;
+        private readonly FontService _fontService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FontManager"/> class.
@@ -27,8 +23,8 @@
         /// <param name="display">The display.</param>
         public FontManager(IDisplay display)
         {
-            this.display = display;
-            this.fontService = new FontService();
+            _display = display;
+            _fontService = new FontService();
         }
 
         #region IFontManager Members
@@ -43,7 +39,7 @@
             {
                 // ReSharper disable once LoopCanBeConvertedToQuery
                 // returning WinRT method call directly doesn't work so do NOT refactor!!!
-                foreach (var fontName in this.fontService.GetFontNames())
+                foreach (var fontName in _fontService.GetFontNames())
                 {
                     yield return fontName;
                 }
@@ -58,7 +54,7 @@
         public double GetHeight(Font font)
         {
             var multiplier = Application.Current.Host.Content.ScaleFactor / 100d;
-            return multiplier * font.GetHeight() / this.display.Ydpi;
+            return multiplier * font.GetHeight() / _display.Ydpi;
         }
 
         #endregion

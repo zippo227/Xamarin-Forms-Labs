@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using XLabs.Enums;
 
 namespace XLabs.Forms.Controls
 {
-    public class IconLabel : Label
+	/// <summary>
+	/// Implementation of a label to add support for an Icon.
+	/// </summary>
+	public class IconLabel : Label
     {
         /// <summary>
         /// Backing field for the orientation property.

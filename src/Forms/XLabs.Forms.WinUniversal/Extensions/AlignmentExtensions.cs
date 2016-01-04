@@ -1,13 +1,22 @@
-﻿namespace XLabs.Forms
-{
-    using System;
-    using System.Windows;
-    using Windows.UI.Xaml;
-    using TextAlignment = Xamarin.Forms.TextAlignment;
+﻿using System;
+using Windows.UI.Xaml;
+using TextAlignment = Xamarin.Forms.TextAlignment;
 
+namespace XLabs.Forms
+{
+
+    /// <summary>
+    /// Implementation of AlignmentExtensions.
+    /// </summary>
     public static class AlignmentExtensions
     {
-        public static VerticalAlignment ToContentVerticalAlignment(this TextAlignment alignment)
+		/// <summary>
+		/// To the content vertical alignment.
+		/// </summary>
+		/// <param name="alignment">The alignment.</param>
+		/// <returns>VerticalAlignment.</returns>
+		/// <exception cref="System.InvalidOperationException"></exception>
+		public static VerticalAlignment ToContentVerticalAlignment(this TextAlignment alignment)
         {
             switch (alignment)
             {
@@ -22,7 +31,13 @@
             throw new InvalidOperationException(alignment.ToString());
         }
 
-        public static HorizontalAlignment ToContentHorizontalAlignment(this TextAlignment alignment)
+		/// <summary>
+		/// To the content horizontal alignment.
+		/// </summary>
+		/// <param name="alignment">The alignment.</param>
+		/// <returns>HorizontalAlignment.</returns>
+		/// <exception cref="System.InvalidOperationException"></exception>
+		public static HorizontalAlignment ToContentHorizontalAlignment(this TextAlignment alignment)
         {
             switch (alignment)
             {

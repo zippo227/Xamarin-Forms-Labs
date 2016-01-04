@@ -23,15 +23,15 @@
 		/// </summary>
 		private static IDevice _currentDevice;
 
-		/// <summary>
-		/// The file manager.
-		/// </summary>
-		private IFileManager _fileManager;
+		//// <summary>
+		//// The file manager.
+		//// </summary>
+		//private IFileManager _fileManager;
 
-		/// <summary>
-		/// The media picker.
-		/// </summary>
-		private IMediaPicker _mediaPicker;
+		//// <summary>
+		//// The media picker.
+		//// </summary>
+		//private IMediaPicker _mediaPicker;
 
 		/// <summary>
 		/// The network.
@@ -46,7 +46,7 @@
 		private EasClientDeviceInformation _clientDeviceInformation;
 
 		/// <summary>
-		/// Creates an instance of <see cref="WindowsPhoneDevice" />.
+		/// Creates an instance of WindowsPhoneDevice
 		/// </summary>
 		public WindowsDevice()
 		{			

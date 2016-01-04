@@ -45,7 +45,7 @@ namespace XLabs.Forms.Controls
         /// Handles the initial drawing of the button.
         /// </summary>
         /// <param name="e">Information on the <see cref="ImageButton"/>.</param> 
-        protected async override void OnElementChanged(ElementChangedEventArgs<Button> e)
+        protected override async void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
             var imageButton = ImageButton;
@@ -155,6 +155,7 @@ namespace XLabs.Forms.Controls
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="widthRequest">The requested image width.</param>
         /// <param name="targetButton">The button to align.</param>
+        /// <param name="buttonWidthRequest">The button width request.</param>
         private static void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton, double buttonWidthRequest)
         {
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Top;

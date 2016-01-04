@@ -80,7 +80,7 @@
 		/// Connects this instance.
 		/// </summary>
 		/// <returns>Task.</returns>
-		public async Task Connect()
+		public Task Connect()
 		{
 			if (_socket != null)
 			{

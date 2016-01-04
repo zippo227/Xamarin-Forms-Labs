@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace XLabs.Forms.Services
@@ -14,13 +10,13 @@ namespace XLabs.Forms.Services
     {
         private const short InitialSize = 24;
 
-		/// <summary>
-		/// Finds the closest.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="desiredHeight">Height of the desired.</param>
-		/// <returns>Font.</returns>
-		public Font FindClosest(string name, double desiredHeight)
+        /// <summary>
+        /// Finds the closest.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="desiredHeight">Height of the desired.</param>
+        /// <returns>Font.</returns>
+        public Font FindClosest(string name, double desiredHeight)
         {
             var height = this.GetHeight(Font.OfSize(name, InitialSize));
 

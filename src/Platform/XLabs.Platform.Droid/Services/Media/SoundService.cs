@@ -10,7 +10,7 @@ namespace XLabs.Platform.Services.Media
     /// <summary>
     /// Class SoundService.
     /// </summary>
-	public class SoundService : ISoundService , IDisposable
+    public class SoundService : ISoundService , IDisposable
     {
         /// <summary>
         /// The _is player prepared
@@ -51,7 +51,7 @@ namespace XLabs.Platform.Services.Media
                     throw new FileNotFoundException("Make sure you set your file in the Assets folder");
                 }
 
-				await this.player.SetDataSourceAsync(fp.FileDescriptor, fp.StartOffset, fp.Length);
+                await this.player.SetDataSourceAsync(fp.FileDescriptor, fp.StartOffset, fp.Length);
                 this.player.Prepared += (s, e) =>
                     {
                         this.player.SetVolume(0, 0);
@@ -65,19 +65,23 @@ namespace XLabs.Platform.Services.Media
             }
         }
 
-		#region IDisposable implementation
-		bool disposed;
-		public void Dispose ()
-		{
-			if (disposed && this.player != null) {
-				disposed = true;
-				this.player.Dispose ();
-				this.player = null;
-				this.CurrentFile = null;
-			}
-		}
+        #region IDisposable implementation
+        bool _disposed;
+        /// <summary>
+        /// To be added.
+        /// </summary>
+        /// <remarks>To be added.</remarks>
+        public void Dispose ()
+        {
+            if (_disposed && this.player != null) {
+                _disposed = true;
+                this.player.Dispose ();
+                this.player = null;
+                this.CurrentFile = null;
+            }
+        }
 
-		#endregion
+        #endregion
 
         #region ISoundService implementation
 

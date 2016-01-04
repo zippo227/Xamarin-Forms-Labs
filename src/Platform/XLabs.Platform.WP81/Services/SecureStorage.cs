@@ -1,22 +1,20 @@
-﻿
-using Windows.Security.Cryptography.DataProtection;
-
-namespace XLabs.Platform.Services
+﻿namespace XLabs.Platform.Services
 {
     using System;
     using System.IO;
 	using Windows.Storage;
     using System.Threading;
 	using System.Runtime.InteropServices.WindowsRuntime;
+	using Windows.Security.Cryptography.DataProtection;
 
 	/// <summary>
-	/// Implements <see cref="ISecureStorage"/> for WP using <see cref="IsolatedStorageFile"/> and <see cref="ProtectedData"/>.
+	/// Implements <see cref="ISecureStorage"/> for WP using IsolatedStorageFile ProtectedData
 	/// </summary>
 	public class SecureStorage : ISecureStorage
     {
 		private static Windows.Storage.ApplicationData AppStorage { get {  return ApplicationData.Current; } }
 
-		private static Windows.Security.Cryptography.DataProtection.DataProtectionProvider _dataProtectionProvider = new DataProtectionProvider();
+		private static readonly Windows.Security.Cryptography.DataProtection.DataProtectionProvider _dataProtectionProvider = new DataProtectionProvider();
 
         private readonly byte[] _optionalEntropy;
 

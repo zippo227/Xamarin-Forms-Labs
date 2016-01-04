@@ -3,6 +3,8 @@
  * See the license text file delivered with this project for more information.
  */
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedAutoPropertyAccessor.Local
 namespace PhoneInfo
 {
 	using System;
@@ -33,7 +35,6 @@ namespace PhoneInfo
 	/// phone and details about the phone software. In addition, the dynamic
 	/// traits of the phone are resolved. The resolved values are stored in
 	/// the class properties enabling fast queries.
-	/// 
 	/// Note that you need to make sure that the application has enough
 	/// capabilites enabled for the implementation to work properly.
 	/// </summary>
@@ -41,6 +42,9 @@ namespace PhoneInfo
 	{
 		// Constants ->
 
+		/// <summary>
+		/// The debug tag
+		/// </summary>
 		private const string DebugTag = "DeviceProperties: ";
 
 		/* Focus properties available via MediaCapture.VideoDeviceController
@@ -48,6 +52,9 @@ namespace PhoneInfo
 		 * released with Windows Phone OS version 8.0. Thus, we need to check
 		 * those phone models explicitly.
 		 */
+		/// <summary>
+		/// The w P80 phone models with automatic focus
+		/// </summary>
 		private readonly string[] WP80PhoneModelsWithAutoFocus =
 		{
 			"RM-820", // Nokia Lumia 920
@@ -71,98 +78,310 @@ namespace PhoneInfo
 
 		// Data types ->
 
+		/// <summary>
+		/// Enum Resolutions
+		/// </summary>
 		public enum Resolutions
 		{
+			/// <summary>
+			/// The wvga
+			/// </summary>
 			WVGA, // Wide VGA, 480x800
+				  /// <summary>
+				  /// The q hd
+				  /// </summary>
 			qHD, // qHD, 540x960
+				 /// <summary>
+				 /// The h D720
+				 /// </summary>
 			HD720, // HD, 720x1280
+				   /// <summary>
+				   /// The wxga
+				   /// </summary>
 			WXGA, // Wide Extended Graphics Array (WXGA), 768x1280
+				  /// <summary>
+				  /// The h D1080
+				  /// </summary>
 			HD1080, // Full HD, 1080x1920
+					/// <summary>
+					/// The unknown
+					/// </summary>
 			Unknown
 		};
 
+		/// <summary>
+		/// Enum UnitPrefixes
+		/// </summary>
 		public enum UnitPrefixes
 		{
+			/// <summary>
+			/// The kilo
+			/// </summary>
 			Kilo,
+			/// <summary>
+			/// The mega
+			/// </summary>
 			Mega,
+			/// <summary>
+			/// The giga
+			/// </summary>
 			Giga
 		};
 
 		// Members and properties ->
 
+		/// <summary>
+		/// The _instance
+		/// </summary>
 		private static DeviceProperties _instance = null;
-		private static Object _syncLock = new Object();
+		/// <summary>
+		/// The _sync lock
+		/// </summary>
+		private static readonly object _syncLock = new object();
+		/// <summary>
+		/// The _media capture
+		/// </summary>
 		private MediaCapture _mediaCapture = null;
+		/// <summary>
+		/// The _number of asynchronous operations to complete
+		/// </summary>
 		private int _numberOfAsyncOperationsToComplete;
+		/// <summary>
+		/// The _number of asynchronous operations completed
+		/// </summary>
 		private int _numberOfAsyncOperationsCompleted;
 #if (DEBUG)
+		/// <summary>
+		/// The _start of resolve time
+		/// </summary>
 		private DateTime _startOfResolveTime;
 #endif
 
+		/// <summary>
+		/// Gets or sets the is ready changed.
+		/// </summary>
+		/// <value>The is ready changed.</value>
 		public EventHandler<bool> IsReadyChanged { get; set; }
 
+		/// <summary>
+		/// Gets a value indicating whether this instance is ready.
+		/// </summary>
+		/// <value><c>true</c> if this instance is ready; otherwise, <c>false</c>.</value>
 		public bool IsReady { get; private set; }
 
 		// Battery and power
+		/// <summary>
+		/// Gets the remaining battery charge.
+		/// </summary>
+		/// <value>The remaining battery charge.</value>
 		public int RemainingBatteryCharge { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has battery status information.
+		/// </summary>
+		/// <value><c>true</c> if this instance has battery status information; otherwise, <c>false</c>.</value>
 		public bool HasBatteryStatusInfo { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance is connected to external power supply.
+		/// </summary>
+		/// <value><c>true</c> if this instance is connected to external power supply; otherwise, <c>false</c>.</value>
 		public bool IsConnectedToExternalPowerSupply { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether [power saving mode enabled].
+		/// </summary>
+		/// <value><c>true</c> if [power saving mode enabled]; otherwise, <c>false</c>.</value>
 		public bool PowerSavingModeEnabled { get; private set; }
 
 		// Cameras and flashes
+		/// <summary>
+		/// Gets a value indicating whether this instance has back camera.
+		/// </summary>
+		/// <value><c>true</c> if this instance has back camera; otherwise, <c>false</c>.</value>
 		public bool HasBackCamera { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has front camera.
+		/// </summary>
+		/// <value><c>true</c> if this instance has front camera; otherwise, <c>false</c>.</value>
 		public bool HasFrontCamera { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has back camera flash.
+		/// </summary>
+		/// <value><c>true</c> if this instance has back camera flash; otherwise, <c>false</c>.</value>
 		public bool HasBackCameraFlash { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has front camera flash.
+		/// </summary>
+		/// <value><c>true</c> if this instance has front camera flash; otherwise, <c>false</c>.</value>
 		public bool HasFrontCameraFlash { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has back camera automatic focus.
+		/// </summary>
+		/// <value><c>true</c> if this instance has back camera automatic focus; otherwise, <c>false</c>.</value>
 		public bool HasBackCameraAutoFocus { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has front camera automatic focus.
+		/// </summary>
+		/// <value><c>true</c> if this instance has front camera automatic focus; otherwise, <c>false</c>.</value>
 		public bool HasFrontCameraAutoFocus { get; private set; }
+		/// <summary>
+		/// Gets the back camera photo resolutions.
+		/// </summary>
+		/// <value>The back camera photo resolutions.</value>
 		public List<Size> BackCameraPhotoResolutions { get; private set; }
+		/// <summary>
+		/// Gets the front camera photo resolutions.
+		/// </summary>
+		/// <value>The front camera photo resolutions.</value>
 		public List<Size> FrontCameraPhotoResolutions { get; private set; }
+		/// <summary>
+		/// Gets the back camera video resolutions.
+		/// </summary>
+		/// <value>The back camera video resolutions.</value>
 		public List<Size> BackCameraVideoResolutions { get; private set; }
+		/// <summary>
+		/// Gets the front camera video resolutions.
+		/// </summary>
+		/// <value>The front camera video resolutions.</value>
 		public List<Size> FrontCameraVideoResolutions { get; private set; }
 
 		// Memory
+		/// <summary>
+		/// Gets the application current memory usage in bytes.
+		/// </summary>
+		/// <value>The application current memory usage in bytes.</value>
 		public long ApplicationCurrentMemoryUsageInBytes { get; private set; }
+		/// <summary>
+		/// Gets the application memory usage limit in bytes.
+		/// </summary>
+		/// <value>The application memory usage limit in bytes.</value>
 		public long ApplicationMemoryUsageLimitInBytes { get; private set; }
 
 		// Screen
+		/// <summary>
+		/// Gets the screen resolution.
+		/// </summary>
+		/// <value>The screen resolution.</value>
 		public Resolutions ScreenResolution { get; private set; }
+		/// <summary>
+		/// Gets the size of the screen resolution.
+		/// </summary>
+		/// <value>The size of the screen resolution.</value>
 		public Size ScreenResolutionSize { get; private set; }
+		/// <summary>
+		/// Gets the display size in inches.
+		/// </summary>
+		/// <value>The display size in inches.</value>
 		public double DisplaySizeInInches { get; private set; } // E.g. 4.5 for Nokia Lumia 1020
 
 		// Sensors
+		/// <summary>
+		/// Gets a value indicating whether this instance has accelerometer sensor.
+		/// </summary>
+		/// <value><c>true</c> if this instance has accelerometer sensor; otherwise, <c>false</c>.</value>
 		public bool HasAccelerometerSensor { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has compass.
+		/// </summary>
+		/// <value><c>true</c> if this instance has compass; otherwise, <c>false</c>.</value>
 		public bool HasCompass { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has gyroscope sensor.
+		/// </summary>
+		/// <value><c>true</c> if this instance has gyroscope sensor; otherwise, <c>false</c>.</value>
 		public bool HasGyroscopeSensor { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has inclinometer sensor.
+		/// </summary>
+		/// <value><c>true</c> if this instance has inclinometer sensor; otherwise, <c>false</c>.</value>
 		public bool HasInclinometerSensor { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has orientation sensor.
+		/// </summary>
+		/// <value><c>true</c> if this instance has orientation sensor; otherwise, <c>false</c>.</value>
 		public bool HasOrientationSensor { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has proximity sensor.
+		/// </summary>
+		/// <value><c>true</c> if this instance has proximity sensor; otherwise, <c>false</c>.</value>
 		public bool HasProximitySensor { get; private set; } // NFC
 
 		// SensorCore
+		/// <summary>
+		/// Gets a value indicating whether [sensor core activity monitor API supported].
+		/// </summary>
+		/// <value><c>true</c> if [sensor core activity monitor API supported]; otherwise, <c>false</c>.</value>
 		public bool SensorCoreActivityMonitorApiSupported { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether [sensor core place monitor API supported].
+		/// </summary>
+		/// <value><c>true</c> if [sensor core place monitor API supported]; otherwise, <c>false</c>.</value>
 		public bool SensorCorePlaceMonitorApiSupported { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether [sensor core step counter API supported].
+		/// </summary>
+		/// <value><c>true</c> if [sensor core step counter API supported]; otherwise, <c>false</c>.</value>
 		public bool SensorCoreStepCounterApiSupported { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether [sensor core track point monitor API supported].
+		/// </summary>
+		/// <value><c>true</c> if [sensor core track point monitor API supported]; otherwise, <c>false</c>.</value>
 		public bool SensorCoreTrackPointMonitorApiSupported { get; private set; }
 
 		// Other hardware properties
+		/// <summary>
+		/// Gets the name of the device.
+		/// </summary>
+		/// <value>The name of the device.</value>
 		public string DeviceName { get; private set; }
+		/// <summary>
+		/// Gets the manufacturer.
+		/// </summary>
+		/// <value>The manufacturer.</value>
 		public string Manufacturer { get; private set; }
+		/// <summary>
+		/// Gets the hardware version.
+		/// </summary>
+		/// <value>The hardware version.</value>
 		public string HardwareVersion { get; private set; }
+		/// <summary>
+		/// Gets the firmware version.
+		/// </summary>
+		/// <value>The firmware version.</value>
 		public string FirmwareVersion { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has sd card present.
+		/// </summary>
+		/// <value><c>true</c> if this instance has sd card present; otherwise, <c>false</c>.</value>
 		public bool HasSDCardPresent { get; private set; }
+		/// <summary>
+		/// Gets a value indicating whether this instance has vibration device.
+		/// </summary>
+		/// <value><c>true</c> if this instance has vibration device; otherwise, <c>false</c>.</value>
 		public bool HasVibrationDevice { get; private set; }
+		/// <summary>
+		/// Gets the processor core count.
+		/// </summary>
+		/// <value>The processor core count.</value>
 		public int ProcessorCoreCount { get; private set; }
 
 		// Software and other dynamic, non-hardware properties
 #if WINDOWS_PHONE_APP
+		/// <summary>
+		/// Gets the application theme.
+		/// </summary>
+		/// <value>The application theme.</value>
 		public ApplicationTheme AppTheme { get; private set; }
 #endif
+		/// <summary>
+		/// Gets the color of the theme accent.
+		/// </summary>
+		/// <value>The color of the theme accent.</value>
 		public Color ThemeAccentColor { get; private set; }
 
 
-#region Construction, initialisation and refreshing
+		#region Construction, initialisation and refreshing
 
 		/// <summary>
+		/// Gets the instance.
 		/// </summary>
 		/// <returns>The singleton instance of this class.</returns>
 		public static DeviceProperties GetInstance()
@@ -187,7 +406,6 @@ namespace PhoneInfo
 
 		/// <summary>
 		/// Resolves all the properties.
-		/// 
 		/// Note that this method is synchronous, but some method calls within
 		/// are asynchronous. Thus, this method will be executed while some of
 		/// the asynchronous methods may still be running. If you remove or add
@@ -266,6 +484,9 @@ namespace PhoneInfo
 			await Task.Run(() => Resolve());
 		}
 
+		/// <summary>
+		/// Asynchronouses the operation complete.
+		/// </summary>
 		private void AsyncOperationComplete()
 		{
 			lock (_syncLock)
@@ -284,6 +505,9 @@ namespace PhoneInfo
 			}
 		}
 
+		/// <summary>
+		/// notify is ready changed as an asynchronous operation.
+		/// </summary>
 		private async void NotifyIsReadyChangedAsync()
 		{
 			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
@@ -296,11 +520,14 @@ namespace PhoneInfo
 				});
 		}
 
-#endregion // Construction, initialisation and refreshing
+		#endregion // Construction, initialisation and refreshing
 
-#region Battery and power supply
+		#region Battery and power supply
 
 #if !WINDOWS_PHONE_APP && !NETFX_CORE
+		/// <summary>
+		/// Resolves the power information.
+		/// </summary>
 		private void ResolvePowerInfo()
 		{
 			HasBatteryStatusInfo = false;
@@ -325,9 +552,9 @@ namespace PhoneInfo
 		}
 #endif
 
-#endregion // Battery and power supply
+		#endregion // Battery and power supply
 
-#region Cameras and flashes
+		#region Cameras and flashes
 
 		/// <summary>
 		/// Resolves the following properties for both back and front camera:
@@ -495,7 +722,7 @@ namespace PhoneInfo
 
 			foreach (var mediaStreamProperties in mediaStreamPropertiesList)
 			{
-				Size size;
+				Size size = new Size(0,0);
 				bool sizeSet = false;
 
 				var streamProperties = mediaStreamProperties as VideoEncodingProperties;
@@ -528,10 +755,13 @@ namespace PhoneInfo
 			return resolutions;
 		}
 
-#endregion // Cameras and flashes
+		#endregion // Cameras and flashes
 
-#region Memory
+		#region Memory
 
+		/// <summary>
+		/// Resolves the memory information.
+		/// </summary>
 		private void ResolveMemoryInfo()
 		{
 #if !WINDOWS_PHONE_APP && !NETFX_CORE
@@ -547,9 +777,9 @@ namespace PhoneInfo
 #endif
 		}
 
-#endregion // Memory
+		#endregion // Memory
 
-#region Screen
+		#region Screen
 
 		/// <summary>
 		/// Resolves the screen resolution and display size.
@@ -672,10 +902,13 @@ namespace PhoneInfo
 			AsyncOperationComplete();
 		}
 
-#endregion // Screen
+		#endregion // Screen
 
-#region Sensors
+		#region Sensors
 
+		/// <summary>
+		/// Resolves the sensor information.
+		/// </summary>
 		private void ResolveSensorInfo()
 		{
 			if (Windows.Devices.Sensors.Accelerometer.GetDefault() != null)
@@ -727,10 +960,13 @@ namespace PhoneInfo
 		//	AsyncOperationComplete();
 		//}
 
-#endregion
+		#endregion
 
-#region Other hardware properties
+		#region Other hardware properties
 
+		/// <summary>
+		/// Resolves the device information.
+		/// </summary>
 		private void ResolveDeviceInformation()
 		{
 #if WINDOWS_PHONE_APP || NETFX_CORE
@@ -753,22 +989,10 @@ namespace PhoneInfo
 		/// <summary>
 		/// Resolves the SD card information. Note that the result false if the
 		/// card is not installed even if the device supports one.
-		/// 
 		/// "You can't simply check the presence of SD card without first
 		/// registering in Package.appxmanifest Declarations page a File type
 		/// Association. After you have done that, then you can check the
 		/// presence of SD card with this code."
-		/// 
-		// Example snippet from Package.appxmanifest:
-		//
-		//     <Extension Category="windows.fileTypeAssociation">
-		//         <FileTypeAssociation Name="dummy_file_type_association_for_sd_card_detection">
-		//             <SupportedFileTypes>
-		//                 <FileType>.notarealfiletype</FileType>
-		//             </SupportedFileTypes>
-		//         </FileTypeAssociation>
-		//     </Extension>
-		// 
 		/// </summary>
 		private async void ResolveSDCardInfoAsync()
 		{
@@ -787,6 +1011,9 @@ namespace PhoneInfo
 		}
 
 #if !NETFX_CORE
+		/// <summary>
+		/// Resolves the vibration device information.
+		/// </summary>
 		private void ResolveVibrationDeviceInfo()
 		{
 			if (Windows.Phone.Devices.Notification.VibrationDevice.GetDefault() != null)
@@ -796,6 +1023,9 @@ namespace PhoneInfo
 		}
 #endif
 
+		/// <summary>
+		/// Resolves the processor core count.
+		/// </summary>
 		private void ResolveProcessorCoreCount()
 		{
 			ProcessorCoreCount = System.Environment.ProcessorCount;
@@ -830,9 +1060,9 @@ namespace PhoneInfo
 		}
 #endif
 
-#endregion // Software, themes and non-hardware dependent
+		#endregion // Software, themes and non-hardware dependent
 
-#region Utility methods
+		#region Utility methods
 
 		/// <summary>
 		/// Transforms the given bytes based on the given desired unit.
@@ -840,7 +1070,7 @@ namespace PhoneInfo
 		/// <param name="bytes">The number of bytes to transform.</param>
 		/// <param name="toUnit">The unit into which to transform, e.g. gigabytes.</param>
 		/// <param name="numberOfDecimals">The number of decimals desired.</param>
-		/// <returns></returns>
+		/// <returns>System.Double.</returns>
 		public static double TransformBytes(long bytes, UnitPrefixes toUnit, int numberOfDecimals = 0)
 		{
 			double retval = 0;
@@ -899,6 +1129,10 @@ namespace PhoneInfo
 			}
 		}
 
+		/// <summary>
+		/// Sorts the sizes from highest to lowest.
+		/// </summary>
+		/// <param name="sizes">The sizes.</param>
 		private void SortSizesFromHighestToLowest(List<Size> sizes)
 		{
 			if (sizes != null && sizes.Count > 1)

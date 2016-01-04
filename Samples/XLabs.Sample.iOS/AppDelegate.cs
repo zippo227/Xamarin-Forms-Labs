@@ -34,7 +34,7 @@
         /// <summary>
         /// The window
         /// </summary>
-        private UIWindow _window;
+        //private UIWindow _window;
 
         /// <summary>
         /// Finished the launching.

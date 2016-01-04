@@ -10,13 +10,13 @@ namespace XLabs.Platform.Services
 	using System.Runtime.InteropServices.WindowsRuntime;
 
 	/// <summary>
-	/// Implements <see cref="ISecureStorage"/> for WP using <see cref="IsolatedStorageFile"/> and <see cref="ProtectedData"/>.
+	/// Implements <see cref="ISecureStorage"/> for WP using IsolatedStorageFile and ProtectedData
 	/// </summary>
 	public class SecureStorage : ISecureStorage
     {
 		private static Windows.Storage.ApplicationData AppStorage { get {  return ApplicationData.Current; } }
 
-		private static Windows.Security.Cryptography.DataProtection.DataProtectionProvider _dataProtectionProvider = new DataProtectionProvider();
+		private static readonly Windows.Security.Cryptography.DataProtection.DataProtectionProvider _dataProtectionProvider = new DataProtectionProvider();
 
         private readonly byte[] _optionalEntropy;
 

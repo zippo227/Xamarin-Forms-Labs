@@ -45,6 +45,10 @@
 		/// <value>The ydpi.</value>
 		public double Ydpi { get { return Info.RawDpiY; } }
 
+		/// <summary>
+		/// Gets the scale value of the display.
+		/// </summary>
+		/// <value>The scale.</value>
 		public double Scale
 		{
 			get { return ((int)Info.ResolutionScale) / 100; }

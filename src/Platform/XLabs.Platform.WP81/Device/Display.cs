@@ -8,7 +8,7 @@
     /// </summary>
     public class Display : IDisplay
     {
-	    private PhoneInfo.DeviceProperties _deviceProperties;
+        private PhoneInfo.DeviceProperties _deviceProperties;
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents the current <see cref="Display" />.
@@ -33,18 +33,22 @@
         /// <value>The width.</value>
         public int Width { get { return (int)(_deviceProperties ?? (_deviceProperties = PhoneInfo.DeviceProperties.GetInstance())).ScreenResolutionSize.Width; } }
 
-		/// <summary>
-		/// Gets the screens X pixel density per inch
-		/// </summary>
-		/// <value>The xdpi.</value>
-		public double Xdpi { get { return Info.RawDpiY; } }
+        /// <summary>
+        /// Gets the screens X pixel density per inch
+        /// </summary>
+        /// <value>The xdpi.</value>
+        public double Xdpi { get { return Info.RawDpiY; } }
 
-		/// <summary>
-		/// Gets the screens Y pixel density per inch
-		/// </summary>
-		/// <value>The ydpi.</value>
-		public double Ydpi { get { return Info.RawDpiY; }}
+        /// <summary>
+        /// Gets the screens Y pixel density per inch
+        /// </summary>
+        /// <value>The ydpi.</value>
+        public double Ydpi { get { return Info.RawDpiY; }}
 
+        /// <summary>
+        /// Gets the scale value of the display.
+        /// </summary>
+        /// <value>The scale.</value>
         public double Scale
         {
             get { return Info.RawPixelsPerViewPixel; }

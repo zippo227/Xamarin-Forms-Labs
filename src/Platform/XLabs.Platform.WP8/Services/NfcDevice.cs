@@ -10,10 +10,10 @@
 	/// </summary>
 	public class NfcDevice : INfcDevice
 	{
-		/// <summary>
-		/// The _publish identifier
-		/// </summary>
-		private long? _publishId;
+		//// <summary>
+		//// The _publish identifier
+		//// </summary>
+		//private long? _publishId;
 
 		/// <summary>
 		/// The _device

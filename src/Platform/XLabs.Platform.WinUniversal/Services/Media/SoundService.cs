@@ -19,9 +19,9 @@ namespace XLabs.Platform.Services.Media
         /// </summary>
         private bool isScrubbing;
 
-        /// <summary>
-        /// The _TCS set media
-        /// </summary>
+        //// <summary>
+        //// The _TCS set media
+        //// </summary>
         //private TaskCompletionSource<SoundFile> tcsSetMedia;
 
         /// <summary>

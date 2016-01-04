@@ -10,11 +10,7 @@ namespace XLabs.Platform.Services
 	/// </summary>
 	public class PhoneService : IPhoneService
 	{
-		private ConnectionProfile _networkConnectionProfile = NetworkInformation.GetInternetConnectionProfile();
-
-		public PhoneService()
-		{
-		}
+		private readonly ConnectionProfile _networkConnectionProfile = NetworkInformation.GetInternetConnectionProfile();
 
 		/// <summary>
 		///     Gets the cellular provider.
@@ -140,7 +136,7 @@ namespace XLabs.Platform.Services
 			msg.Recipients.Add(to);
 			msg.Body = body;
 
-			await Windows.ApplicationModel.Chat.ChatMessageManager.ShowComposeSmsMessageAsync(msg);
+			await ChatMessageManager.ShowComposeSmsMessageAsync(msg);
 		}
 	}
 }

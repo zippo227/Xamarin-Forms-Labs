@@ -59,10 +59,10 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        ///     Loads the content.
+        /// Loads the content.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="contentFullName">Full name of the content.</param>
+        /// <param name="contentArgs">The <see cref="HybridWebView.LoadContentEventArgs"/> instance containing the event data.</param>
         partial void LoadContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
             this.Control.NavigateToString(contentArgs.Content);

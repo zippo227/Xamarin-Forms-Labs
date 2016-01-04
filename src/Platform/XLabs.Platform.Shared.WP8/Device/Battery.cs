@@ -30,7 +30,7 @@
         /// <param name="o">The o.</param>
         private void OnRemainingChargePercentChanged(object sender, object o)
         {
-            onLevelChange.Invoke(sender, Level);
+            onLevelChange?.Invoke(sender, Level);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@
         /// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnPowerSourceChanged(object sender, EventArgs eventArgs)
         {
-            onChargerStatusChanged.Invoke(sender, Charging);
+            onChargerStatusChanged?.Invoke(sender, Charging);
         }
 
         #region partial implementations

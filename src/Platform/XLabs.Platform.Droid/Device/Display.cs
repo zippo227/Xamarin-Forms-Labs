@@ -83,7 +83,11 @@
             return inches * Ydpi / Metrics.Density;
         }
 
-        public double Scale
+		/// <summary>
+		/// Gets the scale value of the display.
+		/// </summary>
+		/// <value>The scale.</value>
+		public double Scale
         {
             get { return Metrics.Density; }
         }

@@ -5,23 +5,23 @@ namespace XLabs.Platform.Services.Media
     using System;
     using System.Threading.Tasks;
     using System.Windows;
-	using Windows.UI.Xaml;
-	using Windows.UI.Xaml.Controls;
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
 
-	/// <summary>
-	/// SoundService implementation on the Windows Phone platform
-	/// Nees a GlobalMEdiaElement instance on the App resources dictionary
-	/// </summary>
-	public class SoundService : ISoundService
+    /// <summary>
+    /// SoundService implementation on the Windows Phone platform
+    /// Nees a GlobalMEdiaElement instance on the App resources dictionary
+    /// </summary>
+    public class SoundService : ISoundService
     {
         /// <summary>
         /// The _is scrubbing
         /// </summary>
-        private bool isScrubbing;
+        private bool _isScrubbing;
 
-        /// <summary>
-        /// The _TCS set media
-        /// </summary>
+        //// <summary>
+        //// The _TCS set media
+        //// </summary>
         //private TaskCompletionSource<SoundFile> tcsSetMedia;
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace XLabs.Platform.Services.Media
                     return Application.Current.Resources["GlobalMedia"] as MediaElement;
                 }
 
-				throw new ArgumentNullException("Pre-requisite for use: Add a new MediaElement called 'GlobalMedia' instance to the System.Windows.Application.Current.Resources dictionary. Do not replace this instance at any point.");
-			}
-		}
+                throw new ArgumentNullException("Pre-requisite for use: Add a new MediaElement called 'GlobalMedia' instance to the System.Windows.Application.Current.Resources dictionary. Do not replace this instance at any point.");
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance is playing.
@@ -174,7 +174,7 @@ namespace XLabs.Platform.Services.Media
         {
             CurrentFile = new SoundFile {Filename = filename};
 
-	        var file = await ApplicationData.Current.LocalFolder.GetFileAsync(CurrentFile.Filename);
+            var file = await ApplicationData.Current.LocalFolder.GetFileAsync(CurrentFile.Filename);
 
             //TODO: need to clean this events
             GlobalMediaElement.MediaEnded += GlobalMediaElementMediaEnded;
@@ -219,10 +219,10 @@ namespace XLabs.Platform.Services.Media
             return Task.Run(
                 () =>
                     {
-                        if (this.isScrubbing) return;
-                        this.isScrubbing = true;
+                        if (this._isScrubbing) return;
+                        this._isScrubbing = true;
                         //    player.CurrentTime = position;
-                        this.isScrubbing = false;
+                        this._isScrubbing = false;
                     });
         }
     }
