@@ -10,7 +10,8 @@
     <AssemblyName>XLabs.Serialization.ServiceStack.iOS</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>76c56ab3</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <TargetFrameworkIdentifier>Xamarin.iOS</TargetFrameworkIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -132,5 +133,15 @@
       <Name>XLabs.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.XLabs.Serialization.ServiceStack.iOS.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <Import Project="..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets" Condition="Exists('..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets'))" />
+  </Target>
 </Project>

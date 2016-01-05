@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.XLabs.Web.Droid.config" />
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets" Condition="Exists('..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets')" />

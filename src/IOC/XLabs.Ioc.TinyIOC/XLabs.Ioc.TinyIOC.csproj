@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.XLabs.Ioc.TinyIOC.config" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>

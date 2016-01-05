@@ -134,7 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.XLabs.Serialization.ServiceStack.Android.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XLabs.Serialization\XLabs.Serialization.csproj">
