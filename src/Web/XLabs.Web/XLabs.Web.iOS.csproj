@@ -12,6 +12,8 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkIdentifier>Xamarin.iOS</TargetFrameworkIdentifier>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,8 +67,13 @@
       <Name>XLabs.Web</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Error Condition="!Exists('..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets'))" />
   </Target>
+  <Import Project="..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets" Condition="Exists('..\..\..\packages\NuProj.Common.0.10.4-beta\build\NuProj.Common.targets')" />
 </Project>
