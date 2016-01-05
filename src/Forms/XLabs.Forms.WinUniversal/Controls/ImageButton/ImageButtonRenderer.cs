@@ -1,26 +1,42 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms.WinUniversal
+// Author           : XLabs Team
+// Created          : 01-01-2016
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ImageButtonRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinRT;
+using XLabs.Enums;
 using XLabs.Forms.Controls;
+using Button = Xamarin.Forms.Button;
+using Image = Windows.UI.Xaml.Controls.Image;
+using Orientation = Windows.UI.Xaml.Controls.Orientation;
+using TextAlignment = Windows.UI.Xaml.TextAlignment;
+using Thickness = Windows.UI.Xaml.Thickness;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 
 namespace XLabs.Forms.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using System.Threading.Tasks;
-    using System.Windows;
-	using Windows.UI.Xaml.Controls;
-    using Enums;
-    using Xamarin.Forms;
-    using Xamarin.Forms.Platform.WinRT;
-    using Button = Xamarin.Forms.Button;
-    using Image = Windows.UI.Xaml.Controls.Image;
-    using Orientation = Windows.UI.Xaml.Controls.Orientation;
-    using TextAlignment = Windows.UI.Xaml.TextAlignment;
-    using Thickness = Windows.UI.Xaml.Thickness;
-
     /// <summary>
     ///     Draws a button on the Windows Phone platform with the image shown in the right
     ///     position with the right size.
@@ -157,25 +173,25 @@ namespace XLabs.Forms.Controls
             return returnValue;
         }
 
-		/// <summary>
-		/// Returns a <see cref="Xamarin.Forms.Image" /> from the <see cref="ImageSource" /> provided.
-		/// </summary>
-		/// <param name="source">The <see cref="ImageSource" /> to load the image from.</param>
-		/// <param name="height">The height for the image (divides by 2 for the Windows Phone platform).</param>
-		/// <param name="width">The width for the image (divides by 2 for the Windows Phone platform).</param>
-		/// <param name="currentImage">The current image.</param>
-		/// <returns>A properly sized image.</returns>
-		private static async Task<Image> GetImageAsync(ImageSource source, int height, int width, Image currentImage)
+        /// <summary>
+        /// Returns a <see cref="Xamarin.Forms.Image" /> from the <see cref="ImageSource" /> provided.
+        /// </summary>
+        /// <param name="source">The <see cref="ImageSource" /> to load the image from.</param>
+        /// <param name="height">The height for the image (divides by 2 for the Windows Phone platform).</param>
+        /// <param name="width">The width for the image (divides by 2 for the Windows Phone platform).</param>
+        /// <param name="currentImage">The current image.</param>
+        /// <returns>A properly sized image.</returns>
+        private static async Task<Image> GetImageAsync(ImageSource source, int height, int width, Image currentImage)
         {
-			var image = currentImage ?? new Image();
-			var handler = GetHandler(source);
+            var image = currentImage ?? new Image();
+            var handler = GetHandler(source);
 
-			var imageSource = await handler.LoadImageAsync(source);
+            var imageSource = await handler.LoadImageAsync(source);
 
-			image.Source = imageSource;
-			image.Height = Convert.ToDouble(height / 2);
-			image.Width = Convert.ToDouble(width / 2);
-			return image;
+            image.Source = imageSource;
+            image.Height = Convert.ToDouble(height / 2);
+            image.Width = Convert.ToDouble(width / 2);
+            return image;
         }
 
         /// <summary>

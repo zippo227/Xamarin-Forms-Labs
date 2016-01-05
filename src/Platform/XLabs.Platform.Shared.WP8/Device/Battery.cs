@@ -1,7 +1,25 @@
-﻿namespace XLabs.Platform.Device
+﻿// ***********************************************************************
+// Assembly         : XLabs.Platform.WP81
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="Battery.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+namespace XLabs.Platform.Device
 {
-    using System;
-
     /// <summary>
     /// Windows Phone Battery class.
     /// </summary>
@@ -16,9 +34,9 @@
             get
             {
 #if !NETFX_CORE
-				return Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercent;
+                return Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercent;
 #else
-				return 0;
+                return 0;
 #endif
             }
         }
@@ -38,7 +56,7 @@
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void OnPowerSourceChanged(object sender, EventArgs eventArgs)
+        private void OnPowerSourceChanged(object sender, System.EventArgs eventArgs)
         {
             onChargerStatusChanged?.Invoke(sender, Charging);
         }
@@ -51,7 +69,7 @@
         partial void StartLevelMonitoring()
         {
 #if !NETFX_CORE
-			Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged += OnRemainingChargePercentChanged;
+            Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged += OnRemainingChargePercentChanged;
 #else
 #endif
         }
@@ -62,11 +80,11 @@
         partial void StopLevelMonitoring()
         {
 #if !NETFX_CORE
-			Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged -= OnRemainingChargePercentChanged;
+            Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged -= OnRemainingChargePercentChanged;
 #else
 #endif
-		}
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

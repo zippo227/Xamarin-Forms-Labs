@@ -209,9 +209,6 @@
     <BundleResource Include="Images\RadioButton\unchecked%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\XLabs.licenseheader">
-      <Link>XLabs.licenseheader</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\..\..\packages\Xamarin.Forms.2.0.0.6490\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\..\packages\Xamarin.Forms.2.0.0.6490\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

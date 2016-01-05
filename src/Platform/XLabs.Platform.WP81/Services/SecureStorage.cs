@@ -1,20 +1,40 @@
-﻿namespace XLabs.Platform.Services
+﻿// ***********************************************************************
+// Assembly         : XLabs.Platform.WP81
+// Author           : XLabs Team
+// Created          : 01-01-2016
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="SecureStorage.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using Windows.Security.Cryptography.DataProtection;
+using Windows.Storage;
+
+namespace XLabs.Platform.Services
 {
-    using System;
-    using System.IO;
-	using Windows.Storage;
-    using System.Threading;
-	using System.Runtime.InteropServices.WindowsRuntime;
-	using Windows.Security.Cryptography.DataProtection;
-
-	/// <summary>
-	/// Implements <see cref="ISecureStorage"/> for WP using IsolatedStorageFile ProtectedData
-	/// </summary>
-	public class SecureStorage : ISecureStorage
+    /// <summary>
+    /// Implements <see cref="ISecureStorage"/> for WP using IsolatedStorageFile ProtectedData
+    /// </summary>
+    public class SecureStorage : ISecureStorage
     {
-		private static Windows.Storage.ApplicationData AppStorage { get {  return ApplicationData.Current; } }
+        private static Windows.Storage.ApplicationData AppStorage { get {  return ApplicationData.Current; } }
 
-		private static readonly Windows.Security.Cryptography.DataProtection.DataProtectionProvider _dataProtectionProvider = new DataProtectionProvider();
+        private static readonly Windows.Security.Cryptography.DataProtection.DataProtectionProvider _dataProtectionProvider = new DataProtectionProvider();
 
         private readonly byte[] _optionalEntropy;
 
@@ -34,14 +54,14 @@
             
         }
 
-		#region ISecureStorage Members
+        #region ISecureStorage Members
 
-		/// <summary>
-		/// Stores the specified key.
-		/// </summary>
-		/// <param name="key">The key.</param>
-		/// <param name="dataBytes">The data bytes.</param>
-		public async void Store(string key, byte[] dataBytes)
+        /// <summary>
+        /// Stores the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="dataBytes">The data bytes.</param>
+        public async void Store(string key, byte[] dataBytes)
         {
             var mutex = new Mutex(false, key);
 
@@ -49,19 +69,19 @@
             {
                 mutex.WaitOne();
 
-				//var result = await new Windows.Security.Cryptography.DataProtection.DataProtectionProvider().ProtectAsync()
+                //var result = await new Windows.Security.Cryptography.DataProtection.DataProtectionProvider().ProtectAsync()
 
-	            var buffer = dataBytes.AsBuffer();
+                var buffer = dataBytes.AsBuffer();
 
-				if (_optionalEntropy != null)
-	            {
-		            buffer = await _dataProtectionProvider.ProtectAsync(buffer);
-	            }
+                if (_optionalEntropy != null)
+                {
+                    buffer = await _dataProtectionProvider.ProtectAsync(buffer);
+                }
 
-				var file =
-		            await AppStorage.LocalFolder.CreateFileAsync(key, CreationCollisionOption.ReplaceExisting);
+                var file =
+                    await AppStorage.LocalFolder.CreateFileAsync(key, CreationCollisionOption.ReplaceExisting);
 
-	            await FileIO.WriteBufferAsync(file, buffer);
+                await FileIO.WriteBufferAsync(file, buffer);
             }
             finally
             {
@@ -69,48 +89,13 @@
             }
         }
 
-		/// <summary>
-		/// Retrieves the specified key.
-		/// </summary>
-		/// <param name="key">The key.</param>
-		/// <returns>System.Byte[].</returns>
-		/// <exception cref="System.Exception"></exception>
-		public byte[] Retrieve(string key)
-        {
-            var mutex = new Mutex(false, key);
-
-			try
-			{
-				mutex.WaitOne();
-
-				var file = AppStorage.LocalFolder.GetFileAsync(key);
-
-				var bufferTask = FileIO.ReadBufferAsync(file.GetResults());
-
-				var buffer = bufferTask.GetResults();
-
-				if (_optionalEntropy != null)
-				{
-					buffer = _dataProtectionProvider.UnprotectAsync(buffer).GetResults();
-				}
-
-				return buffer.ToArray();
-			}
-			catch (Exception ex)
-			{
-				throw new Exception(string.Format("No entry found for key {0}.", key), ex);
-			}
-            finally
-            {
-                mutex.ReleaseMutex();
-            }
-        }
-
-		/// <summary>
-		/// Deletes the specified key.
-		/// </summary>
-		/// <param name="key">The key.</param>
-		public async void Delete(string key)
+        /// <summary>
+        /// Retrieves the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>System.Byte[].</returns>
+        /// <exception cref="System.Exception"></exception>
+        public byte[] Retrieve(string key)
         {
             var mutex = new Mutex(false, key);
 
@@ -118,9 +103,44 @@
             {
                 mutex.WaitOne();
 
-	            var file = await AppStorage.LocalFolder.GetFileAsync(key);
-	            
-				await file.DeleteAsync();
+                var file = AppStorage.LocalFolder.GetFileAsync(key);
+
+                var bufferTask = FileIO.ReadBufferAsync(file.GetResults());
+
+                var buffer = bufferTask.GetResults();
+
+                if (_optionalEntropy != null)
+                {
+                    buffer = _dataProtectionProvider.UnprotectAsync(buffer).GetResults();
+                }
+
+                return buffer.ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("No entry found for key {0}.", key), ex);
+            }
+            finally
+            {
+                mutex.ReleaseMutex();
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        public async void Delete(string key)
+        {
+            var mutex = new Mutex(false, key);
+
+            try
+            {
+                mutex.WaitOne();
+
+                var file = await AppStorage.LocalFolder.GetFileAsync(key);
+                
+                await file.DeleteAsync();
             }
             finally
             {
@@ -135,17 +155,17 @@
         /// <returns>True if the storage has the key, otherwise false.</returns>
         public bool Contains(string key)
         {
-	        try
-	        {
-		        var file = AppStorage.LocalFolder.GetFileAsync(key);
-		        file.GetResults();
+            try
+            {
+                var file = AppStorage.LocalFolder.GetFileAsync(key);
+                file.GetResults();
 
-		        return true;
-	        }
-	        catch
-	        {
-		        return false;
-	        }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         #endregion

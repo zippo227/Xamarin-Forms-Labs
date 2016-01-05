@@ -158,9 +158,6 @@
     <Compile Include="XFormsApp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\XLabs.licenseheader">
-      <Link>XLabs.licenseheader</Link>
-    </None>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
   </ItemGroup>

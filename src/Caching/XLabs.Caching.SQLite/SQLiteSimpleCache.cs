@@ -1,16 +1,24 @@
 ﻿// ***********************************************************************
 // Assembly         : XLabs.Caching.SQLite
-// Author           : rmarinho
-// Created          : 09-08-2015
-//
-// Last Modified By : rmarinho
-// Last Modified On : 09-08-2015
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
 // ***********************************************************************
 // <copyright file="SQLiteSimpleCache.cs" company="XLabs Team">
-//     Copyright © XLabs Team 2014
+//     Copyright (c) XLabs Team. All rights reserved.
 // </copyright>
-// <summary></summary>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
 // ***********************************************************************
+// 
+#region
 
 using System;
 using System.Collections.Generic;
@@ -21,6 +29,8 @@ using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLite.Net.Interop;
 using XLabs.Serialization;
+
+#endregion
 
 namespace XLabs.Caching.SQLite
 {

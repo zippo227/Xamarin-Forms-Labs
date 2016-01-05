@@ -8,7 +8,7 @@
     <ProjectGuid>{B498D705-8E82-4A9B-96F9-637C62A48E6A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XLabs.Platform.WinUniversal</RootNamespace>
+    <RootNamespace>XLabs.Platform</RootNamespace>
     <AssemblyName>XLabs.Platform.WinUniversal</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>

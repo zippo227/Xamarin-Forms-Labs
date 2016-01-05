@@ -1,18 +1,37 @@
+// ***********************************************************************
+// Assembly         : XLabs.Platform.WinUniversal
+// Author           : XLabs Team
+// Created          : 01-01-2016
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="SoundService.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace XLabs.Platform.Services.Media
 {
-    using System;
-    using System.Threading.Tasks;
-    using System.Windows;
-	using Windows.UI.Xaml;
-	using Windows.UI.Xaml.Controls;
-
-	/// <summary>
-	/// SoundService implementation on the Windows Phone platform
-	/// Nees a GlobalMEdiaElement instance on the App resources dictionary
-	/// </summary>
-	public class SoundService : ISoundService
+    /// <summary>
+    /// SoundService implementation on the Windows Phone platform
+    /// Nees a GlobalMEdiaElement instance on the App resources dictionary
+    /// </summary>
+    public class SoundService : ISoundService
     {
         /// <summary>
         /// The _is scrubbing
@@ -47,9 +66,9 @@ namespace XLabs.Platform.Services.Media
                     return Application.Current.Resources["GlobalMedia"] as MediaElement;
                 }
 
-				throw new ArgumentNullException("Pre-requisite for use: Add a new MediaElement called 'GlobalMedia' instance to the System.Windows.Application.Current.Resources dictionary. Do not replace this instance at any point.");
-			}
-		}
+                throw new ArgumentNullException("Pre-requisite for use: Add a new MediaElement called 'GlobalMedia' instance to the System.Windows.Application.Current.Resources dictionary. Do not replace this instance at any point.");
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance is playing.
@@ -174,7 +193,7 @@ namespace XLabs.Platform.Services.Media
         {
             CurrentFile = new SoundFile {Filename = filename};
 
-	        var file = await ApplicationData.Current.LocalFolder.GetFileAsync(CurrentFile.Filename);
+            var file = await ApplicationData.Current.LocalFolder.GetFileAsync(CurrentFile.Filename);
 
             //TODO: need to clean this events
             GlobalMediaElement.MediaEnded += GlobalMediaElementMediaEnded;

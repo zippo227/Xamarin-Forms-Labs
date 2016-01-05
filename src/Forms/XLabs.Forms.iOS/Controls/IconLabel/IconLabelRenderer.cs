@@ -1,7 +1,26 @@
-﻿using Foundation;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="IconLabelRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -11,19 +30,19 @@ using XLabs.Forms.Controls;
 [assembly: ExportRenderer(typeof(IconLabel), typeof(IconLabelRenderer))]
 namespace XLabs.Forms.Controls
 {
-	/// <summary>
-	/// Implementation of IconLabelRender.
-	/// </summary>
-	public class IconLabelRenderer : LabelRenderer
+    /// <summary>
+    /// Implementation of IconLabelRender.
+    /// </summary>
+    public class IconLabelRenderer : LabelRenderer
     {
         IconLabel _iconLabel;
         UIKit.UILabel _nativeLabel;
 
-		/// <summary>
-		/// Handles the on element changed messages
-		/// </summary>
-		/// <param name="e">The e.</param>
-		protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
+        /// <summary>
+        /// Handles the on element changed messages
+        /// </summary>
+        /// <param name="e">The e.</param>
+        protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             base.OnElementChanged(e);
 
@@ -34,12 +53,12 @@ namespace XLabs.Forms.Controls
                 SetText(_iconLabel, _nativeLabel);
         }
 
-		/// <summary>
-		/// Handles the <see cref="E:ElementPropertyChanged" /> event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
-		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        /// <summary>
+        /// Handles the <see cref="E:ElementPropertyChanged" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
              if(e.PropertyName == IconLabel.IconProperty.PropertyName ||
@@ -55,17 +74,17 @@ namespace XLabs.Forms.Controls
              }
         }
 
-		/// <summary>
-		/// Sets the text.
-		/// </summary>
-		/// <param name="iconLabel">The icon label.</param>
-		/// <param name="targetLabel">The target label.</param>
-		/// <exception cref="System.NotSupportedException">
-		/// Image orientation top and bottom are not supported on iOS
-		/// or
-		/// Image orientation top and bottom are not supported on iOS
-		/// </exception>
-		private void SetText(IconLabel iconLabel, UILabel targetLabel)
+        /// <summary>
+        /// Sets the text.
+        /// </summary>
+        /// <param name="iconLabel">The icon label.</param>
+        /// <param name="targetLabel">The target label.</param>
+        /// <exception cref="System.NotSupportedException">
+        /// Image orientation top and bottom are not supported on iOS
+        /// or
+        /// Image orientation top and bottom are not supported on iOS
+        /// </exception>
+        private void SetText(IconLabel iconLabel, UILabel targetLabel)
         {
             var renderedIcon = iconLabel.Icon;
 
@@ -156,24 +175,24 @@ namespace XLabs.Forms.Controls
             }
         }
 
-		/// <summary>
-		/// Gets the font for the button (applied to all button text EXCEPT the icon)
-		/// </summary>
-		/// <param name="iconLabel">The icon label.</param>
-		/// <param name="targetLabel">The target label.</param>
-		/// <param name="fontSize">Size of the font.</param>
-		/// <returns>UIFont.</returns>
-		private UIFont GetButtonFont(IconLabel iconLabel, UILabel targetLabel, nfloat fontSize)
+        /// <summary>
+        /// Gets the font for the button (applied to all button text EXCEPT the icon)
+        /// </summary>
+        /// <param name="iconLabel">The icon label.</param>
+        /// <param name="targetLabel">The target label.</param>
+        /// <param name="fontSize">Size of the font.</param>
+        /// <returns>UIFont.</returns>
+        private UIFont GetButtonFont(IconLabel iconLabel, UILabel targetLabel, nfloat fontSize)
         {
             UIFont btnTextFont = iconLabel.Font.ToUIFont();
 
             if (iconLabel.Font != Font.Default && btnTextFont != null)
                 return btnTextFont;
-			
-			if (iconLabel.Font == Font.Default)
-				return UIFont.SystemFontOfSize(fontSize);
+            
+            if (iconLabel.Font == Font.Default)
+                return UIFont.SystemFontOfSize(fontSize);
 
-			return btnTextFont;
+            return btnTextFont;
         }
     }
 }

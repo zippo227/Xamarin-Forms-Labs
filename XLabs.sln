@@ -257,7 +257,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".misc", ".misc", "{834C8386-0DD2-4ACC-90A6-8A4F1A54B035}"
 	ProjectSection(SolutionItems) = preProject
 		src\AssemblyInfo.Shared.cs = src\AssemblyInfo.Shared.cs
-		XLabs.licenseheader = XLabs.licenseheader
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{BC82E41D-4E54-436C-932A-B14DDFD91CA6}"

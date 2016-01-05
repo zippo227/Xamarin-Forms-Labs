@@ -207,7 +207,7 @@ __________________
 
 **Contributions:**
 ======
- - Shawn Anderson
+ - ravensorb
  - [Jim Bennett](http://www.jimbobbennett.io) [@jimbobbennett](https://twitter.com/jimbobbennett)
  - Filip De Vos  [@foxtricks](https://twitter.com/foxtricks) 
  - [Kevin E. Ford](http://windingroadway.blogspot.com/) [@Bowman74](https://twitter.com/Bowman74)

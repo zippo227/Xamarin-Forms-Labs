@@ -1,10 +1,31 @@
-﻿namespace XLabs.Sample.Pages.Services
-{
-    using Forms.Controls.SensorBar;
-    using Ioc;
-    using Platform.Device;
-    using Xamarin.Forms;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Sample
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="GyroscopePage.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using Xamarin.Forms;
+using XLabs.Forms.Controls.SensorBar;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
+
+namespace XLabs.Sample.Pages.Services
+{
     public class GyroscopePage : ContentPage
     {
         private readonly IGyroscope gyroscope;
@@ -18,27 +39,27 @@
         public GyroscopePage()
         {
             var device = Resolver.Resolve<IDevice> ();
-	        if (device != null && device.Gyroscope != null)
-	        {
-		        this.gyroscope = device.Gyroscope;
-	        }
-	        else
-	        {
-		        this.gyroscope = Resolver.Resolve<IGyroscope>() ?? DependencyService.Get<IGyroscope>();
-	        }
+            if (device != null && device.Gyroscope != null)
+            {
+                this.gyroscope = device.Gyroscope;
+            }
+            else
+            {
+                this.gyroscope = Resolver.Resolve<IGyroscope>() ?? DependencyService.Get<IGyroscope>();
+            }
 
-	        if (gyroscope == null)
-	        {
-		        Content = new Label()
-		        {
-			        TextColor = Color.Red,
-			        Text = "Device does not have gyroscope sensor or it is not enabled."
-		        };
+            if (gyroscope == null)
+            {
+                Content = new Label()
+                {
+                    TextColor = Color.Red,
+                    Text = "Device does not have gyroscope sensor or it is not enabled."
+                };
 
-		        return;
-	        }
+                return;
+            }
 
-	        Title = "Accelerator Sensor";
+            Title = "Accelerator Sensor";
          
             var grid = new StackLayout ();
 

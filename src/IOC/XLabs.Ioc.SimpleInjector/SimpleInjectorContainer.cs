@@ -1,4 +1,25 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Ioc.SimpleInjector
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="SimpleInjectorContainer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
 using SimpleInjector;
 
 namespace XLabs.Ioc.SimpleInjectorContainer
@@ -67,13 +88,13 @@ namespace XLabs.Ioc.SimpleInjectorContainer
             return this;
         }
 
-		/// <summary>
-		/// Registers the single.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <typeparam name="TImpl">The type of the t implementation.</typeparam>
-		/// <returns>IDependencyContainer.</returns>
-		public IDependencyContainer RegisterSingle<T, TImpl>() where T : class where TImpl : class, T
+        /// <summary>
+        /// Registers the single.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TImpl">The type of the t implementation.</typeparam>
+        /// <returns>IDependencyContainer.</returns>
+        public IDependencyContainer RegisterSingle<T, TImpl>() where T : class where TImpl : class, T
         {
             this.container.RegisterSingleton<T, TImpl>();
             return this;

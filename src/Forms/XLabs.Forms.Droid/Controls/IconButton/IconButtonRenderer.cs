@@ -1,21 +1,42 @@
+// ***********************************************************************
+// Assembly         : XLabs.Forms.Droid
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="IconButtonRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
 using System;
 using System.Linq;
-using Android.Widget;
-using Xamarin.Forms;
-using XLabs.Forms.Controls;
-using Xamarin.Forms.Platform.Android;
 using Android.Graphics;
 using Android.Text;
-using XLabs.Enums;
 using Android.Text.Style;
+using Android.Widget;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
+using XLabs.Enums;
+using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer(typeof(IconButton), typeof(IconButtonRenderer))]
 namespace XLabs.Forms.Controls
 {
-	/// <summary>
-	/// IconButtonRender implementation.
-	/// </summary>
-	public class IconButtonRenderer : ButtonRenderer
+    /// <summary>
+    /// IconButtonRender implementation.
+    /// </summary>
+    public class IconButtonRenderer : ButtonRenderer
     {
         Typeface _iconFont;
         Typeface _textFont;
@@ -27,20 +48,20 @@ namespace XLabs.Forms.Controls
        
         Android.Widget.Button _nativeBtn;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="IconButtonRenderer"/> class.
-		/// </summary>
-		public IconButtonRenderer()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IconButtonRenderer"/> class.
+        /// </summary>
+        public IconButtonRenderer()
             : base()
         {
 
         }
 
-		/// <summary>
-		/// Handled the On Element Changed events
-		/// </summary>
-		/// <param name="e">The e.</param>
-		protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
+        /// <summary>
+        /// Handled the On Element Changed events
+        /// </summary>
+        /// <param name="e">The e.</param>
+        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
         {
 
             base.OnElementChanged(e);
@@ -145,12 +166,12 @@ namespace XLabs.Forms.Controls
             return computedText;
         }
 
-		/// <summary>
-		/// Gets the color of the span.
-		/// </summary>
-		/// <param name="color">The color.</param>
-		/// <returns>Android.Graphics.Color.</returns>
-		private Android.Graphics.Color GetSpanColor(Xamarin.Forms.Color color)
+        /// <summary>
+        /// Gets the color of the span.
+        /// </summary>
+        /// <param name="color">The color.</param>
+        /// <returns>Android.Graphics.Color.</returns>
+        private Android.Graphics.Color GetSpanColor(Xamarin.Forms.Color color)
         {
             if (color == Xamarin.Forms.Color.Default)
                 return new Android.Graphics.Color(Control.TextColors.DefaultColor);
@@ -232,11 +253,11 @@ namespace XLabs.Forms.Controls
             }
         }
 
-		/// <summary>
-		/// Releases unmanaged and - optionally - managed resources.
-		/// </summary>
-		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-		protected override void Dispose(bool disposing)
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected override void Dispose(bool disposing)
         {
             _nativeBtn.AfterTextChanged -= nativeBtn_AfterTextChanged;
             base.Dispose(disposing);

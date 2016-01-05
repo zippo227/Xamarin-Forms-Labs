@@ -1,33 +1,48 @@
-﻿/*
- * Copyright (c) 2013-2014 Microsoft Mobile. All rights reserved.
- * See the license text file delivered with this project for more information.
- */
+﻿// ***********************************************************************
+// Assembly         : XLabs.Platform.WP81
+// Author           : XLabs Team
+// Created          : 01-01-2016
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="PhoneInfo.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
-// ReSharper disable InconsistentNaming
-// ReSharper disable UnusedAutoPropertyAccessor.Local
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using Windows.Devices.Enumeration;
+using Windows.Devices.Sensors;
+using Windows.Graphics.Display;
+using Windows.Media.Capture;
+using Windows.Media.MediaProperties;
+using Windows.Networking.Proximity;
+using Windows.UI;
+using Size = Windows.Foundation.Size;
+
+#if WINDOWS_PHONE_APP || NETFX_CORE
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
+#else
+using Microsoft.Phone.Info;
+#endif
+
 namespace PhoneInfo
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using Windows.Devices.Enumeration;
-	using Windows.Devices.Sensors;
-	using Windows.Foundation;
-	using Windows.Graphics.Display;
-	using Windows.Media.Capture;
-	using Windows.Media.MediaProperties;
-	using Windows.Networking.Proximity;
-	using Windows.UI;
-#if WINDOWS_PHONE_APP || NETFX_CORE
-	using Windows.UI.Xaml;
-	using Windows.UI.Xaml.Media;
-#else
-	using Microsoft.Phone.Info;
-	using Size =System.Windows.Size;
-#endif
 
 
 	/// <summary>
@@ -1046,7 +1061,7 @@ namespace PhoneInfo
 
 					try
 					{
-						SolidColorBrush brush = (SolidColorBrush)Application.Current.Resources["PhoneAccentBrush"];
+						var brush = (SolidColorBrush)Application.Current.Resources["PhoneAccentBrush"];
 						ThemeAccentColor = brush.Color;
 					}
 					catch (System.Runtime.InteropServices.COMException e)
