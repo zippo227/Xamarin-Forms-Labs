@@ -37,7 +37,6 @@
     <Tags>Xamarin XLabs caching sqlite</Tags>
     <IconUrl>https://raw.githubusercontent.com/XLabs/Xamarin-Forms-Labs/master/Design/Icons/nuget/icon_nuget.png</IconUrl>
     <Description>This package implements the caching provider via SQLite</Description>
-
     <OutputPath>$(SolutionDir)\.nuget\Packages</OutputPath>
   </PropertyGroup>
   <Import Project="$(NuProjPath)\NuProj.targets" />
