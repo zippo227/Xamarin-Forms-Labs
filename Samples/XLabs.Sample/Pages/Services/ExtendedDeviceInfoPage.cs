@@ -1,90 +1,109 @@
-﻿namespace XLabs.Sample.Pages.Services
+﻿// ***********************************************************************
+// Assembly         : XLabs.Sample
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ExtendedDeviceInfoPage.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using Xamarin.Forms;
+using XLabs.Platform.Device;
+
+namespace XLabs.Sample.Pages.Services
 {
-	using System;
+    /// <summary>
+    /// Class ExtendedDeviceInfoPage.
+    /// </summary>
+    public class ExtendedDeviceInfoPage : ContentPage
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExtendedDeviceInfoPage"/> class.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        public ExtendedDeviceInfoPage(IDevice device)
+        {
+            this.Title ="Extended Device Info";
+            if (device == null)
+            {
+                this.Content = new Label()
+                {
+                    TextColor = Color.Red,
+                    Text = "IDevice has not been configured with the dependency service."
+                };
+                return;
+            }
 
-	using Xamarin.Forms;
+            var scroll = new ScrollView();
+            var stack = new StackLayout();
 
-	using XLabs.Platform.Device;
+            #region Display information
+            var display = device.Display;
+            var displayFrame = new Frame();
+            if (display != null)
+            {
+                displayFrame.Content = new StackLayout()
+                            {
+                                Children =
+                                {
+                                    new Label() { Text = display.ToString() },
+                                    new Label() { Text = string.Format("Screen width is\t {0:0.0} inches.", display.ScreenWidthInches()) },
+                                    new Label() { Text = string.Format("Screen height is\t {0:0.0} inches.", display.ScreenHeightInches()) },
+                                    new Label() { Text = string.Format("Screen diagonal size is\t {0:0.0} inches.", display.ScreenSizeInches()) }
+                                }
+                            };
+            }
+            else
+            {
+                displayFrame.Content = new Label() { TextColor = Color.Red, Text = "Device does not contain display information." };
+            }
 
-	/// <summary>
-	/// Class ExtendedDeviceInfoPage.
-	/// </summary>
-	public class ExtendedDeviceInfoPage : ContentPage
-	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ExtendedDeviceInfoPage"/> class.
-		/// </summary>
-		/// <param name="device">The device.</param>
-		public ExtendedDeviceInfoPage(IDevice device)
-		{
-			this.Title ="Extended Device Info";
-			if (device == null)
-			{
-				this.Content = new Label()
-				{
-					TextColor = Color.Red,
-					Text = "IDevice has not been configured with the dependency service."
-				};
-				return;
-			}
+            stack.Children.Add(displayFrame); 
+            #endregion
 
-			var scroll = new ScrollView();
-			var stack = new StackLayout();
+            #region Battery information
+            var battery = device.Battery;
+            var batteryFrame = new Frame();
+            if (battery != null)
+            {
+                var level = new Label();
+                var charger = new Label();
 
-			#region Display information
-			var display = device.Display;
-			var displayFrame = new Frame();
-			if (display != null)
-			{
-				displayFrame.Content = new StackLayout()
-							{
-								Children =
-								{
-									new Label() { Text = display.ToString() },
-									new Label() { Text = string.Format("Screen width is\t {0:0.0} inches.", display.ScreenWidthInches()) },
-									new Label() { Text = string.Format("Screen height is\t {0:0.0} inches.", display.ScreenHeightInches()) },
-									new Label() { Text = string.Format("Screen diagonal size is\t {0:0.0} inches.", display.ScreenSizeInches()) }
-								}
-							};
-			}
-			else
-			{
-				displayFrame.Content = new Label() { TextColor = Color.Red, Text = "Device does not contain display information." };
-			}
+                var levelAction = new Action(() => level.Text = string.Format("Battery level is {0}%.", battery.Level));
+                var chargerAction = new Action(() => charger.Text = string.Format("Charger is {0}.", battery.Charging ? "Connected" : "Disconnected"));
 
-			stack.Children.Add(displayFrame); 
-			#endregion
+                levelAction.Invoke();
+                chargerAction.Invoke();
 
-			#region Battery information
-			var battery = device.Battery;
-			var batteryFrame = new Frame();
-			if (battery != null)
-			{
-				var level = new Label();
-				var charger = new Label();
+                batteryFrame.Content = new StackLayout()
+                {
+                    Children = { level, charger }
+                };
 
-				var levelAction = new Action(() => level.Text = string.Format("Battery level is {0}%.", battery.Level));
-				var chargerAction = new Action(() => charger.Text = string.Format("Charger is {0}.", battery.Charging ? "Connected" : "Disconnected"));
+                battery.OnLevelChange += (s, e) => Device.BeginInvokeOnMainThread(levelAction);
 
-				levelAction.Invoke();
-				chargerAction.Invoke();
+                battery.OnChargerStatusChanged += (s, e) => Device.BeginInvokeOnMainThread(chargerAction);
+            }
+            else
+            {
+                batteryFrame.Content = new Label() { TextColor = Color.Red, Text = "Device does not contain battery information." };
+            }
 
-				batteryFrame.Content = new StackLayout()
-				{
-					Children = { level, charger }
-				};
-
-				battery.OnLevelChange += (s, e) => Device.BeginInvokeOnMainThread(levelAction);
-
-				battery.OnChargerStatusChanged += (s, e) => Device.BeginInvokeOnMainThread(chargerAction);
-			}
-			else
-			{
-				batteryFrame.Content = new Label() { TextColor = Color.Red, Text = "Device does not contain battery information." };
-			}
-
-			stack.Children.Add(batteryFrame); 
-			#endregion
+            stack.Children.Add(batteryFrame); 
+            #endregion
 
             #region RAM information
             var ramLabel = new Label() { Text = "Total Memory:" };
@@ -116,36 +135,36 @@
             ramText.Text = String.Format(format, mem);
             #endregion
 
-			#region Device Info
+            #region Device Info
 
 
 
-			var idLabel = new Label() { Text = "Device Id:" };
+            var idLabel = new Label() { Text = "Device Id:" };
 
-			var idText = new Label();
+            var idText = new Label();
 
-			stack.Children.Add(new Frame()
-			{
-				Content = new StackLayout()
-				{
-					Children = { idLabel, idText }
-				}
-			});
+            stack.Children.Add(new Frame()
+            {
+                Content = new StackLayout()
+                {
+                    Children = { idLabel, idText }
+                }
+            });
 
-			try
-			{
-				idText.Text = device.Id;
-			}
-			catch (Exception ex)
-			{
-				idText.Text = ex.Message;
-			}
+            try
+            {
+                idText.Text = device.Id;
+            }
+            catch (Exception ex)
+            {
+                idText.Text = ex.Message;
+            }
 
-			#endregion
+            #endregion
 
-			scroll.Content = stack;
+            scroll.Content = stack;
 
-			this.Content = scroll;
-		}
-	}
+            this.Content = scroll;
+        }
+    }
 }

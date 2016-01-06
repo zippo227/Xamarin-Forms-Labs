@@ -1,24 +1,38 @@
-using Xamarin.Forms;
+// ***********************************************************************
+// Assembly         : XLabs.Forms.Droid
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ImageButtonRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Android.Graphics;
+using Android.Graphics.Drawables;
+using Android.Views;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
+using XLabs.Enums;
 using XLabs.Forms.Controls;
+using XLabs.Forms.Extensions;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace XLabs.Forms.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using System.Threading.Tasks;
-
-    using Android.Graphics;
-    using Android.Graphics.Drawables;
-    using Android.Views;
-
-    using Xamarin.Forms;
-    using Xamarin.Forms.Platform.Android;
-
-    using XLabs.Enums;
-    using XLabs.Forms.Extensions;	
-
     /// <summary>
     /// Draws a button on the Android platform with the image shown in the right 
     /// position with the right size.
@@ -43,26 +57,30 @@ namespace XLabs.Forms.Controls
 
             var targetButton = this.Control;
            
-			if (targetButton == null || e.NewElement == null)
-				return;
+            if (targetButton == null || e.NewElement == null)
+                return;
 
             if(this.Element.Font != Font.Default){
-				targetButton.Typeface = e.NewElement.Font.ToExtendedTypeface(Context);
+                targetButton.Typeface = e.NewElement.Font.ToExtendedTypeface(Context);
             }
 
-			if (this.ImageButton.Source != null || this.ImageButton.DisabledSource != null) {
-				await this.SetImageSourceAsync(targetButton, e.NewElement as ImageButton);
-			}
+            if (this.ImageButton.Source != null || this.ImageButton.DisabledSource != null) {
+                await this.SetImageSourceAsync(targetButton, e.NewElement as ImageButton);
+            }
         }
 
-		protected override void Dispose (bool disposing)
-		{
-			base.Dispose (disposing);
-			if (disposing && this.Control != null) {
-				this.Control.Dispose ();
-			}
-		}
-			
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected override void Dispose (bool disposing)
+        {
+            base.Dispose (disposing);
+            if (disposing && this.Control != null) {
+                this.Control.Dispose ();
+            }
+        }
+            
 
         /// <summary>
         /// Sets the image source.
@@ -72,9 +90,9 @@ namespace XLabs.Forms.Controls
         /// <returns>A <see cref="Task"/> for the awaited operation.</returns>
         private async Task SetImageSourceAsync(Android.Widget.Button targetButton, ImageButton model)
         {
-			if (targetButton == null || model == null)
-				return;
-			
+            if (targetButton == null || model == null)
+                return;
+            
             const int Padding = 10;
             var source = model.IsEnabled ? model.Source : model.DisabledSource ?? model.Source;
 
@@ -90,32 +108,32 @@ namespace XLabs.Forms.Controls
                         drawable.SetTintMode(PorterDuff.Mode.SrcIn);
                     }
 
-					using (var scaledDrawable = GetScaleDrawable (drawable, GetWidth (model.ImageWidthRequest),
-						                           GetHeight (model.ImageHeightRequest))) {
-						Drawable left = null;
-						Drawable right = null;
-						Drawable top = null;
-						Drawable bottom = null;
-						targetButton.CompoundDrawablePadding = Padding;
-						switch (model.Orientation) {
-						case ImageOrientation.ImageToLeft:
-							targetButton.Gravity = GravityFlags.Left | GravityFlags.CenterVertical;
-							left = scaledDrawable;
-							break;
-						case ImageOrientation.ImageToRight:
-							targetButton.Gravity = GravityFlags.Right | GravityFlags.CenterVertical;
-							right = scaledDrawable;
-							break;
-						case ImageOrientation.ImageOnTop:
-							top = scaledDrawable;
-							break;
-						case ImageOrientation.ImageOnBottom:
-							bottom = scaledDrawable;
-							break;
-						}
+                    using (var scaledDrawable = GetScaleDrawable (drawable, GetWidth (model.ImageWidthRequest),
+                                                   GetHeight (model.ImageHeightRequest))) {
+                        Drawable left = null;
+                        Drawable right = null;
+                        Drawable top = null;
+                        Drawable bottom = null;
+                        targetButton.CompoundDrawablePadding = Padding;
+                        switch (model.Orientation) {
+                        case ImageOrientation.ImageToLeft:
+                            targetButton.Gravity = GravityFlags.Left | GravityFlags.CenterVertical;
+                            left = scaledDrawable;
+                            break;
+                        case ImageOrientation.ImageToRight:
+                            targetButton.Gravity = GravityFlags.Right | GravityFlags.CenterVertical;
+                            right = scaledDrawable;
+                            break;
+                        case ImageOrientation.ImageOnTop:
+                            top = scaledDrawable;
+                            break;
+                        case ImageOrientation.ImageOnBottom:
+                            bottom = scaledDrawable;
+                            break;
+                        }
 
-						targetButton.SetCompoundDrawables (left, top, right, bottom);
-					}
+                        targetButton.SetCompoundDrawables (left, top, right, bottom);
+                    }
                 }
             }
         }
@@ -130,8 +148,8 @@ namespace XLabs.Forms.Controls
             var handler = GetHandler(source);
             var returnValue = (Bitmap)null;
 
-			if(handler != null)
-            	returnValue = await handler.LoadImageAsync(source, this.Context);
+            if(handler != null)
+                returnValue = await handler.LoadImageAsync(source, this.Context);
 
             return returnValue;
         }

@@ -1,16 +1,24 @@
 ﻿// ***********************************************************************
 // Assembly         : XLabs.Caching.SQLite
-// Author           : rmarinho
-// Created          : 09-08-2015
-//
-// Last Modified By : rmarinho
-// Last Modified On : 09-08-2015
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
 // ***********************************************************************
-// <copyright file="SQLiteSimpleCache.cs" company="">
-//     Copyright ©  2014
+// <copyright file="SQLiteSimpleCache.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
 // </copyright>
-// <summary></summary>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
 // ***********************************************************************
+// 
+#region
 
 using System;
 using System.Collections.Generic;
@@ -21,6 +29,8 @@ using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLite.Net.Interop;
 using XLabs.Serialization;
+
+#endregion
 
 namespace XLabs.Caching.SQLite
 {
@@ -70,6 +80,7 @@ namespace XLabs.Caching.SQLite
         /// Removes the cache for all the keys provided.
         /// </summary>
         /// <param name="keys">The keys to remove.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool RemoveAll(IEnumerable<string> keys)
         {
             var enumerable = keys.Select(Remove);
@@ -102,11 +113,31 @@ namespace XLabs.Caching.SQLite
             return Insert(new SQliteCacheTable(key, GetBytes(value))) == 1;
         }
 
+        /// <summary>
+        /// Adds a new item into the cache at the specified cache key only if the cache is empty.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">The key used to reference the item.</param>
+        /// <param name="value">The object to be inserted into the cache.</param>
+        /// <param name="expiresIn">The expires in.</param>
+        /// <returns>True if item was added, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        /// <remarks>The item does not expire unless it is removed due memory pressure.</remarks>
         public bool Add<T>(string key, T value, TimeSpan expiresIn)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Adds a new item into the cache at the specified cache key only if the cache is empty.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">The key used to reference the item.</param>
+        /// <param name="value">The object to be inserted into the cache.</param>
+        /// <param name="expiresAt">The expires at.</param>
+        /// <returns>True if item was added, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        /// <remarks>The item does not expire unless it is removed due memory pressure.</remarks>
         public bool Add<T>(string key, T value, DateTime expiresAt)
         {
             throw new NotImplementedException();
@@ -127,11 +158,29 @@ namespace XLabs.Caching.SQLite
             return n == 1;
         }
 
+        /// <summary>
+        /// Sets an item into the cache at the cache key specified regardless if it already exists or not.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">Key for the item.</param>
+        /// <param name="value">Item to set.</param>
+        /// <param name="expiresIn">The expires in.</param>
+        /// <returns>True if item was added, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public bool Set<T>(string key, T value, TimeSpan expiresIn)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Sets an item into the cache at the cache key specified regardless if it already exists or not.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">Key for the item.</param>
+        /// <param name="value">Item to set.</param>
+        /// <param name="expiresAt">The expires at.</param>
+        /// <returns>True if item was added, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public bool Set<T>(string key, T value, DateTime expiresAt)
         {
             throw new NotImplementedException();
@@ -151,11 +200,29 @@ namespace XLabs.Caching.SQLite
             return Remove(key) && Add(key, value);
         }
 
+        /// <summary>
+        /// Replaces the item at the cache.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">Key for the item to replace.</param>
+        /// <param name="value">Item to replace with.</param>
+        /// <param name="expiresIn">The expires in.</param>
+        /// <returns>True if the item exists, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public bool Replace<T>(string key, T value, TimeSpan expiresIn)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Replaces the item at the cache.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">Key for the item to replace.</param>
+        /// <param name="value">Item to replace with.</param>
+        /// <param name="expiresAt">The expires at.</param>
+        /// <returns>True if the item exists, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public bool Replace<T>(string key, T value, DateTime expiresAt)
         {
             throw new NotImplementedException();
@@ -165,6 +232,7 @@ namespace XLabs.Caching.SQLite
         /// <summary>
         /// Invalidates all data on the cache.
         /// </summary>
+        /// <returns>Retrurns true on success</returns>
         public virtual bool FlushAll()
         {
             DeleteAll<SQliteCacheTable>();
@@ -224,14 +292,14 @@ namespace XLabs.Caching.SQLite
         protected class SQliteCacheTable
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="SQliteCacheTable"/> class.
+            /// Initializes a new instance of the <see cref="SQliteCacheTable" /> class.
             /// </summary>
             public SQliteCacheTable()
             {
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="SQliteCacheTable"/> class.
+            /// Initializes a new instance of the <see cref="SQliteCacheTable" /> class.
             /// </summary>
             /// <param name="key">The key.</param>
             /// <param name="blob">The BLOB.</param>
@@ -307,11 +375,31 @@ namespace XLabs.Caching.SQLite
             return count == 1;
         }
 
+        /// <summary>
+        /// Adds a new item into the cache at the specified cache key only if the cache is empty.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">The key used to reference the item.</param>
+        /// <param name="value">The object to be inserted into the cache.</param>
+        /// <param name="expiresIn">The expires in.</param>
+        /// <returns>True if item was added, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        /// <remarks>The item does not expire unless it is removed due memory pressure.</remarks>
         public async Task<bool> AddAsync<T>(string key, T value, TimeSpan expiresIn)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Adds a new item into the cache at the specified cache key only if the cache is empty.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">The key used to reference the item.</param>
+        /// <param name="value">The object to be inserted into the cache.</param>
+        /// <param name="expiresAt">The expires at.</param>
+        /// <returns>True if item was added, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        /// <remarks>The item does not expire unless it is removed due memory pressure.</remarks>
         public async Task<bool> AddAsync<T>(string key, T value, DateTime expiresAt)
         {
             throw new NotImplementedException();
@@ -332,11 +420,29 @@ namespace XLabs.Caching.SQLite
             return n == 1;
         }
 
+        /// <summary>
+        /// Sets an item into the cache at the cache key specified regardless if it already exists or not.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">Key for the item.</param>
+        /// <param name="value">Item to set.</param>
+        /// <param name="expiresIn">The expires in.</param>
+        /// <returns>True if item was added, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public async Task<bool> SetAsync<T>(string key, T value, TimeSpan expiresIn)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Sets an item into the cache at the cache key specified regardless if it already exists or not.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">Key for the item.</param>
+        /// <param name="value">Item to set.</param>
+        /// <param name="expiresAt">The expires at.</param>
+        /// <returns>True if item was added, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public async Task<bool> SetAsync<T>(string key, T value, DateTime expiresAt)
         {
             throw new NotImplementedException();
@@ -356,11 +462,29 @@ namespace XLabs.Caching.SQLite
             return await RemoveAsync(key) && await AddAsync(key, value);
         }
 
+        /// <summary>
+        /// Replaces the item at the cache.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">Key for the item to replace.</param>
+        /// <param name="value">Item to replace with.</param>
+        /// <param name="expiresIn">The expires in.</param>
+        /// <returns>True if the item exists, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public async Task<bool> ReplaceAsync<T>(string key, T value, TimeSpan expiresIn)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Replaces the item at the cache.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">Key for the item to replace.</param>
+        /// <param name="value">Item to replace with.</param>
+        /// <param name="expiresAt">The expires at.</param>
+        /// <returns>True if the item exists, otherwise false.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public async Task<bool> ReplaceAsync<T>(string key, T value, DateTime expiresAt)
         {
             throw new NotImplementedException();

@@ -1,10 +1,33 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Caching
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="IAsyncCacheProvider.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+#region
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+#endregion
 
 namespace XLabs.Caching
 {
-    using System;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// Async caching interface.
     /// </summary>
@@ -39,13 +62,13 @@ namespace XLabs.Caching
         /// <returns>True if item was added, otherwise false.</returns>
         Task<bool> AddAsync<T>(string key, T value, TimeSpan expiresIn);
 
-		/// <summary>
-		/// Retrieves the requested item from the cache.
-		/// </summary>
-		/// <typeparam name="T">Type of item.</typeparam>
-		/// <param name="key">The key.</param>
-		/// <returns>Requested cache item.</returns>
-		Task<T> GetAsync<T>(string key);
+        /// <summary>
+        /// Retrieves the requested item from the cache.
+        /// </summary>
+        /// <typeparam name="T">Type of item.</typeparam>
+        /// <param name="key">The key.</param>
+        /// <returns>Requested cache item.</returns>
+        Task<T> GetAsync<T>(string key);
 
         /// <summary>
         /// Gets all of the items in the cache related to the specified keys.
@@ -127,10 +150,10 @@ namespace XLabs.Caching
         /// <returns>Task&lt;System.Boolean&gt;.</returns>
         Task<bool> RemoveAllAsync(IEnumerable<string> keys);
 
-		/// <summary>
-		/// Flushes the entire cache (and clears it).
-		/// </summary>
-		/// <returns>Retrurns true on success</returns>
-		Task<bool> FlushAllAsync();
-	}
+        /// <summary>
+        /// Flushes the entire cache (and clears it).
+        /// </summary>
+        /// <returns>Retrurns true on success</returns>
+        Task<bool> FlushAllAsync();
+    }
 }

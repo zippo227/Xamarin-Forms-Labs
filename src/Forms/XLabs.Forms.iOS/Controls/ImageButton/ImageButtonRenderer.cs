@@ -1,22 +1,37 @@
-using Xamarin.Forms;
+// ***********************************************************************
+// Assembly         : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ImageButtonRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using CoreGraphics;
+using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
+using XLabs.Enums;
 using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace XLabs.Forms.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using CoreGraphics;
-    using System.Threading.Tasks;
-
-    using UIKit;
-
-    using Xamarin.Forms;
-    using Xamarin.Forms.Platform.iOS;
-
-    using XLabs.Enums;
-
     /// <summary>
     /// Draws a button on the iOS platform with the image shown in the right 
     /// position with the right size.
@@ -45,7 +60,7 @@ namespace XLabs.Forms.Controls
         /// Handles the initial drawing of the button.
         /// </summary>
         /// <param name="e">Information on the <see cref="ImageButton"/>.</param> 
-        protected async override void OnElementChanged(ElementChangedEventArgs<Button> e)
+        protected override async void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
             var imageButton = ImageButton;
@@ -155,6 +170,7 @@ namespace XLabs.Forms.Controls
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="widthRequest">The requested image width.</param>
         /// <param name="targetButton">The button to align.</param>
+        /// <param name="buttonWidthRequest">The button width request.</param>
         private static void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton, double buttonWidthRequest)
         {
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Top;
