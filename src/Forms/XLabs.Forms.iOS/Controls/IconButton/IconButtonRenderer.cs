@@ -26,6 +26,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XLabs.Enums;
 using XLabs.Forms.Controls;
+using XLabs.Forms.Extensions;
 
 [assembly: ExportRenderer(typeof(IconButton), typeof(IconButtonRenderer))]
 namespace XLabs.Forms.Controls
@@ -55,8 +56,6 @@ namespace XLabs.Forms.Controls
             var iconSize = iconButton.IconSize == default(float)
                 ? 17f
                 : iconButton.IconSize;
-
-
 
             var faFont = UIFont.FromName(iconFontName, iconSize);
             string combinedText = null;
@@ -94,26 +93,22 @@ namespace XLabs.Forms.Controls
                     break;
             }
           
-
-
             // string attributes for the icon
             var iconAttributes = new UIStringAttributes
             {
-                ForegroundColor = iconButton.IconColor.ToUIColor(),
-                BackgroundColor = targetButton.BackgroundColor,
-                Font = faFont,
-                TextAttachment = new NSTextAttachment()
+                    ForegroundColor = iconButton.IconColor.ToUIColorOrDefault(targetButton.TitleColor(targetButton.State)),
+                    BackgroundColor = targetButton.BackgroundColor,
+                    Font = faFont,
+                    TextAttachment = new NSTextAttachment()
             };
-
            
             // string attributes for the button's text. 
             // TODO: Calculate an appropriate BaselineOffset for the main button text in order to center it vertically relative to the icon
             var btnAttributes = new UIStringAttributes
             {
-                BackgroundColor = iconButton.BackgroundColor.ToUIColor(),
-                ForegroundColor = iconButton.TextColor.ToUIColor(),
-                Font = GetButtonFont(iconButton, targetButton),
-
+                    BackgroundColor = iconButton.BackgroundColor.ToUIColor(),
+                    ForegroundColor = iconButton.TextColor.ToUIColorOrDefault(targetButton.TitleColor(targetButton.State)),
+                    Font = GetButtonFont(iconButton, targetButton),
             };
             if (!string.IsNullOrEmpty(iconButton.Text))
                 btnAttributes.BaselineOffset = 3;
@@ -194,7 +189,9 @@ namespace XLabs.Forms.Controls
             base.OnElementPropertyChanged(sender, e);
 
             // Only update the text if the icon or button text changes
-            if (e.PropertyName == IconButton.IconProperty.PropertyName || e.PropertyName == Controls.IconButton.TextProperty.PropertyName)
+            if (e.PropertyName == IconButton.IconProperty.PropertyName ||
+                e.PropertyName == IconButton.TextProperty.PropertyName ||
+                e.PropertyName == IconButton.IsEnabledProperty.PropertyName)
             {
                 var sourceButton = Element as IconButton;
                 if (sourceButton != null && sourceButton.Icon != null)

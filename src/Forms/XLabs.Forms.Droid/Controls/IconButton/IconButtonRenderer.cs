@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Assembly         : XLabs.Forms.Droid
 // Author           : XLabs Team
-// Created          : 12-27-2015
+// Created          : 01-06-2016
 // 
 // Last Modified By : XLabs Team
-// Last Modified On : 01-04-2016
+// Last Modified On : 01-06-2016
 // ***********************************************************************
 // <copyright file="IconButtonRenderer.cs" company="XLabs Team">
 //     Copyright (c) XLabs Team. All rights reserved.
@@ -19,7 +19,6 @@
 // ***********************************************************************
 // 
 
-using System;
 using System.Linq;
 using Android.Graphics;
 using Android.Text;
@@ -34,7 +33,7 @@ using XLabs.Forms.Controls;
 namespace XLabs.Forms.Controls
 {
     /// <summary>
-    /// IconButtonRender implementation.
+    /// Implementation of Icon ButtonRenderer.
     /// </summary>
     public class IconButtonRenderer : ButtonRenderer
     {
@@ -47,32 +46,25 @@ namespace XLabs.Forms.Controls
         int _textStopIndex = -1;
        
         Android.Widget.Button _nativeBtn;
+        private TextViewRenderHelper _helper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IconButtonRenderer"/> class.
-        /// </summary>
-        public IconButtonRenderer()
-            : base()
-        {
-
-        }
-
-        /// <summary>
-        /// Handled the On Element Changed events
+        /// Handles the Element Changed event messages
         /// </summary>
         /// <param name="e">The e.</param>
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
         {
-
             base.OnElementChanged(e);
             if (e.NewElement != null && this.Control != null)
             {
+                if (_helper == null)
+                    _helper = new TextViewRenderHelper(Context);
                 if (_iconSpan == null)
                 {
                     _nativeBtn = (Android.Widget.Button)this.Control;
                     _iconButton = (IconButton)e.NewElement;
 
-                    _iconFont = TrySetFont("fontawesome-webfont.ttf");
+                    _iconFont = _helper.TrySetFont("fontawesome-webfont.ttf");
                     _textFont = _iconButton.Font.ToTypeface();
                     _iconButton.IconSize = _iconButton.IconSize == 0 ? (float)_iconButton.FontSize : _iconButton.IconSize;
                     var computedString = BuildRawTextString();
@@ -167,19 +159,6 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        /// Gets the color of the span.
-        /// </summary>
-        /// <param name="color">The color.</param>
-        /// <returns>Android.Graphics.Color.</returns>
-        private Android.Graphics.Color GetSpanColor(Xamarin.Forms.Color color)
-        {
-            if (color == Xamarin.Forms.Color.Default)
-                return new Android.Graphics.Color(Control.TextColors.DefaultColor);
-
-            return color.ToAndroid();
-        }
-
-        /// <summary>
         /// Build the spannable according to the computed text, meaning set the right font, color and size to the text and icon char index
         /// </summary>
         /// <param name="computedString"></param>
@@ -191,7 +170,7 @@ namespace XLabs.Forms.Controls
             if (!string.IsNullOrEmpty(_iconButton.Icon))
             {
                 //set icon
-                span.SetSpan(new CustomTypefaceSpan("fontawesome", _iconFont, GetSpanColor(_iconButton.IconColor)),
+                span.SetSpan(new CustomTypefaceSpan("fontawesome", _iconFont, _helper.GetSpanColor(_iconButton.IconColor, Control.TextColors)),
                     computedString.IndexOf(_iconButton.Icon),
                     computedString.IndexOf(_iconButton.Icon) + _iconButton.Icon.Length,
                     SpanTypes.ExclusiveExclusive);
@@ -206,7 +185,7 @@ namespace XLabs.Forms.Controls
             //if there is text
             if (!string.IsNullOrEmpty(_iconButton.Text))
             {
-                span.SetSpan(new CustomTypefaceSpan("", _textFont, GetSpanColor(_iconButton.TextColor)),
+                span.SetSpan(new CustomTypefaceSpan("", _textFont, _helper.GetSpanColor(_iconButton.TextColor, Control.TextColors)),
                      _textStartIndex,
                      _textStopIndex,
                      SpanTypes.ExclusiveExclusive);
@@ -220,37 +199,6 @@ namespace XLabs.Forms.Controls
 
             return span;
 
-        }
-
-       
-
-        /// <summary>
-        /// Load the FA font from assets
-        /// </summary>
-        /// <param name="fontName"></param>
-        /// <returns></returns>
-        private Typeface TrySetFont(string fontName)
-        {
-            try
-            {
-                var tp = Typeface.CreateFromAsset(Context.Assets, "fonts/" + fontName);
-
-                return tp;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(string.Format("not found in assets. Exception: {0}", ex));
-                try
-                {
-                    return Typeface.CreateFromFile("fonts/" + fontName);
-                }
-                catch (Exception ex1)
-                {
-                    System.Diagnostics.Debug.WriteLine(string.Format("not found by file. Exception: {0}", ex1));
-
-                    return Typeface.Default;
-                }
-            }
         }
 
         /// <summary>

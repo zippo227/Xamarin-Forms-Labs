@@ -1,20 +1,20 @@
 // ***********************************************************************
-// Assembly         : XLabs.Forms.iOS
+// Assembly       : XLabs.Forms.iOS
 // Author           : XLabs Team
-// Created          : 12-27-2015
+// Created          : 01-06-2016
 // 
 // Last Modified By : XLabs Team
-// Last Modified On : 01-04-2016
+// Last Modified On : 01-06-2016
 // ***********************************************************************
 // <copyright file="CheckBoxRenderer.cs" company="XLabs Team">
-//     Copyright (c) XLabs Team. All rights reserved.
+//        Copyright (c) XLabs Team. All rights reserved.
 // </copyright>
 // <summary>
-//       This project is licensed under the Apache 2.0 license
-//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
-//       
-//       XLabs is a open source project that aims to provide a powerfull and cross 
-//       platform set of controls tailored to work with Xamarin Forms.
+//        This project is licensed under the Apache 2.0 license
+//        https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+// 
+//        XLabs is a open source project that aims to provide a powerfull and cross
+//        platform set of controls tailored to work with Xamarin Forms.
 // </summary>
 // ***********************************************************************
 // 
@@ -25,6 +25,7 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
+using XLabs.Forms.Extensions;
 using XLabs.Platform.Extensions;
 
 [assembly: ExportRenderer(typeof(CheckBox), typeof(CheckBoxRenderer))]
@@ -36,8 +37,10 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public class CheckBoxRenderer : ViewRenderer<CheckBox, CheckBoxView>
     {
+        private UIColor defaultTextColor;
+
         /// <summary>
-        /// Called when [element changed].
+        /// Handles the Element Changed event
         /// </summary>
         /// <param name="e">The e.</param>
         protected override void OnElementChanged(ElementChangedEventArgs<CheckBox> e)
@@ -53,7 +56,7 @@ namespace XLabs.Forms.Controls
                 {
                     var checkBox = new CheckBoxView (Bounds);
                     checkBox.TouchUpInside += (s, args) => Element.Checked = Control.Checked;
-
+                    defaultTextColor = checkBox.TitleColor(UIControlState.Normal);
                     SetNativeControl (checkBox);
                 }
                 Control.LineBreakMode = UILineBreakMode.CharacterWrap;
@@ -61,8 +64,7 @@ namespace XLabs.Forms.Controls
                 Control.CheckedTitle = string.IsNullOrEmpty (e.NewElement.CheckedText) ? e.NewElement.DefaultText : e.NewElement.CheckedText;
                 Control.UncheckedTitle = string.IsNullOrEmpty (e.NewElement.UncheckedText) ? e.NewElement.DefaultText : e.NewElement.UncheckedText;
                 Control.Checked = e.NewElement.Checked;
-                Control.SetTitleColor (e.NewElement.TextColor.ToUIColor (), UIControlState.Normal);
-                Control.SetTitleColor (e.NewElement.TextColor.ToUIColor (), UIControlState.Selected);
+                UpdateTextColor();
             }
 
             Control.Frame = Frame;
@@ -130,6 +132,12 @@ namespace XLabs.Forms.Controls
             }
         }
 
+        private void UpdateTextColor()
+        {
+            Control.SetTitleColor (Element.TextColor.ToUIColorOrDefault(defaultTextColor), UIControlState.Normal);
+            Control.SetTitleColor (Element.TextColor.ToUIColorOrDefault(defaultTextColor), UIControlState.Selected);
+        }
+
         /// <summary>
         /// Handles the <see cref="E:ElementPropertyChanged" /> event.
         /// </summary>
@@ -145,8 +153,7 @@ namespace XLabs.Forms.Controls
                     Control.Checked = Element.Checked;
                     break;
                 case "TextColor":
-                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Normal);
-                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Selected);
+                    UpdateTextColor();
                     break;
                 case "CheckedText":
                     Control.CheckedTitle = string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText;
