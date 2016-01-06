@@ -11,7 +11,14 @@ environment:
 install:
 - choco install doxygen.portable
 before_build:
-- nuget restore XLabs.sln
+- ps: >-
+    nuget install NuProj -Prerelease -OutputDirectory .\packages
+
+    nuget install SharpDX.Direct2D1 -OutputDirectory .\packages
+
+    nuget restore XLabs.sln
+
+    Import-PfxCertificate -FilePath .\Samples\XLabs.sample.pfx -CertStoreLocation Cert:\CurrentUser\My
 - appveyor RegisterXamarinLicense -Email %xamarin_email% -Password %xamarin_password% -Product iOS
 - appveyor RegisterXamarinLicense -Email %xamarin_email% -Password %xamarin_password% -Product Android
 build:
