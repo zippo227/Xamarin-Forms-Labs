@@ -56,8 +56,8 @@ namespace XLabs.Forms.Controls
         /// <value><c>true</c> if checked; otherwise, <c>false</c>.</value>
         public bool Checked
         {
-            set { this.Selected = value; }
-            get { return this.Selected; }
+            set { Selected = value; }
+            get { return Selected; }
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace XLabs.Forms.Controls
         /// <value>The text.</value>
         public string Text
         {
-            set { this.SetTitle(value, UIControlState.Normal); }
+            set { SetTitle(value, UIControlState.Normal); }
             
         }
 
@@ -75,10 +75,13 @@ namespace XLabs.Forms.Controls
         /// </summary>
         void Initialize()
         {
-            this.AdjustEdgeInsets();
-            this.ApplyStyle();
+            AdjustEdgeInsets();
+            ApplyStyle();
 
-            this.TouchUpInside += (sender, args) => this.Selected = !this.Selected;
+            // set default color, because type is not UIButtonType.System 
+            SetTitleColor(UIColor.DarkTextColor, UIControlState.Normal);
+            SetTitleColor(UIColor.DarkTextColor, UIControlState.Selected);
+            TouchUpInside += (sender, args) => Selected = !Selected;
         }
 
         /// <summary>
@@ -88,9 +91,9 @@ namespace XLabs.Forms.Controls
         {
             const float inset = 8f;
 
-            this.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
-            this.ImageEdgeInsets = new UIEdgeInsets(0f, inset, 0f, 0f);
-            this.TitleEdgeInsets = new UIEdgeInsets(0f, inset * 2, 0f, 0f);
+            HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+            ImageEdgeInsets = new UIEdgeInsets(0f, inset, 0f, 0f);
+            TitleEdgeInsets = new UIEdgeInsets(0f, inset * 2, 0f, 0f);
         }
 
         /// <summary>
@@ -98,8 +101,8 @@ namespace XLabs.Forms.Controls
         /// </summary>
         void ApplyStyle()
         {
-            this.SetImage(UIImage.FromBundle("Images/RadioButton/checked.png"), UIControlState.Selected);
-            this.SetImage(UIImage.FromBundle("Images/RadioButton/unchecked.png"), UIControlState.Normal);
+            SetImage(UIImage.FromBundle("Images/RadioButton/checked.png"), UIControlState.Selected);
+            SetImage(UIImage.FromBundle("Images/RadioButton/unchecked.png"), UIControlState.Normal);
         }
     }
 }
