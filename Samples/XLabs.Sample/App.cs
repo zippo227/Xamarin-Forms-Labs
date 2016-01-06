@@ -1,30 +1,49 @@
-﻿using XLabs.Forms.Services;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Sample
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="App.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using XLabs.Forms.Controls;
+using XLabs.Forms.Mvvm;
+using XLabs.Forms.Services;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
+using XLabs.Platform.Mvvm;
 using XLabs.Platform.Services;
+using XLabs.Sample.Pages.Controls;
+using XLabs.Sample.Pages.Controls.Charts;
+using XLabs.Sample.Pages.Controls.DynamicList;
+using XLabs.Sample.Pages.Mvvm;
+using XLabs.Sample.Pages.Samples;
+using XLabs.Sample.Pages.Services;
+using XLabs.Sample.ViewModel;
 
 namespace XLabs.Sample
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Reflection;
-    using System.Threading.Tasks;
-    using Pages.Samples;
-    using Xamarin.Forms;
-
-    using XLabs.Forms.Controls;
-    using XLabs.Forms.Mvvm;
-    using XLabs.Ioc;
-    using XLabs.Platform.Device;
-    using XLabs.Platform.Mvvm;
-    using XLabs.Sample.Pages.Controls;
-    using XLabs.Sample.Pages.Controls.Charts;
-    using XLabs.Sample.Pages.Controls.DynamicList;
-    using XLabs.Sample.Pages.Mvvm;
-    using XLabs.Sample.Pages.Services;
-    using XLabs.Sample.ViewModel;
-
     /// <summary>
     /// Class App.
     /// </summary>
@@ -219,7 +238,7 @@ namespace XLabs.Sample
                 {"AutocompleteView",  typeof(AutoCompletePage)},
                 {"ButtonGroup", typeof(ButtonGroupPage)},
                 {"Calendar", typeof(CalendarPage)},
-				{"CarouselView", typeof(CarouselSample)},
+                {"CarouselView", typeof(CarouselSample)},
                 {"CameraView", typeof(CameraViewPage)},
                 {"CheckBox", typeof(CheckBoxPage)},
                 {"CircleImage", typeof(CircleImagePage)},
@@ -229,7 +248,7 @@ namespace XLabs.Sample
                 {"ExtendedCell", typeof(ExtendedCellPage)},
                 {"ExtendedEntry", typeof(ExtendedEntryPage)},
                 {"ExtendedLabel", typeof(ExtendedLabelPage)},
-				{"ExtendedPicker", typeof(ExtendedPickerPage)},
+                {"ExtendedPicker", typeof(ExtendedPickerPage)},
                 {"ExtendedScrollView", typeof(ExtendedScrollViewPage)},
                 {"ExtendedSlider", typeof(ExtendedSliderPage)},
                 {"ExtendedSwitch", typeof(ExtendedSwitchPage)},
@@ -246,7 +265,7 @@ namespace XLabs.Sample
                 {"Segment", typeof(SegmentPage)},
                 {"Separator", typeof(SeparatorPage)},
                 {"WebImage", typeof(WebImagePage)},
-				{"IconLabel", typeof(IconLabelPage)},
+                {"IconLabel", typeof(IconLabelPage)},
                 {"IconButton", typeof(IconButtonPage)},
             };
 
