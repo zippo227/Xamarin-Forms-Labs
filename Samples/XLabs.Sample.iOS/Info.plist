@@ -66,9 +66,10 @@
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Can I track your location</string>
-	<key>NSAppTransportSecurity</key>  
-     	<dict>  
-          <key>NSAllowsArbitraryLoads</key><true/>  
-     	</dict>  
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

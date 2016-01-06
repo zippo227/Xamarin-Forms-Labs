@@ -125,7 +125,6 @@
     <Compile Include="..\XLabs.Forms\Controls\HybridWebViewRenderer.designer.cs">
       <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
     </Compile>
-    <Compile Include="Controls\HyperLinkLabel\HyperLinkLabelRenderer.cs" />
     <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
     <Compile Include="Controls\RadioButton\RadioButtonRenderer.cs" />
     <Compile Include="Controls\SensorBar\SensorBarControl.xaml.cs">
@@ -208,7 +207,9 @@
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controls\HyperLinkLabel\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <ProjectExtensions />

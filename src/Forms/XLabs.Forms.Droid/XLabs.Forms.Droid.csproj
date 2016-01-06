@@ -130,7 +130,6 @@
       <Link>Controls\HybridWebView\HybridWebViewRenderer.designer.cs</Link>
     </Compile>
     <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
-    <Compile Include="Controls\HyperLinkLabel\HyperLinkLabelRenderer.cs" />
     <Compile Include="..\XLabs.Forms\Controls\ImageButtonRenderer.shared.cs">
       <Link>Controls\ImageButtonRenderer\ImageButtonRenderer.designer.cs</Link>
     </Compile>
@@ -208,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behavior\" />
+    <Folder Include="Controls\HyperLinkLabel\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
