@@ -256,6 +256,7 @@ namespace XLabs.Sample
                 {"ExtendedTimePicker", typeof(ExtendedTimePickerPage)},
                 {"GridView", typeof(GridViewPage)},
                 {"HybridWebView", typeof(CanvasWebHybrid)},
+                {"HperLinkLabel", typeof(HypberLinkLabelPage) },
                 {"WebHybridTestPage", typeof(WebHybridTestPage)},
                 {"ImageButton", typeof(ButtonPage)},
                 {"ImageGallery", typeof(ImageGalleryPage)},

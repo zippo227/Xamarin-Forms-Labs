@@ -73,7 +73,7 @@ namespace XLabs.Forms.Controls
 			{
 				return string.Format("{0}{1}", "mailto:", uri);
 			}
-			else if (uri.StartsWith("www."))
+			else if (uri.StartsWith("www.")) //TODO would it be better to do a !starts with http:// and https://???
 			{
 				return string.Format("{0}{1}", @"http://", uri);
 			}
