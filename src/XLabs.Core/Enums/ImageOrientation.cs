@@ -41,6 +41,10 @@ namespace XLabs.Enums
 		/// <summary>
 		/// The image on bottom
 		/// </summary>
-		ImageOnBottom = 3
+		ImageOnBottom = 3,
+		/// <summary>
+		/// The image centered
+		/// </summary>
+		ImageCentered = 4
 	}
 }

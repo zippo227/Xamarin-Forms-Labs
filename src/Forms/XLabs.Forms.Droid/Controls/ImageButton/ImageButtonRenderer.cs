@@ -19,6 +19,7 @@
 // ***********************************************************************
 // 
 
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Android.Graphics;
@@ -29,6 +30,8 @@ using Xamarin.Forms.Platform.Android;
 using XLabs.Enums;
 using XLabs.Forms.Controls;
 using XLabs.Forms.Extensions;
+using Color = Xamarin.Forms.Color;
+using View = Android.Views.View;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace XLabs.Forms.Controls
@@ -39,6 +42,8 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public partial class ImageButtonRenderer : ButtonRenderer
     {
+        private static float _density = float.MinValue;
+
         /// <summary>
         /// Gets the underlying control typed as an <see cref="ImageButton"/>.
         /// </summary>
@@ -55,18 +60,14 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            var targetButton = this.Control;
-           
-            if (targetButton == null || e.NewElement == null)
-                return;
+            _density = Resources.DisplayMetrics.Density;
 
-            if(this.Element.Font != Font.Default){
-                targetButton.Typeface = e.NewElement.Font.ToExtendedTypeface(Context);
-            }
+            var targetButton = Control;
+            if (targetButton != null) targetButton.SetOnTouchListener(TouchListener.Instance.Value);
 
-            if (this.ImageButton.Source != null || this.ImageButton.DisabledSource != null) {
-                await this.SetImageSourceAsync(targetButton, e.NewElement as ImageButton);
-            }
+            if (Element != null && Element.Font != Font.Default && targetButton != null) targetButton.Typeface = Element.Font.ToExtendedTypeface(Context);
+
+            if (Element != null && ImageButton.Source != null) await SetImageSourceAsync(targetButton, ImageButton).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -76,8 +77,8 @@ namespace XLabs.Forms.Controls
         protected override void Dispose (bool disposing)
         {
             base.Dispose (disposing);
-            if (disposing && this.Control != null) {
-                this.Control.Dispose ();
+            if (disposing && Control != null) {
+                Control.Dispose ();
             }
         }
             
@@ -90,49 +91,59 @@ namespace XLabs.Forms.Controls
         /// <returns>A <see cref="Task"/> for the awaited operation.</returns>
         private async Task SetImageSourceAsync(Android.Widget.Button targetButton, ImageButton model)
         {
-            if (targetButton == null || model == null)
-                return;
-            
-            const int Padding = 10;
+            if (targetButton == null || targetButton.Handle == IntPtr.Zero || model == null) return;
+
+            // const int Padding = 10;
             var source = model.IsEnabled ? model.Source : model.DisabledSource ?? model.Source;
 
-            using (var bitmap = await this.GetBitmapAsync(source))
+            using (var bitmap = await GetBitmapAsync(source).ConfigureAwait(false))
             {
-                if (bitmap != null)
+                if (bitmap == null)
+                    targetButton.SetCompoundDrawables(null, null, null, null);
+                else
                 {
                     var drawable = new BitmapDrawable(bitmap);
                     var tintColor = model.IsEnabled ? model.ImageTintColor : model.DisabledImageTintColor;
-                    if (tintColor != Xamarin.Forms.Color.Transparent)
+                    if (tintColor != Color.Transparent)
                     {
                         drawable.SetTint(tintColor.ToAndroid());
                         drawable.SetTintMode(PorterDuff.Mode.SrcIn);
                     }
 
-                    using (var scaledDrawable = GetScaleDrawable (drawable, GetWidth (model.ImageWidthRequest),
-                                                   GetHeight (model.ImageHeightRequest))) {
+                    using (var scaledDrawable = GetScaleDrawable(drawable, GetWidth(model.ImageWidthRequest), GetHeight(model.ImageHeightRequest)))
+                    {
                         Drawable left = null;
                         Drawable right = null;
                         Drawable top = null;
                         Drawable bottom = null;
-                        targetButton.CompoundDrawablePadding = Padding;
-                        switch (model.Orientation) {
-                        case ImageOrientation.ImageToLeft:
-                            targetButton.Gravity = GravityFlags.Left | GravityFlags.CenterVertical;
-                            left = scaledDrawable;
-                            break;
-                        case ImageOrientation.ImageToRight:
-                            targetButton.Gravity = GravityFlags.Right | GravityFlags.CenterVertical;
-                            right = scaledDrawable;
-                            break;
-                        case ImageOrientation.ImageOnTop:
-                            top = scaledDrawable;
-                            break;
-                        case ImageOrientation.ImageOnBottom:
-                            bottom = scaledDrawable;
-                            break;
+                        //System.Diagnostics.Debug.WriteLine($"SetImageSourceAsync intptr{targetButton.Handle}");
+                        int padding = 10; // model.Padding
+                        targetButton.CompoundDrawablePadding = RequestToPixels(padding);
+                        switch (model.Orientation)
+                        {
+                            case ImageOrientation.ImageToLeft:
+                                targetButton.Gravity = GravityFlags.Left | GravityFlags.CenterVertical;
+                                left = scaledDrawable;
+                                break;
+                            case ImageOrientation.ImageToRight:
+                                targetButton.Gravity = GravityFlags.Right | GravityFlags.CenterVertical;
+                                right = scaledDrawable;
+                                break;
+                            case ImageOrientation.ImageOnTop:
+                                targetButton.Gravity = GravityFlags.Top | GravityFlags.CenterHorizontal;
+                                top = scaledDrawable;
+                                break;
+                            case ImageOrientation.ImageOnBottom:
+                                targetButton.Gravity = GravityFlags.Bottom | GravityFlags.CenterHorizontal;
+                                bottom = scaledDrawable;
+                                break;
+                            case ImageOrientation.ImageCentered:
+                                targetButton.Gravity = GravityFlags.Center; // | GravityFlags.Fill;
+                                top = scaledDrawable;
+                                break;
                         }
 
-                        targetButton.SetCompoundDrawables (left, top, right, bottom);
+                        targetButton.SetCompoundDrawables(left, top, right, bottom);
                     }
                 }
             }
@@ -149,7 +160,7 @@ namespace XLabs.Forms.Controls
             var returnValue = (Bitmap)null;
 
             if(handler != null)
-                returnValue = await handler.LoadImageAsync(source, this.Context);
+                returnValue = await handler.LoadImageAsync(source, Context).ConfigureAwait(false);
 
             return returnValue;
         }
@@ -159,17 +170,17 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="sender">The Model used.</param>
         /// <param name="e">The event arguments.</param>
-        protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == ImageButton.SourceProperty.PropertyName || 
-                e.PropertyName == ImageButton.DisabledSourceProperty.PropertyName || 
+            if (e.PropertyName == ImageButton.SourceProperty.PropertyName ||
+                e.PropertyName == ImageButton.DisabledSourceProperty.PropertyName ||
                 e.PropertyName == VisualElement.IsEnabledProperty.PropertyName ||
                 e.PropertyName == ImageButton.ImageTintColorProperty.PropertyName ||
                 e.PropertyName == ImageButton.DisabledImageTintColorProperty.PropertyName)
             {
-                await SetImageSourceAsync(this.Control, this.ImageButton);
+                await SetImageSourceAsync(Control, ImageButton).ConfigureAwait(false);
             }
         }
 
@@ -183,8 +194,10 @@ namespace XLabs.Forms.Controls
         /// <returns>A scaled <see cref="Drawable"/>.</returns>
         private Drawable GetScaleDrawable(Drawable drawable, int width, int height)
         {
-            var returnValue = new ScaleDrawable(drawable, 0, RequestToPixels(width), RequestToPixels(height)).Drawable;
-            returnValue.SetBounds(0, 0, width, height);
+            var returnValue = new ScaleDrawable(drawable, 0, 100, 100).Drawable;
+
+            returnValue.SetBounds(0, 0, RequestToPixels(width), RequestToPixels(height));
+
             return returnValue;
         }
 
@@ -195,8 +208,36 @@ namespace XLabs.Forms.Controls
         /// <returns>Size in pixels.</returns>
         public int RequestToPixels(int sizeRequest)
         {
-            return (int)(sizeRequest * Resources.DisplayMetrics.Density);
-        }
+            if (_density == float.MinValue)
+            {
+                if (Resources.Handle == IntPtr.Zero || Resources.DisplayMetrics.Handle == IntPtr.Zero)
+                    _density = 1.0f;
+                else
+                    _density = Resources.DisplayMetrics.Density;
+            }
 
+            return (int)(sizeRequest * _density);
+        }
     }
+
+    //Hot fix for the layout positioning issue on Android as described in http://forums.xamarin.com/discussion/20608/fix-for-button-layout-bug-on-android
+    class TouchListener : Java.Lang.Object, View.IOnTouchListener
+    {
+        public static readonly Lazy<TouchListener> Instance = new Lazy<TouchListener>(() => new TouchListener());
+
+        /// <summary>
+        /// Make TouchListener a singleton.
+        /// </summary>
+        private TouchListener()
+        { }
+
+        public bool OnTouch(View v, MotionEvent e)
+        {
+            var buttonRenderer = v.Tag as ButtonRenderer;
+            if (buttonRenderer != null && e.Action == MotionEventActions.Down) buttonRenderer.Control.Text = buttonRenderer.Element.Text;
+
+            return false;
+        }
+    }
+
 }
