@@ -1,24 +1,45 @@
-﻿namespace XLabs.Platform.Device
-{
-    using System;
-    using System.IO.IsolatedStorage;
-    using System.Threading.Tasks;
-    using Android.App;
-    using Android.Bluetooth;
-    using Android.Content;
-    using Android.OS;
-    using Android.Runtime;
-    using Android.Telephony;
-    using Android.Util;
-    using Android.Views;
-    using Enums;
-    using Java.IO;
-    using Java.Util;
-    using Java.Util.Concurrent;
-    using Services;
-    using Services.IO;
-    using Services.Media;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Platform.Droid
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="AndroidDevice.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System;
+using System.IO.IsolatedStorage;
+using System.Threading.Tasks;
+using Android.App;
+using Android.Bluetooth;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Telephony;
+using Android.Util;
+using Android.Views;
+using Java.IO;
+using Java.Util;
+using Java.Util.Concurrent;
+using XLabs.Enums;
+using XLabs.Platform.Services;
+using XLabs.Platform.Services.IO;
+using XLabs.Platform.Services.Media;
+
+namespace XLabs.Platform.Device
+{
     /// <summary>
     /// Android device implements <see cref="IDevice"/>.
     /// </summary>
@@ -32,9 +53,9 @@
         private INetwork network;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="AndroidDevice"/> class from being created. 
+        /// Creates a default instance of <see cref="AndroidDevice"/>. 
         /// </summary>
-        private AndroidDevice()
+        public AndroidDevice()
         {
             var manager = Services.PhoneService.Manager;
 
@@ -76,7 +97,11 @@
         /// <value>
         /// The current device.
         /// </value>
-        public static IDevice CurrentDevice { get { return currentDevice ?? (currentDevice = new AndroidDevice()); } }
+        public static IDevice CurrentDevice
+        {
+            get { return currentDevice ?? (currentDevice = new AndroidDevice()); }
+            set { currentDevice = value; }
+        }
 
         /// <summary>
         /// Gets Unique Id for the device.
@@ -84,7 +109,7 @@
         /// <value>
         /// The id for the device.
         /// </value>
-        public string Id
+        public virtual string Id
         {
             // TODO: Verify what is the best combination of Unique Id for Android
             get
@@ -209,26 +234,43 @@
         /// </value>
         public string Manufacturer { get; private set; }
 
+        /// <summary>
+        /// Gets the language code.
+        /// </summary>
+        /// <value>The language code.</value>
         public string LanguageCode
         {
             get { return Locale.Default.Language; }
         }
 
+        /// <summary>
+        /// Gets the time zone offset.
+        /// </summary>
+        /// <value>The time zone offset.</value>
         public double TimeZoneOffset
         {
             get
             {
-                var calendar = new GregorianCalendar();
-                var timezone = calendar.TimeZone;
-                return TimeUnit.Hours.Convert(timezone.RawOffset, TimeUnit.Milliseconds) / 3600;
+                using (var calendar = new GregorianCalendar())
+                {
+                    return TimeUnit.Hours.Convert(calendar.TimeZone.RawOffset, TimeUnit.Milliseconds) / 3600;
+                }
             }
         }
 
+        /// <summary>
+        /// Gets the time zone.
+        /// </summary>
+        /// <value>The time zone.</value>
         public string TimeZone
         {
             get { return Java.Util.TimeZone.Default.ID; }
         }
 
+        /// <summary>
+        /// Gets the orientation.
+        /// </summary>
+        /// <value>The orientation.</value>
         public Orientation Orientation
         {
             get
@@ -258,19 +300,19 @@
         /// <returns>The launch operation.</returns>
         public Task<bool> LaunchUriAsync(Uri uri)
         {
-            return Task.Run(() =>
-                {
-                    try
-                    {
-                        this.StartActivity(new Intent("android.intent.action.VIEW", Android.Net.Uri.Parse(uri.ToString())));
-                        return true;
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error("Device.LaunchUriAsync", ex.Message);
-                        return false;
-                    }
-                });
+            var launchTaskSource = new TaskCompletionSource<bool>();
+            try
+            {
+                this.StartActivity(new Intent("android.intent.action.VIEW", Android.Net.Uri.Parse(uri.ToString())));
+                launchTaskSource.SetResult(true);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Device.LaunchUriAsync", ex.Message);
+                launchTaskSource.SetException(ex);
+            }
+
+            return launchTaskSource.Task;
         }
 
         /// <summary>
@@ -285,12 +327,12 @@
             }
         }
 
-        private static long GetTotalMemory() 
+        private static long GetTotalMemory()
         {
             using (var reader = new RandomAccessFile("/proc/meminfo", "r")) 
             {
                 var line = reader.ReadLine(); // first line --> MemTotal: xxxxxx kB
-                var split = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var split = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 return Convert.ToInt64(split[1]) * 1024;
             }
         }

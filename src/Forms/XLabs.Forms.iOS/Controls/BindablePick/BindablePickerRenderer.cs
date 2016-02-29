@@ -1,21 +1,37 @@
-using Xamarin.Forms;
+// ***********************************************************************
+// Assembly         : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="BindablePickerRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System;
+using System.ComponentModel;
+using System.Linq;
+using CoreGraphics;
+using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer(typeof(BindablePicker), typeof(BindablePickerRenderer))]
 
 namespace XLabs.Forms.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using CoreGraphics;
-    using System.Linq;
-
-    using UIKit;
-
-    using Xamarin.Forms;
-    using Xamarin.Forms.Platform.iOS;
-
     /// <summary>
     /// Class BindablePickerRenderer.
     /// </summary>
@@ -127,47 +143,57 @@ namespace XLabs.Forms.Controls
         /// <param name="e">The e.</param>
         protected override void OnElementChanged(ElementChangedEventArgs<BindablePicker> e)
         {
-            e.NewElement.Items.CollectionChanged += RowsCollectionChanged;
-            var entry = new NoCaretField 
+            if (e.OldElement != null)
             {
-                BorderStyle = e.NewElement.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None
-            };
-
-            entry.Started += OnStarted;
-            entry.Ended += OnEnded;
-
-            _picker = new UIPickerView 
-            {
-                DataSource = new PickerSource (e.NewElement)
-            };
-
-            var width = UIScreen.MainScreen.Bounds.Width;
-            var uIToolbar = new UIToolbar (new CGRect (0, 0, width, 44)) 
-            {
-                BarStyle = UIBarStyle.Default,
-                Translucent = true
-            };
-
-            var uIBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace);
-            var uIBarButtonItem2 = new UIBarButtonItem (
-                UIBarButtonSystemItem.Done, 
-                delegate { entry.ResignFirstResponder (); });
-
-            uIToolbar.SetItems (new[] { uIBarButtonItem, uIBarButtonItem2 }, false);
-
-            if (Device.Idiom == TargetIdiom.Phone) 
-            {
-                entry.InputView = _picker;
-                entry.InputAccessoryView = uIToolbar;
-            } 
-            else 
-            {
-                entry.InputView = new UIView (CGRect.Empty);
-                entry.InputAccessoryView = new UIView (CGRect.Empty);
+                e.OldElement.Items.CollectionChanged -= RowsCollectionChanged;
             }
+            if (e.NewElement != null)
+            {
+                if (Control == null)
+                {
+                    var entry = new NoCaretField {
+                        BorderStyle = e.NewElement.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None
+                    };
 
-            ((PickerSource)_picker.DataSource).ValueChanged += HandleValueChanged;
-            SetNativeControl(entry);
+                    entry.Started += OnStarted;
+                    entry.Ended += OnEnded;
+
+                    _picker = new UIPickerView {
+                        DataSource = new PickerSource (e.NewElement)
+                    };
+
+                    var width = UIScreen.MainScreen.Bounds.Width;
+                    var uIToolbar = new UIToolbar (new CGRect (0, 0, width, 44)) {
+                        BarStyle = UIBarStyle.Default,
+                        Translucent = true
+                    };
+
+                    var uIBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace);
+                    var uIBarButtonItem2 = new UIBarButtonItem (
+                        UIBarButtonSystemItem.Done,
+                        delegate {
+                            entry.ResignFirstResponder ();
+                        });
+
+                    uIToolbar.SetItems (new[] { uIBarButtonItem, uIBarButtonItem2 }, false);
+
+                    if (Device.Idiom == TargetIdiom.Phone)
+                    {
+                        entry.InputView = _picker;
+                        entry.InputAccessoryView = uIToolbar;
+                    }
+                    else
+                    {
+                        entry.InputView = new UIView (CGRect.Empty);
+                        entry.InputAccessoryView = new UIView (CGRect.Empty);
+                    }
+                    SetNativeControl (entry);
+                    ((PickerSource)_picker.DataSource).ValueChanged += HandleValueChanged;
+                }
+
+                e.NewElement.Items.CollectionChanged += RowsCollectionChanged;
+            }
+          
             UpdatePicker();
         }
 
@@ -255,6 +281,9 @@ namespace XLabs.Forms.Controls
         /// </summary>
         private void UpdatePicker()
         {
+            if (Control == null)
+                return;
+
             Control.Placeholder = Element.Title;
             Control.Text = (Element.SelectedIndex <= -1 || Element.Items == null) ? string.Empty : Element.Items[Element.SelectedIndex];
             _picker.ReloadAllComponents();

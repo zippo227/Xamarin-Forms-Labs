@@ -1,5 +1,23 @@
-﻿//http://forums.xamarin.com/discussion/19351/how-to-achieve-synchronized-scroll-views
-//using and extending on msmith implementation
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ExtendedScrollView.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
 using System;
 using Xamarin.Forms;
@@ -11,10 +29,12 @@ namespace XLabs.Forms.Controls
 	/// </summary>
 	public class ExtendedScrollView : ScrollView
 	{
-		/// <summary>
-		/// Occurs when [scrolled].
-		/// </summary>
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+							  /// <summary>
+							  /// Occurs when [scrolled].
+							  /// </summary>
 		public event Action<ScrollView, Rectangle> Scrolled;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
 
 		/// <summary>
 		/// Updates the bounds.

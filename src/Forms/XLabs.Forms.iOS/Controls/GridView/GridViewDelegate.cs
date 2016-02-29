@@ -1,8 +1,29 @@
+// ***********************************************************************
+// Assembly         : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="GridViewDelegate.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using Foundation;
+using UIKit;
+
 namespace XLabs.Forms.Controls
 {
-	using Foundation;
-	using UIKit;
-
 	/// <summary>
 	/// Class GridViewDelegate.
 	/// </summary>
@@ -26,7 +47,7 @@ namespace XLabs.Forms.Controls
 		/// <param name="onItemSelected">The on item selected.</param>
 		public GridViewDelegate (OnItemSelected onItemSelected)
 		{
-			_onItemSelected = onItemSelected;
+		    this._onItemSelected = onItemSelected;
 		}
 
 		/// <summary>
@@ -36,7 +57,7 @@ namespace XLabs.Forms.Controls
 		/// <param name="indexPath">The index path.</param>
 		public override void ItemSelected (UICollectionView collectionView, NSIndexPath indexPath)
 		{
-			_onItemSelected (collectionView, indexPath);
+		    this._onItemSelected (collectionView, indexPath);
 		}
 
 		/// <summary>
@@ -46,9 +67,8 @@ namespace XLabs.Forms.Controls
 		/// <param name="indexPath">The index path.</param>
 		public override void ItemHighlighted(UICollectionView collectionView, NSIndexPath indexPath)
 		{
-			_onItemSelected.Invoke(collectionView, indexPath);
+		    this._onItemSelected.Invoke(collectionView, indexPath);
 		}
-
 	}
 }
 

@@ -1,22 +1,37 @@
-using Xamarin.Forms;
+// ***********************************************************************
+// Assembly         : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ImageButtonRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using CoreGraphics;
+using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
+using XLabs.Enums;
 using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 namespace XLabs.Forms.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using CoreGraphics;
-    using System.Threading.Tasks;
-
-    using UIKit;
-
-    using Xamarin.Forms;
-    using Xamarin.Forms.Platform.iOS;
-
-    using XLabs.Enums;
-
     /// <summary>
     /// Draws a button on the iOS platform with the image shown in the right 
     /// position with the right size.
@@ -45,37 +60,37 @@ namespace XLabs.Forms.Controls
         /// Handles the initial drawing of the button.
         /// </summary>
         /// <param name="e">Information on the <see cref="ImageButton"/>.</param> 
-        protected async override void OnElementChanged(ElementChangedEventArgs<Button> e)
+        protected override async void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
             var imageButton = ImageButton;
             var targetButton = Control;
             if (imageButton != null && targetButton != null && imageButton.Source != null)
             {
+                // Matches Android ImageButton behavior
+                targetButton.LineBreakMode = UIKit.UILineBreakMode.WordWrap;
+
                 var width = this.GetWidth(imageButton.ImageWidthRequest);
                 var height = this.GetHeight(imageButton.ImageHeightRequest);
 
-                await SetImageAsync(imageButton.Source, width, height, targetButton);
 
-                if (imageButton.DisabledSource != null)
-                {
-                    await SetImageAsync(imageButton.DisabledSource, width, height, targetButton, UIControlState.Disabled);
-                }
+
+                await SetupImages(imageButton, targetButton, width, height);
 
                 switch (imageButton.Orientation)
                 {
-                    case ImageOrientation.ImageToLeft:
-                        AlignToLeft(targetButton);
-                        break;
-                    case ImageOrientation.ImageToRight:
-                        AlignToRight(imageButton.ImageWidthRequest, targetButton);
-                        break;
-                    case ImageOrientation.ImageOnTop:
-                        AlignToTop(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
-                        break;
-                    case ImageOrientation.ImageOnBottom:
-                        AlignToBottom(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
-                        break;
+                case ImageOrientation.ImageToLeft:
+                    AlignToLeft(targetButton);
+                    break;
+                case ImageOrientation.ImageToRight:
+                    AlignToRight(imageButton.ImageWidthRequest, targetButton);
+                    break;
+                case ImageOrientation.ImageOnTop:
+                    AlignToTop(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton, imageButton.WidthRequest);
+                    break;
+                case ImageOrientation.ImageOnBottom:
+                    AlignToBottom(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
+                    break;
                 }
             }
         }
@@ -88,7 +103,10 @@ namespace XLabs.Forms.Controls
         protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            if (e.PropertyName == ImageButton.SourceProperty.PropertyName)
+            if (e.PropertyName == ImageButton.SourceProperty.PropertyName ||
+                e.PropertyName == ImageButton.DisabledSourceProperty.PropertyName ||
+                e.PropertyName == ImageButton.ImageTintColorProperty.PropertyName ||
+                e.PropertyName == ImageButton.DisabledImageTintColorProperty.PropertyName)
             {
                 var sourceButton = Element as ImageButton;
                 if (sourceButton != null && sourceButton.Source != null)
@@ -97,14 +115,22 @@ namespace XLabs.Forms.Controls
                     var targetButton = Control;
                     if (imageButton != null && targetButton != null && imageButton.Source != null)
                     {
-                        await SetImageAsync(imageButton.Source, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
-
-                        if (imageButton.DisabledSource != null)
-                        {
-                            await SetImageAsync(imageButton.DisabledSource, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton, UIControlState.Disabled);
-                        }
+                        await SetupImages(imageButton, targetButton, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest);
                     }
                 }
+            }
+        }
+
+        async Task SetupImages(ImageButton imageButton, UIButton targetButton, int width, int height)
+        {
+            UIColor tintColor = imageButton.ImageTintColor == Color.Transparent ? null : imageButton.ImageTintColor.ToUIColor();
+            UIColor disabledTintColor = imageButton.DisabledImageTintColor == Color.Transparent ? null : imageButton.DisabledImageTintColor.ToUIColor();
+
+            await SetImageAsync(imageButton.Source, width, height, targetButton, UIControlState.Normal, tintColor);
+
+            if (imageButton.DisabledSource != null || disabledTintColor != null)
+            {
+                await SetImageAsync(imageButton.DisabledSource ?? imageButton.Source, width, height, targetButton, UIControlState.Disabled, disabledTintColor);
             }
         }
 
@@ -144,14 +170,18 @@ namespace XLabs.Forms.Controls
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="widthRequest">The requested image width.</param>
         /// <param name="targetButton">The button to align.</param>
-        private static void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton)
+        /// <param name="buttonWidthRequest">The button width request.</param>
+        private static void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton, double buttonWidthRequest)
         {
             targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Top;
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Center;
+            targetButton.TitleLabel.LineBreakMode = UIKit.UILineBreakMode.WordWrap;
+
             targetButton.SizeToFit();
 
             var titleWidth = targetButton.TitleLabel.IntrinsicContentSize.Width;
+            CGSize titleSize = targetButton.TitleLabel.Frame.Size;
 
             UIEdgeInsets titleInsets;
             UIEdgeInsets imageInsets;
@@ -162,9 +192,9 @@ namespace XLabs.Forms.Controls
                 imageInsets = new UIEdgeInsets(0, Convert.ToInt32(titleWidth / 2), 0, -1 * Convert.ToInt32(titleWidth / 2));
             }
             else
-            {
+            {                       
                 titleInsets = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1 * widthRequest / 2), -1 * heightRequest, Convert.ToInt32(widthRequest / 2));
-                imageInsets = new UIEdgeInsets(0, titleWidth / 2, 0, -1 * titleWidth / 2);
+                imageInsets = new UIEdgeInsets(0, Convert.ToInt32(targetButton.IntrinsicContentSize.Width/2 - widthRequest/2 - titleSize.Width/2 ), 0, Convert.ToInt32(-1 * (targetButton.IntrinsicContentSize.Width/2 - widthRequest/2 +  titleSize.Width/2)));
             }
 
             targetButton.TitleEdgeInsets = titleInsets;
@@ -205,14 +235,16 @@ namespace XLabs.Forms.Controls
 
         /// <summary>
         /// Loads an image from a bundle given the supplied image name, resizes it to the
-        /// height and width request and sets it into a <see cref="UIButton"/>.
+        /// height and width request and sets it into a <see cref="UIButton" />.
         /// </summary>
-        /// <param name="source">The <see cref="ImageSource"/> to load the image from.</param>
+        /// <param name="source">The <see cref="ImageSource" /> to load the image from.</param>
         /// <param name="widthRequest">The requested image width.</param>
         /// <param name="heightRequest">The requested image height.</param>
-        /// <param name="targetButton">A <see cref="UIButton"/> to set the image into.</param>
-        /// <returns>A <see cref="Task"/> for the awaited operation.</returns>
-        private async static Task SetImageAsync(ImageSource source, int widthRequest, int heightRequest, UIButton targetButton, UIControlState state = UIControlState.Normal)
+        /// <param name="targetButton">A <see cref="UIButton" /> to set the image into.</param>
+        /// <param name="state">The state.</param>
+        /// <param name="tintColor">Color of the tint.</param>
+        /// <returns>A <see cref="Task" /> for the awaited operation.</returns>
+        private async static Task SetImageAsync(ImageSource source, int widthRequest, int heightRequest, UIButton targetButton, UIControlState state = UIControlState.Normal, UIColor tintColor = null)
         {
             var handler = GetHandler(source);
             using (UIImage image = await handler.LoadImageAsync(source))
@@ -222,10 +254,20 @@ namespace XLabs.Forms.Controls
                 {
                     scaled = scaled.Scale(new CGSize(widthRequest, heightRequest));
                 }
-                targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), state);   
+
+                if (tintColor != null)
+                {
+                    targetButton.TintColor = tintColor;
+                    targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), state);
+                }
+                else 
+                    targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), state);
             }
         }
 
+        /// <summary>
+        /// Layouts the subviews.
+        /// </summary>
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();

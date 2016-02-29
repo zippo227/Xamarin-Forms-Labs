@@ -1,14 +1,34 @@
-﻿namespace XLabs.Platform.Services.Media
+﻿// ***********************************************************************
+// Assembly         : XLabs.Platform.Droid
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="Microphone.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Android.App;
+using Android.Content.PM;
+using Android.Media;
+
+namespace XLabs.Platform.Services.Media
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-
-	using Android.App;
-	using Android.Content.PM;
-	using Android.Media;
-
 	/// <summary>
 	///     Class Microphone.
 	/// </summary>
@@ -25,7 +45,7 @@
 		private int _bufferSize;
 
 		/// <summary>
-		///     Initializes a new instance of the <see cref="Xamarin.Forms.Labs.Droid.Services.Media.Microphone" /> class.
+		///     Initializes a new instance of the <see cref="Microphone" /> class.
 		/// </summary>
 		public Microphone()
 		{

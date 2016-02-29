@@ -1,17 +1,37 @@
-﻿namespace XLabs.Sample.Pages.Services
+﻿// ***********************************************************************
+// Assembly         : XLabs.Sample
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="FontManagerPage.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using Xamarin.Forms;
+using XLabs.Forms.Services;
+using XLabs.Platform.Device;
+
+namespace XLabs.Sample.Pages.Services
 {
-    using System;
-    using Forms.Services;
-    using Xamarin.Forms;
-
-    using XLabs.Platform.Device;
-
     /// <summary>
     /// Class FontManagerPage.
     /// </summary>
-    public class FontManagerPage : ContentPage
+    public class FontManagerPage : TabbedPage
     {
-        private const double fontSize = 0.25;
+        private const double FontSize = 0.25;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FontManagerPage"/> class.
@@ -43,11 +63,11 @@
 
             var f = Font.SystemFontOfSize(24);
 
-            var inchFont = fontManager.FindClosest(f.FontFamily, fontSize);
+            var inchFont = fontManager.FindClosest(f.FontFamily, FontSize);
 
             stack.Children.Add(new Label()
             {
-                Text = "The below text should be " + fontSize + "in height from its highest point to lowest.",
+                Text = "The below text should be " + FontSize + "in height from its highest point to lowest.",
                 XAlign = TextAlignment.Center
             });
 
@@ -66,12 +86,26 @@
 
             stack.Children.Add(new Label()
             {
-                Text = fontSize + "in height = SystemFontOfSize(" + inchFont.FontSize + ")",
+                Text = FontSize + "in height = SystemFontOfSize(" + inchFont.FontSize + ")",
                 XAlign = TextAlignment.Center,
                 YAlign = TextAlignment.End
             });
 
-            this.Content = stack;
+            this.Children.Add(new ContentPage() { Title = "Sizes", Content = stack });
+
+            var listView = new ListView
+            {
+                ItemsSource = fontManager.AvailableFonts,
+                ItemTemplate = new DataTemplate(() =>
+                {
+                    var label = new Label();
+                    label.SetBinding(Label.TextProperty, ".");
+                    label.SetBinding(Label.FontFamilyProperty, ".");
+                    return new ViewCell { View = label};
+                })
+            };
+
+            this.Children.Add(new ContentPage { Title = "Fonts", Content = listView });
         }
     }
 }

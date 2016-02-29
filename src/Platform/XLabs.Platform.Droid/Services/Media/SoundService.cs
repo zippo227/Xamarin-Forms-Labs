@@ -1,16 +1,37 @@
+// ***********************************************************************
+// Assembly         : XLabs.Platform.Droid
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="SoundService.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Android.App;
+using Android.Content.Res;
+using Android.Media;
+
 namespace XLabs.Platform.Services.Media
 {
-    using System;
-    using System.IO;
-    using System.Threading.Tasks;
-    using Android.App;
-    using Android.Content.Res;
-    using Android.Media;
-
     /// <summary>
     /// Class SoundService.
     /// </summary>
-    public class SoundService : ISoundService
+    public class SoundService : ISoundService , IDisposable
     {
         /// <summary>
         /// The _is player prepared
@@ -51,7 +72,7 @@ namespace XLabs.Platform.Services.Media
                     throw new FileNotFoundException("Make sure you set your file in the Assets folder");
                 }
 
-                await this.player.SetDataSourceAsync(fp.FileDescriptor);
+                await this.player.SetDataSourceAsync(fp.FileDescriptor, fp.StartOffset, fp.Length);
                 this.player.Prepared += (s, e) =>
                     {
                         this.player.SetVolume(0, 0);
@@ -64,6 +85,24 @@ namespace XLabs.Platform.Services.Media
                 Console.Out.WriteLine(ex.StackTrace);
             }
         }
+
+        #region IDisposable implementation
+        bool _disposed;
+        /// <summary>
+        /// To be added.
+        /// </summary>
+        /// <remarks>To be added.</remarks>
+        public void Dispose ()
+        {
+            if (_disposed && this.player != null) {
+                _disposed = true;
+                this.player.Dispose ();
+                this.player = null;
+                this.CurrentFile = null;
+            }
+        }
+
+        #endregion
 
         #region ISoundService implementation
 
@@ -83,7 +122,7 @@ namespace XLabs.Platform.Services.Media
             return Task.Run<SoundFile>(
                 async () =>
                     {
-                        if (this.player == null || string.Compare(filename, CurrentFile.Filename) > 0)
+                        if (this.player == null || string.Compare (filename, CurrentFile.Filename, StringComparison.Ordinal) > 0)
                         {
                             await SetMediaAsync(filename);
                         }

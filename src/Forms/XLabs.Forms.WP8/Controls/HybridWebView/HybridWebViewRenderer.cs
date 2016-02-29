@@ -1,217 +1,144 @@
-﻿using Xamarin.Forms;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms.WP8
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="HybridWebViewRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System;
+using Microsoft.Phone.Controls;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.WinPhone;
 using XLabs.Forms.Controls;
+using NavigationEventArgs = System.Windows.Navigation.NavigationEventArgs;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 
 namespace XLabs.Forms.Controls
 {
-	using System;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Windows.Input;
-	using System.Windows.Navigation;
+    /// <summary>
+    /// The hybrid web view renderer.
+    /// </summary>
+    public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, WebBrowser>
+    {
+        /// <summary>
+        ///     Called when [element changed].
+        /// </summary>
+        /// <param name="e">The e.</param>
+        protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
+        {
+            base.OnElementChanged(e);
 
-	using Microsoft.Phone.Controls;
+            if (this.Control == null && e.NewElement != null)
+            {
+                var webView = new WebBrowser { IsScriptEnabled = true, IsGeolocationEnabled = true };
 
-	using Xamarin.Forms.Platform.WinPhone;
+                webView.Navigating += WebViewNavigating;
+                webView.LoadCompleted += WebViewLoadCompleted;
+                webView.ScriptNotify += WebViewOnScriptNotify;
 
-	/// <summary>
-	///     The hybrid web view renderer.
-	/// </summary>
-	public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, WebBrowser>
-	{
-		/// <summary>
-		///     The web view.
-		/// </summary>
-		protected WebBrowser WebView;
+                SetNativeControl(webView);
+            }
 
-		/// <summary>
-		///     Called when [element changed].
-		/// </summary>
-		/// <param name="e">The e.</param>
-		protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
-		{
-			base.OnElementChanged(e);
+            Unbind(e.OldElement);
+            Bind();
+        }
 
-			if (WebView == null)
-			{
-				WebView = new WebBrowser { IsScriptEnabled = true, IsGeolocationEnabled = true };
+        /// <summary>
+        ///     Webs the view on script notify.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="notifyEventArgs">The <see cref="NotifyEventArgs" /> instance containing the event data.</param>
+        private void WebViewOnScriptNotify(object sender, NotifyEventArgs notifyEventArgs)
+        {
+            this.Element.MessageReceived(notifyEventArgs.Value);
+        }
 
-				//Touch.FrameReported += Touch_FrameReported;
+        /// <summary>
+        ///     Webs the view load completed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.NavigationEventArgs" /> instance containing the event data.</param>
+        private void WebViewLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            this.Inject(NativeFunction + GetFuncScript());
+            //this.Inject(GetFuncScript());
+            Element.OnLoadFinished(sender, EventArgs.Empty);
+        }
 
-				//this.WebView.ManipulationStarted += WebView_ManipulationStarted;
-				//this.ManipulationCompleted += HybridWebViewRenderer_ManipulationCompleted;
+        /// <summary>
+        ///     Loads the content.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="contentFullName">Full name of the content.</param>
+        partial void LoadContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
+        {
+            this.Control.NavigateToString(contentArgs.Content);
+            //LoadFromContent(sender, contentFullName);
+        }
 
-				//this.WebView.ManipulationDelta += WebView_ManipulationDelta;
-				//this.WebView.ManipulationCompleted += WebView_ManipulationCompleted;
+        /// <summary>
+        /// Handles navigation started events.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="NavigatingEventArgs" /> instance containing the event data.</param>
+        private void WebViewNavigating(object sender, NavigatingEventArgs e)
+        {
+            Element.OnNavigating(e.Uri);
+        }
 
-				WebView.Navigating += WebViewNavigating;
-				WebView.LoadCompleted += WebViewLoadCompleted;
-				WebView.ScriptNotify += WebViewOnScriptNotify;
+        /// <summary>
+        ///     Injects the specified script.
+        /// </summary>
+        /// <param name="script">The script.</param>
+        partial void Inject(string script)
+        {
+            Device.BeginInvokeOnMainThread(() => this.Control.InvokeScript("eval", script));
+        }
 
-				SetNativeControl(WebView);
-			}
+        /// <summary>
+        ///     Loads the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        partial void Load(Uri uri)
+        {
+            if (uri != null)
+            {
+                this.Control.Source = uri;
+            }
+        }
 
-			Unbind(e.OldElement);
-			Bind();
-		}
+        /// <summary>
+        /// Loads from content.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="contentArgs">The <see cref="HybridWebView.LoadContentEventArgs"/> instance containing the event data.</param>
+        partial void LoadFromContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
+        {
+            Element.Uri = new Uri(contentArgs.Content, UriKind.Relative);
+        }
 
-		/// <summary>
-		///     Touches the frame reported.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="TouchFrameEventArgs" /> instance containing the event data.</param>
-		private void TouchFrameReported(object sender, TouchFrameEventArgs e)
-		{
-			Debug.WriteLine(e);
-
-			var points = e.GetTouchPoints(WebView);
-
-			if (points.Count == 1)
-			{
-				var point = points[0];
-
-				if (point.Action == TouchAction.Move)
-				{
-					var pos = point.Position;
-				}
-			}
-		}
-
-		/// <summary>
-		///     Webs the view manipulation delta.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="ManipulationDeltaEventArgs" /> instance containing the event data.</param>
-		private void WebViewManipulationDelta(object sender, ManipulationDeltaEventArgs e)
-		{
-			var delta = e.CumulativeManipulation.Translation;
-
-			//If Change in X > Change in Y, its considered a horizontal swipe
-			if (Math.Abs(delta.X) > Math.Abs(delta.Y))
-			{
-				if (delta.X > 0)
-				{
-					Element.OnRightSwipe(this, EventArgs.Empty);
-				}
-				else
-				{
-					Element.OnLeftSwipe(this, EventArgs.Empty);
-				}
-			}
-		}
-
-		/// <summary>
-		///     Webs the view manipulation completed.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="ManipulationCompletedEventArgs" /> instance containing the event data.</param>
-		private void WebViewManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
-		{
-		}
-
-		/// <summary>
-		///     Webs the view on script notify.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="notifyEventArgs">The <see cref="NotifyEventArgs" /> instance containing the event data.</param>
-		private void WebViewOnScriptNotify(object sender, NotifyEventArgs notifyEventArgs)
-		{
-			Action<string> action;
-			var values = notifyEventArgs.Value.Split('/');
-			var name = values.FirstOrDefault();
-
-			if (name != null && Element.TryGetAction(name, out action))
-			{
-				var data = Uri.UnescapeDataString(values.ElementAt(1));
-				action.Invoke(data);
-			}
-		}
-
-		/// <summary>
-		///     Webs the view load completed.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.Windows.Navigation.NavigationEventArgs" /> instance containing the event data.</param>
-		private void WebViewLoadCompleted(object sender, NavigationEventArgs e)
-		{
-			InjectNativeFunctionScript();
-			Element.OnLoadFinished(sender, EventArgs.Empty);
-		}
-
-		/// <summary>
-		///     Loads the content.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="contentFullName">Full name of the content.</param>
-		partial void LoadContent(object sender, string contentFullName)
-		{
-			LoadFromContent(sender, contentFullName);
-		}
-
-		/// <summary>
-		///     Webs the view navigating.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="NavigatingEventArgs" /> instance containing the event data.</param>
-		private void WebViewNavigating(object sender, NavigatingEventArgs e)
-		{
-			if (e.Uri.IsAbsoluteUri && CheckRequest(e.Uri.AbsoluteUri))
-			{
-				Debug.WriteLine(e.Uri);
-			}
-			else
-			{
-				Element.OnNavigating(e.Uri);
-			}
-		}
-
-		/// <summary>
-		///     Injects the specified script.
-		/// </summary>
-		/// <param name="script">The script.</param>
-		partial void Inject(string script)
-		{
-			try
-			{
-				WebView.InvokeScript("eval", script);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.Message);
-			}
-		}
-
-		/// <summary>
-		///     Loads the specified URI.
-		/// </summary>
-		/// <param name="uri">The URI.</param>
-		partial void Load(Uri uri)
-		{
-			if (uri != null)
-			{
-				WebView.Source = uri;
-			}
-		}
-
-		/// <summary>
-		///     Loads from content.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="contentFullName">Full name of the content.</param>
-		partial void LoadFromContent(object sender, string contentFullName)
-		{
-			Element.Uri = new Uri(contentFullName, UriKind.Relative);
-		}
-
-		/// <summary>
-		///     Loads from string.
-		/// </summary>
-		/// <param name="html">The HTML.</param>
-		partial void LoadFromString(string html)
-		{
-			Control.NavigateToString(html);
-		}
-	}
+        /// <summary>
+        ///     Loads from string.
+        /// </summary>
+        /// <param name="html">The HTML.</param>
+        partial void LoadFromString(string html)
+        {
+            Control.NavigateToString(html);
+        }
+    }
 }

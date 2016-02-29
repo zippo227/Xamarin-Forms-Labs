@@ -1,13 +1,32 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ViewFactory.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using XLabs.Forms.Services;
 using XLabs.Ioc;
+using XLabs.Platform.Services;
 
 namespace XLabs.Forms.Mvvm
 {
-	using XLabs.Platform.Services;
-
 	/// <summary>
 	/// Class ViewTypeAttribute.
 	/// </summary>
@@ -82,9 +101,10 @@ namespace XLabs.Forms.Mvvm
 		/// </summary>
 		/// <param name="viewModelType">Type of the view model.</param>
 		/// <param name="initialiser">The initialiser.</param>
+		/// <param name="args">The arguments.</param>
 		/// <returns>System.Object.</returns>
 		/// <exception cref="System.InvalidOperationException">Unknown View for ViewModel</exception>
-		public static object CreatePage(Type viewModelType, Action<object, object> initialiser = null)
+		public static object CreatePage(Type viewModelType, Action<object, object> initialiser = null, params object[] args)
 		{
 			Type viewType;
 
@@ -111,7 +131,7 @@ namespace XLabs.Forms.Mvvm
 			{
 				viewModel = (Resolver.Resolve(viewModelType) ?? Activator.CreateInstance(viewModelType)) as IViewModel;
 
-				page = Activator.CreateInstance(viewType);
+				page = Activator.CreateInstance(viewType, args);
 
 				if (EnableCache)
 				{
@@ -148,9 +168,10 @@ namespace XLabs.Forms.Mvvm
 		/// <typeparam name="TViewModel">The type of the view model.</typeparam>
 		/// <typeparam name="TPage">The type of the t page.</typeparam>
 		/// <param name="initialiser">The create action.</param>
+		/// <param name="args">The arguments.</param>
 		/// <returns>Page for the ViewModel.</returns>
 		/// <exception cref="System.InvalidOperationException">Unknown View for ViewModel.</exception>
-		public static object CreatePage<TViewModel, TPage>(Action<TViewModel, TPage> initialiser = null)
+		public static object CreatePage<TViewModel, TPage>(Action<TViewModel, TPage> initialiser = null, params object[] args)
 			where TViewModel : class, IViewModel
 		{
 			Action<object, object> i = (o1, o2) =>
@@ -161,7 +182,18 @@ namespace XLabs.Forms.Mvvm
 				}
 			};
 
-			return CreatePage(typeof (TViewModel), i);
+			return CreatePage(typeof (TViewModel), i, args);
+		}
+
+		/// <summary>
+		/// Clears the cache.
+		/// </summary>
+		public static void ClearCache ()
+		{
+			if (PageCache != null)
+			{
+				PageCache.Clear();
+			}
 		}
 	}
 }

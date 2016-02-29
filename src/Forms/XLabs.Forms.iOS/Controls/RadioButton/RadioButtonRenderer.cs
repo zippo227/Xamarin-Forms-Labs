@@ -1,11 +1,32 @@
+// ***********************************************************************
+// Assembly       : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 01-06-2016
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-06-2016
+// ***********************************************************************
+// <copyright file="RadioButtonRenderer.cs" company="XLabs Team">
+//        Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//        This project is licensed under the Apache 2.0 license
+//        https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+// 
+//        XLabs is a open source project that aims to provide a powerfull and cross
+//        platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using CoreGraphics;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
+using XLabs.Forms.Extensions;
 using XLabs.Platform.Extensions;
 
 [assembly: ExportRenderer(typeof (CustomRadioButton), typeof (RadioButtonRenderer))]
@@ -13,10 +34,16 @@ using XLabs.Platform.Extensions;
 namespace XLabs.Forms.Controls
 {
     /// <summary>
-    ///     The Radio button renderer for iOS.
+    /// The Radio button renderer for iOS.
     /// </summary>
     public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, RadioButtonView>
     {
+        private UIColor _defaultTextColor;
+
+        /// <summary>
+        /// Handles the Element Changed event
+        /// </summary>
+        /// <param name="e">The e.</param>
         protected override void OnElementChanged(ElementChangedEventArgs<CustomRadioButton> e)
         {
             base.OnElementChanged(e);
@@ -24,6 +51,7 @@ namespace XLabs.Forms.Controls
             if (Control == null)
             {
                 var checkBox = new RadioButtonView(Bounds);
+                _defaultTextColor = checkBox.TitleColor(UIControlState.Normal);
 
                 checkBox.TouchUpInside += (s, args) => Element.Checked = Control.Checked;
 
@@ -39,10 +67,12 @@ namespace XLabs.Forms.Controls
             Control.VerticalAlignment = UIControlContentVerticalAlignment.Center;
             Control.Text = this.Element.Text;
             Control.Checked = this.Element.Checked;
-            Control.SetTitleColor(this.Element.TextColor.ToUIColor(), UIControlState.Normal);
-            Control.SetTitleColor(this.Element.TextColor.ToUIColor(), UIControlState.Selected);
+            UpdateTextColor();
         }
 
+        /// <summary>
+        /// Resizes the text.
+        /// </summary>
         private void ResizeText()
         {
             var text = Element.Text;
@@ -70,6 +100,10 @@ namespace XLabs.Forms.Controls
             Element.HeightRequest = bounds.Height;
         }
 
+        /// <summary>
+        /// Draws the specified rect.
+        /// </summary>
+        /// <param name="rect">The rect.</param>
         public override void Draw(CGRect rect)
         {
             base.Draw(rect);
@@ -78,7 +112,7 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        ///     Updates the font.
+        /// Updates the font.
         /// </summary>
         private void UpdateFont()
         {
@@ -95,6 +129,20 @@ namespace XLabs.Forms.Controls
             }
         }
 
+        /// <summary>
+        /// Updates the color of the text.
+        /// </summary>
+        private void UpdateTextColor()
+        {
+            Control.SetTitleColor (Element.TextColor.ToUIColorOrDefault(_defaultTextColor), UIControlState.Normal);
+            Control.SetTitleColor (Element.TextColor.ToUIColorOrDefault(_defaultTextColor), UIControlState.Selected);
+        }
+
+        /// <summary>
+        /// Handles the <see cref="E:ElementPropertyChanged" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
@@ -108,8 +156,7 @@ namespace XLabs.Forms.Controls
                     Control.Text = Element.Text;
                     break;
                 case "TextColor":
-                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Normal);
-                    Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Selected);
+                    UpdateTextColor();
                     break;
                 case "Element":
                     break;

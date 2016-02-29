@@ -1,4 +1,25 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="CheckBox.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
 using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
@@ -43,7 +64,7 @@ namespace XLabs.Forms.Controls
 		/// <remarks/>
 		public static readonly BindableProperty TextColorProperty =
 			BindableProperty.Create<CheckBox, Color>(
-				p => p.TextColor, Color.Black);
+				p => p.TextColor, Color.Default);
 
 		/// <summary>
 		/// The font size property
@@ -78,11 +99,10 @@ namespace XLabs.Forms.Controls
 
 			set
 			{
-                if (this.Checked != value)
-                {
-                    this.SetValue(CheckedProperty, value);
-                    this.CheckedChanged.Invoke(this, value);
-                }
+				if(this.Checked != value) {
+					this.SetValue(CheckedProperty, value);
+					this.CheckedChanged.Invoke(this, value);
+				}
 			}
 		}
 
@@ -142,7 +162,11 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
-		public Color TextColor 
+		/// <summary>
+		/// Gets or sets the color of the text.
+		/// </summary>
+		/// <value>The color of the text.</value>
+		public Color TextColor
 		{
 			get
 			{
@@ -163,7 +187,7 @@ namespace XLabs.Forms.Controls
 		{
 			get
 			{
-				return (double)GetValue(FontSizeProperty);
+				return (double) GetValue(FontSizeProperty);
 			}
 			set
 			{
@@ -179,13 +203,17 @@ namespace XLabs.Forms.Controls
 		{
 			get
 			{
-				return (string)GetValue(FontNameProperty);
+				return (string) GetValue(FontNameProperty);
 			}
 			set
 			{
 				SetValue(FontNameProperty, value);
 			}
 		}
+		/// <summary>
+		/// Gets the text.
+		/// </summary>
+		/// <value>The text.</value>
 		public string Text
 		{
 			get
@@ -195,17 +223,17 @@ namespace XLabs.Forms.Controls
 						: (string.IsNullOrEmpty(this.UncheckedText) ? this.DefaultText : this.UncheckedText);
 			}
 		}
-		
+
 		/// <summary>
-	        /// Called when [checked property changed].
-	        /// </summary>
-	        /// <param name="bindable">The bindable.</param>
-	        /// <param name="oldvalue">if set to <c>true</c> [oldvalue].</param>
-	        /// <param name="newvalue">if set to <c>true</c> [newvalue].</param>
-	        private static void OnCheckedPropertyChanged(BindableObject bindable, bool oldvalue, bool newvalue)
-	        {
-	            var checkBox = (CheckBox)bindable;
-	            checkBox.Checked = newvalue;
-	        }
+		/// Called when [checked property changed].
+		/// </summary>
+		/// <param name="bindable">The bindable.</param>
+		/// <param name="oldvalue">if set to <c>true</c> [oldvalue].</param>
+		/// <param name="newvalue">if set to <c>true</c> [newvalue].</param>
+		private static void OnCheckedPropertyChanged(BindableObject bindable, bool oldvalue, bool newvalue)
+		{
+			var checkBox = (CheckBox) bindable;
+			checkBox.Checked = newvalue;
+		}
 	}
 }

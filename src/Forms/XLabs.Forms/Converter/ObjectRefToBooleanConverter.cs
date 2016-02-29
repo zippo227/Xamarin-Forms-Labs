@@ -1,4 +1,24 @@
-﻿
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ObjectRefToBooleanConverter.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
 using System;
 using System.Globalization;
 using Xamarin.Forms;
@@ -12,13 +32,13 @@ namespace XLabs.Forms.Converter
 	public class ObjectRefToBooleanConverter : IValueConverter
 	{
 		/// <summary>
-		/// Converts an objectreferene to a boolean/>.
+		/// Converts an objectreferene to a boolean/&gt;.
 		/// </summary>
 		/// <param name="value">An objectreference</param>
 		/// <param name="targetType">boolean</param>
 		/// <param name="parameter">not used</param>
 		/// <param name="culture">not used</param>
-		/// <returns>True if the <see cref="value"/> is not null, false otherwise</returns>
+		/// <returns>True if the <see cref="System.Object" /> is not null, false otherwise</returns>
 		/// Element created at 05/11/2014,9:09 AM by Charles
 		/// <remarks>To be added.</remarks>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

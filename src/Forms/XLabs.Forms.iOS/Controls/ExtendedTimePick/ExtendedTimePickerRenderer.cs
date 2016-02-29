@@ -1,162 +1,244 @@
-using Xamarin.Forms;
+// ***********************************************************************
+// Assembly         : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ExtendedTimePickerRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System;
+using System.ComponentModel;
+using CoreGraphics;
+using Foundation;
+using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer(typeof(ExtendedTimePicker), typeof(ExtendedTimePickerRenderer))]
 
 namespace XLabs.Forms.Controls
 {
-	using System;
-	using System.ComponentModel;
-	using CoreGraphics;
+    /// <summary>
+    /// Class ExtendedTimePickerRenderer.
+    /// </summary>
+    public class ExtendedTimePickerRenderer : ViewRenderer<ExtendedTimePicker, UITextField>
+    {
+        /// <summary>
+        /// The _picker
+        /// </summary>
+        UIDatePicker _picker;
+        /// <summary>
+        /// The _pop over
+        /// </summary>
+        UIPopoverController _popOver;
 
-	using Foundation;
-	using UIKit;
+        /// <summary>
+        /// Called when [element changed].
+        /// </summary>
+        /// <param name="e">The e.</param>
+        protected override void OnElementChanged (ElementChangedEventArgs<ExtendedTimePicker> e)
+        {
+            base.OnElementChanged (e);
 
-	using Xamarin.Forms;
-	using Xamarin.Forms.Platform.iOS;
+            if (e.OldElement != null)
+            {
+                // todo: handle this scenario properly
+            }
 
-	/// <summary>
-	/// Class ExtendedTimePickerRenderer.
-	/// </summary>
-	public class ExtendedTimePickerRenderer : ViewRenderer<ExtendedTimePicker, UITextField>
-	{
-		/// <summary>
-		/// The _picker
-		/// </summary>
-		UIDatePicker _picker;
-		/// <summary>
-		/// The _pop over
-		/// </summary>
-		UIPopoverController _popOver;
+            if (e.NewElement != null)
+            {
+                if (Control == null)
+                {
+                    var entry = new NoCaretField { BorderStyle = UITextBorderStyle.RoundedRect };
+                    entry.Started += this.OnStarted;
+                    entry.Ended += this.OnEnded;
+                    this._picker = new UIDatePicker {
+                        Mode = UIDatePickerMode.Time,
+                        TimeZone = new NSTimeZone ("UTC")
+                    };
 
-		/// <summary>
-		/// Sets the border.
-		/// </summary>
-		/// <param name="view">The view.</param>
-		private void SetBorder(ExtendedTimePicker view)
-		{
-			Control.BorderStyle = view.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
-		}
+                    nfloat width = UIScreen.MainScreen.Bounds.Width;
+                    var uIToolbar = new UIToolbar (new CGRect (0, 0, width, 44)) {
+                        BarStyle = UIBarStyle.Default,
+                        Translucent = true
+                    };
 
-		//
-		// Methods
-		//
-		/// <summary>
-		/// Handles the value changed.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-		private void HandleValueChanged (object sender, EventArgs e)
-		{
-			Element.Time = _picker.Date.ToDateTime () - new DateTime (1, 1, 1);
-		}
+                    var uIBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace);
+                    var uIBarButtonItem2 = new UIBarButtonItem (
+                        UIBarButtonSystemItem.Done,
+                        delegate
+                        {
+                            entry.ResignFirstResponder ();
+                        });
 
-		/// <summary>
-		/// Called when [element changed].
-		/// </summary>
-		/// <param name="e">The e.</param>
-		protected override void OnElementChanged (ElementChangedEventArgs<ExtendedTimePicker> e)
-		{
-			base.OnElementChanged (e);
-			NoCaretField entry = new NoCaretField {
-				BorderStyle = UITextBorderStyle.RoundedRect
-			};
-			entry.Started += new EventHandler (OnStarted);
-			entry.Ended += new EventHandler (OnEnded);
-			_picker = new UIDatePicker {
-				Mode = UIDatePickerMode.Time,
-				TimeZone = new NSTimeZone ("UTC")
-			};
-			nfloat width = UIScreen.MainScreen.Bounds.Width;
-			UIToolbar uIToolbar = new UIToolbar (new CGRect (0, 0, width, 44)) {
-				BarStyle = UIBarStyle.Default,
-				Translucent = true
-			};
-			UIBarButtonItem uIBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace);
-			UIBarButtonItem uIBarButtonItem2 = new UIBarButtonItem (UIBarButtonSystemItem.Done, delegate (object o, EventArgs a) {
-				entry.ResignFirstResponder ();
-			});
-			uIToolbar.SetItems (new UIBarButtonItem[] {
-				uIBarButtonItem,
-				uIBarButtonItem2
-			}, false);
+                    uIToolbar.SetItems (new[] { uIBarButtonItem, uIBarButtonItem2 }, false);
 
-			if (Device.Idiom == TargetIdiom.Phone) {
-				entry.InputView = _picker;
-				entry.InputAccessoryView = uIToolbar;
-			} else {
-				entry.InputView = new UIView (CGRect.Empty);
-				entry.InputAccessoryView = new UIView (CGRect.Empty);
-			}
+                    if (Device.Idiom == TargetIdiom.Phone)
+                    {
+                        entry.InputView = this._picker;
+                        entry.InputAccessoryView = uIToolbar;
+                    }
+                    else
+                    {
+                        entry.InputView = new UIView (CGRect.Empty);
+                        entry.InputAccessoryView = new UIView (CGRect.Empty);
+                    }
 
-			_picker.ValueChanged += new EventHandler (HandleValueChanged);
-			SetNativeControl (entry);
-			UpdateTime ();
+                    this._picker.ValueChanged += this.HandleValueChanged;
+                    SetNativeControl (entry);
+                }
+            }
+          
+            UpdateTime();
 
-			var view = (ExtendedTimePicker)Element;
-			SetBorder(view);
-		}
+            SetBorder();
+            UpdateTimeConstraints();
+        }
 
-		/// <summary>
-		/// Handles the <see cref="E:ElementPropertyChanged" /> event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged (sender, e);
-			if (e.PropertyName == TimePicker.TimeProperty.PropertyName || e.PropertyName == TimePicker.FormatProperty.PropertyName) {
-				UpdateTime ();
-			}
+        /// <summary>
+        /// Handles the <see cref="E:ElementPropertyChanged" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+        protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged (sender, e);
+            if (e.PropertyName == TimePicker.TimeProperty.PropertyName || e.PropertyName == TimePicker.FormatProperty.PropertyName) 
+            {
+                UpdateTime();
+            }
+            else if (e.PropertyName == ExtendedTimePicker.HasBorderProperty.PropertyName)
+            {
+                SetBorder();
+            } else if (e.PropertyName == ExtendedTimePicker.MinimumTimeProperty.PropertyName || e.PropertyName == ExtendedTimePicker.MaximumTimeProperty.PropertyName) {
+                UpdateTimeConstraints();
+            }
+        }
 
-			var view = (ExtendedTimePicker)Element;
+        /// <summary>
+        /// Handles the <see cref="E:Ended" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OnEnded (object sender, EventArgs eventArgs)
+        {
+            //base.Element.IsFocused = false;
+        }
 
-			if (e.PropertyName == ExtendedTimePicker.HasBorderProperty.PropertyName)
-				SetBorder(view);
-		}
+        /// <summary>
+        /// Handles the <see cref="E:Started" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OnStarted (object sender, EventArgs eventArgs)
+        {
+            //base.Element.IsFocused = true;
 
-		/// <summary>
-		/// Handles the <see cref="E:Ended" /> event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
-		private void OnEnded (object sender, EventArgs eventArgs)
-		{
-			//base.Element.IsFocused = false;
-		}
+            if (Device.Idiom == TargetIdiom.Phone) return;
 
-		/// <summary>
-		/// Handles the <see cref="E:Started" /> event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
-		private void OnStarted (object sender, EventArgs eventArgs)
-		{
-			//base.Element.IsFocused = true;
+            var vc = new UIViewController {this._picker};
+            vc.View.Frame = new CGRect (0, 0, 320, 200);
+            vc.PreferredContentSize = new CGSize (320, 200);
+            this._popOver = new UIPopoverController (vc);
+            this._popOver.PresentFromRect(
+                new CGRect(this.Control.Frame.Width/2, this.Control.Frame.Height-3, 0, 0), 
+                this.Control, 
+                UIPopoverArrowDirection.Any, 
+                true);
 
-			if (Device.Idiom != TargetIdiom.Phone) {
-				var vc = new UIViewController ();
-				vc.Add (_picker);
-				vc.View.Frame = new CGRect (0, 0, 320, 200);
-				vc.PreferredContentSize = new CGSize (320, 200);
-				_popOver = new UIPopoverController (vc);
-				_popOver.PresentFromRect(new CGRect(Control.Frame.Width/2,Control.Frame.Height-3,0,0), Control, UIPopoverArrowDirection.Any, true);
-				_popOver.DidDismiss += (object s, EventArgs e) => {
-					_popOver = null;
-					Control.ResignFirstResponder();
-				};
-			}
-		}
+            this._popOver.DidDismiss += (s, e) => 
+            {
+                this._popOver = null;
+                this.Control.ResignFirstResponder();
+            };
+        }
 
-		/// <summary>
-		/// Updates the time.
-		/// </summary>
-		private void UpdateTime ()
-		{
-			_picker.Date = new DateTime (1, 1, 1).Add (Element.Time).ToNSDate ();
-			Control.Text = DateTime.Today.Add (Element.Time).ToString (Element.Format);
-		}
-	}
+        /// <summary>
+        /// Updates the time.
+        /// </summary>
+        private void UpdateTime ()
+        {
+            if (this.Element == null || Control == null) return;
+
+            this._picker.Date = new DateTime (1, 1, 1).Add (this.Element.Time).ToNSDate ();
+            this.Control.Text = DateTime.Today.Add (this.Element.Time).ToString (this.Element.Format);
+        }
+
+        /// <summary>
+        /// Sets the border.
+        /// </summary>
+        private void SetBorder()
+        {
+            if (this.Element == null) return;
+
+            this.Control.BorderStyle = this.Element.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
+        }
+
+        /// <summary>
+        /// Updates the time constraints.
+        /// </summary>
+        private void UpdateTimeConstraints()
+        {
+            if (this.Element == null) return;
+
+            this._picker.MinimumDate = new DateTime(1, 1, 1).Add(this.Element.MinimumTime).ToNSDate();
+            this._picker.MaximumDate = new DateTime(1, 1, 1).Add(this.Element.MaximumTime).ToNSDate();
+        }
+
+        //
+        // Methods
+        //
+        /// <summary>
+        /// Handles the value changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void HandleValueChanged(object sender, EventArgs e)
+        {
+            if (this.Element == null) return;
+
+            this.Element.Time = this._picker.Date.ToDateTime() - new DateTime(1, 1, 1);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected override void Dispose (bool disposing)
+        {
+            base.Dispose (disposing);
+            if (disposing && this._picker != null)
+            {
+                this._picker.ValueChanged -= this.HandleValueChanged;
+                this._picker.Dispose ();
+                this._picker = null;
+                if (this._popOver != null)
+                {
+                    this._popOver.Dispose ();
+                    this._popOver = null;
+                }
+                if (Control != null)
+                {
+                    Control.Started -= this.OnStarted;
+                    Control.Ended -= this.OnEnded;
+                }
+
+            }
+        }
+    }
 }
 

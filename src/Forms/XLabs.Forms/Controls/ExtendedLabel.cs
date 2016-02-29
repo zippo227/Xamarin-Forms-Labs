@@ -1,4 +1,25 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ExtendedLabel.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
 using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
@@ -13,29 +34,6 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		public ExtendedLabel()
 		{
-		}
-
-		/// <summary>
-		/// The font size property
-		/// </summary>
-		public static readonly BindableProperty FontSizeProperty =
-			BindableProperty.Create<ExtendedLabel, double>(
-				p => p.FontSize, -1);
-
-		/// <summary>
-		/// Gets or sets the size of the font.
-		/// </summary>
-		/// <value>The size of the font.</value>
-		public double FontSize
-		{
-			get
-			{
-				return (double)GetValue(FontSizeProperty);
-			}
-			set
-			{
-				SetValue(FontSizeProperty, value);
-			}
 		}
 
 		/// <summary>
@@ -186,6 +184,10 @@ namespace XLabs.Forms.Controls
 		public static readonly BindableProperty IsDropShadowProperty =
 			BindableProperty.Create<ExtendedLabel, bool>(p => p.IsDropShadow, false);
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this instance is drop shadow.
+		/// </summary>
+		/// <value><c>true</c> if this instance is drop shadow; otherwise, <c>false</c>.</value>
 		public bool IsDropShadow 
 		{
 			get 
@@ -195,6 +197,28 @@ namespace XLabs.Forms.Controls
 			set 
 			{
 				SetValue (IsDropShadowProperty, value);
+			}
+		}
+
+		/// <summary>
+		/// This is the drop shadow color property
+		/// </summary>
+		public static readonly BindableProperty DropShadowColorProperty =
+			BindableProperty.Create<ExtendedLabel, Color>(p => p.DropShadowColor, default(Color));
+
+		/// <summary>
+		/// Gets or sets the color of the drop shadow.
+		/// </summary>
+		/// <value>The color of the drop shadow.</value>
+		public Color DropShadowColor 
+		{
+			get 
+			{
+				return (Color)GetValue (DropShadowColorProperty);
+			}
+			set 
+			{
+				SetValue (DropShadowColorProperty, value);
 			}
 		}
 

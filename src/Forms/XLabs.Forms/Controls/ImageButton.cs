@@ -1,11 +1,31 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ImageButton.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
 using System.Linq.Expressions;
 using Xamarin.Forms;
+using XLabs.Enums;
 
 namespace XLabs.Forms.Controls
 {
-    using XLabs.Enums;
-
     /// <summary>
     /// Creates a button with text and an image.
     /// The image can be on the left, above, on the right or below the text.
@@ -52,6 +72,20 @@ namespace XLabs.Forms.Controls
         public static readonly BindableProperty OrientationProperty =
             BindableProperty.Create<ImageButton, ImageOrientation>(
                 p => p.Orientation, ImageOrientation.ImageToLeft);
+
+        /// <summary>
+        /// Backing field for the tint color property.
+        /// </summary>
+        public static readonly BindableProperty ImageTintColorProperty =
+            BindableProperty.Create<ImageButton, Color>(
+                p => p.ImageTintColor, Color.Transparent);
+
+        /// <summary>
+        /// Backing field for the disbaled tint color property.
+        /// </summary>
+        public static readonly BindableProperty DisabledImageTintColorProperty =
+            BindableProperty.Create<ImageButton, Color>(
+                p => p.DisabledImageTintColor, Color.Transparent);
 
         /// <summary>
         /// Gets or sets the ImageSource to use with the control.
@@ -115,6 +149,30 @@ namespace XLabs.Forms.Controls
         {
             get { return (int)GetValue(ImageWidthRequestProperty); }
             set { SetValue(ImageWidthRequestProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the tint color of the image 
+        /// </summary>
+        /// <value>
+        /// The ImageTintColor property gets/sets the value of the backing field, ImageTintColorProperty.
+        /// </value> 
+        public Color ImageTintColor
+        {
+            get { return (Color)GetValue(ImageTintColorProperty); }
+            set { SetValue(ImageTintColorProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the tint color of the image when the button is disabled
+        /// </summary>
+        /// <value>
+        /// The DisabledImageTintColor property gets/sets the value of the backing field, DisabledImageTintColorProperty.
+        /// </value> 
+        public Color DisabledImageTintColor
+        {
+            get { return (Color)GetValue(DisabledImageTintColorProperty); }
+            set { SetValue(DisabledImageTintColorProperty, value); }
         }
     }
 }

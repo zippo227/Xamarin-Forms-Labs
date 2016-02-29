@@ -1,92 +1,64 @@
-﻿namespace XLabs.Platform.Device
+﻿// ***********************************************************************
+// Assembly         : XLabs.Platform.WP8
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="Battery.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using Microsoft.Phone.Info;
+
+namespace XLabs.Platform.Device
 {
-	using System;
+    /// <summary>
+    /// Windows Phone Battery class.
+    /// </summary>
+    public partial class Battery
+    {
+        /// <summary>
+        /// Gets a value indicating whether battery is charging
+        /// </summary>
+        /// <value><c>true</c> if charging; otherwise, <c>false</c>.</value>
+        public bool Charging
+        {
+            get
+            {
+                
+                return DeviceStatus.PowerSource == PowerSource.External;
+            }
+        }
 
-	using Microsoft.Phone.Info;
+        #region partial implementations
 
-	/// <summary>
-	/// Windows Phone Battery class.
-	/// </summary>
-	public partial class Battery
-	{
-		/// <summary>
-		/// Gets the level.
-		/// </summary>
-		/// <value>The level in percentage 0-100.</value>
-		public int Level
-		{
-			get
-			{
-				return Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercent;
-			}
-		}
+        /// <summary>
+        /// Starts the charger monitoring.
+        /// </summary>
+        partial void StartChargerMonitoring()
+        {
+            DeviceStatus.PowerSourceChanged += OnPowerSourceChanged;
+        }
 
-		/// <summary>
-		/// Gets a value indicating whether battery is charging
-		/// </summary>
-		/// <value><c>true</c> if charging; otherwise, <c>false</c>.</value>
-		public bool Charging
-		{
-			get
-			{
-				return DeviceStatus.PowerSource == PowerSource.External;
-			}
-		}
+        /// <summary>
+        /// Stops the charger monitoring.
+        /// </summary>
+        partial void StopChargerMonitoring()
+        {
+            DeviceStatus.PowerSourceChanged -= OnPowerSourceChanged;
+        }
 
-		/// <summary>
-		/// Called when [remaining charge percent changed].
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="o">The o.</param>
-		private void OnRemainingChargePercentChanged(object sender, object o)
-		{
-			onLevelChange.Invoke(sender, Level);
-		}
-
-		/// <summary>
-		/// Handles the <see cref="E:PowerSourceChanged" /> event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
-		private void OnPowerSourceChanged(object sender, EventArgs eventArgs)
-		{
-			onChargerStatusChanged.Invoke(sender, Charging);
-		}
-
-		#region partial implementations
-
-		/// <summary>
-		/// Starts the level monitoring.
-		/// </summary>
-		partial void StartLevelMonitoring()
-		{
-			Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged += OnRemainingChargePercentChanged;
-		}
-
-		/// <summary>
-		/// Stops the level monitoring.
-		/// </summary>
-		partial void StopLevelMonitoring()
-		{
-			Windows.Phone.Devices.Power.Battery.GetDefault().RemainingChargePercentChanged -= OnRemainingChargePercentChanged;
-		}
-
-		/// <summary>
-		/// Starts the charger monitoring.
-		/// </summary>
-		partial void StartChargerMonitoring()
-		{
-			DeviceStatus.PowerSourceChanged += OnPowerSourceChanged;
-		}
-
-		/// <summary>
-		/// Stops the charger monitoring.
-		/// </summary>
-		partial void StopChargerMonitoring()
-		{
-			DeviceStatus.PowerSourceChanged -= OnPowerSourceChanged;
-		}
-
-		#endregion
-	}
+        #endregion
+    }
 }

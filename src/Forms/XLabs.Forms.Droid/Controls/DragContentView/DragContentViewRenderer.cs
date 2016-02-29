@@ -1,3 +1,24 @@
+// ***********************************************************************
+// Assembly         : XLabs.Forms.Droid
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="DragContentViewRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
 using Android.Graphics;
 using Android.Views;
 using Xamarin.Forms;
@@ -11,19 +32,42 @@ using View = Android.Views.View;
 
 namespace XLabs.Forms.Controls
 {
+    /// <summary>
+    /// Class DragContentViewRenderer.
+    /// </summary>
     public class DragContentViewRenderer : ViewRenderer<DragContentView, View>
     {
+        /// <summary>
+        /// The touched element
+        /// </summary>
         private Xamarin.Forms.View touchedElement;
+        /// <summary>
+        /// The touched view
+        /// </summary>
         private View touchedView;
 
+        /// <summary>
+        /// The home position
+        /// </summary>
         private PointF homePosition;
+        /// <summary>
+        /// The offset location
+        /// </summary>
         private PointF offsetLocation;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DragContentViewRenderer"/> class.
+        /// </summary>
         public DragContentViewRenderer()
         {
             this.Touch += HandleTouch;
         }
 
+        /// <summary>
+        /// Handles the touch.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="View.TouchEventArgs" /> instance containing the event data.</param>
         private void HandleTouch(object sender, TouchEventArgs e)
         {
             switch (e.Event.Action)
@@ -79,6 +123,11 @@ namespace XLabs.Forms.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the point f.
+        /// </summary>
+        /// <param name="e">The e.</param>
+        /// <returns>PointF.</returns>
         private static PointF GetPointF(MotionEvent e)
         {
             return new PointF(e.GetX(), e.GetY());

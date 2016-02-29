@@ -1,3 +1,24 @@
+// ***********************************************************************
+// Assembly         : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="DragContentViewRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
 using System.Linq;
 using System.Reflection;
 using CoreGraphics;
@@ -11,12 +32,28 @@ using XLabs.Forms.Controls;
 
 namespace XLabs.Forms.Controls
 {
+    /// <summary>
+    /// Class DragContentViewRenderer.
+    /// </summary>
     public class DragContentViewRenderer : ViewRenderer<DragContentView, UIView>
     {
+        /// <summary>
+        /// The touched view
+        /// </summary>
         private UIView touchedView;
+        /// <summary>
+        /// The touched element
+        /// </summary>
         private View touchedElement;
+        /// <summary>
+        /// The offset location
+        /// </summary>
         private CGPoint offsetLocation;
 
+        /// <summary>
+        /// Called when [element changed].
+        /// </summary>
+        /// <param name="e">The e.</param>
         protected override void OnElementChanged(ElementChangedEventArgs<DragContentView> e)
         {
             base.OnElementChanged(e);
@@ -33,6 +70,11 @@ namespace XLabs.Forms.Controls
             }
         }
 
+        /// <summary>
+        /// Toucheses the began.
+        /// </summary>
+        /// <param name="touches">The touches.</param>
+        /// <param name="evt">The evt.</param>
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
             base.TouchesBegan(touches, evt);
@@ -52,12 +94,22 @@ namespace XLabs.Forms.Controls
             this.BringSubviewToFront(this.touchedView);
         }
 
+        /// <summary>
+        /// Toucheses the cancelled.
+        /// </summary>
+        /// <param name="touches">The touches.</param>
+        /// <param name="evt">The evt.</param>
         public override void TouchesCancelled(NSSet touches, UIEvent evt)
         {
             base.TouchesCancelled(touches, evt);
             this.touchedView = null;
         }
 
+        /// <summary>
+        /// Toucheses the ended.
+        /// </summary>
+        /// <param name="touches">The touches.</param>
+        /// <param name="evt">The evt.</param>
         public override void TouchesEnded(NSSet touches, UIEvent evt)
         {
             base.TouchesEnded(touches, evt);
@@ -65,6 +117,11 @@ namespace XLabs.Forms.Controls
             this.touchedView = null;
         }
 
+        /// <summary>
+        /// Toucheses the moved.
+        /// </summary>
+        /// <param name="touches">The touches.</param>
+        /// <param name="evt">The evt.</param>
         public override void TouchesMoved(NSSet touches, UIEvent evt)
         {
             base.TouchesMoved(touches, evt);
@@ -83,6 +140,12 @@ namespace XLabs.Forms.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the moved element.
+        /// </summary>
+        /// <param name="nativeView">The native view.</param>
+        /// <param name="view">The view.</param>
+        /// <returns>View.</returns>
         private static View GetMovedElement(object nativeView, View view)
         {
             View movedElement;
@@ -107,6 +170,11 @@ namespace XLabs.Forms.Controls
             return movedElement;
         }
 
+        /// <summary>
+        /// Gets the accessibility identifier.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <returns>System.String.</returns>
         private static string GetAccessibilityId(object view)
         {
             var ni = view.GetType().GetProperty("Control", BindingFlags.Public | BindingFlags.Instance);

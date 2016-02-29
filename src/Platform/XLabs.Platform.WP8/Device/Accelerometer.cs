@@ -1,18 +1,38 @@
-﻿namespace XLabs.Platform.Device
+﻿// ***********************************************************************
+// Assembly         : XLabs.Platform.WP8
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="Accelerometer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using Microsoft.Devices.Sensors;
+
+namespace XLabs.Platform.Device
 {
-	using System;
-
-	using Microsoft.Devices.Sensors;
-
 	/// <summary>
 	/// Class Accelerometer.
 	/// </summary>
 	public partial class Accelerometer
 	{
 		/// <summary>
-		/// The _accelerometer
+		/// The accelerometer
 		/// </summary>
-		private Microsoft.Devices.Sensors.Accelerometer _accelerometer;
+		private Microsoft.Devices.Sensors.Accelerometer accelerometer;
 
 		/// <summary>
 		/// Gets or sets the interval.
@@ -25,14 +45,14 @@
 		/// </summary>
 		partial void Start()
 		{
-			_accelerometer = new Microsoft.Devices.Sensors.Accelerometer
+			this.accelerometer = new Microsoft.Devices.Sensors.Accelerometer
 				                 {
 					                 TimeBetweenUpdates =
 						                 TimeSpan.FromMilliseconds((long)Interval)
 				                 };
 
-			_accelerometer.CurrentValueChanged += AccelerometerOnCurrentValueChanged;
-			_accelerometer.Start();
+			this.accelerometer.CurrentValueChanged += AccelerometerOnCurrentValueChanged;
+			this.accelerometer.Start();
 		}
 
 		/// <summary>
@@ -40,11 +60,11 @@
 		/// </summary>
 		partial void Stop()
 		{
-			if (_accelerometer != null)
+			if (this.accelerometer != null)
 			{
-				_accelerometer.CurrentValueChanged -= AccelerometerOnCurrentValueChanged;
-				_accelerometer.Stop();
-				_accelerometer = null;
+				this.accelerometer.CurrentValueChanged -= AccelerometerOnCurrentValueChanged;
+				this.accelerometer.Stop();
+				this.accelerometer = null;
 			}
 		}
 

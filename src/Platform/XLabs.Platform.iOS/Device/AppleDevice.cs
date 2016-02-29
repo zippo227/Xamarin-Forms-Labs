@@ -1,19 +1,40 @@
+// ***********************************************************************
+// Assembly         : XLabs.Platform.iOS
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="AppleDevice.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using System.IO.IsolatedStorage;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Foundation;
+using ObjCRuntime;
+using UIKit;
+using XLabs.Enums;
+using XLabs.Platform.Services;
+using XLabs.Platform.Services.IO;
+using XLabs.Platform.Services.Media;
+
 namespace XLabs.Platform.Device
 {
-    using System;
-    using System.IO.IsolatedStorage;
-    using System.Runtime.InteropServices;
-    using System.Text.RegularExpressions;
-    using System.Threading.Tasks;
-    using Enums;
-    using Foundation;
-    using ObjCRuntime;
-    using Services;
-    using Services.IO;
-    using Services.Media;
-    using UIKit;
-
-    /// <summary>
+	/// <summary>
     /// Apple device base class.
     /// </summary>
     public abstract class AppleDevice : IDevice
@@ -21,34 +42,34 @@ namespace XLabs.Platform.Device
         /// <summary>
         /// The iPhone expression.
         /// </summary>
-        private const string IPHONE_EXPRESSION = "iPhone([1-7]),([1-4])";
+        protected const string PhoneExpression = "iPhone([1-8]),([1-4])";
 
         /// <summary>
         /// The iPod expression.
         /// </summary>
-        private const string IPOD_EXPRESSION = "iPod([1-5]),([1])";
+        protected const string PodExpression = "iPod([1-5]),([1])";
 
         /// <summary>
         /// The iPad expression.
         /// </summary>
-        private const string IPAD_EXPRESSION = "iPad([1-4]),([1-8])";
+        protected const string PadExpression = "iPad([1-4]),([1-8])";
 
         /// <summary>
         /// Generic CPU/IO.
         /// </summary>
-        private const int CTL_HW = 6;
+        private const int CtlHw = 6;
 
         /// <summary>
         /// Total memory.
         /// </summary>
-        private const int HW_PHYSMEM = 5;
+        private const int HwPhysmem = 5;
 
         /// <summary>
         /// The device.
         /// </summary>
         private static IDevice device;
 
-        private static readonly long totalMemory = GetTotalMemory();
+        private static readonly long DeviceTotalMemory = GetTotalMemory();
 
         /// <summary>
         /// The file manager
@@ -59,6 +80,11 @@ namespace XLabs.Platform.Device
         /// Reference to the Bluetooth hub singleton.
         /// </summary>
         private IBluetoothHub bluetoothHub;
+
+        /// <summary>
+        /// Microphone audio stream.
+        /// </summary>
+        private IAudioStream microphone;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppleDevice" /> class.
@@ -92,27 +118,24 @@ namespace XLabs.Platform.Device
                     return device;
                 }
 
-                var hardwareVersion = GetSystemProperty("hw.machine");
+                var deviceInfo = GetDeviceInfo();
 
-                var regex = new Regex(IPHONE_EXPRESSION).Match(hardwareVersion);
-                if (regex.Success)
+                switch (deviceInfo.Type)
                 {
-                    return device = new Phone(int.Parse(regex.Groups[1].Value), int.Parse(regex.Groups[2].Value));
-                }
-
-                regex = new Regex(IPOD_EXPRESSION).Match(hardwareVersion);
-                if (regex.Success)
-                {
-                    return device = new Pod(int.Parse(regex.Groups[1].Value), int.Parse(regex.Groups[2].Value));
-                }
-
-                regex = new Regex(IPAD_EXPRESSION).Match(hardwareVersion);
-                if (regex.Success)
-                {
-                    return device = new Pad(int.Parse(regex.Groups[1].Value), int.Parse(regex.Groups[2].Value));
+                    case DeviceType.Phone:
+                        return device = new Phone(deviceInfo.MajorVersion, deviceInfo.MinorVersion);
+                    case DeviceType.Pad:
+                        return device = new Pad(deviceInfo.MajorVersion, deviceInfo.MinorVersion);
+                    case DeviceType.Pod:
+                        return device = new Pod(deviceInfo.MajorVersion, deviceInfo.MinorVersion);
                 }
 
                 return device = new Simulator();
+            }
+
+            set
+            {
+                device = value;
             }
         }
 
@@ -164,7 +187,7 @@ namespace XLabs.Platform.Device
         /// Gets Unique Id for the device.
         /// </summary>
         /// <value>The id for the device.</value>
-        public string Id
+        public virtual string Id
         {
             get
             {
@@ -221,7 +244,7 @@ namespace XLabs.Platform.Device
         {
             get
             {
-                return new Microphone();
+                return this.microphone ?? (this.microphone = new Microphone());
             }
         }
 
@@ -287,25 +310,41 @@ namespace XLabs.Platform.Device
         {
             get 
             { 
-                return totalMemory; 
+                return DeviceTotalMemory; 
             }
         }
 
+        /// <summary>
+        /// Gets the language code.
+        /// </summary>
+        /// <value>The language code.</value>
         public string LanguageCode
         {
             get { return NSLocale.PreferredLanguages[0]; }
         }
 
+        /// <summary>
+        /// Gets the time zone offset.
+        /// </summary>
+        /// <value>The time zone offset.</value>
         public double TimeZoneOffset
         {
             get { return NSTimeZone.LocalTimeZone.GetSecondsFromGMT / 3600.0; }
         }
 
+        /// <summary>
+        /// Gets the time zone.
+        /// </summary>
+        /// <value>The time zone.</value>
         public string TimeZone
         {
             get { return NSTimeZone.LocalTimeZone.Name; }
         }
 
+        /// <summary>
+        /// Gets the orientation.
+        /// </summary>
+        /// <value>The orientation.</value>
         public Orientation Orientation
         {
             get
@@ -333,14 +372,60 @@ namespace XLabs.Platform.Device
         /// <returns>The launch operation.</returns>
         public Task<bool> LaunchUriAsync(Uri uri)
         {
-            return Task.Run(() => UIApplication.SharedApplication.OpenUrl(new NSUrl(uri.ToString())));
+            var launchTaskSource = new TaskCompletionSource<bool>();
+            var app = UIApplication.SharedApplication;
+            app.BeginInvokeOnMainThread(() =>
+            {
+                try
+                {
+                    var url = NSUrl.FromString(uri.ToString()) ?? new NSUrl(uri.Scheme, uri.Host, uri.LocalPath);
+                    var result = app.CanOpenUrl(url) && app.OpenUrl(url);
+                    launchTaskSource.SetResult(result);
+                }
+                catch (Exception exception)
+                {
+                    launchTaskSource.SetException(exception);
+                }
+            });
+
+            return launchTaskSource.Task;
         }
         #endregion
+
+        /// <summary>
+        /// Gets the hardware's <see cref="DeviceInfo"/>.
+        /// </summary>
+        /// <returns><see cref="DeviceInfo"/></returns>
+        /// <exception cref="Exception">Throws an exception if unable to determine device type.</exception>
+        public static DeviceInfo GetDeviceInfo()
+        {
+            var hardwareVersion = GetSystemProperty("hw.machine");
+
+            var regex = new Regex(PhoneExpression).Match(hardwareVersion);
+            if (regex.Success)
+            {
+                return new DeviceInfo(DeviceType.Phone, int.Parse(regex.Groups[1].Value), int.Parse(regex.Groups[2].Value));
+            }
+
+            regex = new Regex(PodExpression).Match(hardwareVersion);
+            if (regex.Success)
+            {
+                return new DeviceInfo(DeviceType.Pod, int.Parse(regex.Groups[1].Value), int.Parse(regex.Groups[2].Value));
+            }
+
+            regex = new Regex(PadExpression).Match(hardwareVersion);
+            if (regex.Success)
+            {
+                return new DeviceInfo(DeviceType.Pad, int.Parse(regex.Groups[1].Value), int.Parse(regex.Groups[2].Value));
+            }
+
+            return new DeviceInfo(DeviceType.Simulator, 0, 0);
+        }
 
         private static uint GetTotalMemory()
         {
             var oldlenp = sizeof(int);
-            var mib = new int[2] { CTL_HW, HW_PHYSMEM };
+            var mib = new int[2] { CtlHw, HwPhysmem };
 
             uint mem;
             sysctl(mib, 2, out mem, ref oldlenp, IntPtr.Zero, 0);

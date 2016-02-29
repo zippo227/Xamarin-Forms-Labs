@@ -1,151 +1,178 @@
-using Xamarin.Forms;
+// ***********************************************************************
+// Assembly       : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 01-06-2016
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-06-2016
+// ***********************************************************************
+// <copyright file="CheckBoxRenderer.cs" company="XLabs Team">
+//        Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//        This project is licensed under the Apache 2.0 license
+//        https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+// 
+//        XLabs is a open source project that aims to provide a powerfull and cross
+//        platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System;
+using System.ComponentModel;
+using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
+using XLabs.Forms.Extensions;
+using XLabs.Platform.Extensions;
 
 [assembly: ExportRenderer(typeof(CheckBox), typeof(CheckBoxRenderer))]
 
 namespace XLabs.Forms.Controls
 {
-	using System;
-	using System.ComponentModel;
+    /// <summary>
+    /// The check box renderer for iOS.
+    /// </summary>
+    public class CheckBoxRenderer : ViewRenderer<CheckBox, CheckBoxView>
+    {
+        private UIColor defaultTextColor;
 
-	using UIKit;
+        /// <summary>
+        /// Handles the Element Changed event
+        /// </summary>
+        /// <param name="e">The e.</param>
+        protected override void OnElementChanged(ElementChangedEventArgs<CheckBox> e)
+        {
+            base.OnElementChanged(e);
 
-	using Xamarin.Forms.Platform.iOS;
+            if (Element == null) return;
 
-	using XLabs.Platform.Extensions;
+            BackgroundColor = Element.BackgroundColor.ToUIColor();
+            if (e.NewElement != null)
+            {
+                if (Control == null)
+                {
+                    var checkBox = new CheckBoxView (Bounds);
+                    checkBox.TouchUpInside += (s, args) => Element.Checked = Control.Checked;
+                    defaultTextColor = checkBox.TitleColor(UIControlState.Normal);
+                    SetNativeControl (checkBox);
+                }
+                Control.LineBreakMode = UILineBreakMode.CharacterWrap;
+                Control.VerticalAlignment = UIControlContentVerticalAlignment.Top;
+                Control.CheckedTitle = string.IsNullOrEmpty (e.NewElement.CheckedText) ? e.NewElement.DefaultText : e.NewElement.CheckedText;
+                Control.UncheckedTitle = string.IsNullOrEmpty (e.NewElement.UncheckedText) ? e.NewElement.DefaultText : e.NewElement.UncheckedText;
+                Control.Checked = e.NewElement.Checked;
+                UpdateTextColor();
+            }
 
-	/// <summary>
-	/// The check box renderer for iOS.
-	/// </summary>
-	public class CheckBoxRenderer : ViewRenderer<CheckBox, CheckBoxView>
-	{
-		/// <summary>
-		/// Called when [element changed].
-		/// </summary>
-		/// <param name="e">The e.</param>
-		protected override void OnElementChanged(ElementChangedEventArgs<CheckBox> e)
-		{
-			base.OnElementChanged(e);
+            Control.Frame = Frame;
+            Control.Bounds = Bounds;
 
-			if (Element == null) return;
+            UpdateFont();
+        }
 
-			BackgroundColor = Element.BackgroundColor.ToUIColor();
+        /// <summary>
+        /// Resizes the text.
+        /// </summary>
+        private void ResizeText()
+        {
+            if (Element == null)
+                return;
 
-			if (Control == null)
-			{
-				var checkBox = new CheckBoxView(Bounds);
-				checkBox.TouchUpInside += (s, args) => Element.Checked = Control.Checked;
+            var text = Element.Checked ? string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText :
+                string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
 
-				SetNativeControl(checkBox);
-			}
+            var bounds = Control.Bounds;
 
-			Control.Frame = Frame;
-			Control.Bounds = Bounds;
+            var width = Control.TitleLabel.Bounds.Width;
 
-			UpdateFont();
-			
-			Control.LineBreakMode = UILineBreakMode.CharacterWrap;
-			Control.VerticalAlignment = UIControlContentVerticalAlignment.Top;
-			Control.CheckedTitle = string.IsNullOrEmpty(e.NewElement.CheckedText) ? e.NewElement.DefaultText : e.NewElement.CheckedText;
-			Control.UncheckedTitle = string.IsNullOrEmpty(e.NewElement.UncheckedText) ? e.NewElement.DefaultText : e.NewElement.UncheckedText;
-			Control.Checked = e.NewElement.Checked;
-			Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Normal);
-			Control.SetTitleColor(e.NewElement.TextColor.ToUIColor(), UIControlState.Selected);
-		}
+            var height = text.StringHeight(Control.Font, width);
 
-		/// <summary>
-		/// Resizes the text.
-		/// </summary>
-		private void ResizeText()
-		{
-			var text = Element.Checked ? string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText :
-				string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
+            var minHeight = string.Empty.StringHeight(Control.Font, width);
 
-			var bounds = Control.Bounds;
+            var requiredLines = Math.Round(height / minHeight, MidpointRounding.AwayFromZero);
 
-			var width = Control.TitleLabel.Bounds.Width;
+            var supportedLines = Math.Round(bounds.Height / minHeight, MidpointRounding.ToEven);
 
-			var height = text.StringHeight(Control.Font, width);
+            if (supportedLines != requiredLines)
+            {
+                bounds.Height += (float)(minHeight * (requiredLines - supportedLines));
+                Control.Bounds = bounds;
+                Element.HeightRequest = bounds.Height;
+            }
+        }
 
-			var minHeight = string.Empty.StringHeight(Control.Font, width);
+        /// <summary>
+        /// Draws the specified rect.
+        /// </summary>
+        /// <param name="rect">The rect.</param>
+        public override void Draw(CoreGraphics.CGRect rect)
+        {
+            base.Draw(rect);
+            ResizeText();
+        }
 
-			var requiredLines = Math.Round(height / minHeight, MidpointRounding.AwayFromZero);
+        /// <summary>
+        /// Updates the font.
+        /// </summary>
+        private void UpdateFont()
+        {
+            if (!string.IsNullOrEmpty (Element.FontName)) {
+                var font = UIFont.FromName (Element.FontName, (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f);
+                if (font != null) {
+                    Control.Font = font;
+                }
+            } else if (Element.FontSize > 0) {
+                var font = UIFont.FromName (Control.Font.Name, (float)Element.FontSize);
+                if (font != null) {
+                    Control.Font = font;
+                }
+            }
+        }
 
-			var supportedLines = Math.Round(bounds.Height / minHeight, MidpointRounding.ToEven);
+        private void UpdateTextColor()
+        {
+            Control.SetTitleColor (Element.TextColor.ToUIColorOrDefault(defaultTextColor), UIControlState.Normal);
+            Control.SetTitleColor (Element.TextColor.ToUIColorOrDefault(defaultTextColor), UIControlState.Selected);
+        }
 
-			if (supportedLines != requiredLines)
-			{
-				bounds.Height += (float)(minHeight * (requiredLines - supportedLines));
-				Control.Bounds = bounds;
-				Element.HeightRequest = bounds.Height;
-			}
-		}
+        /// <summary>
+        /// Handles the <see cref="E:ElementPropertyChanged" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
 
-		/// <summary>
-		/// Draws the specified rect.
-		/// </summary>
-		/// <param name="rect">The rect.</param>
-		public override void Draw(CoreGraphics.CGRect rect)
-		{
-			base.Draw(rect);
-			ResizeText();
-		}
-
-		/// <summary>
-		/// Updates the font.
-		/// </summary>
-		private void UpdateFont()
-		{
-			if (!string.IsNullOrEmpty (Element.FontName)) {
-				var font = UIFont.FromName (Element.FontName, (Element.FontSize > 0) ? (float)Element.FontSize : 12.0f);
-				if (font != null) {
-					Control.Font = font;
-				}
-			} else if (Element.FontSize > 0) {
-				var font = UIFont.FromName (Control.Font.Name, (float)Element.FontSize);
-				if (font != null) {
-					Control.Font = font;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Handles the <see cref="E:ElementPropertyChanged" /> event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged(sender, e);
-
-			switch (e.PropertyName)
-			{
-				case "Checked":
-					Control.Checked = Element.Checked;
-					break;
-				case "TextColor":
-					Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Normal);
-					Control.SetTitleColor(Element.TextColor.ToUIColor(), UIControlState.Selected);
-					break;
-				case "CheckedText":
-					Control.CheckedTitle = string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText;
-					break;
-				case "UncheckedText":
-					Control.UncheckedTitle = string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
-					break;
-				case "FontSize":
-					UpdateFont();
-					break;
-				case "FontName":
-					UpdateFont();
-					break;
-				case "Element":
-					break;
-				default:
-					System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", e.PropertyName);
-					return;
-			}
-		}
-	}
+            switch (e.PropertyName)
+            {
+                case "Checked":
+                    Control.Checked = Element.Checked;
+                    break;
+                case "TextColor":
+                    UpdateTextColor();
+                    break;
+                case "CheckedText":
+                    Control.CheckedTitle = string.IsNullOrEmpty(Element.CheckedText) ? Element.DefaultText : Element.CheckedText;
+                    break;
+                case "UncheckedText":
+                    Control.UncheckedTitle = string.IsNullOrEmpty(Element.UncheckedText) ? Element.DefaultText : Element.UncheckedText;
+                    break;
+                case "FontSize":
+                    UpdateFont();
+                    break;
+                case "FontName":
+                    UpdateFont();
+                    break;
+                case "Element":
+                    break;
+                default:
+                    System.Diagnostics.Debug.WriteLine("Property change for {0} has not been implemented.", e.PropertyName);
+                    return;
+            }
+        }
+    }
 }

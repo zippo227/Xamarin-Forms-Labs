@@ -1,176 +1,207 @@
-using Xamarin.Forms;
+// ***********************************************************************
+// Assembly         : XLabs.Forms.iOS
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ExtendedLabelRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System.IO;
+using Foundation;
+using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
+using System;
 
 [assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRenderer))]
 
 namespace XLabs.Forms.Controls
 {
-	using System.IO;
+    /// <summary>
+    /// The extended label renderer.
+    /// </summary>
+    public class ExtendedLabelRenderer : LabelRenderer
+    {
+        /// <summary>
+        /// The on element changed callback.
+        /// </summary>
+        /// <param name="e">
+        /// The event arguments.
+        /// </param>
+        protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
+        {
+            base.OnElementChanged(e);
 
-	using Foundation;
-	using UIKit;
+            var view = e.NewElement as ExtendedLabel;
 
-	using Xamarin.Forms;
-	using Xamarin.Forms.Platform.iOS;
+            //UpdateUi(view, this.Control);
+            if (view != null)
+            {
+                SetPlaceholder(view);
+            }
+        }
 
-	/// <summary>
-	/// The extended label renderer.
-	/// </summary>
-	public class ExtendedLabelRenderer : LabelRenderer
-	{
-		/// <summary>
-		/// The on element changed callback.
-		/// </summary>
-		/// <param name="e">
-		/// The event arguments.
-		/// </param>
-		protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
-		{
-			base.OnElementChanged(e);
+        /// <summary>
+        /// Raises the element property changed event.
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">The event arguments</param>
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
 
-			var view = (ExtendedLabel)Element;
+            var view = Element as ExtendedLabel;
 
-			UpdateUi(view, Control);
-			SetPlaceholder(view);
-		}
+            if (view != null &&
+                e.PropertyName == Label.TextProperty.PropertyName ||
+                e.PropertyName == Label.FormattedTextProperty.PropertyName ||
+                e.PropertyName == ExtendedLabel.PlaceholderProperty.PropertyName ||
+                e.PropertyName == ExtendedLabel.FormattedPlaceholderProperty.PropertyName ||
+                e.PropertyName == ExtendedLabel.IsDropShadowProperty.PropertyName ||
+                e.PropertyName == ExtendedLabel.IsStrikeThroughProperty.PropertyName ||
+                e.PropertyName == ExtendedLabel.IsUnderlineProperty.PropertyName)
+            {
+                SetPlaceholder(view);
+            }
+        }
 
-		/// <summary>
-		/// Raises the element property changed event.
-		/// </summary>
-		/// <param name="sender">Sender</param>
-		/// <param name="e">The event arguments</param>
-		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged(sender, e);
+        /// <summary>
+        /// Updates the UI.
+        /// </summary>
+        /// <param name="view">
+        /// The view.
+        /// </param>
+        private void UpdateUi(ExtendedLabel view)
+        {
+            // Prefer font set through Font property.
+            if (view.Font == Font.Default)
+            {
+                if (view.FontSize > 0)
+                {
+                    this.Control.Font = UIFont.FromName(this.Control.Font.Name, (float)view.FontSize);
+                }
 
-			var view = (ExtendedLabel)Element;
+                if (!string.IsNullOrEmpty(view.FontName))
+                {
+                    var fontName = Path.GetFileNameWithoutExtension(view.FontName);
 
-			if (e.PropertyName == Label.TextProperty.PropertyName)
-			{
-				SetPlaceholder(view);
-			}
+                    var font = UIFont.FromName(fontName, this.Control.Font.PointSize);
 
-			if (e.PropertyName == Label.FormattedTextProperty.PropertyName)
-			{
-				SetPlaceholder(view);
-			}
+                    if (font != null)
+                    {
+                        this.Control.Font = font;
+                    }
+                }
 
-			if (e.PropertyName == ExtendedLabel.PlaceholderProperty.PropertyName)
-			{
-				SetPlaceholder(view);
-			}
+                #region ======= This is for backward compatability with obsolete attrbute 'FontNameIOS' ========
+                if (!string.IsNullOrEmpty(view.FontNameIOS))
+                {
+                    var font = UIFont.FromName(view.FontNameIOS, (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
 
-			if (e.PropertyName == ExtendedLabel.FormattedPlaceholderProperty.PropertyName)
-			{
-				SetPlaceholder(view);
-			}
-		}
+                    if (font != null)
+                    {
+                        this.Control.Font = font;
+                    }
+                }
+                #endregion ====== End of obsolete section ==========================================================
+            }
+            else
+            {
+                try
+                {
+                    var font = UIFont.FromName(view.FontFamily, (float)view.FontSize);
+                    if (font != null)
+                        this.Control.Font = font;
+                }
+                catch (Exception ex)
+                {
+                    var x = ex;
+                }
+            }
 
-		/// <summary>
-		/// Updates the UI.
-		/// </summary>
-		/// <param name="view">
-		/// The view.
-		/// </param>
-		/// <param name="control">
-		/// The control.
-		/// </param>
-		private void UpdateUi(ExtendedLabel view, UILabel control)
-		{
-			// Prefer font set through Font property.
-			if (view.Font == Font.Default)
-			{
-				if (view.FontSize > 0)
-				{
-					control.Font = UIFont.FromName(control.Font.Name, (float)view.FontSize);
-				}
+            //Do not create attributed string if it is not necesarry
+            //if (!view.IsUnderline && !view.IsStrikeThrough && !view.IsDropShadow)
+            //{
+            //    return;
+            //}
 
-				if (!string.IsNullOrEmpty(view.FontName))
-				{
-					var fontName = Path.GetFileNameWithoutExtension(view.FontName);
+            var underline = view.IsUnderline ? NSUnderlineStyle.Single : NSUnderlineStyle.None;
+            var strikethrough = view.IsStrikeThrough ? NSUnderlineStyle.Single : NSUnderlineStyle.None;
 
-					var font = UIFont.FromName(fontName, control.Font.PointSize);
+            NSShadow dropShadow = null;
 
-					if (font != null)
-					{
-						control.Font = font;
-					}
-				}
+            if (view.IsDropShadow)
+            {
+                dropShadow = new NSShadow
+                {
+                    ShadowColor = view.DropShadowColor.ToUIColor(),
+                    ShadowBlurRadius = 1.4f,
+                    ShadowOffset = new CoreGraphics.CGSize(new CoreGraphics.CGPoint(0.3f, 0.8f))
+                };
+            }
 
-				#region ======= This is for backward compatability with obsolete attrbute 'FontNameIOS' ========
-				if (!string.IsNullOrEmpty(view.FontNameIOS))
-				{
-					var font = UIFont.FromName(view.FontNameIOS, (view.FontSize > 0) ? (float)view.FontSize : 12.0f);
+            // For some reason, if we try and convert Color.Default to a UIColor, the resulting color is
+            // either white or transparent. The net result is the ExtendedLabel does not display.
+            // Only setting the control's TextColor if is not Color.Default will prevent this issue.
+            if (view.TextColor != Color.Default)
+            {
+                this.Control.TextColor = view.TextColor.ToUIColor();
+            }
 
-					if (font != null)
-					{
-						control.Font = font;
-					}
-				}
-				#endregion ====== End of obsolete section ==========================================================
-			}
+            this.Control.AttributedText = new NSMutableAttributedString(view.Text,
+                this.Control.Font,
+                underlineStyle: underline,
+                strikethroughStyle: strikethrough,
+                shadow: dropShadow);
+            ;
+        }
 
-			//Do not create attributed string if it is not necesarry
-			if (!view.IsUnderline && !view.IsStrikeThrough && !view.IsDropShadow)
-			{
-				return;
-			}
+        private void SetPlaceholder(ExtendedLabel view)
+        {
+            if (view == null)
+            {
+                return;
+            }
 
-			var underline = view.IsUnderline ? NSUnderlineStyle.Single : NSUnderlineStyle.None;
-			var strikethrough = view.IsStrikeThrough ? NSUnderlineStyle.Single : NSUnderlineStyle.None;
+            if (view.FormattedText != null)
+            {
+                this.Control.AttributedText = view.FormattedText.ToAttributed(view.Font, view.TextColor);
+                LayoutSubviews();
+                return;
+            }
 
-			NSShadow dropShadow = null;
+            if (!string.IsNullOrEmpty(view.Text))
+            {
+                this.UpdateUi(view);
+                LayoutSubviews();
+                return;
+            }
 
-			if (view.IsDropShadow)
-			{
-				dropShadow = new NSShadow
-				{
-					ShadowColor = UIColor.DarkGray,
-					ShadowBlurRadius = 1.4f,
-					ShadowOffset = new CoreGraphics.CGSize(new CoreGraphics.CGPoint(0.3f, 0.8f))
-				};
-			}
+            if (string.IsNullOrWhiteSpace(view.Placeholder) && view.FormattedPlaceholder == null)
+            {
+                return;
+            }
 
-			// For some reason, if we try and convert Color.Default to a UIColor, the resulting color is
-			// either white or transparent. The net result is the ExtendedLabel does not display.
-			// Only setting the control's TextColor if is not Color.Default will prevent this issue.
-			if (view.TextColor != Color.Default)
-			{
-				control.TextColor = view.TextColor.ToUIColor();
-			}
+            var formattedPlaceholder = view.FormattedPlaceholder ?? view.Placeholder;
 
-			control.AttributedText = new NSMutableAttributedString(control.Text,
-																   control.Font,
-																   underlineStyle: underline,
-																   strikethroughStyle: strikethrough,
-																   shadow: dropShadow); ;
-		}
+            Control.AttributedText = formattedPlaceholder.ToAttributed(view.Font, view.TextColor);
 
-		private void SetPlaceholder(ExtendedLabel view)
-		{
-			if (!string.IsNullOrWhiteSpace(view.Text))
-			{
-				var formattedString = view.FormattedText ?? view.Text;
-
-				Control.AttributedText = formattedString.ToAttributed(view.Font, view.TextColor);
-
-				LayoutSubviews();
-
-				return;
-			}
-
-			if (string.IsNullOrWhiteSpace(view.Placeholder) && view.FormattedPlaceholder == null)
-			{
-				return;
-			}
-
-			var formattedPlaceholder = view.FormattedPlaceholder ?? view.Placeholder;
-
-			Control.AttributedText = formattedPlaceholder.ToAttributed(view.Font, view.TextColor);
-
-			LayoutSubviews();
-		}
-	}
+            LayoutSubviews();
+        }
+    }
 }
 

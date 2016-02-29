@@ -1,29 +1,32 @@
 ﻿// ***********************************************************************
 // Assembly         : XLabs.Forms
-// Author           : Shawn Anderson
-// Created          : 12-29-2014
-//
-// Last Modified By : Shawn Anderson
-// Last Modified On : 12-29-2014
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
 // ***********************************************************************
-// <copyright file="NavigationService.cs" company="">
-//     Copyright (c) 2014 . All rights reserved.
+// <copyright file="NavigationService.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
 // </copyright>
 // <summary>
-//	Note: This implementatio is based on the excellent work done in MVVM Light
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
 // </summary>
 // ***********************************************************************
+// 
 
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using XLabs.Forms.Mvvm;
+using XLabs.Platform.Services;
 
 namespace XLabs.Forms.Services
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
-
-	using XLabs.Platform.Services;
-
 	/// <summary>
 	/// Class NavigationService.
 	/// </summary>
@@ -73,10 +76,10 @@ namespace XLabs.Forms.Services
 		/// Navigates to.
 		/// </summary>
 		/// <param name="pageKey">The page key.</param>
-		/// <param name="parameter">The parameter.</param>
 		/// <param name="animated">if set to <c>true</c> [animated].</param>
+		/// <param name="args">The arguments.</param>
 		/// <exception cref="System.ArgumentException">That pagekey is not registered;pageKey</exception>
-		public void NavigateTo(string pageKey, object parameter = null, bool animated = true)
+		public void NavigateTo(string pageKey, bool animated = true, params object[] args)
 		{
 			if (!this._pageLookup.ContainsKey(pageKey))
 			{
@@ -85,17 +88,17 @@ namespace XLabs.Forms.Services
 
 			var pageType = this._pageLookup[pageKey];
 
-			this.NavigateTo(pageType, parameter, animated);
+			this.NavigateTo(pageType, animated, args);
 		}
 
 		/// <summary>
 		/// Navigates to.
 		/// </summary>
 		/// <param name="pageType">Type of the page.</param>
-		/// <param name="parameter">The parameter.</param>
 		/// <param name="animated">if set to <c>true</c> [animated].</param>
+		/// <param name="args">The arguments.</param>
 		/// <exception cref="System.ArgumentException">Argument must be derived from type Xamarin.Forms.Page;pageType</exception>
-		public void NavigateTo(Type pageType, object parameter = null, bool animated = true)
+		public void NavigateTo(Type pageType, bool animated = true, params object[] args)
 		{
 			if (_navigation == null)
 			{
@@ -109,11 +112,11 @@ namespace XLabs.Forms.Services
 
 			if (pInfo.IsAssignableFrom(xlvm) || pInfo.IsSubclassOf(typeof(ViewModel)))
 			{
-				page = ViewFactory.CreatePage(pageType);
+				page = ViewFactory.CreatePage(pageType, null, args);
 			}
 			else if (pInfo.IsAssignableFrom(xfPage) || pInfo.IsSubclassOf(typeof(Xamarin.Forms.Page)))
 			{
-				page = Activator.CreateInstance(pageType);
+				page = Activator.CreateInstance(pageType, args);
 			}
 			else
 			{
@@ -127,12 +130,12 @@ namespace XLabs.Forms.Services
 		/// Navigates to.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <param name="parameter">The parameter.</param>
 		/// <param name="animated">if set to <c>true</c> [animated].</param>
+		/// <param name="args">The arguments.</param>
 		/// <exception cref="System.ArgumentException">Page Type must be based on Xamarin.Forms.Page</exception>
-		public void NavigateTo<T>(object parameter = null, bool animated = true) where T : class
-		{		
-			NavigateTo(typeof(T), parameter, animated);
+		public void NavigateTo<T>(bool animated = true, params object[] args) where T : class
+		{
+			NavigateTo(typeof(T), animated, args);
 		}
 
 		/// <summary>

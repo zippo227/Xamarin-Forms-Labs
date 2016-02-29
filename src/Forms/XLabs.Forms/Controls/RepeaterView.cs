@@ -1,12 +1,33 @@
-﻿namespace XLabs.Forms.Controls
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows.Input;
-    using Xamarin.Forms;
-    using XLabs.Exceptions;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="RepeaterView.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
+using Xamarin.Forms;
+using XLabs.Exceptions;
+
+namespace XLabs.Forms.Controls
+{
     /// <summary>
     /// Low cost control to display a set of clickable items
     /// </summary>
@@ -50,6 +71,48 @@
             BindableProperty.Create<RepeaterView<T>, TemplateSelector>(
                 x => x.TemplateSelector,
                 default(TemplateSelector));
+
+        /// <summary>
+        /// The item template selector property
+        /// </summary>
+        public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<RepeaterView<T>, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
+
+        private DataTemplateSelector currentItemSelector;
+        /// <summary>
+        /// Gets or sets the item template selector.
+        /// </summary>
+        /// <value>The item template selector.</value>
+        public DataTemplateSelector ItemTemplateSelector
+        {
+            get
+            {
+                return (DataTemplateSelector)GetValue(ItemTemplateSelectorProperty);
+            }
+            set
+            {
+                SetValue(ItemTemplateSelectorProperty, value);
+            }
+        }
+
+        private static void OnDataTemplateSelectorChanged(BindableObject bindable, DataTemplateSelector oldvalue, DataTemplateSelector newvalue)
+        {
+            ((RepeaterView<T>)bindable).OnDataTemplateSelectorChanged(oldvalue, newvalue);
+        }
+
+        /// <summary>
+        /// Called when [data template selector changed].
+        /// </summary>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="newValue">The new value.</param>
+        /// <exception cref="System.ArgumentException">Cannot set both ItemTemplate and ItemTemplateSelector;ItemTemplateSelector</exception>
+        protected virtual void OnDataTemplateSelectorChanged(DataTemplateSelector oldValue, DataTemplateSelector newValue)
+        {
+            // check to see we don't have an ItemTemplate set
+            if (ItemTemplate != null && newValue != null)
+                throw new ArgumentException("Cannot set both ItemTemplate and ItemTemplateSelector", "ItemTemplateSelector");
+
+            currentItemSelector = newValue;
+        }
 
         /// <summary>
         /// Event delegate definition fo the <see cref="ItemCreated"/> event
@@ -156,16 +219,27 @@
         ///
         /// </summary>
         /// <param name="item"></param>
-        /// <returns>A View that has been initialized with <see cref="item"/> as it's BindingContext</returns>
+        /// <returns>A <see cref="View"/> item as it's BindingContext</returns>
         /// <exception cref="InvalidVisualObjectException"></exception>Thrown when the matched datatemplate inflates to an object not derived from either
         /// <see cref="Xamarin.Forms.View"/> or <see cref="Xamarin.Forms.ViewCell"/>
         protected virtual View ViewFor(T item)
         {
-            var template = GetTemplateFor(item.GetType());
-            var content = template.CreateContent();
+            // Check the item template selector first
+            View view = null;
+            if (currentItemSelector != null)
+            {
+                view = this.ViewFor(item, currentItemSelector);
+            }
 
-            if (!(content is View) && !(content is ViewCell)) throw new InvalidVisualObjectException(content.GetType());
-            var view = (content is View) ? content as View : ((ViewCell)content).View;
+            if (view == null)
+            {
+                var template = GetTemplateFor(item.GetType());
+                var content = template.CreateContent();
+
+                if (!(content is View) && !(content is ViewCell)) throw new InvalidVisualObjectException(content.GetType());
+                view = (content is View) ? content as View : ((ViewCell)content).View;
+            }
+
             view.BindingContext = item;
             view.GestureRecognizers.Add(
                 new TapGestureRecognizer { Command = ItemClickCommand, CommandParameter = item });

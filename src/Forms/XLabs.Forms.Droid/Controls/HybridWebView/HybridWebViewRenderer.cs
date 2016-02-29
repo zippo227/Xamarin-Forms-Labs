@@ -1,69 +1,53 @@
-﻿using XLabs.Forms.Controls;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms.Droid
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="HybridWebViewRenderer.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
-[assembly: Xamarin.Forms.ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
+using System;
+using Android.Runtime;
+using Android.Views;
+using Android.Webkit;
+using Java.Interop;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
+using XLabs.Forms.Controls;
+using Object = Java.Lang.Object;
+using WebView = Android.Webkit.WebView;
+
+[assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 
 namespace XLabs.Forms.Controls
 {
-    using System;
-	using System.ComponentModel;
-
-    using Android.Views;
-    using Android.Webkit;
-
-    using Xamarin.Forms;
-    using Xamarin.Forms.Platform.Android;
-
     /// <summary>
     /// Class HybridWebViewRenderer.
     /// </summary>
-	public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
+    public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
     {
-		public HybridWebViewRenderer()
-		{
-		}
-
+        /// <summary>
+        /// Allows one to override the Webview Client class without a custom renderer.
+        /// </summary>
+        public static Func<HybridWebViewRenderer,Client> GetWebViewClientDelegate;
 
         /// <summary>
-        /// Called when [element changed].
+        /// Allows one to override the Chrome Client class without a custom renderer.
         /// </summary>
-        /// <param name="e">The e.</param>
-        protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
-        {
-            base.OnElementChanged (e);
-
-            if (this.Control == null)
-            {
-                var webView = new NativeWebView(this);
-
-                webView.Settings.JavaScriptEnabled = true;
-
-				//Turn off hardware rendering
-				webView.SetLayerType(LayerType.Software, null);
-
-				//Set the background color to transparent to fix an issue where the
-				//the picture would fail to draw
-				webView.SetBackgroundColor(Color.Transparent.ToAndroid());
-
-                webView.SetWebViewClient(new Client(this));
-                webView.SetWebChromeClient(new ChromeClient(this));
-
-                webView.AddJavascriptInterface(new Xamarin(this), "Xamarin");
-
-                this.SetNativeControl(webView);
-            }
-
-            this.Unbind(e.OldElement);
-
-            this.Bind();
-        }
-
-		partial void HandleCleanup() {
-			if (Control != null) {
-				Control.SetWebViewClient (null);
-				Control.SetWebChromeClient (null);
-				Control.RemoveJavascriptInterface ("Xamarin");
-			}
-		}
+        public static Func<HybridWebViewRenderer, ChromeClient> GetWebChromeClientDelegate;
 
         /// <summary>
         /// Gets the desired size of the view.
@@ -76,21 +60,106 @@ namespace XLabs.Forms.Controls
         /// completely.</remarks>
         public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
         {
-//            var sizeRequest = base.GetDesiredSize(widthConstraint, heightConstraint);
-//            sizeRequest.Request = new Size(sizeRequest.Request.Width, 0);
-//            return sizeRequest;
+            var sizeRequest = base.GetDesiredSize(widthConstraint, heightConstraint);
+            sizeRequest.Request = new Size(sizeRequest.Request.Width, 0);
+            return sizeRequest;
 
-            return new SizeRequest(Size.Zero, Size.Zero);
+            //return new SizeRequest(Size.Zero, Size.Zero);
+        }
+
+        /// <summary>
+        /// Called when [element changed].
+        /// </summary>
+        /// <param name="e">The e.</param>
+        protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
+        {
+            base.OnElementChanged (e);
+
+            if (this.Control == null && e.NewElement != null)
+            {
+                var webView = new NativeWebView(this);
+
+                webView.Settings.JavaScriptEnabled = true;
+                webView.Settings.DomStorageEnabled = true;
+
+                //Turn off hardware rendering
+                webView.SetLayerType(LayerType.Software, null);
+
+                //Set the background color to transparent to fix an issue where the
+                //the picture would fail to draw
+                webView.SetBackgroundColor(Color.Transparent.ToAndroid());
+
+                webView.SetWebViewClient(this.GetWebViewClient());
+                webView.SetWebChromeClient(this.GetWebChromeClient());
+
+                webView.AddJavascriptInterface(new Xamarin(this), "Xamarin");
+
+                this.SetNativeControl(webView);
+
+                webView.LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
+            }
+
+            this.Unbind(e.OldElement);
+
+            this.Bind();
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.Element != null)
+            {
+                if (this.Control != null)
+                {
+                    this.Control.StopLoading();
+                }
+
+                Unbind(this.Element);
+            }
+
+            base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Gets <see cref="Client"/> for the web view.
+        /// </summary>
+        /// <returns><see cref="Client"/></returns>
+        protected virtual Client GetWebViewClient()
+        {
+            var d = GetWebViewClientDelegate;
+
+            return d != null ? d(this) : new Client(this);
+        }
+
+        /// <summary>
+        /// Gets <see cref="ChromeClient"/> for the web view.
+        /// </summary>
+        /// <returns><see cref="ChromeClient"/></returns>
+        protected virtual ChromeClient GetWebChromeClient()
+        {
+            var d = GetWebChromeClientDelegate;
+
+            return d != null ? d(this) : new ChromeClient();
+        }
+
+        partial void HandleCleanup() 
+        {
+            if (Control == null) return;
+
+            Control.SetWebViewClient (null);
+            Control.SetWebChromeClient (null);
+            Control.RemoveJavascriptInterface ("Xamarin");
         }
 
         private void OnPageFinished()
         {
-            this.InjectNativeFunctionScript();
-
-            if (this.Element != null)
-            {
-                this.Element.OnLoadFinished(this, EventArgs.Empty);
-            }
+            if (this.Element == null) return;
+            this.Inject(NativeFunction);
+            this.Inject(GetFuncScript());
+            this.Element.OnLoadFinished(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -99,12 +168,11 @@ namespace XLabs.Forms.Controls
         /// <param name="script">The script.</param>
         partial void Inject(string script)
         {
-			if (Control != null) {
-	            this.Control.LoadUrl(string.Format("javascript: {0}", script));
-			}
+            if (Control != null) 
+            {
+                this.Control.LoadUrl(string.Format("javascript: {0}", script));
+            }
         }
-
-
 
         /// <summary>
         /// Loads the specified URI.
@@ -112,10 +180,9 @@ namespace XLabs.Forms.Controls
         /// <param name="uri">The URI.</param>
         partial void Load(Uri uri)
         {
-			if (uri != null && Control != null)
+            if (uri != null && Control != null)
             {
                 this.Control.LoadUrl(uri.AbsoluteUri);
-                //this.InjectNativeFunctionScript();
             }
         }
 
@@ -124,23 +191,24 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="contentFullName">Full name of the content.</param>
-        partial void LoadFromContent(object sender, string contentFullName)
+        partial void LoadFromContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
-            this.Element.Uri = new Uri("file:///android_asset/" + contentFullName);
+            var baseUri = new Uri(contentArgs.BaseUri ?? "file:///android_asset/");
+            this.Element.Uri = new Uri(baseUri, contentArgs.Content);
         }
 
         /// <summary>
         /// Loads the content.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="contentFullName">Full name of the content.</param>
-        partial void LoadContent(object sender, string contentFullName)
+        /// <param name="content">Full name of the content.</param>
+        partial void LoadContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
-			if (Control != null) {
-	            this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
-    	        // we can't really set the URI and fire up native function injection so the workaround is to do it here
-        	    //this.InjectNativeFunctionScript();
-			}
+            if (Control != null) 
+            {
+                var baseUri = contentArgs.BaseUri ?? "file:///android_asset/";
+                this.Control.LoadDataWithBaseURL(baseUri, contentArgs.Content, "text/html", "UTF-8", null);
+            }
         }
 
         /// <summary>
@@ -149,21 +217,21 @@ namespace XLabs.Forms.Controls
         /// <param name="html">The HTML.</param>
         partial void LoadFromString(string html)
         {
-			if (Control != null) {
-	            this.Control.LoadData(html, "text/html", "UTF-8");
-				//this.InjectNativeFunctionScript();
-			}
+            if (Control != null) 
+            {
+                this.Control.LoadData(html, "text/html", "UTF-8");
+            }
         }
 
         /// <summary>
         /// Class Client.
         /// </summary>
-        private class Client : WebViewClient
+        public class Client : WebViewClient
         {
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly HybridWebViewRenderer webHybrid;
+            protected readonly WeakReference<HybridWebViewRenderer> WebHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Client"/> class.
@@ -171,7 +239,7 @@ namespace XLabs.Forms.Controls
             /// <param name="webHybrid">The web hybrid.</param>
             public Client(HybridWebViewRenderer webHybrid)
             {
-                this.webHybrid = webHybrid;
+                this.WebHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
             }
 
             /// <summary>
@@ -189,62 +257,27 @@ namespace XLabs.Forms.Controls
             ///     <a href="http://developer.android.com/reference/android/webkit/WebViewClient.html#onPageFinished(android.webkit.WebView, java.lang.String)" target="_blank">[Android Documentation]</a>
             ///   </format>
             /// </para></remarks>
-            public override void OnPageFinished(Android.Webkit.WebView view, string url)
+            public override void OnPageFinished(WebView view, string url)
             {
                 base.OnPageFinished(view, url);
 
-                if (this.webHybrid != null)
+                HybridWebViewRenderer hybrid;
+                if (this.WebHybrid != null && this.WebHybrid.TryGetTarget(out hybrid))
                 {
-                    this.webHybrid.OnPageFinished();
+                    hybrid.OnPageFinished();
                 }
-            }
-
-            /// <summary>
-            /// Give the host application a chance to take over the control when a new
-            /// url is about to be loaded in the current WebView.
-            /// </summary>
-            /// <param name="view">The WebView that is initiating the callback.</param>
-            /// <param name="url">The url to be loaded.</param>
-            /// <returns>To be added.</returns>
-            /// <since version="Added in API level 1" />
-            /// <remarks><para tool="javadoc-to-mdoc">Give the host application a chance to take over the control when a new
-            /// url is about to be loaded in the current WebView. If WebViewClient is not
-            /// provided, by default WebView will ask Activity Manager to choose the
-            /// proper handler for the url. If WebViewClient is provided, return true
-            /// means the host application handles the url, while return false means the
-            /// current WebView handles the url.
-            /// This method is not called for requests using the POST "method".</para>
-            /// <para tool="javadoc-to-mdoc">
-            ///   <format type="text/html">
-            ///     <a href="http://developer.android.com/reference/android/webkit/WebViewClient.html#shouldOverrideUrlLoading(android.webkit.WebView, java.lang.String)" target="_blank">[Android Documentation]</a>
-            ///   </format>
-            /// </para></remarks>
-            public override bool ShouldOverrideUrlLoading(Android.Webkit.WebView view, string url)
-            {
-                if (this.webHybrid == null)
-                {
-                    return base.ShouldOverrideUrlLoading(view, url);
-                }
-
-                if (!this.webHybrid.CheckRequest(url))
-                {
-                    this.webHybrid.Element.OnNavigating(new Uri(url));
-                    return base.ShouldOverrideUrlLoading(view, url);
-                }
-
-                return true;
             }
         }
 
         /// <summary>
         /// Java callback class for JavaScript.
         /// </summary>
-        public class Xamarin : Java.Lang.Object
+        public class Xamarin : Object
         {
             /// <summary>
-            /// The web hybrid
+            /// The web hybrid.
             /// </summary>
-            private readonly HybridWebViewRenderer webHybrid;
+            private readonly WeakReference<HybridWebViewRenderer> webHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Xamarin"/> class.
@@ -252,64 +285,31 @@ namespace XLabs.Forms.Controls
             /// <param name="webHybrid">The web hybrid.</param>
             public Xamarin(HybridWebViewRenderer webHybrid)
             {
-                this.webHybrid = webHybrid;
+                this.webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
             }
 
             /// <summary>
             /// Calls the specified function.
             /// </summary>
-            /// <param name="function">The function.</param>
-            /// <param name="data">The data.</param>
+            /// <param name="message">The message.</param>
             [JavascriptInterface]
-            [Java.Interop.Export("call")]
-            public void Call(string function, string data)
+            [Export("call")]
+            public void Call(string message)
             {
-                this.webHybrid.TryInvoke(function, data);
+                HybridWebViewRenderer hybrid;
+                HybridWebView webView;
+                if (this.webHybrid != null && this.webHybrid.TryGetTarget(out hybrid) && ((webView = hybrid.Element) != null))
+                {
+                    webView.MessageReceived(message);
+                }
             }
         }
 
         /// <summary>
         /// Class ChromeClient.
         /// </summary>
-        private class ChromeClient : WebChromeClient 
+        public class ChromeClient : WebChromeClient 
         {
-            /// <summary>
-            /// The web hybrid
-            /// </summary>
-            private readonly HybridWebViewRenderer webHybrid;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ChromeClient"/> class.
-            /// </summary>
-            /// <param name="webHybrid">The web hybrid.</param>
-            internal ChromeClient(HybridWebViewRenderer webHybrid)
-            {
-                this.webHybrid = webHybrid;
-            }
-
-            /// <summary>
-            /// Tell the client to display a javascript alert dialog.
-            /// </summary>
-            /// <param name="view">The WebView that initiated the callback.</param>
-            /// <param name="url">The url of the page requesting the dialog.</param>
-            /// <param name="message">Message to be displayed in the window.</param>
-            /// <param name="result">A JsResult to confirm that the user hit enter.</param>
-            /// <returns>To be added.</returns>
-            /// <since version="Added in API level 1" />
-            /// <remarks><para tool="javadoc-to-mdoc">Tell the client to display a javascript alert dialog.  If the client
-            /// returns true, WebView will assume that the client will handle the
-            /// dialog.  If the client returns false, it will continue execution.</para>
-            /// <para tool="javadoc-to-mdoc">
-            ///   <format type="text/html">
-            ///     <a href="http://developer.android.com/reference/android/webkit/WebChromeClient.html#onJsAlert(android.webkit.WebView, java.lang.String, java.lang.String, android.webkit.JsResult)" target="_blank">[Android Documentation]</a>
-            ///   </format>
-            /// </para></remarks>
-            public override bool OnJsAlert(Android.Webkit.WebView view, string url, string message, JsResult result)
-            {
-                // the built-in alert is pretty ugly, you could do something different here if you wanted to
-                return base.OnJsAlert(view, url, message, result);
-            }
-
             /// <summary>
             /// Overrides the geolocation prompt and accepts the permission.
             /// </summary>
@@ -326,16 +326,12 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Class NativeWebView.
         /// </summary>
-        public class NativeWebView : Android.Webkit.WebView
+        public class NativeWebView : WebView
         {
-            /// <summary>
-            /// The listener
-            /// </summary>
-            private readonly MyGestureListener _listener;
             /// <summary>
             /// The detector
             /// </summary>
-            private readonly GestureDetector _detector;
+            private readonly GestureDetector detector;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="NativeWebView"/> class.
@@ -343,15 +339,20 @@ namespace XLabs.Forms.Controls
             /// <param name="renderer">The renderer.</param>
             public NativeWebView(HybridWebViewRenderer renderer) : base(renderer.Context)
             {
-                this._listener = new MyGestureListener(renderer);
-                this._detector = new GestureDetector(this.Context, this._listener);
+                var listener = new MyGestureListener(renderer);
+                this.detector = new GestureDetector(this.Context, listener);
             }
 
-			// This is an Android specific constructor that sometimes needs to be called by the underlying
-			// Xamarin ACW environment...
-			public NativeWebView(IntPtr ptr, Android.Runtime.JniHandleOwnership handle) : base(ptr, handle)
-			{
-			}
+            /// <summary>
+            /// This is an Android specific constructor that sometimes needs to be called by the underlying
+            /// Xamarin ACW environment.
+            /// </summary>
+            /// <param name="ptr"></param>
+            /// <param name="handle"></param>
+            public NativeWebView(IntPtr ptr, JniHandleOwnership handle) : base(ptr, handle)
+            {
+
+            }
 
             /// <summary>
             /// Implement this method to handle touch screen motion events.
@@ -367,7 +368,7 @@ namespace XLabs.Forms.Controls
             /// </para></remarks>
             public override bool OnTouchEvent(MotionEvent e)
             {
-                this._detector.OnTouchEvent(e);
+                this.detector.OnTouchEvent(e);
                 return base.OnTouchEvent(e);
             }
 
@@ -392,7 +393,7 @@ namespace XLabs.Forms.Controls
                 /// <summary>
                 /// The web hybrid
                 /// </summary>
-                private readonly WeakReference<HybridWebViewRenderer> _webHybrid;
+                private readonly WeakReference<HybridWebViewRenderer> webHybrid;
 
                 /// <summary>
                 /// Initializes a new instance of the <see cref="MyGestureListener"/> class.
@@ -400,7 +401,7 @@ namespace XLabs.Forms.Controls
                 /// <param name="renderer">The renderer.</param>
                 public MyGestureListener(HybridWebViewRenderer renderer)
                 {
-                    this._webHybrid = new WeakReference<HybridWebViewRenderer>(renderer);
+                    this.webHybrid = new WeakReference<HybridWebViewRenderer>(renderer);
                 }
 
 //                public override void OnLongPress(MotionEvent e)
@@ -445,7 +446,7 @@ namespace XLabs.Forms.Controls
                 {
                     HybridWebViewRenderer hybrid;
 
-                    if (this._webHybrid.TryGetTarget(out hybrid) && Math.Abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+                    if (this.webHybrid.TryGetTarget(out hybrid) && Math.Abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
                     {
                         if(e1.GetX() - e2.GetX() > SWIPE_MIN_DISTANCE) 
                         {

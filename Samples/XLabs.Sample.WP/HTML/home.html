@@ -6,32 +6,28 @@
     </head>
 <body>
     <div id="os"></div>
-</body>
-   
-    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+    <div id="chartContainer" style="width: 100%;"></div>
     <script type="text/javascript" src="canvasjs.min.js"></script>
-
     <script type="text/javascript">
-        var os, h;
+        var os;
 
-        if (navigator.platform == "Win32") {
+        if (navigator.platform === "Win32") {
             os = "WP8";
-            h = "600px";
-        } else if (navigator.appVersion.indexOf("Linux") != -1) {
+        } else if (navigator.appVersion.indexOf("Linux") !== -1) {
             os = "Android";
-            h = "300px";
         } else {
             os = navigator.platform;
-            h = "300px";
         }
 
         document.getElementById("os").innerHTML = "Testing CanvasJS in " + os + " with C# bridge";
-        document.getElementById("chartContainer").style.height = h;
+        
     </script>
     <script language="javascript">
         var chart;
         var points;
-        
+        var h;
+
         function onViewModelData(model) {
             var v;
             if (model.title === undefined) {
@@ -40,11 +36,13 @@
                 v = model;
             }
 
+            document.getElementById("chartContainer").style.height = h;
+
             //Native("dataCallback", v.dataPoints);
-            if (!chart)
-            {
+            if (!chart) {
                 points = v.dataPoints;
                 chart = new CanvasJS.Chart("chartContainer", {
+                    height : h,
                     theme: "theme2",
                     title: {
                         text: v.title
@@ -52,35 +50,39 @@
                     data: [{ type: "column", dataPoints: v.dataPoints }]
                 });
             }
-            else
-            {
+            else {
                 chart.options.data = null;
-                chart.options.data  = [{ type: "column", dataPoints: v.dataPoints }];
+                chart.options.data = [{ type: "column", dataPoints: v.dataPoints }];
                 //chart.options.data[0].dataPoints = null;
                 //chart.options.data[0].dataPoints = v.dataPoints;
                 //update(v.dataPoints);
                 //chart.data.dataPoints = v.dataPoints;
             }
             
-
             chart.render();
             onUpdateFinished();
 
             Native("dataCallback", "test");
         }
-        
+
         function sendData(o) {
             Native("dataCallback", o);
         }
-        
-        function sendData(o,b) {
+
+        function sendData(o, b) {
             Native("dataCallback", [o, b]);
         }
 
-        function onUpdateFinished(){
+        function onUpdateFinished() {
             Native("chartUpdated", chart);
         }
+
+        function setChartHeight(height) {
+            h = (height * .8) - (document.getElementById("os").style.height * 2);
+            
+        }
     </script>
-    
+</body>
+ 
 </html>
 </!DOCTYPE>

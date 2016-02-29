@@ -1,11 +1,32 @@
-﻿namespace XLabs.Platform.Services
-{
-    using System;
-    using System.IO;
-    using System.IO.IsolatedStorage;
-    using System.Security.Cryptography;
-    using System.Threading;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Platform.WP8
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="SecureStorage.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
+using System;
+using System.IO;
+using System.IO.IsolatedStorage;
+using System.Security.Cryptography;
+using System.Threading;
+
+namespace XLabs.Platform.Services
+{
     /// <summary>
     /// Implements <see cref="ISecureStorage"/> for WP using <see cref="IsolatedStorageFile"/> and <see cref="ProtectedData"/>.
     /// </summary>
@@ -13,8 +34,32 @@
     {
         private static IsolatedStorageFile File { get { return IsolatedStorageFile.GetUserStoreForApplication(); } }
 
+        private readonly byte[] optionalEntropy;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SecureStorage"/>.
+        /// </summary>
+        /// <param name="optionalEntropy">Optional password for additional entropy to make encyption more complex.</param>
+        public SecureStorage(byte[] optionalEntropy)
+        {
+            this.optionalEntropy = optionalEntropy;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SecureStorage"/>.
+        /// </summary>
+        public SecureStorage() : this(null)
+        {
+            
+        }
+
         #region ISecureStorage Members
 
+        /// <summary>
+        /// Stores the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="dataBytes">The data bytes.</param>
         public void Store(string key, byte[] dataBytes)
         {
             var mutex = new Mutex(false, key);
@@ -24,7 +69,7 @@
                 mutex.WaitOne();
                 using (var stream = new IsolatedStorageFileStream(key, FileMode.Create, FileAccess.Write, File))
                 {
-                    var data = ProtectedData.Protect(dataBytes, null);
+                    var data = ProtectedData.Protect(dataBytes, this.optionalEntropy);
                     stream.Write(data, 0, data.Length);
                 }
             }
@@ -34,6 +79,12 @@
             }
         }
 
+        /// <summary>
+        /// Retrieves the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>System.Byte[].</returns>
+        /// <exception cref="System.Exception"></exception>
         public byte[] Retrieve(string key)
         {
             var mutex = new Mutex(false, key);
@@ -50,7 +101,7 @@
                 {
                     var data = new byte[stream.Length];
                     stream.Read(data, 0, data.Length);
-                    return ProtectedData.Unprotect(data, null);
+                    return ProtectedData.Unprotect(data, this.optionalEntropy);
                 }
             }
             finally
@@ -59,6 +110,10 @@
             }
         }
 
+        /// <summary>
+        /// Deletes the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
         public void Delete(string key)
         {
             var mutex = new Mutex(false, key);
@@ -72,6 +127,16 @@
             {
                 mutex.ReleaseMutex();
             }
+        }
+
+        /// <summary>
+        /// Checks if the storage contains a key.
+        /// </summary>
+        /// <param name="key">The key to search.</param>
+        /// <returns>True if the storage has the key, otherwise false.</returns>
+        public bool Contains(string key)
+        {
+            return File.FileExists(key);
         }
 
         #endregion

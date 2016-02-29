@@ -1,4 +1,25 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="ButtonGroup.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
@@ -16,13 +37,15 @@ namespace XLabs.Forms.Controls
 		/// The view background color property
 		/// </summary>
 		public static readonly BindableProperty ViewBackgroundColorProperty = BindableProperty.Create("ViewBackgroundColor", typeof(Color), typeof(ButtonGroup), Color.Default);
-		/// <summary>
-		/// The background color property
-		/// </summary>
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+							  /// <summary>
+							  /// The background color property
+							  /// </summary>
 		public static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create("BackgroundColor", typeof(Color), typeof(ButtonGroup), Color.Default);
-		/// <summary>
-		/// The selected background color property
-		/// </summary>
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+							  /// <summary>
+							  /// The selected background color property
+							  /// </summary>
 		public static readonly BindableProperty SelectedBackgroundColorProperty = BindableProperty.Create("SelectedBackgroundColor", typeof(Color), typeof(ButtonGroup), Color.Default);
 		/// <summary>
 		/// The text color property
@@ -142,12 +165,14 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 		/// <summary>
 		/// Gets or sets the color which will fill the background of a VisualElement. This is a bindable property.
 		/// </summary>
 		/// <value>The color that is used to fill the background of a VisualElement. The default is <see cref="P:Xamarin.Forms.Color.Default" />.</value>
 		/// <remarks>To be added.</remarks>
 		public Color BackgroundColor
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
 		{
 			get { return (Color)GetValue(BackgroundColorProperty); }
 			set
@@ -416,7 +441,7 @@ namespace XLabs.Forms.Controls
 		/// <param name="isSelected">if set to <c>true</c> [is selected].</param>
 		private void SetSelectedState(int index, bool isSelected)
 		{
-			if (_buttonLayout.Children.Count <= index)
+			if (index < 0 || _buttonLayout.Children.Count <= index)
 			{
 				return; //Out of bounds
 			}

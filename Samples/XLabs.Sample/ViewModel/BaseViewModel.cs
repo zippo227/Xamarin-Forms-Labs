@@ -1,12 +1,32 @@
-﻿// ReSharper disable once CheckNamespace
-namespace Xamarin.Forms.Labs.Sample
-{
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Runtime.CompilerServices;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Sample
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="BaseViewModel.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
 
-	public class BaseViewModel : INotifyPropertyChanged
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace XLabs.Sample.ViewModel
+{
+    public class BaseViewModel : INotifyPropertyChanged
     {
         // boiler-plate
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,8 +56,8 @@ namespace Xamarin.Forms.Labs.Sample
         private bool _isbusy;
         public bool IsBusy
         {
-            get { return _isbusy; }
-            set { SetField(ref _isbusy, value); }
+            get { return this._isbusy; }
+            set { SetField(ref this._isbusy, value); }
         }
 
     }
@@ -50,7 +70,7 @@ namespace Xamarin.Forms.Labs.Sample
             Item = item;
         }
 
-        public T Item {get {return _item;} private set { SetField(ref _item, value); }} 
+        public T Item {get {return this._item;} private set { SetField(ref this._item, value); }} 
     }
     public class ReadOnlySelectable<T> : BaseViewModel
     {
@@ -65,8 +85,8 @@ namespace Xamarin.Forms.Labs.Sample
 
         public bool Selected
         {
-            get { return _selected; }
-            set { SetField(ref _selected, value); }
+            get { return this._selected; }
+            set { SetField(ref this._selected, value); }
         }
 
     }

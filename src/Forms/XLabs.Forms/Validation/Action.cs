@@ -1,10 +1,30 @@
+// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="Action.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Xamarin.Forms;
-using XLabs.Forms.Controls;
 
 namespace XLabs.Forms.Validation
 {
@@ -16,7 +36,7 @@ namespace XLabs.Forms.Validation
 	{
 		#region Static Fields
 
-		/// <summary>Definition for <see cref="Setters"/>/summary>
+		/// <summary>Definition for <see cref="Setters"/></summary>
 		/// Element created at 08/11/2014,4:01 PM by Charles
 		public static BindableProperty SettersProperty =
 			BindableProperty.Create<Action, PropertySetters>(x => x.Setters,
@@ -51,7 +71,7 @@ namespace XLabs.Forms.Validation
 				{ typeof(Constraint), new ConstraintTypeConverter() },
 				{ typeof(Font), new FontTypeConverter() },
 				{ typeof(GridLength), new GridLengthTypeConverter() },
-				{ typeof(ImageSource), new ImageSourceConverter() },
+				{ typeof(ImageSource), new Controls.ImageSourceConverter() },
 				{ typeof(Keyboard), new KeyboardTypeConverter() },
 				{ typeof(Point), new PointTypeConverter() },
 				{ typeof(Thickness), new ThicknessTypeConverter() },
@@ -120,7 +140,7 @@ namespace XLabs.Forms.Validation
 		/// <summary>Gets the property information.</summary>
 		/// <value>The property information.</value>
 		/// Element created at 07/11/2014,6:18 AM by Charles
-		/// <exception cref="Xamarin.Forms.Labs.Exceptions.PropertyNotFoundException"></exception>
+		/// <exception cref="XLabs.Exceptions.PropertyNotFoundException"></exception>
 		protected virtual PropertyInfo PropertyInfo
 		{
 			get { return _pi ?? (_pi = GetPropertyInfo(Property, Element.GetType())); }

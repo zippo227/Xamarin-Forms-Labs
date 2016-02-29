@@ -1,10 +1,37 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="CustomRadioButton.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
 using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
 {
+    /// <summary>
+    /// Class CustomRadioButton.
+    /// </summary>
     public class CustomRadioButton : View
     {
+        /// <summary>
+        /// The checked property
+        /// </summary>
         public static readonly BindableProperty CheckedProperty =
             BindableProperty.Create<CustomRadioButton, bool>(
                 p => p.Checked, false);
@@ -21,7 +48,7 @@ namespace XLabs.Forms.Controls
         /// </summary>
         public static readonly BindableProperty TextColorProperty =
             BindableProperty.Create<CustomRadioButton, Color>(
-                p => p.TextColor, Color.Black);
+                p => p.TextColor, Color.Default);
 
         /// <summary>
         /// The font size property
@@ -63,6 +90,10 @@ namespace XLabs.Forms.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        /// <value>The text.</value>
         public string Text
         {
             get { return this.GetValue<string>(TextProperty); }
@@ -70,6 +101,10 @@ namespace XLabs.Forms.Controls
             set { SetValue(TextProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the color of the text.
+        /// </summary>
+        /// <value>The color of the text.</value>
         public Color TextColor
         {
             get { return this.GetValue<Color>(TextColorProperty); }
@@ -109,6 +144,12 @@ namespace XLabs.Forms.Controls
             }
         }
 
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>The identifier.</value>
         public int Id { get; set; }
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
     }
 }

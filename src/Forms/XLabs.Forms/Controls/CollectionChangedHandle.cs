@@ -1,11 +1,31 @@
-﻿
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="CollectionChangedHandle.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+
 namespace XLabs.Forms.Controls
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.Linq;
-
     /// <summary>
     /// Small utility class that takes
     /// gyuwon's idea to it's logical 
@@ -27,11 +47,11 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="CollectionChangedHandle{TSyncType,T}"/> class.
         /// </summary>
-        /// <param name="target">The collection to be kept in sync with <see cref="source"/>source</param>
+        /// <param name="target">The collection to be kept in sync with source</param>
         /// <param name="source">The original collection</param>
         /// <param name="projector">A function that returns {TSyncType} for a {T}</param>
         /// <param name="postadd">A functino called right after insertion into the synced collection</param>
-        /// <param name="cleanup">A function that performs any needed cleanup when {TSyncType} is removed from the <see cref="target"/></param>
+        /// <param name="cleanup">A function that performs any needed cleanup when {TSyncType} is removed from the target</param>
         public CollectionChangedHandle(IList<TSyncType> target, IEnumerable<T> source, Func<T,TSyncType> projector, Action<TSyncType,T,int> postadd = null, Action<TSyncType> cleanup = null)
         {
             if (source == null) return;

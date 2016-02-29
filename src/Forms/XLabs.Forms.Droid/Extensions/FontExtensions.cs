@@ -1,15 +1,33 @@
-﻿using Xamarin.Forms;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms.Droid
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="FontExtensions.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
+using System.Collections.Generic;
+using Android.Content;
+using Android.Graphics;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 namespace XLabs.Forms.Extensions
 {
-	using System;
-	using System.Collections.Generic;
-
-	using Android.Content;
-	using Android.Graphics;
-
-	using Xamarin.Forms.Platform.Android;
-
 	/// <summary>
 	/// Interface of TypefaceCaches
 	/// </summary>
@@ -22,8 +40,17 @@ namespace XLabs.Forms.Extensions
 		/// <param name="typeface">Typeface.</param>
 		void StoreTypeface(string key, Typeface typeface);
 
+		/// <summary>
+		/// Removes the typeface.
+		/// </summary>
+		/// <param name="key">The key.</param>
 		void RemoveTypeface(string key);
 
+		/// <summary>
+		/// Retrieves the typeface.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <returns>Typeface.</returns>
 		Typeface RetrieveTypeface(string key);
 	}
 
@@ -155,6 +182,7 @@ namespace XLabs.Forms.Extensions
 					#if DEBUG
 					Console.WriteLine("Found in assets and cached.");
 					#endif
+#pragma warning disable CS0168 // Variable is declared but never used
 				} catch(Exception ex)
 				{
 					#if DEBUG
@@ -164,10 +192,13 @@ namespace XLabs.Forms.Extensions
 					try
 					{
 						typeface = Typeface.CreateFromFile("fonts/" + filename);
-						#if DEBUG
+
+
+#if DEBUG
 						Console.WriteLine("Found in file and cached.");
-						#endif
+#endif
 					} catch(Exception ex1)
+#pragma warning restore CS0168 // Variable is declared but never used
 					{
 						#if DEBUG
 						Console.WriteLine("not found by file. Exception: {0}", ex1);

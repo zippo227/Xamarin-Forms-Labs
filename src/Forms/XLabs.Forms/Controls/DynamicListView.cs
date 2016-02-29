@@ -1,4 +1,25 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="DynamicListView.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
@@ -42,13 +63,15 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		public event EventHandler<EventArgs<T>> OnSelected;
 
+#pragma warning disable CS1587 // XML comment is not placed on a valid language element
 		/// <summary>
 		/// The requested event occurs when an observer requests an item.
 		/// </summary>
 		/// <remarks>The sender will be the requesting observer, f.e. a ListView in Android
 		/// or UITableView in iOS.</remarks>
 		//public event EventHandler<EventArgs<int>> OnRequested;
-
+		
+#pragma warning restore CS1587 // XML comment is not placed on a valid language element
 		/// <summary>
 		/// Add items to data collection.
 		/// </summary>
@@ -132,10 +155,7 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
-		/// <summary>
-		/// Invokes the item requested event.
-		/// </summary>
-		/// <param name="index">Index of the requested item.</param>
+	
 		//public void InvokeItemRequestedEvent(object sender, int index)
 		//{
 		//    if (this.OnRequested != null)

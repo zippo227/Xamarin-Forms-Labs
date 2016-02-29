@@ -1,66 +1,85 @@
-﻿namespace XLabs.Forms.Services
+﻿// ***********************************************************************
+// Assembly         : XLabs.Forms.WP8
+// Author           : XLabs Team
+// Created          : 12-27-2015
+// 
+// Last Modified By : XLabs Team
+// Last Modified On : 01-04-2016
+// ***********************************************************************
+// <copyright file="FontManager.cs" company="XLabs Team">
+//     Copyright (c) XLabs Team. All rights reserved.
+// </copyright>
+// <summary>
+//       This project is licensed under the Apache 2.0 license
+//       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
+//       
+//       XLabs is a open source project that aims to provide a powerfull and cross 
+//       platform set of controls tailored to work with Xamarin Forms.
+// </summary>
+// ***********************************************************************
+// 
+
+using System.Collections.Generic;
+using Xamarin.Forms;
+using XLabs.Forms.Extensions;
+using XLabs.Platform.Device;
+using XLabs.Platform.Services;
+using Application = System.Windows.Application;
+
+namespace XLabs.Forms.Services
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Windows.Media;
 
-	using Xamarin.Forms;
+    /// <summary>
+    /// Class FontManager.
+    /// </summary>
+    public partial class FontManager : IFontManager
+    {
+        private readonly IDisplay _display;
 
-	using XLabs.Forms.Extensions;
-	using XLabs.Platform.Device;
+        private readonly FontService _fontService;
 
-	/// <summary>
-	/// Class FontManager.
-	/// </summary>
-	public partial class FontManager : IFontManager
-	{
-		/// <summary>
-		/// The _display
-		/// </summary>
-		private readonly IDisplay _display;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FontManager"/> class.
+        /// </summary>
+        /// <param name="display">The display.</param>
+        public FontManager(IDisplay display)
+        {
+            _display = display;
+            _fontService = new FontService();
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="FontManager"/> class.
-		/// </summary>
-		/// <param name="display">The display.</param>
-		public FontManager(IDisplay display)
-		{
-			this._display = display;
-		}
+        #region IFontManager Members
 
-		#region IFontManager Members
+        /// <summary>
+        /// Gets all available system fonts.
+        /// </summary>
+        /// <value>The available fonts.</value>
+        public IEnumerable<string> AvailableFonts
+        {
+            get
+            {
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                // returning WinRT method call directly doesn't work so do NOT refactor!!!
+                foreach (var fontName in _fontService.GetFontNames())
+                {
+                    yield return fontName;
+                }
+            }
+        }
 
-		/// <summary>
-		/// Gets all available system fonts.
-		/// </summary>
-		/// <value>The available fonts.</value>
-		public IEnumerable<string> AvailableFonts
-		{
-			get 
-			{
-				return Fonts.SystemTypefaces.Select(a =>
-					{
-						GlyphTypeface typeFace = null;
-						a.TryGetGlyphTypeface(out typeFace);
-						return typeFace;
-					}).Where(a => a != null).Select(a => a.FontFileName);
-				//throw new NotImplementedException(); 
-			}
-		}
+        /// <summary>
+        /// Gets height for the font.
+        /// </summary>
+        /// <param name="font">Font whose height is calculated.</param>
+        /// <returns>Height of the font in inches.</returns>
+        public double GetHeight(Font font)
+        {
+            var multiplier = Application.Current.Host.Content.ScaleFactor / 100d;
+            return multiplier * font.GetHeight() / _display.Ydpi;
+        }
 
-		/// <summary>
-		/// Gets height for the font.
-		/// </summary>
-		/// <param name="font">Font whose height is calculated.</param>
-		/// <returns>Height of the font in inches.</returns>
-		public double GetHeight(Font font)
-		{
-			double multiplier = (double)System.Windows.Application.Current.Host.Content.ScaleFactor / 100d;
-			return multiplier * font.GetHeight() / this._display.Ydpi;
-		}
-
-		#endregion
+        #endregion
 
 
-	}
+    }
 }
