@@ -59,9 +59,9 @@ namespace XLabs.Serialization.AspNet
         /// A <see cref="T:System.Threading.Tasks.Task"/> whose result will be an object of the given type.
         /// </returns>
         /// <param name="type">The type of the object to deserialize.</param><param name="readStream">The <see cref="T:System.IO.Stream"/> to read.</param><param name="content">The <see cref="T:System.Net.Http.HttpContent"/>, if available. It may be null.</param><param name="formatterLogger">The <see cref="T:System.Net.Http.Formatting.IFormatterLogger"/> to log events to.</param><exception cref="T:System.NotSupportedException">Derived types need to support reading.</exception>
-        public override Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content, IFormatterLogger formatterLogger)
+		public override Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContentHeaders contentHeaders, IFormatterLogger formatterLogger)
         {
-            return Task.Factory.StartNew(() => this.serializer.DeserializeFromStream(readStream, type));
+			return Task.Factory.StartNew(() => this.serializer.DeserializeFromStream(readStream, type));
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace XLabs.Serialization.AspNet
         /// A <see cref="T:System.Threading.Tasks.Task"/> that will perform the write.
         /// </returns>
         /// <param name="type">The type of the object to write.</param><param name="value">The object value to write.  It may be null.</param><param name="writeStream">The <see cref="T:System.IO.Stream"/> to which to write.</param><param name="content">The <see cref="T:System.Net.Http.HttpContent"/> if available. It may be null.</param><param name="transportContext">The <see cref="T:System.Net.TransportContext"/> if available. It may be null.</param><exception cref="T:System.NotSupportedException">Derived types need to support writing.</exception>
-        public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content,
-            TransportContext transportContext)
+		public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContentHeaders contentHeaders, 
+			TransportContext transportContext)
         {
             return Task.Factory.StartNew(() => this.serializer.SerializeToStream(value, writeStream));
         }
